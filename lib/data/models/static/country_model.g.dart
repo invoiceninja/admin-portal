@@ -147,7 +147,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -194,7 +194,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -408,7 +408,7 @@ class _$CountryEntity extends CountryEntity {
   @override
   final String iso3;
   @override
-  final int id;
+  final String id;
 
   factory _$CountryEntity([void Function(CountryEntityBuilder) updates]) =>
       (new CountryEntityBuilder()..update(updates)).build();
@@ -528,9 +528,9 @@ class CountryEntityBuilder
   String get iso3 => _$this._iso3;
   set iso3(String iso3) => _$this._iso3 = iso3;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   CountryEntityBuilder();
 

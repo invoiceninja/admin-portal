@@ -21,8 +21,8 @@ class InvoiceItemSelector extends StatefulWidget {
     this.excluded,
   });
 
-  final Function(List<InvoiceItemEntity>, [int]) onItemsSelected;
-  final int clientId;
+  final Function(List<InvoiceItemEntity>, [String]) onItemsSelected;
+  final String clientId;
   final List<BaseEntity> excluded;
 
   @override
@@ -32,7 +32,7 @@ class InvoiceItemSelector extends StatefulWidget {
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     with SingleTickerProviderStateMixin {
   String _filter;
-  int _filterClientId;
+  String _filterClientId;
   TabController _tabController;
   final List<BaseEntity> _selected = [];
 
@@ -107,13 +107,13 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final selected = _selected.firstWhere(
         (entity) =>
             entity is BelongsToClient &&
-            (((entity as BelongsToClient).clientId ?? 0) > 0),
+            (((entity as BelongsToClient).clientId ?? '').isNotEmpty),
         orElse: () => null);
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
     } else if ((widget.clientId ?? 0) == 0) {
-      _filterClientId = 0;
+      _filterClientId = null;
     }
   }
 
@@ -192,7 +192,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
-          final int entityId = matches[index];
+          final String entityId = matches[index];
           final product = state.productState.map[entityId];
           return ProductListItem(
             onCheckboxChanged: (checked) => _toggleEntity(product),
@@ -227,7 +227,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
-          final int entityId = matches[index];
+          final String entityId = matches[index];
           final task = state.taskState.map[entityId];
           final project = state.projectState.map[task.projectId];
           final client = state.clientState.map[task.clientId];
@@ -270,7 +270,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
-          final int entityId = matches[index];
+          final String entityId = matches[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           final vendor = state.vendorState.map[expense.vendorId];
           final client = state.clientState.map[expense.clientId];

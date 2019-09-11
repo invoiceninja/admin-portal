@@ -40,8 +40,8 @@ enum FormatNumberType {
 String formatNumber(
   double value,
   BuildContext context, {
-  int clientId,
-  int currencyId,
+  String clientId,
+  String currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool zeroIsNull = false,
   bool roundToTwo = false,
@@ -66,24 +66,20 @@ String formatNumber(
   final ClientEntity client =
       state.selectedCompanyState.clientState.map[clientId];
 
-  int countryId;
+  String countryId;
 
-  if (client != null && client.countryId > 0) {
+  if (client != null && client.hasNameSet) {
     countryId = client.countryId;
-  } else if (company.countryId > 0) {
-    countryId = company.countryId;
   } else {
-    countryId = kCountryUnitedStates;
+    countryId = company.countryId;
   }
 
-  if (currencyId != null && currencyId > 0) {
+  if (currencyId != null && currencyId.isNotEmpty) {
     // do nothing
-  } else if (client != null && client.currencyId > 0) {
+  } else if (client != null && client.hasCurrency) {
     currencyId = client.currencyId;
-  } else if (company.currencyId > 0) {
-    currencyId = company.currencyId;
   } else {
-    currencyId = kCurrencyUSDollar;
+    currencyId = company.currencyId;
   }
 
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
@@ -255,7 +251,7 @@ String formatDate(String value, BuildContext context,
           : company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
       final dateFormats = state.staticState.datetimeFormatMap;
-      final dateFormatId = company.datetimeFormatId > 0
+      final dateFormatId = (company.datetimeFormatId ?? '').isNotEmpty
           ? company.datetimeFormatId
           : kDefaultDateTimeFormat;
       format = dateFormats[dateFormatId].format;
@@ -269,10 +265,8 @@ String formatDate(String value, BuildContext context,
     return formatter.format(DateTime.tryParse(value).toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
-    final dateFormatId =
-        company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-    final formatter =
-        DateFormat(dateFormats[dateFormatId].format, localeSelector(state));
+    final formatter = DateFormat(
+        dateFormats[company.dateFormatId].format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value));
   }
 }

@@ -104,9 +104,9 @@ class PaymentListVM {
 
   final UserEntity user;
   final ListUIState listState;
-  final List<int> paymentList;
-  final BuiltMap<int, PaymentEntity> paymentMap;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final List<String> paymentList;
+  final BuiltMap<String, PaymentEntity> paymentMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;

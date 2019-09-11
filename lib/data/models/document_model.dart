@@ -45,9 +45,9 @@ class DocumentFields {
 abstract class DocumentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<DocumentEntity, DocumentEntityBuilder> {
-  factory DocumentEntity({int id}) {
+  factory DocumentEntity({String id}) {
     return _$DocumentEntity._(
-      id: id ?? --DocumentEntity.counter,
+      id: id ?? BaseEntity.nextId,
       name: '',
       path: '',
       type: '',
@@ -82,17 +82,17 @@ abstract class DocumentEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @nullable
   @BuiltValueField(wireName: 'expense_id')
-  int get expenseId;
+  String get expenseId;
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
 
   DocumentEntity get clone => rebuild((b) => b
-    ..id = --DocumentEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @override
@@ -111,9 +111,9 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  bool get isInvoiceDocument => invoiceId != null && invoiceId > 0;
+  bool get isInvoiceDocument => invoiceId != null && invoiceId.isNotEmpty;
 
-  bool get isExpenseDocument => expenseId != null && expenseId > 0;
+  bool get isExpenseDocument => expenseId != null && expenseId.isNotEmpty;
 
   String get prettySize => size > 1000000
       ? '${round(size / 1000000, 1).toInt()} MB'

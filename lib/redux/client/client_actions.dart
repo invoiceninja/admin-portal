@@ -25,7 +25,7 @@ class ViewClient implements PersistUI {
     this.force = false,
   });
 
-  final int clientId;
+  final String clientId;
   final BuildContext context;
   final bool force;
 }
@@ -63,7 +63,7 @@ class LoadClient {
   LoadClient({this.completer, this.clientId, this.loadActivities = false});
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
   final bool loadActivities;
 }
 
@@ -71,7 +71,7 @@ class LoadClientActivity {
   LoadClientActivity({this.completer, this.clientId});
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
 }
 
 class LoadClients {
@@ -177,7 +177,7 @@ class ArchiveClientRequest implements StartSaving {
   ArchiveClientRequest(this.completer, this.clientId);
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
 }
 
 class ArchiveClientSuccess implements StopSaving, PersistData {
@@ -196,7 +196,7 @@ class DeleteClientRequest implements StartSaving {
   DeleteClientRequest(this.completer, this.clientId);
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
 }
 
 class DeleteClientSuccess implements StopSaving, PersistData {
@@ -215,7 +215,7 @@ class RestoreClientRequest implements StartSaving {
   RestoreClientRequest(this.completer, this.clientId);
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
 }
 
 class RestoreClientSuccess implements StopSaving, PersistData {

@@ -122,7 +122,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'client_id',
       serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'task_rate',
       serializers.serialize(object.taskRate,
           specifiedType: const FullType(double)),
@@ -176,7 +176,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -199,7 +199,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'task_rate':
           result.taskRate = serializers.deserialize(value,
@@ -247,7 +247,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -449,7 +449,7 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String name;
   @override
-  final int clientId;
+  final String clientId;
   @override
   final double taskRate;
   @override
@@ -473,7 +473,7 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ProjectEntity([void Function(ProjectEntityBuilder) updates]) =>
       (new ProjectEntityBuilder()..update(updates)).build();
@@ -606,9 +606,9 @@ class ProjectEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
   double _taskRate;
   double get taskRate => _$this._taskRate;
@@ -655,9 +655,9 @@ class ProjectEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ProjectEntityBuilder();
 

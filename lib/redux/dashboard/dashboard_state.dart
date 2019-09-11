@@ -53,7 +53,7 @@ abstract class DashboardUIState
       compareCustomStartDate: '',
       compareCustomEndDate: convertDateTimeToSqlDate(),
       offset: 0,
-      currencyId: 0,
+      currencyId: '',
     );
   }
 
@@ -75,7 +75,7 @@ abstract class DashboardUIState
 
   int get offset;
 
-  int get currencyId;
+  String get currencyId;
 
   static Serializer<DashboardUIState> get serializer =>
       _$dashboardUIStateSerializer;

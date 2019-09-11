@@ -41,9 +41,9 @@ ProductEntity _updateEditing(ProductEntity client, dynamic action) {
   return action.product;
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewProduct>((selectedId, action) => action.productId),
-  TypedReducer<int, AddProductSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
+  TypedReducer<String, AddProductSuccess>(
       (selectedId, action) => action.product.id),
 ]);
 

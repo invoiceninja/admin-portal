@@ -46,7 +46,7 @@ class _PaymentViewState extends State<PaymentView> {
       fields[PaymentFields.paymentDate] =
           formatDate(payment.paymentDate, context);
     }
-    if (payment.paymentTypeId > 0) {
+    if ((payment.paymentTypeId ?? '').isNotEmpty) {
       final paymentType =
           state.staticState.paymentTypeMap[payment.paymentTypeId];
       if (paymentType != null) {

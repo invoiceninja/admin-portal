@@ -54,23 +54,24 @@ class PaymentFields {
 abstract class PaymentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<PaymentEntity, PaymentEntityBuilder> {
-  factory PaymentEntity({int id, CompanyEntity company}) {
+  factory PaymentEntity({String id, CompanyEntity company}) {
     return _$PaymentEntity._(
-      id: id ?? --PaymentEntity.counter,
+      id: id ?? BaseEntity.nextId,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId: company != null && company.defaultPaymentTypeId > 0
-          ? company.defaultPaymentTypeId
-          : 0,
-      invoiceId: 0,
-      clientId: 0,
+      paymentTypeId:
+          company != null && (company.defaultPaymentTypeId ?? '').isNotEmpty
+              ? company.defaultPaymentTypeId
+              : '',
+      invoiceId: '',
+      clientId: '',
       invoiceNumber: '',
       privateNotes: '',
       exchangeRate: 0.0,
-      exchangeCurrencyId: 0,
+      exchangeCurrencyId: '',
       refunded: 0.0,
-      paymentStatusId: 0,
+      paymentStatusId: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -91,7 +92,7 @@ abstract class PaymentEntity extends Object
   double get refunded;
 
   @BuiltValueField(wireName: 'payment_status_id')
-  int get paymentStatusId;
+  String get paymentStatusId;
 
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
@@ -100,14 +101,14 @@ abstract class PaymentEntity extends Object
   String get paymentDate;
 
   @BuiltValueField(wireName: 'payment_type_id')
-  int get paymentTypeId;
+  String get paymentTypeId;
 
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @nullable
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
@@ -119,7 +120,7 @@ abstract class PaymentEntity extends Object
   double get exchangeRate;
 
   @BuiltValueField(wireName: 'exchange_currency_id')
-  int get exchangeCurrencyId;
+  String get exchangeCurrencyId;
 
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;

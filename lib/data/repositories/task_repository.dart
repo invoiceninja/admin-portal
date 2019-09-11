@@ -16,7 +16,7 @@ class TaskRepository {
   final WebClient webClient;
 
   Future<TaskEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
+      CompanyEntity company, AuthState auth, String entityId) async {
     final dynamic response =
         await webClient.get('${auth.url}/tasks/$entityId', company.token);
 

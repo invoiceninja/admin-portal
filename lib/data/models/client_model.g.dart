@@ -139,7 +139,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'country_id',
       serializers.serialize(object.countryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'work_phone',
       serializers.serialize(object.workPhone,
           specifiedType: const FullType(String)),
@@ -154,9 +154,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'industry_id',
       serializers.serialize(object.industryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'size_id',
-      serializers.serialize(object.sizeId, specifiedType: const FullType(int)),
+      serializers.serialize(object.sizeId,
+          specifiedType: const FullType(String)),
       'payment_terms',
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(int)),
@@ -168,10 +169,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'language_id',
       serializers.serialize(object.languageId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'currency_id',
       serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_number_counter',
       serializers.serialize(object.invoiceNumberCounter,
           specifiedType: const FullType(int)),
@@ -198,7 +199,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'shipping_country_id',
       serializers.serialize(object.shippingCountryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'show_tasks_in_portal',
       serializers.serialize(object.showTasksInPortal,
           specifiedType: const FullType(bool)),
@@ -263,7 +264,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -321,7 +322,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'work_phone':
           result.workPhone = serializers.deserialize(value,
@@ -341,11 +342,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'industry_id':
           result.industryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'size_id':
           result.sizeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'payment_terms':
           result.paymentTerms = serializers.deserialize(value,
@@ -361,11 +362,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'language_id':
           result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_number_counter':
           result.invoiceNumberCounter = serializers.deserialize(value,
@@ -401,7 +402,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'shipping_country_id':
           result.shippingCountryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'show_tasks_in_portal':
           result.showTasksInPortal = serializers.deserialize(value,
@@ -457,7 +458,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -544,7 +545,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -623,7 +624,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -843,7 +844,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String postalCode;
   @override
-  final int countryId;
+  final String countryId;
   @override
   final String workPhone;
   @override
@@ -853,9 +854,9 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String website;
   @override
-  final int industryId;
+  final String industryId;
   @override
-  final int sizeId;
+  final String sizeId;
   @override
   final int paymentTerms;
   @override
@@ -863,9 +864,9 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String idNumber;
   @override
-  final int languageId;
+  final String languageId;
   @override
-  final int currencyId;
+  final String currencyId;
   @override
   final int invoiceNumberCounter;
   @override
@@ -883,7 +884,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String shippingPostalCode;
   @override
-  final int shippingCountryId;
+  final String shippingCountryId;
   @override
   final bool showTasksInPortal;
   @override
@@ -909,7 +910,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
       (new ClientEntityBuilder()..update(updates)).build();
@@ -1269,9 +1270,9 @@ class ClientEntityBuilder
   String get postalCode => _$this._postalCode;
   set postalCode(String postalCode) => _$this._postalCode = postalCode;
 
-  int _countryId;
-  int get countryId => _$this._countryId;
-  set countryId(int countryId) => _$this._countryId = countryId;
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
 
   String _workPhone;
   String get workPhone => _$this._workPhone;
@@ -1289,13 +1290,13 @@ class ClientEntityBuilder
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
 
-  int _industryId;
-  int get industryId => _$this._industryId;
-  set industryId(int industryId) => _$this._industryId = industryId;
+  String _industryId;
+  String get industryId => _$this._industryId;
+  set industryId(String industryId) => _$this._industryId = industryId;
 
-  int _sizeId;
-  int get sizeId => _$this._sizeId;
-  set sizeId(int sizeId) => _$this._sizeId = sizeId;
+  String _sizeId;
+  String get sizeId => _$this._sizeId;
+  set sizeId(String sizeId) => _$this._sizeId = sizeId;
 
   int _paymentTerms;
   int get paymentTerms => _$this._paymentTerms;
@@ -1309,13 +1310,13 @@ class ClientEntityBuilder
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
 
-  int _languageId;
-  int get languageId => _$this._languageId;
-  set languageId(int languageId) => _$this._languageId = languageId;
+  String _languageId;
+  String get languageId => _$this._languageId;
+  set languageId(String languageId) => _$this._languageId = languageId;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   int _invoiceNumberCounter;
   int get invoiceNumberCounter => _$this._invoiceNumberCounter;
@@ -1355,9 +1356,9 @@ class ClientEntityBuilder
   set shippingPostalCode(String shippingPostalCode) =>
       _$this._shippingPostalCode = shippingPostalCode;
 
-  int _shippingCountryId;
-  int get shippingCountryId => _$this._shippingCountryId;
-  set shippingCountryId(int shippingCountryId) =>
+  String _shippingCountryId;
+  String get shippingCountryId => _$this._shippingCountryId;
+  set shippingCountryId(String shippingCountryId) =>
       _$this._shippingCountryId = shippingCountryId;
 
   bool _showTasksInPortal;
@@ -1415,9 +1416,9 @@ class ClientEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ClientEntityBuilder();
 
@@ -1585,7 +1586,7 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ContactEntity([void Function(ContactEntityBuilder) updates]) =>
       (new ContactEntityBuilder()..update(updates)).build();
@@ -1792,9 +1793,9 @@ class ContactEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ContactEntityBuilder();
 

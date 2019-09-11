@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -63,27 +64,27 @@ class QuoteScreen extends StatelessWidget {
         statuses: [
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 1
+              ..id = kInvoiceStatusDraft
               ..name = localization.draft,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 2
+              ..id = kInvoiceStatusSent
               ..name = localization.sent,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 3
+              ..id = kInvoiceStatusViewed
               ..name = localization.viewed,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 4
+              ..id = kInvoiceStatusApproved
               ..name = localization.approved,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = -1
+              ..id = kInvoiceStatusPastDue
               ..name = localization.expired,
           ),
         ],

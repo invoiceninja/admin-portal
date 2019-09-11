@@ -85,8 +85,8 @@ class VendorListVM {
   }
 
   final UserEntity user;
-  final List<int> vendorList;
-  final BuiltMap<int, VendorEntity> vendorMap;
+  final List<String> vendorList;
+  final BuiltMap<String, VendorEntity> vendorMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;

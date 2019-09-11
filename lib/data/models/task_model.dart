@@ -127,9 +127,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity({int id, bool isRunning = false}) {
+  factory TaskEntity({String id, bool isRunning = false}) {
     return _$TaskEntity._(
-      id: id ?? --TaskEntity.counter,
+      id: id ?? BaseEntity.nextId,
       description: '',
       duration: 0,
       invoiceId: null,
@@ -152,7 +152,7 @@ abstract class TaskEntity extends Object
   static int counter = 0;
 
   TaskEntity get clone => rebuild((b) => b
-    ..id = --TaskEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false
     ..invoiceId = null
     ..isRunning = false
@@ -171,7 +171,7 @@ abstract class TaskEntity extends Object
     return updateTaskTime(taskTime, times.length - 1);
   }
 
-  bool get isInvoiced => invoiceId != null && invoiceId > 0;
+  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
   @override
   EntityType get entityType {
@@ -323,16 +323,16 @@ abstract class TaskEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @override
   @nullable
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @nullable
   @BuiltValueField(wireName: 'project_id')
-  int get projectId;
+  String get projectId;
 
   @BuiltValueField(wireName: 'time_log')
   String get timeLog;
@@ -348,7 +348,7 @@ abstract class TaskEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'task_status_id')
-  int get taskStatusId;
+  String get taskStatusId;
 
   @nullable
   @BuiltValueField(wireName: 'task_status_sort_order')
@@ -469,7 +469,7 @@ abstract class TaskStatusEntity extends Object
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
   factory TaskStatusEntity() {
     return _$TaskStatusEntity._(
-      id: 0,
+      id: '',
       name: '',
       sortOrder: 0,
     );

@@ -126,7 +126,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(double)),
       'payment_status_id',
       serializers.serialize(object.paymentStatusId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'transaction_reference',
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
@@ -135,10 +135,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(String)),
       'payment_type_id',
       serializers.serialize(object.paymentTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_id',
       serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_number',
       serializers.serialize(object.invoiceNumber,
           specifiedType: const FullType(String)),
@@ -150,13 +150,13 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(double)),
       'exchange_currency_id',
       serializers.serialize(object.exchangeCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
     ];
     if (object.clientId != null) {
       result
         ..add('client_id')
         ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
       result
@@ -192,7 +192,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -219,7 +219,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'payment_status_id':
           result.paymentStatusId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'transaction_reference':
           result.transactionReference = serializers.deserialize(value,
@@ -231,15 +231,15 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'payment_type_id':
           result.paymentTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_number':
           result.invoiceNumber = serializers.deserialize(value,
@@ -255,7 +255,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'exchange_currency_id':
           result.exchangeCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -279,7 +279,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -483,17 +483,17 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final double refunded;
   @override
-  final int paymentStatusId;
+  final String paymentStatusId;
   @override
   final String transactionReference;
   @override
   final String paymentDate;
   @override
-  final int paymentTypeId;
+  final String paymentTypeId;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int clientId;
+  final String clientId;
   @override
   final String invoiceNumber;
   @override
@@ -501,7 +501,7 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final double exchangeRate;
   @override
-  final int exchangeCurrencyId;
+  final String exchangeCurrencyId;
   @override
   final int createdAt;
   @override
@@ -513,7 +513,7 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$PaymentEntity([void Function(PaymentEntityBuilder) updates]) =>
       (new PaymentEntityBuilder()..update(updates)).build();
@@ -688,9 +688,9 @@ class PaymentEntityBuilder
   double get refunded => _$this._refunded;
   set refunded(double refunded) => _$this._refunded = refunded;
 
-  int _paymentStatusId;
-  int get paymentStatusId => _$this._paymentStatusId;
-  set paymentStatusId(int paymentStatusId) =>
+  String _paymentStatusId;
+  String get paymentStatusId => _$this._paymentStatusId;
+  set paymentStatusId(String paymentStatusId) =>
       _$this._paymentStatusId = paymentStatusId;
 
   String _transactionReference;
@@ -702,17 +702,18 @@ class PaymentEntityBuilder
   String get paymentDate => _$this._paymentDate;
   set paymentDate(String paymentDate) => _$this._paymentDate = paymentDate;
 
-  int _paymentTypeId;
-  int get paymentTypeId => _$this._paymentTypeId;
-  set paymentTypeId(int paymentTypeId) => _$this._paymentTypeId = paymentTypeId;
+  String _paymentTypeId;
+  String get paymentTypeId => _$this._paymentTypeId;
+  set paymentTypeId(String paymentTypeId) =>
+      _$this._paymentTypeId = paymentTypeId;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
   String _invoiceNumber;
   String get invoiceNumber => _$this._invoiceNumber;
@@ -727,9 +728,9 @@ class PaymentEntityBuilder
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  int _exchangeCurrencyId;
-  int get exchangeCurrencyId => _$this._exchangeCurrencyId;
-  set exchangeCurrencyId(int exchangeCurrencyId) =>
+  String _exchangeCurrencyId;
+  String get exchangeCurrencyId => _$this._exchangeCurrencyId;
+  set exchangeCurrencyId(String exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
 
   int _createdAt;
@@ -752,9 +753,9 @@ class PaymentEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   PaymentEntityBuilder();
 

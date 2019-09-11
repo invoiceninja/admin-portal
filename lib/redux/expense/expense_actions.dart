@@ -25,7 +25,7 @@ class ViewExpense implements PersistUI {
     this.force = false,
   });
 
-  final int expenseId;
+  final String expenseId;
   final BuildContext context;
   final bool force;
 }
@@ -53,7 +53,7 @@ class LoadExpense {
   LoadExpense({this.completer, this.expenseId, this.loadActivities = false});
 
   final Completer completer;
-  final int expenseId;
+  final String expenseId;
   final bool loadActivities;
 }
 
@@ -61,7 +61,7 @@ class LoadExpenseActivity {
   LoadExpenseActivity({this.completer, this.expenseId});
 
   final Completer completer;
-  final int expenseId;
+  final String expenseId;
 }
 
 class LoadExpenses {
@@ -148,7 +148,7 @@ class ArchiveExpenseRequest implements StartSaving {
   ArchiveExpenseRequest(this.completer, this.expenseId);
 
   final Completer completer;
-  final int expenseId;
+  final String expenseId;
 }
 
 class ArchiveExpenseSuccess implements StopSaving, PersistData {
@@ -167,7 +167,7 @@ class DeleteExpenseRequest implements StartSaving {
   DeleteExpenseRequest(this.completer, this.expenseId);
 
   final Completer completer;
-  final int expenseId;
+  final String expenseId;
 }
 
 class DeleteExpenseSuccess implements StopSaving, PersistData {
@@ -186,7 +186,7 @@ class RestoreExpenseRequest implements StartSaving {
   RestoreExpenseRequest(this.completer, this.expenseId);
 
   final Completer completer;
-  final int expenseId;
+  final String expenseId;
 }
 
 class RestoreExpenseSuccess implements StopSaving, PersistData {
@@ -240,7 +240,7 @@ class FilterExpensesByCustom2 implements PersistUI {
 class FilterExpensesByEntity implements PersistUI {
   FilterExpensesByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

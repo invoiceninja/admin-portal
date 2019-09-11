@@ -136,7 +136,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(String)),
       'country_id',
       serializers.serialize(object.countryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'work_phone',
       serializers.serialize(object.workPhone,
           specifiedType: const FullType(String)),
@@ -157,7 +157,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(String)),
       'currency_id',
       serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -203,7 +203,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -253,7 +253,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'work_phone':
           result.workPhone = serializers.deserialize(value,
@@ -281,7 +281,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -319,7 +319,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -393,7 +393,7 @@ class _$VendorContactEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -452,7 +452,7 @@ class _$VendorContactEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -668,7 +668,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String postalCode;
   @override
-  final int countryId;
+  final String countryId;
   @override
   final String workPhone;
   @override
@@ -682,7 +682,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String idNumber;
   @override
-  final int currencyId;
+  final String currencyId;
   @override
   final String customValue1;
   @override
@@ -700,7 +700,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
       (new VendorEntityBuilder()..update(updates)).build();
@@ -939,9 +939,9 @@ class VendorEntityBuilder
   String get postalCode => _$this._postalCode;
   set postalCode(String postalCode) => _$this._postalCode = postalCode;
 
-  int _countryId;
-  int get countryId => _$this._countryId;
-  set countryId(int countryId) => _$this._countryId = countryId;
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
 
   String _workPhone;
   String get workPhone => _$this._workPhone;
@@ -967,9 +967,9 @@ class VendorEntityBuilder
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1005,9 +1005,9 @@ class VendorEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   VendorEntityBuilder();
 
@@ -1125,7 +1125,7 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$VendorContactEntity(
           [void Function(VendorContactEntityBuilder) updates]) =>
@@ -1273,9 +1273,9 @@ class VendorContactEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   VendorContactEntityBuilder();
 

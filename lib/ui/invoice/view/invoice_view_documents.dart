@@ -21,7 +21,7 @@ class InvoiceViewDocuments extends StatelessWidget {
         documentState.map, state.expenseState.map, invoice);
 
     return DocumentGrid(
-      documents: documents,
+      documentIds: documents,
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document) =>
           viewModel.onDeleteDocument(context, document),

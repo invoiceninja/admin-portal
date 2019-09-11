@@ -15,8 +15,8 @@ abstract class InvoiceState
   factory InvoiceState() {
     return _$InvoiceState._(
       lastUpdated: 0,
-      map: BuiltMap<int, InvoiceEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, InvoiceEntity>(),
+      list: BuiltList<String>(),
     );
   }
 
@@ -25,9 +25,9 @@ abstract class InvoiceState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, InvoiceEntity> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
-  InvoiceEntity get(int invoiceId) {
+  InvoiceEntity get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
       return map[invoiceId];
     } else {
@@ -35,7 +35,7 @@ abstract class InvoiceState
     }
   }
 
-  BuiltList<int> get list;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -60,7 +60,7 @@ abstract class InvoiceUIState extends Object
           ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
       editing: InvoiceEntity(),
       editingItem: InvoiceItemEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
 

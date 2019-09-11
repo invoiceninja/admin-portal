@@ -16,7 +16,7 @@ class ProjectRepository {
   final WebClient webClient;
 
   Future<ProjectEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
+      CompanyEntity company, AuthState auth, String entityId) async {
     final dynamic response =
         await webClient.get('${auth.url}/projects/$entityId', company.token);
 

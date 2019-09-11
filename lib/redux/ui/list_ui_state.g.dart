@@ -54,7 +54,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
       result
         ..add('filterEntityId')
         ..add(serializers.serialize(object.filterEntityId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.filterEntityType != null) {
       result
@@ -86,7 +86,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           break;
         case 'filterEntityId':
           result.filterEntityId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'filterEntityType':
           result.filterEntityType = serializers.deserialize(value,
@@ -137,7 +137,7 @@ class _$ListUIState extends ListUIState {
   @override
   final int filterClearedAt;
   @override
-  final int filterEntityId;
+  final String filterEntityId;
   @override
   final EntityType filterEntityType;
   @override
@@ -265,9 +265,9 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  int _filterEntityId;
-  int get filterEntityId => _$this._filterEntityId;
-  set filterEntityId(int filterEntityId) =>
+  String _filterEntityId;
+  String get filterEntityId => _$this._filterEntityId;
+  set filterEntityId(String filterEntityId) =>
       _$this._filterEntityId = filterEntityId;
 
   EntityType _filterEntityType;

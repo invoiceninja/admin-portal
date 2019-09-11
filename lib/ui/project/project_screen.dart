@@ -63,8 +63,7 @@ class ProjectScreen extends StatelessWidget {
               onPressed: () {
                 store.dispatch(EditProject(
                     project: ProjectEntity().rebuild((b) => b
-                      ..clientId =
-                          store.state.projectListState.filterEntityId ?? 0),
+                      ..clientId = store.state.projectListState.filterEntityId),
                     context: context));
               },
               child: Icon(

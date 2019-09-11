@@ -31,7 +31,7 @@ class VendorOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String, String>{};
 
-    if (vendor.currencyId > 0 && vendor.currencyId != company.currencyId) {
+    if (vendor.hasCurrency && vendor.currencyId != company.currencyId) {
       fields[VendorFields.currencyId] =
           statics.currencyMap[vendor.currencyId].name;
     }

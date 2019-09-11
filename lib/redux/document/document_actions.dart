@@ -17,7 +17,7 @@ class ViewDocumentList implements PersistUI {
 class ViewDocument implements PersistUI {
   ViewDocument({this.documentId, this.context});
 
-  final int documentId;
+  final String documentId;
   final BuildContext context;
 }
 
@@ -43,7 +43,7 @@ class LoadDocument {
   LoadDocument({this.completer, this.documentId, this.loadActivities = false});
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
   final bool loadActivities;
 }
 
@@ -51,7 +51,7 @@ class LoadDocumentActivity {
   LoadDocumentActivity({this.completer, this.documentId});
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
 }
 
 class LoadDocuments {
@@ -138,7 +138,7 @@ class ArchiveDocumentRequest implements StartSaving {
   ArchiveDocumentRequest(this.completer, this.documentId);
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
 }
 
 class ArchiveDocumentSuccess implements StopSaving, PersistData {
@@ -157,7 +157,7 @@ class DeleteDocumentRequest implements StartSaving {
   DeleteDocumentRequest(this.completer, this.documentId);
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {
@@ -176,7 +176,7 @@ class RestoreDocumentRequest implements StartSaving {
   RestoreDocumentRequest(this.completer, this.documentId);
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
 }
 
 class RestoreDocumentSuccess implements StopSaving, PersistData {
@@ -224,7 +224,7 @@ class FilterDocumentsByCustom2 implements PersistUI {
 class FilterDocumentsByEntity implements PersistUI {
   FilterDocumentsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

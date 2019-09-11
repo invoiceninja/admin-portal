@@ -13,11 +13,11 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewExpense>((selectedId, action) => action.expenseId),
-  TypedReducer<int, AddExpenseSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewExpense>((selectedId, action) => action.expenseId),
+  TypedReducer<String, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
-  TypedReducer<int, FilterExpensesByEntity>(
+  TypedReducer<String, FilterExpensesByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

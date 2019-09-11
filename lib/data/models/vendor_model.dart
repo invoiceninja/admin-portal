@@ -61,9 +61,9 @@ class VendorFields {
 abstract class VendorEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  factory VendorEntity({int id}) {
+  factory VendorEntity({String id}) {
     return _$VendorEntity._(
-      id: id ?? --VendorEntity.counter,
+      id: id ?? BaseEntity.nextId,
       name: '',
       balance: 0.0,
       paidToDate: 0.0,
@@ -72,14 +72,14 @@ abstract class VendorEntity extends Object
       city: '',
       state: '',
       postalCode: '',
-      countryId: 0,
+      countryId: '',
       workPhone: '',
       privateNotes: '',
       lastLogin: '',
       website: '',
       vatNumber: '',
       idNumber: '',
-      currencyId: 0,
+      currencyId: '',
       customValue1: '',
       customValue2: '',
       contacts: BuiltList<VendorContactEntity>(
@@ -95,10 +95,8 @@ abstract class VendorEntity extends Object
 
   VendorEntity._();
 
-  static int counter = 0;
-
   VendorEntity get clone => rebuild((b) => b
-    ..id = --VendorEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @override
@@ -125,7 +123,7 @@ abstract class VendorEntity extends Object
   String get postalCode;
 
   @BuiltValueField(wireName: 'country_id')
-  int get countryId;
+  String get countryId;
 
   @BuiltValueField(wireName: 'work_phone')
   String get workPhone;
@@ -145,7 +143,7 @@ abstract class VendorEntity extends Object
   String get idNumber;
 
   @BuiltValueField(wireName: 'currency_id')
-  int get currencyId;
+  String get currencyId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -264,6 +262,8 @@ abstract class VendorEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
+  bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
+
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 
   bool get hasNameSet {
@@ -279,7 +279,7 @@ abstract class VendorContactEntity extends Object
     implements Built<VendorContactEntity, VendorContactEntityBuilder> {
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
-      id: --VendorContactEntity.counter,
+      id: BaseEntity.nextId,
       firstName: '',
       lastName: '',
       email: '',

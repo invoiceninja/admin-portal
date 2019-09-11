@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 double getExchangeRate(BuildContext context,
-    {int fromCurrencyId, int toCurrencyId}) {
+    {String fromCurrencyId, String toCurrencyId}) {
   final state = StoreProvider.of<AppState>(context).state;
   final currencyMap = state.staticState.currencyMap;
   final fromCurrency = currencyMap[fromCurrencyId];

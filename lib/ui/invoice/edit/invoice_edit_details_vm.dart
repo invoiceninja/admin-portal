@@ -47,8 +47,8 @@ class EntityEditDetailsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final BuiltList<int> clientList;
+  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddClientPressed;
 }
@@ -58,8 +58,8 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(

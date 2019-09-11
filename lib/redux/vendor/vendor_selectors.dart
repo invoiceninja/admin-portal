@@ -4,11 +4,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownVendorList = memo2(
-    (BuiltMap<int, VendorEntity> vendorMap, BuiltList<int> vendorList) =>
+    (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList) =>
         dropdownVendorsSelector(vendorMap, vendorList));
 
-List<int> dropdownVendorsSelector(
-    BuiltMap<int, VendorEntity> vendorMap, BuiltList<int> vendorList) {
+List<String> dropdownVendorsSelector(
+    BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
     return vendor.isActive;
@@ -23,12 +23,13 @@ List<int> dropdownVendorsSelector(
   return list;
 }
 
-var memoizedFilteredVendorList = memo3((BuiltMap<int, VendorEntity> vendorMap,
-        BuiltList<int> vendorList, ListUIState vendorListState) =>
-    filteredVendorsSelector(vendorMap, vendorList, vendorListState));
+var memoizedFilteredVendorList = memo3(
+    (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList,
+            ListUIState vendorListState) =>
+        filteredVendorsSelector(vendorMap, vendorList, vendorListState));
 
-List<int> filteredVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
-    BuiltList<int> vendorList, ListUIState vendorListState) {
+List<String> filteredVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
+    BuiltList<String> vendorList, ListUIState vendorListState) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
 
@@ -59,12 +60,14 @@ List<int> filteredVendorsSelector(BuiltMap<int, VendorEntity> vendorMap,
   return list;
 }
 
-var memoizedCalculateVendorBalance = memo4((int vendorId, int currencyId,
-        BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) =>
+var memoizedCalculateVendorBalance = memo4((String vendorId,
+        String currencyId,
+        BuiltMap<String, ExpenseEntity> expenseMap,
+        BuiltList<String> expenseList) =>
     calculateVendorBalance(vendorId, currencyId, expenseMap, expenseList));
 
-double calculateVendorBalance(int vendorId, int currencyId,
-    BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList) {
+double calculateVendorBalance(String vendorId, String currencyId,
+    BuiltMap<String, ExpenseEntity> expenseMap, BuiltList<String> expenseList) {
   double total = 0;
 
   expenseList.forEach((expenseId) {
@@ -80,5 +83,5 @@ double calculateVendorBalance(int vendorId, int currencyId,
 }
 
 bool hasVendorChanges(
-        VendorEntity vendor, BuiltMap<int, VendorEntity> vendorMap) =>
+        VendorEntity vendor, BuiltMap<String, VendorEntity> vendorMap) =>
     vendor.isNew || vendor != vendorMap[vendor.id];

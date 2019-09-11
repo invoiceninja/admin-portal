@@ -45,7 +45,7 @@ abstract class CurrencyEntity extends Object
     implements Built<CurrencyEntity, CurrencyEntityBuilder> {
   factory CurrencyEntity() {
     return _$CurrencyEntity._(
-      id: 0,
+      id: '',
       name: '',
       symbol: '',
       precision: '',

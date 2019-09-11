@@ -26,7 +26,7 @@ class ViewInvoiceList implements PersistUI {
 class ViewInvoice implements PersistUI {
   ViewInvoice({this.invoiceId, this.context, this.force = false});
 
-  final int invoiceId;
+  final String invoiceId;
   final BuildContext context;
   final bool force;
 }
@@ -70,7 +70,7 @@ class LoadInvoice {
   LoadInvoice({this.completer, this.invoiceId});
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class LoadInvoices {
@@ -183,7 +183,7 @@ class EmailInvoiceRequest implements StartSaving {
       {this.completer, this.invoiceId, this.template, this.subject, this.body});
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
   final EmailTemplate template;
   final String subject;
   final String body;
@@ -201,7 +201,7 @@ class MarkSentInvoiceRequest implements StartSaving {
   MarkSentInvoiceRequest(this.completer, this.invoiceId);
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class MarkSentInvoiceSuccess implements StopSaving, PersistData {
@@ -220,7 +220,7 @@ class ArchiveInvoiceRequest implements StartSaving {
   ArchiveInvoiceRequest(this.completer, this.invoiceId);
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class ArchiveInvoiceSuccess implements StopSaving, PersistData {
@@ -239,7 +239,7 @@ class DeleteInvoiceRequest implements StartSaving {
   DeleteInvoiceRequest(this.completer, this.invoiceId);
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class DeleteInvoiceSuccess implements StopSaving, PersistData {
@@ -258,7 +258,7 @@ class RestoreInvoiceRequest implements StartSaving {
   RestoreInvoiceRequest(this.completer, this.invoiceId);
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class RestoreInvoiceSuccess implements StopSaving, PersistData {
@@ -300,7 +300,7 @@ class FilterInvoicesByStatus implements PersistUI {
 class FilterInvoicesByEntity implements PersistUI {
   FilterInvoicesByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

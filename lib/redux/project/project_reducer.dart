@@ -29,11 +29,11 @@ final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
   }),
 ]);
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewProject>((selectedId, action) => action.projectId),
-  TypedReducer<int, AddProjectSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewProject>((selectedId, action) => action.projectId),
+  TypedReducer<String, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
-  TypedReducer<int, FilterProjectsByEntity>(
+  TypedReducer<String, FilterProjectsByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

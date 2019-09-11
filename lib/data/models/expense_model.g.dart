@@ -141,10 +141,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
       'bank_id',
-      serializers.serialize(object.bankId, specifiedType: const FullType(int)),
+      serializers.serialize(object.bankId,
+          specifiedType: const FullType(String)),
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -159,10 +160,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           specifiedType: const FullType(double)),
       'invoice_currency_id',
       serializers.serialize(object.invoiceCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'payment_type_id',
       serializers.serialize(object.paymentTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -175,15 +176,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(int)),
-      'vendor_id',
-      serializers.serialize(object.vendorId,
-          specifiedType: const FullType(int)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -195,7 +187,25 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('expense_category_id')
         ..add(serializers.serialize(object.categoryId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
       result
@@ -231,7 +241,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -274,15 +284,15 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'bank_id':
           result.bankId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_category_id':
           result.categoryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
@@ -302,11 +312,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'invoice_currency_id':
           result.invoiceCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'payment_type_id':
           result.paymentTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -326,15 +336,15 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -366,7 +376,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -427,7 +437,7 @@ class _$ExpenseCategoryEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -470,7 +480,7 @@ class _$ExpenseCategoryEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -495,7 +505,7 @@ class _$ExpenseStatusEntitySerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -517,7 +527,7 @@ class _$ExpenseStatusEntitySerializer
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -733,11 +743,11 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String transactionReference;
   @override
-  final int bankId;
+  final String bankId;
   @override
-  final int expenseCurrencyId;
+  final String expenseCurrencyId;
   @override
-  final int categoryId;
+  final String categoryId;
   @override
   final double amount;
   @override
@@ -747,9 +757,9 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double exchangeRate;
   @override
-  final int invoiceCurrencyId;
+  final String invoiceCurrencyId;
   @override
-  final int paymentTypeId;
+  final String paymentTypeId;
   @override
   final String taxName1;
   @override
@@ -759,11 +769,11 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double taxRate2;
   @override
-  final int clientId;
+  final String clientId;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int vendorId;
+  final String vendorId;
   @override
   final String customValue1;
   @override
@@ -779,7 +789,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ExpenseEntity([void Function(ExpenseEntityBuilder) updates]) =>
       (new ExpenseEntityBuilder()..update(updates)).build();
@@ -870,15 +880,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     }
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
-    }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
-    }
-    if (vendorId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
@@ -1042,18 +1043,18 @@ class ExpenseEntityBuilder
   set transactionReference(String transactionReference) =>
       _$this._transactionReference = transactionReference;
 
-  int _bankId;
-  int get bankId => _$this._bankId;
-  set bankId(int bankId) => _$this._bankId = bankId;
+  String _bankId;
+  String get bankId => _$this._bankId;
+  set bankId(String bankId) => _$this._bankId = bankId;
 
-  int _expenseCurrencyId;
-  int get expenseCurrencyId => _$this._expenseCurrencyId;
-  set expenseCurrencyId(int expenseCurrencyId) =>
+  String _expenseCurrencyId;
+  String get expenseCurrencyId => _$this._expenseCurrencyId;
+  set expenseCurrencyId(String expenseCurrencyId) =>
       _$this._expenseCurrencyId = expenseCurrencyId;
 
-  int _categoryId;
-  int get categoryId => _$this._categoryId;
-  set categoryId(int categoryId) => _$this._categoryId = categoryId;
+  String _categoryId;
+  String get categoryId => _$this._categoryId;
+  set categoryId(String categoryId) => _$this._categoryId = categoryId;
 
   double _amount;
   double get amount => _$this._amount;
@@ -1071,14 +1072,15 @@ class ExpenseEntityBuilder
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  int _invoiceCurrencyId;
-  int get invoiceCurrencyId => _$this._invoiceCurrencyId;
-  set invoiceCurrencyId(int invoiceCurrencyId) =>
+  String _invoiceCurrencyId;
+  String get invoiceCurrencyId => _$this._invoiceCurrencyId;
+  set invoiceCurrencyId(String invoiceCurrencyId) =>
       _$this._invoiceCurrencyId = invoiceCurrencyId;
 
-  int _paymentTypeId;
-  int get paymentTypeId => _$this._paymentTypeId;
-  set paymentTypeId(int paymentTypeId) => _$this._paymentTypeId = paymentTypeId;
+  String _paymentTypeId;
+  String get paymentTypeId => _$this._paymentTypeId;
+  set paymentTypeId(String paymentTypeId) =>
+      _$this._paymentTypeId = paymentTypeId;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1096,17 +1098,17 @@ class ExpenseEntityBuilder
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _vendorId;
-  int get vendorId => _$this._vendorId;
-  set vendorId(int vendorId) => _$this._vendorId = vendorId;
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1136,9 +1138,9 @@ class ExpenseEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ExpenseEntityBuilder();
 
@@ -1245,7 +1247,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ExpenseCategoryEntity(
           [void Function(ExpenseCategoryEntityBuilder) updates]) =>
@@ -1343,9 +1345,9 @@ class ExpenseCategoryEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ExpenseCategoryEntityBuilder();
 
@@ -1394,7 +1396,7 @@ class ExpenseCategoryEntityBuilder
 
 class _$ExpenseStatusEntity extends ExpenseStatusEntity {
   @override
-  final int id;
+  final String id;
   @override
   final String name;
 
@@ -1444,9 +1446,9 @@ class ExpenseStatusEntityBuilder
     implements Builder<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   _$ExpenseStatusEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;

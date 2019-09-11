@@ -15,8 +15,8 @@ abstract class ProductState
   factory ProductState() {
     return _$ProductState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ProductEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ProductEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ProductState._();
@@ -24,8 +24,8 @@ abstract class ProductState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ProductEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ProductEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -48,7 +48,7 @@ abstract class ProductUIState extends Object
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
       editing: ProductEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   ProductUIState._();

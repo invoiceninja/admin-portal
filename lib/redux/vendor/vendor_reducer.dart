@@ -41,10 +41,11 @@ VendorContactEntity editVendorContact(
   return action.contact ?? VendorContactEntity();
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewVendor>((selectedId, action) => action.vendorId),
-  TypedReducer<int, AddVendorSuccess>((selectedId, action) => action.vendor.id),
-  TypedReducer<int, FilterVendorsByEntity>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewVendor>((selectedId, action) => action.vendorId),
+  TypedReducer<String, AddVendorSuccess>(
+      (selectedId, action) => action.vendor.id),
+  TypedReducer<String, FilterVendorsByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

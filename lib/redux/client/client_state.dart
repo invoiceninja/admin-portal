@@ -13,8 +13,8 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   factory ClientState() {
     return _$ClientState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ClientEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ClientEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ClientState._();
@@ -22,10 +22,10 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ClientEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ClientEntity> get map;
+  BuiltList<String> get list;
 
-  ClientEntity get(int clientId) {
+  ClientEntity get(String clientId) {
     if (map.containsKey(clientId)) {
       return map[clientId];
     } else {
@@ -55,7 +55,6 @@ abstract class ClientUIState extends Object
       listUIState: ListUIState(ClientFields.name),
       editing: ClientEntity(),
       editingContact: ContactEntity(),
-      selectedId: 0,
       saveCompleter: null,
     );
   }

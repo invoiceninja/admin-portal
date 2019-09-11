@@ -38,7 +38,7 @@ abstract class SizeEntity extends Object
     implements Built<SizeEntity, SizeEntityBuilder> {
   factory SizeEntity() {
     return _$SizeEntity._(
-      id: 0,
+      id: '',
       name: '',
     );
   }

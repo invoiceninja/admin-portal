@@ -28,7 +28,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   int get filterClearedAt;
 
   @nullable
-  int get filterEntityId;
+  String get filterEntityId;
 
   @nullable
   EntityType get filterEntityType;

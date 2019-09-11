@@ -54,9 +54,9 @@ class EntityListVM {
   final AppState state;
   final UserEntity user;
   final ListUIState listState;
-  final List<int> invoiceList;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final List<String> invoiceList;
+  final BuiltMap<String, InvoiceEntity> invoiceMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
@@ -72,9 +72,9 @@ class InvoiceListVM extends EntityListVM {
     AppState state,
     UserEntity user,
     ListUIState listState,
-    List<int> invoiceList,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ClientEntity> clientMap,
+    List<String> invoiceList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
     String filter,
     bool isLoading,
     bool isLoaded,

@@ -179,7 +179,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -254,7 +254,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -482,7 +482,7 @@ class _$ProductEntity extends ProductEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$ProductEntity([void Function(ProductEntityBuilder) updates]) =>
       (new ProductEntityBuilder()..update(updates)).build();
@@ -679,9 +679,9 @@ class ProductEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ProductEntityBuilder();
 

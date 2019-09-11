@@ -21,8 +21,8 @@ class EntityDropdown extends StatefulWidget {
   }) : super(key: key);
 
   final EntityType entityType;
-  final BuiltMap<int, SelectableEntity> entityMap;
-  final List<int> entityList;
+  final BuiltMap<String, SelectableEntity> entityMap;
+  final List<String> entityList;
   final String labelText;
   final String initialValue;
   final Function(SelectableEntity) onSelected;
@@ -95,8 +95,8 @@ class EntityDropdownDialog extends StatefulWidget {
     this.onAddPressed,
   });
 
-  final BuiltMap<int, SelectableEntity> entityMap;
-  final List<int> entityList;
+  final BuiltMap<String, SelectableEntity> entityMap;
+  final List<String> entityList;
   final Function(SelectableEntity) onSelected;
   final Function(BuildContext context, Completer completer) onAddPressed;
 
@@ -168,7 +168,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         shrinkWrap: true,
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
-          final int entityId = matches[index];
+          final entityId = matches[index];
           final entity = widget.entityMap[entityId];
           final String subtitle = entity.matchesFilterValue(_filter);
           return ListTile(

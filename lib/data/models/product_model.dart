@@ -47,9 +47,9 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProductEntity, ProductEntityBuilder> {
-  factory ProductEntity({int id}) {
+  factory ProductEntity({String id}) {
     return _$ProductEntity._(
-      id: id ?? --ProductEntity.counter,
+      id: id ?? BaseEntity.nextId,
       productKey: '',
       notes: '',
       cost: 0.0,
@@ -70,7 +70,7 @@ abstract class ProductEntity extends Object
   static int counter = 0;
 
   ProductEntity get clone => rebuild((b) => b
-    ..id = --ProductEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @override

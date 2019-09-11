@@ -42,7 +42,7 @@ abstract class InvoiceStatusEntity extends Object
     implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
   factory InvoiceStatusEntity() {
     return _$InvoiceStatusEntity._(
-      id: 0,
+      id: null,
       name: '',
     );
   }

@@ -104,8 +104,8 @@ class ExpenseListVM {
 
   final AppState state;
   final UserEntity user;
-  final List<int> expenseList;
-  final BuiltMap<int, ExpenseEntity> expenseMap;
+  final List<String> expenseList;
+  final BuiltMap<String, ExpenseEntity> expenseMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;

@@ -11,7 +11,7 @@ class DashboardChart extends StatefulWidget {
 
   final List<ChartDataGroup> data;
   final String title;
-  final int currencyId;
+  final String currencyId;
 
   static const PERIOD_CURRENT = 'current';
   static const PERIOD_PREVIOUS = 'previous';

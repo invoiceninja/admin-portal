@@ -142,13 +142,13 @@ class _$DocumentEntitySerializer
       result
         ..add('invoice_id')
         ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
         ..add('expense_id')
         ..add(serializers.serialize(object.expenseId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
       result
@@ -184,7 +184,7 @@ class _$DocumentEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -231,11 +231,11 @@ class _$DocumentEntitySerializer
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
@@ -263,7 +263,7 @@ class _$DocumentEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -478,9 +478,9 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int expenseId;
+  final String expenseId;
   @override
   final bool isDefault;
   @override
@@ -494,7 +494,7 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$DocumentEntity([void Function(DocumentEntityBuilder) updates]) =>
       (new DocumentEntityBuilder()..update(updates)).build();
@@ -664,13 +664,13 @@ class DocumentEntityBuilder
   String get preview => _$this._preview;
   set preview(String preview) => _$this._preview = preview;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _expenseId;
-  int get expenseId => _$this._expenseId;
-  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+  String _expenseId;
+  String get expenseId => _$this._expenseId;
+  set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
   bool _isDefault;
   bool get isDefault => _$this._isDefault;
@@ -696,9 +696,9 @@ class DocumentEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   DocumentEntityBuilder();
 

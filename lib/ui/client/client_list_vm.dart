@@ -44,8 +44,8 @@ class ClientListVM {
   });
 
   final UserEntity user;
-  final List<int> clientList;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final List<String> clientList;
+  final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;

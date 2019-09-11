@@ -51,11 +51,11 @@ class ProjectFields {
 abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity({int id}) {
+  factory ProjectEntity({String id}) {
     return _$ProjectEntity._(
-      id: id ?? --ProjectEntity.counter,
+      id: id ?? BaseEntity.nextId,
       name: '',
-      clientId: 0,
+      clientId: '',
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
@@ -73,7 +73,7 @@ abstract class ProjectEntity extends Object
   static int counter = 0;
 
   ProjectEntity get clone => rebuild((b) => b
-    ..id = --ProjectEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @override
@@ -84,7 +84,7 @@ abstract class ProjectEntity extends Object
   String get name;
 
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @BuiltValueField(wireName: 'task_rate')
   double get taskRate;
@@ -176,6 +176,8 @@ abstract class ProjectEntity extends Object
 
   @override
   double get listDisplayAmount => null;
+
+  bool get hasClient => clientId != null && clientId.isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

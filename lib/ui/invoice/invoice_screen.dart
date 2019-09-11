@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -65,32 +66,32 @@ class InvoiceScreen extends StatelessWidget {
         statuses: [
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 1
+              ..id = kInvoiceStatusDraft
               ..name = localization.draft,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 2
+              ..id = kInvoiceStatusSent
               ..name = localization.sent,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 3
+              ..id = kInvoiceStatusViewed
               ..name = localization.viewed,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 5
+              ..id = kInvoiceStatusPartial
               ..name = localization.partial,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = 6
+              ..id = kInvoiceStatusPaid
               ..name = localization.paid,
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = -1
+              ..id = kInvoiceStatusPastDue
               ..name = localization.pastDue,
           ),
         ],

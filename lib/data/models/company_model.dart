@@ -19,15 +19,15 @@ abstract class CompanyEntity
       logoUrl: '',
       appUrl: '',
       convertProductExchangeRate: false,
-      companyCurrencyId: 1,
-      dateFormatId: 1,
-      datetimeFormatId: 1,
-      defaultInvoiceDesignId: 1,
+      companyCurrencyId: '1',
+      dateFormatId: '1',
+      datetimeFormatId: '1',
+      defaultInvoiceDesignId: '1',
       defaultInvoiceFooter: '',
       defaultInvoiceTerms: '',
       defaultPaymentTerms: 0,
-      defaultPaymentTypeId: 0,
-      defaultQuoteDesignId: 1,
+      defaultPaymentTypeId: '',
+      defaultQuoteDesignId: '1',
       defaultQuoteTerms: '',
       defaultTaskRate: 0.0,
       defaultTaxName1: '',
@@ -43,20 +43,20 @@ abstract class CompanyEntity
       enableMilitaryTime: false,
       enableSecondTaxRate: false,
       financialYearStart: 1,
-      languageId: 1,
+      languageId: kLanguageEnglish,
       showCurrencyCode: false,
       showInvoiceItemTaxes: false,
       startOfWeek: 1,
-      timezoneId: 1,
+      timezoneId: '1', // TODO set to default EST timezone
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
-      taskStatusMap: BuiltMap<int, TaskStatusEntity>(),
+      taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
-      expenseCategoryMap: BuiltMap<int, ExpenseCategoryEntity>(),
+      expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
       user: UserEntity(),
       users: BuiltList<UserEntity>(),
-      userMap: BuiltMap<int, UserEntity>(),
+      userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       invoiceFields: '',
       countryId: kCountryUnitedStates,
@@ -99,19 +99,19 @@ abstract class CompanyEntity
   String get appUrl;
 
   @BuiltValueField(wireName: 'currency_id')
-  int get companyCurrencyId;
+  String get companyCurrencyId;
 
   @BuiltValueField(wireName: 'timezone_id')
-  int get timezoneId;
+  String get timezoneId;
 
   @BuiltValueField(wireName: 'country_id')
-  int get countryId;
+  String get countryId;
 
   @BuiltValueField(wireName: 'date_format_id')
-  int get dateFormatId;
+  String get dateFormatId;
 
   @BuiltValueField(wireName: 'datetime_format_id')
-  int get datetimeFormatId;
+  String get datetimeFormatId;
 
   @BuiltValueField(wireName: 'invoice_terms')
   String get defaultInvoiceTerms;
@@ -123,13 +123,13 @@ abstract class CompanyEntity
   bool get enableInvoiceItemTaxes;
 
   @BuiltValueField(wireName: 'invoice_design_id')
-  int get defaultInvoiceDesignId;
+  String get defaultInvoiceDesignId;
 
   @BuiltValueField(wireName: 'quote_design_id')
-  int get defaultQuoteDesignId;
+  String get defaultQuoteDesignId;
 
   @BuiltValueField(wireName: 'language_id')
-  int get languageId;
+  String get languageId;
 
   @BuiltValueField(wireName: 'invoice_footer')
   String get defaultInvoiceFooter;
@@ -174,7 +174,7 @@ abstract class CompanyEntity
   int get defaultPaymentTerms;
 
   @BuiltValueField(wireName: 'payment_type_id')
-  int get defaultPaymentTypeId;
+  String get defaultPaymentTypeId;
 
   @BuiltValueField(wireName: 'task_rate')
   double get defaultTaskRate;
@@ -198,18 +198,18 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
 
-  BuiltMap<int, TaskStatusEntity> get taskStatusMap;
+  BuiltMap<String, TaskStatusEntity> get taskStatusMap;
 
   @nullable
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
-  BuiltMap<int, ExpenseCategoryEntity> get expenseCategoryMap;
+  BuiltMap<String, ExpenseCategoryEntity> get expenseCategoryMap;
 
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
 
-  BuiltMap<int, UserEntity> get userMap;
+  BuiltMap<String, UserEntity> get userMap;
 
   UserEntity get user;
 
@@ -349,8 +349,7 @@ abstract class CompanyEntity
     return true;
   }
 
-  int get currencyId =>
-      companyCurrencyId > 0 ? companyCurrencyId : kDefaultCurrencyId;
+  String get currencyId => companyCurrencyId ?? kDefaultCurrencyId;
 
   // Handle bug in earlier version of API
   int get firstMonthOfYear =>
@@ -364,7 +363,7 @@ abstract class PaymentTermEntity extends Object
     implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
   factory PaymentTermEntity() {
     return _$PaymentTermEntity._(
-      id: --PaymentTermEntity.counter,
+      id: BaseEntity.nextId,
       numDays: 0,
     );
   }
@@ -400,7 +399,7 @@ abstract class TaxRateEntity extends Object
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
   factory TaxRateEntity() {
     return _$TaxRateEntity._(
-      id: --TaxRateEntity.counter,
+      id: BaseEntity.nextId,
       name: '',
       rate: 0.0,
       isInclusive: false,

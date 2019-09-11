@@ -21,7 +21,7 @@ class ViewProduct implements PersistUI {
   ViewProduct(
       {@required this.productId, @required this.context, this.force = false});
 
-  final int productId;
+  final String productId;
   final BuildContext context;
   final bool force;
 }
@@ -105,7 +105,7 @@ class ArchiveProductRequest implements StartSaving {
   ArchiveProductRequest(this.completer, this.productId);
 
   final Completer completer;
-  final int productId;
+  final String productId;
 }
 
 class ArchiveProductSuccess implements StopSaving, PersistData {
@@ -124,7 +124,7 @@ class DeleteProductRequest implements StartSaving {
   DeleteProductRequest(this.completer, this.productId);
 
   final Completer completer;
-  final int productId;
+  final String productId;
 }
 
 class DeleteProductSuccess implements StopSaving, PersistData {
@@ -143,7 +143,7 @@ class RestoreProductRequest implements StartSaving {
   RestoreProductRequest(this.completer, this.productId);
 
   final Completer completer;
-  final int productId;
+  final String productId;
 }
 
 class RestoreProductSuccess implements StopSaving, PersistData {

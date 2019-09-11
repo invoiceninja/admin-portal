@@ -34,13 +34,13 @@ String filterClientDropdownReducer(
   return action.filter;
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewInvoice>((selectedId, action) => action.invoiceId),
-  TypedReducer<int, AddInvoiceSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewInvoice>((selectedId, action) => action.invoiceId),
+  TypedReducer<String, AddInvoiceSuccess>(
       (selectedId, action) => action.invoice.id),
-  TypedReducer<int, ShowEmailInvoice>(
+  TypedReducer<String, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
-  TypedReducer<int, FilterInvoicesByEntity>(
+  TypedReducer<String, FilterInvoicesByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

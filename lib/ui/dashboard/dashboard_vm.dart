@@ -87,7 +87,7 @@ class DashboardVM {
   final AppState state;
   final DashboardState dashboardState;
   final DashboardUIState dashboardUIState;
-  final BuiltMap<int, CurrencyEntity> currencyMap;
+  final BuiltMap<String, CurrencyEntity> currencyMap;
   final String filter;
   final List<BaseEntity> filteredList;
   final bool isLoading;
@@ -95,7 +95,7 @@ class DashboardVM {
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
   final Function(int) onOffsetChanged;
-  final Function(int) onCurrencyChanged;
+  final Function(String) onCurrencyChanged;
 
   @override
   bool operator ==(dynamic other) =>

@@ -4,37 +4,39 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedPaymentsByInvoice = memo3((int invoiceId,
-        BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) =>
+var memoizedPaymentsByInvoice = memo3((String invoiceId,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltList<String> paymentList) =>
     paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
 
-List<PaymentEntity> paymentsByInvoiceSelector(int invoiceId,
-    BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) {
+List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
+    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
   return paymentList
       .map((paymentId) => paymentMap[paymentId])
       .where((payment) => payment.invoiceId == invoiceId && !payment.isDeleted)
       .toList();
 }
 
-InvoiceEntity paymentInvoiceSelector(int paymentId, AppState state) {
+InvoiceEntity paymentInvoiceSelector(String paymentId, AppState state) {
   final payment =
       state.paymentState.map[paymentId] ?? PaymentEntity(id: paymentId);
   return state.invoiceState.map[payment.invoiceId] ??
       InvoiceEntity(id: payment.invoiceId);
 }
 
-ClientEntity paymentClientSelector(int paymentId, AppState state) {
+ClientEntity paymentClientSelector(String paymentId, AppState state) {
   final invoice = paymentInvoiceSelector(paymentId, state);
   return state.clientState.map[invoice.clientId] ??
       ClientEntity(id: invoice.clientId);
 }
 
 var memoizedDropdownPaymentList = memo2(
-    (BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) =>
+    (BuiltMap<String, PaymentEntity> paymentMap,
+            BuiltList<String> paymentList) =>
         dropdownPaymentsSelector(paymentMap, paymentList));
 
-List<int> dropdownPaymentsSelector(
-    BuiltMap<int, PaymentEntity> paymentMap, BuiltList<int> paymentList) {
+List<String> dropdownPaymentsSelector(
+    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
   final list =
       paymentList.where((paymentId) => paymentMap[paymentId].isActive).toList();
 
@@ -48,19 +50,19 @@ List<int> dropdownPaymentsSelector(
 }
 
 var memoizedFilteredPaymentList = memo5(
-    (BuiltMap<int, PaymentEntity> paymentMap,
-            BuiltList<int> paymentList,
-            BuiltMap<int, InvoiceEntity> invoiceMap,
-            BuiltMap<int, ClientEntity> clientMap,
+    (BuiltMap<String, PaymentEntity> paymentMap,
+            BuiltList<String> paymentList,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltMap<String, ClientEntity> clientMap,
             ListUIState paymentListState) =>
         filteredPaymentsSelector(
             paymentMap, paymentList, invoiceMap, clientMap, paymentListState));
 
-List<int> filteredPaymentsSelector(
-    BuiltMap<int, PaymentEntity> paymentMap,
-    BuiltList<int> paymentList,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ClientEntity> clientMap,
+List<String> filteredPaymentsSelector(
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
     ListUIState paymentListState) {
   final list = paymentList.where((paymentId) {
     final payment = paymentMap[paymentId];
@@ -98,18 +100,18 @@ List<int> filteredPaymentsSelector(
   return list;
 }
 
-var memoizedPaymentStatsForClient = memo5((int clientId,
-        BuiltMap<int, PaymentEntity> paymentMap,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
+var memoizedPaymentStatsForClient = memo5((String clientId,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         String activeLabel,
         String archivedLabel) =>
     invoiceStatsForClient(
         clientId, paymentMap, invoiceMap, activeLabel, archivedLabel));
 
 String invoiceStatsForClient(
-    int clientId,
-    BuiltMap<int, PaymentEntity> paymentMap,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
+    String clientId,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     String activeLabel,
     String archivedLabel) {
   int countActive = 0;
@@ -140,5 +142,5 @@ String invoiceStatsForClient(
 }
 
 bool hasPaymentChanges(
-        PaymentEntity payment, BuiltMap<int, PaymentEntity> paymentMap) =>
+        PaymentEntity payment, BuiltMap<String, PaymentEntity> paymentMap) =>
     payment.isNew || payment != paymentMap[payment.id];

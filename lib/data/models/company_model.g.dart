@@ -44,19 +44,19 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(String)),
       'currency_id',
       serializers.serialize(object.companyCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'timezone_id',
       serializers.serialize(object.timezoneId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'country_id',
       serializers.serialize(object.countryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'date_format_id',
       serializers.serialize(object.dateFormatId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'datetime_format_id',
       serializers.serialize(object.datetimeFormatId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_terms',
       serializers.serialize(object.defaultInvoiceTerms,
           specifiedType: const FullType(String)),
@@ -68,13 +68,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(bool)),
       'invoice_design_id',
       serializers.serialize(object.defaultInvoiceDesignId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'quote_design_id',
       serializers.serialize(object.defaultQuoteDesignId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'language_id',
       serializers.serialize(object.languageId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_footer',
       serializers.serialize(object.defaultInvoiceFooter,
           specifiedType: const FullType(String)),
@@ -119,7 +119,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(int)),
       'payment_type_id',
       serializers.serialize(object.defaultPaymentTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'task_rate',
       serializers.serialize(object.defaultTaskRate,
           specifiedType: const FullType(double)),
@@ -141,12 +141,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(TaskStatusEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(TaskStatusEntity)
+          ])),
       'expenseCategoryMap',
       serializers.serialize(object.expenseCategoryMap,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType(int),
+            const FullType(String),
             const FullType(ExpenseCategoryEntity)
           ])),
       'users',
@@ -156,7 +158,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'userMap',
       serializers.serialize(object.userMap,
           specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(UserEntity)])),
+              const [const FullType(String), const FullType(UserEntity)])),
       'user',
       serializers.serialize(object.user,
           specifiedType: const FullType(UserEntity)),
@@ -296,23 +298,23 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'currency_id':
           result.companyCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'timezone_id':
           result.timezoneId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'date_format_id':
           result.dateFormatId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'datetime_format_id':
           result.datetimeFormatId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_terms':
           result.defaultInvoiceTerms = serializers.deserialize(value,
@@ -328,15 +330,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'invoice_design_id':
           result.defaultInvoiceDesignId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'quote_design_id':
           result.defaultQuoteDesignId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'language_id':
           result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_footer':
           result.defaultInvoiceFooter = serializers.deserialize(value,
@@ -396,7 +398,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'payment_type_id':
           result.defaultPaymentTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'task_rate':
           result.defaultTaskRate = serializers.deserialize(value,
@@ -433,7 +435,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'taskStatusMap':
           result.taskStatusMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
+                const FullType(String),
                 const FullType(TaskStatusEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
@@ -446,7 +448,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'expenseCategoryMap':
           result.expenseCategoryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
+                const FullType(String),
                 const FullType(ExpenseCategoryEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
@@ -459,7 +461,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'userMap':
           result.userMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
+                const FullType(String),
                 const FullType(UserEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
@@ -590,7 +592,7 @@ class _$PaymentTermEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -617,7 +619,7 @@ class _$PaymentTermEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -654,7 +656,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -689,7 +691,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -839,15 +841,15 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String appUrl;
   @override
-  final int companyCurrencyId;
+  final String companyCurrencyId;
   @override
-  final int timezoneId;
+  final String timezoneId;
   @override
-  final int countryId;
+  final String countryId;
   @override
-  final int dateFormatId;
+  final String dateFormatId;
   @override
-  final int datetimeFormatId;
+  final String datetimeFormatId;
   @override
   final String defaultInvoiceTerms;
   @override
@@ -855,11 +857,11 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableInvoiceItemTaxes;
   @override
-  final int defaultInvoiceDesignId;
+  final String defaultInvoiceDesignId;
   @override
-  final int defaultQuoteDesignId;
+  final String defaultQuoteDesignId;
   @override
-  final int languageId;
+  final String languageId;
   @override
   final String defaultInvoiceFooter;
   @override
@@ -889,7 +891,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int defaultPaymentTerms;
   @override
-  final int defaultPaymentTypeId;
+  final String defaultPaymentTypeId;
   @override
   final double defaultTaskRate;
   @override
@@ -905,15 +907,15 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<TaskStatusEntity> taskStatuses;
   @override
-  final BuiltMap<int, TaskStatusEntity> taskStatusMap;
+  final BuiltMap<String, TaskStatusEntity> taskStatusMap;
   @override
   final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
-  final BuiltMap<int, ExpenseCategoryEntity> expenseCategoryMap;
+  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
   @override
   final BuiltList<UserEntity> users;
   @override
-  final BuiltMap<int, UserEntity> userMap;
+  final BuiltMap<String, UserEntity> userMap;
   @override
   final UserEntity user;
   @override
@@ -1449,26 +1451,26 @@ class CompanyEntityBuilder
   String get appUrl => _$this._appUrl;
   set appUrl(String appUrl) => _$this._appUrl = appUrl;
 
-  int _companyCurrencyId;
-  int get companyCurrencyId => _$this._companyCurrencyId;
-  set companyCurrencyId(int companyCurrencyId) =>
+  String _companyCurrencyId;
+  String get companyCurrencyId => _$this._companyCurrencyId;
+  set companyCurrencyId(String companyCurrencyId) =>
       _$this._companyCurrencyId = companyCurrencyId;
 
-  int _timezoneId;
-  int get timezoneId => _$this._timezoneId;
-  set timezoneId(int timezoneId) => _$this._timezoneId = timezoneId;
+  String _timezoneId;
+  String get timezoneId => _$this._timezoneId;
+  set timezoneId(String timezoneId) => _$this._timezoneId = timezoneId;
 
-  int _countryId;
-  int get countryId => _$this._countryId;
-  set countryId(int countryId) => _$this._countryId = countryId;
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
 
-  int _dateFormatId;
-  int get dateFormatId => _$this._dateFormatId;
-  set dateFormatId(int dateFormatId) => _$this._dateFormatId = dateFormatId;
+  String _dateFormatId;
+  String get dateFormatId => _$this._dateFormatId;
+  set dateFormatId(String dateFormatId) => _$this._dateFormatId = dateFormatId;
 
-  int _datetimeFormatId;
-  int get datetimeFormatId => _$this._datetimeFormatId;
-  set datetimeFormatId(int datetimeFormatId) =>
+  String _datetimeFormatId;
+  String get datetimeFormatId => _$this._datetimeFormatId;
+  set datetimeFormatId(String datetimeFormatId) =>
       _$this._datetimeFormatId = datetimeFormatId;
 
   String _defaultInvoiceTerms;
@@ -1486,19 +1488,19 @@ class CompanyEntityBuilder
   set enableInvoiceItemTaxes(bool enableInvoiceItemTaxes) =>
       _$this._enableInvoiceItemTaxes = enableInvoiceItemTaxes;
 
-  int _defaultInvoiceDesignId;
-  int get defaultInvoiceDesignId => _$this._defaultInvoiceDesignId;
-  set defaultInvoiceDesignId(int defaultInvoiceDesignId) =>
+  String _defaultInvoiceDesignId;
+  String get defaultInvoiceDesignId => _$this._defaultInvoiceDesignId;
+  set defaultInvoiceDesignId(String defaultInvoiceDesignId) =>
       _$this._defaultInvoiceDesignId = defaultInvoiceDesignId;
 
-  int _defaultQuoteDesignId;
-  int get defaultQuoteDesignId => _$this._defaultQuoteDesignId;
-  set defaultQuoteDesignId(int defaultQuoteDesignId) =>
+  String _defaultQuoteDesignId;
+  String get defaultQuoteDesignId => _$this._defaultQuoteDesignId;
+  set defaultQuoteDesignId(String defaultQuoteDesignId) =>
       _$this._defaultQuoteDesignId = defaultQuoteDesignId;
 
-  int _languageId;
-  int get languageId => _$this._languageId;
-  set languageId(int languageId) => _$this._languageId = languageId;
+  String _languageId;
+  String get languageId => _$this._languageId;
+  set languageId(String languageId) => _$this._languageId = languageId;
 
   String _defaultInvoiceFooter;
   String get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
@@ -1569,9 +1571,9 @@ class CompanyEntityBuilder
   set defaultPaymentTerms(int defaultPaymentTerms) =>
       _$this._defaultPaymentTerms = defaultPaymentTerms;
 
-  int _defaultPaymentTypeId;
-  int get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
-  set defaultPaymentTypeId(int defaultPaymentTypeId) =>
+  String _defaultPaymentTypeId;
+  String get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
+  set defaultPaymentTypeId(String defaultPaymentTypeId) =>
       _$this._defaultPaymentTypeId = defaultPaymentTypeId;
 
   double _defaultTaskRate;
@@ -1611,10 +1613,10 @@ class CompanyEntityBuilder
   set taskStatuses(ListBuilder<TaskStatusEntity> taskStatuses) =>
       _$this._taskStatuses = taskStatuses;
 
-  MapBuilder<int, TaskStatusEntity> _taskStatusMap;
-  MapBuilder<int, TaskStatusEntity> get taskStatusMap =>
-      _$this._taskStatusMap ??= new MapBuilder<int, TaskStatusEntity>();
-  set taskStatusMap(MapBuilder<int, TaskStatusEntity> taskStatusMap) =>
+  MapBuilder<String, TaskStatusEntity> _taskStatusMap;
+  MapBuilder<String, TaskStatusEntity> get taskStatusMap =>
+      _$this._taskStatusMap ??= new MapBuilder<String, TaskStatusEntity>();
+  set taskStatusMap(MapBuilder<String, TaskStatusEntity> taskStatusMap) =>
       _$this._taskStatusMap = taskStatusMap;
 
   ListBuilder<ExpenseCategoryEntity> _expenseCategories;
@@ -1623,12 +1625,12 @@ class CompanyEntityBuilder
   set expenseCategories(ListBuilder<ExpenseCategoryEntity> expenseCategories) =>
       _$this._expenseCategories = expenseCategories;
 
-  MapBuilder<int, ExpenseCategoryEntity> _expenseCategoryMap;
-  MapBuilder<int, ExpenseCategoryEntity> get expenseCategoryMap =>
+  MapBuilder<String, ExpenseCategoryEntity> _expenseCategoryMap;
+  MapBuilder<String, ExpenseCategoryEntity> get expenseCategoryMap =>
       _$this._expenseCategoryMap ??=
-          new MapBuilder<int, ExpenseCategoryEntity>();
+          new MapBuilder<String, ExpenseCategoryEntity>();
   set expenseCategoryMap(
-          MapBuilder<int, ExpenseCategoryEntity> expenseCategoryMap) =>
+          MapBuilder<String, ExpenseCategoryEntity> expenseCategoryMap) =>
       _$this._expenseCategoryMap = expenseCategoryMap;
 
   ListBuilder<UserEntity> _users;
@@ -1636,10 +1638,11 @@ class CompanyEntityBuilder
       _$this._users ??= new ListBuilder<UserEntity>();
   set users(ListBuilder<UserEntity> users) => _$this._users = users;
 
-  MapBuilder<int, UserEntity> _userMap;
-  MapBuilder<int, UserEntity> get userMap =>
-      _$this._userMap ??= new MapBuilder<int, UserEntity>();
-  set userMap(MapBuilder<int, UserEntity> userMap) => _$this._userMap = userMap;
+  MapBuilder<String, UserEntity> _userMap;
+  MapBuilder<String, UserEntity> get userMap =>
+      _$this._userMap ??= new MapBuilder<String, UserEntity>();
+  set userMap(MapBuilder<String, UserEntity> userMap) =>
+      _$this._userMap = userMap;
 
   UserEntityBuilder _user;
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
@@ -1950,7 +1953,7 @@ class _$PaymentTermEntity extends PaymentTermEntity {
   @override
   final int archivedAt;
   @override
-  final int id;
+  final String id;
 
   factory _$PaymentTermEntity(
           [void Function(PaymentTermEntityBuilder) updates]) =>
@@ -2003,9 +2006,9 @@ class PaymentTermEntityBuilder
   int get archivedAt => _$this._archivedAt;
   set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   PaymentTermEntityBuilder();
 
@@ -2052,7 +2055,7 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final int archivedAt;
   @override
-  final int id;
+  final String id;
 
   factory _$TaxRateEntity([void Function(TaxRateEntityBuilder) updates]) =>
       (new TaxRateEntityBuilder()..update(updates)).build();
@@ -2131,9 +2134,9 @@ class TaxRateEntityBuilder
   int get archivedAt => _$this._archivedAt;
   set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   TaxRateEntityBuilder();
 

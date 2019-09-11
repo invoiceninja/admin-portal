@@ -23,7 +23,7 @@ class ViewVendor implements PersistUI {
     this.force = false,
   });
 
-  final int vendorId;
+  final String vendorId;
   final BuildContext context;
   final bool force;
 }
@@ -55,7 +55,7 @@ class LoadVendor {
   LoadVendor({this.completer, this.vendorId, this.loadActivities = false});
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
   final bool loadActivities;
 }
 
@@ -63,7 +63,7 @@ class LoadVendorActivity {
   LoadVendorActivity({this.completer, this.vendorId});
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
 }
 
 class LoadVendors {
@@ -150,7 +150,7 @@ class ArchiveVendorRequest implements StartSaving {
   ArchiveVendorRequest(this.completer, this.vendorId);
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
 }
 
 class ArchiveVendorSuccess implements StopSaving, PersistData {
@@ -169,7 +169,7 @@ class DeleteVendorRequest implements StartSaving {
   DeleteVendorRequest(this.completer, this.vendorId);
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
 }
 
 class DeleteVendorSuccess implements StopSaving, PersistData {
@@ -188,7 +188,7 @@ class RestoreVendorRequest implements StartSaving {
   RestoreVendorRequest(this.completer, this.vendorId);
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
 }
 
 class RestoreVendorSuccess implements StopSaving, PersistData {
@@ -261,7 +261,7 @@ class FilterVendorsByCustom2 implements PersistUI {
 class FilterVendorsByEntity implements PersistUI {
   FilterVendorsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

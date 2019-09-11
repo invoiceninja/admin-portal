@@ -16,7 +16,7 @@ class DocumentRepository {
   final WebClient webClient;
 
   Future<DocumentEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
+      CompanyEntity company, AuthState auth, String entityId) async {
     final dynamic response =
         await webClient.get('${auth.url}/documents/$entityId', company.token);
 
@@ -49,7 +49,7 @@ class DocumentRepository {
 
     if (document.isNew) {
       final fields = <String, String>{};
-      if (document.expenseId != null && document.expenseId > 0) {
+      if (document.expenseId != null && document.expenseId.isNotEmpty) {
         fields['expense_id'] = '${document.expenseId}';
       } else {
         fields['invoice_id'] = '${document.invoiceId}';

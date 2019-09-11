@@ -17,7 +17,7 @@ class StubRepository {
   final WebClient webClient;
 
   Future<StubEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
+      CompanyEntity company, AuthState auth, String entityId) async {
     final dynamic response = await webClient.get(
         '${auth.url}/stubs/$entityId', company.token);
 

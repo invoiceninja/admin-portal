@@ -22,7 +22,7 @@ class ViewQuoteList implements PersistUI {
 class ViewQuote implements PersistUI {
   ViewQuote({this.quoteId, this.context, this.force = false});
 
-  final int quoteId;
+  final String quoteId;
   final BuildContext context;
   final bool force;
 }
@@ -66,7 +66,7 @@ class LoadQuote {
   LoadQuote({this.completer, this.quoteId});
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class LoadQuotes {
@@ -179,7 +179,7 @@ class EmailQuoteRequest implements StartSaving {
       {this.completer, this.quoteId, this.template, this.subject, this.body});
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
   final EmailTemplate template;
   final String subject;
   final String body;
@@ -197,7 +197,7 @@ class MarkSentQuoteRequest implements StartSaving {
   MarkSentQuoteRequest(this.completer, this.quoteId);
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class MarkSentQuoteSuccess implements StopSaving, PersistData {
@@ -216,7 +216,7 @@ class ArchiveQuoteRequest implements StartSaving {
   ArchiveQuoteRequest(this.completer, this.quoteId);
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class ArchiveQuoteSuccess implements StopSaving, PersistData {
@@ -235,7 +235,7 @@ class DeleteQuoteRequest implements StartSaving {
   DeleteQuoteRequest(this.completer, this.quoteId);
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class DeleteQuoteSuccess implements StopSaving, PersistData {
@@ -254,7 +254,7 @@ class RestoreQuoteRequest implements StartSaving {
   RestoreQuoteRequest(this.completer, this.quoteId);
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class RestoreQuoteSuccess implements StopSaving, PersistData {
@@ -296,7 +296,7 @@ class FilterQuotesByStatus implements PersistUI {
 class FilterQuotesByEntity implements PersistUI {
   FilterQuotesByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
@@ -321,7 +321,7 @@ class FilterQuotesByCustom2 implements PersistUI {
 class ConvertQuote implements PersistData {
   ConvertQuote(this.completer, this.quoteId);
 
-  final int quoteId;
+  final String quoteId;
   final Completer completer;
 }
 

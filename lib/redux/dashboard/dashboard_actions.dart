@@ -17,7 +17,7 @@ class UpdateDashboardSettings implements PersistUI {
 
   DashboardSettings settings;
   int offset;
-  int currencyId;
+  String currencyId;
 }
 
 class LoadDashboard {

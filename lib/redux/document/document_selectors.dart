@@ -4,22 +4,22 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedEntityDocumentMap = memo3((EntityType entityType,
-        BuiltMap<int, DocumentEntity> documentMap,
-        BuiltMap<int, ExpenseEntity> expenseMap) =>
+        BuiltMap<String, DocumentEntity> documentMap,
+        BuiltMap<String, ExpenseEntity> expenseMap) =>
     entityDocumentMap(entityType, documentMap, expenseMap));
 
-Map<int, bool> entityDocumentMap(
+Map<String, bool> entityDocumentMap(
     EntityType entityType,
-    BuiltMap<int, DocumentEntity> documentMap,
-    BuiltMap<int, ExpenseEntity> expenseMap) {
-  final invoiceMap = <int, int>{};
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltMap<String, ExpenseEntity> expenseMap) {
+  final invoiceMap = <String, String>{};
   expenseMap.forEach((int, expense) {
     if (expense.invoiceDocuments && expense.isInvoiced) {
       invoiceMap[expense.id] = expense.invoiceId;
     }
   });
 
-  final Map<int, bool> map = {};
+  final Map<String, bool> map = {};
   documentMap.forEach((documentId, document) {
     if (entityType == EntityType.invoice) {
       map[document.invoiceId] = true;
@@ -38,12 +38,14 @@ Map<int, bool> entityDocumentMap(
 }
 
 var memoizedDropdownDocumentList = memo3(
-    (BuiltMap<int, DocumentEntity> documentMap, BuiltList<int> documentList,
-            int clientId) =>
+    (BuiltMap<String, DocumentEntity> documentMap,
+            BuiltList<String> documentList, String clientId) =>
         dropdownDocumentsSelector(documentMap, documentList, clientId));
 
-List<int> dropdownDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
-    BuiltList<int> documentList, int clientId) {
+List<String> dropdownDocumentsSelector(
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltList<String> documentList,
+    String clientId) {
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
     /*
@@ -63,14 +65,16 @@ List<int> dropdownDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
   return list;
 }
 
-var memoizedFilteredDocumentList = memo3((BuiltMap<int, DocumentEntity>
+var memoizedFilteredDocumentList = memo3((BuiltMap<String, DocumentEntity>
             documentMap,
-        BuiltList<int> documentList,
+        BuiltList<String> documentList,
         ListUIState documentListState) =>
     filteredDocumentsSelector(documentMap, documentList, documentListState));
 
-List<int> filteredDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
-    BuiltList<int> documentList, ListUIState documentListState) {
+List<String> filteredDocumentsSelector(
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltList<String> documentList,
+    ListUIState documentListState) {
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
     /*
@@ -97,13 +101,15 @@ List<int> filteredDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
 }
 
 var memoizedInvoiceDocumentsSelector = memo3(
-    (BuiltMap<int, DocumentEntity> documentMap,
-            BuiltMap<int, ExpenseEntity> expenseMap, InvoiceEntity entity) =>
+    (BuiltMap<String, DocumentEntity> documentMap,
+            BuiltMap<String, ExpenseEntity> expenseMap, InvoiceEntity entity) =>
         invoiceDocumentsSelector(documentMap, expenseMap, entity));
 
-List<int> invoiceDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
-    BuiltMap<int, ExpenseEntity> expenseMap, InvoiceEntity entity) {
-  final map = <int, List<int>>{};
+List<String> invoiceDocumentsSelector(
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    InvoiceEntity entity) {
+  final map = <String, List<String>>{};
   expenseMap.forEach((int, expense) {
     if (expense.invoiceDocuments) {
       if (map.containsKey(expense.invoiceId)) {
@@ -141,11 +147,11 @@ List<int> invoiceDocumentsSelector(BuiltMap<int, DocumentEntity> documentMap,
 }
 
 var memoizedExpenseDocumentsSelector = memo2(
-    (BuiltMap<int, DocumentEntity> documentMap, BaseEntity entity) =>
+    (BuiltMap<String, DocumentEntity> documentMap, BaseEntity entity) =>
         expenseDocumentsSelector(documentMap, entity));
 
-List<int> expenseDocumentsSelector(
-    BuiltMap<int, DocumentEntity> documentMap, ExpenseEntity entity) {
+List<String> expenseDocumentsSelector(
+    BuiltMap<String, DocumentEntity> documentMap, ExpenseEntity entity) {
   final list = documentMap.keys.where((documentId) {
     final document = documentMap[documentId];
 

@@ -86,8 +86,8 @@ class DocumentListVM {
   }
 
   final UserEntity user;
-  final List<int> documentList;
-  final BuiltMap<int, DocumentEntity> documentMap;
+  final List<String> documentList;
+  final BuiltMap<String, DocumentEntity> documentMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;

@@ -184,25 +184,25 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('invoice_id')
         ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.clientId != null) {
       result
         ..add('client_id')
         ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.projectId != null) {
       result
         ..add('project_id')
         ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.taskStatusId != null) {
       result
         ..add('task_status_id')
         ..add(serializers.serialize(object.taskStatusId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.taskStatusSortOrder != null) {
       result
@@ -244,7 +244,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -270,15 +270,15 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'project_id':
           result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'time_log':
           result.timeLog = serializers.deserialize(value,
@@ -298,7 +298,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'task_status_id':
           result.taskStatusId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'task_status_sort_order':
           result.taskStatusSortOrder = serializers.deserialize(value,
@@ -326,7 +326,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -350,7 +350,7 @@ class _$TaskStatusEntitySerializer
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -376,7 +376,7 @@ class _$TaskStatusEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -668,11 +668,11 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int duration;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int clientId;
+  final String clientId;
   @override
-  final int projectId;
+  final String projectId;
   @override
   final String timeLog;
   @override
@@ -682,7 +682,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String customValue2;
   @override
-  final int taskStatusId;
+  final String taskStatusId;
   @override
   final int taskStatusSortOrder;
   @override
@@ -696,7 +696,7 @@ class _$TaskEntity extends TaskEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$TaskEntity([void Function(TaskEntityBuilder) updates]) =>
       (new TaskEntityBuilder()..update(updates)).build();
@@ -847,17 +847,17 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   int get duration => _$this._duration;
   set duration(int duration) => _$this._duration = duration;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
-  int _projectId;
-  int get projectId => _$this._projectId;
-  set projectId(int projectId) => _$this._projectId = projectId;
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
 
   String _timeLog;
   String get timeLog => _$this._timeLog;
@@ -875,9 +875,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  int _taskStatusId;
-  int get taskStatusId => _$this._taskStatusId;
-  set taskStatusId(int taskStatusId) => _$this._taskStatusId = taskStatusId;
+  String _taskStatusId;
+  String get taskStatusId => _$this._taskStatusId;
+  set taskStatusId(String taskStatusId) => _$this._taskStatusId = taskStatusId;
 
   int _taskStatusSortOrder;
   int get taskStatusSortOrder => _$this._taskStatusSortOrder;
@@ -904,9 +904,9 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   TaskEntityBuilder();
 
@@ -977,7 +977,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final int sortOrder;
   @override
-  final int id;
+  final String id;
   @override
   final String name;
 
@@ -1038,9 +1038,9 @@ class TaskStatusEntityBuilder
   int get sortOrder => _$this._sortOrder;
   set sortOrder(int sortOrder) => _$this._sortOrder = sortOrder;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;

@@ -658,9 +658,10 @@ class _$ActivityEntitySerializer
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'activity_type_id',
       serializers.serialize(object.activityTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'user_id',
-      serializers.serialize(object.userId, specifiedType: const FullType(int)),
+      serializers.serialize(object.userId,
+          specifiedType: const FullType(String)),
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
@@ -669,31 +670,31 @@ class _$ActivityEntitySerializer
       result
         ..add('client_id')
         ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.invoiceId != null) {
       result
         ..add('invoice_id')
         ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.paymentId != null) {
       result
         ..add('payment_id')
         ..add(serializers.serialize(object.paymentId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.creditId != null) {
       result
         ..add('credit_id')
         ..add(serializers.serialize(object.creditId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
         ..add('expense_id')
         ..add(serializers.serialize(object.expenseId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.isSystem != null) {
       result
@@ -705,13 +706,13 @@ class _$ActivityEntitySerializer
       result
         ..add('contact_id')
         ..add(serializers.serialize(object.contactId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.taskId != null) {
       result
         ..add('task_id')
         ..add(serializers.serialize(object.taskId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -738,27 +739,27 @@ class _$ActivityEntitySerializer
           break;
         case 'activity_type_id':
           result.activityTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'user_id':
           result.userId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'payment_id':
           result.paymentId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'credit_id':
           result.creditId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
@@ -766,7 +767,7 @@ class _$ActivityEntitySerializer
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'is_system':
           result.isSystem = serializers.deserialize(value,
@@ -774,11 +775,11 @@ class _$ActivityEntitySerializer
           break;
         case 'contact_id':
           result.contactId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'task_id':
           result.taskId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -1556,27 +1557,27 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final String key;
   @override
-  final int activityTypeId;
+  final String activityTypeId;
   @override
-  final int clientId;
+  final String clientId;
   @override
-  final int userId;
+  final String userId;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int paymentId;
+  final String paymentId;
   @override
-  final int creditId;
+  final String creditId;
   @override
   final int updatedAt;
   @override
-  final int expenseId;
+  final String expenseId;
   @override
   final bool isSystem;
   @override
-  final int contactId;
+  final String contactId;
   @override
-  final int taskId;
+  final String taskId;
 
   factory _$ActivityEntity([void Function(ActivityEntityBuilder) updates]) =>
       (new ActivityEntityBuilder()..update(updates)).build();
@@ -1700,50 +1701,50 @@ class ActivityEntityBuilder
   String get key => _$this._key;
   set key(String key) => _$this._key = key;
 
-  int _activityTypeId;
-  int get activityTypeId => _$this._activityTypeId;
-  set activityTypeId(int activityTypeId) =>
+  String _activityTypeId;
+  String get activityTypeId => _$this._activityTypeId;
+  set activityTypeId(String activityTypeId) =>
       _$this._activityTypeId = activityTypeId;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
-  int _userId;
-  int get userId => _$this._userId;
-  set userId(int userId) => _$this._userId = userId;
+  String _userId;
+  String get userId => _$this._userId;
+  set userId(String userId) => _$this._userId = userId;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _paymentId;
-  int get paymentId => _$this._paymentId;
-  set paymentId(int paymentId) => _$this._paymentId = paymentId;
+  String _paymentId;
+  String get paymentId => _$this._paymentId;
+  set paymentId(String paymentId) => _$this._paymentId = paymentId;
 
-  int _creditId;
-  int get creditId => _$this._creditId;
-  set creditId(int creditId) => _$this._creditId = creditId;
+  String _creditId;
+  String get creditId => _$this._creditId;
+  set creditId(String creditId) => _$this._creditId = creditId;
 
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _expenseId;
-  int get expenseId => _$this._expenseId;
-  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+  String _expenseId;
+  String get expenseId => _$this._expenseId;
+  set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
   bool _isSystem;
   bool get isSystem => _$this._isSystem;
   set isSystem(bool isSystem) => _$this._isSystem = isSystem;
 
-  int _contactId;
-  int get contactId => _$this._contactId;
-  set contactId(int contactId) => _$this._contactId = contactId;
+  String _contactId;
+  String get contactId => _$this._contactId;
+  set contactId(String contactId) => _$this._contactId = contactId;
 
-  int _taskId;
-  int get taskId => _$this._taskId;
-  set taskId(int taskId) => _$this._taskId = taskId;
+  String _taskId;
+  String get taskId => _$this._taskId;
+  set taskId(String taskId) => _$this._taskId = taskId;
 
   ActivityEntityBuilder();
 

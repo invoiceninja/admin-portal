@@ -105,9 +105,9 @@ class TaskListVM {
 
   final AppState state;
   final UserEntity user;
-  final List<int> taskList;
-  final BuiltMap<int, TaskEntity> taskMap;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final List<String> taskList;
+  final BuiltMap<String, TaskEntity> taskMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;

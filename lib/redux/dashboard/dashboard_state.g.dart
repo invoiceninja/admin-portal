@@ -101,7 +101,7 @@ class _$DashboardUIStateSerializer
       serializers.serialize(object.offset, specifiedType: const FullType(int)),
       'currencyId',
       serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -154,7 +154,7 @@ class _$DashboardUIStateSerializer
           break;
         case 'currencyId':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -282,7 +282,7 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final int offset;
   @override
-  final int currencyId;
+  final String currencyId;
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder) updates]) =>
@@ -433,9 +433,9 @@ class DashboardUIStateBuilder
   int get offset => _$this._offset;
   set offset(int offset) => _$this._offset = offset;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   DashboardUIStateBuilder();
 

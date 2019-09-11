@@ -19,10 +19,10 @@ InvoiceItemEntity convertProductToInvoiceItem(
     ..taxRate2 = product.taxRate2);
 }
 
-var memoizedProductList =
-    memo1((BuiltMap<int, ProductEntity> productMap) => productList(productMap));
+var memoizedProductList = memo1(
+    (BuiltMap<String, ProductEntity> productMap) => productList(productMap));
 
-List<int> productList(BuiltMap<int, ProductEntity> productMap) {
+List<String> productList(BuiltMap<String, ProductEntity> productMap) {
   final list = productMap.keys
       .where((productId) => productMap[productId].isActive)
       .toList();
@@ -35,12 +35,14 @@ List<int> productList(BuiltMap<int, ProductEntity> productMap) {
 }
 
 var memoizedFilteredProductList = memo3(
-    (BuiltMap<int, ProductEntity> productMap, BuiltList<int> productList,
+    (BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList,
             ListUIState productListState) =>
         filteredProductsSelector(productMap, productList, productListState));
 
-List<int> filteredProductsSelector(BuiltMap<int, ProductEntity> productMap,
-    BuiltList<int> productList, ListUIState productListState) {
+List<String> filteredProductsSelector(
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltList<String> productList,
+    ListUIState productListState) {
   final list = productList.where((productId) {
     final product = productMap[productId];
     if (!product.matchesStates(productListState.stateFilters)) {
@@ -71,5 +73,5 @@ List<int> filteredProductsSelector(BuiltMap<int, ProductEntity> productMap,
 }
 
 bool hasProductChanges(
-        ProductEntity product, BuiltMap<int, ProductEntity> productMap) =>
+        ProductEntity product, BuiltMap<String, ProductEntity> productMap) =>
     product.isNew || product != productMap[product.id];

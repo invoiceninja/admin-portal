@@ -22,7 +22,7 @@ class ViewPayment implements PersistUI {
     this.force = false,
   });
 
-  final int paymentId;
+  final String paymentId;
   final BuildContext context;
   final bool force;
 }
@@ -50,7 +50,7 @@ class LoadPayment {
   LoadPayment({this.completer, this.paymentId, this.loadActivities = false});
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
   final bool loadActivities;
 }
 
@@ -58,7 +58,7 @@ class LoadPaymentActivity {
   LoadPaymentActivity({this.completer, this.paymentId});
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
 }
 
 class LoadPayments {
@@ -145,7 +145,7 @@ class ArchivePaymentRequest implements StartSaving {
   ArchivePaymentRequest(this.completer, this.paymentId);
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
 }
 
 class ArchivePaymentSuccess implements StopSaving, PersistData {
@@ -164,7 +164,7 @@ class DeletePaymentRequest implements StartSaving {
   DeletePaymentRequest(this.completer, this.paymentId);
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
 }
 
 class DeletePaymentSuccess implements StopSaving, PersistData {
@@ -183,7 +183,7 @@ class RestorePaymentRequest implements StartSaving {
   RestorePaymentRequest(this.completer, this.paymentId);
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
 }
 
 class RestorePaymentSuccess implements StopSaving, PersistData {
@@ -246,7 +246,7 @@ class FilterPaymentsByCustom2 implements PersistUI {
 class FilterPaymentsByEntity implements PersistUI {
   FilterPaymentsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

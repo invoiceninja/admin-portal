@@ -45,7 +45,7 @@ class QuoteEditVM extends EntityEditVM {
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>, int) onItemsAdded,
+    Function(List<InvoiceItemEntity>, String) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
     Function(BuildContext) onCancelPressed,

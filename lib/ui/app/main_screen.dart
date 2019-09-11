@@ -150,7 +150,9 @@ class EntityScreens extends StatelessWidget {
           child: IndexedStack(
             index: subRoute == 'edit' ? 1 : 0,
             children: <Widget>[
-              entityUIState.selectedId > 0 ? viewWidget : BlankScreen(),
+              (entityUIState.selectedId ?? '').isNotEmpty
+                  ? viewWidget
+                  : BlankScreen(),
               editWidget,
             ],
           ),

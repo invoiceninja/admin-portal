@@ -54,9 +54,9 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({int id}) {
+  factory ClientEntity({String id}) {
     return _$ClientEntity._(
-      id: id ?? --ClientEntity.counter,
+      id: id ?? '${--ClientEntity.counter}',
       name: '',
       displayName: '',
       balance: 0.0,
@@ -66,18 +66,18 @@ abstract class ClientEntity extends Object
       city: '',
       state: '',
       postalCode: '',
-      countryId: 0,
+      countryId: '',
       workPhone: '',
       privateNotes: '',
       publicNotes: '',
       website: '',
-      industryId: 0,
-      sizeId: 0,
+      industryId: '',
+      sizeId: '',
       paymentTerms: 0,
       vatNumber: '',
       idNumber: '',
-      languageId: 0,
-      currencyId: 0,
+      languageId: '',
+      currencyId: '',
       invoiceNumberCounter: 0,
       quoteNumberCounter: 0,
       taskRate: 0.0,
@@ -86,7 +86,7 @@ abstract class ClientEntity extends Object
       shippingCity: '',
       shippingState: '',
       shippingPostalCode: '',
-      shippingCountryId: 0,
+      shippingCountryId: '',
       showTasksInPortal: false,
       sendReminders: false,
       creditNumberCounter: 0,
@@ -103,12 +103,12 @@ abstract class ClientEntity extends Object
     );
   }
 
-  ClientEntity._();
-
   static int counter = 0;
 
+  ClientEntity._();
+
   ClientEntity get clone => rebuild((b) => b
-    ..id = --ClientEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @nullable
@@ -154,7 +154,7 @@ abstract class ClientEntity extends Object
   String get postalCode;
 
   @BuiltValueField(wireName: 'country_id')
-  int get countryId;
+  String get countryId;
 
   @BuiltValueField(wireName: 'work_phone')
   String get workPhone;
@@ -168,10 +168,10 @@ abstract class ClientEntity extends Object
   String get website;
 
   @BuiltValueField(wireName: 'industry_id')
-  int get industryId;
+  String get industryId;
 
   @BuiltValueField(wireName: 'size_id')
-  int get sizeId;
+  String get sizeId;
 
   @BuiltValueField(wireName: 'payment_terms')
   int get paymentTerms;
@@ -183,10 +183,10 @@ abstract class ClientEntity extends Object
   String get idNumber;
 
   @BuiltValueField(wireName: 'language_id')
-  int get languageId;
+  String get languageId;
 
   @BuiltValueField(wireName: 'currency_id')
-  int get currencyId;
+  String get currencyId;
 
   @BuiltValueField(wireName: 'invoice_number_counter')
   int get invoiceNumberCounter;
@@ -213,7 +213,7 @@ abstract class ClientEntity extends Object
   String get shippingPostalCode;
 
   @BuiltValueField(wireName: 'shipping_country_id')
-  int get shippingCountryId;
+  String get shippingCountryId;
 
   @BuiltValueField(wireName: 'show_tasks_in_portal')
   bool get showTasksInPortal;
@@ -242,7 +242,7 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
-  Iterable<ActivityEntity> getActivities({int invoiceId, int typeId}) {
+  Iterable<ActivityEntity> getActivities({String invoiceId, int typeId}) {
     return activities.where((activity) {
       if (invoiceId != null && activity.invoiceId != invoiceId) {
         return false;
@@ -254,7 +254,7 @@ abstract class ClientEntity extends Object
     });
   }
 
-  EmailTemplate getNextEmailTemplate(int invoiceId) {
+  EmailTemplate getNextEmailTemplate(String invoiceId) {
     EmailTemplate template = EmailTemplate.initial;
     getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
         .forEach((activity) {
@@ -279,6 +279,8 @@ abstract class ClientEntity extends Object
       return '$netLabel $paymentTerms';
     }
   }
+
+  bool get hasLanguage => languageId != null && languageId.isNotEmpty;
 
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
@@ -413,7 +415,7 @@ abstract class ClientEntity extends Object
       shippingCity.isNotEmpty ||
       shippingState.isNotEmpty ||
       shippingPostalCode.isNotEmpty ||
-      shippingCountryId > 0;
+      (shippingCountryId ?? '').isNotEmpty;
 
   bool get hasBillingAddress =>
       address1.isNotEmpty ||
@@ -421,7 +423,11 @@ abstract class ClientEntity extends Object
       city.isNotEmpty ||
       state.isNotEmpty ||
       postalCode.isNotEmpty ||
-      countryId > 0;
+      (countryId ?? '').isNotEmpty;
+
+  bool get hasCountry => countryId != null && countryId.isNotEmpty;
+
+  bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
   bool get hasNameSet {
     final contact = contacts.first;
@@ -452,7 +458,7 @@ abstract class ContactEntity extends Object
     implements Built<ContactEntity, ContactEntityBuilder> {
   factory ContactEntity() {
     return _$ContactEntity._(
-      id: --ContactEntity.counter,
+      id: BaseEntity.nextId,
       firstName: '',
       lastName: '',
       email: '',

@@ -127,7 +127,7 @@ class _$PaymentTypeEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -150,7 +150,7 @@ class _$PaymentTypeEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -355,7 +355,7 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
 
   factory _$PaymentTypeEntity(
           [void Function(PaymentTypeEntityBuilder) updates]) =>
@@ -403,9 +403,9 @@ class PaymentTypeEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   PaymentTypeEntityBuilder();
 

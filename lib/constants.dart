@@ -62,26 +62,28 @@ const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kUpdatedAtBufferSeconds = 600;
 
-const int kCurrencyUSDollar = 1;
-const int kCurrencyEuro = 3;
+const String kLanguageEnglish = '1';
 
-const int kCountryUnitedStates = 840;
+const String kCurrencyUSDollar = '1';
+const String kCurrencyEuro = '3';
 
-const int kInvoiceStatusPastDue = -1;
-const int kInvoiceStatusDraft = 1;
-const int kInvoiceStatusSent = 2;
-const int kInvoiceStatusViewed = 3;
-const int kInvoiceStatusApproved = 4;
-const int kInvoiceStatusPartial = 5;
-const int kInvoiceStatusPaid = 6;
+const String kCountryUnitedStates = '840';
+
+const String kInvoiceStatusPastDue = '-1';
+const String kInvoiceStatusDraft = '1';
+const String kInvoiceStatusSent = '2';
+const String kInvoiceStatusViewed = '3';
+const String kInvoiceStatusApproved = '4';
+const String kInvoiceStatusPartial = '5';
+const String kInvoiceStatusPaid = '6';
 
 const String kEntityStateActive = 'active';
 const String kEntityStateArchived = 'archived';
 const String kEntityStateDeleted = 'deleted';
 
-const int kTaskStatusLogged = -1;
-const int kTaskStatusRunning = -2;
-const int kTaskStatusInvoiced = -3;
+const String kTaskStatusLogged = '-1';
+const String kTaskStatusRunning = '-2';
+const String kTaskStatusInvoiced = '-3';
 
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
@@ -90,13 +92,13 @@ const int kPaymentStatusCompleted = 4;
 const int kPaymentStatusPartiallyRefunded = 5;
 const int kPaymentStatusRefunded = 6;
 
-const int kExpenseStatusLogged = 1;
-const int kExpenseStatusPending = 2;
-const int kExpenseStatusInvoiced = 3;
+const String kExpenseStatusLogged = '1';
+const String kExpenseStatusPending = '2';
+const String kExpenseStatusInvoiced = '3';
 
-const int kDefaultCurrencyId = 1;
-const int kDefaultDateFormat = 5;
-const int kDefaultDateTimeFormat = 5;
+const String kDefaultCurrencyId = '1';
+const String kDefaultDateFormat = '5';
+const String kDefaultDateTimeFormat = '5';
 
 const int kInvoiceTypeStandard = 1;
 const int kInvoiceTypeQuote = 2;

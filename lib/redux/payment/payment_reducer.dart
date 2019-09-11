@@ -13,11 +13,11 @@ EntityUIState paymentUIReducer(PaymentUIState state, dynamic action) {
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewPayment>((selectedId, action) => action.paymentId),
-  TypedReducer<int, AddPaymentSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewPayment>((selectedId, action) => action.paymentId),
+  TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
-  TypedReducer<int, FilterPaymentsByEntity>(
+  TypedReducer<String, FilterPaymentsByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

@@ -62,9 +62,7 @@ class InvoiceOverview extends StatelessWidget {
     final Map<String, String> fields = {
       InvoiceFields.invoiceStatusId: invoice.isPastDue
           ? localization.pastDue
-          : (invoice.invoiceStatusId > 0
-              ? localization.lookup('invoice_status_${invoice.invoiceStatusId}')
-              : null),
+          : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
       InvoiceFields.invoiceDate: formatDate(invoice.invoiceDate, context),
       InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,

@@ -40,8 +40,8 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(

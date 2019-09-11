@@ -22,11 +22,11 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
-              const [const FullType(int), const FullType(TaskEntity)])),
+              const [const FullType(String), const FullType(TaskEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(int)])),
+              const FullType(BuiltList, const [const FullType(String)])),
     ];
     if (object.lastUpdated != null) {
       result
@@ -55,14 +55,14 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(int),
+                const FullType(String),
                 const FullType(TaskEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
-                      const FullType(BuiltList, const [const FullType(int)]))
+                      const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<dynamic>);
           break;
       }
@@ -82,9 +82,6 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
   Iterable<Object> serialize(Serializers serializers, TaskUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'selectedId',
-      serializers.serialize(object.selectedId,
-          specifiedType: const FullType(int)),
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -100,6 +97,12 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add('editingTime')
         ..add(serializers.serialize(object.editingTime,
             specifiedType: const FullType(TaskTime)));
+    }
+    if (object.selectedId != null) {
+      result
+        ..add('selectedId')
+        ..add(serializers.serialize(object.selectedId,
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -123,13 +126,13 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
           result.editingTime.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskTime)) as TaskTime);
           break;
-        case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(ListUIState)) as ListUIState);
+          break;
+        case 'selectedId':
+          result.selectedId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -142,9 +145,9 @@ class _$TaskState extends TaskState {
   @override
   final int lastUpdated;
   @override
-  final BuiltMap<int, TaskEntity> map;
+  final BuiltMap<String, TaskEntity> map;
   @override
-  final BuiltList<int> list;
+  final BuiltList<String> list;
 
   factory _$TaskState([void Function(TaskStateBuilder) updates]) =>
       (new TaskStateBuilder()..update(updates)).build();
@@ -197,14 +200,14 @@ class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
   int get lastUpdated => _$this._lastUpdated;
   set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
-  MapBuilder<int, TaskEntity> _map;
-  MapBuilder<int, TaskEntity> get map =>
-      _$this._map ??= new MapBuilder<int, TaskEntity>();
-  set map(MapBuilder<int, TaskEntity> map) => _$this._map = map;
+  MapBuilder<String, TaskEntity> _map;
+  MapBuilder<String, TaskEntity> get map =>
+      _$this._map ??= new MapBuilder<String, TaskEntity>();
+  set map(MapBuilder<String, TaskEntity> map) => _$this._map = map;
 
-  ListBuilder<int> _list;
-  ListBuilder<int> get list => _$this._list ??= new ListBuilder<int>();
-  set list(ListBuilder<int> list) => _$this._list = list;
+  ListBuilder<String> _list;
+  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  set list(ListBuilder<String> list) => _$this._list = list;
 
   TaskStateBuilder();
 
@@ -262,9 +265,9 @@ class _$TaskUIState extends TaskUIState {
   @override
   final TaskTime editingTime;
   @override
-  final int selectedId;
-  @override
   final ListUIState listUIState;
+  @override
+  final String selectedId;
   @override
   final Completer<SelectableEntity> saveCompleter;
   @override
@@ -276,14 +279,11 @@ class _$TaskUIState extends TaskUIState {
   _$TaskUIState._(
       {this.editing,
       this.editingTime,
-      this.selectedId,
       this.listUIState,
+      this.selectedId,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
-    if (selectedId == null) {
-      throw new BuiltValueNullFieldError('TaskUIState', 'selectedId');
-    }
     if (listUIState == null) {
       throw new BuiltValueNullFieldError('TaskUIState', 'listUIState');
     }
@@ -302,8 +302,8 @@ class _$TaskUIState extends TaskUIState {
     return other is TaskUIState &&
         editing == other.editing &&
         editingTime == other.editingTime &&
-        selectedId == other.selectedId &&
         listUIState == other.listUIState &&
+        selectedId == other.selectedId &&
         saveCompleter == other.saveCompleter &&
         cancelCompleter == other.cancelCompleter;
   }
@@ -314,8 +314,8 @@ class _$TaskUIState extends TaskUIState {
         $jc(
             $jc(
                 $jc($jc($jc(0, editing.hashCode), editingTime.hashCode),
-                    selectedId.hashCode),
-                listUIState.hashCode),
+                    listUIState.hashCode),
+                selectedId.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
   }
@@ -325,8 +325,8 @@ class _$TaskUIState extends TaskUIState {
     return (newBuiltValueToStringHelper('TaskUIState')
           ..add('editing', editing)
           ..add('editingTime', editingTime)
-          ..add('selectedId', selectedId)
           ..add('listUIState', listUIState)
+          ..add('selectedId', selectedId)
           ..add('saveCompleter', saveCompleter)
           ..add('cancelCompleter', cancelCompleter))
         .toString();
@@ -346,15 +346,15 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   set editingTime(TaskTimeBuilder editingTime) =>
       _$this._editingTime = editingTime;
 
-  int _selectedId;
-  int get selectedId => _$this._selectedId;
-  set selectedId(int selectedId) => _$this._selectedId = selectedId;
-
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
   set listUIState(ListUIStateBuilder listUIState) =>
       _$this._listUIState = listUIState;
+
+  String _selectedId;
+  String get selectedId => _$this._selectedId;
+  set selectedId(String selectedId) => _$this._selectedId = selectedId;
 
   Completer<SelectableEntity> _saveCompleter;
   Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
@@ -372,8 +372,8 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
       _editingTime = _$v.editingTime?.toBuilder();
-      _selectedId = _$v.selectedId;
       _listUIState = _$v.listUIState?.toBuilder();
+      _selectedId = _$v.selectedId;
       _saveCompleter = _$v.saveCompleter;
       _cancelCompleter = _$v.cancelCompleter;
       _$v = null;
@@ -402,8 +402,8 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
           new _$TaskUIState._(
               editing: _editing?.build(),
               editingTime: _editingTime?.build(),
-              selectedId: selectedId,
               listUIState: listUIState.build(),
+              selectedId: selectedId,
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
@@ -413,7 +413,6 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
         _editing?.build();
         _$failedField = 'editingTime';
         _editingTime?.build();
-
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

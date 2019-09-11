@@ -27,7 +27,7 @@ class ViewTask implements PersistUI {
     this.force = false,
   });
 
-  final int taskId;
+  final String taskId;
   final BuildContext context;
   final bool force;
 }
@@ -59,7 +59,7 @@ class LoadTask {
   LoadTask({this.completer, this.taskId, this.loadActivities = false});
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
   final bool loadActivities;
 }
 
@@ -67,7 +67,7 @@ class LoadTaskActivity {
   LoadTaskActivity({this.completer, this.taskId});
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
 }
 
 class LoadTasks {
@@ -179,7 +179,7 @@ class ArchiveTaskRequest implements StartSaving {
   ArchiveTaskRequest(this.completer, this.taskId);
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
 }
 
 class ArchiveTaskSuccess implements StopSaving, PersistData {
@@ -198,7 +198,7 @@ class DeleteTaskRequest implements StartSaving {
   DeleteTaskRequest(this.completer, this.taskId);
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
 }
 
 class DeleteTaskSuccess implements StopSaving, PersistData {
@@ -217,7 +217,7 @@ class RestoreTaskRequest implements StartSaving {
   RestoreTaskRequest(this.completer, this.taskId);
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
 }
 
 class RestoreTaskSuccess implements StopSaving, PersistData {
@@ -271,7 +271,7 @@ class FilterTasksByCustom2 implements PersistUI {
 class FilterTasksByEntity implements PersistUI {
   FilterTasksByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

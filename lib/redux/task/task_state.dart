@@ -15,8 +15,8 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   factory TaskState() {
     return _$TaskState._(
       lastUpdated: 0,
-      map: BuiltMap<int, TaskEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, TaskEntity>(),
+      list: BuiltList<String>(),
     );
   }
   TaskState._();
@@ -24,8 +24,8 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, TaskEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, TaskEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -49,7 +49,7 @@ abstract class TaskUIState extends Object
       listUIState: ListUIState(TaskFields.updatedAt, sortAscending: false),
       editing: TaskEntity(),
       editingTime: TaskTime(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   TaskUIState._();

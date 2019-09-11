@@ -12,7 +12,7 @@ class PersistStatic {}
 class RefreshClient {
   RefreshClient(this.clientId);
 
-  final int clientId;
+  final String clientId;
 }
 
 class UpdateSidebar implements PersistUI {

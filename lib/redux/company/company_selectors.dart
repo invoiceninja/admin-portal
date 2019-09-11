@@ -6,12 +6,12 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
 
 var memoizedDropdownExpenseCategoriesList = memo2(
-    (BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+    (BuiltMap<String, ExpenseCategoryEntity> categoryMap,
             BuiltList<ExpenseCategoryEntity> categoryList) =>
         dropdownExpenseCategoriesSelector(categoryMap, categoryList));
 
-List<int> dropdownExpenseCategoriesSelector(
-    BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+List<String> dropdownExpenseCategoriesSelector(
+    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
     BuiltList<ExpenseCategoryEntity> categoryList) {
   final list = categoryList
       //.where((category) => category.isActive)
@@ -28,27 +28,23 @@ List<int> dropdownExpenseCategoriesSelector(
 }
 
 var memoizedHasMultipleCurrencies = memo2(
-    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+    (CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
         hasMultipleCurrencies(company, clientMap));
 
 bool hasMultipleCurrencies(
-        CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+        CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
     memoizedGetCurrencyIds(company, clientMap).length > 1;
 
 var memoizedGetCurrencyIds = memo2(
-    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
+    (CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
         getCurrencyIds(company, clientMap));
 
-List<int> getCurrencyIds(
-    CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) {
-  final currencyIds = <int>[];
-  if (company.currencyId > 0) {
-    currencyIds.add(company.currencyId);
-  } else {
-    currencyIds.add(kDefaultCurrencyId);
-  }
+List<String> getCurrencyIds(
+    CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) {
+  final currencyIds = <String>[];
+  currencyIds.add(company.currencyId);
   clientMap.forEach((clientId, client) {
-    if (client.currencyId > 0 &&
+    if (client.hasCurrency &&
         !client.isDeleted &&
         !currencyIds.contains(client.currencyId)) {
       currencyIds.add(client.currencyId);

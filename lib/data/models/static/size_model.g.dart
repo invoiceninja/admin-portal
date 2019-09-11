@@ -116,7 +116,7 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -138,7 +138,7 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -336,7 +336,7 @@ class _$SizeEntity extends SizeEntity {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
 
   factory _$SizeEntity([void Function(SizeEntityBuilder) updates]) =>
       (new SizeEntityBuilder()..update(updates)).build();
@@ -381,9 +381,9 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   SizeEntityBuilder();
 

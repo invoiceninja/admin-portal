@@ -84,9 +84,9 @@ class DashboardPanels extends StatelessWidget {
               ? Row(
                   children: <Widget>[
                     DropdownButtonHideUnderline(
-                      child: DropdownButton<int>(
+                      child: DropdownButton<String>(
                         items: memoizedGetCurrencyIds(company, clientMap)
-                            .map((currencyId) => DropdownMenuItem<int>(
+                            .map((currencyId) => DropdownMenuItem<String>(
                                   child: Text(
                                       viewModel.currencyMap[currencyId].code),
                                   value: currencyId,
@@ -165,7 +165,7 @@ class DashboardPanels extends StatelessWidget {
     return DashboardChart(
       data: currentData,
       title: title,
-      currencyId: settings.currencyId > 0
+      currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.selectedCompany.currencyId,
     );

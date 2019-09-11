@@ -86,13 +86,14 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  factory InvoiceEntity({int id, bool isQuote = false, CompanyEntity company}) {
+  factory InvoiceEntity(
+      {String id, bool isQuote = false, CompanyEntity company}) {
     return _$InvoiceEntity._(
-      id: id ?? --InvoiceEntity.counter,
+      id: id ?? BaseEntity.nextId,
       amount: 0.0,
       balance: 0.0,
-      clientId: 0,
-      invoiceStatusId: 0,
+      clientId: '',
+      invoiceStatusId: '',
       invoiceNumber: '',
       discount: 0.0,
       poNumber: '',
@@ -108,7 +109,7 @@ abstract class InvoiceEntity extends Object
       startDate: '',
       endDate: '',
       lastSentDate: '',
-      recurringInvoiceId: 0,
+      recurringInvoiceId: '',
       taxName1: company?.defaultTaxName1 ?? '',
       taxRate1: company?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.defaultTaxName2 ?? '',
@@ -124,7 +125,7 @@ abstract class InvoiceEntity extends Object
       customTaxes1: false,
       customTaxes2: false,
       hasExpenses: false,
-      quoteInvoiceId: 0,
+      quoteInvoiceId: '',
       customTextValue1: '',
       customTextValue2: '',
       isPublic: false,
@@ -147,10 +148,10 @@ abstract class InvoiceEntity extends Object
   static int counter = 0;
 
   InvoiceEntity get clone => rebuild((b) => b
-    ..id = --InvoiceEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false
     ..invoiceStatusId = kInvoiceStatusDraft
-    ..quoteInvoiceId = 0
+    ..quoteInvoiceId = null
     ..invoiceNumber = ''
     ..invoiceDate = convertDateTimeToSqlDate()
     ..dueDate = ''
@@ -177,10 +178,10 @@ abstract class InvoiceEntity extends Object
   bool get isQuote;
 
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @BuiltValueField(wireName: 'invoice_status_id')
-  int get invoiceStatusId;
+  String get invoiceStatusId;
 
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
@@ -224,7 +225,7 @@ abstract class InvoiceEntity extends Object
   String get lastSentDate;
 
   @BuiltValueField(wireName: 'recurring_invoice_id')
-  int get recurringInvoiceId;
+  String get recurringInvoiceId;
 
   @override
   @BuiltValueField(wireName: 'tax_name1')
@@ -280,7 +281,7 @@ abstract class InvoiceEntity extends Object
   bool get hasExpenses;
 
   @BuiltValueField(wireName: 'quote_invoice_id')
-  int get quoteInvoiceId;
+  String get quoteInvoiceId;
 
   @BuiltValueField(wireName: 'custom_text_value1')
   String get customTextValue1;
@@ -304,7 +305,8 @@ abstract class InvoiceEntity extends Object
   int get designId;
 
   bool get isApproved =>
-      invoiceStatusId == kInvoiceStatusApproved || quoteInvoiceId > 0;
+      invoiceStatusId == kInvoiceStatusApproved ||
+      (quoteInvoiceId ?? '').isNotEmpty;
 
   //String get last_login;
   //String get custom_messages;
@@ -420,7 +422,7 @@ abstract class InvoiceEntity extends Object
         actions.add(EntityAction.enterPayment);
       }
 
-      if (isQuote && quoteInvoiceId > 0) {
+      if (isQuote && (quoteInvoiceId ?? '').isNotEmpty) {
         actions.add(EntityAction.viewInvoice);
       }
 
@@ -528,7 +530,7 @@ abstract class InvoiceItemEntity extends Object
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
-      id: --InvoiceItemEntity.counter,
+      id: BaseEntity.nextId,
       productKey: '',
       notes: '',
       cost: 0.0,
@@ -537,7 +539,7 @@ abstract class InvoiceItemEntity extends Object
       taxRate1: 0.0,
       taxName2: '',
       taxRate2: 0.0,
-      invoiceItemTypeId: 0,
+      invoiceItemTypeId: '',
       customValue1: '',
       customValue2: '',
       discount: 0.0,
@@ -578,7 +580,7 @@ abstract class InvoiceItemEntity extends Object
   double get taxRate2;
 
   @BuiltValueField(wireName: 'invoice_item_type_id')
-  int get invoiceItemTypeId;
+  String get invoiceItemTypeId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -590,17 +592,17 @@ abstract class InvoiceItemEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'task_public_id')
-  int get taskId;
+  String get taskId;
 
   @nullable
   @BuiltValueField(wireName: 'expense_public_id')
-  int get expenseId;
+  String get expenseId;
 
   double get total => round(qty * cost, 2);
 
-  bool get isTask => taskId != null && taskId > 0;
+  bool get isTask => taskId != null && taskId.isNotEmpty;
 
-  bool get isExpense => expenseId != null && expenseId > 0;
+  bool get isExpense => expenseId != null && expenseId.isNotEmpty;
 
   @override
   bool matchesFilter(String filter) {
@@ -661,7 +663,7 @@ abstract class InvitationEntity extends Object
     implements Built<InvitationEntity, InvitationEntityBuilder> {
   factory InvitationEntity() {
     return _$InvitationEntity._(
-      id: --InvitationEntity.counter,
+      id: BaseEntity.nextId,
       key: '',
       link: '',
       sentDate: '',

@@ -33,10 +33,10 @@ InvoiceItemEntity convertTaskToInvoiceItem(
 }
 
 var memoizedTaskList = memo2(
-    (BuiltMap<int, TaskEntity> taskMap, int clientId) =>
+    (BuiltMap<String, TaskEntity> taskMap, String clientId) =>
         taskList(taskMap, clientId));
 
-List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
+List<String> taskList(BuiltMap<String, TaskEntity> taskMap, String clientId) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if (clientId != null && clientId != 0 && task.clientId != clientId) {
@@ -52,11 +52,11 @@ List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
 }
 
 var memoizedDropdownTaskList = memo2(
-    (BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) =>
+    (BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) =>
         dropdownTasksSelector(taskMap, taskList));
 
-List<int> dropdownTasksSelector(
-    BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) {
+List<String> dropdownTasksSelector(
+    BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) {
   final list = taskList.where((taskId) => taskMap[taskId].isActive).toList();
 
   list.sort((taskAId, taskBId) {
@@ -68,19 +68,19 @@ List<int> dropdownTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo5((BuiltMap<int, TaskEntity> taskMap,
-        BuiltMap<int, ClientEntity> clientMap,
-        BuiltMap<int, ProjectEntity> projectMap,
-        BuiltList<int> taskList,
+var memoizedFilteredTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, ProjectEntity> projectMap,
+        BuiltList<String> taskList,
         ListUIState taskListState) =>
     filteredTasksSelector(
         taskMap, clientMap, projectMap, taskList, taskListState));
 
-List<int> filteredTasksSelector(
-    BuiltMap<int, TaskEntity> taskMap,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> taskList,
+List<String> filteredTasksSelector(
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltList<String> taskList,
     ListUIState taskListState) {
   final list = taskList.where((taskId) {
     final task = taskMap[taskId];
@@ -155,13 +155,13 @@ double taskRateSelector(
   return 0;
 }
 
-var memoizedTaskStatsForClient = memo4((int clientId,
-        BuiltMap<int, TaskEntity> taskMap,
+var memoizedTaskStatsForClient = memo4((String clientId,
+        BuiltMap<String, TaskEntity> taskMap,
         String activeLabel,
         String archivedLabel) =>
     taskStatsForClient(clientId, taskMap, activeLabel, archivedLabel));
 
-String taskStatsForClient(int clientId, BuiltMap<int, TaskEntity> taskMap,
+String taskStatsForClient(String clientId, BuiltMap<String, TaskEntity> taskMap,
     String activeLabel, String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
@@ -189,14 +189,17 @@ String taskStatsForClient(int clientId, BuiltMap<int, TaskEntity> taskMap,
   return str;
 }
 
-var memoizedTaskStatsForProject = memo4((int projectId,
-        BuiltMap<int, TaskEntity> taskMap,
+var memoizedTaskStatsForProject = memo4((String projectId,
+        BuiltMap<String, TaskEntity> taskMap,
         String activeLabel,
         String archivedLabel) =>
     taskStatsForProject(projectId, taskMap, activeLabel, archivedLabel));
 
-String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel, String archivedLabel) {
+String taskStatsForProject(
+    String projectId,
+    BuiltMap<String, TaskEntity> taskMap,
+    String activeLabel,
+    String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -223,5 +226,5 @@ String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
   return str;
 }
 
-bool hasTaskChanges(TaskEntity task, BuiltMap<int, TaskEntity> taskMap) =>
+bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>
     task.isNew || task != taskMap[task.id];

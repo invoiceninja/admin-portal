@@ -21,7 +21,7 @@ class ExpenseViewDocuments extends StatelessWidget {
         memoizedExpenseDocumentsSelector(documentState.map, expense);
 
     return DocumentGrid(
-      documents: documents,
+      documentIds: documents,
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
       onDeleteDocument: (document) =>
           viewModel.onDeleteDocument(context, document),

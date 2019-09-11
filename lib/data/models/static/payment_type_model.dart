@@ -41,7 +41,7 @@ abstract class PaymentTypeEntity extends Object
     implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
   factory PaymentTypeEntity() {
     return _$PaymentTypeEntity._(
-      id: 0,
+      id: '',
       name: '',
     );
   }

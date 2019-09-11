@@ -52,7 +52,7 @@ abstract class CreditEntity extends Object
     implements Built<CreditEntity, CreditEntityBuilder> {
   factory CreditEntity() {
     return _$CreditEntity._(
-      id: --CreditEntity.counter,
+      id: BaseEntity.nextId,
       amount: 0.0,
       balance: 0.0,
       creditDate: '',
@@ -71,7 +71,7 @@ abstract class CreditEntity extends Object
   static int counter = 0;
 
   CreditEntity get clone => rebuild((b) => b
-    ..id = --CreditEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false);
 
   @override

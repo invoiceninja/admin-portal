@@ -15,8 +15,8 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   factory VendorState() {
     return _$VendorState._(
       lastUpdated: 0,
-      map: BuiltMap<int, VendorEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, VendorEntity>(),
+      list: BuiltList<String>(),
     );
   }
   VendorState._();
@@ -24,8 +24,8 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, VendorEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, VendorEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -49,7 +49,7 @@ abstract class VendorUIState extends Object
       listUIState: ListUIState(VendorFields.name),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   VendorUIState._();

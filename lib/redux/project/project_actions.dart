@@ -26,7 +26,7 @@ class ViewProject implements PersistUI {
     this.force = false,
   });
 
-  final int projectId;
+  final String projectId;
   final BuildContext context;
   final bool force;
 }
@@ -56,7 +56,7 @@ class LoadProject {
   LoadProject({this.completer, this.projectId, this.loadActivities = false});
 
   final Completer completer;
-  final int projectId;
+  final String projectId;
   final bool loadActivities;
 }
 
@@ -64,7 +64,7 @@ class LoadProjectActivity {
   LoadProjectActivity({this.completer, this.projectId});
 
   final Completer completer;
-  final int projectId;
+  final String projectId;
 }
 
 class LoadProjects {
@@ -151,7 +151,7 @@ class ArchiveProjectRequest implements StartSaving {
   ArchiveProjectRequest(this.completer, this.projectId);
 
   final Completer completer;
-  final int projectId;
+  final String projectId;
 }
 
 class ArchiveProjectSuccess implements StopSaving, PersistData {
@@ -170,7 +170,7 @@ class DeleteProjectRequest implements StartSaving {
   DeleteProjectRequest(this.completer, this.projectId);
 
   final Completer completer;
-  final int projectId;
+  final String projectId;
 }
 
 class DeleteProjectSuccess implements StopSaving, PersistData {
@@ -189,7 +189,7 @@ class RestoreProjectRequest implements StartSaving {
   RestoreProjectRequest(this.completer, this.projectId);
 
   final Completer completer;
-  final int projectId;
+  final String projectId;
 }
 
 class RestoreProjectSuccess implements StopSaving, PersistData {
@@ -237,7 +237,7 @@ class FilterProjectsByCustom2 implements PersistUI {
 class FilterProjectsByEntity implements PersistUI {
   FilterProjectsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 

@@ -4,20 +4,20 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 ClientEntity quoteClientSelector(
-    InvoiceEntity quote, BuiltMap<int, ClientEntity> clientMap) {
+    InvoiceEntity quote, BuiltMap<String, ClientEntity> clientMap) {
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo4((BuiltMap<int, InvoiceEntity> quoteMap,
-        BuiltList<int> quoteList,
-        BuiltMap<int, ClientEntity> clientMap,
+var memoizedFilteredQuoteList = memo4((BuiltMap<String, InvoiceEntity> quoteMap,
+        BuiltList<String> quoteList,
+        BuiltMap<String, ClientEntity> clientMap,
         ListUIState quoteListState) =>
     filteredQuotesSelector(quoteMap, quoteList, clientMap, quoteListState));
 
-List<int> filteredQuotesSelector(
-    BuiltMap<int, InvoiceEntity> quoteMap,
-    BuiltList<int> quoteList,
-    BuiltMap<int, ClientEntity> clientMap,
+List<String> filteredQuotesSelector(
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltList<String> quoteList,
+    BuiltMap<String, ClientEntity> clientMap,
     ListUIState quoteListState) {
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
@@ -61,14 +61,17 @@ List<int> filteredQuotesSelector(
   return list;
 }
 
-var memoizedQuoteStatsForClient = memo4((int clientId,
-        BuiltMap<int, InvoiceEntity> quoteMap,
+var memoizedQuoteStatsForClient = memo4((String clientId,
+        BuiltMap<String, InvoiceEntity> quoteMap,
         String activeLabel,
         String archivedLabel) =>
     quoteStatsForClient(clientId, quoteMap, activeLabel, archivedLabel));
 
-String quoteStatsForClient(int clientId, BuiltMap<int, InvoiceEntity> quoteMap,
-    String activeLabel, String archivedLabel) {
+String quoteStatsForClient(
+    String clientId,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    String activeLabel,
+    String archivedLabel) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
@@ -96,5 +99,5 @@ String quoteStatsForClient(int clientId, BuiltMap<int, InvoiceEntity> quoteMap,
 }
 
 bool hasQuoteChanges(
-        InvoiceEntity quote, BuiltMap<int, InvoiceEntity> quoteMap) =>
+        InvoiceEntity quote, BuiltMap<String, InvoiceEntity> quoteMap) =>
     quote.isNew || quote != quoteMap[quote.id];

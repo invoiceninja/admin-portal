@@ -68,41 +68,39 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
-      {int id,
+      {String id,
       CompanyEntity company,
       UIState uiState,
       VendorEntity vendor,
       ClientEntity client}) {
     return _$ExpenseEntity._(
-      id: id ?? --ExpenseEntity.counter,
+      id: id ?? BaseEntity.nextId,
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
       invoiceDocuments: uiState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
-      bankId: 0,
+      bankId: '',
       amount: 0,
       expenseDate: convertDateTimeToSqlDate(),
       paymentDate: '',
-      paymentTypeId: 0,
+      paymentTypeId: '',
       exchangeRate: 1,
-      expenseCurrencyId:
-          (vendor != null && vendor.currencyId != null && vendor.currencyId > 0)
-              ? vendor.currencyId
-              : (company?.currencyId ?? kDefaultCurrencyId),
-      invoiceCurrencyId:
-          (client != null && client.currencyId != null && client.currencyId > 0)
-              ? client.currencyId
-              : (company?.currencyId ?? kDefaultCurrencyId),
+      expenseCurrencyId: (vendor != null && vendor.hasCurrency)
+          ? vendor.currencyId
+          : (company?.currencyId ?? kDefaultCurrencyId),
+      invoiceCurrencyId: (client != null && client.hasCurrency)
+          ? client.currencyId
+          : (company?.currencyId ?? kDefaultCurrencyId),
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
       taxRate2: 0,
-      clientId: client?.id ?? 0,
-      vendorId: vendor?.id ?? 0,
-      invoiceId: 0,
-      categoryId: 0,
+      clientId: client?.id,
+      vendorId: vendor?.id,
+      invoiceId: '',
+      categoryId: '',
       customValue1: '',
       customValue2: '',
       isDeleted: false,
@@ -114,12 +112,12 @@ abstract class ExpenseEntity extends Object
   static int counter = 0;
 
   ExpenseEntity get clone => rebuild((b) => b
-    ..id = --ExpenseEntity.counter
+    ..id = BaseEntity.nextId
     ..isDeleted = false
-    ..invoiceId = 0
+    ..invoiceId = null
     ..expenseDate = convertDateTimeToSqlDate()
     ..transactionReference = ''
-    ..paymentTypeId = 0
+    ..paymentTypeId = null
     ..paymentDate = '');
 
   @override
@@ -146,14 +144,14 @@ abstract class ExpenseEntity extends Object
   String get transactionReference;
 
   @BuiltValueField(wireName: 'bank_id')
-  int get bankId;
+  String get bankId;
 
   @BuiltValueField(wireName: 'expense_currency_id')
-  int get expenseCurrencyId;
+  String get expenseCurrencyId;
 
   @nullable
   @BuiltValueField(wireName: 'expense_category_id')
-  int get categoryId;
+  String get categoryId;
 
   double get amount;
 
@@ -167,10 +165,10 @@ abstract class ExpenseEntity extends Object
   double get exchangeRate;
 
   @BuiltValueField(wireName: 'invoice_currency_id')
-  int get invoiceCurrencyId;
+  String get invoiceCurrencyId;
 
   @BuiltValueField(wireName: 'payment_type_id')
-  int get paymentTypeId;
+  String get paymentTypeId;
 
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
@@ -184,15 +182,18 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
+  @nullable
   @BuiltValueField(wireName: 'vendor_id')
-  int get vendorId;
+  String get vendorId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -349,8 +350,8 @@ abstract class ExpenseEntity extends Object
     return round(total, 2);
   }
 
-  int get statusId {
-    if ((invoiceId ?? 0) > 0) {
+  String get statusId {
+    if (isInvoiced) {
       return kExpenseStatusInvoiced;
     } else if (shouldBeInvoiced) {
       return kExpenseStatusPending;
@@ -363,7 +364,7 @@ abstract class ExpenseEntity extends Object
 
   double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
 
-  bool get isInvoiced => invoiceId != null && invoiceId > 0;
+  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
   bool get isPending => !isInvoiced && shouldBeInvoiced;
 
@@ -381,7 +382,7 @@ abstract class ExpenseCategoryEntity extends Object
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
   factory ExpenseCategoryEntity() {
     return _$ExpenseCategoryEntity._(
-      id: --ExpenseCategoryEntity.counter,
+      id: BaseEntity.nextId,
       name: '',
       isDeleted: false,
     );
@@ -452,7 +453,7 @@ abstract class ExpenseStatusEntity extends Object
     implements Built<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   factory ExpenseStatusEntity() {
     return _$ExpenseStatusEntity._(
-      id: 0,
+      id: null,
       name: '',
     );
   }

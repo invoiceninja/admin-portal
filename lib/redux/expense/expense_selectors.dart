@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 InvoiceItemEntity convertExpenseToInvoiceItem(
     {@required ExpenseEntity expense,
-    @required BuiltMap<int, ExpenseCategoryEntity> categoryMap}) {
+    @required BuiltMap<String, ExpenseCategoryEntity> categoryMap}) {
   return InvoiceItemEntity().rebuild((b) => b
     ..expenseId = expense.id
     ..productKey = categoryMap[expense.categoryId]?.name ?? ''
@@ -20,12 +20,14 @@ InvoiceItemEntity convertExpenseToInvoiceItem(
 }
 
 var memoizedDropdownExpenseList = memo3(
-    (BuiltMap<int, ExpenseEntity> expenseMap, BuiltList<int> expenseList,
-            int clientId) =>
+    (BuiltMap<String, ExpenseEntity> expenseMap, BuiltList<String> expenseList,
+            String clientId) =>
         dropdownExpensesSelector(expenseMap, expenseList, clientId));
 
-List<int> dropdownExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
-    BuiltList<int> expenseList, int clientId) {
+List<String> dropdownExpensesSelector(
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltList<String> expenseList,
+    String clientId) {
   final list = expenseList.where((expenseId) {
     final expense = expenseMap[expenseId];
     /*
@@ -46,19 +48,19 @@ List<int> dropdownExpensesSelector(BuiltMap<int, ExpenseEntity> expenseMap,
 }
 
 var memoizedFilteredExpenseList = memo5(
-    (BuiltMap<int, ExpenseEntity> expenseMap,
-            BuiltMap<int, ClientEntity> clientMap,
-            BuiltMap<int, VendorEntity> vendorMap,
-            BuiltList<int> expenseList,
+    (BuiltMap<String, ExpenseEntity> expenseMap,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, VendorEntity> vendorMap,
+            BuiltList<String> expenseList,
             ListUIState expenseListState) =>
         filteredExpensesSelector(
             expenseMap, clientMap, vendorMap, expenseList, expenseListState));
 
-List<int> filteredExpensesSelector(
-    BuiltMap<int, ExpenseEntity> expenseMap,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltMap<int, VendorEntity> vendorMap,
-    BuiltList<int> expenseList,
+List<String> filteredExpensesSelector(
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltList<String> expenseList,
     ListUIState expenseListState) {
   final list = expenseList.where((expenseId) {
     final expense = expenseMap[expenseId];
@@ -110,8 +112,8 @@ List<int> filteredExpensesSelector(
 }
 
 String expenseStatsForVendor(
-    int vendorId,
-    BuiltMap<int, ExpenseEntity> expenseMap,
+    String vendorId,
+    BuiltMap<String, ExpenseEntity> expenseMap,
     String activeLabel,
     String archivedLabel) {
   int countActive = 0;
@@ -140,15 +142,15 @@ String expenseStatsForVendor(
   return str;
 }
 
-var memoizedExpenseStatsForClient = memo4((int clientId,
-        BuiltMap<int, ExpenseEntity> expenseMap,
+var memoizedExpenseStatsForClient = memo4((String clientId,
+        BuiltMap<String, ExpenseEntity> expenseMap,
         String activeLabel,
         String archivedLabel) =>
     expenseStatsForClient(clientId, expenseMap, activeLabel, archivedLabel));
 
 String expenseStatsForClient(
-    int clientId,
-    BuiltMap<int, ExpenseEntity> expenseMap,
+    String clientId,
+    BuiltMap<String, ExpenseEntity> expenseMap,
     String activeLabel,
     String archivedLabel) {
   int countActive = 0;
@@ -177,18 +179,18 @@ String expenseStatsForClient(
   return str;
 }
 
-var memoizedExpenseStatsForVendor = memo4((int vendorId,
-        BuiltMap<int, ExpenseEntity> expenseMap,
+var memoizedExpenseStatsForVendor = memo4((String vendorId,
+        BuiltMap<String, ExpenseEntity> expenseMap,
         String activeLabel,
         String archivedLabel) =>
     expenseStatsForVendor(vendorId, expenseMap, activeLabel, archivedLabel));
 
 var memoizedClientExpenseList = memo2(
-    (BuiltMap<int, ExpenseEntity> expenseMap, int clientId) =>
+    (BuiltMap<String, ExpenseEntity> expenseMap, String clientId) =>
         clientExpenseList(expenseMap, clientId));
 
-List<int> clientExpenseList(
-    BuiltMap<int, ExpenseEntity> expenseMap, int clientId) {
+List<String> clientExpenseList(
+    BuiltMap<String, ExpenseEntity> expenseMap, String clientId) {
   final list = expenseMap.keys.where((expenseid) {
     final expense = expenseMap[expenseid];
     if (clientId != null && clientId != 0 && expense.clientId != clientId) {
@@ -205,5 +207,5 @@ List<int> clientExpenseList(
 }
 
 bool hasExpenseChanges(
-        ExpenseEntity expense, BuiltMap<int, ExpenseEntity> expenseMap) =>
+        ExpenseEntity expense, BuiltMap<String, ExpenseEntity> expenseMap) =>
     expense.isNew || expense != expenseMap[expense.id];

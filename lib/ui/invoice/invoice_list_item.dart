@@ -43,9 +43,10 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final invoiceStatusId = invoice.isQuote && invoice.quoteInvoiceId > 0
-        ? kInvoiceStatusApproved
-        : invoice.invoiceStatusId;
+    final invoiceStatusId =
+        invoice.isQuote && (invoice.quoteInvoiceId ?? '').isNotEmpty
+            ? kInvoiceStatusApproved
+            : invoice.invoiceStatusId;
 
     return DismissibleEntity(
       isSelected: invoice.id ==

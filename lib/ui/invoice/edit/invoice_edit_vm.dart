@@ -56,7 +56,7 @@ class EntityEditVM {
   final InvoiceItemEntity invoiceItem;
   final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
-  final Function(List<InvoiceItemEntity>, int) onItemsAdded;
+  final Function(List<InvoiceItemEntity>, String) onItemsAdded;
   final Function onBackPressed;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
@@ -70,7 +70,7 @@ class InvoiceEditVM extends EntityEditVM {
     InvoiceItemEntity invoiceItem,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>, int) onItemsAdded,
+    Function(List<InvoiceItemEntity>, String) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
@@ -127,7 +127,7 @@ class InvoiceEditVM extends EntityEditVM {
         });
       },
       onItemsAdded: (items, clientId) {
-        if (clientId != null && clientId > 0) {
+        if (clientId != null && clientId.isNotEmpty) {
           store.dispatch(
               UpdateInvoice(invoice.rebuild((b) => b..clientId = clientId)));
         }

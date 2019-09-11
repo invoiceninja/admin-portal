@@ -26,8 +26,8 @@ class ChartMoneyData {
 
 var memoizedChartInvoices = memo4((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltMap<int, ClientEntity> clientMap) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ClientEntity> clientMap) =>
     chartInvoices(
         company: company,
         settings: settings,
@@ -37,8 +37,8 @@ var memoizedChartInvoices = memo4((CompanyEntity company,
 List<ChartDataGroup> chartInvoices({
   CompanyEntity company,
   DashboardUIState settings,
-  BuiltMap<int, InvoiceEntity> invoiceMap,
-  BuiltMap<int, ClientEntity> clientMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
@@ -57,7 +57,7 @@ List<ChartDataGroup> chartInvoices({
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     final currencyId =
-        client.currencyId > 0 ? client.currencyId : company.currencyId;
+        client.hasCurrency ? client.currencyId : company.currencyId;
 
     if (!invoice.isPublic ||
         invoice.isDeleted ||
@@ -67,7 +67,8 @@ List<ChartDataGroup> chartInvoices({
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+    } else if ((settings.currencyId ?? '').isNotEmpty &&
+        settings.currencyId != currencyId) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][invoice.invoiceDate] == null) {
@@ -121,8 +122,8 @@ List<ChartDataGroup> chartInvoices({
 
 var memoizedChartQuotes = memo4((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, InvoiceEntity> quoteMap,
-        BuiltMap<int, ClientEntity> clientMap) =>
+        BuiltMap<String, InvoiceEntity> quoteMap,
+        BuiltMap<String, ClientEntity> clientMap) =>
     chartQuotes(
         company: company,
         settings: settings,
@@ -132,8 +133,8 @@ var memoizedChartQuotes = memo4((CompanyEntity company,
 List<ChartDataGroup> chartQuotes({
   CompanyEntity company,
   DashboardUIState settings,
-  BuiltMap<int, InvoiceEntity> quoteMap,
-  BuiltMap<int, ClientEntity> clientMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity> clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
@@ -155,7 +156,7 @@ List<ChartDataGroup> chartQuotes({
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
     final currencyId =
-        client.currencyId > 0 ? client.currencyId : company.currencyId;
+        client.hasCurrency ? client.currencyId : company.currencyId;
 
     if (!quote.isPublic ||
         quote.isDeleted ||
@@ -165,7 +166,8 @@ List<ChartDataGroup> chartQuotes({
     } else if (!quote.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+    } else if ((settings.currencyId ?? '').isNotEmpty &&
+        settings.currencyId != currencyId) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][quote.invoiceDate] == null) {
@@ -231,17 +233,17 @@ List<ChartDataGroup> chartQuotes({
 
 var memoizedChartPayments = memo5((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltMap<int, ClientEntity> clientMap,
-        BuiltMap<int, PaymentEntity> paymentMap) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, PaymentEntity> paymentMap) =>
     chartPayments(company, settings, invoiceMap, clientMap, paymentMap));
 
 List<ChartDataGroup> chartPayments(
     CompanyEntity company,
     DashboardUIState settings,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltMap<int, PaymentEntity> paymentMap) {
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap) {
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
@@ -261,14 +263,15 @@ List<ChartDataGroup> chartPayments(
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     final currencyId =
-        client.currencyId > 0 ? client.currencyId : company.currencyId;
+        client.hasCurrency ? client.currencyId : company.currencyId;
 
     if (payment.isDeleted || invoice.isDeleted || client.isDeleted) {
       // skip it
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+    } else if ((settings.currencyId ?? '').isNotEmpty &&
+        settings.currencyId != currencyId) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][payment.paymentDate] == null) {
@@ -323,10 +326,10 @@ List<ChartDataGroup> chartPayments(
 List<ChartDataGroup> chartTasks(
     CompanyEntity company,
     DashboardUIState settings,
-    BuiltMap<int, TaskEntity> taskMap,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ProjectEntity> projectMap,
-    BuiltMap<int, ClientEntity> clientMap) {
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, ClientEntity> clientMap) {
   const STATUS_LOGGED = 'logged';
   const STATUS_INVOICED = 'invoiced';
   const STATUS_PAID = 'paid';
@@ -348,14 +351,15 @@ List<ChartDataGroup> chartTasks(
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
     final currencyId =
-        client.currencyId > 0 ? client.currencyId : company.currencyId;
+        client.hasCurrency ? client.currencyId : company.currencyId;
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
     } else if (!task.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+    } else if ((settings.currencyId ?? '').isNotEmpty &&
+        settings.currencyId != currencyId) {
       // skip it
     } else {
       task.taskTimes.forEach((taskTime) {
@@ -431,17 +435,17 @@ List<ChartDataGroup> chartTasks(
 
 var memoizedChartTasks = memo6((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, TaskEntity> taskMap,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltMap<int, ProjectEntity> projectMap,
-        BuiltMap<int, ClientEntity> clientMap) =>
+        BuiltMap<String, TaskEntity> taskMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ProjectEntity> projectMap,
+        BuiltMap<String, ClientEntity> clientMap) =>
     chartTasks(company, settings, taskMap, invoiceMap, projectMap, clientMap));
 
 List<ChartDataGroup> chartExpenses(
     CompanyEntity company,
     DashboardUIState settings,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ExpenseEntity> expenseMap) {
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap) {
   const STATUS_LOGGED = 'logged';
   const STATUS_PENDING = 'pending';
   const STATUS_INVOICED = 'invoiced';
@@ -471,7 +475,8 @@ List<ChartDataGroup> chartExpenses(
     } else if (!expense.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if (settings.currencyId > 0 && settings.currencyId != currencyId) {
+    } else if ((settings.currencyId ?? '').isNotEmpty &&
+        settings.currencyId != currencyId) {
       // skip it
     } else {
       if (totals[STATUS_LOGGED][date] == null) {
@@ -551,6 +556,6 @@ List<ChartDataGroup> chartExpenses(
 
 var memoizedChartExpenses = memo4((CompanyEntity company,
         DashboardUIState settings,
-        BuiltMap<int, InvoiceEntity> invoiceMap,
-        BuiltMap<int, ExpenseEntity> expenseMap) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ExpenseEntity> expenseMap) =>
     chartExpenses(company, settings, invoiceMap, expenseMap));

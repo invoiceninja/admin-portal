@@ -91,9 +91,9 @@ class ProjectListVM {
   }
 
   final UserEntity user;
-  final List<int> projectList;
-  final BuiltMap<int, ProjectEntity> projectMap;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final List<String> projectList;
+  final BuiltMap<String, ProjectEntity> projectMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;

@@ -16,8 +16,8 @@ abstract class ExpenseState
   factory ExpenseState() {
     return _$ExpenseState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ExpenseEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ExpenseEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ExpenseState._();
@@ -25,8 +25,8 @@ abstract class ExpenseState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ExpenseEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ExpenseEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -49,7 +49,7 @@ abstract class ExpenseUIState extends Object
     return _$ExpenseUIState._(
       listUIState: ListUIState(ExpenseFields.publicNotes),
       editing: ExpenseEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   ExpenseUIState._();

@@ -133,10 +133,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(bool)),
       'client_id',
       serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_status_id',
       serializers.serialize(object.invoiceStatusId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'invoice_number',
       serializers.serialize(object.invoiceNumber,
           specifiedType: const FullType(String)),
@@ -181,7 +181,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(String)),
       'recurring_invoice_id',
       serializers.serialize(object.recurringInvoiceId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -229,7 +229,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(bool)),
       'quote_invoice_id',
       serializers.serialize(object.quoteInvoiceId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'custom_text_value1',
       serializers.serialize(object.customTextValue1,
           specifiedType: const FullType(String)),
@@ -291,7 +291,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -322,11 +322,11 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_status_id':
           result.invoiceStatusId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_number':
           result.invoiceNumber = serializers.deserialize(value,
@@ -386,7 +386,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'recurring_invoice_id':
           result.recurringInvoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -450,7 +450,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'quote_invoice_id':
           result.quoteInvoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_text_value1':
           result.customTextValue1 = serializers.deserialize(value,
@@ -506,7 +506,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -550,7 +550,7 @@ class _$InvoiceItemEntitySerializer
           specifiedType: const FullType(double)),
       'invoice_item_type_id',
       serializers.serialize(object.invoiceItemTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -565,13 +565,13 @@ class _$InvoiceItemEntitySerializer
       result
         ..add('task_public_id')
         ..add(serializers.serialize(object.taskId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
         ..add('expense_public_id')
         ..add(serializers.serialize(object.expenseId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
       result
@@ -607,7 +607,7 @@ class _$InvoiceItemEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -658,7 +658,7 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'invoice_item_type_id':
           result.invoiceItemTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -674,11 +674,11 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'task_public_id':
           result.taskId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_public_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -702,7 +702,7 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -767,7 +767,7 @@ class _$InvitationEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -822,7 +822,7 @@ class _$InvitationEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -1028,9 +1028,9 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool isQuote;
   @override
-  final int clientId;
+  final String clientId;
   @override
-  final int invoiceStatusId;
+  final String invoiceStatusId;
   @override
   final String invoiceNumber;
   @override
@@ -1060,7 +1060,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String lastSentDate;
   @override
-  final int recurringInvoiceId;
+  final String recurringInvoiceId;
   @override
   final String taxName1;
   @override
@@ -1092,7 +1092,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasExpenses;
   @override
-  final int quoteInvoiceId;
+  final String quoteInvoiceId;
   @override
   final String customTextValue1;
   @override
@@ -1118,7 +1118,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$InvoiceEntity([void Function(InvoiceEntityBuilder) updates]) =>
       (new InvoiceEntityBuilder()..update(updates)).build();
@@ -1478,13 +1478,13 @@ class InvoiceEntityBuilder
   bool get isQuote => _$this._isQuote;
   set isQuote(bool isQuote) => _$this._isQuote = isQuote;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
-  int _invoiceStatusId;
-  int get invoiceStatusId => _$this._invoiceStatusId;
-  set invoiceStatusId(int invoiceStatusId) =>
+  String _invoiceStatusId;
+  String get invoiceStatusId => _$this._invoiceStatusId;
+  set invoiceStatusId(String invoiceStatusId) =>
       _$this._invoiceStatusId = invoiceStatusId;
 
   String _invoiceNumber;
@@ -1544,9 +1544,9 @@ class InvoiceEntityBuilder
   String get lastSentDate => _$this._lastSentDate;
   set lastSentDate(String lastSentDate) => _$this._lastSentDate = lastSentDate;
 
-  int _recurringInvoiceId;
-  int get recurringInvoiceId => _$this._recurringInvoiceId;
-  set recurringInvoiceId(int recurringInvoiceId) =>
+  String _recurringInvoiceId;
+  String get recurringInvoiceId => _$this._recurringInvoiceId;
+  set recurringInvoiceId(String recurringInvoiceId) =>
       _$this._recurringInvoiceId = recurringInvoiceId;
 
   String _taxName1;
@@ -1612,9 +1612,9 @@ class InvoiceEntityBuilder
   bool get hasExpenses => _$this._hasExpenses;
   set hasExpenses(bool hasExpenses) => _$this._hasExpenses = hasExpenses;
 
-  int _quoteInvoiceId;
-  int get quoteInvoiceId => _$this._quoteInvoiceId;
-  set quoteInvoiceId(int quoteInvoiceId) =>
+  String _quoteInvoiceId;
+  String get quoteInvoiceId => _$this._quoteInvoiceId;
+  set quoteInvoiceId(String quoteInvoiceId) =>
       _$this._quoteInvoiceId = quoteInvoiceId;
 
   String _customTextValue1;
@@ -1671,9 +1671,9 @@ class InvoiceEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   InvoiceEntityBuilder();
 
@@ -1837,7 +1837,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double taxRate2;
   @override
-  final int invoiceItemTypeId;
+  final String invoiceItemTypeId;
   @override
   final String customValue1;
   @override
@@ -1845,9 +1845,9 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double discount;
   @override
-  final int taskId;
+  final String taskId;
   @override
-  final int expenseId;
+  final String expenseId;
   @override
   final int createdAt;
   @override
@@ -1859,7 +1859,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$InvoiceItemEntity(
           [void Function(InvoiceItemEntityBuilder) updates]) =>
@@ -2065,9 +2065,9 @@ class InvoiceItemEntityBuilder
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
 
-  int _invoiceItemTypeId;
-  int get invoiceItemTypeId => _$this._invoiceItemTypeId;
-  set invoiceItemTypeId(int invoiceItemTypeId) =>
+  String _invoiceItemTypeId;
+  String get invoiceItemTypeId => _$this._invoiceItemTypeId;
+  set invoiceItemTypeId(String invoiceItemTypeId) =>
       _$this._invoiceItemTypeId = invoiceItemTypeId;
 
   String _customValue1;
@@ -2082,13 +2082,13 @@ class InvoiceItemEntityBuilder
   double get discount => _$this._discount;
   set discount(double discount) => _$this._discount = discount;
 
-  int _taskId;
-  int get taskId => _$this._taskId;
-  set taskId(int taskId) => _$this._taskId = taskId;
+  String _taskId;
+  String get taskId => _$this._taskId;
+  set taskId(String taskId) => _$this._taskId = taskId;
 
-  int _expenseId;
-  int get expenseId => _$this._expenseId;
-  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+  String _expenseId;
+  String get expenseId => _$this._expenseId;
+  set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -2110,9 +2110,9 @@ class InvoiceItemEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   InvoiceItemEntityBuilder();
 
@@ -2205,7 +2205,7 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final bool isOwner;
   @override
-  final int id;
+  final String id;
 
   factory _$InvitationEntity(
           [void Function(InvitationEntityBuilder) updates]) =>
@@ -2338,9 +2338,9 @@ class InvitationEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   InvitationEntityBuilder();
 

@@ -9,17 +9,17 @@ part 'static_state.g.dart';
 abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   factory StaticState() {
     return _$StaticState._(
-      currencyMap: BuiltMap<int, CurrencyEntity>(),
-      sizeMap: BuiltMap<int, SizeEntity>(),
-      industryMap: BuiltMap<int, IndustryEntity>(),
-      timezoneMap: BuiltMap<int, TimezoneEntity>(),
-      dateFormatMap: BuiltMap<int, DateFormatEntity>(),
-      datetimeFormatMap: BuiltMap<int, DatetimeFormatEntity>(),
-      languageMap: BuiltMap<int, LanguageEntity>(),
-      paymentTypeMap: BuiltMap<int, PaymentTypeEntity>(),
-      countryMap: BuiltMap<int, CountryEntity>(),
-      invoiceStatusMap: BuiltMap<int, InvoiceStatusEntity>(),
-      frequencyMap: BuiltMap<int, FrequencyEntity>(),
+      currencyMap: BuiltMap<String, CurrencyEntity>(),
+      sizeMap: BuiltMap<String, SizeEntity>(),
+      industryMap: BuiltMap<String, IndustryEntity>(),
+      timezoneMap: BuiltMap<String, TimezoneEntity>(),
+      dateFormatMap: BuiltMap<String, DateFormatEntity>(),
+      datetimeFormatMap: BuiltMap<String, DatetimeFormatEntity>(),
+      languageMap: BuiltMap<String, LanguageEntity>(),
+      paymentTypeMap: BuiltMap<String, PaymentTypeEntity>(),
+      countryMap: BuiltMap<String, CountryEntity>(),
+      invoiceStatusMap: BuiltMap<String, InvoiceStatusEntity>(),
+      frequencyMap: BuiltMap<String, FrequencyEntity>(),
     );
   }
 
@@ -39,27 +39,27 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
         kMillisecondsToRefreshStaticData;
   }
 
-  BuiltMap<int, CurrencyEntity> get currencyMap;
+  BuiltMap<String, CurrencyEntity> get currencyMap;
 
-  BuiltMap<int, SizeEntity> get sizeMap;
+  BuiltMap<String, SizeEntity> get sizeMap;
 
-  BuiltMap<int, IndustryEntity> get industryMap;
+  BuiltMap<String, IndustryEntity> get industryMap;
 
-  BuiltMap<int, TimezoneEntity> get timezoneMap;
+  BuiltMap<String, TimezoneEntity> get timezoneMap;
 
-  BuiltMap<int, DateFormatEntity> get dateFormatMap;
+  BuiltMap<String, DateFormatEntity> get dateFormatMap;
 
-  BuiltMap<int, DatetimeFormatEntity> get datetimeFormatMap;
+  BuiltMap<String, DatetimeFormatEntity> get datetimeFormatMap;
 
-  BuiltMap<int, LanguageEntity> get languageMap;
+  BuiltMap<String, LanguageEntity> get languageMap;
 
-  BuiltMap<int, PaymentTypeEntity> get paymentTypeMap;
+  BuiltMap<String, PaymentTypeEntity> get paymentTypeMap;
 
-  BuiltMap<int, CountryEntity> get countryMap;
+  BuiltMap<String, CountryEntity> get countryMap;
 
-  BuiltMap<int, InvoiceStatusEntity> get invoiceStatusMap;
+  BuiltMap<String, InvoiceStatusEntity> get invoiceStatusMap;
 
-  BuiltMap<int, FrequencyEntity> get frequencyMap;
+  BuiltMap<String, FrequencyEntity> get frequencyMap;
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;
 }

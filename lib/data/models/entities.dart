@@ -90,14 +90,14 @@ class UserPermission extends EnumClass {
 }
 
 abstract class EntityStatus {
-  int get id;
+  String get id;
 
   String get name;
 }
 
 abstract class SelectableEntity {
   @nullable
-  int get id;
+  String get id;
 
   bool matchesFilter(String filter) => true;
 
@@ -111,6 +111,10 @@ abstract class SelectableEntity {
 }
 
 abstract class BaseEntity implements SelectableEntity {
+  static int counter = 0;
+
+  static String get nextId => '${--counter}';
+
   @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
@@ -135,7 +139,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   EntityType get entityType => throw 'EntityType not set: ${this}';
 
-  bool get isNew => id == null || id < 0;
+  bool get isNew => id == null || int.tryParse(id) < 0;
 
   bool get isOld => !isNew;
 
@@ -192,7 +196,7 @@ abstract class BaseEntity implements SelectableEntity {
 }
 
 abstract class BelongsToClient {
-  int get clientId;
+  String get clientId;
 }
 
 abstract class ErrorMessage
@@ -325,33 +329,33 @@ abstract class ActivityEntity
   String get key;
 
   @BuiltValueField(wireName: 'activity_type_id')
-  int get activityTypeId;
+  String get activityTypeId;
 
   @nullable
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @BuiltValueField(wireName: 'user_id')
-  int get userId;
+  String get userId;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @nullable
   @BuiltValueField(wireName: 'payment_id')
-  int get paymentId;
+  String get paymentId;
 
   @nullable
   @BuiltValueField(wireName: 'credit_id')
-  int get creditId;
+  String get creditId;
 
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
 
   @nullable
   @BuiltValueField(wireName: 'expense_id')
-  int get expenseId;
+  String get expenseId;
 
   @nullable
   @BuiltValueField(wireName: 'is_system')
@@ -359,11 +363,11 @@ abstract class ActivityEntity
 
   @nullable
   @BuiltValueField(wireName: 'contact_id')
-  int get contactId;
+  String get contactId;
 
   @nullable
   @BuiltValueField(wireName: 'task_id')
-  int get taskId;
+  String get taskId;
 
   EntityType get entityType {
     if ([1, 2, 3, 26].contains(activityTypeId)) {
@@ -405,7 +409,7 @@ abstract class ActivityEntity
     }
 
     ContactEntity contact;
-    if (client != null && contactId != null && contactId > 0) {
+    if (client != null && contactId != null && contactId.isNotEmpty) {
       contact = client.contacts
           .firstWhere((contact) => contact.id == contactId, orElse: () => null);
     }

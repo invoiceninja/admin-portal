@@ -124,11 +124,11 @@ class PaymentEditVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
-  final BuiltMap<int, InvoiceEntity> invoiceMap;
+  final BuiltMap<String, InvoiceEntity> invoiceMap;
   final UIState uiState;
-  final BuiltList<int> invoiceList;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final BuiltList<int> clientList;
+  final BuiltList<String> invoiceList;
+  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltList<String> clientList;
   final Function onBackPressed;
   final StaticState staticState;
   final bool isSaving;

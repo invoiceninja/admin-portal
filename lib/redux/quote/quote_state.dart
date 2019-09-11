@@ -15,8 +15,8 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   factory QuoteState() {
     return _$QuoteState._(
       lastUpdated: 0,
-      map: BuiltMap<int, InvoiceEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, InvoiceEntity>(),
+      list: BuiltList<String>(),
     );
   }
 
@@ -25,9 +25,9 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, InvoiceEntity> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
-  BuiltList<int> get list;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -51,7 +51,7 @@ abstract class QuoteUIState extends Object
       listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
       editing: InvoiceEntity(),
       editingItem: InvoiceItemEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
 

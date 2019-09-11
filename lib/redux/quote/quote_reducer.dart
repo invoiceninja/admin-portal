@@ -33,11 +33,12 @@ String filterClientDropdownReducer(
   return action.filter;
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewQuote>((selectedId, action) => action.quoteId),
-  TypedReducer<int, AddQuoteSuccess>((selectedId, action) => action.quote.id),
-  TypedReducer<int, ShowEmailQuote>((selectedId, action) => action.quote.id),
-  TypedReducer<int, FilterQuotesByEntity>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewQuote>((selectedId, action) => action.quoteId),
+  TypedReducer<String, AddQuoteSuccess>(
+      (selectedId, action) => action.quote.id),
+  TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
+  TypedReducer<String, FilterQuotesByEntity>(
       (selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 

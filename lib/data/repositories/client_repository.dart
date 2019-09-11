@@ -17,7 +17,7 @@ class ClientRepository {
   final WebClient webClient;
 
   Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth,
-      int entityId, bool loadActivities) async {
+      String entityId, bool loadActivities) async {
     String url = '${auth.url}/clients/$entityId';
 
     if (loadActivities) {
