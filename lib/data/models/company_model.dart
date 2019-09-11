@@ -324,8 +324,7 @@ abstract class CompanyEntity
 
   bool get isHosted => !isSelfHost;
 
-  bool get isProPlan =>
-      isSelfHost || plan == kPlanPro;
+  bool get isProPlan => isSelfHost || plan == kPlanPro;
 
   bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
 
@@ -484,4 +483,22 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   }
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
+}
+
+abstract class UserCompanyEntity
+    implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
+  factory UserCompanyEntity() {
+    return _$UserCompanyEntity._(
+      isAdmin: false,
+    );
+  }
+
+  UserCompanyEntity._();
+
+  CompanyEntity get company;
+
+  bool get isAdmin;
+
+  static Serializer<UserCompanyEntity> get serializer =>
+      _$userCompanyEntitySerializer;
 }

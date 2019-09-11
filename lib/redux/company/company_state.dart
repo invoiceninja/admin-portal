@@ -27,7 +27,8 @@ abstract class CompanyState
     implements Built<CompanyState, CompanyStateBuilder> {
   factory CompanyState() {
     return _$CompanyState._(
-      company: CompanyEntity(),
+      //company: CompanyEntity(),
+      userCompany: UserCompanyEntity(),
       documentState: DocumentState(),
       dashboardState: DashboardState(),
       productState: ProductState(),
@@ -46,7 +47,7 @@ abstract class CompanyState
   CompanyState._();
 
   @nullable
-  CompanyEntity get company;
+  UserCompanyEntity get userCompany;
 
   DocumentState get documentState;
 
@@ -71,6 +72,8 @@ abstract class CompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+
+  CompanyEntity get company => userCompany.company;
 
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<CompanyState> get serializer => _$companyStateSerializer;

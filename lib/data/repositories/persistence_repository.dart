@@ -21,10 +21,12 @@ class PersistenceRepository {
   final FileStorage fileStorage;
 
   Future<File> saveCompanyState(CompanyState state) async {
+    /*
+    // TODO re-enable
     final stateWithoutToken = state.rebuild(
         (b) => b..company.replace(state.company.rebuild((b) => b..token = '')));
-    final data =
-        serializers.serializeWith(CompanyState.serializer, stateWithoutToken);
+     */
+    final data = serializers.serializeWith(CompanyState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
@@ -34,8 +36,16 @@ class PersistenceRepository {
     final token = prefs.getString(getCompanyTokenKey(index - 1)) ?? '';
     final companyState =
         serializers.deserializeWith(CompanyState.serializer, json.decode(data));
-    return companyState.rebuild((b) => b
+
+    /*
+    // TODO re-enable
+        return companyState.rebuild((b) => b
       ..company.replace(companyState.company.rebuild((b) => b..token = token)));
+
+     */
+
+    return companyState;
+
     //return compute(_deserialize, data);
   }
 

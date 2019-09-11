@@ -4,11 +4,11 @@ class SelectCompany {
   SelectCompany(this.companyIndex, this.company);
 
   final int companyIndex;
-  final CompanyEntity company;
+  final UserCompanyEntity company;
 }
 
 class LoadCompanySuccess {
   LoadCompanySuccess(this.company);
 
-  final CompanyEntity company;
+  final UserCompanyEntity company;
 }

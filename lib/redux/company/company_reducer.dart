@@ -22,7 +22,7 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
   }
 
   return state.rebuild((b) => b
-    ..company.replace(companyEntityReducer(state.company, action))
+    ..userCompany.replace(companyEntityReducer(state.userCompany, action))
     ..documentState.replace(documentsReducer(state.documentState, action))
     ..clientState.replace(clientsReducer(state.clientState, action))
     ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
@@ -37,12 +37,13 @@ CompanyState companyReducer(CompanyState state, dynamic action) {
   // STARTER: reducer - do not remove comment
 }
 
-Reducer<CompanyEntity> companyEntityReducer = combineReducers([
-  TypedReducer<CompanyEntity, LoadCompanySuccess>(loadCompanySuccessReducer),
+Reducer<UserCompanyEntity> companyEntityReducer = combineReducers([
+  TypedReducer<UserCompanyEntity, LoadCompanySuccess>(
+      loadCompanySuccessReducer),
 ]);
 
-CompanyEntity loadCompanySuccessReducer(
-    CompanyEntity company, LoadCompanySuccess action) {
+UserCompanyEntity loadCompanySuccessReducer(
+    UserCompanyEntity company, LoadCompanySuccess action) {
   var company = action.company;
 
   if (company.taskStatuses != null) {

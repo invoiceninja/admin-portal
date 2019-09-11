@@ -13,6 +13,8 @@ Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
 Serializer<TaxRateEntity> _$taxRateEntitySerializer =
     new _$TaxRateEntitySerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
+Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
+    new _$UserCompanyEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -766,6 +768,55 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
                 const FullType(String),
                 const FullType(bool)
               ])) as BuiltMap<dynamic, dynamic>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserCompanyEntitySerializer
+    implements StructuredSerializer<UserCompanyEntity> {
+  @override
+  final Iterable<Type> types = const [UserCompanyEntity, _$UserCompanyEntity];
+  @override
+  final String wireName = 'UserCompanyEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, UserCompanyEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'company',
+      serializers.serialize(object.company,
+          specifiedType: const FullType(CompanyEntity)),
+      'isAdmin',
+      serializers.serialize(object.isAdmin,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  UserCompanyEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserCompanyEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'company':
+          result.company.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+          break;
+        case 'isAdmin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -2291,6 +2342,114 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserCompanyEntity extends UserCompanyEntity {
+  @override
+  final CompanyEntity company;
+  @override
+  final bool isAdmin;
+
+  factory _$UserCompanyEntity(
+          [void Function(UserCompanyEntityBuilder) updates]) =>
+      (new UserCompanyEntityBuilder()..update(updates)).build();
+
+  _$UserCompanyEntity._({this.company, this.isAdmin}) : super._() {
+    if (company == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'company');
+    }
+    if (isAdmin == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
+    }
+  }
+
+  @override
+  UserCompanyEntity rebuild(void Function(UserCompanyEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserCompanyEntityBuilder toBuilder() =>
+      new UserCompanyEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserCompanyEntity &&
+        company == other.company &&
+        isAdmin == other.isAdmin;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, company.hashCode), isAdmin.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserCompanyEntity')
+          ..add('company', company)
+          ..add('isAdmin', isAdmin))
+        .toString();
+  }
+}
+
+class UserCompanyEntityBuilder
+    implements Builder<UserCompanyEntity, UserCompanyEntityBuilder> {
+  _$UserCompanyEntity _$v;
+
+  CompanyEntityBuilder _company;
+  CompanyEntityBuilder get company =>
+      _$this._company ??= new CompanyEntityBuilder();
+  set company(CompanyEntityBuilder company) => _$this._company = company;
+
+  bool _isAdmin;
+  bool get isAdmin => _$this._isAdmin;
+  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+
+  UserCompanyEntityBuilder();
+
+  UserCompanyEntityBuilder get _$this {
+    if (_$v != null) {
+      _company = _$v.company?.toBuilder();
+      _isAdmin = _$v.isAdmin;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserCompanyEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserCompanyEntity;
+  }
+
+  @override
+  void update(void Function(UserCompanyEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserCompanyEntity build() {
+    _$UserCompanyEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$UserCompanyEntity._(company: company.build(), isAdmin: isAdmin);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'company';
+        company.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserCompanyEntity', _$failedField, e.toString());
       }
       rethrow;
     }

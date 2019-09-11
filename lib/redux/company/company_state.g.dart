@@ -53,11 +53,11 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
     ];
-    if (object.company != null) {
+    if (object.userCompany != null) {
       result
-        ..add('company')
-        ..add(serializers.serialize(object.company,
-            specifiedType: const FullType(CompanyEntity)));
+        ..add('userCompany')
+        ..add(serializers.serialize(object.userCompany,
+            specifiedType: const FullType(UserCompanyEntity)));
     }
     return result;
   }
@@ -73,9 +73,10 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'company':
-          result.company.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+        case 'userCompany':
+          result.userCompany.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyEntity))
+              as UserCompanyEntity);
           break;
         case 'documentState':
           result.documentState.replace(serializers.deserialize(value,
@@ -130,7 +131,7 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
 
 class _$CompanyState extends CompanyState {
   @override
-  final CompanyEntity company;
+  final UserCompanyEntity userCompany;
   @override
   final DocumentState documentState;
   @override
@@ -158,7 +159,7 @@ class _$CompanyState extends CompanyState {
       (new CompanyStateBuilder()..update(updates)).build();
 
   _$CompanyState._(
-      {this.company,
+      {this.userCompany,
       this.documentState,
       this.dashboardState,
       this.productState,
@@ -217,7 +218,7 @@ class _$CompanyState extends CompanyState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyState &&
-        company == other.company &&
+        userCompany == other.userCompany &&
         documentState == other.documentState &&
         dashboardState == other.dashboardState &&
         productState == other.productState &&
@@ -243,7 +244,7 @@ class _$CompanyState extends CompanyState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, company.hashCode),
+                                            $jc($jc(0, userCompany.hashCode),
                                                 documentState.hashCode),
                                             dashboardState.hashCode),
                                         productState.hashCode),
@@ -260,7 +261,7 @@ class _$CompanyState extends CompanyState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyState')
-          ..add('company', company)
+          ..add('userCompany', userCompany)
           ..add('documentState', documentState)
           ..add('dashboardState', dashboardState)
           ..add('productState', productState)
@@ -280,10 +281,11 @@ class CompanyStateBuilder
     implements Builder<CompanyState, CompanyStateBuilder> {
   _$CompanyState _$v;
 
-  CompanyEntityBuilder _company;
-  CompanyEntityBuilder get company =>
-      _$this._company ??= new CompanyEntityBuilder();
-  set company(CompanyEntityBuilder company) => _$this._company = company;
+  UserCompanyEntityBuilder _userCompany;
+  UserCompanyEntityBuilder get userCompany =>
+      _$this._userCompany ??= new UserCompanyEntityBuilder();
+  set userCompany(UserCompanyEntityBuilder userCompany) =>
+      _$this._userCompany = userCompany;
 
   DocumentStateBuilder _documentState;
   DocumentStateBuilder get documentState =>
@@ -354,7 +356,7 @@ class CompanyStateBuilder
 
   CompanyStateBuilder get _$this {
     if (_$v != null) {
-      _company = _$v.company?.toBuilder();
+      _userCompany = _$v.userCompany?.toBuilder();
       _documentState = _$v.documentState?.toBuilder();
       _dashboardState = _$v.dashboardState?.toBuilder();
       _productState = _$v.productState?.toBuilder();
@@ -390,7 +392,7 @@ class CompanyStateBuilder
     try {
       _$result = _$v ??
           new _$CompanyState._(
-              company: _company?.build(),
+              userCompany: _userCompany?.build(),
               documentState: documentState.build(),
               dashboardState: dashboardState.build(),
               productState: productState.build(),
@@ -405,8 +407,8 @@ class CompanyStateBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'company';
-        _company?.build();
+        _$failedField = 'userCompany';
+        _userCompany?.build();
         _$failedField = 'documentState';
         documentState.build();
         _$failedField = 'dashboardState';
