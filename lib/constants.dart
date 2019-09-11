@@ -64,6 +64,7 @@ const int kUpdatedAtBufferSeconds = 600;
 
 const String kLanguageEnglish = '1';
 
+const String kCurrencyAll = '-1';
 const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
