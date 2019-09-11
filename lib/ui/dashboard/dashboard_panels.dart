@@ -187,7 +187,7 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final currentData = memoizedChartInvoices(
-        getCurrencyMap(context),
+        state.staticState.currencyMap,
         state.selectedCompany,
         settings,
         state.invoiceState.map,
@@ -196,7 +196,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartInvoices(
-          getCurrencyMap(context),
+          state.staticState.currencyMap,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -216,7 +216,7 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final currentData = memoizedChartPayments(
-        getCurrencyMap(context),
+        state.staticState.currencyMap,
         state.selectedCompany,
         settings,
         state.invoiceState.map,
@@ -226,7 +226,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartPayments(
-          getCurrencyMap(context),
+          state.staticState.currencyMap,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
@@ -247,7 +247,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final isLoaded = state.quoteState.isLoaded;
     final currentData = memoizedChartQuotes(
-        getCurrencyMap(context),
+        state.staticState.currencyMap,
         state.selectedCompany,
         settings,
         state.quoteState.map,
@@ -256,7 +256,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartQuotes(
-          getCurrencyMap(context),
+          state.staticState.currencyMap,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.quoteState.map,
@@ -277,7 +277,7 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = state.taskState.isLoaded;
 
     final currentData = memoizedChartTasks(
-        getCurrencyMap(context),
+        state.staticState.currencyMap,
         state.selectedCompany,
         settings,
         state.taskState.map,
@@ -288,7 +288,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartTasks(
-          getCurrencyMap(context),
+          state.staticState.currencyMap,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.taskState.map,
@@ -310,7 +310,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final isLoaded = state.expenseState.isLoaded;
     final currentData = memoizedChartExpenses(
-        getCurrencyMap(context),
+        state.staticState.currencyMap,
         state.selectedCompany,
         settings,
         state.invoiceState.map,
@@ -319,7 +319,7 @@ class DashboardPanels extends StatelessWidget {
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartExpenses(
-          getCurrencyMap(context),
+          state.staticState.currencyMap,
           state.selectedCompany,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,

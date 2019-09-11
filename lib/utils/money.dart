@@ -7,14 +7,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 double getExchangeRate(BuildContext context,
     {int fromCurrencyId, int toCurrencyId}) {
-  final currencyMap = getCurrencyMap(context);
+  final state = StoreProvider.of<AppState>(context).state;
+  final currencyMap = state.staticState.currencyMap;
   return getExchangeRateWithMap(currencyMap,
       fromCurrencyId: fromCurrencyId, toCurrencyId: toCurrencyId);
-}
-
-BuiltMap<int, CurrencyEntity> getCurrencyMap(BuildContext context) {
-  final state = StoreProvider.of<AppState>(context).state;
-  return state.staticState.currencyMap;
 }
 
 double getExchangeRateWithMap(BuiltMap<int, CurrencyEntity> currencyMap,
