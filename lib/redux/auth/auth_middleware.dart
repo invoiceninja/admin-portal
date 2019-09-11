@@ -44,7 +44,7 @@ void _loadAuthLocal(Store<AppState> store) async {
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   store.dispatch(UserSettingsChanged(
-    enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? false,
+    enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? true,
     emailPayment: prefs.getBool(kSharedPrefEmailPayment) ?? false,
     requireAuthentication:
         prefs.getBool(kSharedPrefRequireAuthentication) ?? false,

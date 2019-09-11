@@ -82,6 +82,7 @@ class _LoginState extends State<LoginView> {
 
     setState(() {
       _autoValidate = !isValid;
+      _loginError = '';
     });
 
     if (!isValid) {
@@ -137,6 +138,7 @@ class _LoginState extends State<LoginView> {
 
     setState(() {
       _autoValidate = !isValid;
+      _loginError = '';
     });
 
     if (!isValid) {
