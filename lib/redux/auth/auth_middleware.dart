@@ -97,6 +97,9 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         message += ', you may need to add /public to the URL';
       }
       store.dispatch(UserLoginFailure(message));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -123,6 +126,9 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);
@@ -151,6 +157,9 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(UserLoginFailure(error.toString()));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
     });
 
     next(action);

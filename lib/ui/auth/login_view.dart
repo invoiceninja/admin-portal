@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -40,6 +42,7 @@ class _LoginState extends State<LoginView> {
 
   final FocusNode _focusNode1 = new FocusNode();
 
+  String _loginError = '';
   bool _createAccount = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
@@ -108,8 +111,20 @@ class _LoginState extends State<LoginView> {
       return;
     }
 
+    final Completer<Null> completer = Completer<Null>();
+    completer.future.then((_) {
+      setState(() {
+        _loginError = '';
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _loginError = error.toString();
+      });
+    });
+
     widget.viewModel.onSignUpPressed(
       context,
+      completer,
       email: _emailController.text,
       password: _passwordController.text,
       firstName: _firstNameController.text,
@@ -128,8 +143,20 @@ class _LoginState extends State<LoginView> {
       return;
     }
 
+    final Completer<Null> completer = Completer<Null>();
+    completer.future.then((_) {
+      setState(() {
+        _loginError = '';
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _loginError = error.toString();
+      });
+    });
+
     widget.viewModel.onLoginPressed(
       context,
+      completer,
       email: _emailController.text,
       password: _passwordController.text,
       url: _isSelfHosted ? _urlController.text : '',
@@ -142,9 +169,8 @@ class _LoginState extends State<LoginView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final error = viewModel.authState.error ?? '';
-    final isOneTimePassword =
-        error.contains(OTP_ERROR) || _oneTimePasswordController.text.isNotEmpty;
+    final isOneTimePassword = _loginError.contains(OTP_ERROR) ||
+        _oneTimePasswordController.text.isNotEmpty;
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -327,13 +353,13 @@ class _LoginState extends State<LoginView> {
                           ),
                       ],
                     ),
-                  if (viewModel.authState.error != null &&
-                      !error.contains(OTP_ERROR))
+                  if (_loginError.isNotEmpty &&
+                      !_loginError.contains(OTP_ERROR))
                     Container(
                       padding: EdgeInsets.only(top: 20),
                       child: Center(
                         child: Text(
-                          viewModel.authState.error,
+                          _loginError,
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.bold,
@@ -437,7 +463,6 @@ class _LoginState extends State<LoginView> {
                           setState(() {
                             _oneTimePasswordController.text = '';
                           });
-                          viewModel.onCancel2FAPressed();
                         },
                       ),
                     ),

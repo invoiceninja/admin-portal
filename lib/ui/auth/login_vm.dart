@@ -40,16 +40,15 @@ class LoginVM {
     @required this.authState,
     @required this.onLoginPressed,
     @required this.onSignUpPressed,
-    @required this.onCancel2FAPressed,
     @required this.onGoogleLoginPressed,
   });
 
   bool isLoading;
   AuthState authState;
-  final Function() onCancel2FAPressed;
 
   final Function(
-    BuildContext, {
+    BuildContext,
+    Completer<Null> completer, {
     @required String email,
     @required String password,
     @required String url,
@@ -58,7 +57,8 @@ class LoginVM {
   }) onLoginPressed;
 
   final Function(
-    BuildContext, {
+    BuildContext,
+    Completer<Null> completer, {
     @required String firstName,
     @required String lastName,
     @required String email,
@@ -90,7 +90,6 @@ class LoginVM {
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
-        onCancel2FAPressed: () => store.dispatch(ClearAuthError()),
         onGoogleLoginPressed:
             (BuildContext context, String url, String secret) async {
           try {
@@ -114,7 +113,8 @@ class LoginVM {
           }
         },
         onSignUpPressed: (
-          BuildContext context, {
+          BuildContext context,
+          Completer<Null> completer, {
           @required String firstName,
           @required String lastName,
           @required String email,
@@ -124,7 +124,6 @@ class LoginVM {
             return;
           }
 
-          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserSignUpRequest(
             completer: completer,
             firstName: firstName.trim(),
@@ -136,7 +135,8 @@ class LoginVM {
           completer.future.then((_) => _handleLogin(context));
         },
         onLoginPressed: (
-          BuildContext context, {
+          BuildContext context,
+          Completer<Null> completer, {
           @required String email,
           @required String password,
           @required String url,
@@ -151,7 +151,6 @@ class LoginVM {
             url = 'https://' + url;
           }
 
-          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserLoginRequest(
             completer: completer,
             email: email.trim(),

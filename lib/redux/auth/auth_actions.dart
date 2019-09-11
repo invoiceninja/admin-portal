@@ -77,7 +77,6 @@ class UserLogout implements PersistData, PersistUI {}
 
 class UserSignUpRequest implements StartLoading {
   UserSignUpRequest({
-
     this.completer,
     this.firstName,
     this.lastName,
@@ -93,5 +92,3 @@ class UserSignUpRequest implements StartLoading {
   final String password;
   final String platform;
 }
-
-class ClearAuthError {}

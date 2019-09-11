@@ -36,12 +36,7 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       serializers.serialize(object.isAuthenticated,
           specifiedType: const FullType(bool)),
     ];
-    if (object.error != null) {
-      result
-        ..add('error')
-        ..add(serializers.serialize(object.error,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -80,10 +75,6 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.isAuthenticated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
       }
     }
 
@@ -104,8 +95,6 @@ class _$AuthState extends AuthState {
   final bool isInitialized;
   @override
   final bool isAuthenticated;
-  @override
-  final String error;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
@@ -116,8 +105,7 @@ class _$AuthState extends AuthState {
       this.url,
       this.secret,
       this.isInitialized,
-      this.isAuthenticated,
-      this.error})
+      this.isAuthenticated})
       : super._() {
     if (email == null) {
       throw new BuiltValueNullFieldError('AuthState', 'email');
@@ -155,8 +143,7 @@ class _$AuthState extends AuthState {
         url == other.url &&
         secret == other.secret &&
         isInitialized == other.isInitialized &&
-        isAuthenticated == other.isAuthenticated &&
-        error == other.error;
+        isAuthenticated == other.isAuthenticated;
   }
 
   @override
@@ -164,13 +151,11 @@ class _$AuthState extends AuthState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc(
-                    $jc($jc($jc(0, email.hashCode), password.hashCode),
-                        url.hashCode),
-                    secret.hashCode),
-                isInitialized.hashCode),
-            isAuthenticated.hashCode),
-        error.hashCode));
+                $jc($jc($jc(0, email.hashCode), password.hashCode),
+                    url.hashCode),
+                secret.hashCode),
+            isInitialized.hashCode),
+        isAuthenticated.hashCode));
   }
 
   @override
@@ -181,8 +166,7 @@ class _$AuthState extends AuthState {
           ..add('url', url)
           ..add('secret', secret)
           ..add('isInitialized', isInitialized)
-          ..add('isAuthenticated', isAuthenticated)
-          ..add('error', error))
+          ..add('isAuthenticated', isAuthenticated))
         .toString();
   }
 }
@@ -216,10 +200,6 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   set isAuthenticated(bool isAuthenticated) =>
       _$this._isAuthenticated = isAuthenticated;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
-
   AuthStateBuilder();
 
   AuthStateBuilder get _$this {
@@ -230,7 +210,6 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _secret = _$v.secret;
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
-      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -258,8 +237,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             url: url,
             secret: secret,
             isInitialized: isInitialized,
-            isAuthenticated: isAuthenticated,
-            error: error);
+            isAuthenticated: isAuthenticated);
     replace(_$result);
     return _$result;
   }

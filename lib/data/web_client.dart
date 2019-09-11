@@ -174,15 +174,18 @@ String _parseError(int code, String response) {
   try {
     final dynamic jsonResponse = json.decode(response);
     message = jsonResponse['message'] ?? jsonResponse;
-    try {
-      jsonResponse['errors'].forEach((String field, dynamic errors) {
-        (errors as List<dynamic>)
-            .forEach((dynamic error) => message += '\n • $error');
-      });
-    } catch (error) {
-      print('parse error');
-      print(error);
-      // do nothing
+
+    if (jsonResponse['errors'] != null) {
+      try {
+        jsonResponse['errors'].forEach((String field, dynamic errors) {
+          (errors as List<dynamic>)
+              .forEach((dynamic error) => message += '\n • $error');
+        });
+      } catch (error) {
+        print('parse error');
+        print(error);
+        // do nothing
+      }
     }
   } catch (error) {
     // do nothing
