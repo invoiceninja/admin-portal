@@ -412,14 +412,18 @@ class _LoginState extends State<LoginView> {
                             Icon(FontAwesomeIcons.user, size: 16),
                             _createAccount
                                 ? FlatButton(
-                                    onPressed: () =>
-                                        setState(() => _createAccount = false),
+                                    onPressed: () => setState(() {
+                                          _createAccount = false;
+                                          _isSelfHosted = false;
+                                          _loginError = '';
+                                        }),
                                     child: Text(localization.accountLogin))
                                 : FlatButton(
                                     key: ValueKey(localization.createAccount),
                                     onPressed: () => setState(() {
                                           _createAccount = true;
                                           _isSelfHosted = false;
+                                          _loginError = '';
                                         }),
                                     child: Text(localization.createAccount)),
                           ],
@@ -428,14 +432,17 @@ class _LoginState extends State<LoginView> {
                           Icon(FontAwesomeIcons.userCog, size: 16),
                           _isSelfHosted
                               ? FlatButton(
-                                  onPressed: () =>
-                                      setState(() => _isSelfHosted = false),
+                                  onPressed: () => setState(() {
+                                        _isSelfHosted = false;
+                                        _loginError = '';
+                                      }),
                                   child: Text(localization.hostedLogin))
                               : FlatButton(
                                   key: ValueKey(localization.selfhostLogin),
                                   onPressed: () => setState(() {
                                         _isSelfHosted = true;
                                         _createAccount = false;
+                                        _loginError = '';
                                       }),
                                   child: Text(localization.selfhostLogin)),
                         ]),
