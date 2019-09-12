@@ -66,6 +66,7 @@ class _LoginState extends State<LoginView> {
       _lastNameController.text = 'TEST';
       _privacyChecked = true;
       _termsChecked = true;
+      _createAccount = true;
     }
 
     if (cleanApiUrl(state.url).isNotEmpty) {
