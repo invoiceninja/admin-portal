@@ -278,34 +278,34 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
 
-  CompanyStateBuilder _companyState1;
-  CompanyStateBuilder get companyState1 =>
-      _$this._companyState1 ??= new CompanyStateBuilder();
-  set companyState1(CompanyStateBuilder companyState1) =>
+  UserCompanyStateBuilder _companyState1;
+  UserCompanyStateBuilder get companyState1 =>
+      _$this._companyState1 ??= new UserCompanyStateBuilder();
+  set companyState1(UserCompanyStateBuilder companyState1) =>
       _$this._companyState1 = companyState1;
 
-  CompanyStateBuilder _companyState2;
-  CompanyStateBuilder get companyState2 =>
-      _$this._companyState2 ??= new CompanyStateBuilder();
-  set companyState2(CompanyStateBuilder companyState2) =>
+  UserCompanyStateBuilder _companyState2;
+  UserCompanyStateBuilder get companyState2 =>
+      _$this._companyState2 ??= new UserCompanyStateBuilder();
+  set companyState2(UserCompanyStateBuilder companyState2) =>
       _$this._companyState2 = companyState2;
 
-  CompanyStateBuilder _companyState3;
-  CompanyStateBuilder get companyState3 =>
-      _$this._companyState3 ??= new CompanyStateBuilder();
-  set companyState3(CompanyStateBuilder companyState3) =>
+  UserCompanyStateBuilder _companyState3;
+  UserCompanyStateBuilder get companyState3 =>
+      _$this._companyState3 ??= new UserCompanyStateBuilder();
+  set companyState3(UserCompanyStateBuilder companyState3) =>
       _$this._companyState3 = companyState3;
 
-  CompanyStateBuilder _companyState4;
-  CompanyStateBuilder get companyState4 =>
-      _$this._companyState4 ??= new CompanyStateBuilder();
-  set companyState4(CompanyStateBuilder companyState4) =>
+  UserCompanyStateBuilder _companyState4;
+  UserCompanyStateBuilder get companyState4 =>
+      _$this._companyState4 ??= new UserCompanyStateBuilder();
+  set companyState4(UserCompanyStateBuilder companyState4) =>
       _$this._companyState4 = companyState4;
 
-  CompanyStateBuilder _companyState5;
-  CompanyStateBuilder get companyState5 =>
-      _$this._companyState5 ??= new CompanyStateBuilder();
-  set companyState5(CompanyStateBuilder companyState5) =>
+  UserCompanyStateBuilder _companyState5;
+  UserCompanyStateBuilder get companyState5 =>
+      _$this._companyState5 ??= new UserCompanyStateBuilder();
+  set companyState5(UserCompanyStateBuilder companyState5) =>
       _$this._companyState5 = companyState5;
 
   AppStateBuilder();

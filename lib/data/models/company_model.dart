@@ -14,7 +14,6 @@ abstract class CompanyEntity
     return _$CompanyEntity._(
       companyKey: '',
       name: '',
-      token: '',
       plan: '',
       logoUrl: '',
       appUrl: '',
@@ -83,8 +82,6 @@ abstract class CompanyEntity
   CompanyEntity._();
 
   String get name;
-
-  String get token;
 
   String get plan;
 

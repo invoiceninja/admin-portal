@@ -110,8 +110,7 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
     final action = dynamicAction as ArchiveExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.archive)
+        .saveData(store.state.credentials, origExpense, EntityAction.archive)
         .then((ExpenseEntity expense) {
       store.dispatch(ArchiveExpenseSuccess(expense));
       if (action.completer != null) {
@@ -134,8 +133,7 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
     final action = dynamicAction as DeleteExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.delete)
+        .saveData(store.state.credentials, origExpense, EntityAction.delete)
         .then((ExpenseEntity expense) {
       store.dispatch(DeleteExpenseSuccess(expense));
       if (action.completer != null) {
@@ -158,8 +156,7 @@ Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
     final action = dynamicAction as RestoreExpenseRequest;
     final origExpense = store.state.expenseState.map[action.expenseId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.restore)
+        .saveData(store.state.credentials, origExpense, EntityAction.restore)
         .then((ExpenseEntity expense) {
       store.dispatch(RestoreExpenseSuccess(expense));
       if (action.completer != null) {
@@ -181,8 +178,7 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveExpenseRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.expense)
+        .saveData(store.state.credentials, action.expense)
         .then((ExpenseEntity expense) {
       if (action.expense.isNew) {
         store.dispatch(AddExpenseSuccess(expense));
@@ -212,7 +208,7 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 
     store.dispatch(LoadExpenseRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.expenseId)
+        .loadItem(store.state.credentials, action.expenseId)
         .then((expense) {
       store.dispatch(LoadExpenseSuccess(expense));
 
@@ -249,9 +245,7 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
     final int updatedAt = (state.expenseState.lastUpdated / 1000).round();
 
     store.dispatch(LoadExpensesRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadExpensesSuccess(data));
 
       if (action.completer != null) {

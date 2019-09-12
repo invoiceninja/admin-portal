@@ -109,8 +109,7 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
     final action = dynamicAction as ArchivePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, origPayment,
+        .saveData(store.state.credentials, origPayment,
             action: EntityAction.archive)
         .then((PaymentEntity payment) {
       store.dispatch(ArchivePaymentSuccess(payment));
@@ -134,8 +133,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
     final action = dynamicAction as DeletePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, origPayment,
+        .saveData(store.state.credentials, origPayment,
             action: EntityAction.delete)
         .then((PaymentEntity payment) {
       store.dispatch(DeletePaymentSuccess(payment));
@@ -160,8 +158,7 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
     final action = dynamicAction as RestorePaymentRequest;
     final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, origPayment,
+        .saveData(store.state.credentials, origPayment,
             action: EntityAction.restore)
         .then((PaymentEntity payment) {
       store.dispatch(RestorePaymentSuccess(payment));
@@ -188,9 +185,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     final bool sendEmail =
         payment.isNew ? store.state.uiState.emailPayment : false;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.payment,
-            sendEmail: sendEmail)
+        .saveData(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
       if (action.payment.isNew) {
         store.dispatch(AddPaymentSuccess(payment));
@@ -213,9 +208,7 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailPaymentRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.payment,
-            sendEmail: true)
+        .saveData(store.state.credentials, action.payment, sendEmail: true)
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       action.completer.complete(null);
@@ -241,7 +234,7 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
 
     store.dispatch(LoadPaymentRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.paymentId)
+        .loadItem(store.state.credentials, action.paymentId)
         .then((payment) {
       store.dispatch(LoadPaymentSuccess(payment));
 
@@ -279,9 +272,7 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     final int updatedAt = (state.paymentState.lastUpdated / 1000).round();
 
     store.dispatch(LoadPaymentsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
 
       if (action.completer != null) {

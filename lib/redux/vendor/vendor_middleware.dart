@@ -110,8 +110,7 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
     final action = dynamicAction as ArchiveVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.archive)
+        .saveData(store.state.credentials, origVendor, EntityAction.archive)
         .then((VendorEntity vendor) {
       store.dispatch(ArchiveVendorSuccess(vendor));
       if (action.completer != null) {
@@ -134,8 +133,7 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
     final action = dynamicAction as DeleteVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.delete)
+        .saveData(store.state.credentials, origVendor, EntityAction.delete)
         .then((VendorEntity vendor) {
       store.dispatch(DeleteVendorSuccess(vendor));
       if (action.completer != null) {
@@ -158,8 +156,7 @@ Middleware<AppState> _restoreVendor(VendorRepository repository) {
     final action = dynamicAction as RestoreVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.restore)
+        .saveData(store.state.credentials, origVendor, EntityAction.restore)
         .then((VendorEntity vendor) {
       store.dispatch(RestoreVendorSuccess(vendor));
       if (action.completer != null) {
@@ -181,8 +178,7 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveVendorRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.vendor)
+        .saveData(store.state.credentials, action.vendor)
         .then((VendorEntity vendor) {
       if (action.vendor.isNew) {
         store.dispatch(AddVendorSuccess(vendor));
@@ -218,7 +214,7 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
 
     store.dispatch(LoadVendorRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.vendorId)
+        .loadItem(store.state.credentials, action.vendorId)
         .then((vendor) {
       store.dispatch(LoadVendorSuccess(vendor));
 
@@ -261,9 +257,7 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
     final int updatedAt = (state.vendorState.lastUpdated / 1000).round();
 
     store.dispatch(LoadVendorsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadVendorsSuccess(data));
 
       if (action.completer != null) {

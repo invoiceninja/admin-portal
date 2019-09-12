@@ -6,15 +6,15 @@ part of 'company_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<UserCompanyState> _$companyStateSerializer =
-    new _$CompanyStateSerializer();
+Serializer<UserCompanyState> _$userCompanyStateSerializer =
+    new _$UserCompanyStateSerializer();
 
-class _$CompanyStateSerializer
+class _$UserCompanyStateSerializer
     implements StructuredSerializer<UserCompanyState> {
   @override
-  final Iterable<Type> types = const [UserCompanyState, _$CompanyState];
+  final Iterable<Type> types = const [UserCompanyState, _$UserCompanyState];
   @override
-  final String wireName = 'CompanyState';
+  final String wireName = 'UserCompanyState';
 
   @override
   Iterable<Object> serialize(Serializers serializers, UserCompanyState object,
@@ -67,7 +67,7 @@ class _$CompanyStateSerializer
   UserCompanyState deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyStateBuilder();
+    final result = new UserCompanyStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -131,7 +131,7 @@ class _$CompanyStateSerializer
   }
 }
 
-class _$CompanyState extends UserCompanyState {
+class _$UserCompanyState extends UserCompanyState {
   @override
   final UserCompanyEntity userCompany;
   @override
@@ -157,10 +157,11 @@ class _$CompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
 
-  factory _$CompanyState([void Function(CompanyStateBuilder) updates]) =>
-      (new CompanyStateBuilder()..update(updates)).build();
+  factory _$UserCompanyState(
+          [void Function(UserCompanyStateBuilder) updates]) =>
+      (new UserCompanyStateBuilder()..update(updates)).build();
 
-  _$CompanyState._(
+  _$UserCompanyState._(
       {this.userCompany,
       this.documentState,
       this.dashboardState,
@@ -175,46 +176,47 @@ class _$CompanyState extends UserCompanyState {
       this.quoteState})
       : super._() {
     if (documentState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'documentState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
     }
     if (dashboardState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'dashboardState');
     }
     if (productState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'productState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'productState');
     }
     if (clientState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'clientState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'clientState');
     }
     if (invoiceState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'invoiceState');
     }
     if (expenseState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'expenseState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'expenseState');
     }
     if (vendorState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'vendorState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'vendorState');
     }
     if (taskState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'taskState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'taskState');
     }
     if (projectState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'projectState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'projectState');
     }
     if (paymentState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'paymentState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'paymentState');
     }
     if (quoteState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'quoteState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
     }
   }
 
   @override
-  UserCompanyState rebuild(void Function(CompanyStateBuilder) updates) =>
+  UserCompanyState rebuild(void Function(UserCompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CompanyStateBuilder toBuilder() => new CompanyStateBuilder()..replace(this);
+  UserCompanyStateBuilder toBuilder() =>
+      new UserCompanyStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -262,7 +264,7 @@ class _$CompanyState extends UserCompanyState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CompanyState')
+    return (newBuiltValueToStringHelper('UserCompanyState')
           ..add('userCompany', userCompany)
           ..add('documentState', documentState)
           ..add('dashboardState', dashboardState)
@@ -279,9 +281,9 @@ class _$CompanyState extends UserCompanyState {
   }
 }
 
-class CompanyStateBuilder
-    implements Builder<UserCompanyState, CompanyStateBuilder> {
-  _$CompanyState _$v;
+class UserCompanyStateBuilder
+    implements Builder<UserCompanyState, UserCompanyStateBuilder> {
+  _$UserCompanyState _$v;
 
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
@@ -354,9 +356,9 @@ class CompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
-  CompanyStateBuilder();
+  UserCompanyStateBuilder();
 
-  CompanyStateBuilder get _$this {
+  UserCompanyStateBuilder get _$this {
     if (_$v != null) {
       _userCompany = _$v.userCompany?.toBuilder();
       _documentState = _$v.documentState?.toBuilder();
@@ -380,20 +382,20 @@ class CompanyStateBuilder
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$CompanyState;
+    _$v = other as _$UserCompanyState;
   }
 
   @override
-  void update(void Function(CompanyStateBuilder) updates) {
+  void update(void Function(UserCompanyStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$CompanyState build() {
-    _$CompanyState _$result;
+  _$UserCompanyState build() {
+    _$UserCompanyState _$result;
     try {
       _$result = _$v ??
-          new _$CompanyState._(
+          new _$UserCompanyState._(
               userCompany: _userCompany?.build(),
               documentState: documentState.build(),
               dashboardState: dashboardState.build(),
@@ -435,7 +437,7 @@ class CompanyStateBuilder
         quoteState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CompanyState', _$failedField, e.toString());
+            'UserCompanyState', _$failedField, e.toString());
       }
       rethrow;
     }

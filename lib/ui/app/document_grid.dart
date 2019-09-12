@@ -261,8 +261,8 @@ class DocumentPreview extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
-            imageUrl: document.previewUrl(state.authState.url),
-            httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
+            imageUrl: document.previewUrl(state.credentials.url),
+            httpHeaders: {'X-Ninja-Token': state.credentials.token},
             placeholder: (context, url) => Container(
                   height: height,
                   child: Center(

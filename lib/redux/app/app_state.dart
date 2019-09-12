@@ -122,6 +122,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UserEntity get user => selectedCompanyState.user;
 
+  Credentials get credentials =>
+      Credentials(token: selectedCompanyState.token.token, url: authState.url);
+
   EntityUIState getUIState(EntityType type) {
     switch (type) {
       case EntityType.product:
@@ -276,4 +279,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Is Testing: ${uiState.isTesting}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
+}
+
+class Credentials {
+  Credentials({this.url, this.token});
+  String url;
+  String token;
 }

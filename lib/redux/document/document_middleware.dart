@@ -84,8 +84,7 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
     final action = dynamicAction as ArchiveDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.archive)
+        .saveData(store.state.credentials, origDocument, EntityAction.archive)
         .then((DocumentEntity document) {
       store.dispatch(ArchiveDocumentSuccess(document));
       if (action.completer != null) {
@@ -108,8 +107,7 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
     final action = dynamicAction as DeleteDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.delete)
+        .saveData(store.state.credentials, origDocument, EntityAction.delete)
         .then((DocumentEntity document) {
       store.dispatch(DeleteDocumentSuccess(document));
       if (action.completer != null) {
@@ -132,8 +130,7 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
     final action = dynamicAction as RestoreDocumentRequest;
     final origDocument = store.state.documentState.map[action.documentId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.restore)
+        .saveData(store.state.credentials, origDocument, EntityAction.restore)
         .then((DocumentEntity document) {
       store.dispatch(RestoreDocumentSuccess(document));
       if (action.completer != null) {
@@ -156,8 +153,7 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
     final action = dynamicAction as SaveDocumentRequest;
     if (store.state.selectedCompany.isEnterprisePlan) {
       repository
-          .saveData(store.state.selectedCompany, store.state.authState,
-              action.document)
+          .saveData(store.state.credentials, action.document)
           .then((DocumentEntity document) {
         if (action.document.isNew) {
           store.dispatch(AddDocumentSuccess(document));
@@ -192,7 +188,7 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
 
     store.dispatch(LoadDocumentRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.documentId)
+        .loadItem(store.state.credentials, action.documentId)
         .then((document) {
       store.dispatch(LoadDocumentSuccess(document));
 
@@ -229,9 +225,7 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
     final int updatedAt = (state.documentState.lastUpdated / 1000).round();
 
     store.dispatch(LoadDocumentsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadDocumentsSuccess(data));
 
       if (action.completer != null) {

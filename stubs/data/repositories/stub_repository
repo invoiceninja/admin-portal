@@ -17,9 +17,9 @@ class StubRepository {
   final WebClient webClient;
 
   Future<StubEntity> loadItem(
-      CompanyEntity company, AuthState auth, String entityId) async {
+      Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${auth.url}/stubs/$entityId', company.token);
+        '${credentials.url}/stubs/$entityId', credentials.token);
 
     final StubItemResponse stubResponse =
         serializers.deserializeWith(StubItemResponse.serializer, response);
@@ -28,14 +28,14 @@ class StubRepository {
   }
 
   Future<BuiltList<StubEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/stubs?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/stubs?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final StubListResponse stubResponse =
         serializers.deserializeWith(StubListResponse.serializer, response);
@@ -44,22 +44,22 @@ class StubRepository {
   }
   
   Future<StubEntity> saveData(
-      CompanyEntity company, AuthState auth, StubEntity stub,
+      Credentials credentials, StubEntity stub,
       [EntityAction action]) async {
     final data = serializers.serializeWith(StubEntity.serializer, stub);
     dynamic response;
 
     if (stub.isNew) {
       response = await webClient.post(
-          auth.url + '/stubs',
-          company.token,
+          credentials.url + '/stubs',
+          credentials.token,
           json.encode(data));
     } else {
-      var url = auth.url + '/stubs/' + stub.id.toString();
+      var url = credentials.url + '/stubs/' + stub.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, company.token, json.encode(data));
+      response = await webClient.put(url, credentials.token, json.encode(data));
     }
 
     final StubItemResponse stubResponse =

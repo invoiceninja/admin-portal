@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -16,15 +17,15 @@ class ClientRepository {
 
   final WebClient webClient;
 
-  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth,
-      String entityId, bool loadActivities) async {
-    String url = '${auth.url}/clients/$entityId';
+  Future<ClientEntity> loadItem(
+      Credentials credentials, String entityId, bool loadActivities) async {
+    String url = '${credentials.url}/clients/$entityId';
 
     if (loadActivities) {
       url += '?include=activities';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);
@@ -33,14 +34,14 @@ class ClientRepository {
   }
 
   Future<BuiltList<ClientEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/clients?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/clients?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);
@@ -48,21 +49,22 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<ClientEntity> saveData(
-      CompanyEntity company, AuthState auth, ClientEntity client,
+  Future<ClientEntity> saveData(Credentials credentials, ClientEntity client,
       [EntityAction action]) async {
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;
 
     if (client.isNew) {
-      response = await webClient.post(auth.url + '/clients?include=activities',
-          company.token, json.encode(data));
+      response = await webClient.post(
+          credentials.url + '/clients?include=activities',
+          credentials.token,
+          json.encode(data));
     } else {
-      var url = auth.url + '/clients/${client.id}?include=activities';
+      var url = credentials.url + '/clients/${client.id}?include=activities';
       if (action != null) {
         url += '&action=' + action.toString();
       }
-      response = await webClient.put(url, company.token, json.encode(data));
+      response = await webClient.put(url, credentials.token, json.encode(data));
     }
 
     final ClientItemResponse clientResponse =

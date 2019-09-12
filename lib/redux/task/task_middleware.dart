@@ -109,8 +109,7 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
     final action = dynamicAction as ArchiveTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.archive)
+        .saveData(store.state.credentials, origTask, EntityAction.archive)
         .then((TaskEntity task) {
       store.dispatch(ArchiveTaskSuccess(task));
       if (action.completer != null) {
@@ -133,8 +132,7 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
     final action = dynamicAction as DeleteTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.delete)
+        .saveData(store.state.credentials, origTask, EntityAction.delete)
         .then((TaskEntity task) {
       store.dispatch(DeleteTaskSuccess(task));
       if (action.completer != null) {
@@ -157,8 +155,7 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
     final action = dynamicAction as RestoreTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.restore)
+        .saveData(store.state.credentials, origTask, EntityAction.restore)
         .then((TaskEntity task) {
       store.dispatch(RestoreTaskSuccess(task));
       if (action.completer != null) {
@@ -180,8 +177,7 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTaskRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.task)
+        .saveData(store.state.credentials, action.task)
         .then((TaskEntity task) {
       if (action.task.isNew) {
         store.dispatch(AddTaskSuccess(task));
@@ -210,9 +206,7 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
     }
 
     store.dispatch(LoadTaskRequest());
-    repository
-        .loadItem(state.selectedCompany, state.authState, action.taskId)
-        .then((task) {
+    repository.loadItem(state.credentials, action.taskId).then((task) {
       store.dispatch(LoadTaskSuccess(task));
 
       if (action.completer != null) {
@@ -248,9 +242,7 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     final int updatedAt = (state.taskState.lastUpdated / 1000).round();
 
     store.dispatch(LoadTasksRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
       if (action.completer != null) {

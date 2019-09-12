@@ -325,7 +325,7 @@ Middleware<AppState> _createAccountLoaded() {
         final UserCompanyEntity userCompany = data.userCompanies[i];
 
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(getCompanyTokenKey(i), userCompany.company.token);
+        prefs.setString(getCompanyTokenKey(i), userCompany.token.token);
 
         store.dispatch(SelectCompany(i + 1, userCompany));
         store.dispatch(LoadCompanySuccess(userCompany));

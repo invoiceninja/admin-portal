@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -17,14 +18,14 @@ class ProductRepository {
   final WebClient webClient;
 
   Future<BuiltList<ProductEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/products?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/products?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);
@@ -32,21 +33,20 @@ class ProductRepository {
     return productResponse.data;
   }
 
-  Future<ProductEntity> saveData(
-      CompanyEntity company, AuthState auth, ProductEntity product,
+  Future<ProductEntity> saveData(Credentials credentials, ProductEntity product,
       [EntityAction action]) async {
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
 
     if (product.isNew) {
       response = await webClient.post(
-          auth.url + '/products', company.token, json.encode(data));
+          credentials.url + '/products', credentials.token, json.encode(data));
     } else {
-      var url = auth.url + '/products/' + product.id.toString();
+      var url = credentials.url + '/products/' + product.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, company.token, json.encode(data));
+      response = await webClient.put(url, credentials.token, json.encode(data));
     }
 
     final ProductItemResponse productResponse =

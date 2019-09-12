@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -16,9 +17,10 @@ class QuoteRepository {
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      CompanyEntity company, AuthState auth, String entityId) async {
+      Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${auth.url}/invoices/$entityId?include=invitations', company.token);
+        '${credentials.url}/invoices/$entityId?include=invitations',
+        credentials.token);
 
     final InvoiceItemResponse quoteResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -27,15 +29,15 @@ class QuoteRepository {
   }
 
   Future<BuiltList<InvoiceEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url +
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url +
         '/invoices?include=invitations&invoice_type_id=2&is_recurring=0';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse quoteResponse =
         serializers.deserializeWith(InvoiceListResponse.serializer, response);
@@ -43,23 +45,22 @@ class QuoteRepository {
     return quoteResponse.data;
   }
 
-  Future<InvoiceEntity> saveData(
-      CompanyEntity company, AuthState auth, InvoiceEntity quote,
+  Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity quote,
       [EntityAction action]) async {
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
     dynamic response;
 
     if (quote.isNew) {
       response = await webClient.post(
-          auth.url + '/invoices?include=invitations',
-          company.token,
+          credentials.url + '/invoices?include=invitations',
+          credentials.token,
           json.encode(data));
     } else {
-      var url = '${auth.url}/invoices/${quote.id}';
+      var url = '${credentials.url}/invoices/${quote.id}';
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, company.token, json.encode(data));
+      response = await webClient.put(url, credentials.token, json.encode(data));
     }
 
     final InvoiceItemResponse quoteResponse =
@@ -68,13 +69,8 @@ class QuoteRepository {
     return quoteResponse.data;
   }
 
-  Future<Null> emailQuote(
-      CompanyEntity company,
-      AuthState auth,
-      InvoiceEntity quote,
-      EmailTemplate template,
-      String subject,
-      String body) async {
+  Future<Null> emailQuote(Credentials credentials, InvoiceEntity quote,
+      EmailTemplate template, String subject, String body) async {
     final data = {
       'reminder': template == EmailTemplate.initial ? '' : template.toString(),
       'template': {
@@ -83,7 +79,9 @@ class QuoteRepository {
       }
     };
 
-    await webClient.post(auth.url + '/email_invoice?invoice_id=${quote.id}',
-        company.token, json.encode(data));
+    await webClient.post(
+        credentials.url + '/email_invoice?invoice_id=${quote.id}',
+        credentials.token,
+        json.encode(data));
   }
 }

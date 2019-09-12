@@ -103,8 +103,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
     final action = dynamicAction as ArchiveClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.archive)
+        .saveData(store.state.credentials, origClient, EntityAction.archive)
         .then((ClientEntity client) {
       store.dispatch(ArchiveClientSuccess(client));
       if (action.completer != null) {
@@ -127,8 +126,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
     final action = dynamicAction as DeleteClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.delete)
+        .saveData(store.state.credentials, origClient, EntityAction.delete)
         .then((ClientEntity client) {
       store.dispatch(DeleteClientSuccess(client));
       if (action.completer != null) {
@@ -151,8 +149,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
     final action = dynamicAction as RestoreClientRequest;
     final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.restore)
+        .saveData(store.state.credentials, origClient, EntityAction.restore)
         .then((ClientEntity client) {
       store.dispatch(RestoreClientSuccess(client));
       if (action.completer != null) {
@@ -174,8 +171,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveClientRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.client)
+        .saveData(store.state.credentials, action.client)
         .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
@@ -211,8 +207,8 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.clientId,
-            action.loadActivities)
+        .loadItem(
+            store.state.credentials, action.clientId, action.loadActivities)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 
@@ -249,9 +245,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     final int updatedAt = (state.clientState.lastUpdated / 1000).round();
 
     store.dispatch(LoadClientsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadClientsSuccess(data));
 
       if (action.completer != null) {

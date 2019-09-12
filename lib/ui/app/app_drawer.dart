@@ -147,7 +147,7 @@ class AppDrawer extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             // Hide options while refreshing data
-            company.token.isEmpty
+            state.credentials.token.isEmpty
                 ? Container(
                     padding: EdgeInsets.only(top: 40),
                     child: CircularProgressIndicator(),
@@ -159,7 +159,7 @@ class AppDrawer extends StatelessWidget {
                         viewModel.companies.length > 1 && !viewModel.isLoading
                             ? _multipleCompanies
                             : _singleCompany),
-            company.token.isEmpty
+            state.credentials.token.isEmpty
                 ? SizedBox()
                 : Expanded(
                     child: ListView(

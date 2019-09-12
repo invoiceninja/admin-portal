@@ -84,7 +84,7 @@ Middleware<AppState> _archiveStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
+        .saveData(store.state.credentials,
             origStub, EntityAction.archive)
         .then((StubEntity stub) {
       store.dispatch(ArchiveStubSuccess(stub));
@@ -107,7 +107,7 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
+        .saveData(store.state.credentials,
             origStub, EntityAction.delete)
         .then((StubEntity stub) {
       store.dispatch(DeleteStubSuccess(stub));
@@ -130,7 +130,7 @@ Middleware<AppState> _restoreStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
+        .saveData(store.state.credentials,
             origStub, EntityAction.restore)
         .then((StubEntity stub) {
       store.dispatch(RestoreStubSuccess(stub));
@@ -153,7 +153,7 @@ Middleware<AppState> _saveStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     repository
         .saveData(
-            store.state.selectedCompany, store.state.authState, action.stub)
+            store.state.credentials, action.stub)
         .then((StubEntity stub) {
       if (action.stub.isNew) {
         store.dispatch(AddStubSuccess(stub));
@@ -182,7 +182,7 @@ Middleware<AppState> _loadStub(StubRepository repository) {
 
     store.dispatch(LoadStubRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.stubId)
+        .loadItem(state.credentials, action.stubId)
         .then((stub) {
       store.dispatch(LoadStubSuccess(stub));
 
@@ -219,7 +219,7 @@ Middleware<AppState> _loadStubs(StubRepository repository) {
 
     store.dispatch(LoadStubsRequest());
     repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
+        .loadList(state.credentials, updatedAt)
         .then((data) {
       store.dispatch(LoadStubsSuccess(data));
 

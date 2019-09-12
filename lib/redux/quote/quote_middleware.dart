@@ -123,8 +123,7 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
     final action = dynamicAction as ArchiveQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.archive)
+        .saveData(store.state.credentials, origQuote, EntityAction.archive)
         .then((InvoiceEntity quote) {
       store.dispatch(ArchiveQuoteSuccess(quote));
       if (action.completer != null) {
@@ -147,8 +146,7 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
     final action = dynamicAction as DeleteQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.delete)
+        .saveData(store.state.credentials, origQuote, EntityAction.delete)
         .then((InvoiceEntity quote) {
       store.dispatch(DeleteQuoteSuccess(quote));
       if (action.completer != null) {
@@ -171,8 +169,7 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
     final action = dynamicAction as RestoreQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.restore)
+        .saveData(store.state.credentials, origQuote, EntityAction.restore)
         .then((InvoiceEntity quote) {
       store.dispatch(RestoreQuoteSuccess(quote));
       if (action.completer != null) {
@@ -195,8 +192,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
     final action = dynamicAction as ConvertQuote;
     final quote = store.state.quoteState.map[action.quoteId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, quote,
-            EntityAction.convert)
+        .saveData(store.state.credentials, quote, EntityAction.convert)
         .then((InvoiceEntity invoice) {
       store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
       action.completer.complete(invoice);
@@ -215,8 +211,7 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
     final action = dynamicAction as MarkSentQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.markSent)
+        .saveData(store.state.credentials, origQuote, EntityAction.markSent)
         .then((InvoiceEntity quote) {
       store.dispatch(MarkSentQuoteSuccess(quote));
       if (action.completer != null) {
@@ -239,8 +234,8 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     final action = dynamicAction as EmailQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .emailQuote(store.state.selectedCompany, store.state.authState,
-            origQuote, action.template, action.subject, action.body)
+        .emailQuote(store.state.credentials, origQuote, action.template,
+            action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailQuoteSuccess());
       if (action.completer != null) {
@@ -262,8 +257,7 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveQuoteRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.quote)
+        .saveData(store.state.credentials, action.quote)
         .then((InvoiceEntity quote) {
       if (action.quote.isNew) {
         store.dispatch(AddQuoteSuccess(quote));
@@ -292,9 +286,7 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
     }
 
     store.dispatch(LoadQuoteRequest());
-    repository
-        .loadItem(state.selectedCompany, state.authState, action.quoteId)
-        .then((quote) {
+    repository.loadItem(store.state.credentials, action.quoteId).then((quote) {
       store.dispatch(LoadQuoteSuccess(quote));
 
       if (action.completer != null) {
@@ -333,9 +325,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     final int updatedAt = (state.quoteState.lastUpdated / 1000).round();
 
     store.dispatch(LoadQuotesRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadQuotesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

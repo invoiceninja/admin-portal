@@ -110,8 +110,7 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
     final action = dynamicAction as ArchiveProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.archive)
+        .saveData(store.state.credentials, origProject, EntityAction.archive)
         .then((ProjectEntity project) {
       store.dispatch(ArchiveProjectSuccess(project));
       if (action.completer != null) {
@@ -134,8 +133,7 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
     final action = dynamicAction as DeleteProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.delete)
+        .saveData(store.state.credentials, origProject, EntityAction.delete)
         .then((ProjectEntity project) {
       store.dispatch(DeleteProjectSuccess(project));
       if (action.completer != null) {
@@ -158,8 +156,7 @@ Middleware<AppState> _restoreProject(ProjectRepository repository) {
     final action = dynamicAction as RestoreProjectRequest;
     final origProject = store.state.projectState.map[action.projectId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.restore)
+        .saveData(store.state.credentials, origProject, EntityAction.restore)
         .then((ProjectEntity project) {
       store.dispatch(RestoreProjectSuccess(project));
       if (action.completer != null) {
@@ -181,8 +178,7 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProjectRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.project)
+        .saveData(store.state.credentials, action.project)
         .then((ProjectEntity project) {
       if (action.project.isNew) {
         store.dispatch(AddProjectSuccess(project));
@@ -218,7 +214,7 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 
     store.dispatch(LoadProjectRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.projectId)
+        .loadItem(store.state.credentials, action.projectId)
         .then((project) {
       store.dispatch(LoadProjectSuccess(project));
 
@@ -258,9 +254,7 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
     final int updatedAt = (state.projectState.lastUpdated / 1000).round();
 
     store.dispatch(LoadProjectsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadProjectsSuccess(data));
 
       if (action.completer != null) {

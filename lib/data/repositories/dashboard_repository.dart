@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -13,10 +14,10 @@ class DashboardRepository {
 
   final WebClient webClient;
 
-  Future<DashboardEntity> loadItem(
-      CompanyEntity company, AuthState auth) async {
+  Future<DashboardEntity> loadItem(Credentials connectionInfo) async {
     final dynamic response = await webClient.get(
-        auth.url + '/dashboard?only_activity=true', company.token);
+        connectionInfo.url + '/dashboard?only_activity=true',
+        connectionInfo.token);
 
     final DashboardResponse dashboardResponse =
         serializers.deserializeWith(DashboardResponse.serializer, response);

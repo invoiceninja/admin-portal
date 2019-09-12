@@ -101,8 +101,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
     final action = dynamicAction as ArchiveProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.archive)
+        .saveData(store.state.credentials, origProduct, EntityAction.archive)
         .then((ProductEntity product) {
       store.dispatch(ArchiveProductSuccess(product));
       if (action.completer != null) {
@@ -125,8 +124,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
     final action = dynamicAction as DeleteProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.delete)
+        .saveData(store.state.credentials, origProduct, EntityAction.delete)
         .then((ProductEntity product) {
       store.dispatch(DeleteProductSuccess(product));
       if (action.completer != null) {
@@ -149,8 +147,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
     final action = dynamicAction as RestoreProductRequest;
     final origProduct = store.state.productState.map[action.productId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.restore)
+        .saveData(store.state.credentials, origProduct, EntityAction.restore)
         .then((ProductEntity product) {
       store.dispatch(RestoreProductSuccess(product));
       if (action.completer != null) {
@@ -172,8 +169,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProductRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.product)
+        .saveData(store.state.credentials, action.product)
         .then((ProductEntity product) {
       if (action.product.isNew) {
         store.dispatch(AddProductSuccess(product));
@@ -209,9 +205,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     final int updatedAt = (state.productState.lastUpdated / 1000).round();
 
     store.dispatch(LoadProductsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

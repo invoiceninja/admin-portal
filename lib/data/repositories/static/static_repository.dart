@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -13,10 +14,9 @@ class StaticRepository {
 
   final WebClient webClient;
 
-  Future<StaticDataEntity> loadList(
-      CompanyEntity company, AuthState auth) async {
+  Future<StaticDataEntity> loadList(Credentials credentials) async {
     final dynamic response =
-        await webClient.get(auth.url + '/static', company.token);
+        await webClient.get(credentials.url + '/static', credentials.token);
 
     final StaticDataItemResponse staticDataResponse = serializers
         .deserializeWith(StaticDataItemResponse.serializer, response);

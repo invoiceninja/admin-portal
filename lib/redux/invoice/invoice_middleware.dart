@@ -135,8 +135,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
     final action = dynamicAction as ArchiveInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.archive)
+        .saveData(store.state.credentials, origInvoice, EntityAction.archive)
         .then((InvoiceEntity invoice) {
       store.dispatch(ArchiveInvoiceSuccess(invoice));
       if (action.completer != null) {
@@ -159,8 +158,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
     final action = dynamicAction as DeleteInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.delete)
+        .saveData(store.state.credentials, origInvoice, EntityAction.delete)
         .then((InvoiceEntity invoice) {
       store.dispatch(DeleteInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -184,8 +182,7 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
     final action = dynamicAction as RestoreInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.restore)
+        .saveData(store.state.credentials, origInvoice, EntityAction.restore)
         .then((InvoiceEntity invoice) {
       store.dispatch(RestoreInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -209,8 +206,7 @@ Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
     final action = dynamicAction as MarkSentInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origInvoice, EntityAction.markSent)
+        .saveData(store.state.credentials, origInvoice, EntityAction.markSent)
         .then((InvoiceEntity invoice) {
       store.dispatch(MarkSentInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -234,8 +230,8 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     final action = dynamicAction as EmailInvoiceRequest;
     final origInvoice = store.state.invoiceState.map[action.invoiceId];
     repository
-        .emailInvoice(store.state.selectedCompany, store.state.authState,
-            origInvoice, action.template, action.subject, action.body)
+        .emailInvoice(store.state.credentials, origInvoice, action.template,
+            action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailInvoiceSuccess());
       store.dispatch(LoadClient(clientId: origInvoice.clientId));
@@ -258,8 +254,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveInvoiceRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.invoice)
+        .saveData(store.state.credentials, action.invoice)
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
@@ -297,7 +292,7 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
 
     store.dispatch(LoadInvoiceRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.invoiceId)
+        .loadItem(store.state.credentials, action.invoiceId)
         .then((invoice) {
       store.dispatch(LoadInvoiceSuccess(invoice));
       store.dispatch(LoadClient(clientId: invoice.clientId));
@@ -335,9 +330,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
     final int updatedAt = (state.invoiceState.lastUpdated / 1000).round();
 
     store.dispatch(LoadInvoicesRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
