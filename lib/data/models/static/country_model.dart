@@ -59,8 +59,8 @@ abstract class CountryEntity extends Object
       name: '',
       iso2: '',
       iso3: '',
-      swapPostalCode: false,
-      swapCurrencySymbol: false,
+      swapPostalCodeInt: 0,
+      swapCurrencySymbolInt: 0,
       thousandSeparator: '',
       decimalSeparator: '',
     );
@@ -70,10 +70,14 @@ abstract class CountryEntity extends Object
   String get name;
 
   @BuiltValueField(wireName: 'swap_postal_code')
-  bool get swapPostalCode;
+  int get swapPostalCodeInt;
+
+  bool get swapPostalCode => swapCurrencySymbolInt == 1;
 
   @BuiltValueField(wireName: 'swap_currency_symbol')
-  bool get swapCurrencySymbol;
+  int get swapCurrencySymbolInt;
+
+  bool get swapCurrencySymbol => swapCurrencySymbolInt == 1;
 
   // TODO remove once fixed in the app
   @nullable

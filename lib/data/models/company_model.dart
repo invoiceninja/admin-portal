@@ -83,14 +83,19 @@ abstract class CompanyEntity
 
   String get name;
 
+  // TODO remove this
+  @nullable
   String get plan;
 
-  @BuiltValueField(wireName: 'account_key')
+  @BuiltValueField(wireName: 'company_key')
   String get companyKey;
 
-  @BuiltValueField(wireName: 'logo_url')
+  @nullable
+  @BuiltValueField(wireName: 'logo')
   String get logoUrl;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 

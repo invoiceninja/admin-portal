@@ -120,7 +120,7 @@ class _$TimezoneEntitySerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'location',
@@ -145,7 +145,7 @@ class _$TimezoneEntitySerializer
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -354,7 +354,7 @@ class TimezoneItemResponseBuilder
 
 class _$TimezoneEntity extends TimezoneEntity {
   @override
-  final int id;
+  final String id;
   @override
   final String name;
   @override
@@ -411,9 +411,9 @@ class TimezoneEntityBuilder
     implements Builder<TimezoneEntity, TimezoneEntityBuilder> {
   _$TimezoneEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;

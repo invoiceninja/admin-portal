@@ -121,11 +121,11 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'swap_postal_code',
-      serializers.serialize(object.swapPostalCode,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(object.swapPostalCodeInt,
+          specifiedType: const FullType(int)),
       'swap_currency_symbol',
-      serializers.serialize(object.swapCurrencySymbol,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(object.swapCurrencySymbolInt,
+          specifiedType: const FullType(int)),
       'iso_3166_2',
       serializers.serialize(object.iso2, specifiedType: const FullType(String)),
       'iso_3166_3',
@@ -169,12 +169,12 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'swap_postal_code':
-          result.swapPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+          result.swapPostalCodeInt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'swap_currency_symbol':
-          result.swapCurrencySymbol = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+          result.swapCurrencySymbolInt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'thousand_separator':
           result.thousandSeparator = serializers.deserialize(value,
@@ -396,9 +396,9 @@ class _$CountryEntity extends CountryEntity {
   @override
   final String name;
   @override
-  final bool swapPostalCode;
+  final int swapPostalCodeInt;
   @override
-  final bool swapCurrencySymbol;
+  final int swapCurrencySymbolInt;
   @override
   final String thousandSeparator;
   @override
@@ -415,8 +415,8 @@ class _$CountryEntity extends CountryEntity {
 
   _$CountryEntity._(
       {this.name,
-      this.swapPostalCode,
-      this.swapCurrencySymbol,
+      this.swapPostalCodeInt,
+      this.swapCurrencySymbolInt,
       this.thousandSeparator,
       this.decimalSeparator,
       this.iso2,
@@ -426,11 +426,12 @@ class _$CountryEntity extends CountryEntity {
     if (name == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'name');
     }
-    if (swapPostalCode == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCode');
+    if (swapPostalCodeInt == null) {
+      throw new BuiltValueNullFieldError('CountryEntity', 'swapPostalCodeInt');
     }
-    if (swapCurrencySymbol == null) {
-      throw new BuiltValueNullFieldError('CountryEntity', 'swapCurrencySymbol');
+    if (swapCurrencySymbolInt == null) {
+      throw new BuiltValueNullFieldError(
+          'CountryEntity', 'swapCurrencySymbolInt');
     }
     if (iso2 == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'iso2');
@@ -452,8 +453,8 @@ class _$CountryEntity extends CountryEntity {
     if (identical(other, this)) return true;
     return other is CountryEntity &&
         name == other.name &&
-        swapPostalCode == other.swapPostalCode &&
-        swapCurrencySymbol == other.swapCurrencySymbol &&
+        swapPostalCodeInt == other.swapPostalCodeInt &&
+        swapCurrencySymbolInt == other.swapCurrencySymbolInt &&
         thousandSeparator == other.thousandSeparator &&
         decimalSeparator == other.decimalSeparator &&
         iso2 == other.iso2 &&
@@ -468,8 +469,10 @@ class _$CountryEntity extends CountryEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, name.hashCode), swapPostalCode.hashCode),
-                            swapCurrencySymbol.hashCode),
+                        $jc(
+                            $jc($jc(0, name.hashCode),
+                                swapPostalCodeInt.hashCode),
+                            swapCurrencySymbolInt.hashCode),
                         thousandSeparator.hashCode),
                     decimalSeparator.hashCode),
                 iso2.hashCode),
@@ -481,8 +484,8 @@ class _$CountryEntity extends CountryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('CountryEntity')
           ..add('name', name)
-          ..add('swapPostalCode', swapPostalCode)
-          ..add('swapCurrencySymbol', swapCurrencySymbol)
+          ..add('swapPostalCodeInt', swapPostalCodeInt)
+          ..add('swapCurrencySymbolInt', swapCurrencySymbolInt)
           ..add('thousandSeparator', thousandSeparator)
           ..add('decimalSeparator', decimalSeparator)
           ..add('iso2', iso2)
@@ -500,15 +503,15 @@ class CountryEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  bool _swapPostalCode;
-  bool get swapPostalCode => _$this._swapPostalCode;
-  set swapPostalCode(bool swapPostalCode) =>
-      _$this._swapPostalCode = swapPostalCode;
+  int _swapPostalCodeInt;
+  int get swapPostalCodeInt => _$this._swapPostalCodeInt;
+  set swapPostalCodeInt(int swapPostalCodeInt) =>
+      _$this._swapPostalCodeInt = swapPostalCodeInt;
 
-  bool _swapCurrencySymbol;
-  bool get swapCurrencySymbol => _$this._swapCurrencySymbol;
-  set swapCurrencySymbol(bool swapCurrencySymbol) =>
-      _$this._swapCurrencySymbol = swapCurrencySymbol;
+  int _swapCurrencySymbolInt;
+  int get swapCurrencySymbolInt => _$this._swapCurrencySymbolInt;
+  set swapCurrencySymbolInt(int swapCurrencySymbolInt) =>
+      _$this._swapCurrencySymbolInt = swapCurrencySymbolInt;
 
   String _thousandSeparator;
   String get thousandSeparator => _$this._thousandSeparator;
@@ -537,8 +540,8 @@ class CountryEntityBuilder
   CountryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _swapPostalCode = _$v.swapPostalCode;
-      _swapCurrencySymbol = _$v.swapCurrencySymbol;
+      _swapPostalCodeInt = _$v.swapPostalCodeInt;
+      _swapCurrencySymbolInt = _$v.swapCurrencySymbolInt;
       _thousandSeparator = _$v.thousandSeparator;
       _decimalSeparator = _$v.decimalSeparator;
       _iso2 = _$v.iso2;
@@ -567,8 +570,8 @@ class CountryEntityBuilder
     final _$result = _$v ??
         new _$CountryEntity._(
             name: name,
-            swapPostalCode: swapPostalCode,
-            swapCurrencySymbol: swapCurrencySymbol,
+            swapPostalCodeInt: swapPostalCodeInt,
+            swapCurrencySymbolInt: swapCurrencySymbolInt,
             thousandSeparator: thousandSeparator,
             decimalSeparator: decimalSeparator,
             iso2: iso2,

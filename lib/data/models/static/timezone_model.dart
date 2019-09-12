@@ -37,14 +37,14 @@ abstract class TimezoneEntity
     implements Built<TimezoneEntity, TimezoneEntityBuilder> {
   factory TimezoneEntity() {
     return _$TimezoneEntity._(
-      id: 0,
+      id: '',
       name: '',
       location: '',
     );
   }
   TimezoneEntity._();
 
-  int get id;
+  String get id;
 
   String get name;
 

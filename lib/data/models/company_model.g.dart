@@ -29,16 +29,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'plan',
-      serializers.serialize(object.plan, specifiedType: const FullType(String)),
-      'account_key',
+      'company_key',
       serializers.serialize(object.companyKey,
-          specifiedType: const FullType(String)),
-      'logo_url',
-      serializers.serialize(object.logoUrl,
-          specifiedType: const FullType(String)),
-      'default_url',
-      serializers.serialize(object.appUrl,
           specifiedType: const FullType(String)),
       'currency_id',
       serializers.serialize(object.companyCurrencyId,
@@ -208,6 +200,24 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.emailBodyReminder3,
           specifiedType: const FullType(String)),
     ];
+    if (object.plan != null) {
+      result
+        ..add('plan')
+        ..add(serializers.serialize(object.plan,
+            specifiedType: const FullType(String)));
+    }
+    if (object.logoUrl != null) {
+      result
+        ..add('logo')
+        ..add(serializers.serialize(object.logoUrl,
+            specifiedType: const FullType(String)));
+    }
+    if (object.appUrl != null) {
+      result
+        ..add('default_url')
+        ..add(serializers.serialize(object.appUrl,
+            specifiedType: const FullType(String)));
+    }
     if (object.taskStatuses != null) {
       result
         ..add('task_statuses')
@@ -275,11 +285,11 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.plan = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'account_key':
+        case 'company_key':
           result.companyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'logo_url':
+        case 'logo':
           result.logoUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -1076,17 +1086,8 @@ class _$CompanyEntity extends CompanyEntity {
     if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
     }
-    if (plan == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
-    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
-    }
-    if (logoUrl == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
-    }
-    if (appUrl == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'appUrl');
     }
     if (companyCurrencyId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyCurrencyId');

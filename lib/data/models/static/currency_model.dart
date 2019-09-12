@@ -52,7 +52,7 @@ abstract class CurrencyEntity extends Object
       thousandSeparator: '',
       decimalSeparator: '',
       code: '',
-      swapCurrencySymbol: false,
+      swapCurrencySymbolInt: 0,
       exchangeRate: 0.0,
     );
   }
@@ -73,7 +73,9 @@ abstract class CurrencyEntity extends Object
   String get code;
 
   @BuiltValueField(wireName: 'swap_currency_symbol')
-  bool get swapCurrencySymbol;
+  int get swapCurrencySymbolInt;
+
+  bool get swapCurrencySymbol => swapCurrencySymbolInt == 1;
 
   // TODO remove once fixed in the app
   @nullable
