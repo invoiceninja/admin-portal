@@ -49,11 +49,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       serverVersion: '',
       authState: AuthState(),
       staticState: StaticState(),
+      /*
       companyState1: CompanyState(),
       companyState2: CompanyState(),
       companyState3: CompanyState(),
       companyState4: CompanyState(),
       companyState5: CompanyState(),
+      */
       uiState: UIState(
         CompanyEntity(),
         enableDarkMode: enableDarkMode,

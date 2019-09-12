@@ -487,18 +487,13 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
-    return _$UserCompanyEntity._();
-  }
-
-  /*
-  factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
       isAdmin: false,
       company: CompanyEntity(),
       user: UserEntity(),
+      token: TokenEntity(),
     );
   }
-  */
 
   UserCompanyEntity._();
 
@@ -516,18 +511,11 @@ abstract class UserCompanyEntity
 
 abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
   factory TokenEntity() {
-    return _$TokenEntity._();
-  }
-
-  /*
-  factory UserCompanyEntity() {
-    return _$UserCompanyEntity._(
-      isAdmin: false,
-      company: CompanyEntity(),
-      user: UserEntity(),
+    return _$TokenEntity._(
+      token: '',
+      name: '',
     );
   }
-  */
 
   TokenEntity._();
 
