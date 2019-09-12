@@ -32,21 +32,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
-      'currency_id',
-      serializers.serialize(object.companyCurrencyId,
-          specifiedType: const FullType(String)),
-      'timezone_id',
-      serializers.serialize(object.timezoneId,
-          specifiedType: const FullType(String)),
-      'country_id',
-      serializers.serialize(object.countryId,
-          specifiedType: const FullType(String)),
-      'date_format_id',
-      serializers.serialize(object.dateFormatId,
-          specifiedType: const FullType(String)),
-      'datetime_format_id',
-      serializers.serialize(object.datetimeFormatId,
-          specifiedType: const FullType(String)),
       'invoice_terms',
       serializers.serialize(object.defaultInvoiceTerms,
           specifiedType: const FullType(String)),
@@ -216,6 +201,36 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('default_url')
         ..add(serializers.serialize(object.appUrl,
+            specifiedType: const FullType(String)));
+    }
+    if (object.companyCurrencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.companyCurrencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.timezoneId != null) {
+      result
+        ..add('timezone_id')
+        ..add(serializers.serialize(object.timezoneId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.countryId != null) {
+      result
+        ..add('country_id')
+        ..add(serializers.serialize(object.countryId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.dateFormatId != null) {
+      result
+        ..add('date_format_id')
+        ..add(serializers.serialize(object.dateFormatId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.datetimeFormatId != null) {
+      result
+        ..add('datetime_format_id')
+        ..add(serializers.serialize(object.datetimeFormatId,
             specifiedType: const FullType(String)));
     }
     if (object.taskStatuses != null) {
@@ -1088,21 +1103,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
-    }
-    if (companyCurrencyId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'companyCurrencyId');
-    }
-    if (timezoneId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'timezoneId');
-    }
-    if (countryId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
-    }
-    if (dateFormatId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'dateFormatId');
-    }
-    if (datetimeFormatId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'datetimeFormatId');
     }
     if (defaultInvoiceTerms == null) {
       throw new BuiltValueNullFieldError(

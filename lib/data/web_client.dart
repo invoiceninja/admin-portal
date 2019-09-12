@@ -137,7 +137,7 @@ void _checkResponse(http.Response response) {
 
   final version = response.headers['x-app-version'];
 
-  if (_isVersionSupported(version)) {
+  if (!_isVersionSupported(version)) {
     throw 'The minimum web app version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion';
   } else if (response.statusCode >= 400) {
     print('==== FAILED ====');
@@ -176,6 +176,9 @@ String _parseError(int code, String response) {
 }
 
 bool _isVersionSupported(String version) {
+  // TODO remove this
+  return true;
+
   if (version == null || version.isEmpty) {
     return false;
   }

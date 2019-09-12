@@ -99,18 +99,26 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get companyCurrencyId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
+  @nullable
   @BuiltValueField(wireName: 'date_format_id')
   String get dateFormatId;
 
+  @nullable
   @BuiltValueField(wireName: 'datetime_format_id')
   String get datetimeFormatId;
 
