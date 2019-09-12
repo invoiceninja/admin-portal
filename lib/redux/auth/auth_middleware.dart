@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -38,7 +39,9 @@ void _saveAuthLocal(
 
 void _loadAuthLocal(Store<AppState> store) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String email = prefs.getString(kSharedPrefEmail) ?? '';
+  final String email = kReleaseMode
+      ? (prefs.getString(kSharedPrefEmail) ?? '')
+      : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
   store.dispatch(UserLoginLoaded(email, url, secret));

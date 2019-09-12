@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
@@ -52,10 +53,18 @@ class _LoginState extends State<LoginView> {
   @override
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
-    _emailController.text = state.email;
-    _passwordController.text = state.password;
-    _urlController.text = cleanApiUrl(state.url);
-    _secretController.text = state.secret;
+
+    if (kReleaseMode) {
+      _emailController.text = state.email;
+      _passwordController.text = state.password;
+      _urlController.text = cleanApiUrl(state.url);
+      _secretController.text = state.secret;
+    } else {
+      _emailController.text = Config.TEST_EMAIL;
+      _passwordController.text = Config.TEST_PASSWORD;
+      _firstNameController.text = 'TEST';
+      _lastNameController.text = 'TEST';
+    }
 
     if (cleanApiUrl(state.url).isNotEmpty) {
       _isSelfHosted = true;
