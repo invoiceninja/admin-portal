@@ -49,13 +49,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       serverVersion: '',
       authState: AuthState(),
       staticState: StaticState(),
-      /*
-      companyState1: CompanyState(),
-      companyState2: CompanyState(),
-      companyState3: CompanyState(),
-      companyState4: CompanyState(),
-      companyState5: CompanyState(),
-      */
+      companyState1: UserCompanyState(),
+      companyState2: UserCompanyState(),
+      companyState3: UserCompanyState(),
+      companyState4: UserCompanyState(),
+      companyState5: UserCompanyState(),
       uiState: UIState(
         CompanyEntity(),
         enableDarkMode: enableDarkMode,
@@ -80,20 +78,20 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UIState get uiState;
 
-  CompanyState get companyState1;
+  UserCompanyState get companyState1;
 
-  CompanyState get companyState2;
+  UserCompanyState get companyState2;
 
-  CompanyState get companyState3;
+  UserCompanyState get companyState3;
 
-  CompanyState get companyState4;
+  UserCompanyState get companyState4;
 
-  CompanyState get companyState5;
+  UserCompanyState get companyState5;
 
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
-  CompanyState get selectedCompanyState {
+  UserCompanyState get selectedCompanyState {
     switch (uiState.selectedCompanyIndex) {
       case 1:
         return companyState1;

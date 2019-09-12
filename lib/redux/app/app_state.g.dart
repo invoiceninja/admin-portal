@@ -38,19 +38,19 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           specifiedType: const FullType(UIState)),
       'companyState1',
       serializers.serialize(object.companyState1,
-          specifiedType: const FullType(CompanyState)),
+          specifiedType: const FullType(UserCompanyState)),
       'companyState2',
       serializers.serialize(object.companyState2,
-          specifiedType: const FullType(CompanyState)),
+          specifiedType: const FullType(UserCompanyState)),
       'companyState3',
       serializers.serialize(object.companyState3,
-          specifiedType: const FullType(CompanyState)),
+          specifiedType: const FullType(UserCompanyState)),
       'companyState4',
       serializers.serialize(object.companyState4,
-          specifiedType: const FullType(CompanyState)),
+          specifiedType: const FullType(UserCompanyState)),
       'companyState5',
       serializers.serialize(object.companyState5,
-          specifiedType: const FullType(CompanyState)),
+          specifiedType: const FullType(UserCompanyState)),
     ];
 
     return result;
@@ -93,23 +93,28 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           break;
         case 'companyState1':
           result.companyState1.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
           break;
         case 'companyState2':
           result.companyState2.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
           break;
         case 'companyState3':
           result.companyState3.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
           break;
         case 'companyState4':
           result.companyState4.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
           break;
         case 'companyState5':
           result.companyState5.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
           break;
       }
     }
@@ -132,15 +137,15 @@ class _$AppState extends AppState {
   @override
   final UIState uiState;
   @override
-  final CompanyState companyState1;
+  final UserCompanyState companyState1;
   @override
-  final CompanyState companyState2;
+  final UserCompanyState companyState2;
   @override
-  final CompanyState companyState3;
+  final UserCompanyState companyState3;
   @override
-  final CompanyState companyState4;
+  final UserCompanyState companyState4;
   @override
-  final CompanyState companyState5;
+  final UserCompanyState companyState5;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();

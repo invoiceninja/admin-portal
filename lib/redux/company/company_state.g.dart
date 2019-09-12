@@ -6,17 +6,18 @@ part of 'company_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<CompanyState> _$companyStateSerializer =
+Serializer<UserCompanyState> _$companyStateSerializer =
     new _$CompanyStateSerializer();
 
-class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
+class _$CompanyStateSerializer
+    implements StructuredSerializer<UserCompanyState> {
   @override
-  final Iterable<Type> types = const [CompanyState, _$CompanyState];
+  final Iterable<Type> types = const [UserCompanyState, _$CompanyState];
   @override
   final String wireName = 'CompanyState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CompanyState object,
+  Iterable<Object> serialize(Serializers serializers, UserCompanyState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'documentState',
@@ -63,7 +64,8 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
   }
 
   @override
-  CompanyState deserialize(Serializers serializers, Iterable<Object> serialized,
+  UserCompanyState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CompanyStateBuilder();
 
@@ -129,7 +131,7 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
   }
 }
 
-class _$CompanyState extends CompanyState {
+class _$CompanyState extends UserCompanyState {
   @override
   final UserCompanyEntity userCompany;
   @override
@@ -208,7 +210,7 @@ class _$CompanyState extends CompanyState {
   }
 
   @override
-  CompanyState rebuild(void Function(CompanyStateBuilder) updates) =>
+  UserCompanyState rebuild(void Function(CompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
@@ -217,7 +219,7 @@ class _$CompanyState extends CompanyState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CompanyState &&
+    return other is UserCompanyState &&
         userCompany == other.userCompany &&
         documentState == other.documentState &&
         dashboardState == other.dashboardState &&
@@ -278,7 +280,7 @@ class _$CompanyState extends CompanyState {
 }
 
 class CompanyStateBuilder
-    implements Builder<CompanyState, CompanyStateBuilder> {
+    implements Builder<UserCompanyState, CompanyStateBuilder> {
   _$CompanyState _$v;
 
   UserCompanyEntityBuilder _userCompany;
@@ -374,7 +376,7 @@ class CompanyStateBuilder
   }
 
   @override
-  void replace(CompanyState other) {
+  void replace(UserCompanyState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }

@@ -20,22 +20,22 @@ class PersistenceRepository {
 
   final FileStorage fileStorage;
 
-  Future<File> saveCompanyState(CompanyState state) async {
+  Future<File> saveCompanyState(UserCompanyState state) async {
     /*
     // TODO re-enable
     final stateWithoutToken = state.rebuild(
         (b) => b..company.replace(state.company.rebuild((b) => b..token = '')));
      */
-    final data = serializers.serializeWith(CompanyState.serializer, state);
+    final data = serializers.serializeWith(UserCompanyState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<CompanyState> loadCompanyState(int index) async {
+  Future<UserCompanyState> loadCompanyState(int index) async {
     final String data = await fileStorage.load();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString(getCompanyTokenKey(index - 1)) ?? '';
-    final companyState =
-        serializers.deserializeWith(CompanyState.serializer, json.decode(data));
+    final companyState = serializers.deserializeWith(
+        UserCompanyState.serializer, json.decode(data));
 
     /*
     // TODO re-enable

@@ -16,9 +16,9 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 // STARTER: import - do not remove comment
 
-CompanyState companyReducer(CompanyState state, dynamic action) {
+UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
   if (action is RefreshData && action.loadCompanies) {
-    return CompanyState();
+    return UserCompanyState();
   }
 
   return state.rebuild((b) => b

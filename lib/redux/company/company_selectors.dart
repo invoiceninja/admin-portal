@@ -54,9 +54,9 @@ List<String> getCurrencyIds(
 }
 
 var memoizedFilteredSelector = memo2(
-    (String filter, CompanyState state) => filteredSelector(filter, state));
+    (String filter, UserCompanyState state) => filteredSelector(filter, state));
 
-List<BaseEntity> filteredSelector(String filter, CompanyState state) {
+List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
   final List<BaseEntity> list = []
     ..addAll(state.productState.list
         .map((productId) => state.productState.map[productId])

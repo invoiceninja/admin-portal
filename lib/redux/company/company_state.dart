@@ -23,9 +23,9 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'company_state.g.dart';
 
-abstract class CompanyState
-    implements Built<CompanyState, CompanyStateBuilder> {
-  factory CompanyState() {
+abstract class UserCompanyState
+    implements Built<UserCompanyState, CompanyStateBuilder> {
+  factory UserCompanyState() {
     return _$CompanyState._(
       userCompany: UserCompanyEntity(),
       documentState: DocumentState(),
@@ -43,7 +43,7 @@ abstract class CompanyState
     );
   }
 
-  CompanyState._();
+  UserCompanyState._();
 
   @nullable
   UserCompanyEntity get userCompany;
@@ -79,5 +79,6 @@ abstract class CompanyState
   TokenEntity get token => userCompany.token;
 
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
-  static Serializer<CompanyState> get serializer => _$companyStateSerializer;
+  static Serializer<UserCompanyState> get serializer =>
+      _$companyStateSerializer;
 }

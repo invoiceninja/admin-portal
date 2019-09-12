@@ -143,11 +143,11 @@ Middleware<AppState> _createLoadState(
   AuthState authState;
   UIState uiState;
   StaticState staticState;
-  CompanyState company1State;
-  CompanyState company2State;
-  CompanyState company3State;
-  CompanyState company4State;
-  CompanyState company5State;
+  UserCompanyState company1State;
+  UserCompanyState company2State;
+  UserCompanyState company3State;
+  UserCompanyState company4State;
+  UserCompanyState company5State;
 
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
