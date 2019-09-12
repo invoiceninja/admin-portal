@@ -321,8 +321,8 @@ Middleware<AppState> _createAccountLoaded() {
     store.dispatch(LoadStaticSuccess(data: data.static));
 
     if (action.loadCompanies) {
-      for (int i = 0; i < data.companies.length; i++) {
-        final UserCompanyEntity userCompany = data.companies[i];
+      for (int i = 0; i < data.userCompanies.length; i++) {
+        final UserCompanyEntity userCompany = data.userCompanies[i];
 
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(getCompanyTokenKey(i), userCompany.company.token);
@@ -331,7 +331,7 @@ Middleware<AppState> _createAccountLoaded() {
         store.dispatch(LoadCompanySuccess(userCompany));
       }
 
-      store.dispatch(SelectCompany(1, data.companies[0]));
+      store.dispatch(SelectCompany(1, data.userCompanies[0]));
       store.dispatch(UserLoginSuccess());
     }
 

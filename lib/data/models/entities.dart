@@ -231,7 +231,7 @@ abstract class LoginResponseData
   LoginResponseData._();
 
   @BuiltValueField(wireName: 'company_users')
-  BuiltList<UserCompanyEntity> get companies;
+  BuiltList<UserCompanyEntity> get userCompanies;
 
   StaticData get static;
 

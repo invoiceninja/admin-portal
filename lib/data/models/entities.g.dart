@@ -369,7 +369,7 @@ class _$LoginResponseDataSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'company_users',
-      serializers.serialize(object.companies,
+      serializers.serialize(object.userCompanies,
           specifiedType: const FullType(
               BuiltList, const [const FullType(UserCompanyEntity)])),
       'static',
@@ -393,7 +393,7 @@ class _$LoginResponseDataSerializer
       final dynamic value = iterator.current;
       switch (key) {
         case 'company_users':
-          result.companies.replace(serializers.deserialize(value,
+          result.userCompanies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(UserCompanyEntity)]))
               as BuiltList<dynamic>);
@@ -959,7 +959,7 @@ class LoginResponseBuilder
 
 class _$LoginResponseData extends LoginResponseData {
   @override
-  final BuiltList<UserCompanyEntity> companies;
+  final BuiltList<UserCompanyEntity> userCompanies;
   @override
   final StaticData static;
 
@@ -967,9 +967,9 @@ class _$LoginResponseData extends LoginResponseData {
           [void Function(LoginResponseDataBuilder) updates]) =>
       (new LoginResponseDataBuilder()..update(updates)).build();
 
-  _$LoginResponseData._({this.companies, this.static}) : super._() {
-    if (companies == null) {
-      throw new BuiltValueNullFieldError('LoginResponseData', 'companies');
+  _$LoginResponseData._({this.userCompanies, this.static}) : super._() {
+    if (userCompanies == null) {
+      throw new BuiltValueNullFieldError('LoginResponseData', 'userCompanies');
     }
     if (static == null) {
       throw new BuiltValueNullFieldError('LoginResponseData', 'static');
@@ -988,19 +988,19 @@ class _$LoginResponseData extends LoginResponseData {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is LoginResponseData &&
-        companies == other.companies &&
+        userCompanies == other.userCompanies &&
         static == other.static;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, companies.hashCode), static.hashCode));
+    return $jf($jc($jc(0, userCompanies.hashCode), static.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('LoginResponseData')
-          ..add('companies', companies)
+          ..add('userCompanies', userCompanies)
           ..add('static', static))
         .toString();
   }
@@ -1010,11 +1010,11 @@ class LoginResponseDataBuilder
     implements Builder<LoginResponseData, LoginResponseDataBuilder> {
   _$LoginResponseData _$v;
 
-  ListBuilder<UserCompanyEntity> _companies;
-  ListBuilder<UserCompanyEntity> get companies =>
-      _$this._companies ??= new ListBuilder<UserCompanyEntity>();
-  set companies(ListBuilder<UserCompanyEntity> companies) =>
-      _$this._companies = companies;
+  ListBuilder<UserCompanyEntity> _userCompanies;
+  ListBuilder<UserCompanyEntity> get userCompanies =>
+      _$this._userCompanies ??= new ListBuilder<UserCompanyEntity>();
+  set userCompanies(ListBuilder<UserCompanyEntity> userCompanies) =>
+      _$this._userCompanies = userCompanies;
 
   StaticDataBuilder _static;
   StaticDataBuilder get static => _$this._static ??= new StaticDataBuilder();
@@ -1024,7 +1024,7 @@ class LoginResponseDataBuilder
 
   LoginResponseDataBuilder get _$this {
     if (_$v != null) {
-      _companies = _$v.companies?.toBuilder();
+      _userCompanies = _$v.userCompanies?.toBuilder();
       _static = _$v.static?.toBuilder();
       _$v = null;
     }
@@ -1050,12 +1050,12 @@ class LoginResponseDataBuilder
     try {
       _$result = _$v ??
           new _$LoginResponseData._(
-              companies: companies.build(), static: static.build());
+              userCompanies: userCompanies.build(), static: static.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'companies';
-        companies.build();
+        _$failedField = 'userCompanies';
+        userCompanies.build();
         _$failedField = 'static';
         static.build();
       } catch (e) {

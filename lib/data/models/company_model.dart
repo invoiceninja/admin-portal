@@ -487,18 +487,53 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
+    return _$UserCompanyEntity._();
+  }
+
+  /*
+  factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
       isAdmin: false,
       company: CompanyEntity(),
+      user: UserEntity(),
     );
   }
+  */
 
   UserCompanyEntity._();
 
+  bool get isAdmin;
+
   CompanyEntity get company;
 
-  bool get isAdmin;
+  UserEntity get user;
+
+  TokenEntity get token;
 
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
+}
+
+abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
+  factory TokenEntity() {
+    return _$TokenEntity._();
+  }
+
+  /*
+  factory UserCompanyEntity() {
+    return _$UserCompanyEntity._(
+      isAdmin: false,
+      company: CompanyEntity(),
+      user: UserEntity(),
+    );
+  }
+  */
+
+  TokenEntity._();
+
+  String get token;
+
+  String get name;
+
+  static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
 }

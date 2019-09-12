@@ -15,6 +15,7 @@ Serializer<TaxRateEntity> _$taxRateEntitySerializer =
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
+Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -789,12 +790,18 @@ class _$UserCompanyEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserCompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'company',
-      serializers.serialize(object.company,
-          specifiedType: const FullType(CompanyEntity)),
       'isAdmin',
       serializers.serialize(object.isAdmin,
           specifiedType: const FullType(bool)),
+      'company',
+      serializers.serialize(object.company,
+          specifiedType: const FullType(CompanyEntity)),
+      'user',
+      serializers.serialize(object.user,
+          specifiedType: const FullType(UserEntity)),
+      'token',
+      serializers.serialize(object.token,
+          specifiedType: const FullType(TokenEntity)),
     ];
 
     return result;
@@ -812,13 +819,67 @@ class _$UserCompanyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'isAdmin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
           break;
-        case 'isAdmin':
-          result.isAdmin = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user':
+          result.user.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+        case 'token':
+          result.token.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TokenEntity)) as TokenEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
+  @override
+  final Iterable<Type> types = const [TokenEntity, _$TokenEntity];
+  @override
+  final String wireName = 'TokenEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, TokenEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'token',
+      serializers.serialize(object.token,
+          specifiedType: const FullType(String)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  TokenEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TokenEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'token':
+          result.token = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -2355,20 +2416,31 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
 class _$UserCompanyEntity extends UserCompanyEntity {
   @override
+  final bool isAdmin;
+  @override
   final CompanyEntity company;
   @override
-  final bool isAdmin;
+  final UserEntity user;
+  @override
+  final TokenEntity token;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
-  _$UserCompanyEntity._({this.company, this.isAdmin}) : super._() {
+  _$UserCompanyEntity._({this.isAdmin, this.company, this.user, this.token})
+      : super._() {
+    if (isAdmin == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
+    }
     if (company == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'company');
     }
-    if (isAdmin == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
+    if (user == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'user');
+    }
+    if (token == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'token');
     }
   }
 
@@ -2384,20 +2456,26 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserCompanyEntity &&
+        isAdmin == other.isAdmin &&
         company == other.company &&
-        isAdmin == other.isAdmin;
+        user == other.user &&
+        token == other.token;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, company.hashCode), isAdmin.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, isAdmin.hashCode), company.hashCode), user.hashCode),
+        token.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
+          ..add('isAdmin', isAdmin)
           ..add('company', company)
-          ..add('isAdmin', isAdmin))
+          ..add('user', user)
+          ..add('token', token))
         .toString();
   }
 }
@@ -2406,21 +2484,31 @@ class UserCompanyEntityBuilder
     implements Builder<UserCompanyEntity, UserCompanyEntityBuilder> {
   _$UserCompanyEntity _$v;
 
+  bool _isAdmin;
+  bool get isAdmin => _$this._isAdmin;
+  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
       _$this._company ??= new CompanyEntityBuilder();
   set company(CompanyEntityBuilder company) => _$this._company = company;
 
-  bool _isAdmin;
-  bool get isAdmin => _$this._isAdmin;
-  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+  UserEntityBuilder _user;
+  UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+  set user(UserEntityBuilder user) => _$this._user = user;
+
+  TokenEntityBuilder _token;
+  TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
+  set token(TokenEntityBuilder token) => _$this._token = token;
 
   UserCompanyEntityBuilder();
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
-      _company = _$v.company?.toBuilder();
       _isAdmin = _$v.isAdmin;
+      _company = _$v.company?.toBuilder();
+      _user = _$v.user?.toBuilder();
+      _token = _$v.token?.toBuilder();
       _$v = null;
     }
     return this;
@@ -2444,18 +2532,114 @@ class UserCompanyEntityBuilder
     _$UserCompanyEntity _$result;
     try {
       _$result = _$v ??
-          new _$UserCompanyEntity._(company: company.build(), isAdmin: isAdmin);
+          new _$UserCompanyEntity._(
+              isAdmin: isAdmin,
+              company: company.build(),
+              user: user.build(),
+              token: token.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'company';
         company.build();
+        _$failedField = 'user';
+        user.build();
+        _$failedField = 'token';
+        token.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TokenEntity extends TokenEntity {
+  @override
+  final String token;
+  @override
+  final String name;
+
+  factory _$TokenEntity([void Function(TokenEntityBuilder) updates]) =>
+      (new TokenEntityBuilder()..update(updates)).build();
+
+  _$TokenEntity._({this.token, this.name}) : super._() {
+    if (token == null) {
+      throw new BuiltValueNullFieldError('TokenEntity', 'token');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('TokenEntity', 'name');
+    }
+  }
+
+  @override
+  TokenEntity rebuild(void Function(TokenEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TokenEntityBuilder toBuilder() => new TokenEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TokenEntity && token == other.token && name == other.name;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, token.hashCode), name.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TokenEntity')
+          ..add('token', token)
+          ..add('name', name))
+        .toString();
+  }
+}
+
+class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
+  _$TokenEntity _$v;
+
+  String _token;
+  String get token => _$this._token;
+  set token(String token) => _$this._token = token;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  TokenEntityBuilder();
+
+  TokenEntityBuilder get _$this {
+    if (_$v != null) {
+      _token = _$v.token;
+      _name = _$v.name;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TokenEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TokenEntity;
+  }
+
+  @override
+  void update(void Function(TokenEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TokenEntity build() {
+    final _$result = _$v ?? new _$TokenEntity._(token: token, name: name);
     replace(_$result);
     return _$result;
   }
