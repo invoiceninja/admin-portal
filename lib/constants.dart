@@ -104,7 +104,7 @@ const String kDefaultDateTimeFormat = '5';
 const int kInvoiceTypeStandard = 1;
 const int kInvoiceTypeQuote = 2;
 
-const int kActivityEmailInvoice = 6;
+const String kActivityEmailInvoice = '6';
 
 const int kModuleRecurringInvoice = 1;
 const int kModuleCredit = 2;

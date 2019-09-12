@@ -17,7 +17,6 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.selectedCompany;
     final user = state.user;
     final localization = AppLocalization.of(context);
 

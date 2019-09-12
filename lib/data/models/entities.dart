@@ -404,7 +404,7 @@ abstract class ActivityEntity
     VendorEntity vendor,
   }) {
     // TODO remove this in v2
-    if (activityTypeId == 10 && contactId == null) {
+    if (activityTypeId == '10' && contactId == null) {
       activity = activity.replaceFirst(':contact', ':user');
     }
 

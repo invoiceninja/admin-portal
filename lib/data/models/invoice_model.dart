@@ -402,7 +402,7 @@ abstract class InvoiceEntity extends Object
       }
 
       if (user.canCreate(EntityType.invoice)) {
-        if (isQuote && user.canEditEntity(this) && quoteInvoiceId == 0) {
+        if (isQuote && user.canEditEntity(this) && quoteInvoiceId == null) {
           actions.add(EntityAction.convert);
         }
       }

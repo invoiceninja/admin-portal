@@ -103,9 +103,9 @@ abstract class ClientEntity extends Object
     );
   }
 
-  static int counter = 0;
-
   ClientEntity._();
+
+  static int counter = 0;
 
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -242,7 +242,7 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
-  Iterable<ActivityEntity> getActivities({String invoiceId, int typeId}) {
+  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
     return activities.where((activity) {
       if (invoiceId != null && activity.invoiceId != invoiceId) {
         return false;

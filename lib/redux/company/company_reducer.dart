@@ -44,35 +44,33 @@ Reducer<UserCompanyEntity> companyEntityReducer = combineReducers([
 
 UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity company, LoadCompanySuccess action) {
-  var company = action.company;
+  var userCompany = action.company;
 
-  /*
-  if (company.taskStatuses != null) {
-    company = company.rebuild((b) => b
-      ..taskStatusMap.addAll(Map.fromIterable(
-        company.taskStatuses,
+  if (userCompany.company.taskStatuses != null) {
+    userCompany = userCompany
+      ..company.rebuild((b) => b
+        ..taskStatusMap.addAll(Map.fromIterable(
+          userCompany.company.taskStatuses,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        )));
+  }
+
+  if (userCompany.company.expenseCategories != null) {
+    userCompany = userCompany
+      ..company.rebuild((b) => b
+        ..expenseCategoryMap.addAll(Map.fromIterable(
+          userCompany.company.expenseCategories,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        )));
+  }
+
+  return userCompany
+    ..company.rebuild((b) => b
+      ..userMap.addAll(Map.fromIterable(
+        action.company.company.users,
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
       )));
-  }
-
-  if (company.expenseCategories != null) {
-    company = company.rebuild((b) => b
-      ..expenseCategoryMap.addAll(Map.fromIterable(
-        company.expenseCategories,
-        key: (dynamic item) => item.id,
-        value: (dynamic item) => item,
-      )));
-  }
-
-  return company.rebuild((b) => b
-    ..userMap.addAll(Map.fromIterable(
-      action.company.users,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-   */
-
-  return company;
 }

@@ -193,7 +193,7 @@ List<String> clientExpenseList(
     BuiltMap<String, ExpenseEntity> expenseMap, String clientId) {
   final list = expenseMap.keys.where((expenseid) {
     final expense = expenseMap[expenseid];
-    if (clientId != null && clientId != 0 && expense.clientId != clientId) {
+    if (clientId != null && clientId != null && expense.clientId != clientId) {
       return false;
     }
     return expense.isActive && !expense.isInvoiced;

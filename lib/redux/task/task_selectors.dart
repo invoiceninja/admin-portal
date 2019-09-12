@@ -39,7 +39,7 @@ var memoizedTaskList = memo2(
 List<String> taskList(BuiltMap<String, TaskEntity> taskMap, String clientId) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
-    if (clientId != null && clientId != 0 && task.clientId != clientId) {
+    if (clientId != null && clientId != null && task.clientId != clientId) {
       return false;
     }
     return task.isActive && task.isStopped && !task.isInvoiced;
