@@ -64,6 +64,8 @@ class _LoginState extends State<LoginView> {
       _passwordController.text = Config.TEST_PASSWORD;
       _firstNameController.text = 'TEST';
       _lastNameController.text = 'TEST';
+      _privacyChecked = true;
+      _termsChecked = true;
     }
 
     if (cleanApiUrl(state.url).isNotEmpty) {
