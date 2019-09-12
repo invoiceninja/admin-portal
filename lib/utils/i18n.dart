@@ -14598,8 +14598,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get thankYouForYourPurchase =>
       _localizedValues[localeCode]['thank_you_for_your_purchase'];
 
-  String get all =>
-      _localizedValues[localeCode]['all'];
+  String get all => _localizedValues[localeCode]['all'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -149,8 +149,6 @@ abstract class TaskEntity extends Object
 
   TaskEntity._();
 
-  static int counter = 0;
-
   TaskEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false

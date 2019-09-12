@@ -56,7 +56,7 @@ abstract class ClientEntity extends Object
     implements Built<ClientEntity, ClientEntityBuilder> {
   factory ClientEntity({String id}) {
     return _$ClientEntity._(
-      id: id ?? '${--ClientEntity.counter}',
+      id: id ?? BaseEntity.nextId,
       name: '',
       displayName: '',
       balance: 0.0,
@@ -104,8 +104,6 @@ abstract class ClientEntity extends Object
   }
 
   ClientEntity._();
-
-  static int counter = 0;
 
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -476,8 +474,6 @@ abstract class ContactEntity extends Object
   }
 
   ContactEntity._();
-
-  static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;

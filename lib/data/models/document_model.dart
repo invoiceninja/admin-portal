@@ -64,8 +64,6 @@ abstract class DocumentEntity extends Object
 
   DocumentEntity._();
 
-  static int counter = 0;
-
   String get name;
 
   String get type;

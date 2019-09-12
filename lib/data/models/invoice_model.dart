@@ -145,8 +145,6 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity._();
 
-  static int counter = 0;
-
   InvoiceEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false
@@ -551,8 +549,6 @@ abstract class InvoiceItemEntity extends Object
 
   InvoiceItemEntity._();
 
-  static int counter = 0;
-
   @override
   EntityType get entityType {
     return EntityType.invoiceItem;
@@ -675,8 +671,6 @@ abstract class InvitationEntity extends Object
   }
 
   InvitationEntity._();
-
-  static int counter = 0;
 
   String get key;
 

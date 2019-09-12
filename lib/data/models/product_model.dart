@@ -67,8 +67,6 @@ abstract class ProductEntity extends Object
 
   ProductEntity._();
 
-  static int counter = 0;
-
   ProductEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false);

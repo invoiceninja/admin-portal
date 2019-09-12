@@ -369,8 +369,6 @@ abstract class PaymentTermEntity extends Object
 
   PaymentTermEntity._();
 
-  static int counter = 0;
-
   static Serializer<PaymentTermEntity> get serializer =>
       _$paymentTermEntitySerializer;
 
@@ -406,8 +404,6 @@ abstract class TaxRateEntity extends Object
   }
 
   TaxRateEntity._();
-
-  static int counter = 0;
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 

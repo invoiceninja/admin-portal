@@ -298,8 +298,6 @@ abstract class VendorContactEntity extends Object
     return EntityType.vendorContact;
   }
 
-  static int counter = 0;
-
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
 

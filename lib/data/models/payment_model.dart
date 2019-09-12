@@ -80,8 +80,6 @@ abstract class PaymentEntity extends Object
 
   PaymentEntity._();
 
-  static int counter = 0;
-
   @override
   EntityType get entityType {
     return EntityType.payment;

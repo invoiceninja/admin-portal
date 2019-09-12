@@ -109,8 +109,6 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity._();
 
-  static int counter = 0;
-
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false
@@ -389,8 +387,6 @@ abstract class ExpenseCategoryEntity extends Object
   }
 
   ExpenseCategoryEntity._();
-
-  static int counter = 0;
 
   @override
   bool matchesFilter(String filter) {

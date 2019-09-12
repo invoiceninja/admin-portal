@@ -68,8 +68,6 @@ abstract class CreditEntity extends Object
 
   CreditEntity._();
 
-  static int counter = 0;
-
   CreditEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false);

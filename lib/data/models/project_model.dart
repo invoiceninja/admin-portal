@@ -70,8 +70,6 @@ abstract class ProjectEntity extends Object
 
   ProjectEntity._();
 
-  static int counter = 0;
-
   ProjectEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false);
