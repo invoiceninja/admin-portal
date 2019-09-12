@@ -157,7 +157,7 @@ class InvoiceViewVM extends EntityViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.selectedCompany.user,
+              user: state.user,
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,

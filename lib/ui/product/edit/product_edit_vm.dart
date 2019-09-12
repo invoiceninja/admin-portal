@@ -36,6 +36,7 @@ class ProductEditScreen extends StatelessWidget {
 
 class ProductEditVM {
   ProductEditVM({
+    @required this.state,
     @required this.company,
     @required this.product,
     @required this.origProduct,
@@ -53,6 +54,7 @@ class ProductEditVM {
     final product = state.productUIState.editing;
 
     return ProductEditVM(
+      state: state,
       company: state.selectedCompany,
       isSaving: state.isSaving,
       isDirty: product.isNew,
@@ -111,6 +113,7 @@ class ProductEditVM {
     );
   }
 
+  final AppState state;
   final CompanyEntity company;
   final ProductEntity product;
   final ProductEntity origProduct;

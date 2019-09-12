@@ -54,7 +54,7 @@ class _ClientViewState extends State<ClientView>
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final company = viewModel.company;
-    final user = company.user;
+    final user = store.state.user;
 
     return WillPopScope(
       onWillPop: () async {
@@ -240,7 +240,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),
@@ -270,7 +270,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     )
                   : Container(),
               ActionMenuButton(
-                user: viewModel.company.user,
+                user: viewModel.state.user,
                 isSaving: viewModel.isSaving,
                 entity: client,
                 onSelected: viewModel.onEntityAction,

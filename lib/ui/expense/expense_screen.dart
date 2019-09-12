@@ -17,8 +17,9 @@ class ExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
-    final user = company.user;
+    final state = store.state;
+    final company = state.selectedCompany;
+    final user = state.user;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(

@@ -139,7 +139,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
     final documentState = viewModel.state.documentState;
     final documents =
         memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
@@ -178,7 +178,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     )
                   : Container(),
               ActionMenuButton(
-                user: viewModel.company.user,
+                user: viewModel.state.user,
                 isSaving: viewModel.isSaving,
                 entity: expense,
                 onSelected: viewModel.onEntityAction,

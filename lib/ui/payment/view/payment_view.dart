@@ -75,12 +75,12 @@ class _PaymentViewState extends State<PaymentView> {
                     },
                   ),
                   ActionMenuButton(
-                    user: viewModel.company.user,
+                    user: viewModel.state.user,
                     isSaving: viewModel.isSaving,
                     entity: payment,
                     onSelected: viewModel.onEntityAction,
-                    entityActions: viewModel.payment.getActions(
-                        user: viewModel.company.user, client: client),
+                    entityActions: viewModel.payment
+                        .getActions(user: viewModel.state.user, client: client),
                   )
                 ],
         ),

@@ -54,7 +54,6 @@ abstract class CompanyEntity
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
-      user: UserEntity(),
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
@@ -210,8 +209,6 @@ abstract class CompanyEntity
   BuiltList<UserEntity> get users;
 
   BuiltMap<String, UserEntity> get userMap;
-
-  UserEntity get user;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;

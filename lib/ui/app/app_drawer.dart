@@ -79,7 +79,7 @@ class AppDrawer extends StatelessWidget {
                 style: Theme.of(context).textTheme.subhead,
                 overflow: TextOverflow.ellipsis,
               ),
-              Text(company.user.email,
+              Text(viewModel.user.email,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.caption),
             ],
@@ -118,7 +118,7 @@ class AppDrawer extends StatelessWidget {
                             style: Theme.of(context).textTheme.subhead,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Text(company.user.email,
+                          Text(viewModel.user.email,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.caption)
                         ],
@@ -380,7 +380,7 @@ class DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
-    final user = company.user;
+    final user = store.state.user;
 
     if (entityType != null && !user.canViewOrCreate(entityType)) {
       return Container();

@@ -179,7 +179,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final project = viewModel.project;
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),

@@ -35,6 +35,7 @@ class ProductViewScreen extends StatelessWidget {
 
 class ProductViewVM {
   ProductViewVM({
+    @required this.state,
     @required this.product,
     @required this.company,
     @required this.onEntityAction,
@@ -64,6 +65,7 @@ class ProductViewVM {
     */
 
     return ProductViewVM(
+      state: state,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: product.isNew,
@@ -95,6 +97,7 @@ class ProductViewVM {
     );
   }
 
+  final AppState state;
   final ProductEntity product;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;

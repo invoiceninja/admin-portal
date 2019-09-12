@@ -17,7 +17,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = company.user;
+    final user = store.state.user;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(

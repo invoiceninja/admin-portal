@@ -36,7 +36,7 @@ class InvoiceOverview extends StatelessWidget {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
-    final user = viewModel.company.user;
+    final user = state.user;
     final color = invoice.isPastDue
         ? Colors.red
         : InvoiceStatusColors.colors[invoice.invoiceStatusId];

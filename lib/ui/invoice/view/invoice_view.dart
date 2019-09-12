@@ -119,7 +119,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final invoice = viewModel.invoice;
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
     final client = viewModel.client;
     final documentState = viewModel.state.documentState;
     final documents = memoizedInvoiceDocumentsSelector(

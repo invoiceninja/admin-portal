@@ -92,7 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
-    final user = company.user;
+    final user = viewModel.state.user;
 
     return WillPopScope(
       onWillPop: () async {

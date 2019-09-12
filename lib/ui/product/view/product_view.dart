@@ -120,7 +120,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
     final product = viewModel.product;
 
     return AppBar(

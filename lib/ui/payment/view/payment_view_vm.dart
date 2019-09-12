@@ -34,6 +34,7 @@ class PaymentViewScreen extends StatelessWidget {
 
 class PaymentViewVM {
   PaymentViewVM({
+    @required this.state,
     @required this.payment,
     @required this.company,
     @required this.onEntityAction,
@@ -55,6 +56,7 @@ class PaymentViewVM {
     final user = state.user;
 
     return PaymentViewVM(
+      state: state,
       company: state.selectedCompany,
       isSaving: state.isSaving,
       isDirty: payment.isNew,
@@ -95,6 +97,7 @@ class PaymentViewVM {
     );
   }
 
+  final AppState state;
   final PaymentEntity payment;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;

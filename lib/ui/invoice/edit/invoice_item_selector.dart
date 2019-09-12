@@ -246,7 +246,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            user: state.selectedCompany.user,
+            user: state.user,
           );
         },
       );
@@ -290,7 +290,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            user: state.selectedCompany.user,
+            user: state.user,
           );
         },
       );

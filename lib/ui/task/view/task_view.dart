@@ -189,7 +189,7 @@ class _TaskViewState extends State<TaskView> {
                       task: task,
                       taskTime: taskTime,
                       onTap: (BuildContext context) =>
-                          company.user.canEditEntity(task)
+                          viewModel.state.user.canEditEntity(task)
                               ? viewModel.onEditPressed(context, taskTime)
                               : null,
                     )
@@ -247,7 +247,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final task = viewModel.task;
-    final user = viewModel.company.user;
+    final user = viewModel.state.user;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),
