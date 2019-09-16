@@ -8,6 +8,8 @@ class DecoratedFormField extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.maxLines,
+    this.textInputAction,
+    this.onFieldSubmitted,
   });
 
   final TextEditingController controller;
@@ -16,6 +18,8 @@ class DecoratedFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool autovalidate;
+  final TextInputAction textInputAction;
+  final ValueChanged<String> onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,8 @@ class DecoratedFormField extends StatelessWidget {
       keyboardType: null,
       maxLines: maxLines ?? 1,
       autovalidate: autovalidate,
+      textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 }

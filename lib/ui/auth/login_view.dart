@@ -41,8 +41,6 @@ class _LoginState extends State<LoginView> {
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
-  final FocusNode _focusNode1 = new FocusNode();
-
   String _loginError = '';
   bool _createAccount = false;
   bool _isSelfHosted = false;
@@ -242,6 +240,9 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -252,6 +253,9 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -271,11 +275,14 @@ class _LoginState extends State<LoginView> {
                               ? localization.pleaseEnterYourEmail
                               : null,
                           onFieldSubmitted: (String value) =>
-                              FocusScope.of(context).requestFocus(_focusNode1),
+                              FocusScope.of(context).nextFocus(),
                         ),
                         TextFormField(
                           controller: _passwordController,
                           key: ValueKey(localization.password),
+                          textInputAction: _createAccount
+                              ? TextInputAction.next
+                              : TextInputAction.done,
                           autocorrect: false,
                           autovalidate: _autoValidate,
                           decoration:
@@ -284,9 +291,9 @@ class _LoginState extends State<LoginView> {
                               ? localization.pleaseEnterYourPassword
                               : null,
                           obscureText: true,
-                          focusNode: _focusNode1,
-                          onFieldSubmitted: (value) =>
-                              _createAccount ? null : _submitLoginForm(),
+                          onFieldSubmitted: (value) => _createAccount
+                              ? FocusScope.of(context).nextFocus()
+                              : _submitLoginForm(),
                         ),
                         if (_isSelfHosted)
                           TextFormField(
@@ -294,12 +301,15 @@ class _LoginState extends State<LoginView> {
                             key: ValueKey(localization.url),
                             autocorrect: false,
                             autovalidate: _autoValidate,
+                            textInputAction: TextInputAction.next,
                             decoration:
                                 InputDecoration(labelText: localization.url),
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourUrl
                                     : null,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             keyboardType: TextInputType.url,
                           ),
                         if (_isSelfHosted)
