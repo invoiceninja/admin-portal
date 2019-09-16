@@ -64,7 +64,7 @@ class _LoginState extends State<LoginView> {
       _lastNameController.text = 'TEST';
       _privacyChecked = true;
       _termsChecked = true;
-      _createAccount = true;
+      //_createAccount = true;
     }
 
     if (cleanApiUrl(state.url).isNotEmpty) {
@@ -280,7 +280,7 @@ class _LoginState extends State<LoginView> {
                         TextFormField(
                           controller: _passwordController,
                           key: ValueKey(localization.password),
-                          textInputAction: _createAccount
+                          textInputAction: _createAccount && !_isSelfHosted
                               ? TextInputAction.next
                               : TextInputAction.done,
                           autocorrect: false,
@@ -291,9 +291,10 @@ class _LoginState extends State<LoginView> {
                               ? localization.pleaseEnterYourPassword
                               : null,
                           obscureText: true,
-                          onFieldSubmitted: (value) => _createAccount
-                              ? FocusScope.of(context).nextFocus()
-                              : _submitLoginForm(),
+                          onFieldSubmitted: (value) =>
+                              _createAccount && !_isSelfHosted
+                                  ? FocusScope.of(context).nextFocus()
+                                  : _submitLoginForm(),
                         ),
                         if (_isSelfHosted)
                           TextFormField(
