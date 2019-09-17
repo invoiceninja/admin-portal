@@ -36,7 +36,8 @@ class OAuthLoginRequest implements StartLoading {
       this.token,
       this.url,
       this.secret,
-      this.platform});
+      this.platform,
+      this.oneTimePassword});
 
   final Completer completer;
   final String email; // TODO remove this property, break up _saveAuthLocal
@@ -44,6 +45,7 @@ class OAuthLoginRequest implements StartLoading {
   final String url;
   final String secret;
   final String platform;
+  final String oneTimePassword;
 }
 
 class UserLoginRequest implements StartLoading {

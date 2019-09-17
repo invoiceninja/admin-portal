@@ -167,15 +167,21 @@ class _LoginState extends State<LoginView> {
       });
     });
 
-    widget.viewModel.onLoginPressed(
-      context,
-      completer,
-      email: _emailController.text,
-      password: _passwordController.text,
-      url: _isSelfHosted ? _urlController.text : '',
-      secret: _isSelfHosted ? _secretController.text : '',
-      oneTimePassword: _oneTimePasswordController.text,
-    );
+    if (_emailLogin) {
+      widget.viewModel.onLoginPressed(
+        context,
+        completer,
+        email: _emailController.text,
+        password: _passwordController.text,
+        url: _isSelfHosted ? _urlController.text : '',
+        secret: _isSelfHosted ? _secretController.text : '',
+        oneTimePassword: _oneTimePasswordController.text,
+      );
+    } else {
+      widget.viewModel.onGoogleLoginPressed(context, completer,
+          url: _isSelfHosted ? _urlController.text : '',
+          secret: _isSelfHosted ? _secretController.text : '');
+    }
   }
 
   @override
@@ -416,12 +422,7 @@ class _LoginState extends State<LoginView> {
                                           ? localization.login
                                           : localization.googleLogin)
                                       .toUpperCase(),
-                                  onPressed: () => _emailLogin
-                                      ? _submitLoginForm()
-                                      : viewModel.onGoogleLoginPressed(
-                                          context,
-                                          _urlController.text,
-                                          _secretController.text),
+                                  onPressed: () => _submitLoginForm(),
                                 )),
                   SizedBox(height: 6),
                   if (!isOneTimePassword)
