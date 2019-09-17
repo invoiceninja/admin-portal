@@ -403,7 +403,7 @@ class _LoginState extends State<LoginView> {
                           ? LoadingIndicator(height: 50)
                           : _createAccount
                               ? ElevatedButton(
-                                  width: 300,
+                                  width: 280,
                                   label: (_emailLogin
                                           ? localization.signUp
                                           : localization.signUpWithGoogle)
@@ -411,7 +411,7 @@ class _LoginState extends State<LoginView> {
                                   onPressed: () => _submitSignUpForm(),
                                 )
                               : ElevatedButton(
-                                  width: 300,
+                                  width: 280,
                                   label: (_emailLogin
                                           ? localization.login
                                           : localization.googleLogin)
@@ -429,98 +429,111 @@ class _LoginState extends State<LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(FontAwesomeIcons.solidEnvelope, size: 16),
-                            _emailLogin
-                                ? FlatButton(
-                                    onPressed: () => setState(() {
-                                          _emailLogin = false;
-                                          _loginError = '';
-                                        }),
-                                    child: Text(_createAccount
-                                        ? localization.googleSignUp
-                                        : localization.googleLogin))
-                                : FlatButton(
-                                    key: ValueKey(localization.emailLogin),
-                                    onPressed: () => setState(() {
-                                          _emailLogin = true;
-                                          _loginError = '';
-                                        }),
-                                    child: Text(_createAccount
-                                        ? localization.emailSignUp
-                                        : localization.emailLogin)),
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(FontAwesomeIcons.user, size: 16),
-                            _createAccount
-                                ? FlatButton(
-                                    onPressed: () => setState(() {
-                                          _emailLogin = true;
-                                          _createAccount = false;
-                                          _isSelfHosted = false;
-                                          _loginError = '';
-                                        }),
-                                    child: Text(localization.accountLogin))
-                                : FlatButton(
-                                    key: ValueKey(localization.createAccount),
-                                    onPressed: () => setState(() {
-                                          _emailLogin = false;
-                                          _createAccount = true;
-                                          _isSelfHosted = false;
-                                          _loginError = '';
-                                        }),
-                                    child: Text(localization.createAccount)),
-                          ],
-                        ),
-                        if (!_createAccount)
-                          Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.userCog, size: 16),
-                                _isSelfHosted
-                                    ? FlatButton(
-                                        onPressed: () => setState(() {
-                                              _emailLogin = true;
-                                              _isSelfHosted = false;
-                                              _loginError = '';
-                                            }),
-                                        child: Text(localization.hostedLogin))
-                                    : FlatButton(
-                                        key: ValueKey(
-                                            localization.selfhostLogin),
-                                        onPressed: () => setState(() {
-                                              _emailLogin = true;
-                                              _isSelfHosted = true;
-                                              _createAccount = false;
-                                              _loginError = '';
-                                            }),
-                                        child:
-                                            Text(localization.selfhostLogin)),
-                              ]),
-                        Row(
+                        Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
-                              FlatButton(
-                                child: Text(localization.viewWebsite),
-                                onPressed: () async {
-                                  if (await canLaunch(kSiteUrl)) {
-                                    await launch(kSiteUrl,
-                                        forceSafariVC: false,
-                                        forceWebView: false);
-                                  }
-                                },
-                              ),
-                            ]),
+                              Icon(FontAwesomeIcons.solidEnvelope, size: 16),
+                              _emailLogin
+                                  ? FlatButton(
+                                      onPressed: () => setState(() {
+                                            _emailLogin = false;
+                                            _loginError = '';
+                                          }),
+                                      child: Text(_createAccount
+                                          ? localization.googleSignUp
+                                          : localization.googleLogin))
+                                  : FlatButton(
+                                      key: ValueKey(localization.emailLogin),
+                                      onPressed: () => setState(() {
+                                            _emailLogin = true;
+                                            _loginError = '';
+                                          }),
+                                      child: Text(_createAccount
+                                          ? localization.emailSignUp
+                                          : localization.emailLogin)),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(FontAwesomeIcons.user, size: 16),
+                              _createAccount
+                                  ? FlatButton(
+                                      onPressed: () => setState(() {
+                                            _emailLogin = true;
+                                            _createAccount = false;
+                                            _isSelfHosted = false;
+                                            _loginError = '';
+                                          }),
+                                      child: Text(localization.accountLogin))
+                                  : FlatButton(
+                                      key: ValueKey(localization.createAccount),
+                                      onPressed: () => setState(() {
+                                            _emailLogin = false;
+                                            _createAccount = true;
+                                            _isSelfHosted = false;
+                                            _loginError = '';
+                                          }),
+                                      child: Text(localization.createAccount)),
+                            ],
+                          ),
+                        ),
+                        if (!_createAccount)
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.userCog, size: 16),
+                                  _isSelfHosted
+                                      ? FlatButton(
+                                          onPressed: () => setState(() {
+                                                _emailLogin = true;
+                                                _isSelfHosted = false;
+                                                _loginError = '';
+                                              }),
+                                          child: Text(localization.hostedLogin))
+                                      : FlatButton(
+                                          key: ValueKey(
+                                              localization.selfhostLogin),
+                                          onPressed: () => setState(() {
+                                                _emailLogin = true;
+                                                _isSelfHosted = true;
+                                                _createAccount = false;
+                                                _loginError = '';
+                                              }),
+                                          child:
+                                              Text(localization.selfhostLogin)),
+                                ]),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.externalLinkAlt,
+                                    size: 16),
+                                FlatButton(
+                                  child: Text(localization.viewWebsite),
+                                  onPressed: () async {
+                                    if (await canLaunch(kSiteUrl)) {
+                                      await launch(kSiteUrl,
+                                          forceSafariVC: false,
+                                          forceWebView: false);
+                                    }
+                                  },
+                                ),
+                              ]),
+                        ),
                       ],
                     ),
                   if (isOneTimePassword && !viewModel.isLoading)
