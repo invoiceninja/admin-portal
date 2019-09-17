@@ -398,41 +398,31 @@ class _LoginState extends State<LoginView> {
                       ),
                     ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30, bottom: 10),
-                    child: viewModel.isLoading
-                        ? LoadingIndicator(height: 50)
-                        : _createAccount
-                            ? ElevatedButton(
-                                label: (_emailLogin
-                                        ? localization.signUp
-                                        : localization.signUpWithGoogle)
-                                    .toUpperCase(),
-                                onPressed: () => _submitSignUpForm(),
-                              )
-                            : Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      label:
-                                          localization.emailLogin.toUpperCase(),
-                                      onPressed: () => _submitLoginForm(),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20),
-                                  Expanded(
-                                    child: ElevatedButton(
-                                      label: localization.googleLogin
-                                          .toUpperCase(),
-                                      onPressed: () =>
-                                          viewModel.onGoogleLoginPressed(
-                                              context,
-                                              _urlController.text,
-                                              _secretController.text),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                  ),
+                      padding: EdgeInsets.only(top: 30, bottom: 10),
+                      child: viewModel.isLoading
+                          ? LoadingIndicator(height: 50)
+                          : _createAccount
+                              ? ElevatedButton(
+                                  width: double.infinity,
+                                  label: (_emailLogin
+                                          ? localization.signUp
+                                          : localization.signUpWithGoogle)
+                                      .toUpperCase(),
+                                  onPressed: () => _submitSignUpForm(),
+                                )
+                              : ElevatedButton(
+                                  width: double.infinity,
+                                  label: (_emailLogin
+                                          ? localization.login
+                                          : localization.googleLogin)
+                                      .toUpperCase(),
+                                  onPressed: () => _emailLogin
+                                      ? _submitLoginForm()
+                                      : viewModel.onGoogleLoginPressed(
+                                          context,
+                                          _urlController.text,
+                                          _secretController.text),
+                                )),
                   SizedBox(height: 6),
                   if (!isOneTimePassword)
                     Column(
