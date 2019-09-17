@@ -403,7 +403,7 @@ class _LoginState extends State<LoginView> {
                           ? LoadingIndicator(height: 50)
                           : _createAccount
                               ? ElevatedButton(
-                                  width: double.infinity,
+                                  width: 300,
                                   label: (_emailLogin
                                           ? localization.signUp
                                           : localization.signUpWithGoogle)
@@ -411,7 +411,7 @@ class _LoginState extends State<LoginView> {
                                   onPressed: () => _submitSignUpForm(),
                                 )
                               : ElevatedButton(
-                                  width: double.infinity,
+                                  width: 300,
                                   label: (_emailLogin
                                           ? localization.login
                                           : localization.googleLogin)
