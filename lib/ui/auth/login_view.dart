@@ -435,10 +435,38 @@ class _LoginState extends State<LoginView> {
                   ),
                   SizedBox(height: 6),
                   if (!isOneTimePassword)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(FontAwesomeIcons.solidEnvelope, size: 16),
+                            _emailLogin
+                                ? FlatButton(
+                                    onPressed: () => setState(() {
+                                          _emailLogin = false;
+                                          _loginError = '';
+                                        }),
+                                    child: Text(_createAccount
+                                        ? localization.googleSignUp
+                                        : localization.googleLogin))
+                                : FlatButton(
+                                    key: ValueKey(localization.emailLogin),
+                                    onPressed: () => setState(() {
+                                          _emailLogin = true;
+                                          _loginError = '';
+                                        }),
+                                    child: Text(_createAccount
+                                        ? localization.emailSignUp
+                                        : localization.emailLogin)),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(FontAwesomeIcons.user, size: 16),
                             _createAccount
@@ -461,40 +489,48 @@ class _LoginState extends State<LoginView> {
                                     child: Text(localization.createAccount)),
                           ],
                         ),
-                        Row(children: <Widget>[
-                          Icon(FontAwesomeIcons.userCog, size: 16),
-                          _isSelfHosted
-                              ? FlatButton(
-                                  onPressed: () => setState(() {
-                                        _emailLogin = true;
-                                        _isSelfHosted = false;
-                                        _loginError = '';
-                                      }),
-                                  child: Text(localization.hostedLogin))
-                              : FlatButton(
-                                  key: ValueKey(localization.selfhostLogin),
-                                  onPressed: () => setState(() {
-                                        _emailLogin = true;
-                                        _isSelfHosted = true;
-                                        _createAccount = false;
-                                        _loginError = '';
-                                      }),
-                                  child: Text(localization.selfhostLogin)),
-                        ]),
-                        if (isTablet(context))
-                          Row(children: <Widget>[
-                            Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
-                            FlatButton(
-                              child: Text(localization.viewWebsite),
-                              onPressed: () async {
-                                if (await canLaunch(kSiteUrl)) {
-                                  await launch(kSiteUrl,
-                                      forceSafariVC: false,
-                                      forceWebView: false);
-                                }
-                              },
-                            ),
-                          ]),
+                        if (!_createAccount)
+                          Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.userCog, size: 16),
+                                _isSelfHosted
+                                    ? FlatButton(
+                                        onPressed: () => setState(() {
+                                              _emailLogin = true;
+                                              _isSelfHosted = false;
+                                              _loginError = '';
+                                            }),
+                                        child: Text(localization.hostedLogin))
+                                    : FlatButton(
+                                        key: ValueKey(
+                                            localization.selfhostLogin),
+                                        onPressed: () => setState(() {
+                                              _emailLogin = true;
+                                              _isSelfHosted = true;
+                                              _createAccount = false;
+                                              _loginError = '';
+                                            }),
+                                        child:
+                                            Text(localization.selfhostLogin)),
+                              ]),
+                        Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(FontAwesomeIcons.externalLinkAlt, size: 16),
+                              FlatButton(
+                                child: Text(localization.viewWebsite),
+                                onPressed: () async {
+                                  if (await canLaunch(kSiteUrl)) {
+                                    await launch(kSiteUrl,
+                                        forceSafariVC: false,
+                                        forceWebView: false);
+                                  }
+                                },
+                              ),
+                            ]),
                       ],
                     ),
                   if (isOneTimePassword && !viewModel.isLoading)

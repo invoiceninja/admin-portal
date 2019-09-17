@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'email_sign_up': 'Email Sign Up',
+      'google_sign_up': 'Google Sign Up',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
       'sign_up_with_google': 'Sign Up With Google',
@@ -14603,6 +14605,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['thank_you_for_your_purchase'];
 
   String get all => _localizedValues[localeCode]['all'];
+  String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];
+  String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
