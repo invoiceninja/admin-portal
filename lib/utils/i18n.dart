@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
+      'sign_up_with_google': 'Sign Up With Google',
       'back': 'Back',
       'past_purchases': 'Past Purchases',
       'annual_subscription': 'Annual Subscription',
@@ -14562,6 +14563,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get accountLogin => _localizedValues[localeCode]['account_login'];
 
   String get signUp => _localizedValues[localeCode]['sign_up'];
+
+  String get signUpWithGoogle =>
+      _localizedValues[localeCode]['sign_up_with_google'];
 
   String get pleaseAgreeToTermsAndPrivacy =>
       _localizedValues[localeCode]['please_agree_to_terms_and_privacy'];

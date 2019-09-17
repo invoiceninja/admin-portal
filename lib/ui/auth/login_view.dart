@@ -42,7 +42,8 @@ class _LoginState extends State<LoginView> {
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
   String _loginError = '';
-  bool _createAccount = false;
+  bool _emailLogin = false;
+  bool _createAccount = true;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
@@ -236,7 +237,7 @@ class _LoginState extends State<LoginView> {
                   else
                     Column(
                       children: <Widget>[
-                        if (_createAccount)
+                        if (_createAccount && _emailLogin)
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
@@ -249,7 +250,7 @@ class _LoginState extends State<LoginView> {
                                     ? localization.pleaseEnterAFirstName
                                     : null,
                           ),
-                        if (_createAccount)
+                        if (_createAccount && _emailLogin)
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
@@ -262,40 +263,44 @@ class _LoginState extends State<LoginView> {
                                     ? localization.pleaseEnterALastName
                                     : null,
                           ),
-                        TextFormField(
-                          controller: _emailController,
-                          key: ValueKey(localization.email),
-                          autocorrect: false,
-                          textInputAction: TextInputAction.next,
-                          decoration:
-                              InputDecoration(labelText: localization.email),
-                          keyboardType: TextInputType.emailAddress,
-                          autovalidate: _autoValidate,
-                          validator: (val) => val.isEmpty || val.trim().isEmpty
-                              ? localization.pleaseEnterYourEmail
-                              : null,
-                          onFieldSubmitted: (String value) =>
-                              FocusScope.of(context).nextFocus(),
-                        ),
-                        TextFormField(
-                          controller: _passwordController,
-                          key: ValueKey(localization.password),
-                          textInputAction: _createAccount && !_isSelfHosted
-                              ? TextInputAction.next
-                              : TextInputAction.done,
-                          autocorrect: false,
-                          autovalidate: _autoValidate,
-                          decoration:
-                              InputDecoration(labelText: localization.password),
-                          validator: (val) => val.isEmpty || val.trim().isEmpty
-                              ? localization.pleaseEnterYourPassword
-                              : null,
-                          obscureText: true,
-                          onFieldSubmitted: (value) =>
-                              _createAccount && !_isSelfHosted
-                                  ? FocusScope.of(context).nextFocus()
-                                  : _submitLoginForm(),
-                        ),
+                        if (_emailLogin)
+                          TextFormField(
+                            controller: _emailController,
+                            key: ValueKey(localization.email),
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            decoration:
+                                InputDecoration(labelText: localization.email),
+                            keyboardType: TextInputType.emailAddress,
+                            autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterYourEmail
+                                    : null,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
+                          ),
+                        if (_emailLogin)
+                          TextFormField(
+                            controller: _passwordController,
+                            key: ValueKey(localization.password),
+                            textInputAction: _createAccount && !_isSelfHosted
+                                ? TextInputAction.next
+                                : TextInputAction.done,
+                            autocorrect: false,
+                            autovalidate: _autoValidate,
+                            decoration: InputDecoration(
+                                labelText: localization.password),
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterYourPassword
+                                    : null,
+                            obscureText: true,
+                            onFieldSubmitted: (value) =>
+                                _createAccount && !_isSelfHosted
+                                    ? FocusScope.of(context).nextFocus()
+                                    : _submitLoginForm(),
+                          ),
                         if (_isSelfHosted)
                           TextFormField(
                             controller: _urlController,
@@ -398,7 +403,10 @@ class _LoginState extends State<LoginView> {
                         ? LoadingIndicator(height: 50)
                         : _createAccount
                             ? ElevatedButton(
-                                label: localization.signUp.toUpperCase(),
+                                label: (_emailLogin
+                                        ? localization.signUp
+                                        : localization.signUpWithGoogle)
+                                    .toUpperCase(),
                                 onPressed: () => _submitSignUpForm(),
                               )
                             : Row(
@@ -436,6 +444,7 @@ class _LoginState extends State<LoginView> {
                             _createAccount
                                 ? FlatButton(
                                     onPressed: () => setState(() {
+                                          _emailLogin = true;
                                           _createAccount = false;
                                           _isSelfHosted = false;
                                           _loginError = '';
@@ -444,6 +453,7 @@ class _LoginState extends State<LoginView> {
                                 : FlatButton(
                                     key: ValueKey(localization.createAccount),
                                     onPressed: () => setState(() {
+                                          _emailLogin = false;
                                           _createAccount = true;
                                           _isSelfHosted = false;
                                           _loginError = '';
@@ -456,6 +466,7 @@ class _LoginState extends State<LoginView> {
                           _isSelfHosted
                               ? FlatButton(
                                   onPressed: () => setState(() {
+                                        _emailLogin = true;
                                         _isSelfHosted = false;
                                         _loginError = '';
                                       }),
@@ -463,6 +474,7 @@ class _LoginState extends State<LoginView> {
                               : FlatButton(
                                   key: ValueKey(localization.selfhostLogin),
                                   onPressed: () => setState(() {
+                                        _emailLogin = true;
                                         _isSelfHosted = true;
                                         _createAccount = false;
                                         _loginError = '';
