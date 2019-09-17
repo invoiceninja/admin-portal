@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -41,6 +42,7 @@ class LoginVM {
     @required this.onLoginPressed,
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
+    @required this.onGoogleSignUpPressed,
   });
 
   bool isLoading;
@@ -67,6 +69,7 @@ class LoginVM {
 
   final Function(BuildContext, Completer<Null> completer,
       {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -110,6 +113,28 @@ class LoginVM {
                   secret: secret.trim(),
                   platform: getPlatform(context),
                   oneTimePassword: oneTimePassword,
+                ));
+                completer.future.then((_) => _handleLogin(context));
+              });
+            }
+          } catch (error) {
+            print(error);
+          }
+        },
+        onGoogleSignUpPressed:
+            (BuildContext context, Completer<Null> completer) async {
+          try {
+            final account = await _googleSignIn.signIn();
+
+            if (account != null) {
+              account.authentication.then((GoogleSignInAuthentication value) {
+                store.dispatch(UserSignUpRequest(
+                  completer: completer,
+                  email: account.email,
+                  firstName: getFirstName(account.displayName),
+                  lastName: getLastName(account.displayName),
+                  photoUrl: account.photoUrl,
+                  oauthId: account.id,
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });

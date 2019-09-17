@@ -85,6 +85,8 @@ class UserSignUpRequest implements StartLoading {
     this.email,
     this.password,
     this.platform,
+    this.photoUrl,
+    this.oauthId,
   });
 
   final Completer completer;
@@ -93,4 +95,6 @@ class UserSignUpRequest implements StartLoading {
   final String email;
   final String password;
   final String platform;
+  final String photoUrl;
+  final String oauthId;
 }
