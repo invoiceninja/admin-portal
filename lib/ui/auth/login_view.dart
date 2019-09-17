@@ -475,16 +475,13 @@ class _LoginState extends State<LoginView> {
                               _createAccount
                                   ? FlatButton(
                                       onPressed: () => setState(() {
-                                            _emailLogin = true;
                                             _createAccount = false;
-                                            _isSelfHosted = false;
                                             _loginError = '';
                                           }),
                                       child: Text(localization.accountLogin))
                                   : FlatButton(
                                       key: ValueKey(localization.createAccount),
                                       onPressed: () => setState(() {
-                                            _emailLogin = false;
                                             _createAccount = true;
                                             _isSelfHosted = false;
                                             _loginError = '';
@@ -504,7 +501,6 @@ class _LoginState extends State<LoginView> {
                                   _isSelfHosted
                                       ? FlatButton(
                                           onPressed: () => setState(() {
-                                                _emailLogin = true;
                                                 _isSelfHosted = false;
                                                 _loginError = '';
                                               }),
@@ -513,9 +509,9 @@ class _LoginState extends State<LoginView> {
                                           key: ValueKey(
                                               localization.selfhostLogin),
                                           onPressed: () => setState(() {
-                                                _emailLogin = true;
                                                 _isSelfHosted = true;
                                                 _createAccount = false;
+                                                _emailLogin = true;
                                                 _loginError = '';
                                               }),
                                           child:
