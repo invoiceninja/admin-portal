@@ -90,6 +90,7 @@ class _LoginState extends State<LoginView> {
   void _submitSignUpForm() {
     final bool isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
 
     setState(() {
       _autoValidate = !isValid;
@@ -134,18 +135,23 @@ class _LoginState extends State<LoginView> {
       });
     });
 
-    widget.viewModel.onSignUpPressed(
-      context,
-      completer,
-      email: _emailController.text,
-      password: _passwordController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-    );
+    if (_emailLogin) {
+      viewModel.onSignUpPressed(
+        context,
+        completer,
+        email: _emailController.text,
+        password: _passwordController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+      );
+    } else {
+      viewModel.onGoogleSignUpPressed(context, completer);
+    }
   }
 
   void _submitLoginForm() {
     final bool isValid = _formKey.currentState.validate();
+    final viewModel = widget.viewModel;
 
     setState(() {
       _autoValidate = !isValid;
@@ -168,7 +174,7 @@ class _LoginState extends State<LoginView> {
     });
 
     if (_emailLogin) {
-      widget.viewModel.onLoginPressed(
+      viewModel.onLoginPressed(
         context,
         completer,
         email: _emailController.text,
@@ -178,7 +184,7 @@ class _LoginState extends State<LoginView> {
         oneTimePassword: _oneTimePasswordController.text,
       );
     } else {
-      widget.viewModel.onGoogleLoginPressed(context, completer,
+      viewModel.onGoogleLoginPressed(context, completer,
           url: _isSelfHosted ? _urlController.text : '',
           secret: _isSelfHosted ? _secretController.text : '',
           oneTimePassword: _oneTimePasswordController.text);
