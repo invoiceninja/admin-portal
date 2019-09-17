@@ -180,7 +180,8 @@ class _LoginState extends State<LoginView> {
     } else {
       widget.viewModel.onGoogleLoginPressed(context, completer,
           url: _isSelfHosted ? _urlController.text : '',
-          secret: _isSelfHosted ? _secretController.text : '');
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text);
     }
   }
 

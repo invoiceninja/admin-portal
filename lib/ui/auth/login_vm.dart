@@ -66,7 +66,7 @@ class LoginVM {
   }) onSignUpPressed;
 
   final Function(BuildContext, Completer<Null> completer,
-      {String url, String secret}) onGoogleLoginPressed;
+      {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
