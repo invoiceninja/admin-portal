@@ -99,99 +99,161 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get companyCurrencyId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
 
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'date_format_id')
   String get dateFormatId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'datetime_format_id')
   String get datetimeFormatId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_terms')
   String get defaultInvoiceTerms;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_taxes')
   bool get enableInvoiceTaxes;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_item_taxes')
   bool get enableInvoiceItemTaxes;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_design_id')
   String get defaultInvoiceDesignId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'quote_design_id')
   String get defaultQuoteDesignId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'language_id')
   String get languageId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_footer')
   String get defaultInvoiceFooter;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'show_item_taxes')
   bool get showInvoiceItemTaxes;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'military_time')
   bool get enableMilitaryTime;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get defaultTaxName1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'tax_rate1')
   double get defaultTaxRate1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'tax_name2')
   String get defaultTaxName2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'tax_rate2')
   double get defaultTaxRate2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'quote_terms')
   String get defaultQuoteTerms;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'show_currency_code')
   bool get showCurrencyCode;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'start_of_week')
   int get startOfWeek;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'financial_year_start')
   int get financialYearStart;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'payment_terms')
   int get defaultPaymentTerms;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'task_rate')
   double get defaultTaskRate;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'inclusive_taxes')
   bool get enableInclusiveTaxes;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes1')
   bool get enableCustomInvoiceTaxes1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes2')
   bool get enableCustomInvoiceTaxes2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
@@ -205,58 +267,96 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
+  // TODO remove this
+  @nullable
   BuiltMap<String, ExpenseCategoryEntity> get expenseCategoryMap;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
 
+  // TODO remove this
+  @nullable
   BuiltMap<String, UserEntity> get userMap;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
   BuiltList<PaymentTermEntity> get customPaymentTerms;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_footer')
   String get emailFooter;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_invoice')
   String get emailSubjectInvoice;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_quote')
   String get emailSubjectQuote;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_payment')
   String get emailSubjectPayment;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_quote')
   String get emailBodyQuote;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_payment')
   String get emailBodyPayment;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder1')
   String get emailSubjectReminder1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder2')
   String get emailSubjectReminder2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder3')
   String get emailSubjectReminder3;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder1')
   String get emailBodyReminder1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder2')
   String get emailBodyReminder2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
 
@@ -425,7 +525,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
       firstName: '',
       lastName: '',
       email: '',
-      id: 0,
+      id: '',
       isAdmin: false,
       permissionsMap: BuiltMap<String, bool>(),
     );
@@ -433,7 +533,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   UserEntity._();
 
-  int get id;
+  String get id;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
@@ -445,6 +545,8 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
 
@@ -483,7 +585,6 @@ abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
-      isAdmin: false,
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
@@ -491,8 +592,6 @@ abstract class UserCompanyEntity
   }
 
   UserCompanyEntity._();
-
-  bool get isAdmin;
 
   CompanyEntity get company;
 

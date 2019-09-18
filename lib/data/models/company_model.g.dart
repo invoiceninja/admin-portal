@@ -32,158 +32,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
-      'invoice_terms',
-      serializers.serialize(object.defaultInvoiceTerms,
+      'country_id',
+      serializers.serialize(object.countryId,
           specifiedType: const FullType(String)),
-      'invoice_taxes',
-      serializers.serialize(object.enableInvoiceTaxes,
-          specifiedType: const FullType(bool)),
-      'invoice_item_taxes',
-      serializers.serialize(object.enableInvoiceItemTaxes,
-          specifiedType: const FullType(bool)),
-      'invoice_design_id',
-      serializers.serialize(object.defaultInvoiceDesignId,
-          specifiedType: const FullType(String)),
-      'quote_design_id',
-      serializers.serialize(object.defaultQuoteDesignId,
-          specifiedType: const FullType(String)),
-      'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
-      'invoice_footer',
-      serializers.serialize(object.defaultInvoiceFooter,
-          specifiedType: const FullType(String)),
-      'show_item_taxes',
-      serializers.serialize(object.showInvoiceItemTaxes,
-          specifiedType: const FullType(bool)),
-      'military_time',
-      serializers.serialize(object.enableMilitaryTime,
-          specifiedType: const FullType(bool)),
-      'tax_name1',
-      serializers.serialize(object.defaultTaxName1,
-          specifiedType: const FullType(String)),
-      'tax_rate1',
-      serializers.serialize(object.defaultTaxRate1,
-          specifiedType: const FullType(double)),
-      'tax_name2',
-      serializers.serialize(object.defaultTaxName2,
-          specifiedType: const FullType(String)),
-      'tax_rate2',
-      serializers.serialize(object.defaultTaxRate2,
-          specifiedType: const FullType(double)),
-      'quote_terms',
-      serializers.serialize(object.defaultQuoteTerms,
-          specifiedType: const FullType(String)),
-      'show_currency_code',
-      serializers.serialize(object.showCurrencyCode,
-          specifiedType: const FullType(bool)),
-      'enable_second_tax_rate',
-      serializers.serialize(object.enableSecondTaxRate,
-          specifiedType: const FullType(bool)),
-      'start_of_week',
-      serializers.serialize(object.startOfWeek,
-          specifiedType: const FullType(int)),
-      'financial_year_start',
-      serializers.serialize(object.financialYearStart,
-          specifiedType: const FullType(int)),
-      'enabled_modules',
-      serializers.serialize(object.enabledModules,
-          specifiedType: const FullType(int)),
-      'payment_terms',
-      serializers.serialize(object.defaultPaymentTerms,
-          specifiedType: const FullType(int)),
-      'payment_type_id',
-      serializers.serialize(object.defaultPaymentTypeId,
-          specifiedType: const FullType(String)),
-      'task_rate',
-      serializers.serialize(object.defaultTaskRate,
-          specifiedType: const FullType(double)),
-      'inclusive_taxes',
-      serializers.serialize(object.enableInclusiveTaxes,
-          specifiedType: const FullType(bool)),
-      'convert_products',
-      serializers.serialize(object.convertProductExchangeRate,
-          specifiedType: const FullType(bool)),
-      'custom_invoice_taxes1',
-      serializers.serialize(object.enableCustomInvoiceTaxes1,
-          specifiedType: const FullType(bool)),
-      'custom_invoice_taxes2',
-      serializers.serialize(object.enableCustomInvoiceTaxes2,
-          specifiedType: const FullType(bool)),
-      'tax_rates',
-      serializers.serialize(object.taxRates,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(TaskStatusEntity)
           ])),
-      'expenseCategoryMap',
-      serializers.serialize(object.expenseCategoryMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ])),
-      'users',
-      serializers.serialize(object.users,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(UserEntity)])),
-      'userMap',
-      serializers.serialize(object.userMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(UserEntity)])),
-      'custom_fields',
-      serializers.serialize(object.customFields,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
-      'custom_payment_terms',
-      serializers.serialize(object.customPaymentTerms,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(PaymentTermEntity)])),
-      'invoice_fields',
-      serializers.serialize(object.invoiceFields,
-          specifiedType: const FullType(String)),
-      'email_footer',
-      serializers.serialize(object.emailFooter,
-          specifiedType: const FullType(String)),
-      'email_subject_invoice',
-      serializers.serialize(object.emailSubjectInvoice,
-          specifiedType: const FullType(String)),
-      'email_subject_quote',
-      serializers.serialize(object.emailSubjectQuote,
-          specifiedType: const FullType(String)),
-      'email_subject_payment',
-      serializers.serialize(object.emailSubjectPayment,
-          specifiedType: const FullType(String)),
-      'email_template_invoice',
-      serializers.serialize(object.emailBodyInvoice,
-          specifiedType: const FullType(String)),
-      'email_template_quote',
-      serializers.serialize(object.emailBodyQuote,
-          specifiedType: const FullType(String)),
-      'email_template_payment',
-      serializers.serialize(object.emailBodyPayment,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder1',
-      serializers.serialize(object.emailSubjectReminder1,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder2',
-      serializers.serialize(object.emailSubjectReminder2,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder3',
-      serializers.serialize(object.emailSubjectReminder3,
-          specifiedType: const FullType(String)),
-      'email_template_reminder1',
-      serializers.serialize(object.emailBodyReminder1,
-          specifiedType: const FullType(String)),
-      'email_template_reminder2',
-      serializers.serialize(object.emailBodyReminder2,
-          specifiedType: const FullType(String)),
-      'email_template_reminder3',
-      serializers.serialize(object.emailBodyReminder3,
-          specifiedType: const FullType(String)),
     ];
     if (object.plan != null) {
       result
@@ -215,12 +72,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.timezoneId,
             specifiedType: const FullType(String)));
     }
-    if (object.countryId != null) {
-      result
-        ..add('country_id')
-        ..add(serializers.serialize(object.countryId,
-            specifiedType: const FullType(String)));
-    }
     if (object.dateFormatId != null) {
       result
         ..add('date_format_id')
@@ -232,6 +83,169 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('datetime_format_id')
         ..add(serializers.serialize(object.datetimeFormatId,
             specifiedType: const FullType(String)));
+    }
+    if (object.defaultInvoiceTerms != null) {
+      result
+        ..add('invoice_terms')
+        ..add(serializers.serialize(object.defaultInvoiceTerms,
+            specifiedType: const FullType(String)));
+    }
+    if (object.enableInvoiceTaxes != null) {
+      result
+        ..add('invoice_taxes')
+        ..add(serializers.serialize(object.enableInvoiceTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableInvoiceItemTaxes != null) {
+      result
+        ..add('invoice_item_taxes')
+        ..add(serializers.serialize(object.enableInvoiceItemTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.defaultInvoiceDesignId != null) {
+      result
+        ..add('invoice_design_id')
+        ..add(serializers.serialize(object.defaultInvoiceDesignId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultQuoteDesignId != null) {
+      result
+        ..add('quote_design_id')
+        ..add(serializers.serialize(object.defaultQuoteDesignId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.languageId != null) {
+      result
+        ..add('language_id')
+        ..add(serializers.serialize(object.languageId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultInvoiceFooter != null) {
+      result
+        ..add('invoice_footer')
+        ..add(serializers.serialize(object.defaultInvoiceFooter,
+            specifiedType: const FullType(String)));
+    }
+    if (object.showInvoiceItemTaxes != null) {
+      result
+        ..add('show_item_taxes')
+        ..add(serializers.serialize(object.showInvoiceItemTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableMilitaryTime != null) {
+      result
+        ..add('military_time')
+        ..add(serializers.serialize(object.enableMilitaryTime,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.defaultTaxName1 != null) {
+      result
+        ..add('tax_name1')
+        ..add(serializers.serialize(object.defaultTaxName1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultTaxRate1 != null) {
+      result
+        ..add('tax_rate1')
+        ..add(serializers.serialize(object.defaultTaxRate1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.defaultTaxName2 != null) {
+      result
+        ..add('tax_name2')
+        ..add(serializers.serialize(object.defaultTaxName2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultTaxRate2 != null) {
+      result
+        ..add('tax_rate2')
+        ..add(serializers.serialize(object.defaultTaxRate2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.defaultQuoteTerms != null) {
+      result
+        ..add('quote_terms')
+        ..add(serializers.serialize(object.defaultQuoteTerms,
+            specifiedType: const FullType(String)));
+    }
+    if (object.showCurrencyCode != null) {
+      result
+        ..add('show_currency_code')
+        ..add(serializers.serialize(object.showCurrencyCode,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableSecondTaxRate != null) {
+      result
+        ..add('enable_second_tax_rate')
+        ..add(serializers.serialize(object.enableSecondTaxRate,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.startOfWeek != null) {
+      result
+        ..add('start_of_week')
+        ..add(serializers.serialize(object.startOfWeek,
+            specifiedType: const FullType(int)));
+    }
+    if (object.financialYearStart != null) {
+      result
+        ..add('financial_year_start')
+        ..add(serializers.serialize(object.financialYearStart,
+            specifiedType: const FullType(int)));
+    }
+    if (object.enabledModules != null) {
+      result
+        ..add('enabled_modules')
+        ..add(serializers.serialize(object.enabledModules,
+            specifiedType: const FullType(int)));
+    }
+    if (object.defaultPaymentTerms != null) {
+      result
+        ..add('payment_terms')
+        ..add(serializers.serialize(object.defaultPaymentTerms,
+            specifiedType: const FullType(int)));
+    }
+    if (object.defaultPaymentTypeId != null) {
+      result
+        ..add('payment_type_id')
+        ..add(serializers.serialize(object.defaultPaymentTypeId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultTaskRate != null) {
+      result
+        ..add('task_rate')
+        ..add(serializers.serialize(object.defaultTaskRate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.enableInclusiveTaxes != null) {
+      result
+        ..add('inclusive_taxes')
+        ..add(serializers.serialize(object.enableInclusiveTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.convertProductExchangeRate != null) {
+      result
+        ..add('convert_products')
+        ..add(serializers.serialize(object.convertProductExchangeRate,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomInvoiceTaxes1 != null) {
+      result
+        ..add('custom_invoice_taxes1')
+        ..add(serializers.serialize(object.enableCustomInvoiceTaxes1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomInvoiceTaxes2 != null) {
+      result
+        ..add('custom_invoice_taxes2')
+        ..add(serializers.serialize(object.enableCustomInvoiceTaxes2,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.taxRates != null) {
+      result
+        ..add('tax_rates')
+        ..add(serializers.serialize(object.taxRates,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(TaxRateEntity)])));
     }
     if (object.taskStatuses != null) {
       result
@@ -246,6 +260,127 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.expenseCategories,
             specifiedType: const FullType(
                 BuiltList, const [const FullType(ExpenseCategoryEntity)])));
+    }
+    if (object.expenseCategoryMap != null) {
+      result
+        ..add('expenseCategoryMap')
+        ..add(serializers.serialize(object.expenseCategoryMap,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(ExpenseCategoryEntity)
+            ])));
+    }
+    if (object.users != null) {
+      result
+        ..add('users')
+        ..add(serializers.serialize(object.users,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(UserEntity)])));
+    }
+    if (object.userMap != null) {
+      result
+        ..add('userMap')
+        ..add(serializers.serialize(object.userMap,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(String), const FullType(UserEntity)])));
+    }
+    if (object.customFields != null) {
+      result
+        ..add('custom_fields')
+        ..add(serializers.serialize(object.customFields,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(String), const FullType(String)])));
+    }
+    if (object.customPaymentTerms != null) {
+      result
+        ..add('custom_payment_terms')
+        ..add(serializers.serialize(object.customPaymentTerms,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(PaymentTermEntity)])));
+    }
+    if (object.invoiceFields != null) {
+      result
+        ..add('invoice_fields')
+        ..add(serializers.serialize(object.invoiceFields,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailFooter != null) {
+      result
+        ..add('email_footer')
+        ..add(serializers.serialize(object.emailFooter,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectInvoice != null) {
+      result
+        ..add('email_subject_invoice')
+        ..add(serializers.serialize(object.emailSubjectInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectQuote != null) {
+      result
+        ..add('email_subject_quote')
+        ..add(serializers.serialize(object.emailSubjectQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectPayment != null) {
+      result
+        ..add('email_subject_payment')
+        ..add(serializers.serialize(object.emailSubjectPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyInvoice != null) {
+      result
+        ..add('email_template_invoice')
+        ..add(serializers.serialize(object.emailBodyInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyQuote != null) {
+      result
+        ..add('email_template_quote')
+        ..add(serializers.serialize(object.emailBodyQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyPayment != null) {
+      result
+        ..add('email_template_payment')
+        ..add(serializers.serialize(object.emailBodyPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder1 != null) {
+      result
+        ..add('email_subject_reminder1')
+        ..add(serializers.serialize(object.emailSubjectReminder1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder2 != null) {
+      result
+        ..add('email_subject_reminder2')
+        ..add(serializers.serialize(object.emailSubjectReminder2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder3 != null) {
+      result
+        ..add('email_subject_reminder3')
+        ..add(serializers.serialize(object.emailSubjectReminder3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder1 != null) {
+      result
+        ..add('email_template_reminder1')
+        ..add(serializers.serialize(object.emailBodyReminder1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder2 != null) {
+      result
+        ..add('email_template_reminder2')
+        ..add(serializers.serialize(object.emailBodyReminder2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder3 != null) {
+      result
+        ..add('email_template_reminder3')
+        ..add(serializers.serialize(object.emailBodyReminder3,
+            specifiedType: const FullType(String)));
     }
     if (object.fillProducts != null) {
       result
@@ -723,7 +858,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'first_name',
       serializers.serialize(object.firstName,
           specifiedType: const FullType(String)),
@@ -733,15 +868,17 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
-      'is_admin',
-      serializers.serialize(object.isAdmin,
-          specifiedType: const FullType(bool)),
       'permissions',
       serializers.serialize(object.permissionsMap,
           specifiedType: const FullType(
               BuiltMap, const [const FullType(String), const FullType(bool)])),
     ];
-
+    if (object.isAdmin != null) {
+      result
+        ..add('is_admin')
+        ..add(serializers.serialize(object.isAdmin,
+            specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -758,7 +895,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'first_name':
           result.firstName = serializers.deserialize(value,
@@ -801,9 +938,6 @@ class _$UserCompanyEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserCompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'isAdmin',
-      serializers.serialize(object.isAdmin,
-          specifiedType: const FullType(bool)),
       'company',
       serializers.serialize(object.company,
           specifiedType: const FullType(CompanyEntity)),
@@ -830,10 +964,6 @@ class _$UserCompanyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'isAdmin':
-          result.isAdmin = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
@@ -1104,164 +1234,11 @@ class _$CompanyEntity extends CompanyEntity {
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
-    if (defaultInvoiceTerms == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultInvoiceTerms');
-    }
-    if (enableInvoiceTaxes == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'enableInvoiceTaxes');
-    }
-    if (enableInvoiceItemTaxes == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableInvoiceItemTaxes');
-    }
-    if (defaultInvoiceDesignId == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultInvoiceDesignId');
-    }
-    if (defaultQuoteDesignId == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultQuoteDesignId');
-    }
-    if (languageId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'languageId');
-    }
-    if (defaultInvoiceFooter == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultInvoiceFooter');
-    }
-    if (showInvoiceItemTaxes == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'showInvoiceItemTaxes');
-    }
-    if (enableMilitaryTime == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'enableMilitaryTime');
-    }
-    if (defaultTaxName1 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxName1');
-    }
-    if (defaultTaxRate1 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxRate1');
-    }
-    if (defaultTaxName2 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxName2');
-    }
-    if (defaultTaxRate2 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaxRate2');
-    }
-    if (defaultQuoteTerms == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuoteTerms');
-    }
-    if (showCurrencyCode == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'showCurrencyCode');
-    }
-    if (enableSecondTaxRate == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableSecondTaxRate');
-    }
-    if (startOfWeek == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'startOfWeek');
-    }
-    if (financialYearStart == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'financialYearStart');
-    }
-    if (enabledModules == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'enabledModules');
-    }
-    if (defaultPaymentTerms == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultPaymentTerms');
-    }
-    if (defaultPaymentTypeId == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'defaultPaymentTypeId');
-    }
-    if (defaultTaskRate == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultTaskRate');
-    }
-    if (enableInclusiveTaxes == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableInclusiveTaxes');
-    }
-    if (convertProductExchangeRate == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'convertProductExchangeRate');
-    }
-    if (enableCustomInvoiceTaxes1 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableCustomInvoiceTaxes1');
-    }
-    if (enableCustomInvoiceTaxes2 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableCustomInvoiceTaxes2');
-    }
-    if (taxRates == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
+    if (countryId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
     }
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
-    }
-    if (expenseCategoryMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
-    }
-    if (users == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'users');
-    }
-    if (userMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
-    }
-    if (customFields == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
-    }
-    if (customPaymentTerms == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'customPaymentTerms');
-    }
-    if (invoiceFields == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'invoiceFields');
-    }
-    if (emailFooter == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailFooter');
-    }
-    if (emailSubjectInvoice == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'emailSubjectInvoice');
-    }
-    if (emailSubjectQuote == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailSubjectQuote');
-    }
-    if (emailSubjectPayment == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'emailSubjectPayment');
-    }
-    if (emailBodyInvoice == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyInvoice');
-    }
-    if (emailBodyQuote == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyQuote');
-    }
-    if (emailBodyPayment == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyPayment');
-    }
-    if (emailSubjectReminder1 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'emailSubjectReminder1');
-    }
-    if (emailSubjectReminder2 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'emailSubjectReminder2');
-    }
-    if (emailSubjectReminder3 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'emailSubjectReminder3');
-    }
-    if (emailBodyReminder1 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder1');
-    }
-    if (emailBodyReminder2 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder2');
-    }
-    if (emailBodyReminder3 == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'emailBodyReminder3');
     }
   }
 
@@ -1905,15 +1882,15 @@ class CompanyEntityBuilder
               convertProductExchangeRate: convertProductExchangeRate,
               enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
-              taxRates: taxRates.build(),
+              taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
               expenseCategories: _expenseCategories?.build(),
-              expenseCategoryMap: expenseCategoryMap.build(),
-              users: users.build(),
-              userMap: userMap.build(),
-              customFields: customFields.build(),
-              customPaymentTerms: customPaymentTerms.build(),
+              expenseCategoryMap: _expenseCategoryMap?.build(),
+              users: _users?.build(),
+              userMap: _userMap?.build(),
+              customFields: _customFields?.build(),
+              customPaymentTerms: _customPaymentTerms?.build(),
               invoiceFields: invoiceFields,
               emailFooter: emailFooter,
               emailSubjectInvoice: emailSubjectInvoice,
@@ -1937,7 +1914,7 @@ class CompanyEntityBuilder
       String _$failedField;
       try {
         _$failedField = 'taxRates';
-        taxRates.build();
+        _taxRates?.build();
         _$failedField = 'taskStatuses';
         _taskStatuses?.build();
         _$failedField = 'taskStatusMap';
@@ -1945,15 +1922,15 @@ class CompanyEntityBuilder
         _$failedField = 'expenseCategories';
         _expenseCategories?.build();
         _$failedField = 'expenseCategoryMap';
-        expenseCategoryMap.build();
+        _expenseCategoryMap?.build();
         _$failedField = 'users';
-        users.build();
+        _users?.build();
         _$failedField = 'userMap';
-        userMap.build();
+        _userMap?.build();
         _$failedField = 'customFields';
-        customFields.build();
+        _customFields?.build();
         _$failedField = 'customPaymentTerms';
-        customPaymentTerms.build();
+        _customPaymentTerms?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyEntity', _$failedField, e.toString());
@@ -2199,7 +2176,7 @@ class TaxRateEntityBuilder
 
 class _$UserEntity extends UserEntity {
   @override
-  final int id;
+  final String id;
   @override
   final String firstName;
   @override
@@ -2233,9 +2210,6 @@ class _$UserEntity extends UserEntity {
     }
     if (email == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'email');
-    }
-    if (isAdmin == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'isAdmin');
     }
     if (permissionsMap == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'permissionsMap');
@@ -2289,9 +2263,9 @@ class _$UserEntity extends UserEntity {
 class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   _$UserEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _firstName;
   String get firstName => _$this._firstName;
@@ -2373,8 +2347,6 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
 class _$UserCompanyEntity extends UserCompanyEntity {
   @override
-  final bool isAdmin;
-  @override
   final CompanyEntity company;
   @override
   final UserEntity user;
@@ -2385,11 +2357,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           [void Function(UserCompanyEntityBuilder) updates]) =>
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
-  _$UserCompanyEntity._({this.isAdmin, this.company, this.user, this.token})
-      : super._() {
-    if (isAdmin == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
-    }
+  _$UserCompanyEntity._({this.company, this.user, this.token}) : super._() {
     if (company == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'company');
     }
@@ -2413,7 +2381,6 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserCompanyEntity &&
-        isAdmin == other.isAdmin &&
         company == other.company &&
         user == other.user &&
         token == other.token;
@@ -2421,15 +2388,13 @@ class _$UserCompanyEntity extends UserCompanyEntity {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, isAdmin.hashCode), company.hashCode), user.hashCode),
-        token.hashCode));
+    return $jf(
+        $jc($jc($jc(0, company.hashCode), user.hashCode), token.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
-          ..add('isAdmin', isAdmin)
           ..add('company', company)
           ..add('user', user)
           ..add('token', token))
@@ -2440,10 +2405,6 @@ class _$UserCompanyEntity extends UserCompanyEntity {
 class UserCompanyEntityBuilder
     implements Builder<UserCompanyEntity, UserCompanyEntityBuilder> {
   _$UserCompanyEntity _$v;
-
-  bool _isAdmin;
-  bool get isAdmin => _$this._isAdmin;
-  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
 
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
@@ -2462,7 +2423,6 @@ class UserCompanyEntityBuilder
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
-      _isAdmin = _$v.isAdmin;
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
@@ -2490,7 +2450,6 @@ class UserCompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$UserCompanyEntity._(
-              isAdmin: isAdmin,
               company: company.build(),
               user: user.build(),
               token: token.build());

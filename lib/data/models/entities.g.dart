@@ -196,8 +196,6 @@ Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
     new _$LoginResponseSerializer();
-Serializer<LoginResponseData> _$loginResponseDataSerializer =
-    new _$LoginResponseDataSerializer();
 Serializer<StaticData> _$staticDataSerializer = new _$StaticDataSerializer();
 Serializer<DashboardResponse> _$dashboardResponseSerializer =
     new _$DashboardResponseSerializer();
@@ -326,8 +324,12 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(LoginResponseData)),
+      serializers.serialize(object.userCompanies,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(UserCompanyEntity)])),
+      'static',
+      serializers.serialize(object.static,
+          specifiedType: const FullType(StaticData)),
     ];
 
     return result;
@@ -346,53 +348,6 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
       final dynamic value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(LoginResponseData))
-              as LoginResponseData);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$LoginResponseDataSerializer
-    implements StructuredSerializer<LoginResponseData> {
-  @override
-  final Iterable<Type> types = const [LoginResponseData, _$LoginResponseData];
-  @override
-  final String wireName = 'LoginResponseData';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, LoginResponseData object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'company_users',
-      serializers.serialize(object.userCompanies,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(UserCompanyEntity)])),
-      'static',
-      serializers.serialize(object.static,
-          specifiedType: const FullType(StaticData)),
-    ];
-
-    return result;
-  }
-
-  @override
-  LoginResponseData deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new LoginResponseDataBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'company_users':
           result.userCompanies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(UserCompanyEntity)]))
@@ -868,14 +823,19 @@ class ErrorMessageBuilder
 
 class _$LoginResponse extends LoginResponse {
   @override
-  final LoginResponseData data;
+  final BuiltList<UserCompanyEntity> userCompanies;
+  @override
+  final StaticData static;
 
   factory _$LoginResponse([void Function(LoginResponseBuilder) updates]) =>
       (new LoginResponseBuilder()..update(updates)).build();
 
-  _$LoginResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('LoginResponse', 'data');
+  _$LoginResponse._({this.userCompanies, this.static}) : super._() {
+    if (userCompanies == null) {
+      throw new BuiltValueNullFieldError('LoginResponse', 'userCompanies');
+    }
+    if (static == null) {
+      throw new BuiltValueNullFieldError('LoginResponse', 'static');
     }
   }
 
@@ -889,17 +849,21 @@ class _$LoginResponse extends LoginResponse {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is LoginResponse && data == other.data;
+    return other is LoginResponse &&
+        userCompanies == other.userCompanies &&
+        static == other.static;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return $jf($jc($jc(0, userCompanies.hashCode), static.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('LoginResponse')..add('data', data))
+    return (newBuiltValueToStringHelper('LoginResponse')
+          ..add('userCompanies', userCompanies)
+          ..add('static', static))
         .toString();
   }
 }
@@ -908,16 +872,22 @@ class LoginResponseBuilder
     implements Builder<LoginResponse, LoginResponseBuilder> {
   _$LoginResponse _$v;
 
-  LoginResponseDataBuilder _data;
-  LoginResponseDataBuilder get data =>
-      _$this._data ??= new LoginResponseDataBuilder();
-  set data(LoginResponseDataBuilder data) => _$this._data = data;
+  ListBuilder<UserCompanyEntity> _userCompanies;
+  ListBuilder<UserCompanyEntity> get userCompanies =>
+      _$this._userCompanies ??= new ListBuilder<UserCompanyEntity>();
+  set userCompanies(ListBuilder<UserCompanyEntity> userCompanies) =>
+      _$this._userCompanies = userCompanies;
+
+  StaticDataBuilder _static;
+  StaticDataBuilder get static => _$this._static ??= new StaticDataBuilder();
+  set static(StaticDataBuilder static) => _$this._static = static;
 
   LoginResponseBuilder();
 
   LoginResponseBuilder get _$this {
     if (_$v != null) {
-      _data = _$v.data?.toBuilder();
+      _userCompanies = _$v.userCompanies?.toBuilder();
+      _static = _$v.static?.toBuilder();
       _$v = null;
     }
     return this;
@@ -940,116 +910,8 @@ class LoginResponseBuilder
   _$LoginResponse build() {
     _$LoginResponse _$result;
     try {
-      _$result = _$v ?? new _$LoginResponse._(data: data.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'data';
-        data.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'LoginResponse', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$LoginResponseData extends LoginResponseData {
-  @override
-  final BuiltList<UserCompanyEntity> userCompanies;
-  @override
-  final StaticData static;
-
-  factory _$LoginResponseData(
-          [void Function(LoginResponseDataBuilder) updates]) =>
-      (new LoginResponseDataBuilder()..update(updates)).build();
-
-  _$LoginResponseData._({this.userCompanies, this.static}) : super._() {
-    if (userCompanies == null) {
-      throw new BuiltValueNullFieldError('LoginResponseData', 'userCompanies');
-    }
-    if (static == null) {
-      throw new BuiltValueNullFieldError('LoginResponseData', 'static');
-    }
-  }
-
-  @override
-  LoginResponseData rebuild(void Function(LoginResponseDataBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  LoginResponseDataBuilder toBuilder() =>
-      new LoginResponseDataBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is LoginResponseData &&
-        userCompanies == other.userCompanies &&
-        static == other.static;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc($jc(0, userCompanies.hashCode), static.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('LoginResponseData')
-          ..add('userCompanies', userCompanies)
-          ..add('static', static))
-        .toString();
-  }
-}
-
-class LoginResponseDataBuilder
-    implements Builder<LoginResponseData, LoginResponseDataBuilder> {
-  _$LoginResponseData _$v;
-
-  ListBuilder<UserCompanyEntity> _userCompanies;
-  ListBuilder<UserCompanyEntity> get userCompanies =>
-      _$this._userCompanies ??= new ListBuilder<UserCompanyEntity>();
-  set userCompanies(ListBuilder<UserCompanyEntity> userCompanies) =>
-      _$this._userCompanies = userCompanies;
-
-  StaticDataBuilder _static;
-  StaticDataBuilder get static => _$this._static ??= new StaticDataBuilder();
-  set static(StaticDataBuilder static) => _$this._static = static;
-
-  LoginResponseDataBuilder();
-
-  LoginResponseDataBuilder get _$this {
-    if (_$v != null) {
-      _userCompanies = _$v.userCompanies?.toBuilder();
-      _static = _$v.static?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(LoginResponseData other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$LoginResponseData;
-  }
-
-  @override
-  void update(void Function(LoginResponseDataBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$LoginResponseData build() {
-    _$LoginResponseData _$result;
-    try {
       _$result = _$v ??
-          new _$LoginResponseData._(
+          new _$LoginResponse._(
               userCompanies: userCompanies.build(), static: static.build());
     } catch (_) {
       String _$failedField;
@@ -1060,7 +922,7 @@ class LoginResponseDataBuilder
         static.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'LoginResponseData', _$failedField, e.toString());
+            'LoginResponse', _$failedField, e.toString());
       }
       rethrow;
     }

@@ -67,7 +67,7 @@ class LoadAccountSuccess {
       {this.loginResponse, this.completer, this.loadCompanies = true});
 
   final Completer completer;
-  final LoginResponseData loginResponse;
+  final LoginResponse loginResponse;
   final bool loadCompanies;
 }
 

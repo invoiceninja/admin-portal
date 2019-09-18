@@ -136,8 +136,8 @@ class _$CurrencyEntitySerializer
       'code',
       serializers.serialize(object.code, specifiedType: const FullType(String)),
       'swap_currency_symbol',
-      serializers.serialize(object.swapCurrencySymbolInt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(object.swapCurrencySymbol,
+          specifiedType: const FullType(bool)),
     ];
     if (object.exchangeRate != null) {
       result
@@ -191,8 +191,8 @@ class _$CurrencyEntitySerializer
               specifiedType: const FullType(String)) as String;
           break;
         case 'swap_currency_symbol':
-          result.swapCurrencySymbolInt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.swapCurrencySymbol = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'exchange_rate':
           result.exchangeRate = serializers.deserialize(value,
@@ -413,7 +413,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   @override
   final String code;
   @override
-  final int swapCurrencySymbolInt;
+  final bool swapCurrencySymbol;
   @override
   final double exchangeRate;
   @override
@@ -429,7 +429,7 @@ class _$CurrencyEntity extends CurrencyEntity {
       this.thousandSeparator,
       this.decimalSeparator,
       this.code,
-      this.swapCurrencySymbolInt,
+      this.swapCurrencySymbol,
       this.exchangeRate,
       this.id})
       : super._() {
@@ -451,9 +451,9 @@ class _$CurrencyEntity extends CurrencyEntity {
     if (code == null) {
       throw new BuiltValueNullFieldError('CurrencyEntity', 'code');
     }
-    if (swapCurrencySymbolInt == null) {
+    if (swapCurrencySymbol == null) {
       throw new BuiltValueNullFieldError(
-          'CurrencyEntity', 'swapCurrencySymbolInt');
+          'CurrencyEntity', 'swapCurrencySymbol');
     }
   }
 
@@ -475,7 +475,7 @@ class _$CurrencyEntity extends CurrencyEntity {
         thousandSeparator == other.thousandSeparator &&
         decimalSeparator == other.decimalSeparator &&
         code == other.code &&
-        swapCurrencySymbolInt == other.swapCurrencySymbolInt &&
+        swapCurrencySymbol == other.swapCurrencySymbol &&
         exchangeRate == other.exchangeRate &&
         id == other.id;
   }
@@ -493,7 +493,7 @@ class _$CurrencyEntity extends CurrencyEntity {
                             thousandSeparator.hashCode),
                         decimalSeparator.hashCode),
                     code.hashCode),
-                swapCurrencySymbolInt.hashCode),
+                swapCurrencySymbol.hashCode),
             exchangeRate.hashCode),
         id.hashCode));
   }
@@ -507,7 +507,7 @@ class _$CurrencyEntity extends CurrencyEntity {
           ..add('thousandSeparator', thousandSeparator)
           ..add('decimalSeparator', decimalSeparator)
           ..add('code', code)
-          ..add('swapCurrencySymbolInt', swapCurrencySymbolInt)
+          ..add('swapCurrencySymbol', swapCurrencySymbol)
           ..add('exchangeRate', exchangeRate)
           ..add('id', id))
         .toString();
@@ -544,10 +544,10 @@ class CurrencyEntityBuilder
   String get code => _$this._code;
   set code(String code) => _$this._code = code;
 
-  int _swapCurrencySymbolInt;
-  int get swapCurrencySymbolInt => _$this._swapCurrencySymbolInt;
-  set swapCurrencySymbolInt(int swapCurrencySymbolInt) =>
-      _$this._swapCurrencySymbolInt = swapCurrencySymbolInt;
+  bool _swapCurrencySymbol;
+  bool get swapCurrencySymbol => _$this._swapCurrencySymbol;
+  set swapCurrencySymbol(bool swapCurrencySymbol) =>
+      _$this._swapCurrencySymbol = swapCurrencySymbol;
 
   double _exchangeRate;
   double get exchangeRate => _$this._exchangeRate;
@@ -567,7 +567,7 @@ class CurrencyEntityBuilder
       _thousandSeparator = _$v.thousandSeparator;
       _decimalSeparator = _$v.decimalSeparator;
       _code = _$v.code;
-      _swapCurrencySymbolInt = _$v.swapCurrencySymbolInt;
+      _swapCurrencySymbol = _$v.swapCurrencySymbol;
       _exchangeRate = _$v.exchangeRate;
       _id = _$v.id;
       _$v = null;
@@ -598,7 +598,7 @@ class CurrencyEntityBuilder
             thousandSeparator: thousandSeparator,
             decimalSeparator: decimalSeparator,
             code: code,
-            swapCurrencySymbolInt: swapCurrencySymbolInt,
+            swapCurrencySymbol: swapCurrencySymbol,
             exchangeRate: exchangeRate,
             id: id);
     replace(_$result);

@@ -15,7 +15,7 @@ class AuthRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponseData> signUp({
+  Future<LoginResponse> signUp({
     String firstName,
     String lastName,
     String email,
@@ -37,7 +37,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> login(
+  Future<LoginResponse> login(
       {String email,
       String password,
       String url,
@@ -57,7 +57,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> oauthLogin(
+  Future<LoginResponse> oauthLogin(
       {String token, String url, String secret, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -70,7 +70,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> refresh(
+  Future<LoginResponse> refresh(
       {String url, String token, String platform}) async {
     final credentials = {
       'token_name': 'invoice-ninja-$platform-app',
@@ -81,7 +81,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, token: token);
   }
 
-  Future<LoginResponseData> sendRequest(
+  Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token}) async {
     /*
     url +=
@@ -96,6 +96,6 @@ class AuthRepository {
     final LoginResponse loginResponse =
         serializers.deserializeWith(LoginResponse.serializer, response);
 
-    return loginResponse.data;
+    return loginResponse;
   }
 }

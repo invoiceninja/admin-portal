@@ -176,9 +176,6 @@ String _parseError(int code, String response) {
 }
 
 bool _isVersionSupported(String version) {
-  // TODO remove this
-  return true;
-
   if (version == null || version.isEmpty) {
     return false;
   }

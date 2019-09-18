@@ -218,25 +218,11 @@ abstract class LoginResponse
   LoginResponse._();
 
   @BuiltValueField(wireName: 'data')
-  LoginResponseData get data;
-
-  static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
-}
-
-abstract class LoginResponseData
-    implements Built<LoginResponseData, LoginResponseDataBuilder> {
-  factory LoginResponseData([void updates(LoginResponseDataBuilder b)]) =
-      _$LoginResponseData;
-
-  LoginResponseData._();
-
-  @BuiltValueField(wireName: 'company_users')
   BuiltList<UserCompanyEntity> get userCompanies;
 
   StaticData get static;
 
-  static Serializer<LoginResponseData> get serializer =>
-      _$loginResponseDataSerializer;
+  static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
 }
 
 abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
