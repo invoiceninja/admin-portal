@@ -1,9 +1,12 @@
 name: invoiceninja_flutter
 description: Mobile app for Invoice Ninja
-version: 0.1.50
+version: 2.0.0+0
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
+
+environment:
+  sdk: ">=2.4.0 <3.0.0"
 
 dependencies:
   flutter:
