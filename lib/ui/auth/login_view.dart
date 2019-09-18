@@ -518,26 +518,27 @@ class _LoginState extends State<LoginView> {
                                               Text(localization.selfhostLogin)),
                                 ]),
                           ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.externalLinkAlt,
-                                    size: 16),
-                                FlatButton(
-                                  child: Text(localization.viewWebsite),
-                                  onPressed: () async {
-                                    if (await canLaunch(kSiteUrl)) {
-                                      await launch(kSiteUrl,
-                                          forceSafariVC: false,
-                                          forceWebView: false);
-                                    }
-                                  },
-                                ),
-                              ]),
-                        ),
+                        if (_createAccount)
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.externalLinkAlt,
+                                      size: 16),
+                                  FlatButton(
+                                    child: Text(localization.viewWebsite),
+                                    onPressed: () async {
+                                      if (await canLaunch(kSiteUrl)) {
+                                        await launch(kSiteUrl,
+                                            forceSafariVC: false,
+                                            forceWebView: false);
+                                      }
+                                    },
+                                  ),
+                                ]),
+                          ),
                       ],
                     ),
                   if (isOneTimePassword && !viewModel.isLoading)
