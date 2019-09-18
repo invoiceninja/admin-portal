@@ -79,6 +79,5 @@
 key.properties
 google-services.json
 GoogleService-Info.plist
-ios/Runner/Info.plist
 android/app/build.gradle
 android/app/release/
