@@ -15,6 +15,7 @@ abstract class CompanyEntity
       companyKey: '',
       name: '',
       plan: '',
+      settings: SettingsEntity(),
       logoUrl: '',
       appUrl: '',
       convertProductExchangeRate: false,
@@ -46,7 +47,8 @@ abstract class CompanyEntity
       showCurrencyCode: false,
       showInvoiceItemTaxes: false,
       startOfWeek: 1,
-      timezoneId: '1', // TODO set to default EST timezone
+      timezoneId: '1',
+      // TODO set to default EST timezone
       customPaymentTerms: BuiltList<PaymentTermEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -103,6 +105,8 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get companyCurrencyId;
+
+  SettingsEntity get settings;
 
   // TODO remove this
   @nullable
@@ -554,7 +558,8 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   BuiltMap<String, bool> get permissionsMap;
 
   bool can(UserPermission permission, EntityType entityType) =>
-      isAdmin || permissionsMap.containsKey('${permission}_$entityType');
+      (isAdmin ?? false) ||
+      permissionsMap.containsKey('${permission}_$entityType');
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 
@@ -618,4 +623,23 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
   String get name;
 
   static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
+}
+
+abstract class SettingsEntity
+    implements Built<SettingsEntity, SettingsEntityBuilder> {
+  factory SettingsEntity() {
+    return _$SettingsEntity._(
+        //timezoneId: '',
+        );
+  }
+
+  SettingsEntity._();
+
+  @BuiltValueField(wireName: 'timezone_id')
+  int get timezoneIdInt;
+
+  String get timezoneId => timezoneId.toString();
+
+  static Serializer<SettingsEntity> get serializer =>
+      _$settingsEntitySerializer;
 }

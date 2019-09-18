@@ -16,6 +16,8 @@ Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
 Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
+Serializer<SettingsEntity> _$settingsEntitySerializer =
+    new _$SettingsEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -32,6 +34,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
       'country_id',
       serializers.serialize(object.countryId,
           specifiedType: const FullType(String)),
@@ -450,6 +455,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'currency_id':
           result.companyCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'timezone_id':
           result.timezoneId = serializers.deserialize(value,
@@ -1029,6 +1038,48 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   }
 }
 
+class _$SettingsEntitySerializer
+    implements StructuredSerializer<SettingsEntity> {
+  @override
+  final Iterable<Type> types = const [SettingsEntity, _$SettingsEntity];
+  @override
+  final String wireName = 'SettingsEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, SettingsEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'timezone_id',
+      serializers.serialize(object.timezoneIdInt,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  SettingsEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new SettingsEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'timezone_id':
+          result.timezoneIdInt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$CompanyEntity extends CompanyEntity {
   @override
   final String name;
@@ -1042,6 +1093,8 @@ class _$CompanyEntity extends CompanyEntity {
   final String appUrl;
   @override
   final String companyCurrencyId;
+  @override
+  final SettingsEntity settings;
   @override
   final String timezoneId;
   @override
@@ -1169,6 +1222,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.logoUrl,
       this.appUrl,
       this.companyCurrencyId,
+      this.settings,
       this.timezoneId,
       this.countryId,
       this.dateFormatId,
@@ -1234,6 +1288,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
+    }
     if (countryId == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
     }
@@ -1259,6 +1316,7 @@ class _$CompanyEntity extends CompanyEntity {
         logoUrl == other.logoUrl &&
         appUrl == other.appUrl &&
         companyCurrencyId == other.companyCurrencyId &&
+        settings == other.settings &&
         timezoneId == other.timezoneId &&
         countryId == other.countryId &&
         dateFormatId == other.dateFormatId &&
@@ -1339,7 +1397,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), plan.hashCode), companyKey.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), userMap.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), plan.hashCode), companyKey.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), settings.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), userMap.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -1370,6 +1428,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('logoUrl', logoUrl)
           ..add('appUrl', appUrl)
           ..add('companyCurrencyId', companyCurrencyId)
+          ..add('settings', settings)
           ..add('timezoneId', timezoneId)
           ..add('countryId', countryId)
           ..add('dateFormatId', dateFormatId)
@@ -1460,6 +1519,11 @@ class CompanyEntityBuilder
   String get companyCurrencyId => _$this._companyCurrencyId;
   set companyCurrencyId(String companyCurrencyId) =>
       _$this._companyCurrencyId = companyCurrencyId;
+
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
   String _timezoneId;
   String get timezoneId => _$this._timezoneId;
@@ -1764,6 +1828,7 @@ class CompanyEntityBuilder
       _logoUrl = _$v.logoUrl;
       _appUrl = _$v.appUrl;
       _companyCurrencyId = _$v.companyCurrencyId;
+      _settings = _$v.settings?.toBuilder();
       _timezoneId = _$v.timezoneId;
       _countryId = _$v.countryId;
       _dateFormatId = _$v.dateFormatId;
@@ -1852,6 +1917,7 @@ class CompanyEntityBuilder
               logoUrl: logoUrl,
               appUrl: appUrl,
               companyCurrencyId: companyCurrencyId,
+              settings: settings.build(),
               timezoneId: timezoneId,
               countryId: countryId,
               dateFormatId: dateFormatId,
@@ -1913,6 +1979,9 @@ class CompanyEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'settings';
+        settings.build();
+
         _$failedField = 'taxRates';
         _taxRates?.build();
         _$failedField = 'taskStatuses';
@@ -2556,6 +2625,86 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   @override
   _$TokenEntity build() {
     final _$result = _$v ?? new _$TokenEntity._(token: token, name: name);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$SettingsEntity extends SettingsEntity {
+  @override
+  final int timezoneIdInt;
+
+  factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
+      (new SettingsEntityBuilder()..update(updates)).build();
+
+  _$SettingsEntity._({this.timezoneIdInt}) : super._() {
+    if (timezoneIdInt == null) {
+      throw new BuiltValueNullFieldError('SettingsEntity', 'timezoneIdInt');
+    }
+  }
+
+  @override
+  SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SettingsEntityBuilder toBuilder() =>
+      new SettingsEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is SettingsEntity && timezoneIdInt == other.timezoneIdInt;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, timezoneIdInt.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('SettingsEntity')
+          ..add('timezoneIdInt', timezoneIdInt))
+        .toString();
+  }
+}
+
+class SettingsEntityBuilder
+    implements Builder<SettingsEntity, SettingsEntityBuilder> {
+  _$SettingsEntity _$v;
+
+  int _timezoneIdInt;
+  int get timezoneIdInt => _$this._timezoneIdInt;
+  set timezoneIdInt(int timezoneIdInt) => _$this._timezoneIdInt = timezoneIdInt;
+
+  SettingsEntityBuilder();
+
+  SettingsEntityBuilder get _$this {
+    if (_$v != null) {
+      _timezoneIdInt = _$v.timezoneIdInt;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(SettingsEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$SettingsEntity;
+  }
+
+  @override
+  void update(void Function(SettingsEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$SettingsEntity build() {
+    final _$result =
+        _$v ?? new _$SettingsEntity._(timezoneIdInt: timezoneIdInt);
     replace(_$result);
     return _$result;
   }

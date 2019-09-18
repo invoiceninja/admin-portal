@@ -323,16 +323,18 @@ Middleware<AppState> _createAccountLoaded() {
     if (action.loadCompanies) {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
-
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(getCompanyTokenKey(i), userCompany.token.token);
+        print('user company: $userCompany');
 
         store.dispatch(SelectCompany(i + 1, userCompany));
+        print('selected 1');
         store.dispatch(LoadCompanySuccess(userCompany));
+        print('selected 2');
       }
 
       store.dispatch(SelectCompany(1, response.userCompanies[0]));
+      print('selected 3');
       store.dispatch(UserLoginSuccess());
+      print('selected 4');
     }
 
     if (action.completer != null) {

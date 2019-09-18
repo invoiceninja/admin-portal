@@ -44,6 +44,8 @@ Reducer<UserCompanyEntity> companyEntityReducer = combineReducers([
 
 UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity company, LoadCompanySuccess action) {
+  return action.company;
+
   var userCompany = action.company;
 
   if (userCompany.company.taskStatuses != null) {

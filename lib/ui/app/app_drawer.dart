@@ -165,25 +165,6 @@ class AppDrawer extends StatelessWidget {
                     child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
-                      if (Platform.isIOS &&
-                          isHosted(context) &&
-                          !isPaidAccount(context))
-                        Material(
-                          color: Colors.green,
-                          child: ListTile(
-                            leading: Icon(
-                              FontAwesomeIcons.superpowers,
-                              color: Colors.white,
-                            ),
-                            title: Text(localization.upgrade,
-                                style: TextStyle(color: Colors.white)),
-                            onTap: () => showDialog<UpgradeDialog>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return UpgradeDialog();
-                                }),
-                          ),
-                        ),
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.tachometerAlt,
