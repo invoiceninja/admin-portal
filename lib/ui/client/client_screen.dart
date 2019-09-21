@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/multiple_entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/ui/app/list_more_button.dart';
 import 'package:invoiceninja_flutter/ui/app/list_multiselect_button.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -53,12 +52,6 @@ class ClientScreen extends StatelessWidget {
             onFilterPressed: (String value) {
               store.dispatch(FilterClients(value));
             },
-          ),
-        if (!viewModel.isInMultiselect &&
-            store.state.clientListState.filter == null)
-          ListMoreButton(
-            onPressed: (String value) =>
-                _onSelectPressed(value, store, context),
           ),
         if (viewModel.isInMultiselect)
           ListMultiselectButton(
@@ -118,9 +111,9 @@ class ClientScreen extends StatelessWidget {
   }
 
   void _finishMultiselect(BuildContext context, ListMultiselectButtonMode mode,
-      Store<AppState> store) {
+      Store<AppState> store) async {
     if (mode == ListMultiselectButtonMode.DONE) {
-      showMultipleEntitiesActionsDialog(
+      await showMultipleEntitiesActionsDialog(
           entities: store.state.clientListState.selectedEntities,
           user: viewModel.user,
           onEntityAction: viewModel.onEntityAction,

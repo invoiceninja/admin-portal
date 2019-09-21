@@ -59,6 +59,10 @@ class ClientListItem extends StatelessWidget {
         onLongPress: onLongPress,
         title: Row(
           children: <Widget>[
+            if (isInMultiselect)
+              IgnorePointer(
+                  child: Checkbox(
+                      value: listUIState.isSelected(client), onChanged: null)),
             Expanded(
               child: Text(
                 client.displayName,
@@ -67,10 +71,6 @@ class ClientListItem extends StatelessWidget {
             ),
             Text(formatNumber(client.balance, context, clientId: client.id),
                 style: Theme.of(context).textTheme.title),
-            if (isInMultiselect)
-              IgnorePointer(
-                  child: Checkbox(
-                      value: listUIState.isSelected(client), onChanged: null))
           ],
         ),
         subtitle: (filterMatch == null && client.isActive)

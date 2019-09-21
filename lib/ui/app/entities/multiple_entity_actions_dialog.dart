@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showMultipleEntitiesActionsDialog({
+Future<void> showMultipleEntitiesActionsDialog({
   @required List<BaseEntity> entities,
   @required UserEntity user,
   @required GlobalKey<ScaffoldState> scaffoldKey,
@@ -18,7 +18,7 @@ void showMultipleEntitiesActionsDialog({
     return;
   }
   final mainContext = scaffoldKey.currentContext;
-  showDialog<String>(
+  await showDialog<String>(
       context: scaffoldKey.currentContext,
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
