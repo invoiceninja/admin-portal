@@ -69,5 +69,3 @@ dependencies {
     implementation 'com.google.guava:guava:27.0.1-android' // https://stackoverflow.com/a/56639924/497368
 
 }
-
-apply plugin: 'com.google.gms.google-services'
