@@ -101,6 +101,8 @@ Middleware<AppState> _viewVendorList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           VendorScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.vendorState.isStale) {
+      store.dispatch(LoadVendors());
     }
   };
 }

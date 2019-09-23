@@ -301,31 +301,41 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
             // STARTER: routes - do not remove comment
             DocumentScreen.route: (context) {
-              widget.store.dispatch(LoadDocuments());
+              if (widget.store.state.documentState.isStale) {
+                widget.store.dispatch(LoadDocuments());
+              }
               return DocumentScreen();
             },
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
             ExpenseScreen.route: (context) {
-              widget.store.dispatch(LoadExpenses());
+              if (widget.store.state.expenseState.isStale) {
+                widget.store.dispatch(LoadExpenses());
+              }
               return ExpenseScreen();
             },
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
             VendorScreen.route: (context) {
-              widget.store.dispatch(LoadVendors());
+              if (widget.store.state.vendorState.isStale) {
+                widget.store.dispatch(LoadVendors());
+              }
               return VendorScreen();
             },
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
             TaskScreen.route: (context) {
-              widget.store.dispatch(LoadTasks());
+              if (widget.store.state.taskState.isStale) {
+                widget.store.dispatch(LoadTasks());
+              }
               return TaskScreen();
             },
             TaskViewScreen.route: (context) => TaskViewScreen(),
             TaskEditScreen.route: (context) => TaskEditScreen(),
             ProjectScreen.route: (context) {
-              widget.store.dispatch(LoadProjects());
+              if (widget.store.state.projectState.isStale) {
+                widget.store.dispatch(LoadProjects());
+              }
               return ProjectScreen();
             },
             ProjectViewScreen.route: (context) => ProjectViewScreen(),

@@ -78,6 +78,8 @@ Middleware<AppState> _viewQuoteList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.quoteState.isStale) {
+      store.dispatch(LoadQuotes());
     }
   };
 }

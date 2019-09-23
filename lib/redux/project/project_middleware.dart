@@ -101,6 +101,8 @@ Middleware<AppState> _viewProjectList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           ProjectScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.projectState.isStale) {
+      store.dispatch(LoadProjects());
     }
   };
 }

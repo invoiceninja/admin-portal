@@ -100,6 +100,8 @@ Middleware<AppState> _viewPaymentList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           PaymentScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.paymentState.isStale) {
+      store.dispatch(LoadPayments());
     }
   };
 }

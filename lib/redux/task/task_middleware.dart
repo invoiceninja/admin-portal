@@ -100,6 +100,8 @@ Middleware<AppState> _viewTaskList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           TaskScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.taskState.isStale) {
+      store.dispatch(LoadTasks());
     }
   };
 }

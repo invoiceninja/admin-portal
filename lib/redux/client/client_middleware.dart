@@ -94,6 +94,8 @@ Middleware<AppState> _viewClientList() {
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.clientState.isStale) {
+      store.dispatch(LoadClients());
     }
   };
 }

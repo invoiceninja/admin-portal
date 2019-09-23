@@ -72,11 +72,23 @@ Middleware<AppState> _viewStub() {
 
 Middleware<AppState> _viewStubList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewStubList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(StubScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          StubScreen.route, (Route<dynamic> route) => false);
+    } else if (store.state.stubState.isStale) {
+      store.dispatch(LoadStubs());
+    }
   };
 }
 
