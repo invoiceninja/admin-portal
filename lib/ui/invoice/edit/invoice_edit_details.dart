@@ -117,13 +117,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final company = viewModel.company;
 
     var designs = new List<String>.from(kInvoiceDesigns);
-    if (!(company.hasCustomDesign1 ?? true)) {
+    if (!(company.settings.hasCustomDesign1 ?? true)) {
       designs.remove(kDesignCustom1);
     }
-    if (!(company.hasCustomDesign2 ?? true)) {
+    if (!(company.settings.hasCustomDesign2 ?? true)) {
       designs.remove(kDesignCustom2);
     }
-    if (!(company.hasCustomDesign3 ?? true)) {
+    if (!(company.settings.hasCustomDesign3 ?? true)) {
       designs.remove(kDesignCustom3);
     }
     if (!company.isProPlan) {
@@ -277,7 +277,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.enableInvoiceTaxes
+            company.settings.enableInvoiceTaxes
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
@@ -287,7 +287,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate1,
                   )
                 : Container(),
-            company.enableInvoiceTaxes && company.enableSecondTaxRate
+            company.settings.enableInvoiceTaxes &&
+                    company.settings.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) => viewModel

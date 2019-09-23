@@ -107,7 +107,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               initialValue: null,
               itemBuilder: (BuildContext context) => (<int>[]
                     ..addAll(kPaymentTerms)
-                    ..addAll(viewModel.company.customPaymentTerms
+                    ..addAll(viewModel.company.settings.customPaymentTerms
                         .map((paymentTerm) => paymentTerm.numDays))
                     ..sort((a, b) => a.abs() - b.abs()))
                   .map((int numDays) =>

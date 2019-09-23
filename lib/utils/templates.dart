@@ -23,8 +23,8 @@ String processTemplate(
   const String sampleLink = 'https://example.com/...';
 
   template = template
-      .replaceAll('\$footer', company.emailFooter)
-      .replaceAll('\$emailSignature', company.emailFooter)
+      .replaceAll('\$footer', company.settings.emailFooter)
+      .replaceAll('\$emailSignature', company.settings.emailFooter)
       .replaceAll('\$client', client.displayName)
       .replaceAll('\$idNumber', client.idNumber)
       .replaceAll('\$vatNumber', client.vatNumber)

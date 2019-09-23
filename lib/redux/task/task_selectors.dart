@@ -148,8 +148,8 @@ double taskRateSelector(
     return project.taskRate;
   } else if (client != null && client.taskRate > 0) {
     return client.taskRate;
-  } else if (company != null && company.defaultTaskRate > 0) {
-    return company.defaultTaskRate;
+  } else if (company != null && company.settings.defaultTaskRate > 0) {
+    return company.settings.defaultTaskRate;
   }
 
   return 0;

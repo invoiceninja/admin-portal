@@ -110,10 +110,10 @@ abstract class InvoiceEntity extends Object
       endDate: '',
       lastSentDate: '',
       recurringInvoiceId: '',
-      taxName1: company?.defaultTaxName1 ?? '',
-      taxRate1: company?.defaultTaxRate1 ?? 0.0,
-      taxName2: company?.defaultTaxName2 ?? '',
-      taxRate2: company?.defaultTaxRate2 ?? 0.0,
+      taxName1: company?.settings?.defaultTaxName1 ?? '',
+      taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
+      taxName2: company?.settings?.defaultTaxName2 ?? '',
+      taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
       isAmountDiscount: false,
       invoiceFooter: '',
       partial: 0.0,
@@ -137,8 +137,8 @@ abstract class InvoiceEntity extends Object
       isDeleted: false,
       designId: company != null
           ? (isQuote
-              ? company.defaultQuoteDesignId
-              : company.defaultInvoiceDesignId)
+              ? company.settings.defaultQuoteDesignId
+              : company.settings.defaultInvoiceDesignId)
           : 1,
     );
   }

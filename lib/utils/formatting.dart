@@ -134,7 +134,7 @@ String formatNumber(
 
   if (formatNumberType == FormatNumberType.percent) {
     return '$formatted%';
-  } else if (company.showCurrencyCode || currency.symbol.isEmpty) {
+  } else if (company.settings.showCurrencyCode || currency.symbol.isEmpty) {
     return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {
     return '$formatted ${currency.symbol.trim()}';
@@ -247,15 +247,15 @@ String formatDate(String value, BuildContext context,
     String format;
     if (!showDate) {
       format = showSeconds
-          ? company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
-          : company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+          ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+          : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
       final dateFormats = state.staticState.datetimeFormatMap;
-      final dateFormatId = (company.datetimeFormatId ?? '').isNotEmpty
-          ? company.datetimeFormatId
+      final dateFormatId = (company.settings.datetimeFormatId ?? '').isNotEmpty
+          ? company.settings.datetimeFormatId
           : kDefaultDateTimeFormat;
       format = dateFormats[dateFormatId].format;
-      if (company.enableMilitaryTime) {
+      if (company.settings.enableMilitaryTime) {
         format = showSeconds
             ? format.replaceFirst('h:mm:ss a', 'H:mm:ss')
             : format.replaceFirst('h:mm a', 'H:mm');
@@ -266,7 +266,8 @@ String formatDate(String value, BuildContext context,
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final formatter = DateFormat(
-        dateFormats[company.dateFormatId].format, localeSelector(state));
+        dateFormats[company.settings.dateFormatId].format,
+        localeSelector(state));
     return formatter.format(DateTime.tryParse(value));
   }
 }

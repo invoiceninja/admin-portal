@@ -118,7 +118,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               initialTaxName: expense.taxName1,
               initialTaxRate: expense.taxRate1,
             ),
-            company.enableSecondTaxRate
+            company.settings.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>

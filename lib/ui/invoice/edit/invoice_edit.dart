@@ -139,7 +139,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
-              '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
+              '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
               style: TextStyle(
                 //color: Theme.of(context).selectedRowColor,
                 color: Colors.white,

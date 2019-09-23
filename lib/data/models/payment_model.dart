@@ -60,10 +60,10 @@ abstract class PaymentEntity extends Object
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId:
-          company != null && (company.defaultPaymentTypeId ?? '').isNotEmpty
-              ? company.defaultPaymentTypeId
-              : '',
+      paymentTypeId: company != null &&
+              (company.settings.defaultPaymentTypeId ?? '').isNotEmpty
+          ? company.settings.defaultPaymentTypeId
+          : '',
       invoiceId: '',
       clientId: '',
       invoiceNumber: '',

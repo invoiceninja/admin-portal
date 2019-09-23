@@ -18,38 +18,11 @@ abstract class CompanyEntity
       settings: SettingsEntity(),
       logoUrl: '',
       appUrl: '',
-      convertProductExchangeRate: false,
       companyCurrencyId: '1',
-      dateFormatId: '1',
-      datetimeFormatId: '1',
-      defaultInvoiceDesignId: '1',
-      defaultInvoiceFooter: '',
-      defaultInvoiceTerms: '',
-      defaultPaymentTerms: 0,
-      defaultPaymentTypeId: '',
-      defaultQuoteDesignId: '1',
-      defaultQuoteTerms: '',
-      defaultTaskRate: 0.0,
-      defaultTaxName1: '',
-      defaultTaxRate1: 0.0,
-      defaultTaxName2: '',
-      defaultTaxRate2: 0.0,
-      enableCustomInvoiceTaxes1: false,
-      enableCustomInvoiceTaxes2: false,
       enabledModules: 0,
-      enableInclusiveTaxes: false,
-      enableInvoiceItemTaxes: false,
-      enableInvoiceTaxes: true,
-      enableMilitaryTime: false,
-      enableSecondTaxRate: false,
       financialYearStart: 1,
-      languageId: kLanguageEnglish,
-      showCurrencyCode: false,
-      showInvoiceItemTaxes: false,
       startOfWeek: 1,
-      timezoneId: '1',
-      // TODO set to default EST timezone
-      customPaymentTerms: BuiltList<PaymentTermEntity>(),
+      countryId: kCountryUnitedStates,
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
@@ -58,26 +31,6 @@ abstract class CompanyEntity
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
-      invoiceFields: '',
-      countryId: kCountryUnitedStates,
-      emailFooter: '',
-      emailSubjectInvoice: '',
-      emailSubjectQuote: '',
-      emailSubjectPayment: '',
-      emailBodyInvoice: '',
-      emailBodyQuote: '',
-      emailBodyPayment: '',
-      emailSubjectReminder1: '',
-      emailSubjectReminder2: '',
-      emailSubjectReminder3: '',
-      emailBodyReminder1: '',
-      emailBodyReminder2: '',
-      emailBodyReminder3: '',
-      fillProducts: true,
-      enablePortalPassword: false,
-      hasCustomDesign1: false,
-      hasCustomDesign2: false,
-      hasCustomDesign3: false,
     );
   }
 
@@ -101,160 +54,16 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'currency_id')
-  String get companyCurrencyId;
-
-  SettingsEntity get settings;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'timezone_id')
-  String get timezoneId;
-
-  @BuiltValueField(wireName: 'country_id')
-  String get countryId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'date_format_id')
-  String get dateFormatId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'datetime_format_id')
-  String get datetimeFormatId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'invoice_terms')
-  String get defaultInvoiceTerms;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'invoice_taxes')
-  bool get enableInvoiceTaxes;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'invoice_item_taxes')
-  bool get enableInvoiceItemTaxes;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'invoice_design_id')
-  String get defaultInvoiceDesignId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'quote_design_id')
-  String get defaultQuoteDesignId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'language_id')
-  String get languageId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'invoice_footer')
-  String get defaultInvoiceFooter;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'show_item_taxes')
-  bool get showInvoiceItemTaxes;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'military_time')
-  bool get enableMilitaryTime;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'tax_name1')
-  String get defaultTaxName1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'tax_rate1')
-  double get defaultTaxRate1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'tax_name2')
-  String get defaultTaxName2;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'tax_rate2')
-  double get defaultTaxRate2;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'quote_terms')
-  String get defaultQuoteTerms;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'show_currency_code')
-  bool get showCurrencyCode;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'enable_second_tax_rate')
-  bool get enableSecondTaxRate;
-
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'start_of_week')
   int get startOfWeek;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'financial_year_start')
   int get financialYearStart;
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'enabled_modules')
-  int get enabledModules;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'payment_terms')
-  int get defaultPaymentTerms;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'payment_type_id')
-  String get defaultPaymentTypeId;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'task_rate')
-  double get defaultTaskRate;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'inclusive_taxes')
-  bool get enableInclusiveTaxes;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'convert_products')
-  bool get convertProductExchangeRate;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
-  bool get enableCustomInvoiceTaxes1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes2')
-  bool get enableCustomInvoiceTaxes2;
+  @BuiltValueField(wireName: 'currency_id')
+  String get companyCurrencyId;
 
   // TODO remove this
   @nullable
@@ -289,114 +98,18 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'custom_payment_terms')
-  BuiltList<PaymentTermEntity> get customPaymentTerms;
+  SettingsEntity get settings;
+
+  @BuiltValueField(wireName: 'country_id')
+  String get countryId;
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'invoice_fields')
-  String get invoiceFields;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_footer')
-  String get emailFooter;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_invoice')
-  String get emailSubjectInvoice;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_quote')
-  String get emailSubjectQuote;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_payment')
-  String get emailSubjectPayment;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_invoice')
-  String get emailBodyInvoice;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_quote')
-  String get emailBodyQuote;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_payment')
-  String get emailBodyPayment;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_reminder1')
-  String get emailSubjectReminder1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_reminder2')
-  String get emailSubjectReminder2;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_subject_reminder3')
-  String get emailSubjectReminder3;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_reminder1')
-  String get emailBodyReminder1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_reminder2')
-  String get emailBodyReminder2;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'email_template_reminder3')
-  String get emailBodyReminder3;
-
-  @nullable
-  @BuiltValueField(wireName: 'fill_products')
-  bool get fillProducts;
-
-  @nullable
-  @BuiltValueField(wireName: 'enable_portal_password')
-  bool get enablePortalPassword;
-
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design1')
-  bool get hasCustomDesign1;
-
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design2')
-  bool get hasCustomDesign2;
-
-  @nullable
-  @BuiltValueField(wireName: 'has_custom_design3')
-  bool get hasCustomDesign3;
+  @BuiltValueField(wireName: 'enabled_modules')
+  int get enabledModules;
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
-
-  bool hasInvoiceField(String field,
-      [EntityType entityType = EntityType.product]) {
-    if (invoiceFields.isNotEmpty) {
-      return invoiceFields.contains('$entityType.$field');
-    } else if (field == 'discount') {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
@@ -629,16 +342,241 @@ abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
   factory SettingsEntity() {
     return _$SettingsEntity._(
-        //timezoneId: '',
-        );
+      // TODO set to default EST timezone
+      timezoneId: '',
+      convertProductExchangeRate: false,
+      dateFormatId: '1',
+      datetimeFormatId: '1',
+      defaultInvoiceDesignId: '1',
+      defaultInvoiceFooter: '',
+      defaultInvoiceTerms: '',
+      defaultPaymentTerms: 0,
+      defaultPaymentTypeId: '',
+      defaultQuoteDesignId: '1',
+      defaultQuoteTerms: '',
+      defaultTaskRate: 0,
+      defaultTaxName1: '',
+      defaultTaxRate1: 0,
+      defaultTaxName2: '',
+      defaultTaxRate2: 0,
+      enableCustomInvoiceTaxes1: false,
+      enableCustomInvoiceTaxes2: false,
+      enableInclusiveTaxes: false,
+      enableInvoiceItemTaxes: false,
+      enableInvoiceTaxes: true,
+      enableMilitaryTime: false,
+      enableSecondTaxRate: false,
+      languageId: kLanguageEnglish,
+      showCurrencyCode: false,
+      showInvoiceItemTaxes: false,
+      customPaymentTerms: BuiltList<PaymentTermEntity>(),
+      invoiceFields: '',
+      emailFooter: '',
+      emailSubjectInvoice: '',
+      emailSubjectQuote: '',
+      emailSubjectPayment: '',
+      emailBodyInvoice: '',
+      emailBodyQuote: '',
+      emailBodyPayment: '',
+      emailSubjectReminder1: '',
+      emailSubjectReminder2: '',
+      emailSubjectReminder3: '',
+      emailBodyReminder1: '',
+      emailBodyReminder2: '',
+      emailBodyReminder3: '',
+      fillProducts: true,
+      enablePortalPassword: false,
+      hasCustomDesign1: false,
+      hasCustomDesign2: false,
+      hasCustomDesign3: false,
+    );
   }
 
   SettingsEntity._();
 
   @BuiltValueField(wireName: 'timezone_id')
-  int get timezoneIdInt;
+  String get timezoneId;
 
-  String get timezoneId => timezoneId.toString();
+  @BuiltValueField(wireName: 'date_format_id')
+  String get dateFormatId;
+
+  @BuiltValueField(wireName: 'datetime_format_id')
+  String get datetimeFormatId;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoice_terms')
+  String get defaultInvoiceTerms;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoice_taxes')
+  bool get enableInvoiceTaxes;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoice_item_taxes')
+  bool get enableInvoiceItemTaxes;
+
+  @BuiltValueField(wireName: 'invoice_design_id')
+  String get defaultInvoiceDesignId;
+
+  @BuiltValueField(wireName: 'quote_design_id')
+  String get defaultQuoteDesignId;
+
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoice_footer')
+  String get defaultInvoiceFooter;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'show_item_taxes')
+  bool get showInvoiceItemTaxes;
+
+  @BuiltValueField(wireName: 'military_time')
+  bool get enableMilitaryTime;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'tax_name1')
+  String get defaultTaxName1;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'tax_rate1')
+  double get defaultTaxRate1;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'tax_name2')
+  String get defaultTaxName2;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'tax_rate2')
+  double get defaultTaxRate2;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'quote_terms')
+  String get defaultQuoteTerms;
+
+  @BuiltValueField(wireName: 'show_currency_code')
+  bool get showCurrencyCode;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'enable_second_tax_rate')
+  bool get enableSecondTaxRate;
+
+  @BuiltValueField(wireName: 'payment_terms')
+  int get defaultPaymentTerms;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'payment_type_id')
+  String get defaultPaymentTypeId;
+
+  @BuiltValueField(wireName: 'default_task_rate')
+  double get defaultTaskRate;
+
+  @BuiltValueField(wireName: 'inclusive_taxes')
+  bool get enableInclusiveTaxes;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'convert_products')
+  bool get convertProductExchangeRate;
+
+  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  bool get enableCustomInvoiceTaxes1;
+
+  @BuiltValueField(wireName: 'custom_invoice_taxes2')
+  bool get enableCustomInvoiceTaxes2;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'custom_payment_terms')
+  BuiltList<PaymentTermEntity> get customPaymentTerms;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoice_fields')
+  String get invoiceFields;
+
+  @BuiltValueField(wireName: 'email_footer')
+  String get emailFooter;
+
+  @BuiltValueField(wireName: 'email_subject_invoice')
+  String get emailSubjectInvoice;
+
+  @BuiltValueField(wireName: 'email_subject_quote')
+  String get emailSubjectQuote;
+
+  @BuiltValueField(wireName: 'email_subject_payment')
+  String get emailSubjectPayment;
+
+  @BuiltValueField(wireName: 'email_template_invoice')
+  String get emailBodyInvoice;
+
+  @BuiltValueField(wireName: 'email_template_quote')
+  String get emailBodyQuote;
+
+  @BuiltValueField(wireName: 'email_template_payment')
+  String get emailBodyPayment;
+
+  @BuiltValueField(wireName: 'email_subject_reminder1')
+  String get emailSubjectReminder1;
+
+  @BuiltValueField(wireName: 'email_subject_reminder2')
+  String get emailSubjectReminder2;
+
+  @BuiltValueField(wireName: 'email_subject_reminder3')
+  String get emailSubjectReminder3;
+
+  @BuiltValueField(wireName: 'email_template_reminder1')
+  String get emailBodyReminder1;
+
+  @BuiltValueField(wireName: 'email_template_reminder2')
+  String get emailBodyReminder2;
+
+  @BuiltValueField(wireName: 'email_template_reminder3')
+  String get emailBodyReminder3;
+
+  @nullable
+  @BuiltValueField(wireName: 'fill_products')
+  bool get fillProducts;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_portal_password')
+  bool get enablePortalPassword;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design1')
+  bool get hasCustomDesign1;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design2')
+  bool get hasCustomDesign2;
+
+  @nullable
+  @BuiltValueField(wireName: 'has_custom_design3')
+  bool get hasCustomDesign3;
+
+  bool hasInvoiceField(String field,
+      [EntityType entityType = EntityType.product]) {
+    if (invoiceFields.isNotEmpty) {
+      return invoiceFields.contains('$entityType.$field');
+    } else if (field == 'discount') {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   static Serializer<SettingsEntity> get serializer =>
       _$settingsEntitySerializer;

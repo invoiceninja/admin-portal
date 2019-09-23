@@ -75,24 +75,24 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     switch (template) {
       case EmailTemplate.initial:
         if (viewModel.invoice.isQuote) {
-          emailSubject = company.emailSubjectQuote;
-          emailBody = company.emailBodyQuote;
+          emailSubject = company.settings.emailSubjectQuote;
+          emailBody = company.settings.emailBodyQuote;
         } else {
-          emailSubject = company.emailSubjectInvoice;
-          emailBody = company.emailBodyInvoice;
+          emailSubject = company.settings.emailSubjectInvoice;
+          emailBody = company.settings.emailBodyInvoice;
         }
         break;
       case EmailTemplate.reminder1:
-        emailSubject = company.emailSubjectReminder1;
-        emailBody = company.emailBodyReminder1;
+        emailSubject = company.settings.emailSubjectReminder1;
+        emailBody = company.settings.emailBodyReminder1;
         break;
       case EmailTemplate.reminder2:
-        emailSubject = company.emailSubjectReminder2;
-        emailBody = company.emailBodyReminder2;
+        emailSubject = company.settings.emailSubjectReminder2;
+        emailBody = company.settings.emailBodyReminder2;
         break;
       case EmailTemplate.reminder3:
-        emailSubject = company.emailSubjectReminder3;
-        emailBody = company.emailBodyReminder3;
+        emailSubject = company.settings.emailSubjectReminder3;
+        emailBody = company.settings.emailBodyReminder3;
         break;
     }
 

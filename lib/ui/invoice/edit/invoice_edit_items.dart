@@ -242,7 +242,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               controller: _costController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
-            company.hasInvoiceField('quantity')
+            company.settings.hasInvoiceField('quantity')
                 ? DecoratedFormField(
                     label: localization.quantity,
                     controller: _qtyController,
@@ -250,7 +250,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.hasInvoiceField('discount')
+            company.settings.hasInvoiceField('discount')
                 ? DecoratedFormField(
                     label: localization.discount,
                     controller: _discountController,
@@ -258,7 +258,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.enableInvoiceItemTaxes
+            company.settings.enableInvoiceItemTaxes
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) {
@@ -270,7 +270,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     initialTaxRate: invoiceItem.taxRate1,
                   )
                 : Container(),
-            company.enableInvoiceItemTaxes && company.enableSecondTaxRate
+            company.settings.enableInvoiceItemTaxes &&
+                    company.settings.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) {

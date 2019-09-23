@@ -314,7 +314,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   ? localization.emailIsInvalid
                   : null,
             ),
-            company.enablePortalPassword ?? false
+            company.settings.enablePortalPassword ?? false
                 ? TextFormField(
                     autocorrect: false,
                     controller: _passwordController,

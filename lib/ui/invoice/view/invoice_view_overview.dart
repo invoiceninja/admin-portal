@@ -208,31 +208,35 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
-    if (invoice.customValue1 != 0 && company.enableCustomInvoiceTaxes1) {
+    if (invoice.customValue1 != 0 &&
+        company.settings.enableCustomInvoiceTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customValue1));
     }
 
-    if (invoice.customValue2 != 0 && company.enableCustomInvoiceTaxes2) {
+    if (invoice.customValue2 != 0 &&
+        company.settings.enableCustomInvoiceTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customValue2));
     }
 
     invoice
-        .calculateTaxes(company.enableInclusiveTaxes)
+        .calculateTaxes(company.settings.enableInclusiveTaxes)
         .forEach((taxName, taxAmount) {
       widgets.add(surchargeRow(taxName, taxAmount));
     });
 
-    if (invoice.customValue1 != 0 && !company.enableCustomInvoiceTaxes1) {
+    if (invoice.customValue1 != 0 &&
+        !company.settings.enableCustomInvoiceTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customValue1));
     }
 
-    if (invoice.customValue2 != 0 && !company.enableCustomInvoiceTaxes2) {
+    if (invoice.customValue2 != 0 &&
+        !company.settings.enableCustomInvoiceTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customValue2));

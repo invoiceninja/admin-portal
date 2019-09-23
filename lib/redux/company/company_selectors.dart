@@ -126,7 +126,7 @@ List<CompanyEntity> companiesSelector(AppState state) {
 
 String localeSelector(AppState state) {
   final locale = state.staticState
-          ?.languageMap[state.selectedCompany?.languageId]?.locale ??
+          ?.languageMap[state.selectedCompany?.settings?.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090
