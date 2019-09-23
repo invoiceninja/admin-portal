@@ -59,7 +59,7 @@ class ProjectList extends StatelessWidget {
             : Container(),
         Expanded(
           child: !viewModel.isLoaded
-              ? LoadingIndicator()
+              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.projectList.isEmpty

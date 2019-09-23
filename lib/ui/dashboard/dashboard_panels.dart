@@ -121,13 +121,17 @@ class DashboardPanels extends StatelessWidget {
       List<ChartDataGroup> currentData,
       List<ChartDataGroup> previousData,
       bool isLoaded}) {
-    if (!isLoaded) {
-      return LoadingIndicator(useCard: true);
-    }
-
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+
+    if (!isLoaded) {
+      if (state.isLoading) {
+        return LoadingIndicator(useCard: true);
+      } else {
+        return SizedBox();
+      }
+    }
 
     currentData.forEach((dataGroup) {
       final index = currentData.indexOf(dataGroup);

@@ -278,8 +278,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'Settings: ${selectedCompanyState.company.settings}';
-    return 'URL: ${authState.url}, ${selectedCompany.plan}';
-    //return 'Is Testing: ${uiState.isTesting}';
+    //return 'URL: ${authState.url}, ${selectedCompany.plan}';
+    return 'Is Loading: $isLoading';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }

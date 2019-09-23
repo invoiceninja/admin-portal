@@ -20,7 +20,7 @@ class ClientList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!viewModel.isLoaded) {
-      return LoadingIndicator();
+      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
     } else if (viewModel.clientList.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }

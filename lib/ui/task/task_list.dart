@@ -71,7 +71,7 @@ class TaskList extends StatelessWidget {
             : Container(),
         Expanded(
           child: !viewModel.isLoaded
-              ? LoadingIndicator()
+              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.taskList.isEmpty
