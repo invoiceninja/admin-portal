@@ -79,6 +79,8 @@ class RefreshData {
   final bool loadCompanies;
 }
 
+class ClearLastError {}
+
 class FilterCompany {
   FilterCompany(this.filter);
 

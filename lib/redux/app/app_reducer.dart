@@ -1,3 +1,14 @@
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -23,6 +34,7 @@ AppState appReducer(AppState state, dynamic action) {
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
     ..isSaving = savingReducer(state.isSaving, action)
+    ..lastError = lastErrorReducer(state.lastError, action)
     ..serverVersion = serverVersionReducer(state.serverVersion, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
@@ -47,4 +59,41 @@ AppState appReducer(AppState state, dynamic action) {
 final serverVersionReducer = combineReducers<String>([
   // TODO re-enable this
   //TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
+]);
+
+final lastErrorReducer = combineReducers<String>([
+  TypedReducer<String, ClearLastError>((state, action) {
+    return '';
+  }),
+  TypedReducer<String, LoadDashboardFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadClientsFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadProductsFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadInvoicesFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadPaymentsFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadQuotesFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadProjectsFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadTasksFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadVendorsFailure>((state, action) {
+    return action.error;
+  }),
+  TypedReducer<String, LoadExpensesFailure>((state, action) {
+    return action.error;
+  }),
+  // TODO add to starter.sh
 ]);

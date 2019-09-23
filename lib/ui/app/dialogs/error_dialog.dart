@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -9,6 +12,7 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return Padding(
       padding: EdgeInsets.all(16.0),
@@ -26,7 +30,10 @@ class ErrorDialog extends StatelessWidget {
                   Text(error.toString()),
                   SizedBox(height: 40.0),
                   ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      store.dispatch(ClearLastError());
+                      Navigator.of(context).pop();
+                    },
                     label: localization.dismiss,
                   ),
                 ],

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:redux/redux.dart';
@@ -406,6 +407,7 @@ class _LinkTextSpan extends TextSpan {
 class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -468,6 +470,18 @@ class SidebarFooter extends StatelessWidget {
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
           ),
+          if (state.lastError.isNotEmpty)
+            IconButton(
+              icon: Icon(
+                Icons.warning,
+                color: Colors.red,
+              ),
+              onPressed: () => showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(state.lastError);
+                  }),
+            ),
           if (!Platform.isIOS &&
               isHosted(context) &&
               !isPaidAccount(context)) ...[

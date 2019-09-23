@@ -47,6 +47,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isLoading: false,
       isSaving: false,
       serverVersion: '',
+      lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
       companyState1: UserCompanyState(),
@@ -69,6 +70,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoading;
 
   bool get isSaving;
+
+  String get lastError;
 
   String get serverVersion;
 
@@ -279,7 +282,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Settings: ${selectedCompanyState.company.settings}';
     //return 'URL: ${authState.url}, ${selectedCompany.plan}';
-    return 'Is Loading: $isLoading';
+    return 'Is Loading: $isLoading, Last Error: $lastError';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
