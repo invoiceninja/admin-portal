@@ -479,7 +479,7 @@ class _$UserCompanyEntitySerializer
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(TokenEntity)),
-      'permissions',
+      'permissions_HIDDEN',
       serializers.serialize(object.permissionsMap,
           specifiedType: const FullType(
               BuiltMap, const [const FullType(String), const FullType(bool)])),
@@ -520,7 +520,7 @@ class _$UserCompanyEntitySerializer
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
           break;
-        case 'permissions':
+        case 'permissions_HIDDEN':
           result.permissionsMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),

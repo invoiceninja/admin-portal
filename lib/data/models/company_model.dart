@@ -295,7 +295,8 @@ abstract class UserCompanyEntity
 
   TokenEntity get token;
 
-  @BuiltValueField(wireName: 'permissions')
+  // TODO fix this
+  @BuiltValueField(wireName: 'permissions_HIDDEN')
   BuiltMap<String, bool> get permissionsMap;
 
   bool can(UserPermission permission, EntityType entityType) =>
