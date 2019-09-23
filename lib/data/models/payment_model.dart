@@ -176,15 +176,17 @@ abstract class PaymentEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canEditEntity(this) && client.hasEmailAddress) {
+      if (userCompany.canEditEntity(this) && client.hasEmailAddress) {
         actions.add(EntityAction.sendEmail);
       }
     }
@@ -193,7 +195,7 @@ abstract class PaymentEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   @override

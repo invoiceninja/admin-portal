@@ -19,6 +19,8 @@ class DocumentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCompany = viewModel.state.userCompany;
+
     /*
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
@@ -43,16 +45,15 @@ class DocumentList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final documentId = viewModel.documentList[index];
                             final document = viewModel.documentMap[documentId];
-                            final user = viewModel.user;
 
                             void showDialog() => showEntityActionsDialog(
                                 entity: document,
                                 context: context,
-                                user: user,
+                                userCompany: userCompany,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return DocumentListItem(
-                              user: viewModel.user,
+                              userCompany: userCompany,
                               filter: viewModel.filter,
                               document: document,
                               onTap: () =>

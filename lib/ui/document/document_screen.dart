@@ -17,7 +17,7 @@ class DocumentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final user = state.user;
+    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -51,7 +51,7 @@ class DocumentScreen extends StatelessWidget {
           store.dispatch(FilterDocumentsByState(state));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.document)
+      floatingActionButton: userCompany.canCreate(EntityType.document)
           ? FloatingActionButton(
               //key: Key(DocumentKeys.documentScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,

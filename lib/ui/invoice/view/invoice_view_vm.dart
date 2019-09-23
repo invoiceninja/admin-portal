@@ -115,7 +115,6 @@ class InvoiceViewVM extends EntityViewVM {
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.user;
     final invoice = state.invoiceState.get(state.invoiceUIState.selectedId);
     final client = state.clientState.get(invoice.clientId);
 
@@ -157,7 +156,7 @@ class InvoiceViewVM extends EntityViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.user,
+              userCompany: state.userCompany,
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,
@@ -171,7 +170,7 @@ class InvoiceViewVM extends EntityViewVM {
           [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               client: client,
               entity: payment,

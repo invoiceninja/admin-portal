@@ -18,7 +18,7 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -76,7 +76,7 @@ class TaskScreen extends StatelessWidget {
           store.dispatch(FilterTasksByState(state));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.task)
+      floatingActionButton: userCompany.canCreate(EntityType.task)
           ? FloatingActionButton(
               //key: Key(TaskKeys.taskScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,

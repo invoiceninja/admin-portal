@@ -37,16 +37,16 @@ class ClientList extends StatelessWidget {
           itemBuilder: (BuildContext context, index) {
             final clientId = viewModel.clientList[index];
             final client = viewModel.clientMap[clientId];
-            final user = viewModel.user;
+            final userCompany = viewModel.state.userCompany;
 
             void showDialog() => showEntityActionsDialog(
                 entity: client,
                 context: context,
-                user: user,
+                userCompany: userCompany,
                 onEntityAction: viewModel.onEntityAction);
 
             return ClientListItem(
-              user: viewModel.user,
+              user: viewModel.state.user,
               filter: viewModel.filter,
               client: client,
               onEntityAction: (EntityAction action) {

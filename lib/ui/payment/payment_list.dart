@@ -86,7 +86,6 @@ class PaymentList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.paymentList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
                             final paymentId = viewModel.paymentList[index];
                             final payment = state.paymentState.map[paymentId];
                             final client =
@@ -95,7 +94,7 @@ class PaymentList extends StatelessWidget {
                             void showDialog() => showEntityActionsDialog(
                                 entity: payment,
                                 context: context,
-                                user: user,
+                                userCompany: state.userCompany,
                                 client: client,
                                 onEntityAction: viewModel.onEntityAction);
 

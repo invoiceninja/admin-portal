@@ -36,7 +36,7 @@ class InvoiceOverview extends StatelessWidget {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
-    final user = state.user;
+    final userCompany = state.userCompany;
     final color = invoice.isPastDue
         ? Colors.red
         : InvoiceStatusColors.colors[invoice.invoiceStatusId];
@@ -168,7 +168,7 @@ class InvoiceOverview extends StatelessWidget {
               return InvoiceItemListTile(
                 invoice: invoice,
                 invoiceItem: invoiceItem,
-                onTap: () => user.canEditEntity(invoice)
+                onTap: () => userCompany.canEditEntity(invoice)
                     ? viewModel.onEditPressed(context, invoiceItem)
                     : null,
               );

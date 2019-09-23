@@ -414,17 +414,8 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
-      'permissions',
-      serializers.serialize(object.permissionsMap,
-          specifiedType: const FullType(
-              BuiltMap, const [const FullType(String), const FullType(bool)])),
     ];
-    if (object.isAdmin != null) {
-      result
-        ..add('is_admin')
-        ..add(serializers.serialize(object.isAdmin,
-            specifiedType: const FullType(bool)));
-    }
+
     return result;
   }
 
@@ -455,17 +446,6 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'is_admin':
-          result.isAdmin = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'permissions':
-          result.permissionsMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(bool)
-              ])) as BuiltMap<dynamic, dynamic>);
-          break;
       }
     }
 
@@ -484,6 +464,12 @@ class _$UserCompanyEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserCompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'is_owner',
+      serializers.serialize(object.isOwner,
+          specifiedType: const FullType(bool)),
+      'is_admin',
+      serializers.serialize(object.isAdmin,
+          specifiedType: const FullType(bool)),
       'company',
       serializers.serialize(object.company,
           specifiedType: const FullType(CompanyEntity)),
@@ -493,6 +479,10 @@ class _$UserCompanyEntitySerializer
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(TokenEntity)),
+      'permissions',
+      serializers.serialize(object.permissionsMap,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(bool)])),
     ];
 
     return result;
@@ -510,6 +500,14 @@ class _$UserCompanyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_admin':
+          result.isAdmin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
@@ -521,6 +519,13 @@ class _$UserCompanyEntitySerializer
         case 'token':
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
+          break;
+        case 'permissions':
+          result.permissionsMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(bool)
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
       }
     }
@@ -1626,21 +1631,11 @@ class _$UserEntity extends UserEntity {
   final String lastName;
   @override
   final String email;
-  @override
-  final bool isAdmin;
-  @override
-  final BuiltMap<String, bool> permissionsMap;
 
   factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
       (new UserEntityBuilder()..update(updates)).build();
 
-  _$UserEntity._(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.isAdmin,
-      this.permissionsMap})
+  _$UserEntity._({this.id, this.firstName, this.lastName, this.email})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'id');
@@ -1653,9 +1648,6 @@ class _$UserEntity extends UserEntity {
     }
     if (email == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'email');
-    }
-    if (permissionsMap == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'permissionsMap');
     }
   }
 
@@ -1673,21 +1665,14 @@ class _$UserEntity extends UserEntity {
         id == other.id &&
         firstName == other.firstName &&
         lastName == other.lastName &&
-        email == other.email &&
-        isAdmin == other.isAdmin &&
-        permissionsMap == other.permissionsMap;
+        email == other.email;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, id.hashCode), firstName.hashCode),
-                    lastName.hashCode),
-                email.hashCode),
-            isAdmin.hashCode),
-        permissionsMap.hashCode));
+        $jc($jc($jc(0, id.hashCode), firstName.hashCode), lastName.hashCode),
+        email.hashCode));
   }
 
   @override
@@ -1696,9 +1681,7 @@ class _$UserEntity extends UserEntity {
           ..add('id', id)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
-          ..add('email', email)
-          ..add('isAdmin', isAdmin)
-          ..add('permissionsMap', permissionsMap))
+          ..add('email', email))
         .toString();
   }
 }
@@ -1722,16 +1705,6 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
-  bool _isAdmin;
-  bool get isAdmin => _$this._isAdmin;
-  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
-
-  MapBuilder<String, bool> _permissionsMap;
-  MapBuilder<String, bool> get permissionsMap =>
-      _$this._permissionsMap ??= new MapBuilder<String, bool>();
-  set permissionsMap(MapBuilder<String, bool> permissionsMap) =>
-      _$this._permissionsMap = permissionsMap;
-
   UserEntityBuilder();
 
   UserEntityBuilder get _$this {
@@ -1740,8 +1713,6 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _email = _$v.email;
-      _isAdmin = _$v.isAdmin;
-      _permissionsMap = _$v.permissionsMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1762,27 +1733,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   _$UserEntity build() {
-    _$UserEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$UserEntity._(
-              id: id,
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              isAdmin: isAdmin,
-              permissionsMap: permissionsMap.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'permissionsMap';
-        permissionsMap.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'UserEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$UserEntity._(
+            id: id, firstName: firstName, lastName: lastName, email: email);
     replace(_$result);
     return _$result;
   }
@@ -1790,17 +1743,36 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
 class _$UserCompanyEntity extends UserCompanyEntity {
   @override
+  final bool isOwner;
+  @override
+  final bool isAdmin;
+  @override
   final CompanyEntity company;
   @override
   final UserEntity user;
   @override
   final TokenEntity token;
+  @override
+  final BuiltMap<String, bool> permissionsMap;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
-  _$UserCompanyEntity._({this.company, this.user, this.token}) : super._() {
+  _$UserCompanyEntity._(
+      {this.isOwner,
+      this.isAdmin,
+      this.company,
+      this.user,
+      this.token,
+      this.permissionsMap})
+      : super._() {
+    if (isOwner == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isOwner');
+    }
+    if (isAdmin == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
+    }
     if (company == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'company');
     }
@@ -1809,6 +1781,9 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     }
     if (token == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'token');
+    }
+    if (permissionsMap == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissionsMap');
     }
   }
 
@@ -1824,23 +1799,35 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserCompanyEntity &&
+        isOwner == other.isOwner &&
+        isAdmin == other.isAdmin &&
         company == other.company &&
         user == other.user &&
-        token == other.token;
+        token == other.token &&
+        permissionsMap == other.permissionsMap;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, company.hashCode), user.hashCode), token.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc(0, isOwner.hashCode), isAdmin.hashCode),
+                    company.hashCode),
+                user.hashCode),
+            token.hashCode),
+        permissionsMap.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
+          ..add('isOwner', isOwner)
+          ..add('isAdmin', isAdmin)
           ..add('company', company)
           ..add('user', user)
-          ..add('token', token))
+          ..add('token', token)
+          ..add('permissionsMap', permissionsMap))
         .toString();
   }
 }
@@ -1848,6 +1835,14 @@ class _$UserCompanyEntity extends UserCompanyEntity {
 class UserCompanyEntityBuilder
     implements Builder<UserCompanyEntity, UserCompanyEntityBuilder> {
   _$UserCompanyEntity _$v;
+
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
+  bool _isAdmin;
+  bool get isAdmin => _$this._isAdmin;
+  set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
 
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
@@ -1862,13 +1857,22 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
 
+  MapBuilder<String, bool> _permissionsMap;
+  MapBuilder<String, bool> get permissionsMap =>
+      _$this._permissionsMap ??= new MapBuilder<String, bool>();
+  set permissionsMap(MapBuilder<String, bool> permissionsMap) =>
+      _$this._permissionsMap = permissionsMap;
+
   UserCompanyEntityBuilder();
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
+      _isOwner = _$v.isOwner;
+      _isAdmin = _$v.isAdmin;
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
+      _permissionsMap = _$v.permissionsMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1893,9 +1897,12 @@ class UserCompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$UserCompanyEntity._(
+              isOwner: isOwner,
+              isAdmin: isAdmin,
               company: company.build(),
               user: user.build(),
-              token: token.build());
+              token: token.build(),
+              permissionsMap: permissionsMap.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -1905,6 +1912,8 @@ class UserCompanyEntityBuilder
         user.build();
         _$failedField = 'token';
         token.build();
+        _$failedField = 'permissionsMap';
+        permissionsMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyEntity', _$failedField, e.toString());

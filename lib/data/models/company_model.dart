@@ -171,9 +171,10 @@ abstract class CompanyEntity
 
   String get currencyId => companyCurrencyId ?? kDefaultCurrencyId;
 
+  // TODO remove
   // Handle bug in earlier version of API
   int get firstMonthOfYear =>
-      financialYearStart == 2000 ? 1 : financialYearStart;
+      financialYearStart == 2000 ? 1 : (financialYearStart ?? 1);
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
@@ -247,8 +248,6 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
       lastName: '',
       email: '',
       id: '',
-      isAdmin: false,
-      permissionsMap: BuiltMap<String, bool>(),
     );
   }
 
@@ -266,10 +265,35 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
-  // TODO remove this
-  @nullable
+  static Serializer<UserEntity> get serializer => _$userEntitySerializer;
+}
+
+abstract class UserCompanyEntity
+    implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
+  factory UserCompanyEntity() {
+    return _$UserCompanyEntity._(
+      isOwner: false,
+      isAdmin: false,
+      permissionsMap: BuiltMap<String, bool>(),
+      company: CompanyEntity(),
+      user: UserEntity(),
+      token: TokenEntity(),
+    );
+  }
+
+  UserCompanyEntity._();
+
+  @BuiltValueField(wireName: 'is_owner')
+  bool get isOwner;
+
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
+
+  CompanyEntity get company;
+
+  UserEntity get user;
+
+  TokenEntity get token;
 
   @BuiltValueField(wireName: 'permissions')
   BuiltMap<String, bool> get permissionsMap;
@@ -299,27 +323,6 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
       return canEdit(entity.entityType) || (entity.isOwner ?? false);
     }
   }
-
-  static Serializer<UserEntity> get serializer => _$userEntitySerializer;
-}
-
-abstract class UserCompanyEntity
-    implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
-  factory UserCompanyEntity() {
-    return _$UserCompanyEntity._(
-      company: CompanyEntity(),
-      user: UserEntity(),
-      token: TokenEntity(),
-    );
-  }
-
-  UserCompanyEntity._();
-
-  CompanyEntity get company;
-
-  UserEntity get user;
-
-  TokenEntity get token;
 
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;

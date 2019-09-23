@@ -41,11 +41,11 @@ class ProductList extends StatelessWidget {
             void showDialog() => showEntityActionsDialog(
                 entity: product,
                 context: context,
-                user: viewModel.user,
+                userCompany: viewModel.state.userCompany,
                 onEntityAction: viewModel.onEntityAction);
 
             return ProductListItem(
-              user: viewModel.user,
+              userCompany: viewModel.state.userCompany,
               filter: viewModel.filter,
               product: product,
               onEntityAction: (EntityAction action) {

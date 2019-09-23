@@ -52,7 +52,7 @@ class PaymentListItem extends StatelessWidget {
           (uiState.isEditing
               ? paymentUIState.editing.id
               : paymentUIState.selectedId),
-      user: user,
+      userCompany: state.userCompany,
       entity: payment,
       onEntityAction: onEntityAction,
       child: ListTile(

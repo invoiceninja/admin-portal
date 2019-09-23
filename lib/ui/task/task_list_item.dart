@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
-    @required this.user,
+    @required this.userCompany,
     @required this.client,
     @required this.project,
     @required this.onTap,
@@ -23,7 +23,7 @@ class TaskListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final ClientEntity client;
   final ProjectEntity project;
   final Function(EntityAction) onEntityAction;
@@ -64,7 +64,7 @@ class TaskListItem extends StatelessWidget {
     return DismissibleEntity(
       isSelected: task.id ==
           (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
-      user: user,
+      userCompany: userCompany,
       entity: task,
       onEntityAction: onEntityAction,
       child: ListTile(

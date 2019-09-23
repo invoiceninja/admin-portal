@@ -198,7 +198,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
             onCheckboxChanged: (checked) => _toggleEntity(product),
             isChecked: _selected.contains(product),
             product: product,
-            user: state.user,
+            userCompany: state.userCompany,
             filter: _filter,
             onTap: () {
               if (_selected.isNotEmpty) {
@@ -232,6 +232,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final project = state.projectState.map[task.projectId];
           final client = state.clientState.map[task.clientId];
           return TaskListItem(
+            userCompany: state.userCompany,
             onCheckboxChanged: (checked) => _toggleEntity(task),
             isChecked: _selected.contains(task),
             project: project,
@@ -246,7 +247,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            user: state.user,
           );
         },
       );
@@ -290,7 +290,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
               }
             },
             filter: _filter,
-            user: state.user,
+            userCompany: state.userCompany,
           );
         },
       );

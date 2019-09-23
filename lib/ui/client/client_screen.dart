@@ -18,7 +18,7 @@ class ClientScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
-    final user = state.user;
+    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -60,7 +60,7 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom2: (value) =>
             store.dispatch(FilterClientsByCustom2(value)),
       ),
-      floatingActionButton: user.canCreate(EntityType.client)
+      floatingActionButton: userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () => store.dispatch(

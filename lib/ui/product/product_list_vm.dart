@@ -31,7 +31,7 @@ class ProductListBuilder extends StatelessWidget {
 
 class ProductListVM {
   ProductListVM({
-    @required this.user,
+    @required this.state,
     @required this.productList,
     @required this.productMap,
     @required this.filter,
@@ -56,7 +56,7 @@ class ProductListVM {
     final state = store.state;
 
     return ProductListVM(
-      user: state.user,
+      state: state,
       productList: memoizedFilteredProductList(state.productState.map,
           state.productState.list, state.productListState),
       productMap: state.productState.map,
@@ -73,7 +73,7 @@ class ProductListVM {
     );
   }
 
-  final UserEntity user;
+  final AppState state;
   final List<String> productList;
   final BuiltMap<String, ProductEntity> productMap;
   final String filter;

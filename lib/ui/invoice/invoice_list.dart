@@ -74,7 +74,6 @@ class InvoiceList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.invoiceList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
                             final invoiceId = viewModel.invoiceList[index];
                             final invoice = viewModel.invoiceMap[invoiceId];
                             final client =
@@ -84,7 +83,7 @@ class InvoiceList extends StatelessWidget {
                             void showDialog() => showEntityActionsDialog(
                                 entity: invoice,
                                 context: context,
-                                user: user,
+                                userCompany: state.userCompany,
                                 client: client,
                                 onEntityAction: viewModel.onEntityAction);
 

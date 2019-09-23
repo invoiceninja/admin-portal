@@ -60,7 +60,6 @@ class TaskViewVM {
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.user;
     final task = state.taskState.map[state.taskUIState.selectedId] ??
         TaskEntity(id: state.taskUIState.selectedId);
     final client = state.clientState.map[task.clientId];
@@ -110,7 +109,7 @@ class TaskViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,
@@ -123,7 +122,7 @@ class TaskViewVM {
       onProjectPressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               entity: project,
               client: client,
@@ -137,7 +136,7 @@ class TaskViewVM {
       onInvoicePressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               entity: invoice,
               client: client,

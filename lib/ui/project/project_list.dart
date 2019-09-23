@@ -69,7 +69,6 @@ class ProjectList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.projectList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
                             final projectId = viewModel.projectList[index];
                             final project = viewModel.projectMap[projectId];
                             final client =
@@ -79,12 +78,12 @@ class ProjectList extends StatelessWidget {
                             void showDialog() => showEntityActionsDialog(
                                 entity: project,
                                 context: context,
-                                user: user,
+                                userCompany: viewModel.state.userCompany,
                                 client: client,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return ProjectListItem(
-                              user: viewModel.user,
+                              userCompany: viewModel.state.userCompany,
                               filter: viewModel.filter,
                               project: project,
                               client: viewModel.clientMap[project.clientId] ??

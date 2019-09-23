@@ -120,7 +120,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final vendor = viewModel.vendor;
-    final user = viewModel.state.user;
+    final userCompany = viewModel.state.userCompany;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),
@@ -140,18 +140,18 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: vendor.isNew
           ? []
           : [
-              user.canEditEntity(vendor)
+              userCompany.canEditEntity(vendor)
                   ? EditIconButton(
                       isVisible: !vendor.isDeleted,
                       onPressed: () => viewModel.onEditPressed(context),
                     )
                   : Container(),
               ActionMenuButton(
-                user: viewModel.state.user,
                 isSaving: viewModel.isSaving,
                 entity: vendor,
                 onSelected: viewModel.onEntityAction,
-                entityActions: viewModel.vendor.getActions(user: user),
+                entityActions:
+                    viewModel.vendor.getActions(userCompany: userCompany),
               )
             ],
     );

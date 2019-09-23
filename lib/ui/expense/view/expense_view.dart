@@ -139,7 +139,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
-    final user = viewModel.state.user;
+    final userCompany = viewModel.state.userCompany;
     final documentState = viewModel.state.documentState;
     final documents =
         memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
@@ -171,18 +171,18 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: expense.isNew
           ? []
           : [
-              user.canEditEntity(expense)
+              userCompany.canEditEntity(expense)
                   ? EditIconButton(
                       isVisible: !expense.isDeleted,
                       onPressed: () => viewModel.onEditPressed(context),
                     )
                   : Container(),
               ActionMenuButton(
-                user: viewModel.state.user,
                 isSaving: viewModel.isSaving,
                 entity: expense,
                 onSelected: viewModel.onEntityAction,
-                entityActions: viewModel.expense.getActions(user: user),
+                entityActions:
+                    viewModel.expense.getActions(userCompany: userCompany),
               )
             ],
     );

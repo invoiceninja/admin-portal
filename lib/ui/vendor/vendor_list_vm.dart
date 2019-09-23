@@ -33,7 +33,7 @@ class VendorListBuilder extends StatelessWidget {
 
 class VendorListVM {
   VendorListVM({
-    @required this.user,
+    @required this.state,
     @required this.vendorList,
     @required this.vendorMap,
     @required this.filter,
@@ -61,7 +61,7 @@ class VendorListVM {
     final state = store.state;
 
     return VendorListVM(
-      user: state.user,
+      state: state,
       listState: state.vendorListState,
       vendorList: memoizedFilteredVendorList(
           state.vendorState.map, state.vendorState.list, state.vendorListState),
@@ -84,7 +84,7 @@ class VendorListVM {
     );
   }
 
-  final UserEntity user;
+  final AppState state;
   final List<String> vendorList;
   final BuiltMap<String, VendorEntity> vendorMap;
   final ListUIState listState;

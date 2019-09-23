@@ -58,7 +58,7 @@ class ExpenseViewVM {
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.user;
+    final userCompany = state.userCompany;
     final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
         ExpenseEntity(id: state.expenseUIState.selectedId);
     final vendor = state.vendorState.map[expense.vendorId];
@@ -102,7 +102,7 @@ class ExpenseViewVM {
             case EntityType.vendor:
               if (longPress) {
                 showEntityActionsDialog(
-                    user: user,
+                    userCompany: userCompany,
                     context: context,
                     entity: vendor,
                     onEntityAction: (BuildContext context, BaseEntity vendor,
@@ -116,7 +116,7 @@ class ExpenseViewVM {
             case EntityType.client:
               if (longPress) {
                 showEntityActionsDialog(
-                    user: user,
+                    userCompany: userCompany,
                     context: context,
                     entity: client,
                     onEntityAction: (BuildContext context, BaseEntity client,
@@ -130,7 +130,7 @@ class ExpenseViewVM {
             case EntityType.invoice:
               if (longPress) {
                 showEntityActionsDialog(
-                    user: user,
+                    userCompany: userCompany,
                     context: context,
                     entity: invoice,
                     client: client,

@@ -17,7 +17,7 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -57,7 +57,7 @@ class ProductScreen extends StatelessWidget {
           store.dispatch(FilterProductsByState(state));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.product)
+      floatingActionButton: userCompany.canCreate(EntityType.product)
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {

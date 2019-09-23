@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 void showEntityActionsDialog({
   @required BuildContext context,
   @required BaseEntity entity,
-  @required UserEntity user,
+  @required UserCompanyEntity userCompany,
   @required Function(BuildContext, BaseEntity, EntityAction) onEntityAction,
   ClientEntity client,
 }) async {
@@ -20,7 +20,8 @@ void showEntityActionsDialog({
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
         actions.addAll(entity
-            .getActions(user: user, includeEdit: true, client: client)
+            .getActions(
+                userCompany: userCompany, includeEdit: true, client: client)
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();

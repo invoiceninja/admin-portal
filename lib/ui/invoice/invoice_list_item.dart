@@ -32,8 +32,8 @@ class InvoiceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = StoreProvider.of<AppState>(context).state;
+    final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final quoteUIState = uiState.quoteUIState;
 
@@ -57,7 +57,7 @@ class InvoiceListItem extends StatelessWidget {
               : (invoice.isQuote
                   ? quoteUIState.selectedId
                   : invoiceUIState.selectedId)),
-      user: user,
+      userCompany: state.userCompany,
       entity: invoice,
       onEntityAction: onEntityAction,
       child: ListTile(

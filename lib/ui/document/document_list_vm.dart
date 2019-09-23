@@ -33,7 +33,7 @@ class DocumentListBuilder extends StatelessWidget {
 
 class DocumentListVM {
   DocumentListVM({
-    @required this.user,
+    @required this.state,
     @required this.documentList,
     @required this.documentMap,
     @required this.filter,
@@ -61,7 +61,7 @@ class DocumentListVM {
     final state = store.state;
 
     return DocumentListVM(
-      user: state.user,
+      state: state,
       listState: state.documentListState,
       documentList: memoizedFilteredDocumentList(state.documentState.map,
           state.documentState.list, state.documentListState),
@@ -85,7 +85,7 @@ class DocumentListVM {
     );
   }
 
-  final UserEntity user;
+  final AppState state;
   final List<String> documentList;
   final BuiltMap<String, DocumentEntity> documentMap;
   final ListUIState listState;

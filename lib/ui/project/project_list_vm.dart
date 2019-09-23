@@ -33,7 +33,7 @@ class ProjectListBuilder extends StatelessWidget {
 
 class ProjectListVM {
   ProjectListVM({
-    @required this.user,
+    @required this.state,
     @required this.projectList,
     @required this.projectMap,
     @required this.clientMap,
@@ -62,7 +62,7 @@ class ProjectListVM {
     final state = store.state;
 
     return ProjectListVM(
-      user: state.user,
+      state: state,
       listState: state.projectListState,
       projectList: memoizedFilteredProjectList(
           state.projectState.map,
@@ -90,7 +90,7 @@ class ProjectListVM {
     );
   }
 
-  final UserEntity user;
+  final AppState state;
   final List<String> projectList;
   final BuiltMap<String, ProjectEntity> projectMap;
   final BuiltMap<String, ClientEntity> clientMap;

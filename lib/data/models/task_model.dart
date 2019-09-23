@@ -354,11 +354,13 @@ abstract class TaskEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this) && !isDeleted) {
+      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted) {
         actions.add(EntityAction.edit);
       }
 
@@ -372,7 +374,7 @@ abstract class TaskEntity extends Object
             actions.add(EntityAction.start);
           }
 
-          if (user.canCreate(EntityType.invoice)) {
+          if (userCompany.canCreate(EntityType.invoice)) {
             actions.add(EntityAction.newInvoice);
           }
         }
@@ -383,13 +385,13 @@ abstract class TaskEntity extends Object
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (user.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task)) {
       actions.add(EntityAction.clone);
     }
 
     actions.add(null);
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {

@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
-    @required this.user,
+    @required this.userCompany,
     @required this.onTap,
     @required this.product,
     @required this.filter,
@@ -34,7 +34,7 @@ class ProductListItem extends StatelessWidget {
           (uiState.isEditing
               ? productUIState.editing.id
               : productUIState.selectedId),
-      user: user,
+      userCompany: userCompany,
       entity: product,
       onEntityAction: onEntityAction,
       child: ListTile(
@@ -81,7 +81,7 @@ class ProductListItem extends StatelessWidget {
     );
   }
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;

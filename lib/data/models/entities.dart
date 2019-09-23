@@ -152,18 +152,20 @@ abstract class BaseEntity implements SelectableEntity {
       : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
 
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (user.canEditEntity(this) && (isArchived || isDeleted)) {
+    if (userCompany.canEditEntity(this) && (isArchived || isDeleted)) {
       actions.add(EntityAction.restore);
     }
 
-    if (user.canEditEntity(this) && isActive) {
+    if (userCompany.canEditEntity(this) && isActive) {
       actions.add(EntityAction.archive);
     }
 
-    if (user.canEditEntity(this) && (isActive || isArchived)) {
+    if (userCompany.canEditEntity(this) && (isActive || isArchived)) {
       actions.add(EntityAction.delete);
     }
 

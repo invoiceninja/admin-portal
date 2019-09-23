@@ -19,7 +19,7 @@ class ExpenseScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
-    final user = state.user;
+    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -77,7 +77,7 @@ class ExpenseScreen extends StatelessWidget {
           store.dispatch(FilterExpensesByStatus(status));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.expense)
+      floatingActionButton: userCompany.canCreate(EntityType.expense)
           ? FloatingActionButton(
               //key: Key(ExpenseKeys.expenseScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,

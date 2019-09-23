@@ -36,7 +36,6 @@ class _DocumentViewState extends State<DocumentView> {
                   },
                 ),
                 ActionMenuButton(
-                  user: viewModel.state.user,
                   isSaving: viewModel.isSaving,
                   entity: document,
                   onSelected: viewModel.onEntityAction,

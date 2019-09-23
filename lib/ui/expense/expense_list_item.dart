@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
-    @required this.user,
+    @required this.userCompany,
     @required this.onTap,
     @required this.expense,
     @required this.client,
@@ -24,7 +24,7 @@ class ExpenseListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
@@ -84,7 +84,7 @@ class ExpenseListItem extends StatelessWidget {
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),
-      user: user,
+      userCompany: userCompany,
       entity: expense,
       onEntityAction: onEntityAction,
       child: ListTile(

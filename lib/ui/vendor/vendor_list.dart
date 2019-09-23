@@ -33,18 +33,18 @@ class VendorList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.vendorList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
+                            final userCompany = viewModel.state.userCompany;
                             final vendorId = viewModel.vendorList[index];
                             final vendor = viewModel.vendorMap[vendorId];
 
                             void showDialog() => showEntityActionsDialog(
                                 entity: vendor,
                                 context: context,
-                                user: user,
+                                userCompany: userCompany,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return VendorListItem(
-                              user: viewModel.user,
+                              userCompany: viewModel.state.userCompany,
                               filter: viewModel.filter,
                               vendor: vendor,
                               onTap: () =>

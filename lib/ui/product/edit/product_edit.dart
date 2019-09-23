@@ -92,7 +92,7 @@ class _ProductEditState extends State<ProductEdit> {
     final viewModel = widget.viewModel;
     final product = viewModel.product;
     final company = viewModel.company;
-    final user = viewModel.state.user;
+    final userCompany = viewModel.state.userCompany;
 
     return WillPopScope(
       onWillPop: () async {
@@ -115,7 +115,7 @@ class _ProductEditState extends State<ProductEdit> {
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
             Builder(builder: (BuildContext context) {
-              if (!user.canEditEntity(product)) {
+              if (!userCompany.canEditEntity(product)) {
                 return Container();
               }
 

@@ -156,15 +156,17 @@ abstract class VendorEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.expense)) {
+      if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }
     }
@@ -173,7 +175,7 @@ abstract class VendorEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {

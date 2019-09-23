@@ -18,7 +18,7 @@ class QuoteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -89,7 +89,7 @@ class QuoteScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: user.canCreate(EntityType.quote)
+      floatingActionButton: userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {

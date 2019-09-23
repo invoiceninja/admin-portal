@@ -180,20 +180,22 @@ abstract class ProductEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.invoice) && !isDeleted) {
+      if (userCompany.canCreate(EntityType.invoice) && !isDeleted) {
         actions.add(EntityAction.newInvoice);
       }
     }
 
-    if (user.canCreate(EntityType.product)) {
+    if (userCompany.canCreate(EntityType.product)) {
       actions.add(EntityAction.clone);
     }
 
@@ -201,7 +203,7 @@ abstract class ProductEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   static Serializer<ProductEntity> get serializer => _$productEntitySerializer;

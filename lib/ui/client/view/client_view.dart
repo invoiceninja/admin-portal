@@ -54,7 +54,7 @@ class _ClientViewState extends State<ClientView>
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final company = viewModel.company;
-    final user = store.state.user;
+    final userCompany = viewModel.state.userCompany;
 
     return WillPopScope(
       onWillPop: () async {
@@ -77,7 +77,7 @@ class _ClientViewState extends State<ClientView>
               context: context,
               builder: (BuildContext context) =>
                   SimpleDialog(children: <Widget>[
-                user.canCreate(EntityType.client)
+                userCompany.canCreate(EntityType.client)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -91,7 +91,7 @@ class _ClientViewState extends State<ClientView>
                         },
                       )
                     : Container(),
-                user.canCreate(EntityType.payment)
+                userCompany.canCreate(EntityType.payment)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -106,7 +106,7 @@ class _ClientViewState extends State<ClientView>
                       )
                     : Container(),
                 company.isModuleEnabled(EntityType.quote) &&
-                        user.canCreate(EntityType.quote)
+                        userCompany.canCreate(EntityType.quote)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -121,7 +121,7 @@ class _ClientViewState extends State<ClientView>
                       )
                     : Container(),
                 company.isModuleEnabled(EntityType.project) &&
-                        user.canCreate(EntityType.project)
+                        userCompany.canCreate(EntityType.project)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -136,7 +136,7 @@ class _ClientViewState extends State<ClientView>
                       )
                     : Container(),
                 company.isModuleEnabled(EntityType.task) &&
-                        user.canCreate(EntityType.task)
+                        userCompany.canCreate(EntityType.task)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -153,7 +153,7 @@ class _ClientViewState extends State<ClientView>
                       )
                     : Container(),
                 company.isModuleEnabled(EntityType.expense) &&
-                        user.canCreate(EntityType.expense)
+                        userCompany.canCreate(EntityType.expense)
                     ? ListTile(
                         //dense: true,
                         leading: Icon(Icons.add_circle_outline),
@@ -240,7 +240,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
-    final user = viewModel.state.user;
+    final userCompany = viewModel.state.userCompany;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),
@@ -263,18 +263,18 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: client.isNew
           ? []
           : [
-              user.canEditEntity(client)
+              userCompany.canEditEntity(client)
                   ? EditIconButton(
                       isVisible: !client.isDeleted,
                       onPressed: () => viewModel.onEditPressed(context),
                     )
                   : Container(),
               ActionMenuButton(
-                user: viewModel.state.user,
                 isSaving: viewModel.isSaving,
                 entity: client,
                 onSelected: viewModel.onEntityAction,
-                entityActions: viewModel.client.getActions(user: user),
+                entityActions:
+                    viewModel.client.getActions(userCompany: userCompany),
               )
             ],
     );

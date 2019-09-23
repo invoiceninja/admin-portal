@@ -121,7 +121,7 @@ class QuoteViewVM extends EntityViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.user,
+              userCompany: state.userCompany,
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,

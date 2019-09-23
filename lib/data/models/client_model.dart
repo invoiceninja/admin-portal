@@ -365,23 +365,25 @@ abstract class ClientEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.client)) {
+      if (userCompany.canCreate(EntityType.client)) {
         actions.add(EntityAction.newInvoice);
       }
 
-      if (user.canCreate(EntityType.expense)) {
+      if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }
 
-      if (user.canCreate(EntityType.payment)) {
+      if (userCompany.canCreate(EntityType.payment)) {
         actions.add(EntityAction.enterPayment);
       }
     }
@@ -390,7 +392,7 @@ abstract class ClientEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   @override

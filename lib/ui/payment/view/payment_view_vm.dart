@@ -53,7 +53,6 @@ class PaymentViewVM {
     final client = paymentClientSelector(payment.id, state) ?? ClientEntity();
     final invoice =
         paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
-    final user = state.user;
 
     return PaymentViewVM(
       state: state,
@@ -68,7 +67,7 @@ class PaymentViewVM {
       onClientPressed: (context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               entity: client,
               onEntityAction: (BuildContext context, BaseEntity client,
@@ -81,7 +80,7 @@ class PaymentViewVM {
       onInvoicePressed: (context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
+              userCompany: state.userCompany,
               context: context,
               entity: invoice,
               client: client,

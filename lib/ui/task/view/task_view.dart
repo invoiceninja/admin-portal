@@ -189,7 +189,7 @@ class _TaskViewState extends State<TaskView> {
                       task: task,
                       taskTime: taskTime,
                       onTap: (BuildContext context) =>
-                          viewModel.state.user.canEditEntity(task)
+                          viewModel.state.userCompany.canEditEntity(task)
                               ? viewModel.onEditPressed(context, taskTime)
                               : null,
                     )
@@ -247,7 +247,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final task = viewModel.task;
-    final user = viewModel.state.user;
+    final userCompany = viewModel.state.userCompany;
 
     return AppBar(
       automaticallyImplyLeading: isMobile(context),
@@ -258,16 +258,15 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: task.isNew
           ? []
           : [
-              user.canEditEntity(task)
+              userCompany.canEditEntity(task)
                   ? EditIconButton(
                       isVisible: !task.isDeleted,
                       onPressed: () => viewModel.onEditPressed(context),
                     )
                   : Container(),
               ActionMenuButton(
-                user: user,
-                entityActions:
-                    task.getActions(client: viewModel.client, user: user),
+                entityActions: task.getActions(
+                    client: viewModel.client, userCompany: userCompany),
                 isSaving: viewModel.isSaving,
                 entity: task,
                 onSelected: viewModel.onEntityAction,

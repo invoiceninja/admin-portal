@@ -32,7 +32,7 @@ class ClientListBuilder extends StatelessWidget {
 
 class ClientListVM {
   ClientListVM({
-    @required this.user,
+    @required this.state,
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
@@ -43,7 +43,7 @@ class ClientListVM {
     @required this.onEntityAction,
   });
 
-  final UserEntity user;
+  final AppState state;
   final List<String> clientList;
   final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
@@ -67,7 +67,7 @@ class ClientListVM {
     final state = store.state;
 
     return ClientListVM(
-      user: state.user,
+      state: state,
       clientList: memoizedFilteredClientList(
           state.clientState.map, state.clientState.list, state.clientListState),
       clientMap: state.clientState.map,

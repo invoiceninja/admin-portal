@@ -15,7 +15,7 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -51,7 +51,7 @@ class PaymentScreen extends StatelessWidget {
           store.dispatch(FilterPaymentsByState(state));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.payment)
+      floatingActionButton: userCompany.canCreate(EntityType.payment)
           ? FloatingActionButton(
               //key: Key(PaymentKeys.paymentScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,

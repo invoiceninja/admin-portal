@@ -361,9 +361,9 @@ class DrawerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
 
-    if (entityType != null && !user.canViewOrCreate(entityType)) {
+    if (entityType != null && !userCompany.canViewOrCreate(entityType)) {
       return Container();
     } else if (!company.isModuleEnabled(entityType)) {
       return Container();
@@ -381,7 +381,7 @@ class DrawerTile extends StatelessWidget {
         leading: Icon(icon, size: 22.0),
         title: Tooltip(message: title, child: Text(title)),
         onTap: onTap,
-        trailing: onCreateTap == null || !user.canCreate(entityType)
+        trailing: onCreateTap == null || !userCompany.canCreate(entityType)
             ? null
             : IconButton(
                 icon: Icon(Icons.add_circle_outline),

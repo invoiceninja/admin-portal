@@ -78,7 +78,6 @@ class ExpenseList extends StatelessWidget {
                       separatorBuilder: (context, index) => ListDivider(),
                       itemCount: viewModel.expenseList.length,
                       itemBuilder: (BuildContext context, index) {
-                        final user = viewModel.user;
                         final expenseId = viewModel.expenseList[index];
                         final expense = viewModel.expenseMap[expenseId];
                         final client =
@@ -89,12 +88,12 @@ class ExpenseList extends StatelessWidget {
                         void showDialog() => showEntityActionsDialog(
                             entity: expense,
                             context: context,
-                            user: user,
+                            userCompany: state.userCompany,
                             client: client,
                             onEntityAction: viewModel.onEntityAction);
 
                         return ExpenseListItem(
-                          user: viewModel.user,
+                          userCompany: viewModel.state.userCompany,
                           filter: viewModel.filter,
                           hasDocuments: documentMap[expense.id] == true,
                           expense: expense,

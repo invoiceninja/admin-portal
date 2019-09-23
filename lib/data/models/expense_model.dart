@@ -201,15 +201,17 @@ abstract class ExpenseEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.invoice)) {
+      if (userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.newInvoice);
       }
     }
@@ -218,7 +220,7 @@ abstract class ExpenseEntity extends Object
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (user.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task)) {
       actions.add(EntityAction.clone);
     }
 
@@ -226,7 +228,7 @@ abstract class ExpenseEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {

@@ -391,30 +391,34 @@ abstract class InvoiceEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.invoice)) {
-        if (isQuote && user.canEditEntity(this) && quoteInvoiceId == null) {
+      if (userCompany.canCreate(EntityType.invoice)) {
+        if (isQuote &&
+            userCompany.canEditEntity(this) &&
+            quoteInvoiceId == null) {
           actions.add(EntityAction.convert);
         }
       }
 
-      if (user.canEditEntity(this) && !isPublic) {
+      if (userCompany.canEditEntity(this) && !isPublic) {
         actions.add(EntityAction.markSent);
       }
 
-      if (user.canEditEntity(this) && client.hasEmailAddress) {
+      if (userCompany.canEditEntity(this) && client.hasEmailAddress) {
         actions.add(EntityAction.sendEmail);
       }
 
-      if (user.canEditEntity(this) &&
-          user.canCreate(EntityType.payment) &&
+      if (userCompany.canEditEntity(this) &&
+          userCompany.canCreate(EntityType.payment) &&
           isUnpaid &&
           !isQuote) {
         actions.add(EntityAction.enterPayment);
@@ -434,13 +438,13 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    if (user.canCreate(EntityType.invoice)) {
+    if (userCompany.canCreate(EntityType.invoice)) {
       actions.add(EntityAction.cloneToInvoice);
       actions.add(EntityAction.cloneToQuote);
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   InvoiceEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {

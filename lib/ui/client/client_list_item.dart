@@ -44,7 +44,7 @@ class ClientListItem extends StatelessWidget {
           (uiState.isEditing
               ? clientUIState.editing.id
               : clientUIState.selectedId),
-      user: user,
+      userCompany: store.state.userCompany,
       onEntityAction: onEntityAction,
       entity: client,
       //entityKey: clientItemKey,

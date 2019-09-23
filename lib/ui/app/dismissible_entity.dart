@@ -7,14 +7,14 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
-    @required this.user,
+    @required this.userCompany,
     @required this.entity,
     @required this.child,
     @required this.onEntityAction,
     @required this.isSelected,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final BaseEntity entity;
   final Widget child;
   final bool isSelected;
@@ -22,7 +22,7 @@ class DismissibleEntity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!user.canEditEntity(entity)) {
+    if (!userCompany.canEditEntity(entity)) {
       return child;
     }
 

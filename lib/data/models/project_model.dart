@@ -104,24 +104,26 @@ abstract class ProjectEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.task) && isActive) {
+      if (userCompany.canCreate(EntityType.task) && isActive) {
         actions.add(EntityAction.newTask);
       }
 
-      if (user.canCreate(EntityType.invoice) && isActive) {
+      if (userCompany.canCreate(EntityType.invoice) && isActive) {
         actions.add(EntityAction.newInvoice);
       }
     }
 
-    if (user.canCreate(EntityType.project)) {
+    if (userCompany.canCreate(EntityType.project)) {
       actions.add(EntityAction.clone);
     }
 
@@ -129,7 +131,7 @@ abstract class ProjectEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {

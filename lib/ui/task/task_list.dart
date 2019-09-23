@@ -20,6 +20,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
     final listState = viewModel.listState;
 
     BaseEntity filteredEntity;
@@ -32,7 +33,7 @@ class TaskList extends StatelessWidget {
     } else if (listState.filterEntityType == EntityType.project) {
       final filteredProjectId = listState.filterEntityId;
       filteredEntity = filteredProjectId != null
-          ? viewModel.state.projectState.map[filteredProjectId]
+          ? state.projectState.map[filteredProjectId]
           : null;
     }
 
@@ -80,7 +81,6 @@ class TaskList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.taskList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
                             final taskId = viewModel.taskList[index];
                             final task = viewModel.taskMap[taskId];
                             final client = viewModel.clientMap[task.clientId] ??
@@ -89,12 +89,12 @@ class TaskList extends StatelessWidget {
                             void showDialog() => showEntityActionsDialog(
                                 entity: task,
                                 context: context,
-                                user: user,
+                                userCompany: state.userCompany,
                                 client: client,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return TaskListItem(
-                              user: viewModel.user,
+                              userCompany: state.userCompany,
                               filter: viewModel.filter,
                               task: task,
                               client: viewModel.clientMap[task.clientId] ??

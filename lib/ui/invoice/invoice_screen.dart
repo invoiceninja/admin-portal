@@ -18,7 +18,7 @@ class InvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.selectedCompany;
-    final user = store.state.user;
+    final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -96,7 +96,7 @@ class InvoiceScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: user.canCreate(EntityType.invoice)
+      floatingActionButton: userCompany.canCreate(EntityType.invoice)
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
