@@ -34,12 +34,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
-      'start_of_week',
-      serializers.serialize(object.startOfWeek,
-          specifiedType: const FullType(int)),
-      'financial_year_start',
-      serializers.serialize(object.financialYearStart,
-          specifiedType: const FullType(int)),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap, const [
@@ -70,6 +64,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('default_url')
         ..add(serializers.serialize(object.appUrl,
             specifiedType: const FullType(String)));
+    }
+    if (object.startOfWeek != null) {
+      result
+        ..add('start_of_week')
+        ..add(serializers.serialize(object.startOfWeek,
+            specifiedType: const FullType(int)));
+    }
+    if (object.financialYearStart != null) {
+      result
+        ..add('financial_year_start')
+        ..add(serializers.serialize(object.financialYearStart,
+            specifiedType: const FullType(int)));
     }
     if (object.companyCurrencyId != null) {
       result
@@ -589,24 +595,21 @@ class _$SettingsEntitySerializer
       'datetime_format_id',
       serializers.serialize(object.datetimeFormatId,
           specifiedType: const FullType(String)),
+      'military_time',
+      serializers.serialize(object.enableMilitaryTime,
+          specifiedType: const FullType(bool)),
+      'language_id',
+      serializers.serialize(object.languageId,
+          specifiedType: const FullType(String)),
       'invoice_design_id',
       serializers.serialize(object.defaultInvoiceDesignId,
           specifiedType: const FullType(String)),
       'quote_design_id',
       serializers.serialize(object.defaultQuoteDesignId,
           specifiedType: const FullType(String)),
-      'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
-      'military_time',
-      serializers.serialize(object.enableMilitaryTime,
-          specifiedType: const FullType(bool)),
       'show_currency_code',
       serializers.serialize(object.showCurrencyCode,
           specifiedType: const FullType(bool)),
-      'payment_terms',
-      serializers.serialize(object.defaultPaymentTerms,
-          specifiedType: const FullType(int)),
       'default_task_rate',
       serializers.serialize(object.defaultTaskRate,
           specifiedType: const FullType(double)),
@@ -697,7 +700,7 @@ class _$SettingsEntitySerializer
     }
     if (object.defaultTaxRate1 != null) {
       result
-        ..add('tax_rate1')
+        ..add('tax_rate1_HIDDEN')
         ..add(serializers.serialize(object.defaultTaxRate1,
             specifiedType: const FullType(double)));
     }
@@ -709,7 +712,7 @@ class _$SettingsEntitySerializer
     }
     if (object.defaultTaxRate2 != null) {
       result
-        ..add('tax_rate2')
+        ..add('tax_rate2_HIDDEN')
         ..add(serializers.serialize(object.defaultTaxRate2,
             specifiedType: const FullType(double)));
     }
@@ -724,6 +727,12 @@ class _$SettingsEntitySerializer
         ..add('enable_second_tax_rate')
         ..add(serializers.serialize(object.enableSecondTaxRate,
             specifiedType: const FullType(bool)));
+    }
+    if (object.defaultPaymentTerms != null) {
+      result
+        ..add('payment_terms_HIDDEN')
+        ..add(serializers.serialize(object.defaultPaymentTerms,
+            specifiedType: const FullType(int)));
     }
     if (object.defaultPaymentTypeId != null) {
       result
@@ -764,19 +773,19 @@ class _$SettingsEntitySerializer
     }
     if (object.hasCustomDesign1 != null) {
       result
-        ..add('has_custom_design1')
+        ..add('has_custom_design1_HIDDEN')
         ..add(serializers.serialize(object.hasCustomDesign1,
             specifiedType: const FullType(bool)));
     }
     if (object.hasCustomDesign2 != null) {
       result
-        ..add('has_custom_design2')
+        ..add('has_custom_design2_HIDDEN')
         ..add(serializers.serialize(object.hasCustomDesign2,
             specifiedType: const FullType(bool)));
     }
     if (object.hasCustomDesign3 != null) {
       result
-        ..add('has_custom_design3')
+        ..add('has_custom_design3_HIDDEN')
         ..add(serializers.serialize(object.hasCustomDesign3,
             specifiedType: const FullType(bool)));
     }
@@ -807,6 +816,14 @@ class _$SettingsEntitySerializer
           result.datetimeFormatId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'military_time':
+          result.enableMilitaryTime = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'language_id':
+          result.languageId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'invoice_terms':
           result.defaultInvoiceTerms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -827,10 +844,6 @@ class _$SettingsEntitySerializer
           result.defaultQuoteDesignId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'invoice_footer':
           result.defaultInvoiceFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -839,15 +852,11 @@ class _$SettingsEntitySerializer
           result.showInvoiceItemTaxes = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'military_time':
-          result.enableMilitaryTime = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'tax_name1':
           result.defaultTaxName1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'tax_rate1':
+        case 'tax_rate1_HIDDEN':
           result.defaultTaxRate1 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
@@ -855,7 +864,7 @@ class _$SettingsEntitySerializer
           result.defaultTaxName2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'tax_rate2':
+        case 'tax_rate2_HIDDEN':
           result.defaultTaxRate2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
@@ -871,7 +880,7 @@ class _$SettingsEntitySerializer
           result.enableSecondTaxRate = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'payment_terms':
+        case 'payment_terms_HIDDEN':
           result.defaultPaymentTerms = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -969,15 +978,15 @@ class _$SettingsEntitySerializer
           result.enablePortalPassword = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'has_custom_design1':
+        case 'has_custom_design1_HIDDEN':
           result.hasCustomDesign1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'has_custom_design2':
+        case 'has_custom_design2_HIDDEN':
           result.hasCustomDesign2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'has_custom_design3':
+        case 'has_custom_design3_HIDDEN':
           result.hasCustomDesign3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
@@ -1057,12 +1066,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
-    }
-    if (startOfWeek == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'startOfWeek');
-    }
-    if (financialYearStart == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'financialYearStart');
     }
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
@@ -2009,6 +2012,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String datetimeFormatId;
   @override
+  final bool enableMilitaryTime;
+  @override
+  final String languageId;
+  @override
   final String defaultInvoiceTerms;
   @override
   final bool enableInvoiceTaxes;
@@ -2019,13 +2026,9 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String defaultQuoteDesignId;
   @override
-  final String languageId;
-  @override
   final String defaultInvoiceFooter;
   @override
   final bool showInvoiceItemTaxes;
-  @override
-  final bool enableMilitaryTime;
   @override
   final String defaultTaxName1;
   @override
@@ -2102,15 +2105,15 @@ class _$SettingsEntity extends SettingsEntity {
       {this.timezoneId,
       this.dateFormatId,
       this.datetimeFormatId,
+      this.enableMilitaryTime,
+      this.languageId,
       this.defaultInvoiceTerms,
       this.enableInvoiceTaxes,
       this.enableInvoiceItemTaxes,
       this.defaultInvoiceDesignId,
       this.defaultQuoteDesignId,
-      this.languageId,
       this.defaultInvoiceFooter,
       this.showInvoiceItemTaxes,
-      this.enableMilitaryTime,
       this.defaultTaxName1,
       this.defaultTaxRate1,
       this.defaultTaxName2,
@@ -2155,6 +2158,13 @@ class _$SettingsEntity extends SettingsEntity {
     if (datetimeFormatId == null) {
       throw new BuiltValueNullFieldError('SettingsEntity', 'datetimeFormatId');
     }
+    if (enableMilitaryTime == null) {
+      throw new BuiltValueNullFieldError(
+          'SettingsEntity', 'enableMilitaryTime');
+    }
+    if (languageId == null) {
+      throw new BuiltValueNullFieldError('SettingsEntity', 'languageId');
+    }
     if (defaultInvoiceDesignId == null) {
       throw new BuiltValueNullFieldError(
           'SettingsEntity', 'defaultInvoiceDesignId');
@@ -2163,19 +2173,8 @@ class _$SettingsEntity extends SettingsEntity {
       throw new BuiltValueNullFieldError(
           'SettingsEntity', 'defaultQuoteDesignId');
     }
-    if (languageId == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'languageId');
-    }
-    if (enableMilitaryTime == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'enableMilitaryTime');
-    }
     if (showCurrencyCode == null) {
       throw new BuiltValueNullFieldError('SettingsEntity', 'showCurrencyCode');
-    }
-    if (defaultPaymentTerms == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'defaultPaymentTerms');
     }
     if (defaultTaskRate == null) {
       throw new BuiltValueNullFieldError('SettingsEntity', 'defaultTaskRate');
@@ -2256,15 +2255,15 @@ class _$SettingsEntity extends SettingsEntity {
         timezoneId == other.timezoneId &&
         dateFormatId == other.dateFormatId &&
         datetimeFormatId == other.datetimeFormatId &&
+        enableMilitaryTime == other.enableMilitaryTime &&
+        languageId == other.languageId &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
         enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
         defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
         defaultQuoteDesignId == other.defaultQuoteDesignId &&
-        languageId == other.languageId &&
         defaultInvoiceFooter == other.defaultInvoiceFooter &&
         showInvoiceItemTaxes == other.showInvoiceItemTaxes &&
-        enableMilitaryTime == other.enableMilitaryTime &&
         defaultTaxName1 == other.defaultTaxName1 &&
         defaultTaxRate1 == other.defaultTaxRate1 &&
         defaultTaxName2 == other.defaultTaxName2 &&
@@ -2321,7 +2320,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2349,15 +2348,15 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('timezoneId', timezoneId)
           ..add('dateFormatId', dateFormatId)
           ..add('datetimeFormatId', datetimeFormatId)
+          ..add('enableMilitaryTime', enableMilitaryTime)
+          ..add('languageId', languageId)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
           ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
           ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
           ..add('defaultQuoteDesignId', defaultQuoteDesignId)
-          ..add('languageId', languageId)
           ..add('defaultInvoiceFooter', defaultInvoiceFooter)
           ..add('showInvoiceItemTaxes', showInvoiceItemTaxes)
-          ..add('enableMilitaryTime', enableMilitaryTime)
           ..add('defaultTaxName1', defaultTaxName1)
           ..add('defaultTaxRate1', defaultTaxRate1)
           ..add('defaultTaxName2', defaultTaxName2)
@@ -2413,6 +2412,15 @@ class SettingsEntityBuilder
   set datetimeFormatId(String datetimeFormatId) =>
       _$this._datetimeFormatId = datetimeFormatId;
 
+  bool _enableMilitaryTime;
+  bool get enableMilitaryTime => _$this._enableMilitaryTime;
+  set enableMilitaryTime(bool enableMilitaryTime) =>
+      _$this._enableMilitaryTime = enableMilitaryTime;
+
+  String _languageId;
+  String get languageId => _$this._languageId;
+  set languageId(String languageId) => _$this._languageId = languageId;
+
   String _defaultInvoiceTerms;
   String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
   set defaultInvoiceTerms(String defaultInvoiceTerms) =>
@@ -2438,10 +2446,6 @@ class SettingsEntityBuilder
   set defaultQuoteDesignId(String defaultQuoteDesignId) =>
       _$this._defaultQuoteDesignId = defaultQuoteDesignId;
 
-  String _languageId;
-  String get languageId => _$this._languageId;
-  set languageId(String languageId) => _$this._languageId = languageId;
-
   String _defaultInvoiceFooter;
   String get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
   set defaultInvoiceFooter(String defaultInvoiceFooter) =>
@@ -2451,11 +2455,6 @@ class SettingsEntityBuilder
   bool get showInvoiceItemTaxes => _$this._showInvoiceItemTaxes;
   set showInvoiceItemTaxes(bool showInvoiceItemTaxes) =>
       _$this._showInvoiceItemTaxes = showInvoiceItemTaxes;
-
-  bool _enableMilitaryTime;
-  bool get enableMilitaryTime => _$this._enableMilitaryTime;
-  set enableMilitaryTime(bool enableMilitaryTime) =>
-      _$this._enableMilitaryTime = enableMilitaryTime;
 
   String _defaultTaxName1;
   String get defaultTaxName1 => _$this._defaultTaxName1;
@@ -2633,15 +2632,15 @@ class SettingsEntityBuilder
       _timezoneId = _$v.timezoneId;
       _dateFormatId = _$v.dateFormatId;
       _datetimeFormatId = _$v.datetimeFormatId;
+      _enableMilitaryTime = _$v.enableMilitaryTime;
+      _languageId = _$v.languageId;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
       _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
       _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
       _defaultQuoteDesignId = _$v.defaultQuoteDesignId;
-      _languageId = _$v.languageId;
       _defaultInvoiceFooter = _$v.defaultInvoiceFooter;
       _showInvoiceItemTaxes = _$v.showInvoiceItemTaxes;
-      _enableMilitaryTime = _$v.enableMilitaryTime;
       _defaultTaxName1 = _$v.defaultTaxName1;
       _defaultTaxRate1 = _$v.defaultTaxRate1;
       _defaultTaxName2 = _$v.defaultTaxName2;
@@ -2703,15 +2702,15 @@ class SettingsEntityBuilder
               timezoneId: timezoneId,
               dateFormatId: dateFormatId,
               datetimeFormatId: datetimeFormatId,
+              enableMilitaryTime: enableMilitaryTime,
+              languageId: languageId,
               defaultInvoiceTerms: defaultInvoiceTerms,
               enableInvoiceTaxes: enableInvoiceTaxes,
               enableInvoiceItemTaxes: enableInvoiceItemTaxes,
               defaultInvoiceDesignId: defaultInvoiceDesignId,
               defaultQuoteDesignId: defaultQuoteDesignId,
-              languageId: languageId,
               defaultInvoiceFooter: defaultInvoiceFooter,
               showInvoiceItemTaxes: showInvoiceItemTaxes,
-              enableMilitaryTime: enableMilitaryTime,
               defaultTaxName1: defaultTaxName1,
               defaultTaxRate1: defaultTaxRate1,
               defaultTaxName2: defaultTaxName2,

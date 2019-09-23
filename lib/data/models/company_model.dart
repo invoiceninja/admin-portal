@@ -54,9 +54,13 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'start_of_week')
   int get startOfWeek;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'financial_year_start')
   int get financialYearStart;
 
@@ -403,6 +407,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'datetime_format_id')
   String get datetimeFormatId;
 
+  @BuiltValueField(wireName: 'military_time')
+  bool get enableMilitaryTime;
+
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
+
   // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_terms')
@@ -424,9 +434,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'quote_design_id')
   String get defaultQuoteDesignId;
 
-  @BuiltValueField(wireName: 'language_id')
-  String get languageId;
-
   // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_footer')
@@ -437,9 +444,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_item_taxes')
   bool get showInvoiceItemTaxes;
 
-  @BuiltValueField(wireName: 'military_time')
-  bool get enableMilitaryTime;
-
   // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'tax_name1')
@@ -447,7 +451,7 @@ abstract class SettingsEntity
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'tax_rate1')
+  @BuiltValueField(wireName: 'tax_rate1_HIDDEN')
   double get defaultTaxRate1;
 
   // TODO remove this
@@ -457,7 +461,7 @@ abstract class SettingsEntity
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'tax_rate2')
+  @BuiltValueField(wireName: 'tax_rate2_HIDDEN')
   double get defaultTaxRate2;
 
   // TODO remove this
@@ -473,7 +477,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
 
-  @BuiltValueField(wireName: 'payment_terms')
+  // TODO change to int/remove nullable
+  @nullable
+  @BuiltValueField(wireName: 'payment_terms_HIDDEN')
   int get defaultPaymentTerms;
 
   // TODO remove this
@@ -556,15 +562,15 @@ abstract class SettingsEntity
   bool get enablePortalPassword;
 
   @nullable
-  @BuiltValueField(wireName: 'has_custom_design1')
+  @BuiltValueField(wireName: 'has_custom_design1_HIDDEN')
   bool get hasCustomDesign1;
 
   @nullable
-  @BuiltValueField(wireName: 'has_custom_design2')
+  @BuiltValueField(wireName: 'has_custom_design2_HIDDEN')
   bool get hasCustomDesign2;
 
   @nullable
-  @BuiltValueField(wireName: 'has_custom_design3')
+  @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
   bool get hasCustomDesign3;
 
   bool hasInvoiceField(String field,
