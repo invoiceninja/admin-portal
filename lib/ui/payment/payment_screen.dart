@@ -53,7 +53,7 @@ class PaymentScreen extends StatelessWidget {
       ),
       floatingActionButton: userCompany.canCreate(EntityType.payment)
           ? FloatingActionButton(
-              //key: Key(PaymentKeys.paymentScreenFABKeyString),
+              heroTag: 'payment_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(EditPayment(

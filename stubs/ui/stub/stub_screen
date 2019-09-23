@@ -60,7 +60,7 @@ class StubScreen extends StatelessWidget {
                    ),
                    floatingActionButton: user.canCreate(EntityType.stub)
                        ? FloatingActionButton(
-                           //key: Key(StubKeys.stubScreenFABKeyString),
+                           heroTag: 'stub_fab',
                            backgroundColor: Theme.of(context).primaryColorDark,
                            onPressed: () {
                              store.dispatch(

@@ -58,7 +58,7 @@ class ProjectScreen extends StatelessWidget {
       ),
       floatingActionButton: userCompany.canCreate(EntityType.project)
           ? FloatingActionButton(
-              //key: Key(ProjectKeys.projectScreenFABKeyString),
+              heroTag: 'project_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(EditProject(

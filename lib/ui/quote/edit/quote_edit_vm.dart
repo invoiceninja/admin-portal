@@ -5,8 +5,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_edit.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -28,7 +28,7 @@ class QuoteEditScreen extends StatelessWidget {
         return QuoteEditVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEdit(
+        return QuoteEdit(
           viewModel: viewModel,
           formKey: _formKey,
         );

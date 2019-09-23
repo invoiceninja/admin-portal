@@ -57,6 +57,7 @@ class _VendorViewState extends State<VendorView>
           controller: _controller,
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: 'vendor_view_fab',
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () => viewModel.onAddExpensePressed(context),
           child: Icon(

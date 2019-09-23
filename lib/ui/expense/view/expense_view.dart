@@ -63,6 +63,7 @@ class _ExpenseViewState extends State<ExpenseView>
         floatingActionButton: company.isEnterprisePlan
             ? Builder(builder: (BuildContext context) {
                 return FloatingActionButton(
+                  heroTag: 'expense_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,
                   onPressed: () async {
                     final image =

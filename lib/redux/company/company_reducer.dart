@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
-import 'package:sentry/sentry.dart';
 // STARTER: import - do not remove comment
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {

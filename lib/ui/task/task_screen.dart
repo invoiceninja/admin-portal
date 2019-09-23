@@ -78,7 +78,7 @@ class TaskScreen extends StatelessWidget {
       ),
       floatingActionButton: userCompany.canCreate(EntityType.task)
           ? FloatingActionButton(
-              //key: Key(TaskKeys.taskScreenFABKeyString),
+              heroTag: 'task_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(EditTask(
