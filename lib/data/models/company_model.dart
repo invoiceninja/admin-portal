@@ -116,6 +116,11 @@ abstract class CompanyEntity
   //@BuiltValueField(wireName: 'invoice_labels')
 
   String getCustomFieldLabel(String field) {
+    // TODO remove this
+    if (customFields == null) {
+      return '';
+    }
+
     if (customFields.containsKey(field)) {
       return customFields[field].split('|').first;
     } else {
@@ -124,6 +129,11 @@ abstract class CompanyEntity
   }
 
   List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
+    // TODO remove this
+    if (customFields == null) {
+      return [];
+    }
+
     final values = customFields[field];
 
     if (values == null || !values.contains('|')) {
@@ -149,6 +159,9 @@ abstract class CompanyEntity
   bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
 
   bool isModuleEnabled(EntityType entityType) {
+    // TODO remove this
+    return true;
+
     if (entityType == EntityType.recurringInvoice &&
         enabledModules & kModuleRecurringInvoice == 0) {
       return false;

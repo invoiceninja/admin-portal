@@ -451,7 +451,7 @@ abstract class ExpenseStatusEntity extends Object
     implements Built<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   factory ExpenseStatusEntity() {
     return _$ExpenseStatusEntity._(
-      id: null,
+      id: '',
       name: '',
     );
   }

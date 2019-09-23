@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -14,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+import 'package:sentry/sentry.dart';
 // STARTER: import - do not remove comment
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
@@ -44,9 +46,20 @@ Reducer<UserCompanyEntity> companyEntityReducer = combineReducers([
 
 UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity company, LoadCompanySuccess action) {
-  return action.company;
-
   var userCompany = action.company;
+
+  userCompany = userCompany.rebuild((b) => b.company
+    ..taskStatuses.replace(<TaskStatusEntity>[])
+    ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
+    ..expenseCategories.replace(<ExpenseCategoryEntity>[])
+    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>())
+    ..users.replace(<UserEntity>[])
+    ..userMap.replace(BuiltMap<String, UserEntity>()));
+
+  print(
+      '${userCompany.company.companyKey} map: ${userCompany.company.expenseCategoryMap}');
+
+  return userCompany;
 
   if (userCompany.company.taskStatuses != null) {
     userCompany = userCompany
