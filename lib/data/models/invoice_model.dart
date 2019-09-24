@@ -139,7 +139,7 @@ abstract class InvoiceEntity extends Object
           ? (isQuote
               ? company.settings.defaultQuoteDesignId
               : company.settings.defaultInvoiceDesignId)
-          : 1,
+          : '1',
     );
   }
 
@@ -300,7 +300,7 @@ abstract class InvoiceEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'invoice_design_id')
-  int get designId;
+  String get designId;
 
   bool get isApproved =>
       invoiceStatusId == kInvoiceStatusApproved ||

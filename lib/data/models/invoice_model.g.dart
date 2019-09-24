@@ -255,7 +255,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('invoice_design_id')
         ..add(serializers.serialize(object.designId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.createdAt != null) {
       result
@@ -482,7 +482,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'invoice_design_id':
           result.designId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -1106,7 +1106,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
-  final int designId;
+  final String designId;
   @override
   final int createdAt;
   @override
@@ -1647,9 +1647,9 @@ class InvoiceEntityBuilder
   set invitations(ListBuilder<InvitationEntity> invitations) =>
       _$this._invitations = invitations;
 
-  int _designId;
-  int get designId => _$this._designId;
-  set designId(int designId) => _$this._designId = designId;
+  String _designId;
+  String get designId => _$this._designId;
+  set designId(String designId) => _$this._designId = designId;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;

@@ -73,9 +73,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text = invoice.designId != null
-        ? kInvoiceDesigns.elementAt(invoice.designId - 1)
-        : '';
+    _designController.text =
+        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -116,7 +115,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
 
-    var designs = new List<String>.from(kInvoiceDesigns);
+    var designs = kInvoiceDesigns.values.toList();
+
     if (!(company.settings.hasCustomDesign1 ?? true)) {
       designs.remove(kDesignCustom1);
     }
@@ -304,8 +304,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     padding: EdgeInsets.zero,
                     onSelected: (String design) {
                       _designController.text = design;
-                      viewModel.onChanged(invoice.rebuild((b) =>
-                          b..designId = kInvoiceDesigns.indexOf(design) + 1));
+                      viewModel.onChanged(
+                          invoice.rebuild((b) => b..designId = design));
                     },
                     child: InkWell(
                       child: IgnorePointer(

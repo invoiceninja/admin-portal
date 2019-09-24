@@ -148,21 +148,21 @@ const String kDesignCustom1 = 'Custom 1';
 const String kDesignCustom2 = 'Custom 2';
 const String kDesignCustom3 = 'Custom 3';
 
-const List<String> kInvoiceDesigns = [
-  'Clean',
-  'Bold',
-  'Modern',
-  'Plain',
-  'Business',
-  'Creative',
-  'Elegant',
-  'Hipster',
-  'Playful',
-  'Photo',
-  kDesignCustom1,
-  kDesignCustom2,
-  kDesignCustom3,
-];
+const Map<String, String> kInvoiceDesigns = {
+  '1': 'Clean',
+  '2': 'Bold',
+  '3': 'Modern',
+  '4': 'Plain',
+  '5': 'Business',
+  '6': 'Creative',
+  '7': 'Elegant',
+  '8': 'Hipster',
+  '9': 'Playful',
+  '10': 'Photo',
+  '11': kDesignCustom1,
+  '12': kDesignCustom2,
+  '13': kDesignCustom3,
+};
 
 const List<String> kLanguages = [
   'ca',
