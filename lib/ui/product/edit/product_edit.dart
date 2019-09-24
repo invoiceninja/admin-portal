@@ -32,6 +32,7 @@ class _ProductEditState extends State<ProductEdit> {
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
+  final _quantityController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
@@ -43,6 +44,7 @@ class _ProductEditState extends State<ProductEdit> {
       _productKeyController,
       _notesController,
       _costController,
+      _quantityController,
       _custom1Controller,
       _custom2Controller,
     ];
@@ -54,6 +56,8 @@ class _ProductEditState extends State<ProductEdit> {
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _costController.text = formatNumber(product.cost, context,
+        formatNumberType: FormatNumberType.input);
+    _quantityController.text = formatNumber(product.cost, context,
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
@@ -79,6 +83,7 @@ class _ProductEditState extends State<ProductEdit> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text.trim()
       ..cost = parseDouble(_costController.text)
+      ..quantity = parseDouble(_quantityController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
     if (product != widget.viewModel.product) {
@@ -179,6 +184,12 @@ class _ProductEditState extends State<ProductEdit> {
                   DecoratedFormField(
                     label: localization.cost,
                     controller: _costController,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  DecoratedFormField(
+                    label: localization.quantity,
+                    controller: _quantityController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),

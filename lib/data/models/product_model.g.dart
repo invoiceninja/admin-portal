@@ -126,6 +126,9 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           specifiedType: const FullType(String)),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
+      'quantity',
+      serializers.serialize(object.quantity,
+          specifiedType: const FullType(double)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -206,6 +209,10 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'cost':
           result.cost = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'quantity':
+          result.quantity = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'tax_name1':
@@ -460,6 +467,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final double cost;
   @override
+  final double quantity;
+  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -491,6 +500,7 @@ class _$ProductEntity extends ProductEntity {
       {this.productKey,
       this.notes,
       this.cost,
+      this.quantity,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -512,6 +522,9 @@ class _$ProductEntity extends ProductEntity {
     }
     if (cost == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'cost');
+    }
+    if (quantity == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'quantity');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxName1');
@@ -547,6 +560,7 @@ class _$ProductEntity extends ProductEntity {
         productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
+        quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -578,11 +592,13 @@ class _$ProductEntity extends ProductEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                productKey
-                                                                    .hashCode),
-                                                            notes.hashCode),
-                                                        cost.hashCode),
+                                                                $jc(
+                                                                    0,
+                                                                    productKey
+                                                                        .hashCode),
+                                                                notes.hashCode),
+                                                            cost.hashCode),
+                                                        quantity.hashCode),
                                                     taxName1.hashCode),
                                                 taxRate1.hashCode),
                                             taxName2.hashCode),
@@ -603,6 +619,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
+          ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -634,6 +651,10 @@ class ProductEntityBuilder
   double _cost;
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
+
+  double _quantity;
+  double get quantity => _$this._quantity;
+  set quantity(double quantity) => _$this._quantity = quantity;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -690,6 +711,7 @@ class ProductEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
+      _quantity = _$v.quantity;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -727,6 +749,7 @@ class ProductEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
+            quantity: quantity,
             taxName1: taxName1,
             taxRate1: taxRate1,
             taxName2: taxName2,

@@ -52,11 +52,12 @@ abstract class ProductEntity extends Object
       id: id ?? BaseEntity.nextId,
       productKey: '',
       notes: '',
-      cost: 0.0,
+      cost: 0,
+      quantity: 1,
       taxName1: '',
-      taxRate1: 0.0,
+      taxRate1: 0,
       taxName2: '',
-      taxRate2: 0.0,
+      taxRate2: 0,
       customValue1: '',
       customValue2: '',
       updatedAt: 0,
@@ -82,6 +83,8 @@ abstract class ProductEntity extends Object
   String get notes;
 
   double get cost;
+
+  double get quantity;
 
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
