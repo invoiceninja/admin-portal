@@ -114,8 +114,8 @@ String _checkUrl(String url) {
 }
 
 Map<String, String> _getHeaders(String token) => {
-      'X-API-SECRET': Config.API_SECRET,
-      'X-API-TOKEN': token,
+      'X-API-Secret': Config.API_SECRET,
+      'X-API-Token': token,
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/json',
     };
