@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -342,9 +343,15 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
+      // TODO update once supported
+      if (state.dashboardState.isStale) {
+        store.dispatch(LoadDashboard());
+      }
+      /*
       if (state.projectState.isStale) {
         store.dispatch(LoadProjects());
       }
+       */
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuotesFailure(error));

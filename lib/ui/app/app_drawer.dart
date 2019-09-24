@@ -21,10 +21,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -252,6 +248,7 @@ class AppDrawer extends StatelessWidget {
                               context: context));
                         },
                       ),
+                      /*
                       DrawerTile(
                         company: company,
                         entityType: EntityType.project,
@@ -316,6 +313,7 @@ class AppDrawer extends StatelessWidget {
                               context: context));
                         },
                       ),
+                      */
                       // STARTER: menu - do not remove comment
                       DrawerTile(
                         company: company,
