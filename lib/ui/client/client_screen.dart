@@ -15,9 +15,6 @@ import 'package:redux/src/store.dart';
 
 import 'client_screen_vm.dart';
 
-final GlobalKey<ScaffoldState> _clientListScaffoldKey =
-    GlobalKey<ScaffoldState>(debugLabel: 'clientListScaffold');
-
 class ClientScreen extends StatelessWidget {
   const ClientScreen({
     Key key,
@@ -37,7 +34,6 @@ class ClientScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-      scaffoldKey: _clientListScaffoldKey,
       appBarTitle: ListFilter(
         key: ValueKey(state.clientListState.filterClearedAt),
         entityType: EntityType.client,
@@ -109,8 +105,8 @@ class ClientScreen extends StatelessWidget {
       await showMultipleEntitiesActionsDialog(
           entities: store.state.clientListState.selectedEntities,
           user: viewModel.user,
-          onEntityAction: viewModel.onEntityAction,
-          scaffoldKey: _clientListScaffoldKey);
+          context: context,
+          onEntityAction: viewModel.onEntityAction);
     }
     store.dispatch(ClearMultiselect(context: context));
   }

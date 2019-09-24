@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 Future<void> showMultipleEntitiesActionsDialog({
   @required List<BaseEntity> entities,
   @required UserEntity user,
-  @required GlobalKey<ScaffoldState> scaffoldKey,
+  @required BuildContext context,
   @required
       Function(BuildContext, ClientEntity, EntityAction,
               {bool multiselect, bool isMultiselectLast})
@@ -17,9 +17,9 @@ Future<void> showMultipleEntitiesActionsDialog({
   if (entities == null || entities.isEmpty) {
     return;
   }
-  final mainContext = scaffoldKey.currentContext;
+  final mainContext = context;
   await showDialog<String>(
-      context: scaffoldKey.currentContext,
+      context: mainContext,
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
         actions.addAll(entities[0] // Suppose they are all the same type
@@ -65,7 +65,7 @@ class EntityActionListTile extends StatelessWidget {
         Navigator.of(context).pop();
         for (int i = 0; i < entities.length; i++) {
           final BaseEntity entity = entities[i];
-          onEntityAction(mainContext, entity, entityAction,
+          onEntityAction(context, entity, entityAction,
               multiselect: true, isMultiselectLast: i == entities.length - 1);
         }
       },
