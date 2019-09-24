@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({Key key, this.useCard = false, this.height = 200.0})
+  const LoadingIndicator({Key key, this.useCard = false, this.height})
       : super(key: key);
 
   final double height;
@@ -14,6 +14,7 @@ class LoadingIndicator extends StatelessWidget {
         padding: EdgeInsets.all(14.0),
         child: SizedBox(
           height: 200.0,
+          width: double.infinity,
           child: Card(
             elevation: 4.0,
             child: Center(
@@ -25,8 +26,8 @@ class LoadingIndicator extends StatelessWidget {
     }
 
     return Container(
-      height: height,
-      width: height,
+      height: height ?? double.infinity,
+      width: double.infinity,
       child: Center(
         child: CircularProgressIndicator(),
       ),
