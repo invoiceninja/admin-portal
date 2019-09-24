@@ -125,24 +125,22 @@ class ExpenseEditVM {
             new Completer<ExpenseEntity>();
         store.dispatch(
             SaveExpenseRequest(completer: completer, expense: expense));
-        return completer.future.then((_) {
-          return completer.future.then((savedExpense) {
-            store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-            if (isMobile(context)) {
-              if (expense.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(ExpenseViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedExpense);
-              }
+        return completer.future.then((savedExpense) {
+          store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
+          if (isMobile(context)) {
+            if (expense.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ExpenseViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedExpense);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
       onAddDocumentsChanged: (value) async {

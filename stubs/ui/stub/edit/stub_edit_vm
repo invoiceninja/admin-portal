@@ -73,23 +73,21 @@ class StubEditVM {
       onSavePressed: (BuildContext context) {
         final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
-        return completer.future.then((_) {
-            return completer.future.then((savedStub) {
-              store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-              if (isMobile(context)) {
-                  if (stub.isNew) {
-                    Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
-                  } else {
-                    Navigator.of(context).pop(savedStub);
-                  }
+        return completer.future.then((savedStub) {
+          store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+          if (isMobile(context)) {
+              if (stub.isNew) {
+                Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedStub);
               }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );

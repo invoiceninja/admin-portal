@@ -72,24 +72,22 @@ class DocumentEditVM {
             new Completer<DocumentEntity>();
         store.dispatch(
             SaveDocumentRequest(completer: completer, document: document));
-        return completer.future.then((_) {
-          return completer.future.then((savedDocument) {
-            store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-            if (isMobile(context)) {
-              if (document.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(DocumentViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedDocument);
-              }
+        return completer.future.then((savedDocument) {
+          store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
+          if (isMobile(context)) {
+            if (document.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(DocumentViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedDocument);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );

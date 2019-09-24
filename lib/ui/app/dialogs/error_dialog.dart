@@ -3,10 +3,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog(this.error, {this.clearErrorOnDismiss});
+  const ErrorDialog(this.error, {this.clearErrorOnDismiss = false});
   final Object error;
   final bool clearErrorOnDismiss;
 
@@ -15,8 +16,7 @@ class ErrorDialog extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
 
-    return Padding(
-      padding: EdgeInsets.all(16.0),
+    return ResponsivePadding(
       child: Column(
         children: <Widget>[
           Material(

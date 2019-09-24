@@ -78,24 +78,22 @@ class ProductEditVM {
             new Completer<ProductEntity>();
         store.dispatch(
             SaveProductRequest(completer: completer, product: product));
-        return completer.future.then((_) {
-          return completer.future.then((savedProduct) {
-            store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-            if (isMobile(context)) {
-              if (product.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(ProductViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedProduct);
-              }
+        return completer.future.then((savedProduct) {
+          store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
+          if (isMobile(context)) {
+            if (product.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ProductViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedProduct);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {
