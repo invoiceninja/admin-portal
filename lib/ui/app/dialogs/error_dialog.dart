@@ -6,8 +6,9 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog(this.error);
+  const ErrorDialog(this.error, {this.clearErrorOnDismiss});
   final Object error;
+  final bool clearErrorOnDismiss;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,9 @@ class ErrorDialog extends StatelessWidget {
                   SizedBox(height: 40.0),
                   ElevatedButton(
                     onPressed: () {
-                      store.dispatch(ClearLastError());
+                      if (clearErrorOnDismiss) {
+                        store.dispatch(ClearLastError());
+                      }
                       Navigator.of(context).pop();
                     },
                     label: localization.dismiss,

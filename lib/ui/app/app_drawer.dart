@@ -479,7 +479,10 @@ class SidebarFooter extends StatelessWidget {
               onPressed: () => showDialog<ErrorDialog>(
                   context: context,
                   builder: (BuildContext context) {
-                    return ErrorDialog(state.lastError);
+                    return ErrorDialog(
+                      state.lastError,
+                      clearErrorOnDismiss: true,
+                    );
                   }),
             ),
           if (!Platform.isIOS &&
