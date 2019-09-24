@@ -53,9 +53,10 @@ class _LoginState extends State<LoginView> {
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
 
+    _passwordController.text = '';
+
     if (kReleaseMode) {
       _emailController.text = state.email;
-      _passwordController.text = state.password;
       _urlController.text = cleanApiUrl(state.url);
       _secretController.text = state.secret;
     } else {

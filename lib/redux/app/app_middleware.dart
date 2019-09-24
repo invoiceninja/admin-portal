@@ -227,16 +227,14 @@ Middleware<AppState> _createLoadState(
             store.dispatch(ViewMainScreen(action.context));
           }
         }).catchError((Object error) {
-          store.dispatch(UserLogout());
-          store.dispatch(LoadUserLogin(action.context));
+          store.dispatch(UserLogout(action.context));
         });
         store.dispatch(RefreshData(
           platform: getPlatform(action.context),
           completer: completer,
         ));
       } else {
-        store.dispatch(UserLogout());
-        store.dispatch(LoadUserLogin(action.context));
+        store.dispatch(UserLogout(action.context));
       }
     }
 

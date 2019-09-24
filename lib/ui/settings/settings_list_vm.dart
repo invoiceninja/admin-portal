@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -80,9 +79,7 @@ class SettingsListVM {
             new FlatButton(
                 child: Text(localization.ok.toUpperCase()),
                 onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      LoginScreen.route, (Route<dynamic> route) => false);
-                  store.dispatch(UserLogout());
+                  store.dispatch(UserLogout(context));
                 })
           ],
         ),

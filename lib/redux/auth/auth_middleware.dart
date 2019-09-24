@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
@@ -14,14 +15,14 @@ import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
 ]) {
-  final loginInit = _createLoginInit();
+  final userLogout = _createUserLogout();
   final loginRequest = _createLoginRequest(repository);
   final signUpRequest = _createSignUpRequest(repository);
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
 
   return [
-    TypedMiddleware<AppState, LoadUserLogin>(loginInit),
+    TypedMiddleware<AppState, UserLogout>(userLogout),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
     TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
@@ -57,15 +58,18 @@ void _loadAuthLocal(Store<AppState> store) async {
   ));
 }
 
-Middleware<AppState> _createLoginInit() {
+Middleware<AppState> _createUserLogout() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadUserLogin;
+    final action = dynamicAction as UserLogout;
+
+    next(action);
 
     _loadAuthLocal(store);
 
-    Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
+    store.dispatch(UpdateCurrentRoute(LoginScreen.route));
 
-    next(action);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        LoginScreen.route, (Route<dynamic> route) => false);
   };
 }
 

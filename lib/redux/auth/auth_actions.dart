@@ -15,12 +15,6 @@ class LoadStateSuccess {
   final AppState state;
 }
 
-class LoadUserLogin {
-  LoadUserLogin(this.context);
-
-  final BuildContext context;
-}
-
 class UserLoginLoaded {
   UserLoginLoaded(this.email, this.url, this.secret);
 
@@ -75,7 +69,10 @@ class UserLoginFailure implements StopLoading {
   final Object error;
 }
 
-class UserLogout implements PersistData, PersistUI {}
+class UserLogout implements PersistData, PersistUI {
+  UserLogout(this.context);
+  final BuildContext context;
+}
 
 class UserSignUpRequest implements StartLoading {
   UserSignUpRequest({
