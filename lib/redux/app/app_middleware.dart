@@ -216,7 +216,7 @@ Middleware<AppState> _createLoadState(
       print(error);
 
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(getCompanyTokenKey()) ?? '';
+      final token = prefs.getString(kSharedPrefToken) ?? '';
 
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
@@ -322,8 +322,10 @@ Middleware<AppState> _createAccountLoaded() {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(getCompanyTokenKey(i), userCompany.token.token);
+        if (i == 0) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefToken, userCompany.token.token);
+        }
 
         store.dispatch(SelectCompany(i + 1, userCompany));
         store.dispatch(LoadCompanySuccess(userCompany));
@@ -410,7 +412,7 @@ Middleware<AppState> _createDeleteState(
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     for (int i = 0; i < 5; i++) {
-      prefs.setString(getCompanyTokenKey(i), '');
+      prefs.setString(kSharedPrefToken, '');
     }
 
     next(action);

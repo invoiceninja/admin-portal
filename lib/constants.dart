@@ -49,9 +49,6 @@ const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
 
-String getCompanyTokenKey([int companyIndex = 0]) =>
-    '${kSharedPrefToken}_$companyIndex';
-
 const int kMinMajorAppVersion = 0;
 const int kMinMinorAppVersion = 0;
 const int kMinPatchAppVersion = 0;

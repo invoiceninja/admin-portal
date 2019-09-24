@@ -185,7 +185,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url =
         formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final String token = prefs.getString(getCompanyTokenKey());
+    final String token = prefs.getString(kSharedPrefToken);
 
     repository
         .refresh(url: url, token: token, platform: action.platform)
