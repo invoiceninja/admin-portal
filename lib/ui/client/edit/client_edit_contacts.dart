@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -23,19 +24,21 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
   ContactEntity selectedContact;
 
   void _showContactEditor(ContactEntity contact, BuildContext context) {
-    showDialog<ContactEditDetails>(
+    showDialog<ResponsivePadding>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
           final client = viewModel.client;
 
-          return ContactEditDetails(
-            viewModel: viewModel,
-            key: Key(contact.entityKey),
-            contact: contact,
-            areButtonsVisible: client.contacts.length > 1,
-            index: client.contacts
-                .indexOf(client.contacts.firstWhere((c) => c.id == contact.id)),
+          return ResponsivePadding(
+            child: ContactEditDetails(
+              viewModel: viewModel,
+              key: Key(contact.entityKey),
+              contact: contact,
+              areButtonsVisible: client.contacts.length > 1,
+              index: client.contacts.indexOf(
+                  client.contacts.firstWhere((c) => c.id == contact.id)),
+            ),
           );
         });
   }
