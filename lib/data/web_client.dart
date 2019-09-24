@@ -23,9 +23,7 @@ class WebClient {
 
     final http.Response response = await http.Client().get(
       url,
-      headers: {
-        'X-Ninja-Token': token,
-      },
+      headers: _getHeaders(token),
     );
 
     _checkResponse(response);
@@ -44,13 +42,6 @@ class WebClient {
     print('Data: $data');
     http.Response response;
 
-    final Map<String, String> headers = {
-      'X-API-SECRET': Config.API_SECRET,
-      'X-Ninja-Token': token,
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-    };
-
     if (filePath != null) {
       final file = File(filePath);
       final stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
@@ -58,7 +49,7 @@ class WebClient {
 
       final request = http.MultipartRequest('POST', Uri.parse(url))
         ..fields.addAll(data)
-        ..headers.addAll(headers)
+        ..headers.addAll(_getHeaders(token))
         ..files.add(http.MultipartFile('file', stream, length,
             filename: basename(file.path)));
 
@@ -66,7 +57,7 @@ class WebClient {
           .timeout(const Duration(minutes: 10));
     } else {
       response = await http.Client()
-          .post(url, body: data, headers: headers)
+          .post(url, body: data, headers: _getHeaders(token))
           .timeout(const Duration(seconds: 30));
     }
 
@@ -83,11 +74,7 @@ class WebClient {
     final http.Response response = await http.Client().put(
       url,
       body: data,
-      headers: {
-        'X-Ninja-Token': token,
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers: _getHeaders(token),
     );
 
     _checkResponse(response);
@@ -101,11 +88,7 @@ class WebClient {
 
     final http.Response response = await http.Client().delete(
       url,
-      headers: {
-        'X-Ninja-Token': token,
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers: _getHeaders(token),
     );
 
     _checkResponse(response);
@@ -129,6 +112,13 @@ String _checkUrl(String url) {
 
   return url;
 }
+
+Map<String, String> _getHeaders(String token) => {
+      'X-API-SECRET': Config.API_SECRET,
+      'X-API-TOKEN': token,
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json',
+    };
 
 void _checkResponse(http.Response response) {
   //debugPrint('response: ${response.statusCode} ${response.body}');
