@@ -243,6 +243,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return hasVendorChanges(vendorUIState.editing, vendorState.map);
       case ExpenseEditScreen.route:
         return hasExpenseChanges(expenseUIState.editing, expenseState.map);
+      // TODO add to stater.sh
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {
@@ -289,6 +290,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
 class Credentials {
   Credentials({this.url, this.token});
+
   String url;
   String token;
 }
