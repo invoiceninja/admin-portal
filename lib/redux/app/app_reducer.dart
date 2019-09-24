@@ -22,7 +22,8 @@ import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState().rebuild((b) => b
-      ..authState.replace(state.authState)
+      ..authState
+          .replace(state.authState.rebuild((b) => b..isAuthenticated = false))
       ..uiState.enableDarkMode = state.uiState.enableDarkMode
       ..uiState.isTesting = state.uiState.isTesting);
   } else if (action is LoadStateSuccess) {

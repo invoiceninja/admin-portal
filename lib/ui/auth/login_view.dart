@@ -411,29 +411,31 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     ),
-                  Padding(
-                      padding: EdgeInsets.only(top: 30, bottom: 10),
-                      child: viewModel.isLoading
-                          ? LoadingIndicator(height: 48)
-                          : _createAccount
-                              ? ElevatedButton(
-                                  width: 280,
-                                  label: (_emailLogin
-                                          ? localization.signUp
-                                          : localization.signUpWithGoogle)
-                                      .toUpperCase(),
-                                  onPressed: () => _submitSignUpForm(),
-                                )
-                              : ElevatedButton(
-                                  width: 280,
-                                  label: (_emailLogin
-                                          ? localization.login
-                                          : localization.googleLogin)
-                                      .toUpperCase(),
-                                  onPressed: () => _submitLoginForm(),
-                                )),
+                  if (!viewModel.authState.isAuthenticated)
+                    Padding(
+                        padding: EdgeInsets.only(top: 30, bottom: 10),
+                        child: viewModel.isLoading
+                            ? LoadingIndicator(height: 48)
+                            : _createAccount
+                                ? ElevatedButton(
+                                    width: 280,
+                                    label: (_emailLogin
+                                            ? localization.signUp
+                                            : localization.signUpWithGoogle)
+                                        .toUpperCase(),
+                                    onPressed: () => _submitSignUpForm(),
+                                  )
+                                : ElevatedButton(
+                                    width: 280,
+                                    label: (_emailLogin
+                                            ? localization.login
+                                            : localization.googleLogin)
+                                        .toUpperCase(),
+                                    onPressed: () => _submitLoginForm(),
+                                  )),
                   SizedBox(height: 6),
-                  if (!isOneTimePassword)
+                  if (!isOneTimePassword &&
+                      !viewModel.authState.isAuthenticated)
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
