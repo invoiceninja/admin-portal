@@ -413,7 +413,7 @@ class _LoginState extends State<LoginView> {
                   Padding(
                       padding: EdgeInsets.only(top: 30, bottom: 10),
                       child: viewModel.isLoading
-                          ? LoadingIndicator(height: 50)
+                          ? LoadingIndicator(height: 48)
                           : _createAccount
                               ? ElevatedButton(
                                   width: 280,
