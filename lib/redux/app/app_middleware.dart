@@ -191,7 +191,7 @@ Middleware<AppState> _createLoadState(
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
-          authState.url.isNotEmpty) {
+          uiState.currentRoute.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
         final routes = _getRoutes(appState);
         if (uiState.layout == AppLayout.mobile) {
@@ -323,18 +323,16 @@ Middleware<AppState> _createAccountLoaded() {
     if (action.loadCompanies) {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
-        print('user company: $userCompany');
+
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(getCompanyTokenKey(i), userCompany.token.token);
 
         store.dispatch(SelectCompany(i + 1, userCompany));
-        print('selected 1');
         store.dispatch(LoadCompanySuccess(userCompany));
-        print('selected 2');
       }
 
       store.dispatch(SelectCompany(1, response.userCompanies[0]));
-      print('selected 3');
       store.dispatch(UserLoginSuccess());
-      print('selected 4');
     }
 
     if (action.completer != null) {
