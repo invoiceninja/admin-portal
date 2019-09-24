@@ -425,7 +425,9 @@ Middleware<AppState> _createViewMainScreen() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+    if (store.state.uiState.currentRoute == LoginScreen.route) {
+      store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+    }
 
     Navigator.of(action.context).pushNamedAndRemoveUntil(
         MainScreen.route, (Route<dynamic> route) => false);

@@ -282,7 +282,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Settings: ${selectedCompanyState.company.settings}';
     //return 'URL: ${authState.url}, ${selectedCompany.plan}';
-    return 'Is Loading: $isLoading, Last Error: $lastError';
+    return 'Route: ${uiState.currentRoute}, Is Loading: $isLoading, Last Error: $lastError';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
