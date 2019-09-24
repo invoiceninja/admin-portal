@@ -56,7 +56,9 @@ final editingReducer = combineReducers<VendorEntity>([
   TypedReducer<VendorEntity, ArchiveVendorSuccess>(_updateEditing),
   TypedReducer<VendorEntity, DeleteVendorSuccess>(_updateEditing),
   TypedReducer<VendorEntity, EditVendor>(_updateEditing),
-  TypedReducer<VendorEntity, UpdateVendor>(_updateEditing),
+  TypedReducer<VendorEntity, UpdateVendor>((vendor, action) {
+    return action.vendor.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<VendorEntity, AddVendorContact>(_addContact),
   TypedReducer<VendorEntity, DeleteVendorContact>(_removeContact),
   TypedReducer<VendorEntity, UpdateVendorContact>(_updateContact),

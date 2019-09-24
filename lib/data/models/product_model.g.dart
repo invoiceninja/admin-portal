@@ -481,6 +481,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String customValue2;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -507,6 +509,7 @@ class _$ProductEntity extends ProductEntity {
       this.taxRate2,
       this.customValue1,
       this.customValue2,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -544,6 +547,9 @@ class _$ProductEntity extends ProductEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'isChanged');
+    }
   }
 
   @override
@@ -567,6 +573,7 @@ class _$ProductEntity extends ProductEntity {
         taxRate2 == other.taxRate2 &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -593,18 +600,21 @@ class _$ProductEntity extends ProductEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    productKey
+                                                                    $jc(
+                                                                        0,
+                                                                        productKey
+                                                                            .hashCode),
+                                                                    notes
                                                                         .hashCode),
-                                                                notes.hashCode),
-                                                            cost.hashCode),
-                                                        quantity.hashCode),
-                                                    taxName1.hashCode),
-                                                taxRate1.hashCode),
-                                            taxName2.hashCode),
-                                        taxRate2.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
+                                                                cost.hashCode),
+                                                            quantity.hashCode),
+                                                        taxName1.hashCode),
+                                                    taxRate1.hashCode),
+                                                taxName2.hashCode),
+                                            taxRate2.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -626,6 +636,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('taxRate2', taxRate2)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -680,6 +691,10 @@ class ProductEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -718,6 +733,7 @@ class ProductEntityBuilder
       _taxRate2 = _$v.taxRate2;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -756,6 +772,7 @@ class ProductEntityBuilder
             taxRate2: taxRate2,
             customValue1: customValue1,
             customValue2: customValue2,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

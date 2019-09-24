@@ -90,6 +90,7 @@ abstract class InvoiceEntity extends Object
       {String id, bool isQuote = false, CompanyEntity company}) {
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       amount: 0.0,
       balance: 0.0,
       clientId: '',
@@ -533,6 +534,7 @@ abstract class InvoiceItemEntity extends Object
   factory InvoiceItemEntity() {
     return _$InvoiceItemEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       productKey: '',
       notes: '',
       cost: 0.0,
@@ -664,6 +666,7 @@ abstract class InvitationEntity extends Object
   factory InvitationEntity() {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       key: '',
       link: '',
       sentDate: '',

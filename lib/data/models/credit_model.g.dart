@@ -446,6 +446,8 @@ class _$CreditEntity extends CreditEntity {
   @override
   final int clientId;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -469,6 +471,7 @@ class _$CreditEntity extends CreditEntity {
       this.privateNotes,
       this.publicNotes,
       this.clientId,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -497,6 +500,9 @@ class _$CreditEntity extends CreditEntity {
     if (clientId == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'clientId');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('CreditEntity', 'isChanged');
+    }
   }
 
   @override
@@ -517,6 +523,7 @@ class _$CreditEntity extends CreditEntity {
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         clientId == other.clientId &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -538,13 +545,15 @@ class _$CreditEntity extends CreditEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, amount.hashCode),
-                                                    balance.hashCode),
-                                                creditDate.hashCode),
-                                            creditNumber.hashCode),
-                                        privateNotes.hashCode),
-                                    publicNotes.hashCode),
-                                clientId.hashCode),
+                                                $jc(
+                                                    $jc($jc(0, amount.hashCode),
+                                                        balance.hashCode),
+                                                    creditDate.hashCode),
+                                                creditNumber.hashCode),
+                                            privateNotes.hashCode),
+                                        publicNotes.hashCode),
+                                    clientId.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -563,6 +572,7 @@ class _$CreditEntity extends CreditEntity {
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
           ..add('clientId', clientId)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -605,6 +615,10 @@ class CreditEntityBuilder
   int get clientId => _$this._clientId;
   set clientId(int clientId) => _$this._clientId = clientId;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -640,6 +654,7 @@ class CreditEntityBuilder
       _privateNotes = _$v.privateNotes;
       _publicNotes = _$v.publicNotes;
       _clientId = _$v.clientId;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -675,6 +690,7 @@ class CreditEntityBuilder
             privateNotes: privateNotes,
             publicNotes: publicNotes,
             clientId: clientId,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

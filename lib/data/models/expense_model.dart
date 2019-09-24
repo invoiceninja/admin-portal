@@ -75,6 +75,7 @@ abstract class ExpenseEntity extends Object
       ClientEntity client}) {
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
@@ -383,6 +384,7 @@ abstract class ExpenseCategoryEntity extends Object
   factory ExpenseCategoryEntity() {
     return _$ExpenseCategoryEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       name: '',
       isDeleted: false,
     );

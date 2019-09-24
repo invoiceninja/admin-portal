@@ -37,7 +37,9 @@ final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, ArchiveTaskSuccess>(_updateEditing),
   TypedReducer<TaskEntity, DeleteTaskSuccess>(_updateEditing),
   TypedReducer<TaskEntity, EditTask>(_updateEditing),
-  TypedReducer<TaskEntity, UpdateTask>(_updateEditing),
+  TypedReducer<TaskEntity, UpdateTask>((task, action) {
+    return action.task.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<TaskEntity, AddTaskTime>(_addTaskTime),
   TypedReducer<TaskEntity, DeleteTaskTime>(_removeTaskTime),
   TypedReducer<TaskEntity, UpdateTaskTime>(_updateTaskTime),

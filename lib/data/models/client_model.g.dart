@@ -900,6 +900,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ActivityEntity> activities;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -954,6 +956,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue2,
       this.contacts,
       this.activities,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1073,6 +1076,9 @@ class _$ClientEntity extends ClientEntity {
     if (activities == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'activities');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'isChanged');
+    }
   }
 
   @override
@@ -1124,6 +1130,7 @@ class _$ClientEntity extends ClientEntity {
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
         activities == other.activities &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1152,20 +1159,20 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode),
-                                                                                shippingAddress1.hashCode),
-                                                                            shippingAddress2.hashCode),
-                                                                        shippingCity.hashCode),
-                                                                    shippingState.hashCode),
-                                                                shippingPostalCode.hashCode),
-                                                            shippingCountryId.hashCode),
-                                                        showTasksInPortal.hashCode),
-                                                    sendReminders.hashCode),
-                                                creditNumberCounter.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
-                                    contacts.hashCode),
-                                activities.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode), shippingAddress1.hashCode),
+                                                                                shippingAddress2.hashCode),
+                                                                            shippingCity.hashCode),
+                                                                        shippingState.hashCode),
+                                                                    shippingPostalCode.hashCode),
+                                                                shippingCountryId.hashCode),
+                                                            showTasksInPortal.hashCode),
+                                                        sendReminders.hashCode),
+                                                    creditNumberCounter.hashCode),
+                                                customValue1.hashCode),
+                                            customValue2.hashCode),
+                                        contacts.hashCode),
+                                    activities.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1215,6 +1222,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
           ..add('activities', activities)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1396,6 +1404,10 @@ class ClientEntityBuilder
   set activities(ListBuilder<ActivityEntity> activities) =>
       _$this._activities = activities;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1462,6 +1474,7 @@ class ClientEntityBuilder
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
       _activities = _$v.activities?.toBuilder();
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1530,6 +1543,7 @@ class ClientEntityBuilder
               customValue2: customValue2,
               contacts: contacts.build(),
               activities: activities.build(),
+              isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1576,6 +1590,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String customValue2;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1602,6 +1618,7 @@ class _$ContactEntity extends ContactEntity {
       this.sendInvoice,
       this.customValue1,
       this.customValue2,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1636,6 +1653,9 @@ class _$ContactEntity extends ContactEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'isChanged');
+    }
   }
 
   @override
@@ -1659,6 +1679,7 @@ class _$ContactEntity extends ContactEntity {
         sendInvoice == other.sendInvoice &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1685,19 +1706,21 @@ class _$ContactEntity extends ContactEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    firstName
+                                                                    $jc(
+                                                                        0,
+                                                                        firstName
+                                                                            .hashCode),
+                                                                    lastName
                                                                         .hashCode),
-                                                                lastName
-                                                                    .hashCode),
-                                                            email.hashCode),
-                                                        password.hashCode),
-                                                    phone.hashCode),
-                                                contactKey.hashCode),
-                                            isPrimary.hashCode),
-                                        sendInvoice.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
+                                                                email.hashCode),
+                                                            password.hashCode),
+                                                        phone.hashCode),
+                                                    contactKey.hashCode),
+                                                isPrimary.hashCode),
+                                            sendInvoice.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1719,6 +1742,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('sendInvoice', sendInvoice)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1773,6 +1797,10 @@ class ContactEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1811,6 +1839,7 @@ class ContactEntityBuilder
       _sendInvoice = _$v.sendInvoice;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1849,6 +1878,7 @@ class ContactEntityBuilder
             sendInvoice: sendInvoice,
             customValue1: customValue1,
             customValue2: customValue2,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

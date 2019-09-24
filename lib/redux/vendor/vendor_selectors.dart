@@ -84,4 +84,4 @@ double calculateVendorBalance(String vendorId, String currencyId,
 
 bool hasVendorChanges(
         VendorEntity vendor, BuiltMap<String, VendorEntity> vendorMap) =>
-    vendor.isNew || vendor != vendorMap[vendor.id];
+    vendor.isNew ? vendor.isChanged : vendor != vendorMap[vendor.id];

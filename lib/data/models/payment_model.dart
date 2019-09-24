@@ -57,6 +57,7 @@ abstract class PaymentEntity extends Object
   factory PaymentEntity({String id, CompanyEntity company}) {
     return _$PaymentEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),

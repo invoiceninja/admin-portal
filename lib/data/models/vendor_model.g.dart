@@ -690,6 +690,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final BuiltList<VendorContactEntity> contacts;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -725,6 +727,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue1,
       this.customValue2,
       this.contacts,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -789,6 +792,9 @@ class _$VendorEntity extends VendorEntity {
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'isChanged');
+    }
   }
 
   @override
@@ -821,6 +827,7 @@ class _$VendorEntity extends VendorEntity {
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -849,20 +856,20 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode),
-                                                                                state.hashCode),
-                                                                            postalCode.hashCode),
-                                                                        countryId.hashCode),
-                                                                    workPhone.hashCode),
-                                                                privateNotes.hashCode),
-                                                            lastLogin.hashCode),
-                                                        website.hashCode),
-                                                    vatNumber.hashCode),
-                                                idNumber.hashCode),
-                                            currencyId.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode),
+                                                                                postalCode.hashCode),
+                                                                            countryId.hashCode),
+                                                                        workPhone.hashCode),
+                                                                    privateNotes.hashCode),
+                                                                lastLogin.hashCode),
+                                                            website.hashCode),
+                                                        vatNumber.hashCode),
+                                                    idNumber.hashCode),
+                                                currencyId.hashCode),
+                                            customValue1.hashCode),
+                                        customValue2.hashCode),
+                                    contacts.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -893,6 +900,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -985,6 +993,10 @@ class VendorEntityBuilder
   set contacts(ListBuilder<VendorContactEntity> contacts) =>
       _$this._contacts = contacts;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1032,6 +1044,7 @@ class VendorEntityBuilder
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1081,6 +1094,7 @@ class VendorEntityBuilder
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
+              isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
@@ -1115,6 +1129,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1137,6 +1153,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.email,
       this.isPrimary,
       this.phone,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1159,6 +1176,9 @@ class _$VendorContactEntity extends VendorContactEntity {
     if (phone == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('VendorContactEntity', 'isChanged');
+    }
   }
 
   @override
@@ -1179,6 +1199,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         email == other.email &&
         isPrimary == other.isPrimary &&
         phone == other.phone &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1198,11 +1219,13 @@ class _$VendorContactEntity extends VendorContactEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, firstName.hashCode),
-                                            lastName.hashCode),
-                                        email.hashCode),
-                                    isPrimary.hashCode),
-                                phone.hashCode),
+                                        $jc(
+                                            $jc($jc(0, firstName.hashCode),
+                                                lastName.hashCode),
+                                            email.hashCode),
+                                        isPrimary.hashCode),
+                                    phone.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1219,6 +1242,7 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('email', email)
           ..add('isPrimary', isPrimary)
           ..add('phone', phone)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1253,6 +1277,10 @@ class VendorContactEntityBuilder
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1286,6 +1314,7 @@ class VendorContactEntityBuilder
       _email = _$v.email;
       _isPrimary = _$v.isPrimary;
       _phone = _$v.phone;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1319,6 +1348,7 @@ class VendorContactEntityBuilder
             email: email,
             isPrimary: isPrimary,
             phone: phone,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

@@ -53,6 +53,7 @@ abstract class CreditEntity extends Object
   factory CreditEntity() {
     return _$CreditEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       amount: 0.0,
       balance: 0.0,
       creditDate: '',

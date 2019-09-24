@@ -54,6 +54,7 @@ abstract class ProjectEntity extends Object
   factory ProjectEntity({String id}) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       clientId: '',
       taskRate: 0.0,

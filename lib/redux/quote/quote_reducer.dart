@@ -46,7 +46,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, EditQuote>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdateQuote>(_updateEditing),
+  TypedReducer<InvoiceEntity, UpdateQuote>((quote, action) {
+    return action.quote.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<InvoiceEntity, RestoreQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ArchiveQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, DeleteQuoteSuccess>(_updateEditing),

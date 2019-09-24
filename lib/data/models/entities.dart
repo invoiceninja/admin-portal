@@ -115,6 +115,9 @@ abstract class BaseEntity implements SelectableEntity {
 
   static String get nextId => '${--counter}';
 
+  @BuiltValueField(serialize: false)
+  bool get isChanged;
+
   @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;

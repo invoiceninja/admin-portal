@@ -50,6 +50,7 @@ abstract class ProductEntity extends Object
   factory ProductEntity({String id}) {
     return _$ProductEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       productKey: '',
       notes: '',
       cost: 0,

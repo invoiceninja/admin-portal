@@ -484,6 +484,8 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final bool isDefault;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -510,6 +512,7 @@ class _$DocumentEntity extends DocumentEntity {
       this.invoiceId,
       this.expenseId,
       this.isDefault,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -541,6 +544,9 @@ class _$DocumentEntity extends DocumentEntity {
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'isDefault');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'isChanged');
+    }
   }
 
   @override
@@ -565,6 +571,7 @@ class _$DocumentEntity extends DocumentEntity {
         invoiceId == other.invoiceId &&
         expenseId == other.expenseId &&
         isDefault == other.isDefault &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -590,17 +597,19 @@ class _$DocumentEntity extends DocumentEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(0,
-                                                                    name.hashCode),
-                                                                type.hashCode),
-                                                            path.hashCode),
-                                                        width.hashCode),
-                                                    height.hashCode),
-                                                size.hashCode),
-                                            preview.hashCode),
-                                        invoiceId.hashCode),
-                                    expenseId.hashCode),
-                                isDefault.hashCode),
+                                                                $jc(
+                                                                    $jc(0,
+                                                                        name.hashCode),
+                                                                    type.hashCode),
+                                                                path.hashCode),
+                                                            width.hashCode),
+                                                        height.hashCode),
+                                                    size.hashCode),
+                                                preview.hashCode),
+                                            invoiceId.hashCode),
+                                        expenseId.hashCode),
+                                    isDefault.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -622,6 +631,7 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('invoiceId', invoiceId)
           ..add('expenseId', expenseId)
           ..add('isDefault', isDefault)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -676,6 +686,10 @@ class DocumentEntityBuilder
   bool get isDefault => _$this._isDefault;
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -714,6 +728,7 @@ class DocumentEntityBuilder
       _invoiceId = _$v.invoiceId;
       _expenseId = _$v.expenseId;
       _isDefault = _$v.isDefault;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -752,6 +767,7 @@ class DocumentEntityBuilder
             invoiceId: invoiceId,
             expenseId: expenseId,
             isDefault: isDefault,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

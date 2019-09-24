@@ -64,6 +64,7 @@ abstract class VendorEntity extends Object
   factory VendorEntity({String id}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       balance: 0.0,
       paidToDate: 0.0,
@@ -282,6 +283,7 @@ abstract class VendorContactEntity extends Object
   factory VendorContactEntity() {
     return _$VendorContactEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       firstName: '',
       lastName: '',
       email: '',

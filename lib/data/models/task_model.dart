@@ -130,6 +130,7 @@ abstract class TaskEntity extends Object
   factory TaskEntity({String id, bool isRunning = false}) {
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       description: '',
       duration: 0,
       invoiceId: null,

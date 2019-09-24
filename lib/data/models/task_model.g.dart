@@ -686,6 +686,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int taskStatusSortOrder;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -713,6 +715,7 @@ class _$TaskEntity extends TaskEntity {
       this.customValue2,
       this.taskStatusId,
       this.taskStatusSortOrder,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -738,6 +741,9 @@ class _$TaskEntity extends TaskEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'isChanged');
+    }
   }
 
   @override
@@ -762,6 +768,7 @@ class _$TaskEntity extends TaskEntity {
         customValue2 == other.customValue2 &&
         taskStatusId == other.taskStatusId &&
         taskStatusSortOrder == other.taskStatusSortOrder &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -789,21 +796,24 @@ class _$TaskEntity extends TaskEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        description
+                                                                        $jc(
+                                                                            0,
+                                                                            description
+                                                                                .hashCode),
+                                                                        duration
                                                                             .hashCode),
-                                                                    duration
+                                                                    invoiceId
                                                                         .hashCode),
-                                                                invoiceId
+                                                                clientId
                                                                     .hashCode),
-                                                            clientId.hashCode),
-                                                        projectId.hashCode),
-                                                    timeLog.hashCode),
-                                                isRunning.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
-                                    taskStatusId.hashCode),
-                                taskStatusSortOrder.hashCode),
+                                                            projectId.hashCode),
+                                                        timeLog.hashCode),
+                                                    isRunning.hashCode),
+                                                customValue1.hashCode),
+                                            customValue2.hashCode),
+                                        taskStatusId.hashCode),
+                                    taskStatusSortOrder.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -826,6 +836,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('customValue2', customValue2)
           ..add('taskStatusId', taskStatusId)
           ..add('taskStatusSortOrder', taskStatusSortOrder)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -884,6 +895,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set taskStatusSortOrder(int taskStatusSortOrder) =>
       _$this._taskStatusSortOrder = taskStatusSortOrder;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -923,6 +938,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _customValue2 = _$v.customValue2;
       _taskStatusId = _$v.taskStatusId;
       _taskStatusSortOrder = _$v.taskStatusSortOrder;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -962,6 +978,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             customValue2: customValue2,
             taskStatusId: taskStatusId,
             taskStatusSortOrder: taskStatusSortOrder,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

@@ -503,6 +503,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String exchangeCurrencyId;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -531,6 +533,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -572,6 +575,9 @@ class _$PaymentEntity extends PaymentEntity {
     if (exchangeCurrencyId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'isChanged');
+    }
   }
 
   @override
@@ -597,6 +603,7 @@ class _$PaymentEntity extends PaymentEntity {
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -625,24 +632,27 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            amount
+                                                                            $jc(
+                                                                                0,
+                                                                                amount
+                                                                                    .hashCode),
+                                                                            refunded
                                                                                 .hashCode),
-                                                                        refunded
+                                                                        paymentStatusId
                                                                             .hashCode),
-                                                                    paymentStatusId
+                                                                    transactionReference
                                                                         .hashCode),
-                                                                transactionReference
+                                                                paymentDate
                                                                     .hashCode),
-                                                            paymentDate
+                                                            paymentTypeId
                                                                 .hashCode),
-                                                        paymentTypeId.hashCode),
-                                                    invoiceId.hashCode),
-                                                clientId.hashCode),
-                                            invoiceNumber.hashCode),
-                                        privateNotes.hashCode),
-                                    exchangeRate.hashCode),
-                                exchangeCurrencyId.hashCode),
+                                                        invoiceId.hashCode),
+                                                    clientId.hashCode),
+                                                invoiceNumber.hashCode),
+                                            privateNotes.hashCode),
+                                        exchangeRate.hashCode),
+                                    exchangeCurrencyId.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -666,6 +676,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -733,6 +744,10 @@ class PaymentEntityBuilder
   set exchangeCurrencyId(String exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -773,6 +788,7 @@ class PaymentEntityBuilder
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -813,6 +829,7 @@ class PaymentEntityBuilder
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

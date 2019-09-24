@@ -57,6 +57,7 @@ abstract class ClientEntity extends Object
   factory ClientEntity({String id}) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       displayName: '',
       balance: 0.0,
@@ -459,6 +460,7 @@ abstract class ContactEntity extends Object
   factory ContactEntity() {
     return _$ContactEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       firstName: '',
       lastName: '',
       email: '',

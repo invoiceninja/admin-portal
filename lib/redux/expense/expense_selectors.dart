@@ -208,4 +208,4 @@ List<String> clientExpenseList(
 
 bool hasExpenseChanges(
         ExpenseEntity expense, BuiltMap<String, ExpenseEntity> expenseMap) =>
-    expense.isNew || expense != expenseMap[expense.id];
+    expense.isNew ? expense.isChanged : expense != expenseMap[expense.id];

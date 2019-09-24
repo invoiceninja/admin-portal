@@ -227,4 +227,4 @@ String taskStatsForProject(
 }
 
 bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>
-    task.isNew || task != taskMap[task.id];
+    task.isNew ? task.isChanged : task != taskMap[task.id];

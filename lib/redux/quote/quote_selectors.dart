@@ -100,4 +100,4 @@ String quoteStatsForClient(
 
 bool hasQuoteChanges(
         InvoiceEntity quote, BuiltMap<String, InvoiceEntity> quoteMap) =>
-    quote.isNew || quote != quoteMap[quote.id];
+    quote.isNew ? quote.isChanged : quote != quoteMap[quote.id];

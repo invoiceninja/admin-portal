@@ -43,7 +43,9 @@ final editingReducer = combineReducers<ProjectEntity>([
   TypedReducer<ProjectEntity, RestoreProjectSuccess>(_updateEditing),
   TypedReducer<ProjectEntity, ArchiveProjectSuccess>(_updateEditing),
   TypedReducer<ProjectEntity, DeleteProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, EditProject>(_updateEditing),
+  TypedReducer<ProjectEntity, EditProject>((project, action) {
+    return action.project.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<ProjectEntity, UpdateProject>(_updateEditing),
   TypedReducer<ProjectEntity, SelectCompany>(_clearEditing),
 ]);

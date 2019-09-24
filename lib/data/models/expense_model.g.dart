@@ -779,6 +779,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue2;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -819,6 +821,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.vendorId,
       this.customValue1,
       this.customValue2,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -887,6 +890,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
     }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'isChanged');
+    }
   }
 
   @override
@@ -924,6 +930,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -952,20 +959,20 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode),
-                                                                                paymentDate.hashCode),
-                                                                            exchangeRate.hashCode),
-                                                                        invoiceCurrencyId.hashCode),
-                                                                    paymentTypeId.hashCode),
-                                                                taxName1.hashCode),
-                                                            taxName2.hashCode),
-                                                        taxRate1.hashCode),
-                                                    taxRate2.hashCode),
-                                                clientId.hashCode),
-                                            invoiceId.hashCode),
-                                        vendorId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode),
+                                                                                exchangeRate.hashCode),
+                                                                            invoiceCurrencyId.hashCode),
+                                                                        paymentTypeId.hashCode),
+                                                                    taxName1.hashCode),
+                                                                taxName2.hashCode),
+                                                            taxRate1.hashCode),
+                                                        taxRate2.hashCode),
+                                                    clientId.hashCode),
+                                                invoiceId.hashCode),
+                                            vendorId.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
+                                isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
@@ -1001,6 +1008,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('vendorId', vendorId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1118,6 +1126,10 @@ class ExpenseEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1170,6 +1182,7 @@ class ExpenseEntityBuilder
       _vendorId = _$v.vendorId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1222,6 +1235,7 @@ class ExpenseEntityBuilder
             vendorId: vendorId,
             customValue1: customValue1,
             customValue2: customValue2,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
@@ -1236,6 +1250,8 @@ class ExpenseEntityBuilder
 class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final String name;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -1255,6 +1271,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   _$ExpenseCategoryEntity._(
       {this.name,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
@@ -1264,6 +1281,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
+    }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'isChanged');
     }
   }
 
@@ -1281,6 +1301,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     if (identical(other, this)) return true;
     return other is ExpenseCategoryEntity &&
         name == other.name &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
@@ -1295,7 +1316,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, name.hashCode), createdAt.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, name.hashCode), isChanged.hashCode),
+                            createdAt.hashCode),
                         updatedAt.hashCode),
                     archivedAt.hashCode),
                 isDeleted.hashCode),
@@ -1307,6 +1330,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
           ..add('name', name)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
@@ -1324,6 +1348,10 @@ class ExpenseCategoryEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1354,6 +1382,7 @@ class ExpenseCategoryEntityBuilder
   ExpenseCategoryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
@@ -1383,6 +1412,7 @@ class ExpenseCategoryEntityBuilder
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
             name: name,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,

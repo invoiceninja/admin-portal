@@ -48,6 +48,7 @@ abstract class DocumentEntity extends Object
   factory DocumentEntity({String id}) {
     return _$DocumentEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       path: '',
       type: '',

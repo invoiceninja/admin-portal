@@ -74,4 +74,4 @@ List<String> filteredProductsSelector(
 
 bool hasProductChanges(
         ProductEntity product, BuiltMap<String, ProductEntity> productMap) =>
-    product.isNew || product != productMap[product.id];
+    product.isNew ? product.isChanged : product != productMap[product.id];

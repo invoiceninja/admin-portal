@@ -48,7 +48,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, EditInvoice>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdateInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity, UpdateInvoice>((invoice, action) {
+    return action.invoice.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<InvoiceEntity, RestoreInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ArchiveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, DeleteInvoiceSuccess>(_updateEditing),
