@@ -87,6 +87,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
+      'longPressSelectionIsDefault',
+      serializers.serialize(object.longPressSelectionIsDefault,
+          specifiedType: const FullType(bool)),
       'requireAuthentication',
       serializers.serialize(object.requireAuthentication,
           specifiedType: const FullType(bool)),
@@ -183,6 +186,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           break;
         case 'enableDarkMode':
           result.enableDarkMode = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'longPressSelectionIsDefault':
+          result.longPressSelectionIsDefault = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'requireAuthentication':
@@ -310,6 +317,8 @@ class _$UIState extends UIState {
   @override
   final bool enableDarkMode;
   @override
+  final bool longPressSelectionIsDefault;
+  @override
   final bool requireAuthentication;
   @override
   final bool emailPayment;
@@ -354,6 +363,7 @@ class _$UIState extends UIState {
       this.currentRoute,
       this.previousRoute,
       this.enableDarkMode,
+      this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.emailPayment,
       this.autoStartTasks,
@@ -394,6 +404,10 @@ class _$UIState extends UIState {
     }
     if (enableDarkMode == null) {
       throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
+    }
+    if (longPressSelectionIsDefault == null) {
+      throw new BuiltValueNullFieldError(
+          'UIState', 'longPressSelectionIsDefault');
     }
     if (requireAuthentication == null) {
       throw new BuiltValueNullFieldError('UIState', 'requireAuthentication');
@@ -461,6 +475,7 @@ class _$UIState extends UIState {
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
         enableDarkMode == other.enableDarkMode &&
+        longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
         autoStartTasks == other.autoStartTasks &&
@@ -499,10 +514,10 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
-                                                                                currentRoute.hashCode),
-                                                                            previousRoute.hashCode),
-                                                                        enableDarkMode.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode),
+                                                                                previousRoute.hashCode),
+                                                                            enableDarkMode.hashCode),
+                                                                        longPressSelectionIsDefault.hashCode),
                                                                     requireAuthentication.hashCode),
                                                                 emailPayment.hashCode),
                                                             autoStartTasks.hashCode),
@@ -532,6 +547,7 @@ class _$UIState extends UIState {
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
           ..add('enableDarkMode', enableDarkMode)
+          ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
           ..add('autoStartTasks', autoStartTasks)
@@ -591,6 +607,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get enableDarkMode => _$this._enableDarkMode;
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
+
+  bool _longPressSelectionIsDefault;
+  bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
+  set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
+      _$this._longPressSelectionIsDefault = longPressSelectionIsDefault;
 
   bool _requireAuthentication;
   bool get requireAuthentication => _$this._requireAuthentication;
@@ -693,6 +714,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
       _enableDarkMode = _$v.enableDarkMode;
+      _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
       _autoStartTasks = _$v.autoStartTasks;
@@ -741,6 +763,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               currentRoute: currentRoute,
               previousRoute: previousRoute,
               enableDarkMode: enableDarkMode,
+              longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,
               autoStartTasks: autoStartTasks,

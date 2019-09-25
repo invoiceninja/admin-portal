@@ -3,9 +3,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -36,12 +40,14 @@ class SettingsListVM {
     @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
+    @required this.onLongPressSelectionIsDefault,
     @required this.enableDarkMode,
     @required this.autoStartTasks,
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.requireAuthentication,
     @required this.authenticationSupported,
+    @required this.longPressSelectionIsDefault,
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
@@ -96,6 +102,12 @@ class SettingsListVM {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
+      onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool(kSharedPrefLongPressSelectionIsDefault, value);
+        store.dispatch(UserSettingsChanged(longPressSelectionIsDefault: value));
+        AppBuilder.of(context).rebuild();
+      },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefAutoStartTasks, value);
@@ -122,6 +134,8 @@ class SettingsListVM {
       },
       autoStartTasks: store.state.uiState.autoStartTasks,
       enableDarkMode: store.state.uiState.enableDarkMode,
+      longPressSelectionIsDefault:
+          store.state.uiState.longPressSelectionIsDefault,
       requireAuthentication: store.state.uiState.requireAuthentication,
       //authenticationSupported: LocalAuthentication().canCheckBiometrics,
       // TODO remove this once issue is resolved:
@@ -142,9 +156,12 @@ class SettingsListVM {
   final Function(BuildContext context) onLogoutTap;
   final Function(BuildContext context) onRefreshTap;
   final Function(BuildContext context, bool value) onDarkModeChanged;
+  final Function(BuildContext context, bool value)
+      onLongPressSelectionIsDefault;
   final Function(BuildContext context, bool value) onAutoStartTasksChanged;
   final bool enableDarkMode;
   final bool autoStartTasks;
+  final bool longPressSelectionIsDefault;
   final Function(BuildContext context, bool value)
       onRequireAuthenticationChanged;
   final bool requireAuthentication;

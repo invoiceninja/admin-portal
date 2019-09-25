@@ -2,26 +2,18 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
+import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
+import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
-import 'package:redux/redux.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+import 'package:redux/redux.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);
@@ -39,6 +31,8 @@ UIState uiReducer(UIState state, dynamic action) {
             : state.currentRoute
     ..currentRoute = currentRoute
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..longPressSelectionIsDefault =
+        longPressReducer(state.longPressSelectionIsDefault, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
     ..requireAuthentication =
         requireAuthenticationReducer(state.requireAuthentication, action)
@@ -106,6 +100,15 @@ Reducer<bool> darkModeReducer = combineReducers([
 
 bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
   return action.enableDarkMode ?? enableDarkMode;
+}
+
+Reducer<bool> longPressReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(updateLongPressReducer),
+]);
+
+bool updateLongPressReducer(
+    bool longPressSelectionIsDefault, UserSettingsChanged action) {
+  return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
 }
 
 Reducer<bool> autoStartTasksReducer = combineReducers([

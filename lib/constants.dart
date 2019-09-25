@@ -19,6 +19,8 @@ const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefToken = 'api_token';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
+const String kSharedPrefLongPressSelectionIsDefault =
+    'long_press_selection_is_default';
 const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 const String kSharedPrefAppVersion = 'app_version';
