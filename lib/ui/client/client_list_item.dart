@@ -1,11 +1,13 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:redux/src/store.dart';
 
 class ClientListItem extends StatelessWidget {
   const ClientListItem({
@@ -38,6 +40,8 @@ class ClientListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? client.matchesFilterValue(filter)
         : null;
+    final listUIState = clientUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return DismissibleEntity(
       isSelected: client.id ==
@@ -49,7 +53,9 @@ class ClientListItem extends StatelessWidget {
       entity: client,
       //entityKey: clientItemKey,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => _toggleSelection(context, store, client.id)
+            : onTap,
         onLongPress: onLongPress,
         title: Row(
           children: <Widget>[
@@ -60,7 +66,12 @@ class ClientListItem extends StatelessWidget {
               ),
             ),
             Text(formatNumber(client.balance, context, clientId: client.id),
-                style: Theme.of(context).textTheme.title)
+                style: Theme.of(context).textTheme.title),
+            if (isInMultiselect)
+              IgnorePointer(
+                  child: Checkbox(
+                      value: listUIState.isSelected(client.id),
+                      onChanged: null))
           ],
         ),
         subtitle: (filterMatch == null && client.isActive)
@@ -80,5 +91,15 @@ class ClientListItem extends StatelessWidget {
               ),
       ),
     );
+  }
+
+  void _toggleSelection(
+      BuildContext context, Store<AppState> store, int clientId) {
+    if (store.state.clientListState.isSelected(clientId)) {
+      store.dispatch(
+          RemoveFromMultiselect(context: context, clientId: clientId));
+    } else {
+      store.dispatch(AddToMultiselect(context: context, clientId: clientId));
+    }
   }
 }

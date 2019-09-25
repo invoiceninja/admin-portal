@@ -283,7 +283,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ProductScreen.route: (context) => ProductScreen(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
-            ClientScreen.route: (context) => ClientScreen(),
+            ClientScreen.route: (context) => ClientScreenBuilder(),
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),
             InvoiceScreen.route: (context) => InvoiceScreen(),
