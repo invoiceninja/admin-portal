@@ -324,6 +324,16 @@ void handleClientAction(
             snackBarCompleter(context, localization.deletedClient), client.id));
       }
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.clientListState.isInMultiselect()) {
+        store.dispatch(StartMultiselect(context: context));
+      }
+      if (!store.state.clientListState.isSelected(client)) {
+        store.dispatch(AddToMultiselect(context: context, entity: client));
+      } else {
+        store.dispatch(RemoveFromMultiselect(context: context, entity: client));
+      }
+      break;
   }
 }
 

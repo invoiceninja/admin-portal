@@ -2,31 +2,31 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-export 'package:invoiceninja_flutter/data/models/entities.dart';
-export 'package:invoiceninja_flutter/data/models/product_model.dart';
 export 'package:invoiceninja_flutter/data/models/client_model.dart';
 export 'package:invoiceninja_flutter/data/models/company_model.dart';
 export 'package:invoiceninja_flutter/data/models/credit_model.dart';
-export 'package:invoiceninja_flutter/data/models/project_model.dart';
-export 'package:invoiceninja_flutter/data/models/payment_model.dart';
-export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-export 'package:invoiceninja_flutter/data/models/task_model.dart';
-export 'package:invoiceninja_flutter/data/models/expense_model.dart';
-export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 export 'package:invoiceninja_flutter/data/models/document_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
+export 'package:invoiceninja_flutter/data/models/entities.dart';
+export 'package:invoiceninja_flutter/data/models/expense_model.dart';
+export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+export 'package:invoiceninja_flutter/data/models/payment_model.dart';
+export 'package:invoiceninja_flutter/data/models/product_model.dart';
+export 'package:invoiceninja_flutter/data/models/project_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/language_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/country_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/language_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/size_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
+export 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
+export 'package:invoiceninja_flutter/data/models/task_model.dart';
+export 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 
 part 'models.g.dart';
 
@@ -59,6 +59,7 @@ class EntityAction extends EnumClass {
   static const EntityAction start = _$start;
   static const EntityAction resume = _$resume;
   static const EntityAction stop = _$stop;
+  static const EntityAction toggleMultiselect = _$toggleMultiselect;
 
   static BuiltSet<EntityAction> get values => _$values;
   static EntityAction valueOf(String name) => _$valueOf(name);
