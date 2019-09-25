@@ -59,14 +59,14 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;
 
   @nullable
-  List<int> get selectedIds;
+  List<BaseEntity> get selectedEntities;
 
   bool isInMultiselect() {
-    return selectedIds != null;
+    return selectedEntities != null;
   }
 
-  bool isSelected(int id) {
-    return selectedIds != null && selectedIds.contains(id);
+  bool isSelected(BaseEntity entity) {
+    return selectedEntities != null && selectedEntities.contains(entity);
   }
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;

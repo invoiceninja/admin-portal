@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -11,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/src/store.dart';
 
 class ClientList extends StatelessWidget {
   const ClientList({
@@ -63,15 +61,9 @@ class ClientList extends StatelessWidget {
                 }
               },
               onTap: () => viewModel.onClientTap(context, client),
-              onLongPress: () => _onLongPress(context, store),
+              onLongPress: () => showDialog(),
             );
           }),
     );
-  }
-
-  void _onLongPress(BuildContext context, Store<AppState> store) {
-    if (!store.state.clientListState.isInMultiselect()) {
-      store.dispatch(StartMultiselect(context: context));
-    }
   }
 }

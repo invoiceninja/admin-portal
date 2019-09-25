@@ -1,13 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 import 'client_screen.dart';
@@ -32,24 +29,26 @@ class ClientScreenBuilder extends StatelessWidget {
 class ClientScreenVM {
   ClientScreenVM({
     @required this.isInMultiselect,
+    @required this.user,
+    @required this.onEntityAction,
   });
 
   final bool isInMultiselect;
+  final UserEntity user;
+  final Function(BuildContext, ClientEntity, EntityAction,
+      {bool multiselect, bool isMultiselectLast}) onEntityAction;
 
   static ClientScreenVM fromStore(Store<AppState> store) {
-    Future<Null> _handleRefresh(BuildContext context) {
-      if (store.state.isLoading) {
-        return Future<Null>(null);
-      }
-      final completer = snackBarCompleter(
-          context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadClients(completer: completer, force: true));
-      return completer.future;
-    }
-
     final state = store.state;
 
     return ClientScreenVM(
-        isInMultiselect: state.clientListState.isInMultiselect());
+      user: state.user,
+      isInMultiselect: state.clientListState.isInMultiselect(),
+      onEntityAction: (BuildContext context, BaseEntity client,
+              EntityAction action,
+              {bool multiselect = false, bool isMultiselectLast = false}) =>
+          handleClientAction(context, client, action,
+              multiselect: multiselect, isMultiselectLast: isMultiselectLast),
+    );
   }
 }

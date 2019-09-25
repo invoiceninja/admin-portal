@@ -368,23 +368,24 @@ abstract class ClientEntity extends Object
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
-      bool includeEdit = false}) {
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this) && !multiselect) {
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canCreate(EntityType.client)) {
+      if (userCompany.canCreate(EntityType.client) && !multiselect) {
         actions.add(EntityAction.newInvoice);
       }
 
-      if (userCompany.canCreate(EntityType.expense)) {
+      if (userCompany.canCreate(EntityType.expense) && !multiselect) {
         actions.add(EntityAction.newExpense);
       }
 
-      if (userCompany.canCreate(EntityType.payment)) {
+      if (userCompany.canCreate(EntityType.payment) && !multiselect) {
         actions.add(EntityAction.enterPayment);
       }
     }

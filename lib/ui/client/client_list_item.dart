@@ -54,7 +54,7 @@ class ClientListItem extends StatelessWidget {
       //entityKey: clientItemKey,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => _toggleSelection(context, store, client.id)
+            ? () => _toggleSelection(context, store, client)
             : onTap,
         onLongPress: onLongPress,
         title: Row(
@@ -70,8 +70,7 @@ class ClientListItem extends StatelessWidget {
             if (isInMultiselect)
               IgnorePointer(
                   child: Checkbox(
-                      value: listUIState.isSelected(client.id),
-                      onChanged: null))
+                      value: listUIState.isSelected(client), onChanged: null))
           ],
         ),
         subtitle: (filterMatch == null && client.isActive)
@@ -94,12 +93,11 @@ class ClientListItem extends StatelessWidget {
   }
 
   void _toggleSelection(
-      BuildContext context, Store<AppState> store, int clientId) {
-    if (store.state.clientListState.isSelected(clientId)) {
-      store.dispatch(
-          RemoveFromMultiselect(context: context, clientId: clientId));
+      BuildContext context, Store<AppState> store, BaseEntity entity) {
+    if (store.state.clientListState.isSelected(entity)) {
+      store.dispatch(RemoveFromMultiselect(context: context, entity: entity));
     } else {
-      store.dispatch(AddToMultiselect(context: context, clientId: clientId));
+      store.dispatch(AddToMultiselect(context: context, entity: entity));
     }
   }
 }

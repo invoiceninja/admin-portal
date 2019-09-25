@@ -262,7 +262,8 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, ClientEntity client, EntityAction action) {
+    BuildContext context, ClientEntity client, EntityAction action,
+    {bool multiselect = false, bool isMultiselectLast = false}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
@@ -291,16 +292,30 @@ void handleClientAction(
           context: context));
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreClientRequest(
-          snackBarCompleter(context, localization.restoredClient), client.id));
+      if (multiselect && !isMultiselectLast) {
+        store.dispatch(RestoreClientRequest(null, client.id));
+      } else {
+        store.dispatch(RestoreClientRequest(
+            snackBarCompleter(context, localization.restoredClient),
+            client.id));
+      }
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveClientRequest(
-          snackBarCompleter(context, localization.archivedClient), client.id));
+      if (multiselect && !isMultiselectLast) {
+        store.dispatch(ArchiveClientRequest(null, client.id));
+      } else {
+        store.dispatch(ArchiveClientRequest(
+            snackBarCompleter(context, localization.archivedClient),
+            client.id));
+      }
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteClientRequest(
-          snackBarCompleter(context, localization.deletedClient), client.id));
+      if (multiselect && !isMultiselectLast) {
+        store.dispatch(DeleteClientRequest(null, client.id));
+      } else {
+        store.dispatch(DeleteClientRequest(
+            snackBarCompleter(context, localization.deletedClient), client.id));
+      }
       break;
   }
 }
@@ -312,17 +327,17 @@ class StartMultiselect {
 }
 
 class AddToMultiselect {
-  AddToMultiselect({@required this.context, @required this.clientId});
+  AddToMultiselect({@required this.context, @required this.entity});
 
   final BuildContext context;
-  final int clientId;
+  final BaseEntity entity;
 }
 
 class RemoveFromMultiselect {
-  RemoveFromMultiselect({@required this.context, @required this.clientId});
+  RemoveFromMultiselect({@required this.context, @required this.entity});
 
   final BuildContext context;
-  final int clientId;
+  final BaseEntity entity;
 }
 
 class ClearMultiselect {

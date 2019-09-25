@@ -5,14 +5,19 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/multiple_entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/app/list_more_button.dart';
 import 'package:invoiceninja_flutter/ui/app/list_multiselect_button.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/src/store.dart';
 
 import 'client_screen_vm.dart';
+
+final GlobalKey<ScaffoldState> _clientListScaffoldKey =
+    GlobalKey<ScaffoldState>(debugLabel: 'clientListScaffold');
 
 class ClientScreen extends StatelessWidget {
   const ClientScreen({
@@ -33,6 +38,7 @@ class ClientScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
+      scaffoldKey: _clientListScaffoldKey,
       appBarTitle: ListFilter(
         key: ValueKey(state.clientListState.filterClearedAt),
         entityType: EntityType.client,
@@ -47,6 +53,12 @@ class ClientScreen extends StatelessWidget {
             onFilterPressed: (String value) {
               store.dispatch(FilterClients(value));
             },
+          ),
+        if (!viewModel.isInMultiselect &&
+            store.state.clientListState.filter == null)
+          ListMoreButton(
+            onPressed: (String value) =>
+                _onSelectPressed(value, store, context),
           ),
         if (viewModel.isInMultiselect)
           ListMultiselectButton(
@@ -98,10 +110,21 @@ class ClientScreen extends StatelessWidget {
     );
   }
 
+  void _onSelectPressed(
+      String value, Store<AppState> store, BuildContext context) {
+    if (value == 'select' && !store.state.clientListState.isInMultiselect()) {
+      store.dispatch(StartMultiselect(context: context));
+    }
+  }
+
   void _finishMultiselect(BuildContext context, ListMultiselectButtonMode mode,
       Store<AppState> store) {
     if (mode == ListMultiselectButtonMode.DONE) {
-      // showDialog();
+      showMultipleEntitiesActionsDialog(
+          entities: store.state.clientListState.selectedEntities,
+          user: viewModel.user,
+          onEntityAction: viewModel.onEntityAction,
+          scaffoldKey: _clientListScaffoldKey);
     }
     store.dispatch(ClearMultiselect(context: context));
   }

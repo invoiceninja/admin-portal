@@ -157,7 +157,8 @@ abstract class BaseEntity implements SelectableEntity {
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
-      bool includeEdit = false}) {
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (userCompany.canEditEntity(this) && (isArchived || isDeleted)) {
