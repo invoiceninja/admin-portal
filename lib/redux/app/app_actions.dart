@@ -54,9 +54,11 @@ class UserSettingsChanged implements PersistUI {
       this.emailPayment,
       this.requireAuthentication,
       this.autoStartTasks,
+      this.longPressSelectionIsDefault,
       this.addDocumentsToInvoice});
 
   final bool enableDarkMode;
+  final bool longPressSelectionIsDefault;
   final bool emailPayment;
   final bool requireAuthentication;
   final bool autoStartTasks;

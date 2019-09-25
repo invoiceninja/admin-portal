@@ -497,7 +497,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_quote_as_sent': 'Successfully marked quote as sent',
       'expired': 'Expired',
       'all': 'All',
-      'select': 'Select'
+      'select': 'Select',
+      'longPressSelectionIsDefault': 'Long-Press causes multiselect'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -14648,6 +14649,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get select =>
       _localizedValues[localeCode]['select'];
+
+  String get longPressSelectionIsDefault =>
+      _localizedValues[localeCode]['longPressSelectionIsDefault'];
 
   String get all =>
       _localizedValues[localeCode]['all'];
