@@ -7,8 +7,10 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -55,6 +57,9 @@ class AppBuilderState extends State<AppBuilder> {
     dynamic action;
 
     switch (_command) {
+      case 'gd':
+        action = ViewDashboard(context: context, force: force);
+        break;
       case 'lc':
         action = ViewClientList(context: context, force: force);
         break;
@@ -76,6 +81,15 @@ class AppBuilderState extends State<AppBuilder> {
         action = EditInvoice(
             context: context,
             invoice: InvoiceEntity(company: company),
+            force: force);
+        break;
+      case 'lp':
+        action = ViewPaymentList(context: context, force: force);
+        break;
+      case 'np':
+        action = EditPayment(
+            context: context,
+            payment: PaymentEntity(company: company),
             force: force);
         break;
       case 'lq':
