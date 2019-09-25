@@ -29,12 +29,12 @@ class ClientScreenBuilder extends StatelessWidget {
 class ClientScreenVM {
   ClientScreenVM({
     @required this.isInMultiselect,
-    @required this.user,
+    @required this.userCompany,
     @required this.onEntityAction,
   });
 
   final bool isInMultiselect;
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final Function(BuildContext, ClientEntity, EntityAction,
       {bool multiselect, bool isMultiselectLast}) onEntityAction;
 
@@ -42,7 +42,7 @@ class ClientScreenVM {
     final state = store.state;
 
     return ClientScreenVM(
-      user: state.user,
+      userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
       onEntityAction: (BuildContext context, BaseEntity client,
               EntityAction action,

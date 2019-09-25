@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 Future<void> showMultipleEntitiesActionsDialog({
   @required List<BaseEntity> entities,
-  @required UserEntity user,
+  @required UserCompanyEntity userCompany,
   @required BuildContext context,
   @required
       Function(BuildContext, ClientEntity, EntityAction,
@@ -23,7 +23,7 @@ Future<void> showMultipleEntitiesActionsDialog({
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
         actions.addAll(entities[0] // Suppose they are all the same type
-            .getActions(user: user, client: client, multiselect: true)
+            .getActions(userCompany: userCompany, client: client, multiselect: true)
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();
