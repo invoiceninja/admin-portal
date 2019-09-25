@@ -104,7 +104,7 @@ class ClientScreen extends StatelessWidget {
     if (mode == ListMultiselectButtonMode.DONE) {
       await showMultipleEntitiesActionsDialog(
           entities: store.state.clientListState.selectedEntities,
-          user: viewModel.user,
+          userCompany: viewModel.userCompany,
           context: context,
           onEntityAction: viewModel.onEntityAction);
     }
