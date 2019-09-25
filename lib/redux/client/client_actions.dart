@@ -1,8 +1,9 @@
 import 'dart:async';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
@@ -302,4 +303,30 @@ void handleClientAction(
           snackBarCompleter(context, localization.deletedClient), client.id));
       break;
   }
+}
+
+class StartMultiselect {
+  StartMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToMultiselect {
+  AddToMultiselect({@required this.context, @required this.clientId});
+
+  final BuildContext context;
+  final int clientId;
+}
+
+class RemoveFromMultiselect {
+  RemoveFromMultiselect({@required this.context, @required this.clientId});
+
+  final BuildContext context;
+  final int clientId;
+}
+
+class ClearMultiselect {
+  ClearMultiselect({@required this.context});
+
+  final BuildContext context;
 }

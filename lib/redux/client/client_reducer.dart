@@ -1,11 +1,12 @@
 import 'dart:async';
+
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 
 EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -97,6 +98,10 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterClients>(_filterClients),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
+  TypedReducer<ListUIState, StartMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterClientsByCustom1(
@@ -140,6 +145,27 @@ ListUIState _sortClients(ListUIState clientListState, SortClients action) {
   return clientListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState clientListState, StartMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds = <int>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState clientListState, AddToMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds.add(action.clientId));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState clientListState, RemoveFromMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds.remove(action.clientId));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState clientListState, ClearMultiselect action) {
+  // TODO: Notify UI which IDs were selected
+  return clientListState.rebuild((b) => b..selectedIds = null);
 }
 
 final clientsReducer = combineReducers<ClientState>([

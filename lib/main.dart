@@ -286,7 +286,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               if (widget.store.state.clientState.isStale) {
                 widget.store.dispatch(LoadClients());
               }
-              return ClientScreen();
+              return ClientScreenBuilder();
             },
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),

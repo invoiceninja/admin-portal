@@ -1,17 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/list_multiselect_button.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/src/store.dart';
+
+import 'client_screen_vm.dart';
 
 class ClientScreen extends StatelessWidget {
+  const ClientScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/client';
+
+  final ClientScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +41,23 @@ class ClientScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.client,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterClients(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.client,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterClients(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          ListMultiselectButton(
+              mode: ListMultiselectButtonMode.DONE,
+              onPressed: () => _finishMultiselect(
+                  context, ListMultiselectButtonMode.DONE, store)),
+        if (viewModel.isInMultiselect)
+          ListMultiselectButton(
+              mode: ListMultiselectButtonMode.CANCEL,
+              onPressed: () => _finishMultiselect(
+                  context, ListMultiselectButtonMode.CANCEL, store)),
       ],
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
@@ -74,5 +96,13 @@ class ClientScreen extends StatelessWidget {
             )
           : null,
     );
+  }
+
+  void _finishMultiselect(BuildContext context, ListMultiselectButtonMode mode,
+      Store<AppState> store) {
+    if (mode == ListMultiselectButtonMode.DONE) {
+      // showDialog();
+    }
+    store.dispatch(ClearMultiselect(context: context));
   }
 }
