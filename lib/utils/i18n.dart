@@ -497,6 +497,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_quote_as_sent': 'Successfully marked quote as sent',
       'expired': 'Expired',
       'all': 'All',
+      'select': 'Select...'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -14645,8 +14646,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get thankYouForYourPurchase =>
       _localizedValues[localeCode]['thank_you_for_your_purchase'];
 
-  String get all => _localizedValues[localeCode]['all'];
+  String get select =>
+      _localizedValues[localeCode]['select'];
 
+  String get all =>
+      _localizedValues[localeCode]['all'];
   String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];
 
   String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];

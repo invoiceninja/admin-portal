@@ -101,7 +101,8 @@ abstract class CreditEntity extends Object
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
-      bool includeEdit = false}) {
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     return actions..addAll(super.getActions(userCompany: userCompany));

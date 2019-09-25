@@ -159,23 +159,24 @@ ListUIState _sortClients(ListUIState clientListState, SortClients action) {
 
 ListUIState _startListMultiselect(
     ListUIState clientListState, StartMultiselect action) {
-  return clientListState.rebuild((b) => b..selectedIds = <int>[]);
+  return clientListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState clientListState, AddToMultiselect action) {
-  return clientListState.rebuild((b) => b..selectedIds.add(action.clientId));
+  return clientListState.rebuild((b) => b..selectedEntities.add(action.entity));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState clientListState, RemoveFromMultiselect action) {
-  return clientListState.rebuild((b) => b..selectedIds.remove(action.clientId));
+  return clientListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState clientListState, ClearMultiselect action) {
   // TODO: Notify UI which IDs were selected
-  return clientListState.rebuild((b) => b..selectedIds = null);
+  return clientListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final clientsReducer = combineReducers<ClientState>([

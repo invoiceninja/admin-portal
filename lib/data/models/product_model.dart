@@ -189,7 +189,8 @@ abstract class ProductEntity extends Object
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
-      bool includeEdit = false}) {
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {

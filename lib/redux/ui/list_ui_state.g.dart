@@ -62,11 +62,12 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         ..add(serializers.serialize(object.filterEntityType,
             specifiedType: const FullType(EntityType)));
     }
-    if (object.selectedIds != null) {
+    if (object.selectedEntities != null) {
       result
-        ..add('selectedIds')
-        ..add(serializers.serialize(object.selectedIds,
-            specifiedType: const FullType(List, const [const FullType(int)])));
+        ..add('selectedEntities')
+        ..add(serializers.serialize(object.selectedEntities,
+            specifiedType:
+                const FullType(List, const [const FullType(BaseEntity)])));
     }
     return result;
   }
@@ -130,11 +131,11 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
                       const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<dynamic>);
           break;
-        case 'selectedIds':
-          result.selectedIds = serializers.deserialize(value,
+        case 'selectedEntities':
+          result.selectedEntities = serializers.deserialize(value,
                   specifiedType:
-                      const FullType(List, const [const FullType(int)]))
-              as List<int>;
+                      const FullType(List, const [const FullType(BaseEntity)]))
+              as List<BaseEntity>;
           break;
       }
     }
@@ -165,7 +166,7 @@ class _$ListUIState extends ListUIState {
   @override
   final BuiltList<String> custom2Filters;
   @override
-  final List<int> selectedIds;
+  final List<BaseEntity> selectedEntities;
 
   factory _$ListUIState([void Function(ListUIStateBuilder) updates]) =>
       (new ListUIStateBuilder()..update(updates)).build();
@@ -181,7 +182,7 @@ class _$ListUIState extends ListUIState {
       this.statusFilters,
       this.custom1Filters,
       this.custom2Filters,
-      this.selectedIds})
+      this.selectedEntities})
       : super._() {
     if (filterClearedAt == null) {
       throw new BuiltValueNullFieldError('ListUIState', 'filterClearedAt');
@@ -227,7 +228,7 @@ class _$ListUIState extends ListUIState {
         statusFilters == other.statusFilters &&
         custom1Filters == other.custom1Filters &&
         custom2Filters == other.custom2Filters &&
-        selectedIds == other.selectedIds;
+        selectedEntities == other.selectedEntities;
   }
 
   @override
@@ -251,7 +252,7 @@ class _$ListUIState extends ListUIState {
                     statusFilters.hashCode),
                 custom1Filters.hashCode),
             custom2Filters.hashCode),
-        selectedIds.hashCode));
+        selectedEntities.hashCode));
   }
 
   @override
@@ -267,7 +268,7 @@ class _$ListUIState extends ListUIState {
           ..add('statusFilters', statusFilters)
           ..add('custom1Filters', custom1Filters)
           ..add('custom2Filters', custom2Filters)
-          ..add('selectedIds', selectedIds))
+          ..add('selectedEntities', selectedEntities))
         .toString();
   }
 }
@@ -327,9 +328,10 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   set custom2Filters(ListBuilder<String> custom2Filters) =>
       _$this._custom2Filters = custom2Filters;
 
-  List<int> _selectedIds;
-  List<int> get selectedIds => _$this._selectedIds;
-  set selectedIds(List<int> selectedIds) => _$this._selectedIds = selectedIds;
+  List<BaseEntity> _selectedEntities;
+  List<BaseEntity> get selectedEntities => _$this._selectedEntities;
+  set selectedEntities(List<BaseEntity> selectedEntities) =>
+      _$this._selectedEntities = selectedEntities;
 
   ListUIStateBuilder();
 
@@ -345,7 +347,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
       _statusFilters = _$v.statusFilters?.toBuilder();
       _custom1Filters = _$v.custom1Filters?.toBuilder();
       _custom2Filters = _$v.custom2Filters?.toBuilder();
-      _selectedIds = _$v.selectedIds;
+      _selectedEntities = _$v.selectedEntities;
       _$v = null;
     }
     return this;
@@ -380,7 +382,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
               statusFilters: statusFilters.build(),
               custom1Filters: custom1Filters.build(),
               custom2Filters: custom2Filters.build(),
-              selectedIds: selectedIds);
+              selectedEntities: selectedEntities);
     } catch (_) {
       String _$failedField;
       try {
