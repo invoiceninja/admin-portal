@@ -257,6 +257,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.designId,
             specifiedType: const FullType(String)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -484,6 +490,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.designId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -572,6 +582,12 @@ class _$InvoiceItemEntitySerializer
         ..add('expense_public_id')
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -680,6 +696,10 @@ class _$InvoiceItemEntitySerializer
           result.expenseId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -733,6 +753,12 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -799,6 +825,10 @@ class _$InvitationEntitySerializer
         case 'viewed_date':
           result.viewedDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -1302,9 +1332,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (invitations == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invitations');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'isChanged');
     }
   }
 
@@ -1941,9 +1968,6 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'discount');
     }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'isChanged');
-    }
   }
 
   @override
@@ -2265,9 +2289,6 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (viewedDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'viewedDate');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('InvitationEntity', 'isChanged');
     }
   }
 

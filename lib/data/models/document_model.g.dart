@@ -150,6 +150,12 @@ class _$DocumentEntitySerializer
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -239,6 +245,10 @@ class _$DocumentEntitySerializer
           break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
@@ -543,9 +553,6 @@ class _$DocumentEntity extends DocumentEntity {
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'isDefault');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'isChanged');
     }
   }
 

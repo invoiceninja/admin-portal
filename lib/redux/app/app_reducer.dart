@@ -67,34 +67,34 @@ final lastErrorReducer = combineReducers<String>([
     return '';
   }),
   TypedReducer<String, LoadDashboardFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadClientsFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadProductsFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadInvoicesFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadPaymentsFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadQuotesFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadProjectsFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadTasksFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadVendorsFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   TypedReducer<String, LoadExpensesFailure>((state, action) {
-    return action.error;
+    return '${action.error}';
   }),
   // TODO add to starter.sh
 ]);

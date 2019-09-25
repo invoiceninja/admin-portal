@@ -158,6 +158,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.clientId,
             specifiedType: const FullType(String)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -256,6 +262,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'exchange_currency_id':
           result.exchangeCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -574,9 +584,6 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (exchangeCurrencyId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'isChanged');
     }
   }
 

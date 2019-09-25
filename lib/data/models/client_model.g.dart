@@ -230,6 +230,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -436,6 +442,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
                       BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<dynamic>);
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -510,6 +520,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add('password')
         ..add(serializers.serialize(object.password,
             specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -601,6 +617,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -1075,9 +1095,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (activities == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'activities');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'isChanged');
     }
   }
 
@@ -1652,9 +1669,6 @@ class _$ContactEntity extends ContactEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'isChanged');
     }
   }
 

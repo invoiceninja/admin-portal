@@ -132,6 +132,12 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
       serializers.serialize(object.clientId,
           specifiedType: const FullType(int)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -209,6 +215,10 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
         case 'client_id':
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -499,9 +509,6 @@ class _$CreditEntity extends CreditEntity {
     }
     if (clientId == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'clientId');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('CreditEntity', 'isChanged');
     }
   }
 

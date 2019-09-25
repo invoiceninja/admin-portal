@@ -142,6 +142,12 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -224,6 +230,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -520,9 +530,6 @@ class _$ProjectEntity extends ProjectEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'customValue2');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('ProjectEntity', 'isChanged');
     }
   }
 

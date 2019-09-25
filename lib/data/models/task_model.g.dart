@@ -210,6 +210,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(object.taskStatusSortOrder,
             specifiedType: const FullType(int)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -303,6 +309,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'task_status_sort_order':
           result.taskStatusSortOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -740,9 +750,6 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('TaskEntity', 'isChanged');
     }
   }
 

@@ -207,6 +207,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.vendorId,
             specifiedType: const FullType(String)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -354,6 +360,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -403,6 +413,12 @@ class _$ExpenseCategoryEntitySerializer
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -457,6 +473,10 @@ class _$ExpenseCategoryEntitySerializer
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -890,9 +910,6 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
     }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'isChanged');
-    }
   }
 
   @override
@@ -1281,9 +1298,6 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'name');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'isChanged');
     }
   }
 

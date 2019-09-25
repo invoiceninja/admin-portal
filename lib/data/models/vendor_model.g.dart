@@ -169,6 +169,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -297,6 +303,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
                       BuiltList, const [const FullType(VendorContactEntity)]))
               as BuiltList<dynamic>);
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -359,6 +369,12 @@ class _$VendorContactEntitySerializer
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -429,6 +445,10 @@ class _$VendorContactEntitySerializer
         case 'phone':
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -791,9 +811,6 @@ class _$VendorEntity extends VendorEntity {
     }
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'isChanged');
     }
   }
 
@@ -1175,9 +1192,6 @@ class _$VendorContactEntity extends VendorContactEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
-    }
-    if (isChanged == null) {
-      throw new BuiltValueNullFieldError('VendorContactEntity', 'isChanged');
     }
   }
 
