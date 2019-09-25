@@ -454,7 +454,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_quote_as_sent': 'Successfully marked quote as sent',
       'expired': 'Expired',
       'all': 'All',
-      'select': 'Select...'
+      'select': 'Select'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',

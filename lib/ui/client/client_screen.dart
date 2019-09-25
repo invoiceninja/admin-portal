@@ -103,13 +103,6 @@ class ClientScreen extends StatelessWidget {
     );
   }
 
-  void _onSelectPressed(
-      String value, Store<AppState> store, BuildContext context) {
-    if (value == 'select' && !store.state.clientListState.isInMultiselect()) {
-      store.dispatch(StartMultiselect(context: context));
-    }
-  }
-
   void _finishMultiselect(BuildContext context, ListMultiselectButtonMode mode,
       Store<AppState> store) async {
     if (mode == ListMultiselectButtonMode.DONE) {
