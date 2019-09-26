@@ -324,10 +324,9 @@ abstract class CompanyEntity
 
   bool get isHosted => !isSelfHost;
 
-  bool get isProPlan =>
-      isSelfHost || plan == kPlanPro;
+  bool get isProPlan => isSelfHost || plan == kPlanPro;
 
-  bool get isEnterprisePlan => isProPlan || plan == kPlanEnterprise;
+  bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
   bool isModuleEnabled(EntityType entityType) {
     if (entityType == EntityType.recurringInvoice &&
