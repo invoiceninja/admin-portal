@@ -40,13 +40,13 @@ abstract class DateFormatEntity
     implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   factory DateFormatEntity() {
     return _$DateFormatEntity._(
-      id: 0,
+      id: '',
       format: '',
     );
   }
   DateFormatEntity._();
 
-  int get id;
+  String get id;
 
   @BuiltValueField(wireName: 'format_dart')
   String get format;

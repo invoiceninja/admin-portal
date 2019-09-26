@@ -42,7 +42,7 @@ abstract class InvoiceDesignEntity
     implements Built<InvoiceDesignEntity, InvoiceDesignEntityBuilder> {
   factory InvoiceDesignEntity() {
     return _$InvoiceDesignEntity._(
-      id: 0,
+      id: '',
       name: '',
       javascript: '',
       pdfmake: '',
@@ -50,7 +50,7 @@ abstract class InvoiceDesignEntity
   }
   InvoiceDesignEntity._();
 
-  int get id;
+  String get id;
   String get name;
   String get javascript;
   String get pdfmake;

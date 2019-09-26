@@ -29,7 +29,6 @@ class InvoiceEditDetails extends StatefulWidget {
 
 class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _invoiceNumberController = TextEditingController();
-  final _invoiceDateController = TextEditingController();
   final _poNumberController = TextEditingController();
   final _discountController = TextEditingController();
   final _partialController = TextEditingController();
@@ -45,7 +44,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   void didChangeDependencies() {
     _controllers = [
       _invoiceNumberController,
-      _invoiceDateController,
       _poNumberController,
       _discountController,
       _partialController,
@@ -61,7 +59,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
     final invoice = widget.viewModel.invoice;
     _invoiceNumberController.text = invoice.invoiceNumber;
-    _invoiceDateController.text = invoice.invoiceDate;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = formatNumber(invoice.discount, context,
         formatNumberType: FormatNumberType.input);

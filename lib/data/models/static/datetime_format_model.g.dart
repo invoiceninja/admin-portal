@@ -125,7 +125,7 @@ class _$DatetimeFormatEntitySerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'format_dart',
       serializers.serialize(object.format,
           specifiedType: const FullType(String)),
@@ -148,7 +148,7 @@ class _$DatetimeFormatEntitySerializer
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'format_dart':
           result.format = serializers.deserialize(value,
@@ -355,7 +355,7 @@ class DatetimeFormatItemResponseBuilder
 
 class _$DatetimeFormatEntity extends DatetimeFormatEntity {
   @override
-  final int id;
+  final String id;
   @override
   final String format;
 
@@ -407,9 +407,9 @@ class DatetimeFormatEntityBuilder
     implements Builder<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
   _$DatetimeFormatEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _format;
   String get format => _$this._format;
