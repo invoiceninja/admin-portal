@@ -90,18 +90,23 @@ abstract class StaticDataEntity
 
   BuiltList<TimezoneEntity> get timezones;
 
+  @BuiltValueField(wireName: 'date_formats')
   BuiltList<DateFormatEntity> get dateFormats;
 
+  @BuiltValueField(wireName: 'datetime_formats')
   BuiltList<DatetimeFormatEntity> get datetimeFormats;
 
   BuiltList<LanguageEntity> get languages;
 
+  @BuiltValueField(wireName: 'payment_types')
   BuiltList<PaymentTypeEntity> get paymentTypes;
 
   BuiltList<CountryEntity> get countries;
 
+  @BuiltValueField(wireName: 'invoice_designs')
   BuiltList<InvoiceDesignEntity> get invoiceDesigns;
 
+  @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
   BuiltList<FrequencyEntity> get frequencies;

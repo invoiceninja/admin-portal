@@ -136,11 +136,11 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.timezones,
           specifiedType: const FullType(
               BuiltList, const [const FullType(TimezoneEntity)])),
-      'dateFormats',
+      'date_formats',
       serializers.serialize(object.dateFormats,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DateFormatEntity)])),
-      'datetimeFormats',
+      'datetime_formats',
       serializers.serialize(object.datetimeFormats,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DatetimeFormatEntity)])),
@@ -148,7 +148,7 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.languages,
           specifiedType: const FullType(
               BuiltList, const [const FullType(LanguageEntity)])),
-      'paymentTypes',
+      'payment_types',
       serializers.serialize(object.paymentTypes,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentTypeEntity)])),
@@ -156,11 +156,11 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.countries,
           specifiedType:
               const FullType(BuiltList, const [const FullType(CountryEntity)])),
-      'invoiceDesigns',
+      'invoice_designs',
       serializers.serialize(object.invoiceDesigns,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceDesignEntity)])),
-      'invoiceStatus',
+      'invoice_status',
       serializers.serialize(object.invoiceStatus,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceStatusEntity)])),
@@ -209,13 +209,13 @@ class _$StaticDataEntitySerializer
                       BuiltList, const [const FullType(TimezoneEntity)]))
               as BuiltList<dynamic>);
           break;
-        case 'dateFormats':
+        case 'date_formats':
           result.dateFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DateFormatEntity)]))
               as BuiltList<dynamic>);
           break;
-        case 'datetimeFormats':
+        case 'datetime_formats':
           result.datetimeFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DatetimeFormatEntity)]))
@@ -227,7 +227,7 @@ class _$StaticDataEntitySerializer
                       BuiltList, const [const FullType(LanguageEntity)]))
               as BuiltList<dynamic>);
           break;
-        case 'paymentTypes':
+        case 'payment_types':
           result.paymentTypes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTypeEntity)]))
@@ -239,13 +239,13 @@ class _$StaticDataEntitySerializer
                       BuiltList, const [const FullType(CountryEntity)]))
               as BuiltList<dynamic>);
           break;
-        case 'invoiceDesigns':
+        case 'invoice_designs':
           result.invoiceDesigns.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceDesignEntity)]))
               as BuiltList<dynamic>);
           break;
-        case 'invoiceStatus':
+        case 'invoice_status':
           result.invoiceStatus.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
