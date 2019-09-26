@@ -54,6 +54,7 @@ abstract class ProductEntity extends Object
       productKey: '',
       notes: '',
       cost: 0,
+      price: 0,
       quantity: 1,
       taxName1: '',
       taxRate1: 0,
@@ -84,6 +85,8 @@ abstract class ProductEntity extends Object
   String get notes;
 
   double get cost;
+
+  double get price;
 
   double get quantity;
 

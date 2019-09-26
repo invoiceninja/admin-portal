@@ -126,6 +126,9 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           specifiedType: const FullType(String)),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
+      'price',
+      serializers.serialize(object.price,
+          specifiedType: const FullType(double)),
       'quantity',
       serializers.serialize(object.quantity,
           specifiedType: const FullType(double)),
@@ -215,6 +218,10 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           break;
         case 'cost':
           result.cost = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'price':
+          result.price = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'quantity':
@@ -477,6 +484,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final double cost;
   @override
+  final double price;
+  @override
   final double quantity;
   @override
   final String taxName1;
@@ -512,6 +521,7 @@ class _$ProductEntity extends ProductEntity {
       {this.productKey,
       this.notes,
       this.cost,
+      this.price,
       this.quantity,
       this.taxName1,
       this.taxRate1,
@@ -535,6 +545,9 @@ class _$ProductEntity extends ProductEntity {
     }
     if (cost == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'cost');
+    }
+    if (price == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'price');
     }
     if (quantity == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'quantity');
@@ -573,6 +586,7 @@ class _$ProductEntity extends ProductEntity {
         productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
+        price == other.price &&
         quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
@@ -608,12 +622,14 @@ class _$ProductEntity extends ProductEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        productKey
+                                                                        $jc(
+                                                                            0,
+                                                                            productKey
+                                                                                .hashCode),
+                                                                        notes
                                                                             .hashCode),
-                                                                    notes
-                                                                        .hashCode),
-                                                                cost.hashCode),
+                                                                    cost.hashCode),
+                                                                price.hashCode),
                                                             quantity.hashCode),
                                                         taxName1.hashCode),
                                                     taxRate1.hashCode),
@@ -636,6 +652,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
+          ..add('price', price)
           ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
@@ -669,6 +686,10 @@ class ProductEntityBuilder
   double _cost;
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
+
+  double _price;
+  double get price => _$this._price;
+  set price(double price) => _$this._price = price;
 
   double _quantity;
   double get quantity => _$this._quantity;
@@ -733,6 +754,7 @@ class ProductEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
+      _price = _$v.price;
       _quantity = _$v.quantity;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
@@ -772,6 +794,7 @@ class ProductEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
+            price: price,
             quantity: quantity,
             taxName1: taxName1,
             taxRate1: taxRate1,
