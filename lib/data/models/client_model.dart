@@ -358,20 +358,20 @@ abstract class ClientEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this) && !multiselect) {
+    if (!isDeleted && !multiselect) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canCreate(EntityType.client) && !multiselect) {
+      if (userCompany.canCreate(EntityType.client)) {
         actions.add(EntityAction.newInvoice);
       }
 
-      if (userCompany.canCreate(EntityType.expense) && !multiselect) {
+      if (userCompany.canCreate(EntityType.expense)) {
         actions.add(EntityAction.newExpense);
       }
 
-      if (userCompany.canCreate(EntityType.payment) && !multiselect) {
+      if (userCompany.canCreate(EntityType.payment)) {
         actions.add(EntityAction.enterPayment);
       }
     }

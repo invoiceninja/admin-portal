@@ -35,7 +35,6 @@ class AppScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          key: scaffoldKey,
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
             leading: !isMobile(context) && !hideHamburgerButton

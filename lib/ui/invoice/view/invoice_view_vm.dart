@@ -158,7 +158,7 @@ class InvoiceViewVM extends EntityViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
+              entities: [client],
               onEntityAction: (BuildContext context, BaseEntity client,
                       EntityAction action) =>
                   handleClientAction(context, client, action));
@@ -173,7 +173,7 @@ class InvoiceViewVM extends EntityViewVM {
               userCompany: state.userCompany,
               context: context,
               client: client,
-              entity: payment,
+              entities: [payment],
               onEntityAction: (BuildContext context, BaseEntity payment,
                       EntityAction action) =>
                   handlePaymentAction(context, payment, action));

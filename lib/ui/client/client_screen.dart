@@ -5,10 +5,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/multiple_entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/ui/app/list_multiselect_button.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/src/store.dart';
@@ -50,15 +49,23 @@ class ClientScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          ListMultiselectButton(
-              mode: ListMultiselectButtonMode.DONE,
-              onPressed: () => _finishMultiselect(
-                  context, ListMultiselectButtonMode.DONE, store)),
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.done,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => _finishMultiselect(context, 'done', store),
+          ),
         if (viewModel.isInMultiselect)
-          ListMultiselectButton(
-              mode: ListMultiselectButtonMode.CANCEL,
-              onPressed: () => _finishMultiselect(
-                  context, ListMultiselectButtonMode.CANCEL, store)),
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => _finishMultiselect(context, 'cancel', store),
+          ),
       ],
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
@@ -99,10 +106,10 @@ class ClientScreen extends StatelessWidget {
     );
   }
 
-  void _finishMultiselect(BuildContext context, ListMultiselectButtonMode mode,
-      Store<AppState> store) async {
-    if (mode == ListMultiselectButtonMode.DONE) {
-      await showMultipleEntitiesActionsDialog(
+  void _finishMultiselect(
+      BuildContext context, String mode, Store<AppState> store) async {
+    if (mode == 'done') {
+      await showEntityActionsDialog(
           entities: store.state.clientListState.selectedEntities,
           userCompany: viewModel.userCompany,
           context: context,

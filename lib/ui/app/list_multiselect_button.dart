@@ -22,8 +22,7 @@ class ListMultiselectButton extends StatelessWidget {
         style: TextStyle(color: Colors.white),
       ),
       onPressed: onPressed,
-    );
-  }
+    );  }
 }
 
 enum ListMultiselectButtonMode { DONE, CANCEL }

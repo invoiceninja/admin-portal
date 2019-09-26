@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -9,10 +8,9 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
+import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'client_list_vm.dart';
 
@@ -80,10 +78,8 @@ class ClientList extends StatelessWidget {
                                 }
                               },
                 onLongPress: () async {
-                  final prefs = await SharedPreferences.getInstance();
                   final longPressIsSelection =
-                      prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ??
-                          true;
+                      store.state.uiState.longPressSelectionIsDefault ?? true;
                   if (longPressIsSelection) {
                     viewModel.onEntityAction(
                         context, client, EntityAction.toggleMultiselect);

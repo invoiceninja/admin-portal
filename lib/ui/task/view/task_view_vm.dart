@@ -1,23 +1,24 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/data/models/task_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaskViewScreen extends StatelessWidget {
   const TaskViewScreen({Key key}) : super(key: key);
@@ -111,7 +112,7 @@ class TaskViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
+              entities: [client],
               onEntityAction: (BuildContext context, BaseEntity client,
                       EntityAction action) =>
                   handleClientAction(context, client, action));
@@ -124,7 +125,7 @@ class TaskViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: project,
+              entities: [project],
               client: client,
               onEntityAction: (BuildContext context, BaseEntity project,
                       EntityAction action) =>
@@ -138,7 +139,7 @@ class TaskViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: invoice,
+              entities: [invoice],
               client: client,
               onEntityAction: (BuildContext context, BaseEntity invoice,
                       EntityAction action) =>

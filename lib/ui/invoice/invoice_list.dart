@@ -81,7 +81,7 @@ class InvoiceList extends StatelessWidget {
                                     ClientEntity();
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: invoice,
+                                entities: [invoice],
                                 context: context,
                                 userCompany: state.userCompany,
                                 client: client,
