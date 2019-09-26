@@ -15,14 +15,11 @@ class AppScaffold extends StatelessWidget {
       @required this.appBarActions,
       @required this.body,
       @required this.bottomNavigationBar,
-      @required this.floatingActionButton,
-      this.scaffoldKey});
+      @required this.floatingActionButton});
 
   final Widget body;
   final AppBottomBar bottomNavigationBar;
   final FloatingActionButton floatingActionButton;
-
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
   final Widget appBarTitle;
   final List<Widget> appBarActions;
@@ -37,7 +34,6 @@ class AppScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          key: scaffoldKey,
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
             leading: !isMobile(context)

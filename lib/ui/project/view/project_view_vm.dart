@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/data/models/project_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ProjectViewScreen extends StatelessWidget {
   const ProjectViewScreen({Key key}) : super(key: key);
@@ -83,7 +83,7 @@ class ProjectViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
+              entities: [client],
               onEntityAction: (BuildContext context, BaseEntity client,
                       EntityAction action) =>
                   handleClientAction(context, client, action));

@@ -262,12 +262,14 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, ClientEntity client, EntityAction action,
-    {bool multiselect = false, bool isMultiselectLast = false}) {
+    BuildContext context, ClientEntity client, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final multiselect = state.clientListState.isInMultiselect();
+  final isMultiselectLast =
+      client == state.clientListState.selectedEntities.last;
 
   switch (action) {
     case EntityAction.edit:

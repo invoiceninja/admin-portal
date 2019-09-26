@@ -86,7 +86,7 @@ class ExpenseList extends StatelessWidget {
                             viewModel.state.vendorState.map[expense.vendorId];
 
                         void showDialog() => showEntityActionsDialog(
-                            entity: expense,
+                            entities: [expense],
                             context: context,
                             userCompany: state.userCompany,
                             client: client,

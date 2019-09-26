@@ -1,5 +1,3 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -30,6 +28,10 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+
+// STARTER: import - do not remove comment
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
 part 'app_state.g.dart';
 

@@ -1,24 +1,25 @@
 import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/expense_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
+import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/data/models/expense_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ExpenseViewScreen extends StatelessWidget {
   const ExpenseViewScreen({Key key}) : super(key: key);
@@ -104,7 +105,7 @@ class ExpenseViewVM {
                 showEntityActionsDialog(
                     userCompany: userCompany,
                     context: context,
-                    entity: vendor,
+                    entities: [vendor],
                     onEntityAction: (BuildContext context, BaseEntity vendor,
                             EntityAction action) =>
                         handleVendorAction(context, vendor, action));
@@ -118,7 +119,7 @@ class ExpenseViewVM {
                 showEntityActionsDialog(
                     userCompany: userCompany,
                     context: context,
-                    entity: client,
+                    entities: [client],
                     onEntityAction: (BuildContext context, BaseEntity client,
                             EntityAction action) =>
                         handleClientAction(context, client, action));
@@ -132,7 +133,7 @@ class ExpenseViewVM {
                 showEntityActionsDialog(
                     userCompany: userCompany,
                     context: context,
-                    entity: invoice,
+                    entities: [invoice],
                     client: client,
                     onEntityAction: (BuildContext context, BaseEntity invoice,
                             EntityAction action) =>

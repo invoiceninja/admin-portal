@@ -4,14 +4,14 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showEntityActionsDialog({
+Future<void> showEntityActionsDialog({
   @required BuildContext context,
-  @required BaseEntity entity,
+  @required List<BaseEntity> entities,
   @required UserCompanyEntity userCompany,
   @required Function(BuildContext, BaseEntity, EntityAction) onEntityAction,
   ClientEntity client,
 }) async {
-  if (entity == null) {
+  if (entities == null) {
     return;
   }
   final mainContext = context;
@@ -19,7 +19,7 @@ void showEntityActionsDialog({
       context: context,
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
-        actions.addAll(entity
+        actions.addAll(entities[0]
             .getActions(
                 userCompany: userCompany, includeEdit: true, client: client)
             .map((entityAction) {
@@ -27,7 +27,7 @@ void showEntityActionsDialog({
             return Divider();
           } else {
             return EntityActionListTile(
-              entity: entity,
+              entities: entities,
               entityAction: entityAction,
               mainContext: mainContext,
               onEntityAction: onEntityAction,
@@ -41,9 +41,12 @@ void showEntityActionsDialog({
 
 class EntityActionListTile extends StatelessWidget {
   const EntityActionListTile(
-      {this.entity, this.entityAction, this.onEntityAction, this.mainContext});
+      {this.entities,
+      this.entityAction,
+      this.onEntityAction,
+      this.mainContext});
 
-  final BaseEntity entity;
+  final List<BaseEntity> entities;
   final EntityAction entityAction;
   final BuildContext mainContext;
   final Function(BuildContext, BaseEntity, EntityAction) onEntityAction;
@@ -57,7 +60,10 @@ class EntityActionListTile extends StatelessWidget {
       title: Text(localization.lookup(entityAction.toString())),
       onTap: () {
         Navigator.of(context).pop();
-        onEntityAction(mainContext, entity, entityAction);
+        for (int i = 0; i < entities.length; i++) {
+          final BaseEntity entity = entities[i];
+          onEntityAction(context, entity, entityAction);
+        }
       },
     );
   }

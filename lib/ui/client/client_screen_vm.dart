@@ -35,8 +35,7 @@ class ClientScreenVM {
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
-  final Function(BuildContext, ClientEntity, EntityAction,
-      {bool multiselect, bool isMultiselectLast}) onEntityAction;
+  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
 
   static ClientScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -44,11 +43,9 @@ class ClientScreenVM {
     return ClientScreenVM(
       userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, BaseEntity client,
-              EntityAction action,
-              {bool multiselect = false, bool isMultiselectLast = false}) =>
-          handleClientAction(context, client, action,
-              multiselect: multiselect, isMultiselectLast: isMultiselectLast),
+      onEntityAction:
+          (BuildContext context, BaseEntity client, EntityAction action) =>
+              handleClientAction(context, client, action),
     );
   }
 }
