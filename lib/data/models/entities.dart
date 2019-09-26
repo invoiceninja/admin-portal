@@ -225,39 +225,9 @@ abstract class LoginResponse
   @BuiltValueField(wireName: 'data')
   BuiltList<UserCompanyEntity> get userCompanies;
 
-  StaticData get static;
+  StaticDataEntity get static;
 
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
-}
-
-abstract class StaticData implements Built<StaticData, StaticDataBuilder> {
-  factory StaticData([void updates(StaticDataBuilder b)]) = _$StaticData;
-
-  StaticData._();
-
-  BuiltList<CurrencyEntity> get currencies;
-
-  BuiltList<SizeEntity> get sizes;
-
-  BuiltList<IndustryEntity> get industries;
-
-  BuiltList<TimezoneEntity> get timezones;
-
-  BuiltList<DateFormatEntity> get dateFormats;
-
-  BuiltList<DatetimeFormatEntity> get datetimeFormats;
-
-  BuiltList<LanguageEntity> get languages;
-
-  BuiltList<PaymentTypeEntity> get paymentTypes;
-
-  BuiltList<CountryEntity> get countries;
-
-  BuiltList<InvoiceStatusEntity> get invoiceStatus;
-
-  BuiltList<FrequencyEntity> get frequencies;
-
-  static Serializer<StaticData> get serializer => _$staticDataSerializer;
 }
 
 abstract class DashboardResponse

@@ -196,7 +196,6 @@ Serializer<ErrorMessage> _$errorMessageSerializer =
     new _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
     new _$LoginResponseSerializer();
-Serializer<StaticData> _$staticDataSerializer = new _$StaticDataSerializer();
 Serializer<DashboardResponse> _$dashboardResponseSerializer =
     new _$DashboardResponseSerializer();
 Serializer<DashboardEntity> _$dashboardEntitySerializer =
@@ -329,7 +328,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
               BuiltList, const [const FullType(UserCompanyEntity)])),
       'static',
       serializers.serialize(object.static,
-          specifiedType: const FullType(StaticData)),
+          specifiedType: const FullType(StaticDataEntity)),
     ];
 
     return result;
@@ -355,150 +354,8 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
           break;
         case 'static':
           result.static.replace(serializers.deserialize(value,
-              specifiedType: const FullType(StaticData)) as StaticData);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$StaticDataSerializer implements StructuredSerializer<StaticData> {
-  @override
-  final Iterable<Type> types = const [StaticData, _$StaticData];
-  @override
-  final String wireName = 'StaticData';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, StaticData object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'currencies',
-      serializers.serialize(object.currencies,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(CurrencyEntity)])),
-      'sizes',
-      serializers.serialize(object.sizes,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(SizeEntity)])),
-      'industries',
-      serializers.serialize(object.industries,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(IndustryEntity)])),
-      'timezones',
-      serializers.serialize(object.timezones,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(TimezoneEntity)])),
-      'dateFormats',
-      serializers.serialize(object.dateFormats,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DateFormatEntity)])),
-      'datetimeFormats',
-      serializers.serialize(object.datetimeFormats,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DatetimeFormatEntity)])),
-      'languages',
-      serializers.serialize(object.languages,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(LanguageEntity)])),
-      'paymentTypes',
-      serializers.serialize(object.paymentTypes,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(PaymentTypeEntity)])),
-      'countries',
-      serializers.serialize(object.countries,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(CountryEntity)])),
-      'invoiceStatus',
-      serializers.serialize(object.invoiceStatus,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(InvoiceStatusEntity)])),
-      'frequencies',
-      serializers.serialize(object.frequencies,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(FrequencyEntity)])),
-    ];
-
-    return result;
-  }
-
-  @override
-  StaticData deserialize(Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new StaticDataBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'currencies':
-          result.currencies.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'sizes':
-          result.sizes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(SizeEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'industries':
-          result.industries.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(IndustryEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'timezones':
-          result.timezones.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(TimezoneEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'dateFormats':
-          result.dateFormats.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DateFormatEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'datetimeFormats':
-          result.datetimeFormats.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'languages':
-          result.languages.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'paymentTypes':
-          result.paymentTypes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentTypeEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'countries':
-          result.countries.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'invoiceStatus':
-          result.invoiceStatus.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceStatusEntity)]))
-              as BuiltList<dynamic>);
-          break;
-        case 'frequencies':
-          result.frequencies.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(FrequencyEntity)]))
-              as BuiltList<dynamic>);
+                  specifiedType: const FullType(StaticDataEntity))
+              as StaticDataEntity);
           break;
       }
     }
@@ -825,7 +682,7 @@ class _$LoginResponse extends LoginResponse {
   @override
   final BuiltList<UserCompanyEntity> userCompanies;
   @override
-  final StaticData static;
+  final StaticDataEntity static;
 
   factory _$LoginResponse([void Function(LoginResponseBuilder) updates]) =>
       (new LoginResponseBuilder()..update(updates)).build();
@@ -878,9 +735,10 @@ class LoginResponseBuilder
   set userCompanies(ListBuilder<UserCompanyEntity> userCompanies) =>
       _$this._userCompanies = userCompanies;
 
-  StaticDataBuilder _static;
-  StaticDataBuilder get static => _$this._static ??= new StaticDataBuilder();
-  set static(StaticDataBuilder static) => _$this._static = static;
+  StaticDataEntityBuilder _static;
+  StaticDataEntityBuilder get static =>
+      _$this._static ??= new StaticDataEntityBuilder();
+  set static(StaticDataEntityBuilder static) => _$this._static = static;
 
   LoginResponseBuilder();
 
@@ -923,301 +781,6 @@ class LoginResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'LoginResponse', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$StaticData extends StaticData {
-  @override
-  final BuiltList<CurrencyEntity> currencies;
-  @override
-  final BuiltList<SizeEntity> sizes;
-  @override
-  final BuiltList<IndustryEntity> industries;
-  @override
-  final BuiltList<TimezoneEntity> timezones;
-  @override
-  final BuiltList<DateFormatEntity> dateFormats;
-  @override
-  final BuiltList<DatetimeFormatEntity> datetimeFormats;
-  @override
-  final BuiltList<LanguageEntity> languages;
-  @override
-  final BuiltList<PaymentTypeEntity> paymentTypes;
-  @override
-  final BuiltList<CountryEntity> countries;
-  @override
-  final BuiltList<InvoiceStatusEntity> invoiceStatus;
-  @override
-  final BuiltList<FrequencyEntity> frequencies;
-
-  factory _$StaticData([void Function(StaticDataBuilder) updates]) =>
-      (new StaticDataBuilder()..update(updates)).build();
-
-  _$StaticData._(
-      {this.currencies,
-      this.sizes,
-      this.industries,
-      this.timezones,
-      this.dateFormats,
-      this.datetimeFormats,
-      this.languages,
-      this.paymentTypes,
-      this.countries,
-      this.invoiceStatus,
-      this.frequencies})
-      : super._() {
-    if (currencies == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'currencies');
-    }
-    if (sizes == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'sizes');
-    }
-    if (industries == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'industries');
-    }
-    if (timezones == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'timezones');
-    }
-    if (dateFormats == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'dateFormats');
-    }
-    if (datetimeFormats == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'datetimeFormats');
-    }
-    if (languages == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'languages');
-    }
-    if (paymentTypes == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'paymentTypes');
-    }
-    if (countries == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'countries');
-    }
-    if (invoiceStatus == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'invoiceStatus');
-    }
-    if (frequencies == null) {
-      throw new BuiltValueNullFieldError('StaticData', 'frequencies');
-    }
-  }
-
-  @override
-  StaticData rebuild(void Function(StaticDataBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  StaticDataBuilder toBuilder() => new StaticDataBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is StaticData &&
-        currencies == other.currencies &&
-        sizes == other.sizes &&
-        industries == other.industries &&
-        timezones == other.timezones &&
-        dateFormats == other.dateFormats &&
-        datetimeFormats == other.datetimeFormats &&
-        languages == other.languages &&
-        paymentTypes == other.paymentTypes &&
-        countries == other.countries &&
-        invoiceStatus == other.invoiceStatus &&
-        frequencies == other.frequencies;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, currencies.hashCode),
-                                            sizes.hashCode),
-                                        industries.hashCode),
-                                    timezones.hashCode),
-                                dateFormats.hashCode),
-                            datetimeFormats.hashCode),
-                        languages.hashCode),
-                    paymentTypes.hashCode),
-                countries.hashCode),
-            invoiceStatus.hashCode),
-        frequencies.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('StaticData')
-          ..add('currencies', currencies)
-          ..add('sizes', sizes)
-          ..add('industries', industries)
-          ..add('timezones', timezones)
-          ..add('dateFormats', dateFormats)
-          ..add('datetimeFormats', datetimeFormats)
-          ..add('languages', languages)
-          ..add('paymentTypes', paymentTypes)
-          ..add('countries', countries)
-          ..add('invoiceStatus', invoiceStatus)
-          ..add('frequencies', frequencies))
-        .toString();
-  }
-}
-
-class StaticDataBuilder implements Builder<StaticData, StaticDataBuilder> {
-  _$StaticData _$v;
-
-  ListBuilder<CurrencyEntity> _currencies;
-  ListBuilder<CurrencyEntity> get currencies =>
-      _$this._currencies ??= new ListBuilder<CurrencyEntity>();
-  set currencies(ListBuilder<CurrencyEntity> currencies) =>
-      _$this._currencies = currencies;
-
-  ListBuilder<SizeEntity> _sizes;
-  ListBuilder<SizeEntity> get sizes =>
-      _$this._sizes ??= new ListBuilder<SizeEntity>();
-  set sizes(ListBuilder<SizeEntity> sizes) => _$this._sizes = sizes;
-
-  ListBuilder<IndustryEntity> _industries;
-  ListBuilder<IndustryEntity> get industries =>
-      _$this._industries ??= new ListBuilder<IndustryEntity>();
-  set industries(ListBuilder<IndustryEntity> industries) =>
-      _$this._industries = industries;
-
-  ListBuilder<TimezoneEntity> _timezones;
-  ListBuilder<TimezoneEntity> get timezones =>
-      _$this._timezones ??= new ListBuilder<TimezoneEntity>();
-  set timezones(ListBuilder<TimezoneEntity> timezones) =>
-      _$this._timezones = timezones;
-
-  ListBuilder<DateFormatEntity> _dateFormats;
-  ListBuilder<DateFormatEntity> get dateFormats =>
-      _$this._dateFormats ??= new ListBuilder<DateFormatEntity>();
-  set dateFormats(ListBuilder<DateFormatEntity> dateFormats) =>
-      _$this._dateFormats = dateFormats;
-
-  ListBuilder<DatetimeFormatEntity> _datetimeFormats;
-  ListBuilder<DatetimeFormatEntity> get datetimeFormats =>
-      _$this._datetimeFormats ??= new ListBuilder<DatetimeFormatEntity>();
-  set datetimeFormats(ListBuilder<DatetimeFormatEntity> datetimeFormats) =>
-      _$this._datetimeFormats = datetimeFormats;
-
-  ListBuilder<LanguageEntity> _languages;
-  ListBuilder<LanguageEntity> get languages =>
-      _$this._languages ??= new ListBuilder<LanguageEntity>();
-  set languages(ListBuilder<LanguageEntity> languages) =>
-      _$this._languages = languages;
-
-  ListBuilder<PaymentTypeEntity> _paymentTypes;
-  ListBuilder<PaymentTypeEntity> get paymentTypes =>
-      _$this._paymentTypes ??= new ListBuilder<PaymentTypeEntity>();
-  set paymentTypes(ListBuilder<PaymentTypeEntity> paymentTypes) =>
-      _$this._paymentTypes = paymentTypes;
-
-  ListBuilder<CountryEntity> _countries;
-  ListBuilder<CountryEntity> get countries =>
-      _$this._countries ??= new ListBuilder<CountryEntity>();
-  set countries(ListBuilder<CountryEntity> countries) =>
-      _$this._countries = countries;
-
-  ListBuilder<InvoiceStatusEntity> _invoiceStatus;
-  ListBuilder<InvoiceStatusEntity> get invoiceStatus =>
-      _$this._invoiceStatus ??= new ListBuilder<InvoiceStatusEntity>();
-  set invoiceStatus(ListBuilder<InvoiceStatusEntity> invoiceStatus) =>
-      _$this._invoiceStatus = invoiceStatus;
-
-  ListBuilder<FrequencyEntity> _frequencies;
-  ListBuilder<FrequencyEntity> get frequencies =>
-      _$this._frequencies ??= new ListBuilder<FrequencyEntity>();
-  set frequencies(ListBuilder<FrequencyEntity> frequencies) =>
-      _$this._frequencies = frequencies;
-
-  StaticDataBuilder();
-
-  StaticDataBuilder get _$this {
-    if (_$v != null) {
-      _currencies = _$v.currencies?.toBuilder();
-      _sizes = _$v.sizes?.toBuilder();
-      _industries = _$v.industries?.toBuilder();
-      _timezones = _$v.timezones?.toBuilder();
-      _dateFormats = _$v.dateFormats?.toBuilder();
-      _datetimeFormats = _$v.datetimeFormats?.toBuilder();
-      _languages = _$v.languages?.toBuilder();
-      _paymentTypes = _$v.paymentTypes?.toBuilder();
-      _countries = _$v.countries?.toBuilder();
-      _invoiceStatus = _$v.invoiceStatus?.toBuilder();
-      _frequencies = _$v.frequencies?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(StaticData other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$StaticData;
-  }
-
-  @override
-  void update(void Function(StaticDataBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$StaticData build() {
-    _$StaticData _$result;
-    try {
-      _$result = _$v ??
-          new _$StaticData._(
-              currencies: currencies.build(),
-              sizes: sizes.build(),
-              industries: industries.build(),
-              timezones: timezones.build(),
-              dateFormats: dateFormats.build(),
-              datetimeFormats: datetimeFormats.build(),
-              languages: languages.build(),
-              paymentTypes: paymentTypes.build(),
-              countries: countries.build(),
-              invoiceStatus: invoiceStatus.build(),
-              frequencies: frequencies.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'currencies';
-        currencies.build();
-        _$failedField = 'sizes';
-        sizes.build();
-        _$failedField = 'industries';
-        industries.build();
-        _$failedField = 'timezones';
-        timezones.build();
-        _$failedField = 'dateFormats';
-        dateFormats.build();
-        _$failedField = 'datetimeFormats';
-        datetimeFormats.build();
-        _$failedField = 'languages';
-        languages.build();
-        _$failedField = 'paymentTypes';
-        paymentTypes.build();
-        _$failedField = 'countries';
-        countries.build();
-        _$failedField = 'invoiceStatus';
-        invoiceStatus.build();
-        _$failedField = 'frequencies';
-        frequencies.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'StaticData', _$failedField, e.toString());
       }
       rethrow;
     }

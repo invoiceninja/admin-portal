@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 
 class PersistUI {}
@@ -44,7 +45,7 @@ class StopSaving {}
 class LoadStaticSuccess implements PersistStatic {
   LoadStaticSuccess({this.data});
 
-  final StaticData data;
+  final StaticDataEntity data;
 }
 
 class UserSettingsChanged implements PersistUI {
