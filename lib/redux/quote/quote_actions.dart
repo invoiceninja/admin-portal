@@ -1,16 +1,17 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:flutter/material.dart';
 
 class ViewQuoteList implements PersistUI {
   ViewQuoteList({this.context, this.force = false});
@@ -338,31 +339,31 @@ class ConvertQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-Future handleQuoteAction(
-    BuildContext context, InvoiceEntity quote, EntityAction action) async {
+Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
+    EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditQuote(context: context, quote: quote));
+      store.dispatch(EditQuote(context: context, quote: quotes[0]));
       break;
     case EntityAction.pdf:
-      viewPdf(quote, context);
+      viewPdf(quotes[0], context);
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(quote.invitationSilentLink)) {
-        await launch(quote.invitationSilentLink,
+      if (await canLaunch(quotes[0].invitationSilentLink)) {
+        await launch(quotes[0].invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
       break;
     case EntityAction.viewInvoice:
       store.dispatch(
-          ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+          ViewInvoice(context: context, invoiceId: quotes[0].quoteInvoiceId));
       break;
     case EntityAction.convert:
       final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertQuote(completer, quote.id));
+      store.dispatch(ConvertQuote(completer, quotes[0].id));
       completer.future.then((InvoiceEntity invoice) {
         store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
       });
@@ -370,32 +371,35 @@ Future handleQuoteAction(
     case EntityAction.markSent:
       store.dispatch(MarkSentQuoteRequest(
           snackBarCompleter(context, localization.markedQuoteAsSent),
-          quote.id));
+          quotes[0].id));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailQuote(
           completer: snackBarCompleter(context, localization.emailedQuote),
-          quote: quote,
+          quote: quotes[0],
           context: context));
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: quote.cloneToInvoice));
+          EditInvoice(context: context, invoice: quotes[0].cloneToInvoice));
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: quote.cloneToQuote));
+      store
+          .dispatch(EditQuote(context: context, quote: quotes[0].cloneToQuote));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(
-          snackBarCompleter(context, localization.restoredQuote), quote.id));
+          snackBarCompleter(context, localization.restoredQuote),
+          quotes[0].id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveQuoteRequest(
-          snackBarCompleter(context, localization.archivedQuote), quote.id));
+          snackBarCompleter(context, localization.archivedQuote),
+          quotes[0].id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteQuoteRequest(
-          snackBarCompleter(context, localization.deletedQuote), quote.id));
+          snackBarCompleter(context, localization.deletedQuote), quotes[0].id));
       break;
   }
 }

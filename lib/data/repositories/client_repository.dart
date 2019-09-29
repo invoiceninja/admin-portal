@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ClientRepository {
   const ClientRepository({
@@ -47,8 +48,34 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<ClientEntity> saveData(Credentials credentials, ClientEntity client,
-      [EntityAction action]) async {
+  Future<List<ClientEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/clients/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response =
+            await webClient.put(url, credentials.token, json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final ClientListResponse clientResponse =
+        serializers.deserializeWith(ClientListResponse.serializer, response);
+
+    return clientResponse.data.toList();
+  }
+
+  Future<ClientEntity> saveData(
+      Credentials credentials, ClientEntity client) async {
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;
 

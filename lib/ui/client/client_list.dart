@@ -82,7 +82,7 @@ class ClientList extends StatelessWidget {
                       store.state.uiState.longPressSelectionIsDefault ?? true;
                   if (longPressIsSelection) {
                     viewModel.onEntityAction(
-                        context, client, EntityAction.toggleMultiselect);
+                        context, [client], EntityAction.toggleMultiselect);
                   } else {
                     showDialog();
                         }

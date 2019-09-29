@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/document/document_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/document/document_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:redux/redux.dart';
 
 class DocumentListBuilder extends StatelessWidget {
   const DocumentListBuilder({Key key}) : super(key: key);
@@ -78,9 +79,9 @@ class DocumentListVM {
       onDocumentTap: (context, document) {
         store.dispatch(ViewDocument(documentId: document.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity document, EntityAction action) =>
-              handleDocumentAction(context, document, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> documents,
+              EntityAction action) =>
+          handleDocumentAction(context, documents[0], action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -94,7 +95,8 @@ class DocumentListVM {
   final bool isLoaded;
   final Function(BuildContext, DocumentEntity) onDocumentTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, DocumentEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<DocumentEntity>, EntityAction)
+      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

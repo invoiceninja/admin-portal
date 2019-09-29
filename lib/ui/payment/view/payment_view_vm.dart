@@ -70,9 +70,9 @@ class PaymentViewVM {
               userCompany: state.userCompany,
               context: context,
               entities: [client],
-              onEntityAction: (BuildContext context, BaseEntity client,
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -84,7 +84,7 @@ class PaymentViewVM {
               context: context,
               entities: [invoice],
               client: client,
-              onEntityAction: (BuildContext context, BaseEntity invoice,
+              onEntityAction: (BuildContext context, List<BaseEntity> invoice,
                       EntityAction action) =>
                   handleInvoiceAction(context, invoice, action));
         } else {
@@ -92,7 +92,7 @@ class PaymentViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handlePaymentAction(context, payment, action),
+          handlePaymentAction(context, [payment], action),
     );
   }
 

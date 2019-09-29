@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -55,7 +55,7 @@ class ClientListVM {
   final bool isLoaded;
   final Function(BuildContext, ClientEntity) onClientTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<ClientEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 
@@ -84,9 +84,9 @@ class ClientListVM {
         store.dispatch(ViewClient(clientId: client.id, context: context));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction:
-          (BuildContext context, BaseEntity client, EntityAction action) =>
-              handleClientAction(context, client, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> client,
+              EntityAction action) =>
+          handleClientAction(context, client, action),
       onClearEntityFilterPressed: () => store.dispatch(FilterClientsByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
           ViewGroup(

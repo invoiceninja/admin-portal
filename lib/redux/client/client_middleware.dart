@@ -1,16 +1,16 @@
-import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
+import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
   ClientRepository repository = const ClientRepository(),
@@ -105,17 +105,20 @@ Middleware<AppState> _viewClientList() {
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.credentials, origClient, EntityAction.archive)
-        .then((ClientEntity client) {
-      store.dispatch(ArchiveClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.archive)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(ArchiveClientSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveClientFailure(origClient));
+      final clients = action.clientIds
+          .map((id) => store.state.clientState.map[id])
+          .toList();
+      store.dispatch(ArchiveClientFailure(clients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -128,17 +131,20 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.credentials, origClient, EntityAction.delete)
-        .then((ClientEntity client) {
-      store.dispatch(DeleteClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.delete)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(DeleteClientSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteClientFailure(origClient));
+      final clients = action.clientIds
+          .map((id) => store.state.clientState.map[id])
+          .toList();
+      store.dispatch(DeleteClientFailure(clients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -151,17 +157,20 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
     repository
-        .saveData(store.state.credentials, origClient, EntityAction.restore)
-        .then((ClientEntity client) {
-      store.dispatch(RestoreClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.restore)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(RestoreClientSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreClientFailure(origClient));
+      final clients = action.clientIds
+          .map((id) => store.state.clientState.map[id])
+          .toList();
+      store.dispatch(RestoreClientFailure(clients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

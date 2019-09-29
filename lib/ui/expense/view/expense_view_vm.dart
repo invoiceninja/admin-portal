@@ -106,9 +106,9 @@ class ExpenseViewVM {
                     userCompany: userCompany,
                     context: context,
                     entities: [vendor],
-                    onEntityAction: (BuildContext context, BaseEntity vendor,
-                            EntityAction action) =>
-                        handleVendorAction(context, vendor, action));
+                    onEntityAction: (BuildContext context,
+                            List<BaseEntity> vendors, EntityAction action) =>
+                        handleVendorAction(context, vendors, action));
               } else {
                 store.dispatch(
                     ViewVendor(vendorId: vendor.id, context: context));
@@ -120,9 +120,9 @@ class ExpenseViewVM {
                     userCompany: userCompany,
                     context: context,
                     entities: [client],
-                    onEntityAction: (BuildContext context, BaseEntity client,
-                            EntityAction action) =>
-                        handleClientAction(context, client, action));
+                    onEntityAction: (BuildContext context,
+                            List<BaseEntity> clients, EntityAction action) =>
+                        handleClientAction(context, clients, action));
               } else {
                 store.dispatch(
                     ViewClient(clientId: client.id, context: context));
@@ -135,9 +135,9 @@ class ExpenseViewVM {
                     context: context,
                     entities: [invoice],
                     client: client,
-                    onEntityAction: (BuildContext context, BaseEntity invoice,
-                            EntityAction action) =>
-                        handleInvoiceAction(context, invoice, action));
+                    onEntityAction: (BuildContext context,
+                            List<BaseEntity> invoices, EntityAction action) =>
+                        handleInvoiceAction(context, invoices, action));
               } else {
                 store.dispatch(
                     ViewInvoice(invoiceId: invoice.id, context: context));

@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewVendorList implements PersistUI {
   ViewVendorList({@required this.context, this.force = false});
@@ -266,7 +267,7 @@ class FilterVendorsByEntity implements PersistUI {
 }
 
 void handleVendorAction(
-    BuildContext context, VendorEntity vendor, EntityAction action) {
+    BuildContext context, List<VendorEntity> vendors, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
@@ -274,24 +275,27 @@ void handleVendorAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditVendor(context: context, vendor: vendor));
+      store.dispatch(EditVendor(context: context, vendor: vendors[0]));
       break;
     case EntityAction.newExpense:
       store.dispatch(EditExpense(
-          expense: ExpenseEntity(company: company, vendor: vendor),
+          expense: ExpenseEntity(company: company, vendor: vendors[0]),
           context: context));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
-          snackBarCompleter(context, localization.restoredVendor), vendor.id));
+          snackBarCompleter(context, localization.restoredVendor),
+          vendors[0].id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter(context, localization.archivedVendor), vendor.id));
+          snackBarCompleter(context, localization.archivedVendor),
+          vendors[0].id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteVendorRequest(
-          snackBarCompleter(context, localization.deletedVendor), vendor.id));
+          snackBarCompleter(context, localization.deletedVendor),
+          vendors[0].id));
       break;
   }
 }

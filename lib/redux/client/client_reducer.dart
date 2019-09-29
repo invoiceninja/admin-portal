@@ -58,14 +58,14 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, AddClientSuccess>((client, action) {
     return action.client;
   }),
-  TypedReducer<ClientEntity, RestoreClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, RestoreClientSuccess>((clients, action) {
+    return action.clients[0];
   }),
-  TypedReducer<ClientEntity, ArchiveClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, ArchiveClientSuccess>((clients, action) {
+    return action.clients[0];
   }),
-  TypedReducer<ClientEntity, DeleteClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, DeleteClientSuccess>((clients, action) {
+    return action.clients[0];
   }),
   TypedReducer<ClientEntity, EditClient>((client, action) {
     return action.client;
@@ -197,57 +197,103 @@ final clientsReducer = combineReducers<ClientState>([
 
 ClientState _archiveClientRequest(
     ClientState clientState, ArchiveClientRequest action) {
-  final client = clientState.map[action.clientId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _archiveClientSuccess(
     ClientState clientState, ArchiveClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _archiveClientFailure(
     ClientState clientState, ArchiveClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientRequest(
     ClientState clientState, DeleteClientRequest action) {
-  final client = clientState.map[action.clientId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientSuccess(
     ClientState clientState, DeleteClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientFailure(
     ClientState clientState, DeleteClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientRequest(
     ClientState clientState, RestoreClientRequest action) {
-  final client = clientState.map[action.clientId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
+
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientSuccess(
     ClientState clientState, RestoreClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientFailure(
     ClientState clientState, RestoreClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _addClient(ClientState clientState, AddClientSuccess action) {

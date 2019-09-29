@@ -125,15 +125,15 @@ class QuoteViewVM extends EntityViewVM {
               userCompany: state.userCompany,
               context: context,
               entities: [client],
-              onEntityAction: (BuildContext context, BaseEntity client,
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleQuoteAction(context, quote, action),
+          handleQuoteAction(context, [quote], action),
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b

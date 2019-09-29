@@ -113,9 +113,9 @@ class TaskViewVM {
               userCompany: state.userCompany,
               context: context,
               entities: [client],
-              onEntityAction: (BuildContext context, BaseEntity client,
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -127,9 +127,9 @@ class TaskViewVM {
               context: context,
               entities: [project],
               client: client,
-              onEntityAction: (BuildContext context, BaseEntity project,
+              onEntityAction: (BuildContext context, List<BaseEntity> projects,
                       EntityAction action) =>
-                  handleProjectAction(context, project, action));
+                  handleProjectAction(context, projects, action));
         } else {
           store.dispatch(ViewProject(projectId: project.id, context: context));
         }
@@ -141,9 +141,9 @@ class TaskViewVM {
               context: context,
               entities: [invoice],
               client: client,
-              onEntityAction: (BuildContext context, BaseEntity invoice,
+              onEntityAction: (BuildContext context, List<BaseEntity> invoices,
                       EntityAction action) =>
-                  handleInvoiceAction(context, invoice, action));
+                  handleInvoiceAction(context, invoices, action));
         } else {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         }
@@ -170,7 +170,7 @@ class TaskViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleTaskAction(context, task, action),
+          handleTaskAction(context, [task], action),
     );
   }
 

@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -251,31 +252,33 @@ class FilterPaymentsByEntity implements PersistUI {
 }
 
 void handlePaymentAction(
-    BuildContext context, PaymentEntity payment, EntityAction action) {
+    BuildContext context, List<PaymentEntity> payments, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditPayment(context: context, payment: payment));
+      store.dispatch(EditPayment(context: context, payment: payments[0]));
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter(context, localization.emailedPayment), payment));
+          snackBarCompleter(context, localization.emailedPayment),
+          payments[0]));
       break;
     case EntityAction.restore:
       store.dispatch(RestorePaymentRequest(
           snackBarCompleter(context, localization.restoredPayment),
-          payment.id));
+          payments[0].id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchivePaymentRequest(
           snackBarCompleter(context, localization.archivedPayment),
-          payment.id));
+          payments[0].id));
       break;
     case EntityAction.delete:
       store.dispatch(DeletePaymentRequest(
-          snackBarCompleter(context, localization.deletedPayment), payment.id));
+          snackBarCompleter(context, localization.deletedPayment),
+          payments[0].id));
       break;
   }
 }

@@ -52,7 +52,7 @@ class ProductList extends StatelessWidget {
                 if (action == EntityAction.more) {
                   showDialog();
                 } else {
-                  viewModel.onEntityAction(context, product, action);
+                  viewModel.onEntityAction(context, [product], action);
                 }
               },
               onTap: () => viewModel.onProductTap(context, product),

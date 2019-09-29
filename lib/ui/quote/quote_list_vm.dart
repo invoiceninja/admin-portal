@@ -49,7 +49,7 @@ class QuoteListVM extends EntityListVM {
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
-    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
   }) : super(
           state: state,
           user: user,
@@ -100,8 +100,8 @@ class QuoteListVM extends EntityListVM {
           ViewClient(
               clientId: state.quoteListState.filterEntityId, context: context)),
       onEntityAction:
-          (BuildContext context, BaseEntity quote, EntityAction action) =>
-              handleQuoteAction(context, quote, action),
+          (BuildContext context, List<BaseEntity> quotes, EntityAction action) =>
+              handleQuoteAction(context, quotes, action),
     );
   }
 }

@@ -95,7 +95,7 @@ class ProjectList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, project, action);
+                                      context, [project], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

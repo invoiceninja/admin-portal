@@ -8,7 +8,8 @@ Future<void> showEntityActionsDialog({
   @required BuildContext context,
   @required List<BaseEntity> entities,
   @required UserCompanyEntity userCompany,
-  @required Function(BuildContext, BaseEntity, EntityAction) onEntityAction,
+  @required
+      Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction,
   ClientEntity client,
 }) async {
   if (entities == null) {
@@ -49,7 +50,7 @@ class EntityActionListTile extends StatelessWidget {
   final List<BaseEntity> entities;
   final EntityAction entityAction;
   final BuildContext mainContext;
-  final Function(BuildContext, BaseEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +61,7 @@ class EntityActionListTile extends StatelessWidget {
       title: Text(localization.lookup(entityAction.toString())),
       onTap: () {
         Navigator.of(context).pop();
-        for (int i = 0; i < entities.length; i++) {
-          final BaseEntity entity = entities[i];
-          onEntityAction(context, entity, entityAction);
-        }
+        onEntityAction(context, entities, entityAction);
       },
     );
   }

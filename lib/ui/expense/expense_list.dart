@@ -84,7 +84,7 @@ class ExpenseList extends StatelessWidget {
                               showDialog();
                             } else {
                               viewModel.onEntityAction(
-                                  context, expense, action);
+                                  context, [expense], action);
                             }
                           },
                           onLongPress: () => showDialog(),

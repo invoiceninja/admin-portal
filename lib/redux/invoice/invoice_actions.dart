@@ -1,17 +1,18 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -322,8 +323,8 @@ class FilterInvoicesByCustom2 implements PersistUI {
   final String value;
 }
 
-void handleInvoiceAction(
-    BuildContext context, InvoiceEntity invoice, EntityAction action) async {
+void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
+    EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
@@ -331,27 +332,27 @@ void handleInvoiceAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditInvoice(context: context, invoice: invoice));
+      store.dispatch(EditInvoice(context: context, invoice: invoices[0]));
       break;
     case EntityAction.pdf:
-      viewPdf(invoice, context);
+      viewPdf(invoices[0], context);
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(invoice.invitationSilentLink)) {
-        await launch(invoice.invitationSilentLink,
+      if (await canLaunch(invoices[0].invitationSilentLink)) {
+        await launch(invoices[0].invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentInvoiceRequest(
           snackBarCompleter(context, localization.markedInvoiceAsSent),
-          invoice.id));
+          invoices[0].id));
       break;
     case EntityAction.sendEmail:
       if (isMobile(context)) {
         store.dispatch(ShowEmailInvoice(
             completer: snackBarCompleter(context, localization.emailedInvoice),
-            invoice: invoice,
+            invoice: invoices[0],
             context: context));
       } else {
         showDialog<ResponsivePadding>(
@@ -363,28 +364,30 @@ void handleInvoiceAction(
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: invoice.cloneToInvoice));
+          EditInvoice(context: context, invoice: invoices[0].cloneToInvoice));
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: invoice.cloneToQuote));
+      store.dispatch(
+          EditQuote(context: context, quote: invoices[0].cloneToQuote));
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
-          context: context, payment: invoice.createPayment(company)));
+          context: context, payment: invoices[0].createPayment(company)));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(
           snackBarCompleter(context, localization.restoredInvoice),
-          invoice.id));
+          invoices[0].id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveInvoiceRequest(
           snackBarCompleter(context, localization.archivedInvoice),
-          invoice.id));
+          invoices[0].id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter(context, localization.deletedInvoice), invoice.id));
+          snackBarCompleter(context, localization.deletedInvoice),
+          invoices[0].id));
       break;
   }
 }

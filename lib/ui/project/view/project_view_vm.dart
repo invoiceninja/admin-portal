@@ -84,9 +84,9 @@ class ProjectViewVM {
               userCompany: state.userCompany,
               context: context,
               entities: [client],
-              onEntityAction: (BuildContext context, BaseEntity client,
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -119,7 +119,7 @@ class ProjectViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProjectAction(context, project, action),
+          handleProjectAction(context, [project], action),
     );
   }
 

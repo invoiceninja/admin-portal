@@ -112,7 +112,7 @@ class PaymentList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, payment, action);
+                                      context, [payment], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

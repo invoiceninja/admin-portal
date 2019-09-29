@@ -242,53 +242,53 @@ class FilterProjectsByEntity implements PersistUI {
 }
 
 void handleProjectAction(
-    BuildContext context, ProjectEntity project, EntityAction action) {
+    BuildContext context, List<ProjectEntity> projects, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditProject(context: context, project: project));
+      store.dispatch(EditProject(context: context, project: projects[0]));
       break;
     case EntityAction.newTask:
       store.dispatch(EditTask(
           task: TaskEntity(isRunning: state.uiState.autoStartTasks)
               .rebuild((b) => b
-                ..projectId = project.id
-                ..clientId = project.clientId),
+                ..projectId = projects[0].id
+                ..clientId = projects[0].clientId),
           context: context));
       break;
     case EntityAction.newInvoice:
       final items =
-          convertProjectToInvoiceItem(project: project, context: context);
+          convertProjectToInvoiceItem(project: projects[0], context: context);
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = project.clientId
+            ..clientId = projects[0].clientId
             ..invoiceItems.addAll(items)),
           context: context));
       break;
     case EntityAction.clone:
-      store.dispatch(EditProject(context: context, project: project.clone));
+      store.dispatch(EditProject(context: context, project: projects[0].clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).restoredProject),
-          project.id));
+          projects[0].id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).archivedProject),
-          project.id));
+          projects[0].id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).deletedProject),
-          project.id));
+          projects[0].id));
       break;
   }
 }

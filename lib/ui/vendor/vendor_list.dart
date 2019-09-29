@@ -54,7 +54,7 @@ class VendorList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, vendor, action);
+                                      context, [vendor], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

@@ -175,60 +175,60 @@ class SaveClientFailure implements StopSaving {
 }
 
 class ArchiveClientRequest implements StartSaving {
-  ArchiveClientRequest(this.completer, this.clientId);
+  ArchiveClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class ArchiveClientSuccess implements StopSaving, PersistData {
-  ArchiveClientSuccess(this.client);
+  ArchiveClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class ArchiveClientFailure implements StopSaving {
-  ArchiveClientFailure(this.client);
+  ArchiveClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class DeleteClientRequest implements StartSaving {
-  DeleteClientRequest(this.completer, this.clientId);
+  DeleteClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class DeleteClientSuccess implements StopSaving, PersistData {
-  DeleteClientSuccess(this.client);
+  DeleteClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class DeleteClientFailure implements StopSaving {
-  DeleteClientFailure(this.client);
+  DeleteClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class RestoreClientRequest implements StartSaving {
-  RestoreClientRequest(this.completer, this.clientId);
+  RestoreClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class RestoreClientSuccess implements StopSaving, PersistData {
-  RestoreClientSuccess(this.client);
+  RestoreClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class RestoreClientFailure implements StopSaving {
-  RestoreClientFailure(this.client);
+  RestoreClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class FilterClients {
@@ -269,71 +269,64 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, ClientEntity client, EntityAction action) {
+    BuildContext context, List<ClientEntity> clients, EntityAction action) {
+  assert(
+      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
+              .contains(action) ||
+          clients.length == 1,
+      'Cannot perform this action on more than one client');
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final multiselect = state.clientListState.isInMultiselect();
-  final isMultiselectLast =
-      client == state.clientListState.selectedEntities.last;
+  final clientIds = clients.map((client) => client.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditClient(context: context, client: client));
+      store.dispatch(EditClient(context: context, client: clients[0]));
       break;
     case EntityAction.newInvoice:
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
+              .rebuild((b) => b.clientId = clients[0].id),
           context: context));
       break;
     case EntityAction.newExpense:
       store.dispatch(EditExpense(
           expense: ExpenseEntity(
-              company: company, client: client, uiState: state.uiState),
+              company: company, client: clients[0], uiState: state.uiState),
           context: context));
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
           payment: PaymentEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
+              .rebuild((b) => b.clientId = clients[0].id),
           context: context));
       break;
     case EntityAction.restore:
-      if (multiselect && !isMultiselectLast) {
-        store.dispatch(RestoreClientRequest(null, client.id));
-      } else {
-        store.dispatch(RestoreClientRequest(
-            snackBarCompleter(context, localization.restoredClient),
-            client.id));
-      }
+      store.dispatch(RestoreClientRequest(
+          snackBarCompleter(context, localization.restoredClient), clientIds));
       break;
     case EntityAction.archive:
-      if (multiselect && !isMultiselectLast) {
-        store.dispatch(ArchiveClientRequest(null, client.id));
-      } else {
-        store.dispatch(ArchiveClientRequest(
-            snackBarCompleter(context, localization.archivedClient),
-            client.id));
-      }
+      store.dispatch(ArchiveClientRequest(
+          snackBarCompleter(context, localization.archivedClient), clientIds));
       break;
     case EntityAction.delete:
-      if (multiselect && !isMultiselectLast) {
-        store.dispatch(DeleteClientRequest(null, client.id));
-      } else {
-        store.dispatch(DeleteClientRequest(
-            snackBarCompleter(context, localization.deletedClient), client.id));
-      }
+      store.dispatch(DeleteClientRequest(
+          snackBarCompleter(context, localization.deletedClient), clientIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {
         store.dispatch(StartMultiselect(context: context));
       }
-      if (!store.state.clientListState.isSelected(client)) {
-        store.dispatch(AddToMultiselect(context: context, entity: client));
-      } else {
-        store.dispatch(RemoveFromMultiselect(context: context, entity: client));
+
+      for (final client in clients) {
+        if (!store.state.clientListState.isSelected(client)) {
+          store.dispatch(AddToMultiselect(context: context, entity: client));
+        } else {
+          store.dispatch(
+              RemoveFromMultiselect(context: context, entity: client));
+        }
       }
       break;
   }
