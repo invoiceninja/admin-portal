@@ -320,8 +320,13 @@ void handleClientAction(
         store.dispatch(StartMultiselect(context: context));
       }
 
+      if (clients.isEmpty) {
+        break;
+      }
+
+      final select = !store.state.clientListState.isSelected(clients[0]);
       for (final client in clients) {
-        if (!store.state.clientListState.isSelected(client)) {
+        if (select) {
           store.dispatch(AddToMultiselect(context: context, entity: client));
         } else {
           store.dispatch(

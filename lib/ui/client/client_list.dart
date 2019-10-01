@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/src/store.dart';
 
 import 'client_list_vm.dart';
 
@@ -56,27 +57,50 @@ class ClientList extends StatelessWidget {
                             final client =
                                 viewModel.clientMap[clientId] ?? ClientEntity();
 
-                            void showDialog() => showEntityActionsDialog(
-                                entity: client,
-                                context: context,
-                                userCompany: state.userCompany,
-                                client: client,
-                                onEntityAction: viewModel.onEntityAction);
+    final isInMultiselect = store.state.clientListState.isInMultiselect();
 
-                            return ClientListItem(
-                              user: state.user,
-                              filter: viewModel.filter,
-                              client: client,
-                              onTap: () =>
-                                  viewModel.onClientTap(context, client),
-                              onEntityAction: (EntityAction action) {
-                                if (action == EntityAction.more) {
-                                  showDialog();
-                                } else {
-                                  viewModel.onEntityAction(
-                                      context, client, action);
-                                }
-                              },
+            // Add header
+            if (index == 0 && isInMultiselect) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onChanged: (value) =>
+                          _toggleSelectionForAll(store, context),
+                      value:
+                          store.state.clientListState.selectedEntities.length ==
+                              viewModel.clientList.length)
+                ],
+              );
+            }
+
+            if (isInMultiselect) {
+              index--;
+            }
+
+            final clientId = viewModel.clientList[index];
+            final client = viewModel.clientMap[clientId];
+            final userCompany = viewModel.state.userCompany;
+
+            void showDialog() => showEntityActionsDialog(
+                entities: [client],
+                context: context,
+                userCompany: userCompany,
+                onEntityAction: viewModel.onEntityAction);
+
+            return ClientListItem(
+                user: viewModel.state.user,
+                filter: viewModel.filter,
+                client: client,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    viewModel.onEntityAction(context, [client], action);
+                  }
+                },
+                onTap: () => viewModel.onClientTap(context, client),
                 onLongPress: () async {
                   final longPressIsSelection =
                       store.state.uiState.longPressSelectionIsDefault ?? true;
@@ -93,5 +117,13 @@ class ClientList extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _toggleSelectionForAll(Store<AppState> store, BuildContext context) {
+    final clients = viewModel.clientList
+        .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
+        .toList();
+
+    viewModel.onEntityAction(context, clients, EntityAction.toggleMultiselect);
   }
 }
