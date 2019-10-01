@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
@@ -46,7 +47,8 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
           ),
           body: FutureBuilder(
               future: createFileOfPdfUrl(invoice.invitationDownloadLink),
-              builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<PDFPageImage> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
                   case ConnectionState.active:
@@ -56,7 +58,14 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                     if (snapshot.hasError)
                       return Text('Error: ${snapshot.error}');
                     else
-                      return PDFView(filePath: snapshot.data.path);
+                      return Container(
+                        color: Colors.white,
+                        width: double.infinity,
+                        child: Image(
+                          height: double.infinity,
+                          image: MemoryImage(snapshot.data.bytes),
+                        ),
+                      );
                 }
                 return null; // unreachable
               }),
@@ -64,13 +73,27 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       });
 }
 
-Future<File> createFileOfPdfUrl(String url) async {
+Future<PDFPageImage> createFileOfPdfUrl(String url) async {
   final filename = url.substring(url.lastIndexOf('/') + 1);
+
+  url =
+      'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd';
+
   final request = await HttpClient().getUrl(Uri.parse(url));
   final response = await request.close();
   final bytes = await consolidateHttpClientResponseBytes(response);
+
+  final document = await PDFDocument.openData(bytes);
+  final page = await document.getPage(1);
+  final pageImage = await page.render(width: page.width, height: page.height);
+  await page.close();
+
+  return pageImage;
+
+  /*
   final dir = (await getApplicationDocumentsDirectory()).path;
   final file = new File('$dir/$filename');
   await file.writeAsBytes(bytes);
   return file;
+   */
 }

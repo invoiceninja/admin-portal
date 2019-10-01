@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -475,6 +476,8 @@ class SidebarFooter extends StatelessWidget {
                 Icons.warning,
                 color: Colors.red,
               ),
+              onPressed: () => viewPdf(InvoiceEntity(), context),
+              /*
               onPressed: () => showDialog<ErrorDialog>(
                   context: context,
                   builder: (BuildContext context) {
@@ -483,6 +486,7 @@ class SidebarFooter extends StatelessWidget {
                       clearErrorOnDismiss: true,
                     );
                   }),
+               */
             ),
           if (!Platform.isIOS &&
               isHosted(context) &&
