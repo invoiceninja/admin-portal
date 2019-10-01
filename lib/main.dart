@@ -209,7 +209,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           //showPerformanceOverlay: true,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate
           ],
           home: state.uiState.requireAuthentication && !_authenticated
               ? Material(
