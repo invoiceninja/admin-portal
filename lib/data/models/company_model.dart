@@ -40,6 +40,8 @@ abstract class CompanyEntity
       vatNumber: '',
       idNumber: '',
       website: '',
+      workEmail: '',
+      workPhone: '',
     );
   }
 
@@ -72,6 +74,7 @@ abstract class CompanyEntity
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;
 
+  @nullable // TODO remove this
   @BuiltValueField(wireName: 'website')
   String get website;
 
