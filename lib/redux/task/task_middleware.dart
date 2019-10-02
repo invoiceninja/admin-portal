@@ -95,13 +95,15 @@ Middleware<AppState> _viewTaskList() {
 
     next(action);
 
+    if (store.state.taskState.isStale) {
+      store.dispatch(LoadTasks());
+    }
+
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           TaskScreen.route, (Route<dynamic> route) => false);
-    } else if (store.state.taskState.isStale) {
-      store.dispatch(LoadTasks());
     }
   };
 }

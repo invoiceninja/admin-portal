@@ -21,30 +21,19 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 // STARTER: import - do not remove comment
 
@@ -264,101 +253,42 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 ),
           title: 'Invoice Ninja',
           routes: {
-            LoginScreen.route: (context) {
-              return LoginScreen();
-            },
-            MainScreen.route: (context) {
-              return MainScreen();
-            },
-            DashboardScreen.route: (context) {
-              if (widget.store.state.dashboardState.isStale) {
-                widget.store.dispatch(LoadDashboard());
-              }
-              return DashboardScreen();
-            },
-            ProductScreen.route: (context) {
-              if (widget.store.state.productState.isStale) {
-                widget.store.dispatch(LoadProducts());
-              }
-              return ProductScreen();
-            },
+            LoginScreen.route: (context) => LoginScreen(),
+            MainScreen.route: (context) => MainScreen(),
+            DashboardScreen.route: (context) => DashboardScreen(),
+            ProductScreen.route: (context) => ProductScreen(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
-            ClientScreen.route: (context) {
-              if (widget.store.state.clientState.isStale) {
-                widget.store.dispatch(LoadClients());
-              }
-              return ClientScreen();
-            },
+            ClientScreen.route: (context) => ClientScreen(),
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),
-            InvoiceScreen.route: (context) {
-              if (widget.store.state.invoiceState.isStale) {
-                widget.store.dispatch(LoadInvoices());
-              }
-              return InvoiceScreen();
-            },
+            InvoiceScreen.route: (context) => InvoiceScreen(),
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-            // STARTER: routes - do not remove comment
-            DocumentScreen.route: (context) {
-              if (widget.store.state.documentState.isStale) {
-                widget.store.dispatch(LoadDocuments());
-              }
-              return DocumentScreen();
-            },
+            DocumentScreen.route: (context) => DocumentScreen(),
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
-            ExpenseScreen.route: (context) {
-              if (widget.store.state.expenseState.isStale) {
-                widget.store.dispatch(LoadExpenses());
-              }
-              return ExpenseScreen();
-            },
+            ExpenseScreen.route: (context) => ExpenseScreen(),
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-            VendorScreen.route: (context) {
-              if (widget.store.state.vendorState.isStale) {
-                widget.store.dispatch(LoadVendors());
-              }
-              return VendorScreen();
-            },
+            VendorScreen.route: (context) => VendorScreen(),
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
-            TaskScreen.route: (context) {
-              if (widget.store.state.taskState.isStale) {
-                widget.store.dispatch(LoadTasks());
-              }
-              return TaskScreen();
-            },
+            TaskScreen.route: (context) => TaskScreen(),
             TaskViewScreen.route: (context) => TaskViewScreen(),
             TaskEditScreen.route: (context) => TaskEditScreen(),
-            ProjectScreen.route: (context) {
-              if (widget.store.state.projectState.isStale) {
-                widget.store.dispatch(LoadProjects());
-              }
-              return ProjectScreen();
-            },
+            ProjectScreen.route: (context) => ProjectScreen(),
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
-            PaymentScreen.route: (context) {
-              if (widget.store.state.paymentState.isStale) {
-                widget.store.dispatch(LoadPayments());
-              }
-              return PaymentScreen();
-            },
+            PaymentScreen.route: (context) => PaymentScreen(),
             PaymentViewScreen.route: (context) => PaymentViewScreen(),
             PaymentEditScreen.route: (context) => PaymentEditScreen(),
-            QuoteScreen.route: (context) {
-              if (widget.store.state.quoteState.isStale) {
-                widget.store.dispatch(LoadQuotes());
-              }
-              return QuoteScreen();
-            },
+            QuoteScreen.route: (context) => QuoteScreen(),
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
+            // STARTER: routes - do not remove comment
             SettingsScreen.route: (context) => SettingsScreen(),
           },
         );

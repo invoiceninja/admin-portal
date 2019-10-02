@@ -87,13 +87,15 @@ Middleware<AppState> _viewProductList() {
 
     next(action);
 
+    if (store.state.productState.isStale) {
+      store.dispatch(LoadProducts());
+    }
+
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           ProductScreen.route, (Route<dynamic> route) => false);
-    } else if (store.state.productState.isStale) {
-      store.dispatch(LoadProducts());
     }
   };
 }

@@ -81,13 +81,15 @@ Middleware<AppState> _viewStubList() {
 
     next(action);
 
+    if (store.state.stubState.isStale) {
+      store.dispatch(LoadStubs());
+    }
+
     store.dispatch(UpdateCurrentRoute(StubScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           StubScreen.route, (Route<dynamic> route) => false);
-    } else if (store.state.stubState.isStale) {
-      store.dispatch(LoadStubs());
     }
   };
 }

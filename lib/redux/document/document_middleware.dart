@@ -72,6 +72,10 @@ Middleware<AppState> _viewDocumentList() {
 
     next(action);
 
+    if (store.state.documentState.isStale) {
+      store.dispatch(LoadDocuments());
+    }
+
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
     Navigator.of(action.context).pushNamedAndRemoveUntil(

@@ -30,7 +30,10 @@ Middleware<AppState> _createViewDashboard() {
       return;
     }
 
-    store.dispatch(LoadDashboard());
+    if (store.state.dashboardState.isStale) {
+      store.dispatch(LoadDashboard());
+    }
+
     store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
 
     if (isMobile(action.context)) {

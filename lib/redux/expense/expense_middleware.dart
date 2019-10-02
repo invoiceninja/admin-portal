@@ -96,13 +96,15 @@ Middleware<AppState> _viewExpenseList() {
 
     next(action);
 
+    if (store.state.expenseState.isStale) {
+      store.dispatch(LoadExpenses());
+    }
+
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           ExpenseScreen.route, (Route<dynamic> route) => false);
-    } else if (store.state.expenseState.isStale) {
-      store.dispatch(LoadExpenses());
     }
   };
 }

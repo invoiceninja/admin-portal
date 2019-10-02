@@ -60,13 +60,15 @@ Middleware<AppState> _viewInvoiceList() {
 
     next(action);
 
+    if (store.state.invoiceState.isStale) {
+      store.dispatch(LoadInvoices());
+    }
+
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           InvoiceScreen.route, (Route<dynamic> route) => false);
-    } else if (store.state.invoiceState.isStale) {
-      store.dispatch(LoadInvoices());
     }
   };
 }
