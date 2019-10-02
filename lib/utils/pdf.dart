@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
@@ -74,7 +72,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
 }
 
 Future<PDFPageImage> createFileOfPdfUrl(String url) async {
-  final filename = url.substring(url.lastIndexOf('/') + 1);
+  //final filename = url.substring(url.lastIndexOf('/') + 1);
 
   url =
       'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd';

@@ -142,7 +142,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   EntityType get entityType => throw 'EntityType not set: ${this}';
 
-  bool get isNew => id == null || int.tryParse(id) < 0;
+  bool get isNew => id == null || (int.tryParse(id) ?? 0) < 0;
 
   bool get isOld => !isNew;
 
