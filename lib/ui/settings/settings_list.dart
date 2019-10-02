@@ -17,6 +17,14 @@ class SettingsList extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
+        Container(
+          color: Theme.of(context).backgroundColor,
+          padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+          child: Text(
+            localization.basicSettings,
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
         SettingsListTile(
           title: localization.companyDetails,
           viewModel: viewModel,
@@ -27,6 +35,66 @@ class SettingsList extends StatelessWidget {
         ),
         SettingsListTile(
           title: localization.localization,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.onlinePayments,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.taxRates,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.products,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.notifications,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.importExport,
+          viewModel: viewModel,
+        ),
+        Container(
+          color: Theme.of(context).backgroundColor,
+          padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+          child: Text(
+            localization.advancedSettings,
+            style: Theme.of(context).textTheme.title,
+          ),
+        ),
+        SettingsListTile(
+          title: localization.invoiceSettings,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.invoiceDesign,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.clientPortal,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.buyNowButtons,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.emailSettings,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.templatesAndReminders,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.creditCardsAndBanks,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.dataVisualizations,
           viewModel: viewModel,
         ),
       ],
