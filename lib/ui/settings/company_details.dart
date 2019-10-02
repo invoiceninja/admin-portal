@@ -82,7 +82,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackPressed();
+        //viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(

@@ -24,26 +24,17 @@ class CompanyDetailsVM {
     @required this.state,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
-    //final state = store.state;
+    final state = store.state;
 
     return CompanyDetailsVM(
-      state: store.state,
-      onBackPressed: () {
-        /*
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
-        */
-      },
+      state: state,
     );
   }
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
 }
