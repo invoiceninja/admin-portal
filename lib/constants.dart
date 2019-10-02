@@ -101,6 +101,26 @@ const String kSettingsTemplatesAndReminders = 'templates_and_reminders';
 const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
 const String kSettingsDataVisualizations = 'data_visualizations';
 
+const List<String> kSettingsSections = [
+  kSettingsCompanyDetails,
+  kSettingsUserDetails,
+  kSettingsLocalization,
+  kSettingsOnlinePayments,
+  kSettingsTaxRates,
+  kSettingsNotifications,
+  kSettingsProducts,
+  kSettingsImportExport,
+  kSettingsDeviceSettings,
+  kSettingsInvoiceSettings,
+  kSettingsInvoiceDesign,
+  kSettingsClientPortal,
+  kSettingsBuyNowButtons,
+  kSettingsEmailSettings,
+  kSettingsTemplatesAndReminders,
+  kSettingsCreditCardsAndBanks,
+  kSettingsDataVisualizations,
+];
+
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
 const int kPaymentStatusFailed = 3;

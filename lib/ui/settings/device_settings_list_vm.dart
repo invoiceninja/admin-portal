@@ -16,13 +16,13 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DeviceSettingsListBuilder extends StatelessWidget {
-  const DeviceSettingsListBuilder({Key key}) : super(key: key);
+class DeviceSettingsBuilder extends StatelessWidget {
+  const DeviceSettingsBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, DeviceSettingsListVM>(
-      converter: DeviceSettingsListVM.fromStore,
+    return StoreConnector<AppState, DeviceSettingsVM>(
+      converter: DeviceSettingsVM.fromStore,
       builder: (context, viewModel) {
         return DeviceSettingsList(viewModel: viewModel);
       },
@@ -30,8 +30,8 @@ class DeviceSettingsListBuilder extends StatelessWidget {
   }
 }
 
-class DeviceSettingsListVM {
-  DeviceSettingsListVM({
+class DeviceSettingsVM {
+  DeviceSettingsVM({
     @required this.state,
     @required this.onLogoutTap,
     @required this.onRefreshTap,
@@ -44,7 +44,7 @@ class DeviceSettingsListVM {
     @required this.authenticationSupported,
   });
 
-  static DeviceSettingsListVM fromStore(Store<AppState> store) {
+  static DeviceSettingsVM fromStore(Store<AppState> store) {
     void _refreshData(BuildContext context) async {
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete,
@@ -86,7 +86,7 @@ class DeviceSettingsListVM {
       );
     }
 
-    return DeviceSettingsListVM(
+    return DeviceSettingsVM(
       state: store.state,
       onLogoutTap: (BuildContext context) => _confirmLogout(context),
       onRefreshTap: (BuildContext context) => _refreshData(context),

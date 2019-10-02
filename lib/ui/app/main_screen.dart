@@ -1,7 +1,22 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/invoice_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/notifications.dart';
+import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -25,6 +40,7 @@ class MainScreen extends StatelessWidget {
           final mainRoute = uiState.mainRoute;
           int mainIndex = 0;
 
+          // TODO use constants array to lookup index
           if (mainRoute == EntityType.client.name) {
             mainIndex = 1;
           } else if (mainRoute == EntityType.product.name) {
@@ -127,12 +143,7 @@ class SettingsScreens extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final subRoute = uiState.subRoute;
-
-    int index = 0;
-
-    if (subRoute == kSettingsUserDetails) {
-      index = 1;
-    }
+    final index = kSettingsSections.indexOf(subRoute);
 
     return Row(
       children: <Widget>[
@@ -148,6 +159,21 @@ class SettingsScreens extends StatelessWidget {
             children: <Widget>[
               CompanyDetailsBuilder(),
               UserDetailsBuilder(),
+              LocalizationBuilder(),
+              OnlinePaymentsBuilder(),
+              TaxRatesBuilder(),
+              ProductSettingsBuilder(),
+              NotificationSettingsBuilder(),
+              ImportExportBuilder(),
+              DeviceSettingsBuilder(),
+              InvoiceSettingsBuilder(),
+              InvoiceDesignBuilder(),
+              ClientPortalBuilder(),
+              BuyNowButtonsBuilder(),
+              EmailSettingsBuilder(),
+              TemplatesAndRemindersBuilder(),
+              CreditCardsAndBanksBuilder(),
+              DataVisualizationsBuilder(),
             ],
           ),
         ),

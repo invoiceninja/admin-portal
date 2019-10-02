@@ -7,8 +7,8 @@ import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class NotificationSettings extends StatefulWidget {
-  const NotificationSettings({
+class NotificationSettingsBuilder extends StatefulWidget {
+  const NotificationSettingsBuilder({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -16,10 +16,12 @@ class NotificationSettings extends StatefulWidget {
   final NotificationSettingsVM viewModel;
 
   @override
-  _NotificationSettingsState createState() => _NotificationSettingsState();
+  _NotificationSettingsBuilderState createState() =>
+      _NotificationSettingsBuilderState();
 }
 
-class _NotificationSettingsState extends State<NotificationSettings> {
+class _NotificationSettingsBuilderState
+    extends State<NotificationSettingsBuilder> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool autoValidate = false;
