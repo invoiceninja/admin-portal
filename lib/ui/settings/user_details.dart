@@ -25,6 +25,9 @@ class _UserDetailsState extends State<UserDetails> {
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -39,7 +42,12 @@ class _UserDetailsState extends State<UserDetails> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [_firstNameController];
+    _controllers = [
+      _firstNameController,
+      _lastNameController,
+      _emailController,
+      _phoneController,
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -119,6 +127,26 @@ class _UserDetailsState extends State<UserDetails> {
                         ? localization.pleaseEnterAFirstName
                         : null,
                     autovalidate: autoValidate,
+                  ),
+                  DecoratedFormField(
+                    label: localization.lastName,
+                    controller: _lastNameController,
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
+                        ? localization.pleaseEnterALastName
+                        : null,
+                    autovalidate: autoValidate,
+                  ),
+                  DecoratedFormField(
+                    label: localization.email,
+                    controller: _emailController,
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
+                        ? localization.pleaseEnterYourEmail
+                        : null,
+                    autovalidate: autoValidate,
+                  ),
+                  DecoratedFormField(
+                    label: localization.firstName,
+                    controller: _phoneController,
                   ),
                 ],
               )
