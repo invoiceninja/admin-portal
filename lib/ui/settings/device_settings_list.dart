@@ -35,7 +35,7 @@ class _DeviceSettingsListState extends State<DeviceSettingsList> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.deviceSettings),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

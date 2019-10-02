@@ -88,7 +88,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.templatesAndReminders),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

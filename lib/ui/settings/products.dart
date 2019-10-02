@@ -78,7 +78,7 @@ class _ProductSettingsState extends State<ProductSettings> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.productSettings),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

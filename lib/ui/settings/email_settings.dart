@@ -78,7 +78,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.emailSettings),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

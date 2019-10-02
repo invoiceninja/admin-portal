@@ -88,7 +88,7 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.creditCardsAndBanks),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

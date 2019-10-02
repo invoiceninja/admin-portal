@@ -88,7 +88,7 @@ class _ClientPortalState extends State<ClientPortal>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.clientPortal),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

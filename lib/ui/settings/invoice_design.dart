@@ -88,7 +88,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.invoiceDesign),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

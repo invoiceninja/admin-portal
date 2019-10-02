@@ -88,7 +88,7 @@ class _TaxRatesState extends State<TaxRates>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.taxRates),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

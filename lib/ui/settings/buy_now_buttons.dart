@@ -78,7 +78,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.buyNowButtons),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

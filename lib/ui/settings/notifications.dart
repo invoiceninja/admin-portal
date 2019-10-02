@@ -80,7 +80,7 @@ class _NotificationSettingsBuilderState
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.notifications),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

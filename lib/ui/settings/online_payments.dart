@@ -88,7 +88,7 @@ class _OnlinePaymentsState extends State<OnlinePayments>
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.companyDetails),
+          title: Text(localization.onlinePayments),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

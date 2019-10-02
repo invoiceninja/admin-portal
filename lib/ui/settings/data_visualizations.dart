@@ -78,7 +78,7 @@ class _DataVisualizationsState extends State<DataVisualizations> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.dataVisualizations),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

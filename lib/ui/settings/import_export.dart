@@ -78,7 +78,7 @@ class _ImportExportState extends State<ImportExport> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.importExport),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(

@@ -78,7 +78,7 @@ class _LocalizationState extends State<Localization> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
+          title: Text(localization.localization),
           actions: <Widget>[
             if (!isMobile(context))
               FlatButton(
