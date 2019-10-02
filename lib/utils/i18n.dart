@@ -14,6 +14,20 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'company_details': 'Company Details',
+      'user_details': 'User Details',
+      'localization': 'Localization',
+      'online_payments': 'Online Payments',
+      'tax_rates': 'Tax Rates',
+      'notifications': 'Notifications',
+      'import_export': 'Import | Export',
+      'invoice_settings': 'Invoice Settings',
+      'invoice_design': 'Invoice Design',
+      'buy_now_buttons': 'Buy Now Buttons',
+      'email_settings': 'Email Settings',
+      'templates_and_reminders': 'Templates & Reminders',
+      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'data_visualizations': 'Data Visualizations',
       'price': 'Price',
       'email_sign_up': 'Email Sign Up',
       'google_sign_up': 'Google Sign Up',
@@ -14612,6 +14626,38 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];
 
   String get price => _localizedValues[localeCode]['price'];
+
+  String get companyDetails => _localizedValues[localeCode]['company_details'];
+
+  String get userDetails => _localizedValues[localeCode]['user_details'];
+
+  String get localization => _localizedValues[localeCode]['localization'];
+
+  String get onlinePayments => _localizedValues[localeCode]['online_payments'];
+
+  String get taxRates => _localizedValues[localeCode]['tax_rates'];
+
+  String get notifications => _localizedValues[localeCode]['notifications'];
+
+  String get importExport => _localizedValues[localeCode]['import_export'];
+
+  String get invoiceSettings =>
+      _localizedValues[localeCode]['invoice_settings'];
+
+  String get invoiceDesign => _localizedValues[localeCode]['invoice_design'];
+
+  String get buyNowButtons => _localizedValues[localeCode]['buy_now_buttons'];
+
+  String get emailSettings => _localizedValues[localeCode]['email_settings'];
+
+  String get templatesAndReminders =>
+      _localizedValues[localeCode]['templates_and_reminders'];
+
+  String get creditCardsAndBanks =>
+      _localizedValues[localeCode]['credit_cards_and_banks'];
+
+  String get dataVisualizations =>
+      _localizedValues[localeCode]['data_visualizations'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
