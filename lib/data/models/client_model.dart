@@ -136,6 +136,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
+  @BuiltValueField(wireName: 'balance')
   double get balance;
 
   @BuiltValueField(wireName: 'paid_to_date')

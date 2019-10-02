@@ -17,10 +17,39 @@ class SettingsList extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        ListTile(
-          title: Text(localization.companyDetails),
+        SettingsListTile(
+          title: localization.companyDetails,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.userDetails,
+          viewModel: viewModel,
+        ),
+        SettingsListTile(
+          title: localization.localization,
+          viewModel: viewModel,
         ),
       ],
+    );
+  }
+}
+
+class SettingsListTile extends StatelessWidget {
+  const SettingsListTile({
+    @required this.title,
+    @required this.viewModel,
+  });
+
+  final String title;
+  final SettingsListVM viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(title),
+      onTap: () {
+        viewModel.loadSection(context, title);
+      },
     );
   }
 }
