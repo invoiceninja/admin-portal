@@ -43,30 +43,35 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
               ),
             ],
           ),
-          body: FutureBuilder(
-              future: createFileOfPdfUrl(invoice.invitationDownloadLink),
-              builder:
-                  (BuildContext context, AsyncSnapshot<PDFPageImage> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                  case ConnectionState.active:
-                  case ConnectionState.waiting:
-                    return LoadingIndicator();
-                  case ConnectionState.done:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else
-                      return Container(
-                        color: Colors.white,
-                        width: double.infinity,
-                        child: Image(
-                          height: double.infinity,
-                          image: MemoryImage(snapshot.data.bytes),
-                        ),
-                      );
-                }
-                return null; // unreachable
-              }),
+          body: Container(
+            color: Colors.grey,
+            padding: const EdgeInsets.all(16),
+            child: Center(
+              child: FutureBuilder(
+                  future: createFileOfPdfUrl(invoice.invitationDownloadLink),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<PDFPageImage> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                        return LoadingIndicator();
+                      case ConnectionState.done:
+                        if (snapshot.hasError)
+                          return Text('Error: ${snapshot.error}');
+                        else
+                          return Container(
+                            color: Colors.white,
+                            child: Image(
+                              height: double.infinity,
+                              image: MemoryImage(snapshot.data.bytes),
+                            ),
+                          );
+                    }
+                    return null; // unreachable
+                  }),
+            ),
+          ),
         );
       });
 }
