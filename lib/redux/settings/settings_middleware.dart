@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -7,9 +8,11 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 
-List<Middleware<AppState>> createStoreSettingsMiddleware() {
+List<Middleware<AppState>> createStoreSettingsMiddleware([
+  SettingsRepository repository = const SettingsRepository(),
+]) {
   final viewSettings = _viewSettings();
-  final saveSettings = _saveSettings();
+  final saveSettings = _saveSettings(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
@@ -38,9 +41,19 @@ Middleware<AppState> _viewSettings() {
   };
 }
 
-Middleware<AppState> _saveSettings() {
+Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveSettingsRequest;
+
+    settingsRepository
+        .saveData(store.state.credentials, action.settings)
+        .then((response) {
+      print('Done: $response');
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveSettingsFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };

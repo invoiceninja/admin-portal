@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
-class ClientRepository {
-  const ClientRepository({
+class SettingsRepository {
+  const SettingsRepository({
     this.webClient = const WebClient(),
   });
 
