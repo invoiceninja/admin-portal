@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -26,35 +28,35 @@ class SettingsList extends StatelessWidget {
           ),
         ),
         SettingsListTile(
-          title: localization.companyDetails,
+          section: kSettingsCompanyDetails,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.userDetails,
+          section: kSettingsUserDetails,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.localization,
+          section: kSettingsLocalization,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.onlinePayments,
+          section: kSettingsOnlinePayments,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.taxRates,
+          section: kSettingsTaxRates,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.products,
+          section: kSettingsProducts,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.notifications,
+          section: kSettingsNotifications,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.importExport,
+          section: kSettingsImportExport,
           viewModel: viewModel,
         ),
         Container(
@@ -66,35 +68,35 @@ class SettingsList extends StatelessWidget {
           ),
         ),
         SettingsListTile(
-          title: localization.invoiceSettings,
+          section: kSettingsInvoiceSettings,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.invoiceDesign,
+          section: kSettingsInvoiceDesign,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.clientPortal,
+          section: kSettingsClientPortal,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.buyNowButtons,
+          section: kSettingsBuyNowButtons,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.emailSettings,
+          section: kSettingsEmailSettings,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.templatesAndReminders,
+          section: kSettingsTemplatesAndReminders,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.creditCardsAndBanks,
+          section: kSettingsCreditCardsAndBanks,
           viewModel: viewModel,
         ),
         SettingsListTile(
-          title: localization.dataVisualizations,
+          section: kSettingsDataVisualizations,
           viewModel: viewModel,
         ),
       ],
@@ -104,20 +106,25 @@ class SettingsList extends StatelessWidget {
 
 class SettingsListTile extends StatelessWidget {
   const SettingsListTile({
-    @required this.title,
+    @required this.section,
     @required this.viewModel,
   });
 
-  final String title;
+  final String section;
   final SettingsListVM viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title),
-      onTap: () {
-        viewModel.loadSection(context, title);
-      },
+    final localization = AppLocalization.of(context);
+
+    return SelectedIndicator(
+      isSelected: viewModel.state.uiState.containsRoute('/$section'),
+      child: ListTile(
+        title: Text(localization.lookup(section)),
+        onTap: () {
+          viewModel.loadSection(context, section);
+        },
+      ),
     );
   }
 }

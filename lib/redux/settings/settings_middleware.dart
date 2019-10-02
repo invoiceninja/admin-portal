@@ -27,7 +27,7 @@ Middleware<AppState> _viewSettings() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(SettingsScreen.route +
-        (action.section != null ? '/${action.section}' : '')));
+        (action.section != null ? '/${action.section}' : '/company_details')));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(

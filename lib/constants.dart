@@ -83,6 +83,23 @@ const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';
 
+const String kSettingsCompanyDetails = 'company_details';
+const String kSettingsUserDetails = 'user_details';
+const String kSettingsLocalization = 'localization';
+const String kSettingsOnlinePayments = 'online_payments';
+const String kSettingsTaxRates = 'tax_rates';
+const String kSettingsNotifications = 'notifications';
+const String kSettingsProducts = 'products';
+const String kSettingsImportExport = 'import_export';
+const String kSettingsInvoiceSettings = 'invoice_settings';
+const String kSettingsInvoiceDesign = 'invoice_design';
+const String kSettingsClientPortal = 'client_portal';
+const String kSettingsBuyNowButtons = 'buy_now_buttons';
+const String kSettingsEmailSettings = 'email_settings';
+const String kSettingsTemplatesAndReminders = 'templates_and_reminders';
+const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
+const String kSettingsDataVisualizations = 'data_visualizations';
+
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
 const int kPaymentStatusFailed = 3;
