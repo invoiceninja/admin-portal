@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 
 List<Middleware<AppState>> createStoreSettingsMiddleware() {
   final viewSettings = _viewSettings();
+  final saveSettings = _saveSettings();
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
+    TypedMiddleware<AppState, SaveSettingsRequest>(saveSettings),
   ];
 }
 
@@ -33,5 +35,13 @@ Middleware<AppState> _viewSettings() {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           SettingsScreen.route, (Route<dynamic> route) => false);
     }
+  };
+}
+
+Middleware<AppState> _saveSettings() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveSettingsRequest;
+
+    next(action);
   };
 }

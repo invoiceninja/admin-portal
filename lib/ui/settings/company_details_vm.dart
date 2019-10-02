@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -30,8 +33,14 @@ class CompanyDetailsVM {
     final state = store.state;
 
     return CompanyDetailsVM(
-      state: state,
-    );
+        state: state,
+        onSavePressed: (context) {
+          final completer = snackBarCompleter(
+              context, AppLocalization.of(context).refreshData);
+          store.dispatch(SaveSettingsRequest(
+              completer: completer,
+              settings: state.uiState.settingsUIState.editing));
+        });
   }
 
   final AppState state;
