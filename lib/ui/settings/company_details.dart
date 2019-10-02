@@ -28,6 +28,17 @@ class _CompanyDetailsState extends State<CompanyDetails>
   bool autoValidate = false;
 
   final _nameController = TextEditingController();
+  final _idNumberController = TextEditingController();
+  final _vatNumberController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _websiteController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _address1Controller = TextEditingController();
+  final _address2Controller = TextEditingController();
+  final _cityController = TextEditingController();
+  final _stateController = TextEditingController();
+  final _postalCodeController = TextEditingController();
+  final _taskRateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -49,15 +60,37 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   @override
   void didChangeDependencies() {
-    _controllers = [_nameController];
+    _controllers = [
+      _nameController,
+      _idNumberController,
+      _vatNumberController,
+      _emailController,
+      _websiteController,
+      _phoneController,
+      _address1Controller,
+      _address2Controller,
+      _cityController,
+      _stateController,
+      _postalCodeController,
+      _taskRateController,
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    final company = widget.viewModel.company;
+    _nameController.text = company.name;
+    _idNumberController.text = company.idNumber;
+    _vatNumberController.text = company.vatNumber;
+    _emailController.text = company.workEmail;
+    _websiteController.text = company.website;
+    _phoneController.text = company.workPhone;
+    _address1Controller.text = company.address1;
+    _address2Controller.text = company.address2;
+    _cityController.text = company.city;
+    _stateController.text = company.state;
+    _postalCodeController.text = company.postalCode;
+    _taskRateController.text = ''; // TODO fix this
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -148,6 +181,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             : null,
                         autovalidate: autoValidate,
                       ),
+                      DecoratedFormField(
+                        label: localization.idNumber,
+                        controller: _idNumberController,
+                      )
                     ],
                   )
                 ],

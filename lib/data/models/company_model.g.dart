@@ -33,6 +33,38 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'address1',
+      serializers.serialize(object.address1,
+          specifiedType: const FullType(String)),
+      'address2',
+      serializers.serialize(object.address2,
+          specifiedType: const FullType(String)),
+      'city',
+      serializers.serialize(object.city, specifiedType: const FullType(String)),
+      'state',
+      serializers.serialize(object.state,
+          specifiedType: const FullType(String)),
+      'postal_code',
+      serializers.serialize(object.postalCode,
+          specifiedType: const FullType(String)),
+      'work_phone',
+      serializers.serialize(object.workPhone,
+          specifiedType: const FullType(String)),
+      'work_email',
+      serializers.serialize(object.workEmail,
+          specifiedType: const FullType(String)),
+      'country_id',
+      serializers.serialize(object.countryId,
+          specifiedType: const FullType(String)),
+      'id_number',
+      serializers.serialize(object.idNumber,
+          specifiedType: const FullType(String)),
+      'vat_number',
+      serializers.serialize(object.vatNumber,
+          specifiedType: const FullType(String)),
+      'website',
+      serializers.serialize(object.website,
+          specifiedType: const FullType(String)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -45,10 +77,19 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
-      'country_id',
-      serializers.serialize(object.countryId,
-          specifiedType: const FullType(String)),
     ];
+    if (object.sizeId != null) {
+      result
+        ..add('size_id')
+        ..add(serializers.serialize(object.sizeId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.industryId != null) {
+      result
+        ..add('industry_id')
+        ..add(serializers.serialize(object.industryId,
+            specifiedType: const FullType(String)));
+    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -165,6 +206,58 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'address1':
+          result.address1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'address2':
+          result.address2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'city':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'state':
+          result.state = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'postal_code':
+          result.postalCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'work_phone':
+          result.workPhone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'work_email':
+          result.workEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'country_id':
+          result.countryId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id_number':
+          result.idNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vat_number':
+          result.vatNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'website':
+          result.website = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'size_id':
+          result.sizeId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'industry_id':
+          result.industryId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'plan':
           result.plan = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -248,10 +341,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
-          break;
-        case 'country_id':
-          result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'enabled_modules':
           result.enabledModules = serializers.deserialize(value,
@@ -1014,6 +1103,32 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String name;
   @override
+  final String address1;
+  @override
+  final String address2;
+  @override
+  final String city;
+  @override
+  final String state;
+  @override
+  final String postalCode;
+  @override
+  final String workPhone;
+  @override
+  final String workEmail;
+  @override
+  final String countryId;
+  @override
+  final String idNumber;
+  @override
+  final String vatNumber;
+  @override
+  final String website;
+  @override
+  final String sizeId;
+  @override
+  final String industryId;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -1046,8 +1161,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final SettingsEntity settings;
   @override
-  final String countryId;
-  @override
   final int enabledModules;
 
   factory _$CompanyEntity([void Function(CompanyEntityBuilder) updates]) =>
@@ -1056,6 +1169,19 @@ class _$CompanyEntity extends CompanyEntity {
   _$CompanyEntity._(
       {this.id,
       this.name,
+      this.address1,
+      this.address2,
+      this.city,
+      this.state,
+      this.postalCode,
+      this.workPhone,
+      this.workEmail,
+      this.countryId,
+      this.idNumber,
+      this.vatNumber,
+      this.website,
+      this.sizeId,
+      this.industryId,
       this.plan,
       this.companyKey,
       this.logoUrl,
@@ -1072,7 +1198,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.userMap,
       this.customFields,
       this.settings,
-      this.countryId,
       this.enabledModules})
       : super._() {
     if (id == null) {
@@ -1080,6 +1205,39 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
+    }
+    if (address1 == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'address1');
+    }
+    if (address2 == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'address2');
+    }
+    if (city == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'city');
+    }
+    if (state == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'state');
+    }
+    if (postalCode == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'postalCode');
+    }
+    if (workPhone == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'workPhone');
+    }
+    if (workEmail == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'workEmail');
+    }
+    if (countryId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
+    }
+    if (idNumber == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'idNumber');
+    }
+    if (vatNumber == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'vatNumber');
+    }
+    if (website == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'website');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
@@ -1089,9 +1247,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
-    }
-    if (countryId == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'countryId');
     }
   }
 
@@ -1108,6 +1263,19 @@ class _$CompanyEntity extends CompanyEntity {
     return other is CompanyEntity &&
         id == other.id &&
         name == other.name &&
+        address1 == other.address1 &&
+        address2 == other.address2 &&
+        city == other.city &&
+        state == other.state &&
+        postalCode == other.postalCode &&
+        workPhone == other.workPhone &&
+        workEmail == other.workEmail &&
+        countryId == other.countryId &&
+        idNumber == other.idNumber &&
+        vatNumber == other.vatNumber &&
+        website == other.website &&
+        sizeId == other.sizeId &&
+        industryId == other.industryId &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         logoUrl == other.logoUrl &&
@@ -1124,7 +1292,6 @@ class _$CompanyEntity extends CompanyEntity {
         userMap == other.userMap &&
         customFields == other.customFields &&
         settings == other.settings &&
-        countryId == other.countryId &&
         enabledModules == other.enabledModules;
   }
 
@@ -1148,25 +1315,25 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, id.hashCode),
-                                                                                name.hashCode),
-                                                                            plan.hashCode),
-                                                                        companyKey.hashCode),
-                                                                    logoUrl.hashCode),
-                                                                appUrl.hashCode),
-                                                            startOfWeek.hashCode),
-                                                        financialYearStart.hashCode),
-                                                    companyCurrencyId.hashCode),
-                                                taxRates.hashCode),
-                                            taskStatuses.hashCode),
-                                        taskStatusMap.hashCode),
-                                    expenseCategories.hashCode),
-                                expenseCategoryMap.hashCode),
-                            users.hashCode),
-                        userMap.hashCode),
-                    customFields.hashCode),
-                settings.hashCode),
-            countryId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, id.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), workPhone.hashCode), workEmail.hashCode), countryId.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode),
+                                                                                sizeId.hashCode),
+                                                                            industryId.hashCode),
+                                                                        plan.hashCode),
+                                                                    companyKey.hashCode),
+                                                                logoUrl.hashCode),
+                                                            appUrl.hashCode),
+                                                        startOfWeek.hashCode),
+                                                    financialYearStart.hashCode),
+                                                companyCurrencyId.hashCode),
+                                            taxRates.hashCode),
+                                        taskStatuses.hashCode),
+                                    taskStatusMap.hashCode),
+                                expenseCategories.hashCode),
+                            expenseCategoryMap.hashCode),
+                        users.hashCode),
+                    userMap.hashCode),
+                customFields.hashCode),
+            settings.hashCode),
         enabledModules.hashCode));
   }
 
@@ -1175,6 +1342,19 @@ class _$CompanyEntity extends CompanyEntity {
     return (newBuiltValueToStringHelper('CompanyEntity')
           ..add('id', id)
           ..add('name', name)
+          ..add('address1', address1)
+          ..add('address2', address2)
+          ..add('city', city)
+          ..add('state', state)
+          ..add('postalCode', postalCode)
+          ..add('workPhone', workPhone)
+          ..add('workEmail', workEmail)
+          ..add('countryId', countryId)
+          ..add('idNumber', idNumber)
+          ..add('vatNumber', vatNumber)
+          ..add('website', website)
+          ..add('sizeId', sizeId)
+          ..add('industryId', industryId)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('logoUrl', logoUrl)
@@ -1191,7 +1371,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('settings', settings)
-          ..add('countryId', countryId)
           ..add('enabledModules', enabledModules))
         .toString();
   }
@@ -1208,6 +1387,58 @@ class CompanyEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _address1;
+  String get address1 => _$this._address1;
+  set address1(String address1) => _$this._address1 = address1;
+
+  String _address2;
+  String get address2 => _$this._address2;
+  set address2(String address2) => _$this._address2 = address2;
+
+  String _city;
+  String get city => _$this._city;
+  set city(String city) => _$this._city = city;
+
+  String _state;
+  String get state => _$this._state;
+  set state(String state) => _$this._state = state;
+
+  String _postalCode;
+  String get postalCode => _$this._postalCode;
+  set postalCode(String postalCode) => _$this._postalCode = postalCode;
+
+  String _workPhone;
+  String get workPhone => _$this._workPhone;
+  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+
+  String _workEmail;
+  String get workEmail => _$this._workEmail;
+  set workEmail(String workEmail) => _$this._workEmail = workEmail;
+
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
+
+  String _idNumber;
+  String get idNumber => _$this._idNumber;
+  set idNumber(String idNumber) => _$this._idNumber = idNumber;
+
+  String _vatNumber;
+  String get vatNumber => _$this._vatNumber;
+  set vatNumber(String vatNumber) => _$this._vatNumber = vatNumber;
+
+  String _website;
+  String get website => _$this._website;
+  set website(String website) => _$this._website = website;
+
+  String _sizeId;
+  String get sizeId => _$this._sizeId;
+  set sizeId(String sizeId) => _$this._sizeId = sizeId;
+
+  String _industryId;
+  String get industryId => _$this._industryId;
+  set industryId(String industryId) => _$this._industryId = industryId;
 
   String _plan;
   String get plan => _$this._plan;
@@ -1293,10 +1524,6 @@ class CompanyEntityBuilder
       _$this._settings ??= new SettingsEntityBuilder();
   set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
-  String _countryId;
-  String get countryId => _$this._countryId;
-  set countryId(String countryId) => _$this._countryId = countryId;
-
   int _enabledModules;
   int get enabledModules => _$this._enabledModules;
   set enabledModules(int enabledModules) =>
@@ -1308,6 +1535,19 @@ class CompanyEntityBuilder
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _address1 = _$v.address1;
+      _address2 = _$v.address2;
+      _city = _$v.city;
+      _state = _$v.state;
+      _postalCode = _$v.postalCode;
+      _workPhone = _$v.workPhone;
+      _workEmail = _$v.workEmail;
+      _countryId = _$v.countryId;
+      _idNumber = _$v.idNumber;
+      _vatNumber = _$v.vatNumber;
+      _website = _$v.website;
+      _sizeId = _$v.sizeId;
+      _industryId = _$v.industryId;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _logoUrl = _$v.logoUrl;
@@ -1324,7 +1564,6 @@ class CompanyEntityBuilder
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _settings = _$v.settings?.toBuilder();
-      _countryId = _$v.countryId;
       _enabledModules = _$v.enabledModules;
       _$v = null;
     }
@@ -1352,6 +1591,19 @@ class CompanyEntityBuilder
           new _$CompanyEntity._(
               id: id,
               name: name,
+              address1: address1,
+              address2: address2,
+              city: city,
+              state: state,
+              postalCode: postalCode,
+              workPhone: workPhone,
+              workEmail: workEmail,
+              countryId: countryId,
+              idNumber: idNumber,
+              vatNumber: vatNumber,
+              website: website,
+              sizeId: sizeId,
+              industryId: industryId,
               plan: plan,
               companyKey: companyKey,
               logoUrl: logoUrl,
@@ -1368,7 +1620,6 @@ class CompanyEntityBuilder
               userMap: _userMap?.build(),
               customFields: _customFields?.build(),
               settings: settings.build(),
-              countryId: countryId,
               enabledModules: enabledModules);
     } catch (_) {
       String _$failedField;

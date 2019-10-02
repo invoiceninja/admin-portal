@@ -32,6 +32,14 @@ abstract class CompanyEntity
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      vatNumber: '',
+      idNumber: '',
+      website: '',
     );
   }
 
@@ -40,6 +48,40 @@ abstract class CompanyEntity
   String get id;
 
   String get name;
+
+  String get address1;
+  String get address2;
+  String get city;
+  String get state;
+
+  @BuiltValueField(wireName: 'postal_code')
+  String get postalCode;
+
+  @BuiltValueField(wireName: 'work_phone')
+  String get workPhone;
+
+  @BuiltValueField(wireName: 'work_email')
+  String get workEmail;
+
+  @BuiltValueField(wireName: 'country_id')
+  String get countryId;
+
+  @BuiltValueField(wireName: 'id_number')
+  String get idNumber;
+
+  @BuiltValueField(wireName: 'vat_number')
+  String get vatNumber;
+
+  @BuiltValueField(wireName: 'website')
+  String get website;
+
+  @nullable
+  @BuiltValueField(wireName: 'size_id')
+  String get sizeId;
+
+  @nullable
+  @BuiltValueField(wireName: 'industry_id')
+  String get industryId;
 
   // TODO remove this
   @nullable
@@ -106,9 +148,6 @@ abstract class CompanyEntity
   BuiltMap<String, String> get customFields;
 
   SettingsEntity get settings;
-
-  @BuiltValueField(wireName: 'country_id')
-  String get countryId;
 
   // TODO remove this
   @nullable
