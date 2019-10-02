@@ -30,7 +30,7 @@ class SettingsListVM {
     return SettingsListVM(
         state: store.state,
         loadSection: (context, section) {
-          store.dispatch(ViewSettings(context: context));
+          store.dispatch(ViewSettings(context: context, section: section));
         });
   }
 

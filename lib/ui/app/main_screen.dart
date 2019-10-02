@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -123,10 +124,16 @@ class SettingsScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
     final state = store.state;
     final uiState = state.uiState;
     final subRoute = uiState.subRoute;
-    //final entityUIState = state.getUIState(entityType);
+
+    int index = 0;
+
+    if (subRoute == localization.userDetails) {
+      index = 1;
+    }
 
     return Row(
       children: <Widget>[
@@ -138,10 +145,8 @@ class SettingsScreens extends StatelessWidget {
         Expanded(
           flex: 3,
           child: IndexedStack(
-            index: 0,
-            children: <Widget>[
-              CompanyDetailsBuilder(),
-            ],
+            index: index,
+            children: <Widget>[CompanyDetailsBuilder(), UserDetailsBuilder()],
           ),
         ),
       ],

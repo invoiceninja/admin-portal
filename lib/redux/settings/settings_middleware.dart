@@ -26,7 +26,8 @@ Middleware<AppState> _viewSettings() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(SettingsScreen.route));
+    store.dispatch(UpdateCurrentRoute(SettingsScreen.route +
+        (action.section != null ? '/${action.section}' : '')));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
