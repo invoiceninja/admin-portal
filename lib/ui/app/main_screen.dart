@@ -145,7 +145,10 @@ class SettingsScreens extends StatelessWidget {
           flex: 3,
           child: IndexedStack(
             index: index,
-            children: <Widget>[CompanyDetailsBuilder(), UserDetailsBuilder()],
+            children: <Widget>[
+              CompanyDetailsBuilder(),
+              UserDetailsBuilder(),
+            ],
           ),
         ),
       ],
