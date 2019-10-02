@@ -29,6 +29,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'company_key',
@@ -155,6 +157,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1004,6 +1010,8 @@ class _$SettingsEntitySerializer
 
 class _$CompanyEntity extends CompanyEntity {
   @override
+  final String id;
+  @override
   final String name;
   @override
   final String plan;
@@ -1046,7 +1054,8 @@ class _$CompanyEntity extends CompanyEntity {
       (new CompanyEntityBuilder()..update(updates)).build();
 
   _$CompanyEntity._(
-      {this.name,
+      {this.id,
+      this.name,
       this.plan,
       this.companyKey,
       this.logoUrl,
@@ -1066,6 +1075,9 @@ class _$CompanyEntity extends CompanyEntity {
       this.countryId,
       this.enabledModules})
       : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'id');
+    }
     if (name == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'name');
     }
@@ -1094,6 +1106,7 @@ class _$CompanyEntity extends CompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyEntity &&
+        id == other.id &&
         name == other.name &&
         plan == other.plan &&
         companyKey == other.companyKey &&
@@ -1135,22 +1148,14 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                name
-                                                                                    .hashCode),
-                                                                            plan
-                                                                                .hashCode),
-                                                                        companyKey
-                                                                            .hashCode),
-                                                                    logoUrl
-                                                                        .hashCode),
-                                                                appUrl
-                                                                    .hashCode),
-                                                            startOfWeek
-                                                                .hashCode),
-                                                        financialYearStart
-                                                            .hashCode),
+                                                                            $jc($jc(0, id.hashCode),
+                                                                                name.hashCode),
+                                                                            plan.hashCode),
+                                                                        companyKey.hashCode),
+                                                                    logoUrl.hashCode),
+                                                                appUrl.hashCode),
+                                                            startOfWeek.hashCode),
+                                                        financialYearStart.hashCode),
                                                     companyCurrencyId.hashCode),
                                                 taxRates.hashCode),
                                             taskStatuses.hashCode),
@@ -1168,6 +1173,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
@@ -1194,6 +1200,10 @@ class _$CompanyEntity extends CompanyEntity {
 class CompanyEntityBuilder
     implements Builder<CompanyEntity, CompanyEntityBuilder> {
   _$CompanyEntity _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -1296,6 +1306,7 @@ class CompanyEntityBuilder
 
   CompanyEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
@@ -1339,6 +1350,7 @@ class CompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyEntity._(
+              id: id,
               name: name,
               plan: plan,
               companyKey: companyKey,

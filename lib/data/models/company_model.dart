@@ -12,6 +12,7 @@ abstract class CompanyEntity
     implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
+      id: '',
       companyKey: '',
       name: '',
       plan: '',
@@ -35,6 +36,8 @@ abstract class CompanyEntity
   }
 
   CompanyEntity._();
+
+  String get id;
 
   String get name;
 
