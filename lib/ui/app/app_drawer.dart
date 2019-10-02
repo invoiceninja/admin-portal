@@ -323,7 +323,8 @@ class AppDrawer extends StatelessWidget {
                           if (isMobile(context)) {
                             navigator.pop();
                           }
-                          store.dispatch(ViewSettings(context: context));
+                          store.dispatch(
+                              ViewSettings(context: context, company: company));
                         },
                       ),
                     ],

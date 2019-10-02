@@ -1,7 +1,9 @@
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
@@ -57,7 +59,9 @@ UIState uiReducer(UIState state, dynamic action) {
     ..taskUIState.replace(taskUIReducer(state.taskUIState, action))
     ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
-    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
+    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
+    ..settingsUIState
+        .replace(settingsUIReducer(state.settingsUIState, action)));
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([
@@ -160,3 +164,9 @@ Reducer<int> selectedCompanyIndexReducer = combineReducers([
 int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
   return action.companyIndex;
 }
+
+Reducer<SettingsUIState> settingsUIReducer = combineReducers([
+  TypedReducer<SettingsUIState, ViewSettings>((settings, action) {
+    return SettingsUIState(company: action.company);
+  }),
+]);

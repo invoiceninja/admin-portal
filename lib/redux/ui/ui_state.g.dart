@@ -132,6 +132,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'quoteUIState',
       serializers.serialize(object.quoteUIState,
           specifiedType: const FullType(QuoteUIState)),
+      'settingsUIState',
+      serializers.serialize(object.settingsUIState,
+          specifiedType: const FullType(SettingsUIState)),
     ];
     if (object.filter != null) {
       result
@@ -251,6 +254,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.quoteUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteUIState)) as QuoteUIState);
           break;
+        case 'settingsUIState':
+          result.settingsUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SettingsUIState))
+              as SettingsUIState);
+          break;
       }
     }
 
@@ -341,6 +349,8 @@ class _$UIState extends UIState {
   final PaymentUIState paymentUIState;
   @override
   final QuoteUIState quoteUIState;
+  @override
+  final SettingsUIState settingsUIState;
 
   factory _$UIState([void Function(UIStateBuilder) updates]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -369,7 +379,8 @@ class _$UIState extends UIState {
       this.taskUIState,
       this.projectUIState,
       this.paymentUIState,
-      this.quoteUIState})
+      this.quoteUIState,
+      this.settingsUIState})
       : super._() {
     if (layout == null) {
       throw new BuiltValueNullFieldError('UIState', 'layout');
@@ -440,6 +451,9 @@ class _$UIState extends UIState {
     if (quoteUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
     }
+    if (settingsUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'settingsUIState');
+    }
   }
 
   @override
@@ -476,7 +490,8 @@ class _$UIState extends UIState {
         taskUIState == other.taskUIState &&
         projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
-        quoteUIState == other.quoteUIState;
+        quoteUIState == other.quoteUIState &&
+        settingsUIState == other.settingsUIState;
   }
 
   @override
@@ -499,26 +514,26 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
-                                                                                currentRoute.hashCode),
-                                                                            previousRoute.hashCode),
-                                                                        enableDarkMode.hashCode),
-                                                                    requireAuthentication.hashCode),
-                                                                emailPayment.hashCode),
-                                                            autoStartTasks.hashCode),
-                                                        addDocumentsToInvoice.hashCode),
-                                                    filter.hashCode),
-                                                dashboardUIState.hashCode),
-                                            productUIState.hashCode),
-                                        clientUIState.hashCode),
-                                    invoiceUIState.hashCode),
-                                documentUIState.hashCode),
-                            expenseUIState.hashCode),
-                        vendorUIState.hashCode),
-                    taskUIState.hashCode),
-                projectUIState.hashCode),
-            paymentUIState.hashCode),
-        quoteUIState.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode),
+                                                                                previousRoute.hashCode),
+                                                                            enableDarkMode.hashCode),
+                                                                        requireAuthentication.hashCode),
+                                                                    emailPayment.hashCode),
+                                                                autoStartTasks.hashCode),
+                                                            addDocumentsToInvoice.hashCode),
+                                                        filter.hashCode),
+                                                    dashboardUIState.hashCode),
+                                                productUIState.hashCode),
+                                            clientUIState.hashCode),
+                                        invoiceUIState.hashCode),
+                                    documentUIState.hashCode),
+                                expenseUIState.hashCode),
+                            vendorUIState.hashCode),
+                        taskUIState.hashCode),
+                    projectUIState.hashCode),
+                paymentUIState.hashCode),
+            quoteUIState.hashCode),
+        settingsUIState.hashCode));
   }
 
   @override
@@ -547,7 +562,8 @@ class _$UIState extends UIState {
           ..add('taskUIState', taskUIState)
           ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
-          ..add('quoteUIState', quoteUIState))
+          ..add('quoteUIState', quoteUIState)
+          ..add('settingsUIState', settingsUIState))
         .toString();
   }
 }
@@ -681,6 +697,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
       _$this._quoteUIState = quoteUIState;
 
+  SettingsUIStateBuilder _settingsUIState;
+  SettingsUIStateBuilder get settingsUIState =>
+      _$this._settingsUIState ??= new SettingsUIStateBuilder();
+  set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
+      _$this._settingsUIState = settingsUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -709,6 +731,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _projectUIState = _$v.projectUIState?.toBuilder();
       _paymentUIState = _$v.paymentUIState?.toBuilder();
       _quoteUIState = _$v.quoteUIState?.toBuilder();
+      _settingsUIState = _$v.settingsUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -756,7 +779,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               taskUIState: taskUIState.build(),
               projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
-              quoteUIState: quoteUIState.build());
+              quoteUIState: quoteUIState.build(),
+              settingsUIState: settingsUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -782,6 +806,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         paymentUIState.build();
         _$failedField = 'quoteUIState';
         quoteUIState.build();
+        _$failedField = 'settingsUIState';
+        settingsUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

@@ -35,6 +35,7 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
     ..quoteState.replace(quotesReducer(state.quoteState, action)));
+
   // STARTER: reducer - do not remove comment
 }
 

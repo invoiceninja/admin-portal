@@ -8,6 +8,8 @@ part of 'company_state.dart';
 
 Serializer<UserCompanyState> _$userCompanyStateSerializer =
     new _$UserCompanyStateSerializer();
+Serializer<SettingsUIState> _$settingsUIStateSerializer =
+    new _$SettingsUIStateSerializer();
 
 class _$UserCompanyStateSerializer
     implements StructuredSerializer<UserCompanyState> {
@@ -123,6 +125,49 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$SettingsUIStateSerializer
+    implements StructuredSerializer<SettingsUIState> {
+  @override
+  final Iterable<Type> types = const [SettingsUIState, _$SettingsUIState];
+  @override
+  final String wireName = 'SettingsUIState';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.editing != null) {
+      result
+        ..add('editing')
+        ..add(serializers.serialize(object.editing,
+            specifiedType: const FullType(CompanyEntity)));
+    }
+    return result;
+  }
+
+  @override
+  SettingsUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new SettingsUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'editing':
+          result.editing.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
           break;
       }
     }
@@ -438,6 +483,95 @@ class UserCompanyStateBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$SettingsUIState extends SettingsUIState {
+  @override
+  final CompanyEntity editing;
+
+  factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
+      (new SettingsUIStateBuilder()..update(updates)).build();
+
+  _$SettingsUIState._({this.editing}) : super._();
+
+  @override
+  SettingsUIState rebuild(void Function(SettingsUIStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SettingsUIStateBuilder toBuilder() =>
+      new SettingsUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is SettingsUIState && editing == other.editing;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, editing.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('SettingsUIState')
+          ..add('editing', editing))
+        .toString();
+  }
+}
+
+class SettingsUIStateBuilder
+    implements Builder<SettingsUIState, SettingsUIStateBuilder> {
+  _$SettingsUIState _$v;
+
+  CompanyEntityBuilder _editing;
+  CompanyEntityBuilder get editing =>
+      _$this._editing ??= new CompanyEntityBuilder();
+  set editing(CompanyEntityBuilder editing) => _$this._editing = editing;
+
+  SettingsUIStateBuilder();
+
+  SettingsUIStateBuilder get _$this {
+    if (_$v != null) {
+      _editing = _$v.editing?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(SettingsUIState other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$SettingsUIState;
+  }
+
+  @override
+  void update(void Function(SettingsUIStateBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$SettingsUIState build() {
+    _$SettingsUIState _$result;
+    try {
+      _$result = _$v ?? new _$SettingsUIState._(editing: _editing?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'editing';
+        _editing?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SettingsUIState', _$failedField, e.toString());
       }
       rethrow;
     }

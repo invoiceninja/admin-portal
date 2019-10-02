@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
@@ -59,6 +60,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       projectUIState: ProjectUIState(),
       paymentUIState: PaymentUIState(),
       quoteUIState: QuoteUIState(),
+      settingsUIState: SettingsUIState(),
     );
   }
 
@@ -113,6 +115,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   PaymentUIState get paymentUIState;
 
   QuoteUIState get quoteUIState;
+
+  SettingsUIState get settingsUIState;
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 

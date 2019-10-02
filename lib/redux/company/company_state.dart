@@ -82,3 +82,19 @@ abstract class UserCompanyState
   static Serializer<UserCompanyState> get serializer =>
       _$userCompanyStateSerializer;
 }
+
+abstract class SettingsUIState extends Object
+    implements Built<SettingsUIState, SettingsUIStateBuilder> {
+  factory SettingsUIState({CompanyEntity company}) {
+    return _$SettingsUIState._(
+      editing: company ?? CompanyEntity(),
+    );
+  }
+  SettingsUIState._();
+
+  @nullable
+  CompanyEntity get editing;
+
+  static Serializer<SettingsUIState> get serializer =>
+      _$settingsUIStateSerializer;
+}
