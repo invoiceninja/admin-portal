@@ -169,4 +169,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ViewSettings>((settings, action) {
     return SettingsUIState(company: action.company);
   }),
+  TypedReducer<SettingsUIState, UpdateSettings>((settings, action) {
+    return SettingsUIState(company: action.company);
+  }),
 ]);

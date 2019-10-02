@@ -18,6 +18,11 @@ class ViewSettings implements PersistUI {
   final String section;
 }
 
+class UpdateSettings {
+  UpdateSettings({@required this.company});
+  final CompanyEntity company;
+}
+
 class SaveSettingsRequest implements StartSaving {
   SaveSettingsRequest({this.completer, this.settings});
 

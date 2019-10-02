@@ -99,13 +99,21 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+    final company = widget.viewModel.company.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..idNumber = _idNumberController.text.trim()
+      ..vatNumber = _vatNumberController.text.trim()
+      ..workPhone = _phoneController.text.trim()
+      ..workEmail = _emailController.text.trim()
+      ..website = _websiteController.text.trim()
+      ..address1 = _address1Controller.text.trim()
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim());
+    if (company != widget.viewModel.company) {
+      widget.viewModel.onChanged(company);
     }
-    */
   }
 
   @override
@@ -205,7 +213,34 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   )
                 ],
               ),
-              ListView(),
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      DecoratedFormField(
+                        label: localization.address1,
+                        controller: _address1Controller,
+                      ),
+                      DecoratedFormField(
+                        label: localization.address2,
+                        controller: _address2Controller,
+                      ),
+                      DecoratedFormField(
+                        label: localization.city,
+                        controller: _cityController,
+                      ),
+                      DecoratedFormField(
+                        label: localization.state,
+                        controller: _stateController,
+                      ),
+                      DecoratedFormField(
+                        label: localization.postalCode,
+                        controller: _postalCodeController,
+                      ),
+                    ],
+                  )
+                ],
+              ),
               ListView(),
             ],
           ),

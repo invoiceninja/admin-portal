@@ -27,6 +27,7 @@ class CompanyDetailsVM {
   CompanyDetailsVM({
     @required this.state,
     @required this.company,
+    @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
@@ -37,6 +38,9 @@ class CompanyDetailsVM {
     return CompanyDetailsVM(
         state: state,
         company: state.selectedCompany,
+        onChanged: (company) {
+          store.dispatch(UpdateSettings(company: company));
+        },
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);
@@ -48,6 +52,7 @@ class CompanyDetailsVM {
 
   final AppState state;
   final CompanyEntity company;
+  final Function(CompanyEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
 }
