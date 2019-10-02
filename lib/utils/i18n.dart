@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'defaults': 'Defaults',
       'basic_settings': 'Basic Settings',
       'advanced_settings': 'Advanced Settings',
       'company_details': 'Company Details',
@@ -14665,6 +14666,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get advancedSettings =>
       _localizedValues[localeCode]['advanced_settings'];
+
+  String get defaults => _localizedValues[localeCode]['defaults'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

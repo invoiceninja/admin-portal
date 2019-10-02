@@ -1,5 +1,7 @@
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
+import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -107,13 +109,43 @@ class MainScreen extends StatelessWidget {
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
                     ),
-                    SettingsScreen(),
+                    SettingsScreens(),
                   ],
                 ),
               ),
             ],
           );
         });
+  }
+}
+
+class SettingsScreens extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final uiState = state.uiState;
+    final subRoute = uiState.subRoute;
+    //final entityUIState = state.getUIState(entityType);
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: SettingsScreen(),
+          flex: 2,
+        ),
+        VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+        Expanded(
+          flex: 3,
+          child: IndexedStack(
+            index: 0,
+            children: <Widget>[
+              CompanyDetailsBuilder(),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
