@@ -1,6 +1,6 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
-import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -124,14 +124,13 @@ class SettingsScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
     final state = store.state;
     final uiState = state.uiState;
     final subRoute = uiState.subRoute;
 
     int index = 0;
 
-    if (subRoute == localization.userDetails) {
+    if (subRoute == kSettingsUserDetails) {
       index = 1;
     }
 

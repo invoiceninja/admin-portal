@@ -28,7 +28,7 @@ class CompanyDetailsVM {
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
-    final state = store.state;
+    //final state = store.state;
 
     return CompanyDetailsVM(
       state: store.state,

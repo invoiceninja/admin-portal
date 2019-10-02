@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -29,7 +28,7 @@ class UserDetailsVM {
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
-    final state = store.state;
+    //final state = store.state;
 
     return UserDetailsVM(
       state: store.state,

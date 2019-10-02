@@ -59,6 +59,10 @@ class SettingsList extends StatelessWidget {
           section: kSettingsImportExport,
           viewModel: viewModel,
         ),
+        SettingsListTile(
+          section: kSettingsDeviceSettings,
+          viewModel: viewModel,
+        ),
         Container(
           color: Theme.of(context).backgroundColor,
           padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),

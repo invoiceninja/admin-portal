@@ -374,7 +374,7 @@ class DrawerTile extends StatelessWidget {
         : title == localization.settings ? 'settings' : entityType.name;
 
     return SelectedIndicator(
-      isSelected: uiState.containsRoute(route),
+      isSelected: uiState.currentRoute.startsWith('/$route'),
       child: ListTile(
         dense: true,
         leading: Icon(icon, size: 22.0),

@@ -91,6 +91,7 @@ const String kSettingsTaxRates = 'tax_rates';
 const String kSettingsNotifications = 'notifications';
 const String kSettingsProducts = 'products';
 const String kSettingsImportExport = 'import_export';
+const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsInvoiceSettings = 'invoice_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
 const String kSettingsClientPortal = 'client_portal';
