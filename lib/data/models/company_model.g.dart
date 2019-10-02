@@ -62,9 +62,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'vat_number',
       serializers.serialize(object.vatNumber,
           specifiedType: const FullType(String)),
-      'website',
-      serializers.serialize(object.website,
-          specifiedType: const FullType(String)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -78,6 +75,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
+    if (object.website != null) {
+      result
+        ..add('website')
+        ..add(serializers.serialize(object.website,
+            specifiedType: const FullType(String)));
+    }
     if (object.sizeId != null) {
       result
         ..add('size_id')
@@ -1235,9 +1238,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (vatNumber == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'vatNumber');
-    }
-    if (website == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'website');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
