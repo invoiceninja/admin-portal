@@ -7,19 +7,19 @@ import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class Localization extends StatefulWidget {
-  const Localization({
+class LocalizationSettings extends StatefulWidget {
+  const LocalizationSettings({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final LocalizationVM viewModel;
+  final LocalizationSettingsVM viewModel;
 
   @override
-  _LocalizationState createState() => _LocalizationState();
+  _LocalizationSettingsState createState() => _LocalizationSettingsState();
 }
 
-class _LocalizationState extends State<Localization> {
+class _LocalizationSettingsState extends State<LocalizationSettings> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool autoValidate = false;

@@ -14,27 +14,27 @@ class LocalizationBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, LocalizationVM>(
-      converter: LocalizationVM.fromStore,
+    return StoreConnector<AppState, LocalizationSettingsVM>(
+      converter: LocalizationSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return Localization(viewModel: viewModel);
+        return LocalizationSettings(viewModel: viewModel);
       },
     );
   }
 }
 
-class LocalizationVM {
-  LocalizationVM({
+class LocalizationSettingsVM {
+  LocalizationSettingsVM({
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
 
-  static LocalizationVM fromStore(Store<AppState> store) {
+  static LocalizationSettingsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return LocalizationVM(
+    return LocalizationSettingsVM(
         state: state,
         onChanged: (company) {
           store.dispatch(UpdateCompanySettings(company: company));
