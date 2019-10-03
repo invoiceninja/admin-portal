@@ -136,7 +136,7 @@ class AppBuilderState extends State<AppBuilder> {
       child: widget.builder(context),
       focusNode: _focusNode,
       onKey: (event) {
-        if (kReleaseMode) {
+        if (true || kReleaseMode) {
           return;
         }
         print(

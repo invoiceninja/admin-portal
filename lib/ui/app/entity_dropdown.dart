@@ -36,16 +36,24 @@ class EntityDropdown extends StatefulWidget {
 
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
+  final _focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
     _textController.text = widget.initialValue;
+    _focusNode.addListener(() {
+      print('## DOCUS EVENT: hasFocus: ${_focusNode.hasFocus}##');
+      if (_focusNode.hasFocus) {
+        _showOptions();
+      }
+    });
   }
 
   @override
   void dispose() {
     _textController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -74,6 +82,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
       onTap: () => _showOptions(),
       child: IgnorePointer(
         child: TextFormField(
+          focusNode: _focusNode,
+          readOnly: true,
           validator: widget.validator,
           autovalidate: widget.autoValidate,
           controller: _textController,
