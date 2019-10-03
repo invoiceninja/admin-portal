@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -254,7 +255,13 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 width: 300,
                 label: localization.uploadLogo,
                 icon: Icons.cloud_upload,
-                onPressed: () {},
+                onPressed: () async {
+                  final image =
+                      await ImagePicker.pickImage(source: ImageSource.camera);
+                  if (image != null) {
+                    viewModel.onUploadLogo(context, image.path);
+                  }
+                },
               ),
             ),
             ListView(

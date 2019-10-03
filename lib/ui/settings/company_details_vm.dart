@@ -32,25 +32,33 @@ class CompanyDetailsVM {
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
+    @required this.onUploadLogo,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
     return CompanyDetailsVM(
-        state: state,
-        company: state.uiState.settingsUIState.editing.company,
-        onChanged: (company) =>
-            store.dispatch(UpdateCompanySettings(company: company)),
-        onCancelPressed: (context) => store
-            .dispatch(ResetCompanySettings(company: state.selectedCompany)),
-        onSavePressed: (context) {
-          final completer = snackBarCompleter(
-              context, AppLocalization.of(context).savedSettings);
-          store.dispatch(SaveCompanyRequest(
-              completer: completer,
-              company: state.uiState.settingsUIState.editing.company));
-        });
+      state: state,
+      company: state.uiState.settingsUIState.editing.company,
+      onChanged: (company) =>
+          store.dispatch(UpdateCompanySettings(company: company)),
+      onCancelPressed: (context) =>
+          store.dispatch(ResetCompanySettings(company: state.selectedCompany)),
+      onSavePressed: (context) {
+        final completer = snackBarCompleter(
+            context, AppLocalization.of(context).savedSettings);
+        store.dispatch(SaveCompanyRequest(
+            completer: completer,
+            company: state.uiState.settingsUIState.editing.company));
+      },
+      onUploadLogo: (context, path) {
+        final completer = snackBarCompleter(
+            context, AppLocalization.of(context).uploadedLogo);
+        //store.dispatch(
+        //SaveDocumentRequest(document: document, completer: completer));
+      },
+    );
   }
 
   final AppState state;
@@ -58,4 +66,5 @@ class CompanyDetailsVM {
   final Function(CompanyEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
+  final Function(BuildContext, String) onUploadLogo;
 }

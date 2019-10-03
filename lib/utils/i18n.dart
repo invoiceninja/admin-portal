@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'upload_logo': 'Upload Logo',
+      'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
       'saved_settings': 'Successfully saved settings',
       'product_settings': 'Product Settings',
@@ -14684,6 +14685,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get logo => _localizedValues[localeCode]['logo'];
 
   String get uploadLogo => _localizedValues[localeCode]['upload_logo'];
+
+  String get uploadedLogo => _localizedValues[localeCode]['uploaded_logo'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
