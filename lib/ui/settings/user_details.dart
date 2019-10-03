@@ -148,7 +148,7 @@ class _UserDetailsState extends State<UserDetails> {
                     autovalidate: autoValidate,
                   ),
                   DecoratedFormField(
-                    label: localization.firstName,
+                    label: localization.phone,
                     controller: _phoneController,
                   ),
                 ],
