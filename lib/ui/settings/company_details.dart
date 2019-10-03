@@ -29,6 +29,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TabController _controller;
+  final FocusScopeNode _node = FocusScopeNode();
 
   bool autoValidate = false;
 
@@ -160,187 +161,186 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          controller: _controller,
-          children: <Widget>[
-            ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.name,
-                      controller: _nameController,
-                      validator: (val) => val.isEmpty || val.trim().isEmpty
-                          ? localization.pleaseEnterAName
-                          : null,
-                      autovalidate: autoValidate,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                    DecoratedFormField(
-                      label: localization.idNumber,
-                      controller: _idNumberController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                    DecoratedFormField(
-                      label: localization.vatNumber,
-                      controller: _vatNumberController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                    DecoratedFormField(
-                      label: localization.website,
-                      controller: _websiteController,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                    DecoratedFormField(
-                      label: localization.email,
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                    DecoratedFormField(
-                      label: localization.phone,
-                      controller: _phoneController,
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) =>
-                          FocusScope.of(context).nextFocus(),
-                    ),
-                  ],
-                ),
-                FormCard(
-                  children: <Widget>[
-                    EntityDropdown(
-                      key: ValueKey('__size_${company.sizeId}__'),
-                      entityType: EntityType.size,
-                      entityMap: state.staticState.sizeMap,
-                      entityList: memoizedSizeList(state.staticState.sizeMap),
-                      labelText: localization.size,
-                      initialValue:
-                          state.staticState.sizeMap[company.sizeId]?.name,
-                      onSelected: (SelectableEntity size) =>
-                          viewModel.onChanged(
-                              company.rebuild((b) => b..sizeId = size.id)),
-                    ),
-                    EntityDropdown(
-                      key: ValueKey('__industry_${company.industryId}__'),
-                      entityType: EntityType.industry,
-                      entityMap: state.staticState.industryMap,
-                      entityList:
-                          memoizedIndustryList(state.staticState.industryMap),
-                      labelText: localization.industry,
-                      initialValue: state
-                          .staticState.industryMap[company.industryId]?.name,
-                      onSelected: (SelectableEntity industry) =>
-                          viewModel.onChanged(company
-                              .rebuild((b) => b..industryId = industry.id)),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Center(
-              child: ElevatedButton(
-                width: 300,
-                label: localization.uploadLogo,
-                icon: Icons.cloud_upload,
-                onPressed: () async {
-                  final image =
-                      await ImagePicker.pickImage(source: ImageSource.camera);
-                  if (image != null) {
-                    viewModel.onUploadLogo(context, image.path);
-                  }
-                },
+      body: FocusScope(
+        node: _node,
+        child: Form(
+          key: _formKey,
+          child: TabBarView(
+            controller: _controller,
+            children: <Widget>[
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      DecoratedFormField(
+                        label: localization.name,
+                        controller: _nameController,
+                        validator: (val) => val.isEmpty || val.trim().isEmpty
+                            ? localization.pleaseEnterAName
+                            : null,
+                        autovalidate: autoValidate,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                      DecoratedFormField(
+                        label: localization.idNumber,
+                        controller: _idNumberController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                      DecoratedFormField(
+                        label: localization.vatNumber,
+                        controller: _vatNumberController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                      DecoratedFormField(
+                        label: localization.website,
+                        controller: _websiteController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                      DecoratedFormField(
+                        label: localization.email,
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                      DecoratedFormField(
+                        label: localization.phone,
+                        controller: _phoneController,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                    ],
+                  ),
+                  FormCard(
+                    children: <Widget>[
+                      EntityDropdown(
+                        key: ValueKey('__size_${company.sizeId}__'),
+                        entityType: EntityType.size,
+                        entityMap: state.staticState.sizeMap,
+                        entityList: memoizedSizeList(state.staticState.sizeMap),
+                        labelText: localization.size,
+                        initialValue:
+                            state.staticState.sizeMap[company.sizeId]?.name,
+                        onSelected: (SelectableEntity size) =>
+                            viewModel.onChanged(
+                                company.rebuild((b) => b..sizeId = size.id)),
+                      ),
+                      EntityDropdown(
+                        key: ValueKey('__industry_${company.industryId}__'),
+                        entityType: EntityType.industry,
+                        entityMap: state.staticState.industryMap,
+                        entityList:
+                            memoizedIndustryList(state.staticState.industryMap),
+                        labelText: localization.industry,
+                        initialValue: state
+                            .staticState.industryMap[company.industryId]?.name,
+                        onSelected: (SelectableEntity industry) =>
+                            viewModel.onChanged(company
+                                .rebuild((b) => b..industryId = industry.id)),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-            ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.address1,
-                      controller: _address1Controller,
-                    ),
-                    DecoratedFormField(
-                      label: localization.address2,
-                      controller: _address2Controller,
-                    ),
-                    DecoratedFormField(
-                      label: localization.city,
-                      controller: _cityController,
-                    ),
-                    DecoratedFormField(
-                      label: localization.state,
-                      controller: _stateController,
-                    ),
-                    DecoratedFormField(
-                      label: localization.postalCode,
-                      controller: _postalCodeController,
-                    ),
-                    EntityDropdown(
-                      key: ValueKey('__country_${company.countryId}__'),
-                      entityType: EntityType.country,
-                      entityMap: state.staticState.countryMap,
-                      entityList:
-                          memoizedCountryList(state.staticState.countryMap),
-                      labelText: localization.country,
-                      initialValue:
-                          state.staticState.countryMap[company.countryId]?.name,
-                      onSelected: (SelectableEntity country) =>
-                          viewModel.onChanged(company
-                              .rebuild((b) => b..countryId = country.id)),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    EntityDropdown(
-                      key: ValueKey(
-                          '__payment_type_${company.settings.defaultPaymentTypeId}__'),
-                      entityType: EntityType.paymentType,
-                      entityMap: state.staticState.paymentTypeMap,
-                      entityList: memoizedPaymentTypeList(
-                          state.staticState.paymentTypeMap),
-                      labelText: localization.paymentType,
-                      initialValue: state
-                          .staticState
-                          .paymentTypeMap[company.settings.defaultPaymentTypeId]
-                          ?.name,
-                      onSelected: (paymentType) => viewModel.onChanged(
-                          company.rebuild((b) => b
-                            ..settings.defaultPaymentTypeId = paymentType.id)),
-                    ),
-                    DecoratedFormField(
-                      label: localization.paymentTerms,
-                      controller: _paymentTermsController,
-                      keyboardType: TextInputType.number,
-                    ),
-                    DecoratedFormField(
-                      label: localization.taskRate,
-                      controller: _taskRateController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+              Center(
+                child: ElevatedButton(
+                  width: 300,
+                  label: localization.uploadLogo,
+                  icon: Icons.cloud_upload,
+                  onPressed: () async {
+                    final image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    if (image != null) {
+                      viewModel.onUploadLogo(context, image.path);
+                    }
+                  },
+                ),
+              ),
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      DecoratedFormField(
+                        label: localization.address1,
+                        controller: _address1Controller,
+                      ),
+                      DecoratedFormField(
+                        label: localization.address2,
+                        controller: _address2Controller,
+                      ),
+                      DecoratedFormField(
+                        label: localization.city,
+                        controller: _cityController,
+                      ),
+                      DecoratedFormField(
+                        label: localization.state,
+                        controller: _stateController,
+                      ),
+                      DecoratedFormField(
+                        label: localization.postalCode,
+                        controller: _postalCodeController,
+                      ),
+                      EntityDropdown(
+                        key: ValueKey('__country_${company.countryId}__'),
+                        entityType: EntityType.country,
+                        entityMap: state.staticState.countryMap,
+                        entityList:
+                            memoizedCountryList(state.staticState.countryMap),
+                        labelText: localization.country,
+                        initialValue: state
+                            .staticState.countryMap[company.countryId]?.name,
+                        onSelected: (SelectableEntity country) =>
+                            viewModel.onChanged(company
+                                .rebuild((b) => b..countryId = country.id)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      EntityDropdown(
+                        key: ValueKey(
+                            '__payment_type_${company.settings.defaultPaymentTypeId}__'),
+                        entityType: EntityType.paymentType,
+                        entityMap: state.staticState.paymentTypeMap,
+                        entityList: memoizedPaymentTypeList(
+                            state.staticState.paymentTypeMap),
+                        labelText: localization.paymentType,
+                        initialValue: state
+                            .staticState
+                            .paymentTypeMap[
+                                company.settings.defaultPaymentTypeId]
+                            ?.name,
+                        onSelected: (paymentType) => viewModel.onChanged(
+                            company.rebuild((b) => b
+                              ..settings.defaultPaymentTypeId =
+                                  paymentType.id)),
+                      ),
+                      DecoratedFormField(
+                        label: localization.paymentTerms,
+                        controller: _paymentTermsController,
+                        keyboardType: TextInputType.number,
+                      ),
+                      DecoratedFormField(
+                        label: localization.taskRate,
+                        controller: _taskRateController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
