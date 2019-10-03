@@ -39,7 +39,7 @@ class CompanyDetailsVM {
 
     return CompanyDetailsVM(
         state: state,
-        company: state.selectedCompany,
+        company: state.uiState.settingsUIState.editing.company,
         onChanged: (company) =>
             store.dispatch(UpdateCompanySettings(company: company)),
         onCancelPressed: (context) => store

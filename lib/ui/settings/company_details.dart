@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -119,6 +122,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final company = viewModel.company;
 
     return SettingsScaffold(
       title: localization.companyDetails,
@@ -176,7 +181,36 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       controller: _phoneController,
                     ),
                   ],
-                )
+                ),
+                FormCard(
+                  children: <Widget>[
+                    EntityDropdown(
+                      key: ValueKey('__size_${company.sizeId}__'),
+                      entityType: EntityType.size,
+                      entityMap: state.staticState.sizeMap,
+                      entityList: memoizedSizeList(state.staticState.sizeMap),
+                      labelText: localization.size,
+                      initialValue:
+                          state.staticState.sizeMap[company.sizeId]?.name,
+                      onSelected: (SelectableEntity size) =>
+                          viewModel.onChanged(
+                              company.rebuild((b) => b..sizeId = size.id)),
+                    ),
+                    EntityDropdown(
+                      key: ValueKey('__industry_${company.industryId}__'),
+                      entityType: EntityType.industry,
+                      entityMap: state.staticState.industryMap,
+                      entityList:
+                          memoizedIndustryList(state.staticState.industryMap),
+                      labelText: localization.industry,
+                      initialValue: state
+                          .staticState.industryMap[company.industryId]?.name,
+                      onSelected: (SelectableEntity industry) =>
+                          viewModel.onChanged(company
+                              .rebuild((b) => b..industryId = industry.id)),
+                    ),
+                  ],
+                ),
               ],
             ),
             ListView(
@@ -202,6 +236,19 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     DecoratedFormField(
                       label: localization.postalCode,
                       controller: _postalCodeController,
+                    ),
+                    EntityDropdown(
+                      key: ValueKey('__country_${company.countryId}__'),
+                      entityType: EntityType.country,
+                      entityMap: state.staticState.countryMap,
+                      entityList:
+                          memoizedCountryList(state.staticState.countryMap),
+                      labelText: localization.country,
+                      initialValue:
+                          state.staticState.countryMap[company.countryId]?.name,
+                      onSelected: (SelectableEntity country) =>
+                          viewModel.onChanged(company
+                              .rebuild((b) => b..countryId = country.id)),
                     ),
                   ],
                 )
