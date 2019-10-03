@@ -26,10 +26,11 @@ class ActionIconButton extends StatelessWidget {
     }
 
     if (isSaving) {
-      return IconButton(
-        onPressed: null,
-        icon: SizedBox(
-          child: CircularProgressIndicator(),
+      return SizedBox(
+        width: 88,
+        child: IconButton(
+          onPressed: null,
+          icon: CircularProgressIndicator(),
         ),
       );
     }

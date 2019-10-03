@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -21,6 +23,7 @@ class SettingsScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
 
     return WillPopScope(
       onWillPop: () async {
@@ -45,10 +48,7 @@ class SettingsScaffold extends StatelessWidget {
               tooltip: localization.save,
               isVisible: true,
               isDirty: true,
-              isSaving: false,
-              //isVisible: !client.isDeleted,
-              //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.isSaving,
+              isSaving: state.isSaving,
               onPressed: () => onSavePressed(context),
             ),
           ],
