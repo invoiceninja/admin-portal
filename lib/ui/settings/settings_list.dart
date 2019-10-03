@@ -95,6 +95,7 @@ class SettingsList extends StatelessWidget {
           section: kSettingsTemplatesAndReminders,
           viewModel: viewModel,
         ),
+        /*
         SettingsListTile(
           section: kSettingsCreditCardsAndBanks,
           viewModel: viewModel,
@@ -103,6 +104,7 @@ class SettingsList extends StatelessWidget {
           section: kSettingsDataVisualizations,
           viewModel: viewModel,
         ),
+         */
       ],
     );
   }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -22,28 +26,30 @@ class UserDetailsBuilder extends StatelessWidget {
 class UserDetailsVM {
   UserDetailsVM({
     @required this.state,
+    @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
-    //final state = store.state;
+    final state = store.state;
 
     return UserDetailsVM(
-      state: store.state,
-      onBackPressed: () {
-        /*
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
-        */
-      },
-    );
+        state: state,
+        onChanged: (company) {
+          store.dispatch(UpdateSettings(company: company));
+        },
+        onSavePressed: (context) {
+          final completer = snackBarCompleter(
+              context, AppLocalization.of(context).refreshData);
+          store.dispatch(SaveSettingsRequest(
+              completer: completer,
+              settings: state.uiState.settingsUIState.editing));
+        });
   }
 
   final AppState state;
+  final Function(CompanyEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
 }

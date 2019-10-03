@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -22,6 +26,7 @@ class LocalizationBuilder extends StatelessWidget {
 class LocalizationVM {
   LocalizationVM({
     @required this.state,
+    @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
@@ -30,11 +35,21 @@ class LocalizationVM {
     final state = store.state;
 
     return LocalizationVM(
-      state: state,
-    );
+        state: state,
+        onChanged: (company) {
+          store.dispatch(UpdateSettings(company: company));
+        },
+        onSavePressed: (context) {
+          final completer = snackBarCompleter(
+              context, AppLocalization.of(context).refreshData);
+          store.dispatch(SaveSettingsRequest(
+              completer: completer,
+              settings: state.uiState.settingsUIState.editing));
+        });
   }
 
   final AppState state;
+  final Function(CompanyEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
 }

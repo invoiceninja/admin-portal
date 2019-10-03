@@ -80,7 +80,7 @@ class _UserDetailsState extends State<UserDetails> {
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackPressed();
+        //viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(

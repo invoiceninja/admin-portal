@@ -117,8 +117,8 @@ const List<String> kSettingsSections = [
   kSettingsBuyNowButtons,
   kSettingsEmailSettings,
   kSettingsTemplatesAndReminders,
-  kSettingsCreditCardsAndBanks,
-  kSettingsDataVisualizations,
+  //kSettingsCreditCardsAndBanks,
+  //kSettingsDataVisualizations,
 ];
 
 const int kPaymentStatusPending = 1;
