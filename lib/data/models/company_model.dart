@@ -649,3 +649,16 @@ abstract class SettingsEntity
   static Serializer<SettingsEntity> get serializer =>
       _$settingsEntitySerializer;
 }
+
+abstract class UserItemResponse
+    implements Built<UserItemResponse, UserItemResponseBuilder> {
+  factory UserItemResponse([void updates(UserItemResponseBuilder b)]) =
+      _$UserItemResponse;
+
+  UserItemResponse._();
+
+  UserEntity get data;
+
+  static Serializer<UserItemResponse> get serializer =>
+      _$userItemResponseSerializer;
+}

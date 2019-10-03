@@ -36,6 +36,7 @@ part 'serializers.g.dart';
 @SerializersFor(const [
   AppState,
   LoginResponse,
+  UserItemResponse,
   DashboardResponse,
   ProductListResponse,
   ProductItemResponse,

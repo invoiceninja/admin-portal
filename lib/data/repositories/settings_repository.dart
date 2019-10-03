@@ -30,17 +30,16 @@ class SettingsRepository {
     return clientResponse;
   }
 
-  Future<LoginResponse> saveUser(
-      Credentials credentials, UserEntity user) async {
+  Future<UserEntity> saveUser(Credentials credentials, UserEntity user) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
     final url = credentials.url + '/users/${user.id}';
     response = await webClient.put(url, credentials.token, json.encode(data));
 
-    final LoginResponse clientResponse =
-        serializers.deserializeWith(LoginResponse.serializer, response);
+    final UserItemResponse userResponse =
+        serializers.deserializeWith(UserItemResponse.serializer, response);
 
-    return clientResponse;
+    return userResponse.data;
   }
 }

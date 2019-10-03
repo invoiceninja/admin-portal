@@ -18,6 +18,8 @@ Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
 Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
+Serializer<UserItemResponse> _$userItemResponseSerializer =
+    new _$UserItemResponseSerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -1092,6 +1094,48 @@ class _$SettingsEntitySerializer
         case 'has_custom_design3_HIDDEN':
           result.hasCustomDesign3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserItemResponseSerializer
+    implements StructuredSerializer<UserItemResponse> {
+  @override
+  final Iterable<Type> types = const [UserItemResponse, _$UserItemResponse];
+  @override
+  final String wireName = 'UserItemResponse';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, UserItemResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(UserEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  UserItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserItemResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
           break;
       }
     }
@@ -3025,6 +3069,98 @@ class SettingsEntityBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserItemResponse extends UserItemResponse {
+  @override
+  final UserEntity data;
+
+  factory _$UserItemResponse(
+          [void Function(UserItemResponseBuilder) updates]) =>
+      (new UserItemResponseBuilder()..update(updates)).build();
+
+  _$UserItemResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('UserItemResponse', 'data');
+    }
+  }
+
+  @override
+  UserItemResponse rebuild(void Function(UserItemResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserItemResponseBuilder toBuilder() =>
+      new UserItemResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserItemResponse && data == other.data;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserItemResponse')..add('data', data))
+        .toString();
+  }
+}
+
+class UserItemResponseBuilder
+    implements Builder<UserItemResponse, UserItemResponseBuilder> {
+  _$UserItemResponse _$v;
+
+  UserEntityBuilder _data;
+  UserEntityBuilder get data => _$this._data ??= new UserEntityBuilder();
+  set data(UserEntityBuilder data) => _$this._data = data;
+
+  UserItemResponseBuilder();
+
+  UserItemResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserItemResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserItemResponse;
+  }
+
+  @override
+  void update(void Function(UserItemResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserItemResponse build() {
+    _$UserItemResponse _$result;
+    try {
+      _$result = _$v ?? new _$UserItemResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }
