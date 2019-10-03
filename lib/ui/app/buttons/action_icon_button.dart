@@ -30,7 +30,11 @@ class ActionIconButton extends StatelessWidget {
         width: 88,
         child: IconButton(
           onPressed: null,
-          icon: CircularProgressIndicator(),
+          icon: SizedBox(
+            width: 28,
+            height: 28,
+            child: CircularProgressIndicator(),
+          ),
         ),
       );
     }
