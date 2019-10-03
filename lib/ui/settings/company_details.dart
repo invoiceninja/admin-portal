@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -49,7 +50,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -148,6 +149,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
             text: localization.details,
           ),
           Tab(
+            text: localization.logo,
+          ),
+          Tab(
             text: localization.address,
           ),
           Tab(
@@ -244,6 +248,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ],
                 ),
               ],
+            ),
+            Center(
+              child: ElevatedButton(
+                width: 300,
+                label: localization.uploadLogo,
+                icon: Icons.cloud_upload,
+                onPressed: () {},
+              ),
             ),
             ListView(
               children: <Widget>[
