@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
@@ -86,44 +87,38 @@ class _UserDetailsState extends State<UserDetails> {
       title: localization.userDetails,
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                DecoratedFormField(
-                  label: localization.firstName,
-                  controller: _firstNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterAFirstName
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.lastName,
-                  controller: _lastNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterALastName
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.email,
-                  controller: _emailController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterYourEmail
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.phone,
-                  controller: _phoneController,
-                ),
-              ],
-            )
-          ],
-        ),
+      body: AppForm(
+        formKey: _formKey,
+        children: <Widget>[
+          DecoratedFormField(
+            label: localization.firstName,
+            controller: _firstNameController,
+            validator: (val) => val.isEmpty || val.trim().isEmpty
+                ? localization.pleaseEnterAFirstName
+                : null,
+            autovalidate: autoValidate,
+          ),
+          DecoratedFormField(
+            label: localization.lastName,
+            controller: _lastNameController,
+            validator: (val) => val.isEmpty || val.trim().isEmpty
+                ? localization.pleaseEnterALastName
+                : null,
+            autovalidate: autoValidate,
+          ),
+          DecoratedFormField(
+            label: localization.email,
+            controller: _emailController,
+            validator: (val) => val.isEmpty || val.trim().isEmpty
+                ? localization.pleaseEnterYourEmail
+                : null,
+            autovalidate: autoValidate,
+          ),
+          DecoratedFormField(
+            label: localization.phone,
+            controller: _phoneController,
+          ),
+        ],
       ),
     );
   }
