@@ -15,12 +15,27 @@ class SettingsRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponse> saveData(Credentials credentials, CompanyEntity company,
+  Future<LoginResponse> saveCompany(
+      Credentials credentials, CompanyEntity company,
       [EntityAction action]) async {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 
     final url = credentials.url + '/companies/${company.id}';
+    response = await webClient.put(url, credentials.token, json.encode(data));
+
+    final LoginResponse clientResponse =
+        serializers.deserializeWith(LoginResponse.serializer, response);
+
+    return clientResponse;
+  }
+
+  Future<LoginResponse> saveUser(
+      Credentials credentials, UserEntity user) async {
+    final data = serializers.serializeWith(UserEntity.serializer, user);
+    dynamic response;
+
+    final url = credentials.url + '/users/${user.id}';
     response = await webClient.put(url, credentials.token, json.encode(data));
 
     final LoginResponse clientResponse =

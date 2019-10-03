@@ -12,11 +12,13 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   SettingsRepository repository = const SettingsRepository(),
 ]) {
   final viewSettings = _viewSettings();
-  final saveSettings = _saveSettings(repository);
+  final saveCompany = _saveCompany(repository);
+  final saveUser = _saveUser(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
-    TypedMiddleware<AppState, SaveCompanyRequest>(saveSettings),
+    TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
+    TypedMiddleware<AppState, SaveUserRequest>(saveUser),
   ];
 }
 
@@ -41,17 +43,35 @@ Middleware<AppState> _viewSettings() {
   };
 }
 
-Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
+Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveCompanyRequest;
 
     settingsRepository
-        .saveData(store.state.credentials, action.company)
+        .saveCompany(store.state.credentials, action.company)
         .then((response) {
       print('Done: $response');
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveCompanyFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveUserRequest;
+
+    settingsRepository
+        .saveUser(store.state.credentials, action.user)
+        .then((response) {
+      print('Done: $response');
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveUserFailure(error));
       action.completer.completeError(error);
     });
 
