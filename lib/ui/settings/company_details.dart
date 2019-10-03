@@ -228,7 +228,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             state.staticState.sizeMap[company.sizeId]?.name,
                         onSelected: (SelectableEntity size) =>
                             viewModel.onChanged(
-                                company.rebuild((b) => b..sizeId = size.id)),
+                          company.rebuild((b) => b..sizeId = size.id),
+                        ),
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       EntityDropdown(
                         key: ValueKey('__industry_${company.industryId}__'),
@@ -240,8 +242,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         initialValue: state
                             .staticState.industryMap[company.industryId]?.name,
                         onSelected: (SelectableEntity industry) =>
-                            viewModel.onChanged(company
-                                .rebuild((b) => b..industryId = industry.id)),
+                            viewModel.onChanged(
+                          company.rebuild((b) => b..industryId = industry.id),
+                        ),
                       ),
                     ],
                   ),

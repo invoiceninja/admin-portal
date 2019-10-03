@@ -18,6 +18,7 @@ class EntityDropdown extends StatefulWidget {
     this.autoValidate = false,
     this.initialValue,
     this.onAddPressed,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   final EntityType entityType;
@@ -28,6 +29,7 @@ class EntityDropdown extends StatefulWidget {
   final Function(SelectableEntity) onSelected;
   final Function validator;
   final bool autoValidate;
+  final Function(String) onFieldSubmitted;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
 
   @override
@@ -43,7 +45,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
     super.initState();
     _textController.text = widget.initialValue;
     _focusNode.addListener(() {
-      print('## DOCUS EVENT: hasFocus: ${_focusNode.hasFocus}##');
       if (_focusNode.hasFocus) {
         _showOptions();
       }
@@ -67,6 +68,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
               widget.onSelected(entity);
+              if (widget.onFieldSubmitted != null) {
+                widget.onFieldSubmitted(entity.listDisplayName);
+              }
             },
             onAddPressed: widget.onAddPressed != null
                 ? (context, completer) => widget.onAddPressed(completer)
