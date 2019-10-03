@@ -144,6 +144,9 @@ class _$SettingsUIStateSerializer
   Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'isChanged',
+      serializers.serialize(object.isChanged,
+          specifiedType: const FullType(bool)),
       'updatedAt',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
@@ -173,6 +176,10 @@ class _$SettingsUIStateSerializer
           result.editing.replace(serializers.deserialize(value,
                   specifiedType: const FullType(UserCompanyEntity))
               as UserCompanyEntity);
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
@@ -504,12 +511,18 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final UserCompanyEntity editing;
   @override
+  final bool isChanged;
+  @override
   final int updatedAt;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
 
-  _$SettingsUIState._({this.editing, this.updatedAt}) : super._() {
+  _$SettingsUIState._({this.editing, this.isChanged, this.updatedAt})
+      : super._() {
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
+    }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'updatedAt');
     }
@@ -528,18 +541,21 @@ class _$SettingsUIState extends SettingsUIState {
     if (identical(other, this)) return true;
     return other is SettingsUIState &&
         editing == other.editing &&
+        isChanged == other.isChanged &&
         updatedAt == other.updatedAt;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, editing.hashCode), updatedAt.hashCode));
+    return $jf($jc(
+        $jc($jc(0, editing.hashCode), isChanged.hashCode), updatedAt.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SettingsUIState')
           ..add('editing', editing)
+          ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt))
         .toString();
   }
@@ -554,6 +570,10 @@ class SettingsUIStateBuilder
       _$this._editing ??= new UserCompanyEntityBuilder();
   set editing(UserCompanyEntityBuilder editing) => _$this._editing = editing;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _updatedAt;
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
@@ -563,6 +583,7 @@ class SettingsUIStateBuilder
   SettingsUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _$v = null;
     }
@@ -588,7 +609,9 @@ class SettingsUIStateBuilder
     try {
       _$result = _$v ??
           new _$SettingsUIState._(
-              editing: _editing?.build(), updatedAt: updatedAt);
+              editing: _editing?.build(),
+              isChanged: isChanged,
+              updatedAt: updatedAt);
     } catch (_) {
       String _$failedField;
       try {

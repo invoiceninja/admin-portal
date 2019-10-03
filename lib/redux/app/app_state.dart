@@ -249,7 +249,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
 
     if (uiState.currentRoute.startsWith('/settings')) {
-      return settingsUIState.editing != userCompany;
+      return settingsUIState.isChanged;
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {

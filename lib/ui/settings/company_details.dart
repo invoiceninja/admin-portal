@@ -59,8 +59,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   @override
   void didChangeDependencies() {
-    print('### didChangeDependencies...');
-
     _controllers = [
       _nameController,
       _idNumberController,

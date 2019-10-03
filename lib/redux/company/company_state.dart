@@ -88,6 +88,7 @@ abstract class SettingsUIState extends Object
   factory SettingsUIState({UserCompanyEntity userCompany}) {
     return _$SettingsUIState._(
       editing: userCompany ?? UserCompanyEntity(),
+      isChanged: false,
       updatedAt: 0,
     );
   }
@@ -95,6 +96,8 @@ abstract class SettingsUIState extends Object
 
   @nullable
   UserCompanyEntity get editing;
+
+  bool get isChanged;
 
   int get updatedAt;
 

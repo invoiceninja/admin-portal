@@ -170,19 +170,25 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return SettingsUIState(userCompany: action.userCompany);
   }),
   TypedReducer<SettingsUIState, UpdateCompanySettings>((state, action) {
-    return state.rebuild((b) => b..editing.company.replace(action.company));
+    return state.rebuild((b) => b
+      ..editing.company.replace(action.company)
+      ..isChanged = true);
   }),
   TypedReducer<SettingsUIState, UpdateUserSettings>((state, action) {
-    return state.rebuild((b) => b..editing.user.replace(action.user));
+    return state.rebuild((b) => b
+      ..editing.user.replace(action.user)
+      ..isChanged = true);
   }),
   TypedReducer<SettingsUIState, ResetCompanySettings>((state, action) {
     return state.rebuild((b) => b
       ..editing.company.replace(action.company)
+      ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
   TypedReducer<SettingsUIState, ResetUserSettings>((state, action) {
     return state.rebuild((b) => b
       ..editing.user.replace(action.user)
+      ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
 ]);
