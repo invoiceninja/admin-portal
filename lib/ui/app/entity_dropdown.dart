@@ -121,6 +121,11 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
+    void _selectEntity(SelectableEntity entity) {
+      widget.onSelected(entity);
+      Navigator.pop(context);
+    }
+
     Widget _headerRow() {
       return Row(
         children: <Widget>[
@@ -137,8 +142,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
                 final entityId = widget.entityList.firstWhere((entityId) =>
                     widget.entityMap[entityId].matchesFilter(_filter));
                 final entity = widget.entityMap[entityId];
-                widget.onSelected(entity);
-                Navigator.pop(context);
+                _selectEntity(entity);
               },
               onChanged: (value) {
                 setState(() {
@@ -202,10 +206,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               ],
             ),
             subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () {
-              widget.onSelected(entity);
-              Navigator.pop(context);
-            },
+            onTap: () => _selectEntity(entity),
           );
         },
       );
