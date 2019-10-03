@@ -39,7 +39,7 @@ class CompanyDetailsVM {
         state: state,
         company: state.selectedCompany,
         onChanged: (company) =>
-            store.dispatch(UpdateCompanySettings(company: company)),
+            store.dispatch(ResetCompanySettings(company: company)),
         onCancelPressed: (context) => store
             .dispatch(UpdateCompanySettings(company: state.selectedCompany)),
         onSavePressed: (context) {

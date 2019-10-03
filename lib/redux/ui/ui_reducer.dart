@@ -175,4 +175,14 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, UpdateUserSettings>((state, action) {
     return state.rebuild((b) => b..editing.user.replace(action.user));
   }),
+  TypedReducer<SettingsUIState, ResetCompanySettings>((state, action) {
+    return state.rebuild((b) => b
+      ..editing.company.replace(action.company)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch);
+  }),
+  TypedReducer<SettingsUIState, ResetUserSettings>((state, action) {
+    return state.rebuild((b) => b
+      ..editing.user.replace(action.user)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch);
+  }),
 ]);

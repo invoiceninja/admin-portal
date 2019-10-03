@@ -88,12 +88,15 @@ abstract class SettingsUIState extends Object
   factory SettingsUIState({UserCompanyEntity userCompany}) {
     return _$SettingsUIState._(
       editing: userCompany ?? UserCompanyEntity(),
+      updatedAt: 0,
     );
   }
   SettingsUIState._();
 
   @nullable
   UserCompanyEntity get editing;
+
+  int get updatedAt;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;

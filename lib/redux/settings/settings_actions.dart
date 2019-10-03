@@ -18,6 +18,16 @@ class ViewSettings implements PersistUI {
   final String section;
 }
 
+class ResetCompanySettings {
+  ResetCompanySettings({@required this.company});
+  final CompanyEntity company;
+}
+
+class ResetUserSettings {
+  ResetUserSettings({@required this.user});
+  final UserEntity user;
+}
+
 class UpdateCompanySettings {
   UpdateCompanySettings({@required this.company});
   final CompanyEntity company;
