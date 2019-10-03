@@ -36,21 +36,25 @@ class SettingsScaffold extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => onCancelPressed(context),
-              ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: true,
-              isDirty: true,
-              isSaving: state.isSaving,
-              onPressed: () => onSavePressed(context),
-            ),
+              Builder(builder: (BuildContext context) {
+                return FlatButton(
+                  child: Text(
+                    localization.cancel,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => onCancelPressed(context),
+                );
+              }),
+            Builder(builder: (BuildContext context) {
+              return ActionIconButton(
+                icon: Icons.cloud_upload,
+                tooltip: localization.save,
+                isVisible: true,
+                isDirty: true,
+                isSaving: state.isSaving,
+                onPressed: () => onSavePressed(context),
+              );
+            }),
           ],
           bottom: appBarBottom,
         ),
