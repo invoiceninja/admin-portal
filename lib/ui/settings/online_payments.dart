@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -20,7 +18,7 @@ class OnlinePayments extends StatefulWidget {
 
 class _OnlinePaymentsState extends State<OnlinePayments>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TabController _controller;
 
@@ -83,47 +81,7 @@ class _OnlinePaymentsState extends State<OnlinePayments>
       title: localization.onlinePayments,
       onCancelPressed: viewModel.onCancelPressed,
       onSavePressed: viewModel.onSavePressed,
-      appBarBottom: TabBar(
-        controller: _controller,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.address,
-          ),
-          Tab(
-            text: localization.defaults,
-          ),
-        ],
-      ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          key: ValueKey(viewModel.state.selectedCompany.companyKey),
-          controller: _controller,
-          children: <Widget>[
-            ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.name,
-                      controller: _nameController,
-                      validator: (val) => val.isEmpty || val.trim().isEmpty
-                          ? localization.pleaseEnterAName
-                          : null,
-                      autovalidate: autoValidate,
-                    ),
-                  ],
-                )
-              ],
-            ),
-            ListView(),
-            ListView(),
-          ],
-        ),
-      ),
+      body: SizedBox(),
     );
   }
 }

@@ -1,11 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({
@@ -21,7 +18,7 @@ class TemplatesAndReminders extends StatefulWidget {
 
 class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TabController _controller;
 
@@ -78,86 +75,13 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    //final viewModel = widget.viewModel;
 
-    return WillPopScope(
-      onWillPop: () async {
-        //viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.templatesAndReminders),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: true,
-              isDirty: true,
-              isSaving: false,
-              //isVisible: !client.isDeleted,
-              //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            )
-          ],
-          bottom: TabBar(
-            controller: _controller,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              Tab(
-                text: localization.address,
-              ),
-              Tab(
-                text: localization.defaults,
-              ),
-            ],
-          ),
-        ),
-        body: Form(
-          key: _formKey,
-          child: TabBarView(
-            key: ValueKey(viewModel.state.selectedCompany.companyKey),
-            controller: _controller,
-            children: <Widget>[
-              ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      DecoratedFormField(
-                        label: localization.name,
-                        controller: _nameController,
-                        validator: (val) => val.isEmpty || val.trim().isEmpty
-                            ? localization.pleaseEnterAName
-                            : null,
-                        autovalidate: autoValidate,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              ListView(),
-              ListView(),
-            ],
-          ),
-        ),
-      ),
+    return SettingsScaffold(
+      title: localization.templatesAndReminders,
+      onSavePressed: null,
+      onCancelPressed: null,
+      body: SizedBox(),
     );
   }
 }
