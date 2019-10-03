@@ -274,7 +274,30 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 )
               ],
             ),
-            ListView(),
+            ListView(
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    EntityDropdown(
+                      key: ValueKey(
+                          '__payment_type_${company.settings.defaultPaymentTypeId}__'),
+                      entityType: EntityType.paymentType,
+                      entityMap: state.staticState.paymentTypeMap,
+                      entityList: memoizedPaymentTypeList(
+                          state.staticState.paymentTypeMap),
+                      labelText: localization.paymentType,
+                      initialValue: state
+                          .staticState
+                          .paymentTypeMap[company.settings.defaultPaymentTypeId]
+                          ?.name,
+                      onSelected: (paymentType) => viewModel.onChanged(
+                          company.rebuild((b) => b
+                            ..settings.defaultPaymentTypeId = paymentType.id)),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ],
         ),
       ),
