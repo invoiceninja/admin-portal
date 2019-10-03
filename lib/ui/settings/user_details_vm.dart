@@ -43,7 +43,7 @@ class UserDetailsVM {
             store.dispatch(ResetUserSettings(user: state.user)),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
-              context, AppLocalization.of(context).refreshData);
+              context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveUserRequest(
               completer: completer,
               user: state.uiState.settingsUIState.editing.user));
