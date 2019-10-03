@@ -211,8 +211,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         label: localization.phone,
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                        //textInputAction: TextInputAction.next,
+                        //onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                     ],
                   ),
@@ -230,7 +230,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             viewModel.onChanged(
                           company.rebuild((b) => b..sizeId = size.id),
                         ),
-                        onFieldSubmitted: (String value) => _node.nextFocus(),
+                        //onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       EntityDropdown(
                         key: ValueKey('__industry_${company.industryId}__'),
@@ -271,22 +271,32 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       DecoratedFormField(
                         label: localization.address1,
                         controller: _address1Controller,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       DecoratedFormField(
                         label: localization.address2,
                         controller: _address2Controller,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       DecoratedFormField(
                         label: localization.city,
                         controller: _cityController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       DecoratedFormField(
                         label: localization.state,
                         controller: _stateController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       DecoratedFormField(
                         label: localization.postalCode,
                         controller: _postalCodeController,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       EntityDropdown(
                         key: ValueKey('__country_${company.countryId}__'),
