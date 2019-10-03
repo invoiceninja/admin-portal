@@ -13,7 +13,10 @@ class NotificationsSettingsBuilder extends StatelessWidget {
     return StoreConnector<AppState, NotificationSettingsVM>(
       converter: NotificationSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return NotificationSettings(viewModel: viewModel);
+        return NotificationSettings(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

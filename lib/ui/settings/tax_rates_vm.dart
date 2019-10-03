@@ -13,7 +13,10 @@ class TaxRatesBuilder extends StatelessWidget {
     return StoreConnector<AppState, TaxRatesVM>(
       converter: TaxRatesVM.fromStore,
       builder: (context, viewModel) {
-        return TaxRates(viewModel: viewModel);
+        return TaxRates(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

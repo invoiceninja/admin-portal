@@ -13,7 +13,10 @@ class ProductSettingsBuilder extends StatelessWidget {
     return StoreConnector<AppState, ProductSettingsVM>(
       converter: ProductSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return ProductSettings(viewModel: viewModel);
+        return ProductSettings(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

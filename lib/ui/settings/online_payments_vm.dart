@@ -13,7 +13,10 @@ class OnlinePaymentsBuilder extends StatelessWidget {
     return StoreConnector<AppState, OnlinePaymentsVM>(
       converter: OnlinePaymentsVM.fromStore,
       builder: (context, viewModel) {
-        return OnlinePayments(viewModel: viewModel);
+        return OnlinePayments(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

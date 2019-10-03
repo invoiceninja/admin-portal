@@ -13,7 +13,10 @@ class EmailSettingsBuilder extends StatelessWidget {
     return StoreConnector<AppState, EmailSettingsVM>(
       converter: EmailSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return EmailSettings(viewModel: viewModel);
+        return EmailSettings(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

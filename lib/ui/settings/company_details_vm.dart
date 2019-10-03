@@ -17,7 +17,9 @@ class CompanyDetailsBuilder extends StatelessWidget {
     return StoreConnector<AppState, CompanyDetailsVM>(
       converter: CompanyDetailsVM.fromStore,
       builder: (context, viewModel) {
-        return CompanyDetails(viewModel: viewModel);
+        return CompanyDetails(
+            key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+            viewModel: viewModel);
       },
     );
   }
@@ -39,9 +41,9 @@ class CompanyDetailsVM {
         state: state,
         company: state.selectedCompany,
         onChanged: (company) =>
-            store.dispatch(ResetCompanySettings(company: company)),
+            store.dispatch(UpdateCompanySettings(company: company)),
         onCancelPressed: (context) => store
-            .dispatch(UpdateCompanySettings(company: state.selectedCompany)),
+            .dispatch(ResetCompanySettings(company: state.selectedCompany)),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);

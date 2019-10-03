@@ -30,7 +30,6 @@ class SettingsScaffold extends StatelessWidget {
         return true;
       },
       child: Scaffold(
-        key: ValueKey(state.uiState.settingsUIState.updatedAt),
         body: body,
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),

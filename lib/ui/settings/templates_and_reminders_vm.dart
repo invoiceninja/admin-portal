@@ -13,7 +13,10 @@ class TemplatesAndRemindersBuilder extends StatelessWidget {
     return StoreConnector<AppState, TemplatesAndRemindersVM>(
       converter: TemplatesAndRemindersVM.fromStore,
       builder: (context, viewModel) {
-        return TemplatesAndReminders(viewModel: viewModel);
+        return TemplatesAndReminders(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

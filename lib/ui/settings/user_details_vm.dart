@@ -17,7 +17,9 @@ class UserDetailsBuilder extends StatelessWidget {
     return StoreConnector<AppState, UserDetailsVM>(
       converter: UserDetailsVM.fromStore,
       builder: (context, viewModel) {
-        return UserDetails(viewModel: viewModel);
+        return UserDetails(
+            key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+            viewModel: viewModel);
       },
     );
   }

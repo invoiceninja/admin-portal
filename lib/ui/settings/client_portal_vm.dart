@@ -17,7 +17,10 @@ class ClientPortalBuilder extends StatelessWidget {
     return StoreConnector<AppState, ClientPortalVM>(
       converter: ClientPortalVM.fromStore,
       builder: (context, viewModel) {
-        return ClientPortal(viewModel: viewModel);
+        return ClientPortal(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

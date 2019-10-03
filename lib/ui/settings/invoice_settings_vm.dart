@@ -13,7 +13,10 @@ class InvoiceSettingsBuilder extends StatelessWidget {
     return StoreConnector<AppState, InvoiceSettingsVM>(
       converter: InvoiceSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return InvoiceSettings(viewModel: viewModel);
+        return InvoiceSettings(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

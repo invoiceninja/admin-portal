@@ -13,7 +13,10 @@ class InvoiceDesignBuilder extends StatelessWidget {
     return StoreConnector<AppState, InvoiceDesignVM>(
       converter: InvoiceDesignVM.fromStore,
       builder: (context, viewModel) {
-        return InvoiceDesign(viewModel: viewModel);
+        return InvoiceDesign(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }

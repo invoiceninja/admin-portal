@@ -59,6 +59,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
   @override
   void didChangeDependencies() {
+    print('### didChangeDependencies...');
+
     _controllers = [
       _nameController,
       _idNumberController,
@@ -141,7 +143,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
       body: Form(
         key: _formKey,
         child: TabBarView(
-          key: ValueKey(viewModel.state.selectedCompany.companyKey),
           controller: _controller,
           children: <Widget>[
             ListView(

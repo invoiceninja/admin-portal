@@ -17,7 +17,10 @@ class LocalizationBuilder extends StatelessWidget {
     return StoreConnector<AppState, LocalizationSettingsVM>(
       converter: LocalizationSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return LocalizationSettings(viewModel: viewModel);
+        return LocalizationSettings(
+          viewModel: viewModel,
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        );
       },
     );
   }
