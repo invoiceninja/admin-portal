@@ -52,10 +52,11 @@ class _UserDetailsState extends State<UserDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    final user = widget.viewModel.state.user;
+    _firstNameController.text = user.firstName;
+    _lastNameController.text = user.lastName;
+    _emailController.text = user.email;
+    //_phoneController.text = user.
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -64,13 +65,15 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+    final user = widget.viewModel.state.user.rebuild((b) => b
+          ..firstName = _firstNameController.text.trim()
+          ..lastName = _lastNameController.text.trim()
+          ..email = _emailController.text.trim()
+        //..firstName = _firstNameController.text.trim()
+        );
+    if (user != widget.viewModel.state.user) {
+      widget.viewModel.onChanged(user);
     }
-    */
   }
 
   @override
