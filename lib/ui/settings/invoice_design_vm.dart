@@ -31,6 +31,8 @@ class InvoiceDesignVM {
 
     return InvoiceDesignVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

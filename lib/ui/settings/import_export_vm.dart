@@ -31,6 +31,8 @@ class ImportExportVM {
 
     return ImportExportVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

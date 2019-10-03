@@ -31,6 +31,8 @@ class OnlinePaymentsVM {
 
     return OnlinePaymentsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

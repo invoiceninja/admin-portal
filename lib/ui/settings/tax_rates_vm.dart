@@ -31,6 +31,8 @@ class TaxRatesVM {
 
     return TaxRatesVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

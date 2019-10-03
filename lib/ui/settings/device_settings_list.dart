@@ -25,7 +25,7 @@ class _DeviceSettingsListState extends State<DeviceSettingsList> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    //final viewModel = widget.viewModel;
 
     return WillPopScope(
       onWillPop: () async {
@@ -37,14 +37,6 @@ class _DeviceSettingsListState extends State<DeviceSettingsList> {
           automaticallyImplyLeading: isMobile(context),
           title: Text(localization.deviceSettings),
           actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                //onPressed: () => viewModel.onCancelPressed(context),
-              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,

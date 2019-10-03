@@ -39,6 +39,7 @@ class UserDetailsVM {
         onChanged: (user) {
           store.dispatch(UpdateUserSettings(user: user));
         },
+        onCancelPressed: null,
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);

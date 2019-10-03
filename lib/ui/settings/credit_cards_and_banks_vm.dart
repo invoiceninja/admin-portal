@@ -31,6 +31,8 @@ class CreditCardsAndBanksVM {
 
     return CreditCardsAndBanksVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

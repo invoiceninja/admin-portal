@@ -39,6 +39,7 @@ class LocalizationSettingsVM {
         onChanged: (company) {
           store.dispatch(UpdateCompanySettings(company: company));
         },
+        onCancelPressed: null,
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);

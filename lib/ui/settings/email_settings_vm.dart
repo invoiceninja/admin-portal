@@ -31,6 +31,8 @@ class EmailSettingsVM {
 
     return EmailSettingsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

@@ -31,6 +31,8 @@ class ProductSettingsVM {
 
     return ProductSettingsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
@@ -68,7 +67,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    //final viewModel = widget.viewModel;
 
     return WillPopScope(
       onWillPop: () async {
@@ -79,32 +78,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
           title: Text(localization.buyNowButtons),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: true,
-              isDirty: true,
-              isSaving: false,
-              //isVisible: !client.isDeleted,
-              //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            )
-          ],
+          actions: <Widget>[],
         ),
         body: Form(
           key: _formKey,

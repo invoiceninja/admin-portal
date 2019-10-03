@@ -22,8 +22,6 @@ class BuyNowButtonsBuilder extends StatelessWidget {
 class BuyNowButtonsVM {
   BuyNowButtonsVM({
     @required this.state,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static BuyNowButtonsVM fromStore(Store<AppState> store) {
@@ -35,6 +33,4 @@ class BuyNowButtonsVM {
   }
 
   final AppState state;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

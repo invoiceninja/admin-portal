@@ -31,6 +31,8 @@ class InvoiceSettingsVM {
 
     return InvoiceSettingsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

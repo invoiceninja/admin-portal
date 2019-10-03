@@ -41,6 +41,7 @@ class CompanyDetailsVM {
         onChanged: (company) {
           store.dispatch(UpdateCompanySettings(company: state.selectedCompany));
         },
+        onCancelPressed: (context) {},
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);

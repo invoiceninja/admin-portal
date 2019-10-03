@@ -31,6 +31,8 @@ class TemplatesAndRemindersVM {
 
     return TemplatesAndRemindersVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

@@ -31,6 +31,8 @@ class DataVisualizationsVM {
 
     return DataVisualizationsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 

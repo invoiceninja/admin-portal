@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/notifications.dart';
+import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
@@ -163,7 +163,7 @@ class SettingsScreens extends StatelessWidget {
               OnlinePaymentsBuilder(),
               TaxRatesBuilder(),
               ProductSettingsBuilder(),
-              NotificationSettingsBuilder(),
+              NotificationsSettingsBuilder(),
               ImportExportBuilder(),
               DeviceSettingsBuilder(),
               InvoiceSettingsBuilder(),

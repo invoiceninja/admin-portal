@@ -5,15 +5,15 @@ import 'package:invoiceninja_flutter/ui/settings/notifications.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class NotificationsBuilder extends StatelessWidget {
-  const NotificationsBuilder({Key key}) : super(key: key);
+class NotificationsSettingsBuilder extends StatelessWidget {
+  const NotificationsSettingsBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, NotificationSettingsVM>(
       converter: NotificationSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return NotificationSettingsBuilder(viewModel: viewModel);
+        return NotificationSettings(viewModel: viewModel);
       },
     );
   }
@@ -31,6 +31,8 @@ class NotificationSettingsVM {
 
     return NotificationSettingsVM(
       state: state,
+      onSavePressed: null,
+      onCancelPressed: null,
     );
   }
 
