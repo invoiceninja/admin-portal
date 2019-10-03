@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -40,6 +41,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
+  final _paymentTermsController = TextEditingController();
   final _taskRateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -75,12 +77,15 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _stateController,
       _postalCodeController,
       _taskRateController,
+      _paymentTermsController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final company = widget.viewModel.company;
+    final settings = company.settings;
+
     _nameController.text = company.name;
     _idNumberController.text = company.idNumber;
     _vatNumberController.text = company.vatNumber;
@@ -92,7 +97,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _cityController.text = company.city;
     _stateController.text = company.state;
     _postalCodeController.text = company.postalCode;
-    _taskRateController.text = ''; // TODO fix this
+    _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
+        formatNumberType: FormatNumberType.input);
+    _paymentTermsController.text = formatNumber(
+        settings.defaultPaymentTerms?.toDouble(), context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -112,7 +121,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..address2 = _address2Controller.text.trim()
       ..city = _cityController.text.trim()
       ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim());
+      ..postalCode = _postalCodeController.text.trim()
+      ..settings.defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
+      ..settings.defaultPaymentTerms =
+          int.tryParse(_paymentTermsController.text) ?? 0);
     if (company != widget.viewModel.company) {
       widget.viewModel.onChanged(company);
     }
@@ -293,6 +305,17 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       onSelected: (paymentType) => viewModel.onChanged(
                           company.rebuild((b) => b
                             ..settings.defaultPaymentTypeId = paymentType.id)),
+                    ),
+                    DecoratedFormField(
+                      label: localization.paymentTerms,
+                      controller: _paymentTermsController,
+                      keyboardType: TextInputType.number,
+                    ),
+                    DecoratedFormField(
+                      label: localization.taskRate,
+                      controller: _taskRateController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
                     ),
                   ],
                 )
