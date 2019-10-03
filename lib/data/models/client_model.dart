@@ -156,20 +156,24 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
+  @nullable
   @BuiltValueField(wireName: 'work_phone')
   String get workPhone;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  @nullable
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
 
   String get website;
 
+  @nullable
   @BuiltValueField(wireName: 'industry_id')
   String get industryId;
 
+  @nullable
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
@@ -182,9 +186,11 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
+  @nullable
   @BuiltValueField(wireName: 'language_id')
   String get languageId;
 
+  @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
 

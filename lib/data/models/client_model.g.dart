@@ -140,23 +140,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'country_id',
       serializers.serialize(object.countryId,
           specifiedType: const FullType(String)),
-      'work_phone',
-      serializers.serialize(object.workPhone,
-          specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
-      'public_notes',
-      serializers.serialize(object.publicNotes,
-          specifiedType: const FullType(String)),
       'website',
       serializers.serialize(object.website,
-          specifiedType: const FullType(String)),
-      'industry_id',
-      serializers.serialize(object.industryId,
-          specifiedType: const FullType(String)),
-      'size_id',
-      serializers.serialize(object.sizeId,
           specifiedType: const FullType(String)),
       'payment_terms',
       serializers.serialize(object.paymentTerms,
@@ -166,12 +154,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'id_number',
       serializers.serialize(object.idNumber,
-          specifiedType: const FullType(String)),
-      'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
-      'currency_id',
-      serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
       'invoice_number_counter',
       serializers.serialize(object.invoiceNumberCounter,
@@ -229,6 +211,42 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('lastUpdatedActivities')
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
+    }
+    if (object.workPhone != null) {
+      result
+        ..add('work_phone')
+        ..add(serializers.serialize(object.workPhone,
+            specifiedType: const FullType(String)));
+    }
+    if (object.publicNotes != null) {
+      result
+        ..add('public_notes')
+        ..add(serializers.serialize(object.publicNotes,
+            specifiedType: const FullType(String)));
+    }
+    if (object.industryId != null) {
+      result
+        ..add('industry_id')
+        ..add(serializers.serialize(object.industryId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.sizeId != null) {
+      result
+        ..add('size_id')
+        ..add(serializers.serialize(object.sizeId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.languageId != null) {
+      result
+        ..add('language_id')
+        ..add(serializers.serialize(object.languageId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
       result
@@ -1014,23 +1032,11 @@ class _$ClientEntity extends ClientEntity {
     if (countryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
     }
-    if (workPhone == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'workPhone');
-    }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
     }
-    if (publicNotes == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'publicNotes');
-    }
     if (website == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'website');
-    }
-    if (industryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'industryId');
-    }
-    if (sizeId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'sizeId');
     }
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paymentTerms');
@@ -1040,12 +1046,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
-    }
-    if (languageId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'languageId');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'currencyId');
     }
     if (invoiceNumberCounter == null) {
       throw new BuiltValueNullFieldError(

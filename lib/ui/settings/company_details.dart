@@ -159,26 +159,46 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           ? localization.pleaseEnterAName
                           : null,
                       autovalidate: autoValidate,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                     DecoratedFormField(
                       label: localization.idNumber,
                       controller: _idNumberController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                     DecoratedFormField(
                       label: localization.vatNumber,
                       controller: _vatNumberController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                     DecoratedFormField(
                       label: localization.website,
                       controller: _websiteController,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                     DecoratedFormField(
                       label: localization.email,
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                     DecoratedFormField(
                       label: localization.phone,
                       controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) =>
+                          FocusScope.of(context).nextFocus(),
                     ),
                   ],
                 ),
