@@ -42,7 +42,10 @@ class SettingsScaffold extends StatelessWidget {
                     localization.cancel,
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () => onCancelPressed(context),
+                  onPressed: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    onCancelPressed(context);
+                  },
                 );
               }),
             Builder(builder: (BuildContext context) {
