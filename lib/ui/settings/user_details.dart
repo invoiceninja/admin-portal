@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -81,79 +82,47 @@ class _UserDetailsState extends State<UserDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
 
-    return WillPopScope(
-      onWillPop: () async {
-        //viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(localization.userDetails),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
+    return SettingsScaffold(
+      title: localization.userDetails,
+      onSavePressed: viewModel.onSavePressed,
+      onCancelPressed: viewModel.onCancelPressed,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          children: <Widget>[
+            FormCard(
+              children: <Widget>[
+                DecoratedFormField(
+                  label: localization.firstName,
+                  controller: _firstNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterAFirstName
+                      : null,
+                  autovalidate: autoValidate,
                 ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: true,
-              isDirty: true,
-              //isVisible: !client.isDeleted,
-              //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.state.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
+                DecoratedFormField(
+                  label: localization.lastName,
+                  controller: _lastNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterALastName
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.email,
+                  controller: _emailController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterYourEmail
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.phone,
+                  controller: _phoneController,
+                ),
+              ],
             )
           ],
-        ),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  DecoratedFormField(
-                    label: localization.firstName,
-                    controller: _firstNameController,
-                    validator: (val) => val.isEmpty || val.trim().isEmpty
-                        ? localization.pleaseEnterAFirstName
-                        : null,
-                    autovalidate: autoValidate,
-                  ),
-                  DecoratedFormField(
-                    label: localization.lastName,
-                    controller: _lastNameController,
-                    validator: (val) => val.isEmpty || val.trim().isEmpty
-                        ? localization.pleaseEnterALastName
-                        : null,
-                    autovalidate: autoValidate,
-                  ),
-                  DecoratedFormField(
-                    label: localization.email,
-                    controller: _emailController,
-                    validator: (val) => val.isEmpty || val.trim().isEmpty
-                        ? localization.pleaseEnterYourEmail
-                        : null,
-                    autovalidate: autoValidate,
-                  ),
-                  DecoratedFormField(
-                    label: localization.phone,
-                    controller: _phoneController,
-                  ),
-                ],
-              )
-            ],
-          ),
         ),
       ),
     );
