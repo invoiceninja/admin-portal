@@ -493,9 +493,11 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'invoice_item_taxes')
   bool get enableInvoiceItemTaxes;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_design_id')
   String get defaultInvoiceDesignId;
 
+  @nullable
   @BuiltValueField(wireName: 'quote_design_id')
   String get defaultQuoteDesignId;
 

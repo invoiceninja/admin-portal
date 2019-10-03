@@ -713,12 +713,6 @@ class _$SettingsEntitySerializer
       'language_id',
       serializers.serialize(object.languageId,
           specifiedType: const FullType(String)),
-      'invoice_design_id',
-      serializers.serialize(object.defaultInvoiceDesignId,
-          specifiedType: const FullType(String)),
-      'quote_design_id',
-      serializers.serialize(object.defaultQuoteDesignId,
-          specifiedType: const FullType(String)),
       'show_currency_code',
       serializers.serialize(object.showCurrencyCode,
           specifiedType: const FullType(bool)),
@@ -791,6 +785,18 @@ class _$SettingsEntitySerializer
         ..add('invoice_item_taxes')
         ..add(serializers.serialize(object.enableInvoiceItemTaxes,
             specifiedType: const FullType(bool)));
+    }
+    if (object.defaultInvoiceDesignId != null) {
+      result
+        ..add('invoice_design_id')
+        ..add(serializers.serialize(object.defaultInvoiceDesignId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultQuoteDesignId != null) {
+      result
+        ..add('quote_design_id')
+        ..add(serializers.serialize(object.defaultQuoteDesignId,
+            specifiedType: const FullType(String)));
     }
     if (object.defaultInvoiceFooter != null) {
       result
@@ -2507,14 +2513,6 @@ class _$SettingsEntity extends SettingsEntity {
     }
     if (languageId == null) {
       throw new BuiltValueNullFieldError('SettingsEntity', 'languageId');
-    }
-    if (defaultInvoiceDesignId == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'defaultInvoiceDesignId');
-    }
-    if (defaultQuoteDesignId == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'defaultQuoteDesignId');
     }
     if (showCurrencyCode == null) {
       throw new BuiltValueNullFieldError('SettingsEntity', 'showCurrencyCode');

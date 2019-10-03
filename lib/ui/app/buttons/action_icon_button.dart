@@ -4,10 +4,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ActionIconButton extends StatelessWidget {
   const ActionIconButton({
-    this.isSaving,
     this.onPressed,
     this.tooltip,
     this.icon,
+    this.isSaving = false,
     this.isDirty = false,
     this.isVisible = true,
   });

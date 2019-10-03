@@ -104,10 +104,9 @@ class _UserDetailsState extends State<UserDetails> {
               tooltip: localization.save,
               isVisible: true,
               isDirty: true,
-              isSaving: false,
               //isVisible: !client.isDeleted,
               //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.isSaving,
+              //isSaving: viewModel.state.isSaving,
               onPressed: () {
                 if (!_formKey.currentState.validate()) {
                   return;
