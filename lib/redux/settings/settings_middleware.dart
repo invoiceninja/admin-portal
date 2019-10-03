@@ -16,7 +16,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
-    TypedMiddleware<AppState, SaveSettingsRequest>(saveSettings),
+    TypedMiddleware<AppState, SaveCompanyRequest>(saveSettings),
   ];
 }
 
@@ -43,15 +43,15 @@ Middleware<AppState> _viewSettings() {
 
 Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveSettingsRequest;
+    final action = dynamicAction as SaveCompanyRequest;
 
     settingsRepository
-        .saveData(store.state.credentials, action.settings)
+        .saveData(store.state.credentials, action.company)
         .then((response) {
       print('Done: $response');
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SaveSettingsFailure(error));
+      store.dispatch(SaveCompanyFailure(error));
       action.completer.completeError(error);
     });
 

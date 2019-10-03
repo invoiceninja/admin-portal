@@ -39,14 +39,14 @@ class CompanyDetailsVM {
         state: state,
         company: state.selectedCompany,
         onChanged: (company) {
-          store.dispatch(UpdateSettings(company: company));
+          store.dispatch(UpdateCompanySettings(company: state.selectedCompany));
         },
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).refreshData);
-          store.dispatch(SaveSettingsRequest(
+          store.dispatch(SaveCompanyRequest(
               completer: completer,
-              settings: state.uiState.settingsUIState.editing));
+              company: state.uiState.settingsUIState.editing.company));
         });
   }
 

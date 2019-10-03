@@ -148,7 +148,7 @@ class _$SettingsUIStateSerializer
       result
         ..add('editing')
         ..add(serializers.serialize(object.editing,
-            specifiedType: const FullType(CompanyEntity)));
+            specifiedType: const FullType(UserCompanyEntity)));
     }
     return result;
   }
@@ -167,7 +167,8 @@ class _$SettingsUIStateSerializer
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+                  specifiedType: const FullType(UserCompanyEntity))
+              as UserCompanyEntity);
           break;
       }
     }
@@ -493,7 +494,7 @@ class UserCompanyStateBuilder
 
 class _$SettingsUIState extends SettingsUIState {
   @override
-  final CompanyEntity editing;
+  final UserCompanyEntity editing;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
@@ -531,10 +532,10 @@ class SettingsUIStateBuilder
     implements Builder<SettingsUIState, SettingsUIStateBuilder> {
   _$SettingsUIState _$v;
 
-  CompanyEntityBuilder _editing;
-  CompanyEntityBuilder get editing =>
-      _$this._editing ??= new CompanyEntityBuilder();
-  set editing(CompanyEntityBuilder editing) => _$this._editing = editing;
+  UserCompanyEntityBuilder _editing;
+  UserCompanyEntityBuilder get editing =>
+      _$this._editing ??= new UserCompanyEntityBuilder();
+  set editing(UserCompanyEntityBuilder editing) => _$this._editing = editing;
 
   SettingsUIStateBuilder();
 

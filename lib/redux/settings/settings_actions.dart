@@ -7,37 +7,61 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 class ViewSettings implements PersistUI {
   ViewSettings({
     @required this.context,
-    @required this.company,
+    @required this.userCompany,
     this.force = false,
     this.section,
   });
 
-  final CompanyEntity company;
+  final UserCompanyEntity userCompany;
   final BuildContext context;
   final bool force;
   final String section;
 }
 
-class UpdateSettings {
-  UpdateSettings({@required this.company});
+class UpdateCompanySettings {
+  UpdateCompanySettings({@required this.company});
   final CompanyEntity company;
 }
 
-class SaveSettingsRequest implements StartSaving {
-  SaveSettingsRequest({this.completer, this.settings});
+class UpdateUserSettings {
+  UpdateUserSettings({@required this.user});
+  final UserEntity user;
+}
+
+class SaveCompanyRequest implements StartSaving {
+  SaveCompanyRequest({this.completer, this.company});
 
   final Completer completer;
-  final CompanyEntity settings;
+  final CompanyEntity company;
 }
 
-class SaveSettingsSuccess implements StopSaving, PersistData, PersistUI {
-  SaveSettingsSuccess(this.settings);
+class SaveCompanySuccess implements StopSaving, PersistData, PersistUI {
+  SaveCompanySuccess(this.company);
 
-  final SettingsEntity settings;
+  final SettingsEntity company;
 }
 
-class SaveSettingsFailure implements StopSaving {
-  SaveSettingsFailure(this.error);
+class SaveCompanyFailure implements StopSaving {
+  SaveCompanyFailure(this.error);
+
+  final Object error;
+}
+
+class SaveUserRequest implements StartSaving {
+  SaveUserRequest({this.completer, this.user});
+
+  final Completer completer;
+  final UserEntity user;
+}
+
+class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
+  SaveUserSuccess(this.user);
+
+  final SettingsEntity user;
+}
+
+class SaveUserFailure implements StopSaving {
+  SaveUserFailure(this.error);
 
   final Object error;
 }
