@@ -305,6 +305,7 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
       firstName: '',
       lastName: '',
       email: '',
+      phone: '',
       id: '',
     );
   }
@@ -320,6 +321,8 @@ abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   String get lastName;
 
   String get email;
+
+  String get phone;
 
   String get fullName => (firstName + ' ' + lastName).trim();
 

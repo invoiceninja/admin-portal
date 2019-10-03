@@ -38,7 +38,7 @@ class SaveCompanyRequest implements StartSaving {
 class SaveCompanySuccess implements StopSaving, PersistData, PersistUI {
   SaveCompanySuccess(this.company);
 
-  final SettingsEntity company;
+  final CompanyEntity company;
 }
 
 class SaveCompanyFailure implements StopSaving {
@@ -57,7 +57,7 @@ class SaveUserRequest implements StartSaving {
 class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
   SaveUserSuccess(this.user);
 
-  final SettingsEntity user;
+  final UserEntity user;
 }
 
 class SaveUserFailure implements StopSaving {

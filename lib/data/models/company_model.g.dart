@@ -514,6 +514,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
+      'phone',
+      serializers.serialize(object.phone,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -544,6 +547,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'email':
           result.email = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -1938,11 +1945,14 @@ class _$UserEntity extends UserEntity {
   final String lastName;
   @override
   final String email;
+  @override
+  final String phone;
 
   factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
       (new UserEntityBuilder()..update(updates)).build();
 
-  _$UserEntity._({this.id, this.firstName, this.lastName, this.email})
+  _$UserEntity._(
+      {this.id, this.firstName, this.lastName, this.email, this.phone})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'id');
@@ -1955,6 +1965,9 @@ class _$UserEntity extends UserEntity {
     }
     if (email == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'email');
+    }
+    if (phone == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'phone');
     }
   }
 
@@ -1972,14 +1985,18 @@ class _$UserEntity extends UserEntity {
         id == other.id &&
         firstName == other.firstName &&
         lastName == other.lastName &&
-        email == other.email;
+        email == other.email &&
+        phone == other.phone;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, id.hashCode), firstName.hashCode), lastName.hashCode),
-        email.hashCode));
+        $jc(
+            $jc($jc($jc(0, id.hashCode), firstName.hashCode),
+                lastName.hashCode),
+            email.hashCode),
+        phone.hashCode));
   }
 
   @override
@@ -1988,7 +2005,8 @@ class _$UserEntity extends UserEntity {
           ..add('id', id)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
-          ..add('email', email))
+          ..add('email', email)
+          ..add('phone', phone))
         .toString();
   }
 }
@@ -2012,6 +2030,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
+
   UserEntityBuilder();
 
   UserEntityBuilder get _$this {
@@ -2020,6 +2042,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _firstName = _$v.firstName;
       _lastName = _$v.lastName;
       _email = _$v.email;
+      _phone = _$v.phone;
       _$v = null;
     }
     return this;
@@ -2042,7 +2065,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   _$UserEntity build() {
     final _$result = _$v ??
         new _$UserEntity._(
-            id: id, firstName: firstName, lastName: lastName, email: email);
+            id: id,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone);
     replace(_$result);
     return _$result;
   }

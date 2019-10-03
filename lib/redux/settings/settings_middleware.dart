@@ -67,8 +67,9 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
 
     settingsRepository
         .saveUser(store.state.credentials, action.user)
-        .then((response) {
-      print('Done: $response');
+        .then((user) {
+      store.dispatch(SaveUserSuccess(user));
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserFailure(error));
