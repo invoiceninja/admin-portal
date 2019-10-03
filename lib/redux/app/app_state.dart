@@ -223,6 +223,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   QuoteUIState get quoteUIState => uiState.quoteUIState;
 
+  SettingsUIState get settingsUIState => uiState.settingsUIState;
+
   bool hasChanges() {
     switch (uiState.currentRoute) {
       case ClientEditScreen.route:
@@ -244,6 +246,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case ExpenseEditScreen.route:
         return hasExpenseChanges(expenseUIState.editing, expenseState.map);
       // TODO add to stater.sh
+    }
+
+    if (uiState.currentRoute.startsWith('/settings')) {
+      return settingsUIState.editing != userCompany;
     }
 
     if (uiState.currentRoute.endsWith('/edit')) {
