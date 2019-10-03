@@ -24,7 +24,7 @@ class DeviceSettingsBuilder extends StatelessWidget {
     return StoreConnector<AppState, DeviceSettingsVM>(
       converter: DeviceSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return DeviceSettingsList(viewModel: viewModel);
+        return DeviceSettings(viewModel: viewModel);
       },
     );
   }

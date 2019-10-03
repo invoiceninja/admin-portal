@@ -7,8 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class DeviceSettingsList extends StatefulWidget {
-  const DeviceSettingsList({
+class DeviceSettings extends StatefulWidget {
+  const DeviceSettings({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -16,10 +16,10 @@ class DeviceSettingsList extends StatefulWidget {
   final DeviceSettingsVM viewModel;
 
   @override
-  _DeviceSettingsListState createState() => _DeviceSettingsListState();
+  _DeviceSettingsState createState() => _DeviceSettingsState();
 }
 
-class _DeviceSettingsListState extends State<DeviceSettingsList> {
+class _DeviceSettingsState extends State<DeviceSettings> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,24 +36,7 @@ class _DeviceSettingsListState extends State<DeviceSettingsList> {
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
           title: Text(localization.deviceSettings),
-          actions: <Widget>[
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: true,
-              isDirty: true,
-              isSaving: false,
-              //isVisible: !client.isDeleted,
-              //isDirty: client.isNew || client != viewModel.origClient,
-              //isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                //viewModel.onSavePressed(context);
-              },
-            )
-          ],
+          actions: <Widget>[],
         ),
         body: Form(
           key: _formKey,
