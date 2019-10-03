@@ -27,10 +27,15 @@ class SettingsListVM {
   });
 
   static SettingsListVM fromStore(Store<AppState> store) {
+    final state = store.state;
+
     return SettingsListVM(
-        state: store.state,
+        state: state,
         loadSection: (context, section) {
-          store.dispatch(ViewSettings(context: context, section: section));
+          store.dispatch(ViewSettings(
+              context: context,
+              section: section,
+              userCompany: state.userCompany));
         });
   }
 
