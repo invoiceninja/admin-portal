@@ -668,7 +668,7 @@ abstract class SettingsEntity
 
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {
-    if (invoiceFields.isNotEmpty) {
+    if (invoiceFields != null && invoiceFields.isNotEmpty) {
       return invoiceFields.contains('$entityType.$field');
     } else if (field == 'discount') {
       return false;
