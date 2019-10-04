@@ -126,7 +126,8 @@ class MainScreen extends StatelessWidget {
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
                     ),
-                    SettingsScreens(),
+                    // TODO profile/time to see if this optimization helps
+                    mainRoute == 'settings' ? SettingsScreens() : SizedBox(),
                   ],
                 ),
               ),
