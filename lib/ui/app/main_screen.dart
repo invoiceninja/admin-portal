@@ -144,7 +144,9 @@ class SettingsScreens extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final subRoute = uiState.subRoute;
-    final index = kSettingsSections.indexOf(subRoute);
+    final index = subRoute.isEmpty
+        ? kSettingsSections.length
+        : kSettingsSections.indexOf(subRoute);
 
     return Row(
       children: <Widget>[
@@ -175,6 +177,7 @@ class SettingsScreens extends StatelessWidget {
               TemplatesAndRemindersBuilder(),
               CreditCardsAndBanksBuilder(),
               DataVisualizationsBuilder(),
+              BlankScreen(),
             ],
           ),
         ),
@@ -218,7 +221,7 @@ class EntityScreens extends StatelessWidget {
             children: <Widget>[
               (entityUIState.selectedId ?? '').isNotEmpty
                   ? viewWidget
-                  : BlankScreen(),
+                  : BlankScreen(AppLocalization.of(context).noRecordSelected),
               editWidget,
             ],
           ),
@@ -229,11 +232,14 @@ class EntityScreens extends StatelessWidget {
 }
 
 class BlankScreen extends StatelessWidget {
+  const BlankScreen([this.message]);
+  final String message;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: HelpText(AppLocalization.of(context).noRecordSelected),
+      body: HelpText(message ?? ''),
     );
   }
 }

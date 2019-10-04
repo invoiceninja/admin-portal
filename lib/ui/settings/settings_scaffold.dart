@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -23,7 +24,8 @@ class SettingsScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return WillPopScope(
       onWillPop: () async {
@@ -44,6 +46,12 @@ class SettingsScaffold extends StatelessWidget {
                   ),
                   onPressed: () {
                     FocusScope.of(context).requestFocus(FocusNode());
+                    store.dispatch(ViewSettings(
+                      context: context,
+                      userCompany: state.userCompany,
+                      section: '',
+                      force: true,
+                    ));
                     onCancelPressed(context);
                   },
                 );

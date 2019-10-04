@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.1';
+const String kAppVersion = '2.0.2';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://admin.invoiceninja.com';
 const String kAppPlansURL =
@@ -117,8 +117,8 @@ const List<String> kSettingsSections = [
   kSettingsBuyNowButtons,
   kSettingsEmailSettings,
   kSettingsTemplatesAndReminders,
-  //kSettingsCreditCardsAndBanks,
-  //kSettingsDataVisualizations,
+  kSettingsCreditCardsAndBanks,
+  kSettingsDataVisualizations,
 ];
 
 const int kPaymentStatusPending = 1;

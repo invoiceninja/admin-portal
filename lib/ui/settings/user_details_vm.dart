@@ -27,6 +27,7 @@ class UserDetailsBuilder extends StatelessWidget {
 
 class UserDetailsVM {
   UserDetailsVM({
+    @required this.user,
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
@@ -38,6 +39,7 @@ class UserDetailsVM {
 
     return UserDetailsVM(
         state: state,
+        user: state.uiState.settingsUIState.editing.user,
         onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
         onCancelPressed: (context) =>
             store.dispatch(ResetUserSettings(user: state.user)),
@@ -51,6 +53,7 @@ class UserDetailsVM {
   }
 
   final AppState state;
+  final UserEntity user;
   final Function(UserEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

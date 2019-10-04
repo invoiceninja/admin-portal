@@ -289,7 +289,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Settings: ${selectedCompanyState.company.settings}';
     //return 'URL: ${authState.url}, ${selectedCompany.plan}';
-    return 'Route: ${uiState.currentRoute}, size: ${selectedCompany.sizeId}/${uiState.settingsUIState.editing.company.sizeId}, country: ${selectedCompany.countryId}/${uiState.settingsUIState.editing.company.countryId} updatedAt: ${settingsUIState.updatedAt}';
+    return 'Route: ${uiState.currentRoute}, settings isChanged: ${uiState.settingsUIState.isChanged}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
