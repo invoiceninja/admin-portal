@@ -49,7 +49,8 @@ class ExpenseRepository {
 
     if (expense.isNew) {
       response = await webClient.post(
-          credentials.url + '/expenses', credentials.token, json.encode(data));
+          credentials.url + '/expenses', credentials.token,
+          data: json.encode(data));
     } else {
       var url = credentials.url + '/expenses/' + expense.id.toString();
       if (action != null) {

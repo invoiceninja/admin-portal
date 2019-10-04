@@ -49,7 +49,8 @@ class VendorRepository {
 
     if (vendor.isNew) {
       response = await webClient.post(
-          credentials.url + '/vendors', credentials.token, json.encode(data));
+          credentials.url + '/vendors', credentials.token,
+          data: json.encode(data));
     } else {
       var url = credentials.url + '/vendors/' + vendor.id.toString();
       if (action != null) {

@@ -91,7 +91,7 @@ class AuthRepository {
     url += '?include_static=true';
 
     final dynamic response =
-        await webClient.post(url, token ?? '', json.encode(data));
+        await webClient.post(url, token ?? '', data: json.encode(data));
 
     final LoginResponse loginResponse =
         serializers.deserializeWith(LoginResponse.serializer, response);

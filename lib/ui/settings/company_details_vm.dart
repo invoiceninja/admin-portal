@@ -55,8 +55,7 @@ class CompanyDetailsVM {
       onUploadLogo: (context, path) {
         final completer = snackBarCompleter(
             context, AppLocalization.of(context).uploadedLogo);
-        //store.dispatch(
-        //SaveDocumentRequest(document: document, completer: completer));
+        store.dispatch(UploadLogoRequest(completer: completer, path: path));
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -39,5 +40,23 @@ class SettingsRepository {
         serializers.deserializeWith(UserItemResponse.serializer, response);
 
     return userResponse.data;
+  }
+
+  Future<CompanyEntity> uploadLogo(Credentials credentials, String path) async {
+    final url = '${credentials.url}/companies';
+
+    final dynamic response = await webClient.post(url, credentials.token,
+        filePath: path, fileIndex: 'logo');
+
+    debugPrint('### UPLOAD LOGO RESPONSE: $response');
+
+    return null;
+
+    /*
+    final UserItemResponse userResponse =
+        serializers.deserializeWith(UserItemResponse.serializer, response);
+
+    return userResponse.data;
+     */
   }
 }

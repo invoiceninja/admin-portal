@@ -51,9 +51,8 @@ class QuoteRepository {
 
     if (quote.isNew) {
       response = await webClient.post(
-          credentials.url + '/invoices?include=invitations',
-          credentials.token,
-          json.encode(data));
+          credentials.url + '/invoices?include=invitations', credentials.token,
+          data: json.encode(data));
     } else {
       var url = '${credentials.url}/invoices/${quote.id}';
       if (action != null) {
@@ -81,6 +80,6 @@ class QuoteRepository {
     await webClient.post(
         credentials.url + '/email_invoice?invoice_id=${quote.id}',
         credentials.token,
-        json.encode(data));
+        data: json.encode(data));
   }
 }

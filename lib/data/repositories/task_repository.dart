@@ -54,7 +54,8 @@ class TaskRepository {
 
     if (task.isNew) {
       response = await webClient.post(
-          credentials.url + '/tasks', credentials.token, json.encode(data));
+          credentials.url + '/tasks', credentials.token,
+          data: json.encode(data));
     } else {
       var url = credentials.url + '/tasks/' + task.id.toString();
       if (action != null) {

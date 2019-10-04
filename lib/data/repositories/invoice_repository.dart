@@ -51,9 +51,8 @@ class InvoiceRepository {
 
     if (invoice.isNew) {
       response = await webClient.post(
-          credentials.url + '/invoices?include=invitations',
-          credentials.token,
-          json.encode(data));
+          credentials.url + '/invoices?include=invitations', credentials.token,
+          data: json.encode(data));
     } else {
       var url = '${credentials.url}/invoices/${invoice.id}';
       if (action != null) {
@@ -81,7 +80,7 @@ class InvoiceRepository {
     await webClient.post(
         credentials.url + '/email_invoice?invoice_id=${invoice.id}',
         credentials.token,
-        json.encode(data));
+        data: json.encode(data));
 
     /*
     final Future<dynamic> response = await webClient.post(

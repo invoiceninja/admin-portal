@@ -36,7 +36,7 @@ class WebClient {
   }
 
   Future<dynamic> post(String url, String token,
-      [dynamic data, String filePath]) async {
+      {dynamic data, String filePath, String fileIndex = 'file'}) async {
     url = _checkUrl(url);
     print('POST: $url');
     print('Data: $data');
@@ -50,7 +50,7 @@ class WebClient {
       final request = http.MultipartRequest('POST', Uri.parse(url))
         ..fields.addAll(data)
         ..headers.addAll(_getHeaders(token))
-        ..files.add(http.MultipartFile('file', stream, length,
+        ..files.add(http.MultipartFile(fileIndex, stream, length,
             filename: basename(file.path)));
 
       response = await http.Response.fromStream(await request.send())

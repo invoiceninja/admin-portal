@@ -54,9 +54,8 @@ class ClientRepository {
 
     if (client.isNew) {
       response = await webClient.post(
-          credentials.url + '/clients?include=activities',
-          credentials.token,
-          json.encode(data));
+          credentials.url + '/clients?include=activities', credentials.token,
+          data: json.encode(data));
     } else {
       var url = credentials.url + '/clients/${client.id}?include=activities';
       if (action != null) {

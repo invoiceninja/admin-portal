@@ -14,11 +14,13 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   final viewSettings = _viewSettings();
   final saveCompany = _saveCompany(repository);
   final saveUser = _saveUser(repository);
+  final uploadLogo = _uploadLogo(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
     TypedMiddleware<AppState, SaveUserRequest>(saveUser),
+    TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
   ];
 }
 
@@ -73,6 +75,25 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UploadLogoRequest;
+
+    settingsRepository
+        .uploadLogo(store.state.credentials, action.path)
+        .then((user) {
+      //store.dispatch(UploadLogoSuccess());
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UploadLogoFailure(error));
       action.completer.completeError(error);
     });
 

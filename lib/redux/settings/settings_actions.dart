@@ -57,6 +57,25 @@ class SaveCompanyFailure implements StopSaving {
   final Object error;
 }
 
+class UploadLogoRequest implements StartSaving {
+  UploadLogoRequest({this.completer, this.path});
+
+  final Completer completer;
+  final String path;
+}
+
+class UploadLogoSuccess implements StopSaving, PersistData, PersistUI {
+  UploadLogoSuccess(this.company);
+
+  final CompanyEntity company;
+}
+
+class UploadLogoFailure implements StopSaving {
+  UploadLogoFailure(this.error);
+
+  final Object error;
+}
+
 class SaveUserRequest implements StartSaving {
   SaveUserRequest({this.completer, this.user});
 

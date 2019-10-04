@@ -61,7 +61,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     try {
       final dynamic response = await webClient.post(
-          '/api/v1/upgrade', state.credentials.token, json.encode(data));
+          '/api/v1/upgrade', state.credentials.token,
+          data: json.encode(data));
       final String message = response['message'];
 
       if (message == 'success') {

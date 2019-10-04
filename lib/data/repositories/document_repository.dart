@@ -55,8 +55,9 @@ class DocumentRepository {
         fields['invoice_id'] = '${document.invoiceId}';
       }
 
-      response = await webClient.post('${credentials.url}/documents',
-          credentials.token, fields, document.path);
+      response = await webClient.post(
+          '${credentials.url}/documents', credentials.token,
+          data: fields, filePath: document.path);
     } else {
       final data =
           serializers.serializeWith(DocumentEntity.serializer, document);

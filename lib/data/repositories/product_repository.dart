@@ -38,7 +38,8 @@ class ProductRepository {
 
     if (product.isNew) {
       response = await webClient.post(
-          credentials.url + '/products', credentials.token, json.encode(data));
+          credentials.url + '/products', credentials.token,
+          data: json.encode(data));
     } else {
       var url = credentials.url + '/products/' + product.id.toString();
       if (action != null) {

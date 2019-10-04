@@ -42,7 +42,7 @@ class PaymentRepository {
         url += '?email_receipt=true';
       }
       response =
-          await webClient.post(url, credentials.token, json.encode(data));
+          await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
       var url = '${credentials.url}/payments/${payment.id}?';
       if (sendEmail) {
