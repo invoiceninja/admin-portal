@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class UserDetailsBuilder extends StatelessWidget {
   const UserDetailsBuilder({Key key}) : super(key: key);
+  static const String route = '/settings/$kSettingsUserDetails';
 
   @override
   Widget build(BuildContext context) {

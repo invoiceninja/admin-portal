@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:sentry/sentry.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -290,6 +292,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
             SettingsScreen.route: (context) => SettingsScreen(),
+            CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
+            UserDetailsBuilder.route: (context) => UserDetailsBuilder(),
           },
         );
       }),

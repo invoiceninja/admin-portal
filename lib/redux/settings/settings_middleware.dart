@@ -35,12 +35,18 @@ Middleware<AppState> _viewSettings() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(SettingsScreen.route +
-        (action.section != null ? '/${action.section}' : '/company_details')));
+    final route = SettingsScreen.route +
+        (action.section != null ? '/${action.section}' : '/company_details');
+
+    store.dispatch(UpdateCurrentRoute(route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
-          SettingsScreen.route, (Route<dynamic> route) => false);
+      if (action.section == null) {
+        Navigator.of(action.context).pushNamedAndRemoveUntil(
+            SettingsScreen.route, (Route<dynamic> route) => false);
+      } else {
+        Navigator.of(action.context).pushNamed(route);
+      }
     }
   };
 }

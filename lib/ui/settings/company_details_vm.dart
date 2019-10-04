@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
@@ -9,8 +10,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class CompanyDetailsBuilder extends StatelessWidget {
-  const CompanyDetailsBuilder({Key key}) : super(key: key);
+class CompanyDetailsScreen extends StatelessWidget {
+  const CompanyDetailsScreen({Key key}) : super(key: key);
+  static const String route = '/settings/$kSettingsCompanyDetails';
 
   @override
   Widget build(BuildContext context) {
