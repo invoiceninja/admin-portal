@@ -728,45 +728,6 @@ class _$SettingsEntitySerializer
       'custom_invoice_taxes2',
       serializers.serialize(object.enableCustomInvoiceTaxes2,
           specifiedType: const FullType(bool)),
-      'email_footer',
-      serializers.serialize(object.emailFooter,
-          specifiedType: const FullType(String)),
-      'email_subject_invoice',
-      serializers.serialize(object.emailSubjectInvoice,
-          specifiedType: const FullType(String)),
-      'email_subject_quote',
-      serializers.serialize(object.emailSubjectQuote,
-          specifiedType: const FullType(String)),
-      'email_subject_payment',
-      serializers.serialize(object.emailSubjectPayment,
-          specifiedType: const FullType(String)),
-      'email_template_invoice',
-      serializers.serialize(object.emailBodyInvoice,
-          specifiedType: const FullType(String)),
-      'email_template_quote',
-      serializers.serialize(object.emailBodyQuote,
-          specifiedType: const FullType(String)),
-      'email_template_payment',
-      serializers.serialize(object.emailBodyPayment,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder1',
-      serializers.serialize(object.emailSubjectReminder1,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder2',
-      serializers.serialize(object.emailSubjectReminder2,
-          specifiedType: const FullType(String)),
-      'email_subject_reminder3',
-      serializers.serialize(object.emailSubjectReminder3,
-          specifiedType: const FullType(String)),
-      'email_template_reminder1',
-      serializers.serialize(object.emailBodyReminder1,
-          specifiedType: const FullType(String)),
-      'email_template_reminder2',
-      serializers.serialize(object.emailBodyReminder2,
-          specifiedType: const FullType(String)),
-      'email_template_reminder3',
-      serializers.serialize(object.emailBodyReminder3,
-          specifiedType: const FullType(String)),
     ];
     if (object.defaultInvoiceTerms != null) {
       result
@@ -875,6 +836,84 @@ class _$SettingsEntitySerializer
       result
         ..add('invoice_fields')
         ..add(serializers.serialize(object.invoiceFields,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailFooter != null) {
+      result
+        ..add('email_footer')
+        ..add(serializers.serialize(object.emailFooter,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectInvoice != null) {
+      result
+        ..add('email_subject_invoice')
+        ..add(serializers.serialize(object.emailSubjectInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectQuote != null) {
+      result
+        ..add('email_subject_quote')
+        ..add(serializers.serialize(object.emailSubjectQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectPayment != null) {
+      result
+        ..add('email_subject_payment')
+        ..add(serializers.serialize(object.emailSubjectPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyInvoice != null) {
+      result
+        ..add('email_template_invoice')
+        ..add(serializers.serialize(object.emailBodyInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyQuote != null) {
+      result
+        ..add('email_template_quote')
+        ..add(serializers.serialize(object.emailBodyQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyPayment != null) {
+      result
+        ..add('email_template_payment')
+        ..add(serializers.serialize(object.emailBodyPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder1 != null) {
+      result
+        ..add('email_subject_reminder1')
+        ..add(serializers.serialize(object.emailSubjectReminder1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder2 != null) {
+      result
+        ..add('email_subject_reminder2')
+        ..add(serializers.serialize(object.emailSubjectReminder2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectReminder3 != null) {
+      result
+        ..add('email_subject_reminder3')
+        ..add(serializers.serialize(object.emailSubjectReminder3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder1 != null) {
+      result
+        ..add('email_template_reminder1')
+        ..add(serializers.serialize(object.emailBodyReminder1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder2 != null) {
+      result
+        ..add('email_template_reminder2')
+        ..add(serializers.serialize(object.emailBodyReminder2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyReminder3 != null) {
+      result
+        ..add('email_template_reminder3')
+        ..add(serializers.serialize(object.emailBodyReminder3,
             specifiedType: const FullType(String)));
     }
     if (object.fillProducts != null) {
@@ -2531,53 +2570,6 @@ class _$SettingsEntity extends SettingsEntity {
     if (enableCustomInvoiceTaxes2 == null) {
       throw new BuiltValueNullFieldError(
           'SettingsEntity', 'enableCustomInvoiceTaxes2');
-    }
-    if (emailFooter == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'emailFooter');
-    }
-    if (emailSubjectInvoice == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailSubjectInvoice');
-    }
-    if (emailSubjectQuote == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'emailSubjectQuote');
-    }
-    if (emailSubjectPayment == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailSubjectPayment');
-    }
-    if (emailBodyInvoice == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'emailBodyInvoice');
-    }
-    if (emailBodyQuote == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'emailBodyQuote');
-    }
-    if (emailBodyPayment == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'emailBodyPayment');
-    }
-    if (emailSubjectReminder1 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailSubjectReminder1');
-    }
-    if (emailSubjectReminder2 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailSubjectReminder2');
-    }
-    if (emailSubjectReminder3 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailSubjectReminder3');
-    }
-    if (emailBodyReminder1 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailBodyReminder1');
-    }
-    if (emailBodyReminder2 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailBodyReminder2');
-    }
-    if (emailBodyReminder3 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'emailBodyReminder3');
     }
   }
 

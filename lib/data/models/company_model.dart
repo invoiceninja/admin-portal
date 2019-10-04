@@ -581,42 +581,68 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_footer')
   String get emailFooter;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_invoice')
   String get emailSubjectInvoice;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_quote')
   String get emailSubjectQuote;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_payment')
   String get emailSubjectPayment;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_quote')
   String get emailBodyQuote;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_payment')
   String get emailBodyPayment;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder1')
   String get emailSubjectReminder1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder2')
   String get emailSubjectReminder2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_subject_reminder3')
   String get emailSubjectReminder3;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder1')
   String get emailBodyReminder1;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder2')
   String get emailBodyReminder2;
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
 
