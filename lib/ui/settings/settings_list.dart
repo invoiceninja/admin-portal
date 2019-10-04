@@ -146,7 +146,10 @@ class SettingsListTile extends StatelessWidget {
     return SelectedIndicator(
       isSelected: viewModel.state.uiState.containsRoute('/$section'),
       child: ListTile(
-        leading: Icon(icon),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 6, top: 2),
+          child: Icon(icon, size: 20),
+        ),
         title: Text(localization.lookup(section)),
         onTap: () {
           viewModel.loadSection(context, section);

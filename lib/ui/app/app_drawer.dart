@@ -379,7 +379,7 @@ class DrawerTile extends StatelessWidget {
       isSelected: uiState.currentRoute.startsWith('/$route'),
       child: ListTile(
         dense: true,
-        leading: Icon(icon, size: 22.0),
+        leading: Icon(icon, size: 22),
         title: Tooltip(message: title, child: Text(title)),
         onTap: onTap,
         trailing: onCreateTap == null || !userCompany.canCreate(entityType)
