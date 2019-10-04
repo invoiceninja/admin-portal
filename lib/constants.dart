@@ -83,6 +83,9 @@ const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';
 
+const String kSettings = 'settings';
+const String kDashboard = 'dashboard';
+
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';

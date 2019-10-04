@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization.dart';
@@ -9,8 +10,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class LocalizationBuilder extends StatelessWidget {
-  const LocalizationBuilder({Key key}) : super(key: key);
+class LocalizationScreen extends StatelessWidget {
+  const LocalizationScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsLocalization';
 
   @override
   Widget build(BuildContext context) {

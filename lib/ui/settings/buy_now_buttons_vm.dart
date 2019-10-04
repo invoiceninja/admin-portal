@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class BuyNowButtonsBuilder extends StatelessWidget {
-  const BuyNowButtonsBuilder({Key key}) : super(key: key);
+class BuyNowButtonsScreen extends StatelessWidget {
+  const BuyNowButtonsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsBuyNowButtons';
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/settings/products.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class ProductSettingsBuilder extends StatelessWidget {
-  const ProductSettingsBuilder({Key key}) : super(key: key);
+class ProductSettingsScreen extends StatelessWidget {
+  const ProductSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsProducts';
 
   @override
   Widget build(BuildContext context) {

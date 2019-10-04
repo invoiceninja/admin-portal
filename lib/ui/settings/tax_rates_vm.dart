@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class TaxRatesBuilder extends StatelessWidget {
-  const TaxRatesBuilder({Key key}) : super(key: key);
+class TaxRatesScreen extends StatelessWidget {
+  const TaxRatesScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsTaxRates';
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class EmailSettingsBuilder extends StatelessWidget {
-  const EmailSettingsBuilder({Key key}) : super(key: key);
+class EmailSettingsScreen extends StatelessWidget {
+  const EmailSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsEmailSettings';
 
   @override
   Widget build(BuildContext context) {

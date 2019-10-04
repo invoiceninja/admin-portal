@@ -1,5 +1,21 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/invoice_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
+import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:sentry/sentry.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -293,7 +309,26 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             // STARTER: routes - do not remove comment
             SettingsScreen.route: (context) => SettingsScreen(),
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
-            UserDetailsBuilder.route: (context) => UserDetailsBuilder(),
+            UserDetailsScreen.route: (context) => UserDetailsScreen(),
+            LocalizationScreen.route: (context) => LocalizationScreen(),
+            OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
+            TaxRatesScreen.route: (context) => TaxRatesScreen(),
+            ProductSettingsScreen.route: (context) => ProductSettingsScreen(),
+            NotificationsSettingsScreen.route: (context) =>
+                NotificationsSettingsScreen(),
+            ImportExportScreen.route: (context) => ImportExportScreen(),
+            DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
+            InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),
+            InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
+            ClientPortalScreen.route: (context) => ClientPortalScreen(),
+            BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
+            EmailSettingsScreen.route: (context) => EmailSettingsScreen(),
+            TemplatesAndRemindersScreen.route: (context) =>
+                TemplatesAndRemindersScreen(),
+            CreditCardsAndBanksScreen.route: (context) =>
+                CreditCardsAndBanksScreen(),
+            DataVisualizationsScreen.route: (context) =>
+                DataVisualizationsScreen(),
           },
         );
       }),

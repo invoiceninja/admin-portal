@@ -16,8 +16,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DeviceSettingsBuilder extends StatelessWidget {
-  const DeviceSettingsBuilder({Key key}) : super(key: key);
+class DeviceSettingsScreen extends StatelessWidget {
+  const DeviceSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsDeviceSettings';
 
   @override
   Widget build(BuildContext context) {

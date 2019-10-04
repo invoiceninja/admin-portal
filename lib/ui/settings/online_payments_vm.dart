@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class OnlinePaymentsBuilder extends StatelessWidget {
-  const OnlinePaymentsBuilder({Key key}) : super(key: key);
+class OnlinePaymentsScreen extends StatelessWidget {
+  const OnlinePaymentsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsOnlinePayments';
 
   @override
   Widget build(BuildContext context) {

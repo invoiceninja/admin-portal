@@ -10,9 +10,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class UserDetailsBuilder extends StatelessWidget {
-  const UserDetailsBuilder({Key key}) : super(key: key);
-  static const String route = '/settings/$kSettingsUserDetails';
+class UserDetailsScreen extends StatelessWidget {
+  const UserDetailsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsUserDetails';
 
   @override
   Widget build(BuildContext context) {
