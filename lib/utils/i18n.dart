@@ -66,7 +66,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_login': 'Email Login',
       'create_new': 'Create New',
       'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
+      'error_unsaved_changes': 'Please cancel or save your changes',
       'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',

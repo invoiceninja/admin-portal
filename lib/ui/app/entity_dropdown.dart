@@ -142,12 +142,14 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
           ),
           Expanded(
             child: TextField(
+              /*
               onSubmitted: (value) {
                 final entityId = widget.entityList.firstWhere((entityId) =>
                     widget.entityMap[entityId].matchesFilter(_filter));
                 final entity = widget.entityMap[entityId];
                 _selectEntity(entity);
               },
+               */
               onChanged: (value) {
                 setState(() {
                   _filter = value;
