@@ -48,7 +48,7 @@ class WebClient {
       final length = await file.length();
 
       final request = http.MultipartRequest('POST', Uri.parse(url))
-        ..fields.addAll(data)
+        ..fields.addAll(data ?? {})
         ..headers.addAll(_getHeaders(token))
         ..files.add(http.MultipartFile(fileIndex, stream, length,
             filename: basename(file.path)));

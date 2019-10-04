@@ -256,8 +256,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   label: localization.uploadLogo,
                   icon: Icons.cloud_upload,
                   onPressed: () async {
-                    final image =
-                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    final image = await ImagePicker.pickImage(
+                        source: kReleaseMode
+                            ? ImageSource.gallery
+                            : ImageSource.camera);
                     if (image != null) {
                       viewModel.onUploadLogo(context, image.path);
                     }

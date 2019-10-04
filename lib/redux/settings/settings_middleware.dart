@@ -89,7 +89,7 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     settingsRepository
         .uploadLogo(store.state.credentials, action.path)
         .then((user) {
-      //store.dispatch(UploadLogoSuccess());
+      store.dispatch(UploadLogoSuccess(null));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);
