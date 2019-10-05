@@ -42,9 +42,6 @@ Middleware<AppState> _viewSettings() {
                 ? '/$kSettingsCompanyDetails'
                 : '/${uiState.settingsUIState.section}');
 
-    print(
-        '## NEW ROUTE: $route from ${action.section} and ${uiState.settingsUIState.section}');
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(route));
