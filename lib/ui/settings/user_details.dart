@@ -103,6 +103,7 @@ class _UserDetailsState extends State<UserDetails> {
                 : null,
             autovalidate: autoValidate,
           ),
+          /*
           DecoratedFormField(
             label: localization.email,
             controller: _emailController,
@@ -115,6 +116,7 @@ class _UserDetailsState extends State<UserDetails> {
             label: localization.phone,
             controller: _phoneController,
           ),
+           */
         ],
       ),
     );
