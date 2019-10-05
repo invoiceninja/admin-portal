@@ -691,3 +691,15 @@ abstract class UserItemResponse
   static Serializer<UserItemResponse> get serializer =>
       _$userItemResponseSerializer;
 }
+
+abstract class GroupEntity implements Built<GroupEntity, GroupEntityBuilder> {
+  factory GroupEntity([void updates(GroupEntityBuilder b)]) = _$GroupEntity;
+
+  GroupEntity._();
+
+  String get name;
+
+  SettingsEntity get settings;
+
+  static Serializer<GroupEntity> get serializer => _$groupEntitySerializer;
+}

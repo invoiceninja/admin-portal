@@ -160,17 +160,17 @@ class _$SettingsUIStateSerializer
         ..add(serializers.serialize(object.userCompany,
             specifiedType: const FullType(UserCompanyEntity)));
     }
-    if (object.clientSettings != null) {
+    if (object.client != null) {
       result
-        ..add('clientSettings')
-        ..add(serializers.serialize(object.clientSettings,
-            specifiedType: const FullType(SettingsEntity)));
+        ..add('client')
+        ..add(serializers.serialize(object.client,
+            specifiedType: const FullType(ClientEntity)));
     }
-    if (object.groupSettings != null) {
+    if (object.group != null) {
       result
-        ..add('groupSettings')
-        ..add(serializers.serialize(object.groupSettings,
-            specifiedType: const FullType(SettingsEntity)));
+        ..add('group')
+        ..add(serializers.serialize(object.group,
+            specifiedType: const FullType(GroupEntity)));
     }
     return result;
   }
@@ -192,13 +192,13 @@ class _$SettingsUIStateSerializer
                   specifiedType: const FullType(UserCompanyEntity))
               as UserCompanyEntity);
           break;
-        case 'clientSettings':
-          result.clientSettings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+        case 'client':
+          result.client.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ClientEntity)) as ClientEntity);
           break;
-        case 'groupSettings':
-          result.groupSettings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+        case 'group':
+          result.group.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupEntity)) as GroupEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -538,9 +538,9 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final UserCompanyEntity userCompany;
   @override
-  final SettingsEntity clientSettings;
+  final ClientEntity client;
   @override
-  final SettingsEntity groupSettings;
+  final GroupEntity group;
   @override
   final bool isChanged;
   @override
@@ -553,8 +553,8 @@ class _$SettingsUIState extends SettingsUIState {
 
   _$SettingsUIState._(
       {this.userCompany,
-      this.clientSettings,
-      this.groupSettings,
+      this.client,
+      this.group,
       this.isChanged,
       this.updatedAt,
       this.section})
@@ -583,8 +583,8 @@ class _$SettingsUIState extends SettingsUIState {
     if (identical(other, this)) return true;
     return other is SettingsUIState &&
         userCompany == other.userCompany &&
-        clientSettings == other.clientSettings &&
-        groupSettings == other.groupSettings &&
+        client == other.client &&
+        group == other.group &&
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
         section == other.section;
@@ -595,8 +595,8 @@ class _$SettingsUIState extends SettingsUIState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, userCompany.hashCode), clientSettings.hashCode),
-                    groupSettings.hashCode),
+                $jc($jc($jc(0, userCompany.hashCode), client.hashCode),
+                    group.hashCode),
                 isChanged.hashCode),
             updatedAt.hashCode),
         section.hashCode));
@@ -606,8 +606,8 @@ class _$SettingsUIState extends SettingsUIState {
   String toString() {
     return (newBuiltValueToStringHelper('SettingsUIState')
           ..add('userCompany', userCompany)
-          ..add('clientSettings', clientSettings)
-          ..add('groupSettings', groupSettings)
+          ..add('client', client)
+          ..add('group', group)
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
           ..add('section', section))
@@ -625,17 +625,14 @@ class SettingsUIStateBuilder
   set userCompany(UserCompanyEntityBuilder userCompany) =>
       _$this._userCompany = userCompany;
 
-  SettingsEntityBuilder _clientSettings;
-  SettingsEntityBuilder get clientSettings =>
-      _$this._clientSettings ??= new SettingsEntityBuilder();
-  set clientSettings(SettingsEntityBuilder clientSettings) =>
-      _$this._clientSettings = clientSettings;
+  ClientEntityBuilder _client;
+  ClientEntityBuilder get client =>
+      _$this._client ??= new ClientEntityBuilder();
+  set client(ClientEntityBuilder client) => _$this._client = client;
 
-  SettingsEntityBuilder _groupSettings;
-  SettingsEntityBuilder get groupSettings =>
-      _$this._groupSettings ??= new SettingsEntityBuilder();
-  set groupSettings(SettingsEntityBuilder groupSettings) =>
-      _$this._groupSettings = groupSettings;
+  GroupEntityBuilder _group;
+  GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
+  set group(GroupEntityBuilder group) => _$this._group = group;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -654,8 +651,8 @@ class SettingsUIStateBuilder
   SettingsUIStateBuilder get _$this {
     if (_$v != null) {
       _userCompany = _$v.userCompany?.toBuilder();
-      _clientSettings = _$v.clientSettings?.toBuilder();
-      _groupSettings = _$v.groupSettings?.toBuilder();
+      _client = _$v.client?.toBuilder();
+      _group = _$v.group?.toBuilder();
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
@@ -684,8 +681,8 @@ class SettingsUIStateBuilder
       _$result = _$v ??
           new _$SettingsUIState._(
               userCompany: _userCompany?.build(),
-              clientSettings: _clientSettings?.build(),
-              groupSettings: _groupSettings?.build(),
+              client: _client?.build(),
+              group: _group?.build(),
               isChanged: isChanged,
               updatedAt: updatedAt,
               section: section);
@@ -694,10 +691,10 @@ class SettingsUIStateBuilder
       try {
         _$failedField = 'userCompany';
         _userCompany?.build();
-        _$failedField = 'clientSettings';
-        _clientSettings?.build();
-        _$failedField = 'groupSettings';
-        _groupSettings?.build();
+        _$failedField = 'client';
+        _client?.build();
+        _$failedField = 'group';
+        _group?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsUIState', _$failedField, e.toString());

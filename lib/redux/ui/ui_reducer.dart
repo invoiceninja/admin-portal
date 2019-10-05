@@ -176,13 +176,13 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..isChanged = true);
   }),
   TypedReducer<SettingsUIState, UpdateSettings>((state, action) {
-    if (state.clientSettings != null) {
+    if (state.client != null) {
       return state.rebuild((b) => b
-        ..clientSettings.replace(action.settings)
+        //..client.settings.replace(action.settings)
         ..isChanged = true);
-    } else if (state.groupSettings != null) {
+    } else if (state.group != null) {
       return state.rebuild((b) => b
-        ..groupSettings.replace(action.settings)
+        ..group.settings.replace(action.settings)
         ..isChanged = true);
     } else {
       return state.rebuild((b) => b

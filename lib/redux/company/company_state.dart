@@ -101,10 +101,10 @@ abstract class SettingsUIState extends Object
   UserCompanyEntity get userCompany;
 
   @nullable
-  SettingsEntity get clientSettings;
+  ClientEntity get client;
 
   @nullable
-  SettingsEntity get groupSettings;
+  GroupEntity get group;
 
   bool get isChanged;
 
@@ -112,8 +112,9 @@ abstract class SettingsUIState extends Object
 
   String get section;
 
-  SettingsEntity get settings =>
-      clientSettings ?? groupSettings ?? userCompany.company.settings;
+  SettingsEntity get settings => client != null
+      ? null
+      : group != null ? group.settings : userCompany.company.settings;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;

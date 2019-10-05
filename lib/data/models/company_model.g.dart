@@ -20,6 +20,7 @@ Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
 Serializer<UserItemResponse> _$userItemResponseSerializer =
     new _$UserItemResponseSerializer();
+Serializer<GroupEntity> _$groupEntitySerializer = new _$GroupEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   @override
@@ -1188,6 +1189,52 @@ class _$UserItemResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
+  @override
+  final Iterable<Type> types = const [GroupEntity, _$GroupEntity];
+  @override
+  final String wireName = 'GroupEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GroupEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GroupEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GroupEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
       }
     }
@@ -3177,6 +3224,111 @@ class UserItemResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GroupEntity extends GroupEntity {
+  @override
+  final String name;
+  @override
+  final SettingsEntity settings;
+
+  factory _$GroupEntity([void Function(GroupEntityBuilder) updates]) =>
+      (new GroupEntityBuilder()..update(updates)).build();
+
+  _$GroupEntity._({this.name, this.settings}) : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('GroupEntity', 'name');
+    }
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('GroupEntity', 'settings');
+    }
+  }
+
+  @override
+  GroupEntity rebuild(void Function(GroupEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GroupEntityBuilder toBuilder() => new GroupEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GroupEntity &&
+        name == other.name &&
+        settings == other.settings;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, name.hashCode), settings.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GroupEntity')
+          ..add('name', name)
+          ..add('settings', settings))
+        .toString();
+  }
+}
+
+class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
+  _$GroupEntity _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
+
+  GroupEntityBuilder();
+
+  GroupEntityBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _settings = _$v.settings?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GroupEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GroupEntity;
+  }
+
+  @override
+  void update(void Function(GroupEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GroupEntity build() {
+    _$GroupEntity _$result;
+    try {
+      _$result =
+          _$v ?? new _$GroupEntity._(name: name, settings: settings.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'settings';
+        settings.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GroupEntity', _$failedField, e.toString());
       }
       rethrow;
     }
