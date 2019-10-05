@@ -48,9 +48,7 @@ class SettingsRepository {
     final url = '${credentials.url}/companies';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        filePath: path,
-        fileIndex: 'logo',
-        data: {'_method': 'PUT', 'name': 'TEST'});
+        filePath: path, fileIndex: 'logo');
 
     debugPrint('### UPLOAD LOGO RESPONSE: $response');
 
