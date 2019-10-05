@@ -372,8 +372,8 @@ class DrawerTile extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
     final route = title == localization.dashboard
-        ? 'dashboard'
-        : title == localization.settings ? 'settings' : entityType.name;
+        ? kDashboard
+        : title == localization.settings ? kSettings : entityType.name;
 
     return SelectedIndicator(
       isSelected: uiState.currentRoute.startsWith('/$route'),

@@ -260,7 +260,7 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (!['main', 'dashboard', 'settings'].contains(part) &&
+      if (![kMain, kDashboard, kSettings].contains(part) &&
           entityType == null) {
         entityType = EntityType.valueOf(part);
       }
