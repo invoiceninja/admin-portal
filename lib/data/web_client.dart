@@ -36,25 +36,15 @@ class WebClient {
   }
 
   Future<dynamic> post(String url, String token,
-      {dynamic data, String filePath, String fileIndex = 'file'}) async {
+      {dynamic data, String filePath, String fileIndex}) async {
     url = _checkUrl(url);
     print('POST: $url');
     print('Data: $data');
     http.Response response;
 
     if (filePath != null) {
-      final file = File(filePath);
-      final stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
-      final length = await file.length();
-
-      final request = http.MultipartRequest('POST', Uri.parse(url))
-        ..fields.addAll(data ?? {})
-        ..headers.addAll(_getHeaders(token))
-        ..files.add(http.MultipartFile(fileIndex, stream, length,
-            filename: basename(file.path)));
-
-      response = await http.Response.fromStream(await request.send())
-          .timeout(const Duration(minutes: 10));
+      response = await _uploadFile(url, token, filePath,
+          fileIndex: fileIndex, data: data);
     } else {
       response = await http.Client()
           .post(url, body: data, headers: _getHeaders(token))
@@ -66,16 +56,24 @@ class WebClient {
     return json.decode(response.body);
   }
 
-  Future<dynamic> put(String url, String token, dynamic data) async {
+  Future<dynamic> put(String url, String token,
+      {dynamic data, String filePath, String fileIndex = 'file'}) async {
     url = _checkUrl(url);
     print('PUT: $url');
     print('Data: $data');
 
-    final http.Response response = await http.Client().put(
-      url,
-      body: data,
-      headers: _getHeaders(token),
-    );
+    http.Response response;
+
+    if (filePath != null) {
+      response = await _uploadFile(url, token, filePath,
+          fileIndex: fileIndex, data: data, method: 'PUT');
+    } else {
+      response = await http.Client().put(
+        url,
+        body: data,
+        headers: _getHeaders(token),
+      );
+    }
 
     _checkResponse(response);
 
@@ -179,4 +177,20 @@ bool _isVersionSupported(String version) {
   return major >= kMinMajorAppVersion &&
       minor >= kMinMinorAppVersion &&
       patch >= kMinPatchAppVersion;
+}
+
+Future<http.Response> _uploadFile(String url, String token, String filePath,
+    {String method = 'POST', String fileIndex = 'file', dynamic data}) async {
+  final file = File(filePath);
+  final stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
+  final length = await file.length();
+
+  final request = http.MultipartRequest(method, Uri.parse(url))
+    ..fields.addAll(data ?? {})
+    ..headers.addAll(_getHeaders(token))
+    ..files.add(http.MultipartFile(fileIndex, stream, length,
+        filename: basename(file.path)));
+
+  return await http.Response.fromStream(await request.send())
+      .timeout(const Duration(minutes: 10));
 }

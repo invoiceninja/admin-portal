@@ -21,7 +21,8 @@ class SettingsRepository {
     dynamic response;
 
     final url = credentials.url + '/companies/${company.id}';
-    response = await webClient.put(url, credentials.token, json.encode(data));
+    response =
+        await webClient.put(url, credentials.token, data: json.encode(data));
 
     final LoginResponse clientResponse =
         serializers.deserializeWith(LoginResponse.serializer, response);
@@ -34,7 +35,8 @@ class SettingsRepository {
     dynamic response;
 
     final url = credentials.url + '/users/${user.id}';
-    response = await webClient.put(url, credentials.token, json.encode(data));
+    response =
+        await webClient.put(url, credentials.token, data: json.encode(data));
 
     final UserItemResponse userResponse =
         serializers.deserializeWith(UserItemResponse.serializer, response);
@@ -46,7 +48,9 @@ class SettingsRepository {
     final url = '${credentials.url}/companies';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        data: {'name': 'logo'}, filePath: path, fileIndex: 'logo');
+        filePath: path,
+        fileIndex: 'logo',
+        data: {'_method': 'PUT', 'name': 'TEST'});
 
     debugPrint('### UPLOAD LOGO RESPONSE: $response');
 

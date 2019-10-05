@@ -51,7 +51,8 @@ class PaymentRepository {
       if (action != null) {
         url += '&action=' + action.toString();
       }
-      response = await webClient.put(url, credentials.token, json.encode(data));
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final PaymentItemResponse paymentResponse =
