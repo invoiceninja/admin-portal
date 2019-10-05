@@ -150,6 +150,9 @@ class _$SettingsUIStateSerializer
       'updatedAt',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'section',
+      serializers.serialize(object.section,
+          specifiedType: const FullType(String)),
     ];
     if (object.editing != null) {
       result
@@ -184,6 +187,10 @@ class _$SettingsUIStateSerializer
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'section':
+          result.section = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -514,17 +521,23 @@ class _$SettingsUIState extends SettingsUIState {
   final bool isChanged;
   @override
   final int updatedAt;
+  @override
+  final String section;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
 
-  _$SettingsUIState._({this.editing, this.isChanged, this.updatedAt})
+  _$SettingsUIState._(
+      {this.editing, this.isChanged, this.updatedAt, this.section})
       : super._() {
     if (isChanged == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'updatedAt');
+    }
+    if (section == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'section');
     }
   }
 
@@ -542,13 +555,16 @@ class _$SettingsUIState extends SettingsUIState {
     return other is SettingsUIState &&
         editing == other.editing &&
         isChanged == other.isChanged &&
-        updatedAt == other.updatedAt;
+        updatedAt == other.updatedAt &&
+        section == other.section;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc(0, editing.hashCode), isChanged.hashCode), updatedAt.hashCode));
+        $jc($jc($jc(0, editing.hashCode), isChanged.hashCode),
+            updatedAt.hashCode),
+        section.hashCode));
   }
 
   @override
@@ -556,7 +572,8 @@ class _$SettingsUIState extends SettingsUIState {
     return (newBuiltValueToStringHelper('SettingsUIState')
           ..add('editing', editing)
           ..add('isChanged', isChanged)
-          ..add('updatedAt', updatedAt))
+          ..add('updatedAt', updatedAt)
+          ..add('section', section))
         .toString();
   }
 }
@@ -578,6 +595,10 @@ class SettingsUIStateBuilder
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
+  String _section;
+  String get section => _$this._section;
+  set section(String section) => _$this._section = section;
+
   SettingsUIStateBuilder();
 
   SettingsUIStateBuilder get _$this {
@@ -585,6 +606,7 @@ class SettingsUIStateBuilder
       _editing = _$v.editing?.toBuilder();
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
+      _section = _$v.section;
       _$v = null;
     }
     return this;
@@ -611,7 +633,8 @@ class SettingsUIStateBuilder
           new _$SettingsUIState._(
               editing: _editing?.build(),
               isChanged: isChanged,
-              updatedAt: updatedAt);
+              updatedAt: updatedAt,
+              section: section);
     } catch (_) {
       String _$failedField;
       try {

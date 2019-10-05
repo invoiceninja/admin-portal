@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
@@ -85,11 +86,12 @@ abstract class UserCompanyState
 
 abstract class SettingsUIState extends Object
     implements Built<SettingsUIState, SettingsUIStateBuilder> {
-  factory SettingsUIState({UserCompanyEntity userCompany}) {
+  factory SettingsUIState({UserCompanyEntity userCompany, String section}) {
     return _$SettingsUIState._(
       editing: userCompany ?? UserCompanyEntity(),
       isChanged: false,
       updatedAt: 0,
+      section: section ?? kSettingsCompanyDetails,
     );
   }
   SettingsUIState._();
@@ -100,6 +102,8 @@ abstract class SettingsUIState extends Object
   bool get isChanged;
 
   int get updatedAt;
+
+  String get section;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;

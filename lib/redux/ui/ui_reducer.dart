@@ -167,7 +167,8 @@ int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
 
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ViewSettings>((state, action) {
-    return SettingsUIState(userCompany: action.userCompany);
+    return SettingsUIState(
+        userCompany: action.userCompany, section: action.section);
   }),
   TypedReducer<SettingsUIState, UpdateCompanySettings>((state, action) {
     return state.rebuild((b) => b

@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -27,16 +28,24 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
 Middleware<AppState> _viewSettings() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewSettings;
+    final uiState = store.state.uiState;
 
     if (hasChanges(
         store: store, context: action.context, force: action.force)) {
       return;
     }
 
-    next(action);
-
     final route = SettingsScreen.route +
-        (action.section != null ? '/${action.section}' : '/company_details');
+        (action.section != null
+            ? '/${action.section}'
+            : uiState.mainRoute == kSettings
+                ? '/$kSettingsCompanyDetails'
+                : '/${uiState.settingsUIState.section}');
+
+    print(
+        '## NEW ROUTE: $route from ${action.section} and ${uiState.settingsUIState.section}');
+
+    next(action);
 
     store.dispatch(UpdateCurrentRoute(route));
 
