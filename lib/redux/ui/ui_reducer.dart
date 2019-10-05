@@ -170,25 +170,40 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return SettingsUIState(
         userCompany: action.userCompany, section: action.section);
   }),
-  TypedReducer<SettingsUIState, UpdateCompanySettings>((state, action) {
+  TypedReducer<SettingsUIState, UpdateCompany>((state, action) {
     return state.rebuild((b) => b
-      ..editing.company.replace(action.company)
+      ..userCompany.company.replace(action.company)
       ..isChanged = true);
   }),
-  TypedReducer<SettingsUIState, UpdateUserSettings>((state, action) {
+  TypedReducer<SettingsUIState, UpdateSettings>((state, action) {
+    if (state.clientSettings != null) {
+      return state.rebuild((b) => b
+        ..clientSettings.replace(action.settings)
+        ..isChanged = true);
+    } else if (state.groupSettings != null) {
+      return state.rebuild((b) => b
+        ..groupSettings.replace(action.settings)
+        ..isChanged = true);
+    } else {
+      return state.rebuild((b) => b
+        ..userCompany.company.settings.replace(action.settings)
+        ..isChanged = true);
+    }
+  }),
+  TypedReducer<SettingsUIState, UpdateUser>((state, action) {
     return state.rebuild((b) => b
-      ..editing.user.replace(action.user)
+      ..userCompany.user.replace(action.user)
       ..isChanged = true);
   }),
-  TypedReducer<SettingsUIState, ResetCompanySettings>((state, action) {
+  TypedReducer<SettingsUIState, ResetCompany>((state, action) {
     return state.rebuild((b) => b
-      ..editing.company.replace(action.company)
+      ..userCompany.company.replace(action.company)
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
-  TypedReducer<SettingsUIState, ResetUserSettings>((state, action) {
+  TypedReducer<SettingsUIState, ResetUser>((state, action) {
     return state.rebuild((b) => b
-      ..editing.user.replace(action.user)
+      ..userCompany.user.replace(action.user)
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),

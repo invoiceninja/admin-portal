@@ -42,17 +42,16 @@ class CompanyDetailsVM {
 
     return CompanyDetailsVM(
       state: state,
-      company: state.uiState.settingsUIState.editing.company,
-      onChanged: (company) =>
-          store.dispatch(UpdateCompanySettings(company: company)),
+      company: state.uiState.settingsUIState.userCompany.company,
+      onChanged: (company) => store.dispatch(UpdateCompany(company: company)),
       onCancelPressed: (context) =>
-          store.dispatch(ResetCompanySettings(company: state.selectedCompany)),
+          store.dispatch(ResetCompany(company: state.selectedCompany)),
       onSavePressed: (context) {
         final completer = snackBarCompleter(
             context, AppLocalization.of(context).savedSettings);
         store.dispatch(SaveCompanyRequest(
             completer: completer,
-            company: state.uiState.settingsUIState.editing.company));
+            company: state.uiState.settingsUIState.userCompany.company));
       },
       onUploadLogo: (context, path) {
         final completer = snackBarCompleter(

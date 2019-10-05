@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -68,6 +70,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.localization,
@@ -76,13 +80,25 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[
-          DecoratedFormField(
-            label: localization.firstName,
-            controller: _firstNameController,
-            validator: (val) => val.isEmpty || val.trim().isEmpty
-                ? localization.pleaseEnterAFirstName
-                : null,
-            autovalidate: autoValidate,
+          EntityDropdown(
+            entityType: EntityType.currency,
+            entityMap: state.staticState.currencyMap,
+            entityList: memoizedCurrencyList(state.staticState.currencyMap),
+            labelText: localization.currency,
+            initialValue:
+                state.staticState.currencyMap[settings.currencyId]?.name,
+            onSelected: (SelectableEntity currency) => viewModel.onChanged(
+                settings.rebuild((b) => b..currencyId = currency.id)),
+          ),
+          EntityDropdown(
+            entityType: EntityType.language,
+            entityMap: state.staticState.languageMap,
+            entityList: memoizedLanguageList(state.staticState.languageMap),
+            labelText: localization.language,
+            initialValue:
+                state.staticState.languageMap[settings.languageId]?.name,
+            onSelected: (SelectableEntity language) => viewModel.onChanged(
+                settings.rebuild((b) => b..languageId = language.id)),
           ),
         ],
       ),

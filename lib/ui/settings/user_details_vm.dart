@@ -41,16 +41,16 @@ class UserDetailsVM {
 
     return UserDetailsVM(
         state: state,
-        user: state.uiState.settingsUIState.editing.user,
-        onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
+        user: state.uiState.settingsUIState.userCompany.user,
+        onChanged: (user) => store.dispatch(UpdateUser(user: user)),
         onCancelPressed: (context) =>
-            store.dispatch(ResetUserSettings(user: state.user)),
+            store.dispatch(ResetUser(user: state.user)),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveUserRequest(
               completer: completer,
-              user: state.uiState.settingsUIState.editing.user));
+              user: state.uiState.settingsUIState.userCompany.user));
         });
   }
 

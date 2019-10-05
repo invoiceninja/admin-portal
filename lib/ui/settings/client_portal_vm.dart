@@ -44,7 +44,7 @@ class ClientPortalVM {
         state: state,
         company: state.selectedCompany,
         onChanged: (company) {
-          store.dispatch(UpdateCompanySettings(company: state.selectedCompany));
+          store.dispatch(UpdateCompany(company: state.selectedCompany));
         },
         onCancelPressed: (context) {},
         onSavePressed: (context) {
@@ -52,7 +52,7 @@ class ClientPortalVM {
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer,
-              company: state.uiState.settingsUIState.editing.company));
+              company: state.uiState.settingsUIState.userCompany.company));
         });
   }
 

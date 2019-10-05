@@ -125,12 +125,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.financialYearStart,
             specifiedType: const FullType(int)));
     }
-    if (object.companyCurrencyId != null) {
-      result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.companyCurrencyId,
-            specifiedType: const FullType(String)));
-    }
     if (object.taxRates != null) {
       result
         ..add('tax_rates')
@@ -286,10 +280,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'financial_year_start':
           result.financialYearStart = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'currency_id':
-          result.companyCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'tax_rates':
           result.taxRates.replace(serializers.deserialize(value,
@@ -729,6 +719,12 @@ class _$SettingsEntitySerializer
       serializers.serialize(object.enableCustomInvoiceTaxes2,
           specifiedType: const FullType(bool)),
     ];
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
+    }
     if (object.defaultInvoiceTerms != null) {
       result
         ..add('invoice_terms')
@@ -979,6 +975,10 @@ class _$SettingsEntitySerializer
           break;
         case 'language_id':
           result.languageId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_terms':
@@ -1240,8 +1240,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int financialYearStart;
   @override
-  final String companyCurrencyId;
-  @override
   final BuiltList<TaxRateEntity> taxRates;
   @override
   final BuiltList<TaskStatusEntity> taskStatuses;
@@ -1287,7 +1285,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.appUrl,
       this.startOfWeek,
       this.financialYearStart,
-      this.companyCurrencyId,
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
@@ -1378,7 +1375,6 @@ class _$CompanyEntity extends CompanyEntity {
         appUrl == other.appUrl &&
         startOfWeek == other.startOfWeek &&
         financialYearStart == other.financialYearStart &&
-        companyCurrencyId == other.companyCurrencyId &&
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
@@ -1411,16 +1407,16 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, id.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), workPhone.hashCode), workEmail.hashCode), countryId.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode),
-                                                                                sizeId.hashCode),
-                                                                            industryId.hashCode),
-                                                                        plan.hashCode),
-                                                                    companyKey.hashCode),
-                                                                logoUrl.hashCode),
-                                                            appUrl.hashCode),
-                                                        startOfWeek.hashCode),
-                                                    financialYearStart.hashCode),
-                                                companyCurrencyId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, id.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), workPhone.hashCode), workEmail.hashCode), countryId.hashCode), idNumber.hashCode), vatNumber.hashCode),
+                                                                                website.hashCode),
+                                                                            sizeId.hashCode),
+                                                                        industryId.hashCode),
+                                                                    plan.hashCode),
+                                                                companyKey.hashCode),
+                                                            logoUrl.hashCode),
+                                                        appUrl.hashCode),
+                                                    startOfWeek.hashCode),
+                                                financialYearStart.hashCode),
                                             taxRates.hashCode),
                                         taskStatuses.hashCode),
                                     taskStatusMap.hashCode),
@@ -1457,7 +1453,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('appUrl', appUrl)
           ..add('startOfWeek', startOfWeek)
           ..add('financialYearStart', financialYearStart)
-          ..add('companyCurrencyId', companyCurrencyId)
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
@@ -1561,11 +1556,6 @@ class CompanyEntityBuilder
   set financialYearStart(int financialYearStart) =>
       _$this._financialYearStart = financialYearStart;
 
-  String _companyCurrencyId;
-  String get companyCurrencyId => _$this._companyCurrencyId;
-  set companyCurrencyId(String companyCurrencyId) =>
-      _$this._companyCurrencyId = companyCurrencyId;
-
   ListBuilder<TaxRateEntity> _taxRates;
   ListBuilder<TaxRateEntity> get taxRates =>
       _$this._taxRates ??= new ListBuilder<TaxRateEntity>();
@@ -1650,7 +1640,6 @@ class CompanyEntityBuilder
       _appUrl = _$v.appUrl;
       _startOfWeek = _$v.startOfWeek;
       _financialYearStart = _$v.financialYearStart;
-      _companyCurrencyId = _$v.companyCurrencyId;
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
@@ -1706,7 +1695,6 @@ class CompanyEntityBuilder
               appUrl: appUrl,
               startOfWeek: startOfWeek,
               financialYearStart: financialYearStart,
-              companyCurrencyId: companyCurrencyId,
               taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
@@ -2404,6 +2392,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String languageId;
   @override
+  final String currencyId;
+  @override
   final String defaultInvoiceTerms;
   @override
   final bool enableInvoiceTaxes;
@@ -2495,6 +2485,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.datetimeFormatId,
       this.enableMilitaryTime,
       this.languageId,
+      this.currencyId,
       this.defaultInvoiceTerms,
       this.enableInvoiceTaxes,
       this.enableInvoiceItemTaxes,
@@ -2590,6 +2581,7 @@ class _$SettingsEntity extends SettingsEntity {
         datetimeFormatId == other.datetimeFormatId &&
         enableMilitaryTime == other.enableMilitaryTime &&
         languageId == other.languageId &&
+        currencyId == other.currencyId &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
         enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
@@ -2653,7 +2645,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2683,6 +2675,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('datetimeFormatId', datetimeFormatId)
           ..add('enableMilitaryTime', enableMilitaryTime)
           ..add('languageId', languageId)
+          ..add('currencyId', currencyId)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
           ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
@@ -2753,6 +2746,10 @@ class SettingsEntityBuilder
   String _languageId;
   String get languageId => _$this._languageId;
   set languageId(String languageId) => _$this._languageId = languageId;
+
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _defaultInvoiceTerms;
   String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
@@ -2967,6 +2964,7 @@ class SettingsEntityBuilder
       _datetimeFormatId = _$v.datetimeFormatId;
       _enableMilitaryTime = _$v.enableMilitaryTime;
       _languageId = _$v.languageId;
+      _currencyId = _$v.currencyId;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
       _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
@@ -3037,6 +3035,7 @@ class SettingsEntityBuilder
               datetimeFormatId: datetimeFormatId,
               enableMilitaryTime: enableMilitaryTime,
               languageId: languageId,
+              currencyId: currencyId,
               defaultInvoiceTerms: defaultInvoiceTerms,
               enableInvoiceTaxes: enableInvoiceTaxes,
               enableInvoiceItemTaxes: enableInvoiceItemTaxes,

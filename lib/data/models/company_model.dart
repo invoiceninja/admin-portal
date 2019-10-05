@@ -19,7 +19,6 @@ abstract class CompanyEntity
       settings: SettingsEntity(),
       logoUrl: '',
       appUrl: '',
-      companyCurrencyId: '1',
       enabledModules: 0,
       financialYearStart: 1,
       startOfWeek: 1,
@@ -111,11 +110,6 @@ abstract class CompanyEntity
   @nullable
   @BuiltValueField(wireName: 'financial_year_start')
   int get financialYearStart;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'currency_id')
-  String get companyCurrencyId;
 
   // TODO remove this
   @nullable
@@ -227,7 +221,7 @@ abstract class CompanyEntity
     return true;
   }
 
-  String get currencyId => companyCurrencyId ?? kDefaultCurrencyId;
+  String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
   // TODO remove
   // Handle bug in earlier version of API
@@ -477,6 +471,10 @@ abstract class SettingsEntity
 
   @BuiltValueField(wireName: 'language_id')
   String get languageId;
+
+  @nullable
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
 
   // TODO remove this
   @nullable

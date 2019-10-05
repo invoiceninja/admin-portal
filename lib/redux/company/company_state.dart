@@ -88,22 +88,32 @@ abstract class SettingsUIState extends Object
     implements Built<SettingsUIState, SettingsUIStateBuilder> {
   factory SettingsUIState({UserCompanyEntity userCompany, String section}) {
     return _$SettingsUIState._(
-      editing: userCompany ?? UserCompanyEntity(),
+      userCompany: userCompany ?? UserCompanyEntity(),
       isChanged: false,
       updatedAt: 0,
       section: section ?? kSettingsCompanyDetails,
     );
   }
+
   SettingsUIState._();
 
   @nullable
-  UserCompanyEntity get editing;
+  UserCompanyEntity get userCompany;
+
+  @nullable
+  SettingsEntity get clientSettings;
+
+  @nullable
+  SettingsEntity get groupSettings;
 
   bool get isChanged;
 
   int get updatedAt;
 
   String get section;
+
+  SettingsEntity get settings =>
+      clientSettings ?? groupSettings ?? userCompany.company.settings;
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;

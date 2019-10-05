@@ -4,7 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/ui/settings/localization.dart';
+import 'package:invoiceninja_flutter/ui/settings/localization_settings.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -31,6 +31,7 @@ class LocalizationScreen extends StatelessWidget {
 class LocalizationSettingsVM {
   LocalizationSettingsVM({
     @required this.state,
+    @required this.settings,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
@@ -41,21 +42,24 @@ class LocalizationSettingsVM {
 
     return LocalizationSettingsVM(
         state: state,
-        onChanged: (company) {
-          store.dispatch(UpdateCompanySettings(company: company));
+        settings: state.uiState.settingsUIState.settings,
+        onChanged: (settings) {
+          store.dispatch(UpdateSettings(settings: settings));
         },
-        onCancelPressed: null,
+        onCancelPressed: (context) =>
+            store.dispatch(ResetCompany(company: state.selectedCompany)),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer,
-              company: state.uiState.settingsUIState.editing.company));
+              company: state.uiState.settingsUIState.userCompany.company));
         });
   }
 
   final AppState state;
-  final Function(CompanyEntity) onChanged;
+  final SettingsEntity settings;
+  final Function(SettingsEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
 }

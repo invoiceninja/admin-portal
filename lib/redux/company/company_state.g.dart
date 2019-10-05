@@ -154,11 +154,23 @@ class _$SettingsUIStateSerializer
       serializers.serialize(object.section,
           specifiedType: const FullType(String)),
     ];
-    if (object.editing != null) {
+    if (object.userCompany != null) {
       result
-        ..add('editing')
-        ..add(serializers.serialize(object.editing,
+        ..add('userCompany')
+        ..add(serializers.serialize(object.userCompany,
             specifiedType: const FullType(UserCompanyEntity)));
+    }
+    if (object.clientSettings != null) {
+      result
+        ..add('clientSettings')
+        ..add(serializers.serialize(object.clientSettings,
+            specifiedType: const FullType(SettingsEntity)));
+    }
+    if (object.groupSettings != null) {
+      result
+        ..add('groupSettings')
+        ..add(serializers.serialize(object.groupSettings,
+            specifiedType: const FullType(SettingsEntity)));
     }
     return result;
   }
@@ -175,10 +187,18 @@ class _$SettingsUIStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'editing':
-          result.editing.replace(serializers.deserialize(value,
+        case 'userCompany':
+          result.userCompany.replace(serializers.deserialize(value,
                   specifiedType: const FullType(UserCompanyEntity))
               as UserCompanyEntity);
+          break;
+        case 'clientSettings':
+          result.clientSettings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+          break;
+        case 'groupSettings':
+          result.groupSettings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -516,7 +536,11 @@ class UserCompanyStateBuilder
 
 class _$SettingsUIState extends SettingsUIState {
   @override
-  final UserCompanyEntity editing;
+  final UserCompanyEntity userCompany;
+  @override
+  final SettingsEntity clientSettings;
+  @override
+  final SettingsEntity groupSettings;
   @override
   final bool isChanged;
   @override
@@ -528,7 +552,12 @@ class _$SettingsUIState extends SettingsUIState {
       (new SettingsUIStateBuilder()..update(updates)).build();
 
   _$SettingsUIState._(
-      {this.editing, this.isChanged, this.updatedAt, this.section})
+      {this.userCompany,
+      this.clientSettings,
+      this.groupSettings,
+      this.isChanged,
+      this.updatedAt,
+      this.section})
       : super._() {
     if (isChanged == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
@@ -553,7 +582,9 @@ class _$SettingsUIState extends SettingsUIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SettingsUIState &&
-        editing == other.editing &&
+        userCompany == other.userCompany &&
+        clientSettings == other.clientSettings &&
+        groupSettings == other.groupSettings &&
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
         section == other.section;
@@ -562,7 +593,11 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, editing.hashCode), isChanged.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, userCompany.hashCode), clientSettings.hashCode),
+                    groupSettings.hashCode),
+                isChanged.hashCode),
             updatedAt.hashCode),
         section.hashCode));
   }
@@ -570,7 +605,9 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SettingsUIState')
-          ..add('editing', editing)
+          ..add('userCompany', userCompany)
+          ..add('clientSettings', clientSettings)
+          ..add('groupSettings', groupSettings)
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
           ..add('section', section))
@@ -582,10 +619,23 @@ class SettingsUIStateBuilder
     implements Builder<SettingsUIState, SettingsUIStateBuilder> {
   _$SettingsUIState _$v;
 
-  UserCompanyEntityBuilder _editing;
-  UserCompanyEntityBuilder get editing =>
-      _$this._editing ??= new UserCompanyEntityBuilder();
-  set editing(UserCompanyEntityBuilder editing) => _$this._editing = editing;
+  UserCompanyEntityBuilder _userCompany;
+  UserCompanyEntityBuilder get userCompany =>
+      _$this._userCompany ??= new UserCompanyEntityBuilder();
+  set userCompany(UserCompanyEntityBuilder userCompany) =>
+      _$this._userCompany = userCompany;
+
+  SettingsEntityBuilder _clientSettings;
+  SettingsEntityBuilder get clientSettings =>
+      _$this._clientSettings ??= new SettingsEntityBuilder();
+  set clientSettings(SettingsEntityBuilder clientSettings) =>
+      _$this._clientSettings = clientSettings;
+
+  SettingsEntityBuilder _groupSettings;
+  SettingsEntityBuilder get groupSettings =>
+      _$this._groupSettings ??= new SettingsEntityBuilder();
+  set groupSettings(SettingsEntityBuilder groupSettings) =>
+      _$this._groupSettings = groupSettings;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -603,7 +653,9 @@ class SettingsUIStateBuilder
 
   SettingsUIStateBuilder get _$this {
     if (_$v != null) {
-      _editing = _$v.editing?.toBuilder();
+      _userCompany = _$v.userCompany?.toBuilder();
+      _clientSettings = _$v.clientSettings?.toBuilder();
+      _groupSettings = _$v.groupSettings?.toBuilder();
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
@@ -631,15 +683,21 @@ class SettingsUIStateBuilder
     try {
       _$result = _$v ??
           new _$SettingsUIState._(
-              editing: _editing?.build(),
+              userCompany: _userCompany?.build(),
+              clientSettings: _clientSettings?.build(),
+              groupSettings: _groupSettings?.build(),
               isChanged: isChanged,
               updatedAt: updatedAt,
               section: section);
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'editing';
-        _editing?.build();
+        _$failedField = 'userCompany';
+        _userCompany?.build();
+        _$failedField = 'clientSettings';
+        _clientSettings?.build();
+        _$failedField = 'groupSettings';
+        _groupSettings?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsUIState', _$failedField, e.toString());
