@@ -43,15 +43,16 @@ class GroupList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final groupId = viewModel.groupList[index];
                             final group = viewModel.groupMap[groupId];
-                            final user = viewModel.user;
+                            final userCompany = viewModel.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
+                                userCompany: userCompany,
                                 entity: group,
                                 context: context,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return GroupListItem(
-                              user: viewModel.user,
+                              user: viewModel.userCompany.user,
                               filter: viewModel.filter,
                               group: group,
                               onTap: () => viewModel.onGroupTap(context, group),

@@ -34,7 +34,7 @@ class GroupListBuilder extends StatelessWidget {
 
 class GroupListVM {
   GroupListVM({
-    @required this.user,
+    @required this.userCompany,
     @required this.groupList,
     @required this.groupMap,
     @required this.filter,
@@ -62,7 +62,7 @@ class GroupListVM {
     final state = store.state;
 
     return GroupListVM(
-      user: state.user,
+      userCompany: state.userCompany,
       listState: state.groupListState,
       groupList: memoizedFilteredGroupList(
           state.groupState.map, state.groupState.list, state.groupListState),
@@ -84,7 +84,7 @@ class GroupListVM {
     );
   }
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final List<String> groupList;
   final BuiltMap<String, GroupEntity> groupMap;
   final ListUIState listState;

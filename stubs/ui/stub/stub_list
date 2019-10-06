@@ -46,16 +46,16 @@ class StubList extends StatelessWidget {
                                 itemBuilder: (BuildContext context, index) {
                                   final stubId = viewModel.stubList[index];
                                   final stub = viewModel.stubMap[stubId];
-                                  final user = viewModel.user;
+                                  final userCompany = viewModel.userCompany;
 
                               void showDialog() => showEntityActionsDialog(
+                                    userCompany: userCompany,
                                   entity: stub,
                                   context: context,
                                   onEntityAction: viewModel.onEntityAction);
 
-
                                   return StubListItem(
-                                     user: viewModel.user,
+                                     user: viewModel.userCompany.user,
                                      filter: viewModel.filter,
                                      stub: stub,
                                      onTap: () =>
