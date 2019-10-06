@@ -120,7 +120,7 @@ List<CompanyEntity> companiesSelector(AppState state) {
   }
 
   return list
-      .where((CompanyEntity company) => company.name.isNotEmpty)
+      .where((CompanyEntity company) => company.displayName.isNotEmpty)
       .toList();
 }
 

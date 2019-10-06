@@ -30,8 +30,10 @@ class CompanyDetailsScreen extends StatelessWidget {
 class CompanyDetailsVM {
   CompanyDetailsVM({
     @required this.state,
+    @required this.settings,
     @required this.company,
-    @required this.onChanged,
+    @required this.onCompanyChanged,
+    @required this.onSettingsChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.onUploadLogo,
@@ -42,8 +44,12 @@ class CompanyDetailsVM {
 
     return CompanyDetailsVM(
       state: state,
+      settings: state.uiState.settingsUIState.settings,
       company: state.uiState.settingsUIState.userCompany.company,
-      onChanged: (company) => store.dispatch(UpdateCompany(company: company)),
+      onSettingsChanged: (settings) =>
+          store.dispatch(UpdateSettings(settings: settings)),
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
       onCancelPressed: (context) =>
           store.dispatch(ResetCompany(company: state.selectedCompany)),
       onSavePressed: (context) {
@@ -63,7 +69,9 @@ class CompanyDetailsVM {
 
   final AppState state;
   final CompanyEntity company;
-  final Function(CompanyEntity) onChanged;
+  final SettingsEntity settings;
+  final Function(SettingsEntity) onSettingsChanged;
+  final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, String) onUploadLogo;

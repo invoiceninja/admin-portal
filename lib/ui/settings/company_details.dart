@@ -59,7 +59,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   void dispose() {
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
+      controller.removeListener(_onSettingsChanged);
       controller.dispose();
     });
     super.dispose();
@@ -83,53 +83,52 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _paymentTermsController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.removeListener(_onSettingsChanged));
 
-    final company = widget.viewModel.company;
-    final settings = company.settings;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
 
-    _nameController.text = company.name;
-    _idNumberController.text = company.idNumber;
-    _vatNumberController.text = company.vatNumber;
-    _emailController.text = company.workEmail;
-    _websiteController.text = company.website;
-    _phoneController.text = company.workPhone;
-    _address1Controller.text = company.address1;
-    _address2Controller.text = company.address2;
-    _cityController.text = company.city;
-    _stateController.text = company.state;
-    _postalCodeController.text = company.postalCode;
+    _nameController.text = settings.name;
+    _idNumberController.text = settings.idNumber;
+    _vatNumberController.text = settings.vatNumber;
+    _emailController.text = settings.email;
+    _websiteController.text = settings.website;
+    _phoneController.text = settings.phone;
+    _address1Controller.text = settings.address1;
+    _address2Controller.text = settings.address2;
+    _cityController.text = settings.city;
+    _stateController.text = settings.state;
+    _postalCodeController.text = settings.postalCode;
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
     _paymentTermsController.text = formatNumber(
         settings.defaultPaymentTerms?.toDouble(), context,
         formatNumberType: FormatNumberType.input);
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.addListener(_onSettingsChanged));
 
     super.didChangeDependencies();
   }
 
-  void _onChanged() {
-    final company = widget.viewModel.company.rebuild((b) => b
+  void _onSettingsChanged() {
+    final settings = widget.viewModel.settings.rebuild((b) => b
       ..name = _nameController.text.trim()
       ..idNumber = _idNumberController.text.trim()
       ..vatNumber = _vatNumberController.text.trim()
-      ..workPhone = _phoneController.text.trim()
-      ..workEmail = _emailController.text.trim()
+      ..phone = _phoneController.text.trim()
+      ..email = _emailController.text.trim()
       ..website = _websiteController.text.trim()
       ..address1 = _address1Controller.text.trim()
       ..address2 = _address2Controller.text.trim()
       ..city = _cityController.text.trim()
       ..state = _stateController.text.trim()
       ..postalCode = _postalCodeController.text.trim()
-      ..settings.defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
-      ..settings.defaultPaymentTerms =
-          int.tryParse(_paymentTermsController.text) ?? 0);
-    if (company != widget.viewModel.company) {
-      widget.viewModel.onChanged(company);
+      ..defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
+      ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0);
+    if (settings != widget.viewModel.settings) {
+      widget.viewModel.onSettingsChanged(settings);
     }
   }
 
@@ -139,6 +138,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
+    final settings = company.settings;
 
     return SettingsScaffold(
       title: localization.companyDetails,
@@ -227,7 +227,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         initialValue:
                             state.staticState.sizeMap[company.sizeId]?.name,
                         onSelected: (SelectableEntity size) =>
-                            viewModel.onChanged(
+                            viewModel.onCompanyChanged(
                           company.rebuild((b) => b..sizeId = size.id),
                         ),
                         //onFieldSubmitted: (String value) => _node.nextFocus(),
@@ -242,7 +242,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         initialValue: state
                             .staticState.industryMap[company.industryId]?.name,
                         onSelected: (SelectableEntity industry) =>
-                            viewModel.onChanged(
+                            viewModel.onCompanyChanged(
                           company.rebuild((b) => b..industryId = industry.id),
                         ),
                       ),
@@ -301,16 +301,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       EntityDropdown(
-                        key: ValueKey('__country_${company.countryId}__'),
+                        key: ValueKey('__country_${settings.countryId}__'),
                         entityType: EntityType.country,
                         entityMap: state.staticState.countryMap,
                         entityList:
                             memoizedCountryList(state.staticState.countryMap),
                         labelText: localization.country,
                         initialValue: state
-                            .staticState.countryMap[company.countryId]?.name,
+                            .staticState.countryMap[settings.countryId]?.name,
                         onSelected: (SelectableEntity country) =>
-                            viewModel.onChanged(company
+                            viewModel.onSettingsChanged(settings
                                 .rebuild((b) => b..countryId = country.id)),
                       ),
                     ],
@@ -323,7 +323,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     children: <Widget>[
                       EntityDropdown(
                         key: ValueKey(
-                            '__payment_type_${company.settings.defaultPaymentTypeId}__'),
+                            '__payment_type_${settings.defaultPaymentTypeId}__'),
                         entityType: EntityType.paymentType,
                         entityMap: state.staticState.paymentTypeMap,
                         entityList: memoizedPaymentTypeList(
@@ -331,13 +331,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         labelText: localization.paymentType,
                         initialValue: state
                             .staticState
-                            .paymentTypeMap[
-                                company.settings.defaultPaymentTypeId]
+                            .paymentTypeMap[settings.defaultPaymentTypeId]
                             ?.name,
-                        onSelected: (paymentType) => viewModel.onChanged(
-                            company.rebuild((b) => b
-                              ..settings.defaultPaymentTypeId =
-                                  paymentType.id)),
+                        onSelected: (paymentType) =>
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b..defaultPaymentTypeId = paymentType.id)),
                       ),
                       DecoratedFormField(
                         label: localization.paymentTerms,

@@ -71,7 +71,7 @@ String formatNumber(
   if (client != null && client.hasNameSet) {
     countryId = client.countryId;
   } else {
-    countryId = company.countryId;
+    countryId = company.settings.countryId;
   }
 
   if (currencyId != null && currencyId.isNotEmpty) {

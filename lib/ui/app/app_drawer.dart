@@ -72,7 +72,7 @@ class AppDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                company.name,
+                company.displayName,
                 style: Theme.of(context).textTheme.subhead,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -111,7 +111,7 @@ class AppDrawer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            company.name,
+                            company.displayName,
                             style: Theme.of(context).textTheme.subhead,
                             overflow: TextOverflow.ellipsis,
                           ),

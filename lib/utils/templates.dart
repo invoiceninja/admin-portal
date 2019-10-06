@@ -28,7 +28,7 @@ String processTemplate(
       .replaceAll('\$client', client.displayName)
       .replaceAll('\$idNumber', client.idNumber)
       .replaceAll('\$vatNumber', client.vatNumber)
-      .replaceAll('\$account', company.name)
+      .replaceAll('\$account', company.displayName)
       .replaceAll('\$dueDate', formatDate(invoice.dueDate, context))
       .replaceAll('\$invoiceDate', formatDate(invoice.invoiceDate, context))
       .replaceAll('\$contact', contact.fullName)

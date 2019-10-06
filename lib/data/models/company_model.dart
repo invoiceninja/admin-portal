@@ -14,7 +14,6 @@ abstract class CompanyEntity
     return _$CompanyEntity._(
       id: '',
       companyKey: '',
-      name: '',
       plan: '',
       settings: SettingsEntity(),
       logoUrl: '',
@@ -22,7 +21,6 @@ abstract class CompanyEntity
       enabledModules: 0,
       financialYearStart: 1,
       startOfWeek: 1,
-      countryId: kCountryUnitedStates,
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
@@ -31,51 +29,12 @@ abstract class CompanyEntity
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      vatNumber: '',
-      idNumber: '',
-      website: '',
-      workEmail: '',
-      workPhone: '',
     );
   }
 
   CompanyEntity._();
 
   String get id;
-
-  String get name;
-
-  String get address1;
-  String get address2;
-  String get city;
-  String get state;
-
-  @BuiltValueField(wireName: 'postal_code')
-  String get postalCode;
-
-  @BuiltValueField(wireName: 'work_phone')
-  String get workPhone;
-
-  @BuiltValueField(wireName: 'work_email')
-  String get workEmail;
-
-  @BuiltValueField(wireName: 'country_id')
-  String get countryId;
-
-  @BuiltValueField(wireName: 'id_number')
-  String get idNumber;
-
-  @BuiltValueField(wireName: 'vat_number')
-  String get vatNumber;
-
-  @nullable // TODO remove this
-  @BuiltValueField(wireName: 'website')
-  String get website;
 
   @nullable
   @BuiltValueField(wireName: 'size_id')
@@ -153,6 +112,8 @@ abstract class CompanyEntity
 
   //@BuiltValueField(wireName: 'custom_messages')
   //@BuiltValueField(wireName: 'invoice_labels')
+
+  String get displayName => settings.name ?? '';
 
   String getCustomFieldLabel(String field) {
     // TODO remove this
@@ -405,6 +366,18 @@ abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
   factory SettingsEntity() {
     return _$SettingsEntity._(
+      name: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      countryId: kCountryUnitedStates,
+      vatNumber: '',
+      idNumber: '',
+      website: '',
+      email: '',
+      phone: '',
       // TODO set to default EST timezone
       timezoneId: '',
       convertProductExchangeRate: false,
@@ -456,6 +429,47 @@ abstract class SettingsEntity
   }
 
   SettingsEntity._();
+
+  @nullable
+  String get name;
+
+  @nullable
+  String get address1;
+
+  @nullable
+  String get address2;
+
+  @nullable
+  String get city;
+
+  @nullable
+  String get state;
+
+  @nullable
+  @BuiltValueField(wireName: 'postal_code')
+  String get postalCode;
+
+  @nullable
+  String get phone;
+
+  @nullable
+  String get email;
+
+  @nullable
+  @BuiltValueField(wireName: 'country_id')
+  String get countryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'id_number')
+  String get idNumber;
+
+  @nullable
+  @BuiltValueField(wireName: 'vat_number')
+  String get vatNumber;
+
+  @nullable
+  @BuiltValueField(wireName: 'website')
+  String get website;
 
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
