@@ -170,6 +170,11 @@ int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
 }
 
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
+  TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
+    return state.rebuild((b) => b
+      ..userCompany.replace(action.userCompany ?? state.userCompany)
+      ..entityType = EntityType.company);
+  }),
   TypedReducer<SettingsUIState, ViewSettings>((state, action) {
     return state.rebuild((b) => b
       ..userCompany.replace(action.userCompany ?? state.userCompany)

@@ -43,7 +43,8 @@ class SettingsListVM {
               section: section,
               userCompany: state.userCompany));
         },
-        onClearSettingsFilterPressed: () => store.dispatch(null),
+        onClearSettingsFilterPressed: () =>
+            store.dispatch(ClearSettingsFilter(userCompany: state.userCompany)),
         onViewClientPressed: (context) => store.dispatch(
             ViewClient(context: context, clientId: settingsUIState.client.id)),
         onViewGroupPressed: (context) => store.dispatch(

@@ -39,7 +39,7 @@ class SettingsList extends StatelessWidget {
               onPressed: settingsUIState.entityType == EntityType.client
                   ? viewModel.onViewClientPressed
                   : viewModel.onViewGroupPressed,
-              onClearPressed: null,
+              onClearPressed: viewModel.onClearSettingsFilterPressed,
             ),
           ),
         Container(
