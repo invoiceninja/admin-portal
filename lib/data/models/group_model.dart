@@ -65,19 +65,14 @@ abstract class GroupEntity extends Object
   SettingsEntity get settings;
 
   int compareTo(GroupEntity group, String sortField, bool sortAscending) {
-    int response = 0;
+    const int response = 0;
     final GroupEntity groupA = sortAscending ? this : group;
     final GroupEntity groupB = sortAscending ? group : this;
 
     switch (sortField) {
-      /*
-      case GroupFields.balance:
-        response = groupA.balance.compareTo(groupB.balance);
-        break;
-      case GroupFields.updatedAt:
-        response = groupA.updatedAt.compareTo(groupB.updatedAt);
-        break;
-       */
+      case GroupFields.name:
+      //response = groupA.balance.compareTo(groupB.balance);
+      //break;
     }
 
     if (response == 0) {

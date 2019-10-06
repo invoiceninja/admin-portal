@@ -57,7 +57,6 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
 
 void main({bool isTesting = false}) async {

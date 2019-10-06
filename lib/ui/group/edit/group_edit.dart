@@ -33,7 +33,7 @@ class _GroupEditState extends State<GroupEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final group = widget.viewModel.group;
+    //final group = widget.viewModel.group;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));

@@ -1,7 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownGroupList = memo3((BuiltMap<String, GroupEntity> groupMap,

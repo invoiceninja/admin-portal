@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -10,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/group/group_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class GroupScreen extends StatelessWidget {
@@ -21,7 +19,6 @@ class GroupScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
-    final user = state.user;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
