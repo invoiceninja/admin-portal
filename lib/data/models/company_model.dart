@@ -16,7 +16,6 @@ abstract class CompanyEntity
       companyKey: '',
       plan: '',
       settings: SettingsEntity(),
-      logoUrl: '',
       appUrl: '',
       enabledModules: 0,
       financialYearStart: 1,
@@ -50,10 +49,6 @@ abstract class CompanyEntity
 
   @BuiltValueField(wireName: 'company_key')
   String get companyKey;
-
-  @nullable
-  @BuiltValueField(wireName: 'logo')
-  String get logoUrl;
 
   // TODO remove this
   @nullable
@@ -373,6 +368,7 @@ abstract class SettingsEntity
       state: '',
       postalCode: '',
       countryId: kCountryUnitedStates,
+      logoUrl: '',
       vatNumber: '',
       idNumber: '',
       website: '',
@@ -458,6 +454,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'logo_url')
+  String get logoUrl;
 
   @nullable
   @BuiltValueField(wireName: 'id_number')
@@ -704,6 +704,19 @@ abstract class UserItemResponse
 
   static Serializer<UserItemResponse> get serializer =>
       _$userItemResponseSerializer;
+}
+
+abstract class CompanyItemResponse
+    implements Built<CompanyItemResponse, CompanyItemResponseBuilder> {
+  factory CompanyItemResponse([void updates(CompanyItemResponseBuilder b)]) =
+      _$CompanyItemResponse;
+
+  CompanyItemResponse._();
+
+  CompanyEntity get data;
+
+  static Serializer<CompanyItemResponse> get serializer =>
+      _$companyItemResponseSerializer;
 }
 
 abstract class GroupEntity implements Built<GroupEntity, GroupEntityBuilder> {

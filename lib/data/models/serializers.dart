@@ -38,6 +38,7 @@ part 'serializers.g.dart';
   AppState,
   LoginResponse,
   UserItemResponse,
+  CompanyItemResponse,
   DashboardResponse,
   ProductListResponse,
   ProductItemResponse,

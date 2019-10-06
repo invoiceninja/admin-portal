@@ -99,7 +99,8 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final action = dynamicAction as UploadLogoRequest;
 
     settingsRepository
-        .uploadLogo(store.state.credentials, action.path)
+        .uploadLogo(store.state.credentials, store.state.selectedCompany.id,
+            action.path)
         .then((user) {
       store.dispatch(UploadLogoSuccess(null));
       action.completer.complete();

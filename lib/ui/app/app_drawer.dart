@@ -58,11 +58,12 @@ class AppDrawer extends StatelessWidget {
                 width: 32,
                 height: 30,
               )
-            : company.logoUrl != null && company.logoUrl.isNotEmpty
+            : company.settings.logoUrl != null &&
+                    company.settings.logoUrl.isNotEmpty
                 ? CachedImage(
                     width: 32,
                     height: 30,
-                    url: company.logoUrl,
+                    url: company.settings.logoUrl,
                   )
                 : Image.asset('assets/images/logo.png', width: 32, height: 30),
         SizedBox(width: 28, height: 50),
@@ -96,11 +97,12 @@ class AppDrawer extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    company.logoUrl != null && company.logoUrl.isNotEmpty
+                    company.settings.logoUrl != null &&
+                            company.settings.logoUrl.isNotEmpty
                         ? CachedImage(
                             width: 32,
                             height: 30,
-                            url: company.logoUrl,
+                            url: company.settings.logoUrl,
                           )
                         : Image.asset('assets/images/logo.png',
                             width: 32, height: 30),

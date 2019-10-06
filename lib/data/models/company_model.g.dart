@@ -20,6 +20,8 @@ Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
 Serializer<UserItemResponse> _$userItemResponseSerializer =
     new _$UserItemResponseSerializer();
+Serializer<CompanyItemResponse> _$companyItemResponseSerializer =
+    new _$CompanyItemResponseSerializer();
 Serializer<GroupEntity> _$groupEntitySerializer = new _$GroupEntitySerializer();
 
 class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
@@ -63,12 +65,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('plan')
         ..add(serializers.serialize(object.plan,
-            specifiedType: const FullType(String)));
-    }
-    if (object.logoUrl != null) {
-      result
-        ..add('logo')
-        ..add(serializers.serialize(object.logoUrl,
             specifiedType: const FullType(String)));
     }
     if (object.appUrl != null) {
@@ -179,10 +175,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'company_key':
           result.companyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'logo':
-          result.logoUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'default_url':
@@ -689,6 +681,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.countryId,
             specifiedType: const FullType(String)));
     }
+    if (object.logoUrl != null) {
+      result
+        ..add('logo_url')
+        ..add(serializers.serialize(object.logoUrl,
+            specifiedType: const FullType(String)));
+    }
     if (object.idNumber != null) {
       result
         ..add('id_number')
@@ -981,6 +979,10 @@ class _$SettingsEntitySerializer
           result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'logo_url':
+          result.logoUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'id_number':
           result.idNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1232,6 +1234,52 @@ class _$UserItemResponseSerializer
   }
 }
 
+class _$CompanyItemResponseSerializer
+    implements StructuredSerializer<CompanyItemResponse> {
+  @override
+  final Iterable<Type> types = const [
+    CompanyItemResponse,
+    _$CompanyItemResponse
+  ];
+  @override
+  final String wireName = 'CompanyItemResponse';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, CompanyItemResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(CompanyEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  CompanyItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new CompanyItemResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
   @override
   final Iterable<Type> types = const [GroupEntity, _$GroupEntity];
@@ -1290,8 +1338,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String companyKey;
   @override
-  final String logoUrl;
-  @override
   final String appUrl;
   @override
   final int startOfWeek;
@@ -1327,7 +1373,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.industryId,
       this.plan,
       this.companyKey,
-      this.logoUrl,
       this.appUrl,
       this.startOfWeek,
       this.financialYearStart,
@@ -1372,7 +1417,6 @@ class _$CompanyEntity extends CompanyEntity {
         industryId == other.industryId &&
         plan == other.plan &&
         companyKey == other.companyKey &&
-        logoUrl == other.logoUrl &&
         appUrl == other.appUrl &&
         startOfWeek == other.startOfWeek &&
         financialYearStart == other.financialYearStart &&
@@ -1408,19 +1452,16 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                id
-                                                                                    .hashCode),
-                                                                            sizeId
+                                                                            0,
+                                                                            id
                                                                                 .hashCode),
-                                                                        industryId
+                                                                        sizeId
                                                                             .hashCode),
-                                                                    plan
+                                                                    industryId
                                                                         .hashCode),
-                                                                companyKey
-                                                                    .hashCode),
-                                                            logoUrl.hashCode),
+                                                                plan.hashCode),
+                                                            companyKey
+                                                                .hashCode),
                                                         appUrl.hashCode),
                                                     startOfWeek.hashCode),
                                                 financialYearStart.hashCode),
@@ -1444,7 +1485,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('industryId', industryId)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
-          ..add('logoUrl', logoUrl)
           ..add('appUrl', appUrl)
           ..add('startOfWeek', startOfWeek)
           ..add('financialYearStart', financialYearStart)
@@ -1485,10 +1525,6 @@ class CompanyEntityBuilder
   String _companyKey;
   String get companyKey => _$this._companyKey;
   set companyKey(String companyKey) => _$this._companyKey = companyKey;
-
-  String _logoUrl;
-  String get logoUrl => _$this._logoUrl;
-  set logoUrl(String logoUrl) => _$this._logoUrl = logoUrl;
 
   String _appUrl;
   String get appUrl => _$this._appUrl;
@@ -1571,7 +1607,6 @@ class CompanyEntityBuilder
       _industryId = _$v.industryId;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
-      _logoUrl = _$v.logoUrl;
       _appUrl = _$v.appUrl;
       _startOfWeek = _$v.startOfWeek;
       _financialYearStart = _$v.financialYearStart;
@@ -1614,7 +1649,6 @@ class CompanyEntityBuilder
               industryId: industryId,
               plan: plan,
               companyKey: companyKey,
-              logoUrl: logoUrl,
               appUrl: appUrl,
               startOfWeek: startOfWeek,
               financialYearStart: financialYearStart,
@@ -2323,6 +2357,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String countryId;
   @override
+  final String logoUrl;
+  @override
   final String idNumber;
   @override
   final String vatNumber;
@@ -2436,6 +2472,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.phone,
       this.email,
       this.countryId,
+      this.logoUrl,
       this.idNumber,
       this.vatNumber,
       this.website,
@@ -2544,6 +2581,7 @@ class _$SettingsEntity extends SettingsEntity {
         phone == other.phone &&
         email == other.email &&
         countryId == other.countryId &&
+        logoUrl == other.logoUrl &&
         idNumber == other.idNumber &&
         vatNumber == other.vatNumber &&
         website == other.website &&
@@ -2616,7 +2654,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), logoUrl.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2650,6 +2688,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('phone', phone)
           ..add('email', email)
           ..add('countryId', countryId)
+          ..add('logoUrl', logoUrl)
           ..add('idNumber', idNumber)
           ..add('vatNumber', vatNumber)
           ..add('website', website)
@@ -2743,6 +2782,10 @@ class SettingsEntityBuilder
   String _countryId;
   String get countryId => _$this._countryId;
   set countryId(String countryId) => _$this._countryId = countryId;
+
+  String _logoUrl;
+  String get logoUrl => _$this._logoUrl;
+  set logoUrl(String logoUrl) => _$this._logoUrl = logoUrl;
 
   String _idNumber;
   String get idNumber => _$this._idNumber;
@@ -2999,6 +3042,7 @@ class SettingsEntityBuilder
       _phone = _$v.phone;
       _email = _$v.email;
       _countryId = _$v.countryId;
+      _logoUrl = _$v.logoUrl;
       _idNumber = _$v.idNumber;
       _vatNumber = _$v.vatNumber;
       _website = _$v.website;
@@ -3082,6 +3126,7 @@ class SettingsEntityBuilder
               phone: phone,
               email: email,
               countryId: countryId,
+              logoUrl: logoUrl,
               idNumber: idNumber,
               vatNumber: vatNumber,
               website: website,
@@ -3232,6 +3277,100 @@ class UserItemResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$CompanyItemResponse extends CompanyItemResponse {
+  @override
+  final CompanyEntity data;
+
+  factory _$CompanyItemResponse(
+          [void Function(CompanyItemResponseBuilder) updates]) =>
+      (new CompanyItemResponseBuilder()..update(updates)).build();
+
+  _$CompanyItemResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('CompanyItemResponse', 'data');
+    }
+  }
+
+  @override
+  CompanyItemResponse rebuild(
+          void Function(CompanyItemResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  CompanyItemResponseBuilder toBuilder() =>
+      new CompanyItemResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is CompanyItemResponse && data == other.data;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('CompanyItemResponse')
+          ..add('data', data))
+        .toString();
+  }
+}
+
+class CompanyItemResponseBuilder
+    implements Builder<CompanyItemResponse, CompanyItemResponseBuilder> {
+  _$CompanyItemResponse _$v;
+
+  CompanyEntityBuilder _data;
+  CompanyEntityBuilder get data => _$this._data ??= new CompanyEntityBuilder();
+  set data(CompanyEntityBuilder data) => _$this._data = data;
+
+  CompanyItemResponseBuilder();
+
+  CompanyItemResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(CompanyItemResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$CompanyItemResponse;
+  }
+
+  @override
+  void update(void Function(CompanyItemResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$CompanyItemResponse build() {
+    _$CompanyItemResponse _$result;
+    try {
+      _$result = _$v ?? new _$CompanyItemResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'CompanyItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }

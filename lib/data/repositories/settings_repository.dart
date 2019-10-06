@@ -44,15 +44,20 @@ class SettingsRepository {
     return userResponse.data;
   }
 
-  Future<CompanyEntity> uploadLogo(Credentials credentials, String path) async {
-    final url = '${credentials.url}/companies';
+  Future<CompanyEntity> uploadLogo(
+      Credentials credentials, String companyId, String path) async {
+    final url = '${credentials.url}/companies/$companyId';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        filePath: path, fileIndex: 'logo');
+        data: {'_method': 'PUT'}, filePath: path, fileIndex: 'logo');
 
-    debugPrint('### UPLOAD LOGO RESPONSE: $response');
+    final CompanyItemResponse companyResponse =
+        serializers.deserializeWith(CompanyItemResponse.serializer, response);
 
-    return null;
+    debugPrint(
+        '### UPLOAD LOGO RESPONSE: ${companyResponse.data.settings.logoUrl}');
+
+    return companyResponse.data;
 
     /*
     final UserItemResponse userResponse =
