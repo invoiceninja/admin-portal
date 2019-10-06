@@ -18,7 +18,7 @@ class GroupRepository {
 
   Future<GroupEntity> loadItem(Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/groups/$entityId', credentials.token);
+        '${credentials.url}/group_settings/$entityId', credentials.token);
 
     final GroupItemResponse groupResponse =
         serializers.deserializeWith(GroupItemResponse.serializer, response);
@@ -28,7 +28,7 @@ class GroupRepository {
 
   Future<BuiltList<GroupEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/groups?';
+    String url = credentials.url + '/group_settings?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -49,10 +49,10 @@ class GroupRepository {
 
     if (group.isNew) {
       response = await webClient.post(
-          credentials.url + '/groups', credentials.token,
+          credentials.url + '/group_settings', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/groups/' + group.id.toString();
+      var url = credentials.url + '/group_settings/' + group.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }

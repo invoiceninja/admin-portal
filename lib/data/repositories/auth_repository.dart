@@ -88,7 +88,7 @@ class AuthRepository {
         '?include=tax_rates,users,custom_payment_terms,task_statuses,expense_categories&include_static=true';
     */
 
-    url += '?include_static=true';
+    url += '?include=company.groups&include_static=true';
 
     final dynamic response =
         await webClient.post(url, token ?? '', data: json.encode(data));
