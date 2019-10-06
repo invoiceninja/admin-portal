@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,9 +22,24 @@ class SettingsList extends StatelessWidget {
     final state = viewModel.state;
     final showAll =
         state.uiState.settingsUIState.entityType == EntityType.company;
+    final settingsUIState = state.uiState.settingsUIState;
+
+    final title = settingsUIState.entityType == EntityType.client
+        ? localization.filteredByClient +
+            ': ${settingsUIState.client.displayName}'
+        : localization.filteredByGroup + ': ${settingsUIState.group.name}';
 
     return ListView(
       children: <Widget>[
+        if (settingsUIState.isFiltered)
+          Container(
+            color: Colors.orangeAccent,
+            child: ListFilterMessage(
+              title: title,
+              onPressed: null,
+              onClearPressed: null,
+            ),
+          ),
         Container(
           color: Theme.of(context).backgroundColor,
           padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
