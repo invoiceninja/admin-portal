@@ -36,6 +36,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
+      'groups',
+      serializers.serialize(object.groups,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(GroupEntity)])),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap, const [
@@ -223,6 +227,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'financial_year_start':
           result.financialYearStart = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'groups':
+          result.groups.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GroupEntity)]))
+              as BuiltList<dynamic>);
           break;
         case 'tax_rates':
           result.taxRates.replace(serializers.deserialize(value,
@@ -1388,6 +1398,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final int financialYearStart;
   @override
+  final BuiltList<GroupEntity> groups;
+  @override
   final BuiltList<TaxRateEntity> taxRates;
   @override
   final BuiltList<TaskStatusEntity> taskStatuses;
@@ -1433,6 +1445,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.appUrl,
       this.startOfWeek,
       this.financialYearStart,
+      this.groups,
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
@@ -1453,6 +1466,9 @@ class _$CompanyEntity extends CompanyEntity {
       : super._() {
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
+    }
+    if (groups == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'groups');
     }
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
@@ -1480,6 +1496,7 @@ class _$CompanyEntity extends CompanyEntity {
         appUrl == other.appUrl &&
         startOfWeek == other.startOfWeek &&
         financialYearStart == other.financialYearStart &&
+        groups == other.groups &&
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
@@ -1519,9 +1536,9 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode),
-                                                                                startOfWeek.hashCode),
-                                                                            financialYearStart.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode),
+                                                                                financialYearStart.hashCode),
+                                                                            groups.hashCode),
                                                                         taxRates.hashCode),
                                                                     taskStatuses.hashCode),
                                                                 taskStatusMap.hashCode),
@@ -1551,6 +1568,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('appUrl', appUrl)
           ..add('startOfWeek', startOfWeek)
           ..add('financialYearStart', financialYearStart)
+          ..add('groups', groups)
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
@@ -1604,6 +1622,11 @@ class CompanyEntityBuilder
   int get financialYearStart => _$this._financialYearStart;
   set financialYearStart(int financialYearStart) =>
       _$this._financialYearStart = financialYearStart;
+
+  ListBuilder<GroupEntity> _groups;
+  ListBuilder<GroupEntity> get groups =>
+      _$this._groups ??= new ListBuilder<GroupEntity>();
+  set groups(ListBuilder<GroupEntity> groups) => _$this._groups = groups;
 
   ListBuilder<TaxRateEntity> _taxRates;
   ListBuilder<TaxRateEntity> get taxRates =>
@@ -1703,6 +1726,7 @@ class CompanyEntityBuilder
       _appUrl = _$v.appUrl;
       _startOfWeek = _$v.startOfWeek;
       _financialYearStart = _$v.financialYearStart;
+      _groups = _$v.groups?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
@@ -1751,6 +1775,7 @@ class CompanyEntityBuilder
               appUrl: appUrl,
               startOfWeek: startOfWeek,
               financialYearStart: financialYearStart,
+              groups: groups.build(),
               taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
@@ -1771,6 +1796,8 @@ class CompanyEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'groups';
+        groups.build();
         _$failedField = 'taxRates';
         _taxRates?.build();
         _$failedField = 'taskStatuses';

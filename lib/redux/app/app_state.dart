@@ -189,7 +189,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   GroupState get groupState => selectedCompanyState.groupState;
+
   ListUIState get groupListState => uiState.groupUIState.listUIState;
+
   GroupUIState get groupUIState => uiState.groupUIState;
 
   DocumentState get documentState => selectedCompanyState.documentState;
@@ -302,7 +304,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Settings: ${selectedCompanyState.company.settings}';
     //return 'URL: ${authState.url}, ${selectedCompany.plan}';
-    return 'Route: ${uiState.currentRoute}, settings: ${uiState.settingsUIState.userCompany.company.settings.logoUrl}';
+    return 'Route: ${uiState.currentRoute}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }

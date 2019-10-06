@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -23,6 +24,7 @@ abstract class CompanyEntity extends Object
       enabledModules: 0,
       financialYearStart: 1,
       startOfWeek: 1,
+      groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
@@ -65,6 +67,8 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'financial_year_start')
   int get financialYearStart;
+
+  BuiltList<GroupEntity> get groups;
 
   // TODO remove this
   @nullable

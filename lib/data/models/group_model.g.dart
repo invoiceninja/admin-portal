@@ -111,17 +111,17 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
-      'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
     ];
     if (object.customValue1 != null) {
       result
         ..add('custom_value1')
         ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -191,10 +191,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -458,9 +454,6 @@ class _$GroupEntity extends GroupEntity {
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'name');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError('GroupEntity', 'customValue2');
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'settings');

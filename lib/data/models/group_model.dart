@@ -65,9 +65,11 @@ abstract class GroupEntity extends Object
   String get customValue1;
 
   // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @BuiltValueField(serialize: false)
   SettingsEntity get settings;
 
   int compareTo(GroupEntity group, String sortField, bool sortAscending) {
