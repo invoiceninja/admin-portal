@@ -487,18 +487,23 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'website')
   String get website;
 
+  @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
 
+  @nullable
   @BuiltValueField(wireName: 'date_format_id')
   String get dateFormatId;
 
+  @nullable
   @BuiltValueField(wireName: 'datetime_format_id')
   String get datetimeFormatId;
 
+  @nullable
   @BuiltValueField(wireName: 'military_time')
   bool get enableMilitaryTime;
 
+  @nullable
   @BuiltValueField(wireName: 'language_id')
   String get languageId;
 
@@ -564,6 +569,7 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'quote_terms')
   String get defaultQuoteTerms;
 
+  @nullable
   @BuiltValueField(wireName: 'show_currency_code')
   bool get showCurrencyCode;
 
@@ -582,9 +588,11 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
 
+  @nullable
   @BuiltValueField(wireName: 'default_task_rate')
   double get defaultTaskRate;
 
+  @nullable
   @BuiltValueField(wireName: 'inclusive_taxes')
   bool get enableInclusiveTaxes;
 
@@ -593,9 +601,11 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
 
+  @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes1')
   bool get enableCustomInvoiceTaxes1;
 
+  @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes2')
   bool get enableCustomInvoiceTaxes2;
 
@@ -735,8 +745,15 @@ abstract class CompanyItemResponse
       _$companyItemResponseSerializer;
 }
 
-abstract class GroupEntity implements Built<GroupEntity, GroupEntityBuilder> {
-  factory GroupEntity([void updates(GroupEntityBuilder b)]) = _$GroupEntity;
+abstract class GroupEntity extends Object
+    with BaseEntity, SelectableEntity
+    implements Built<GroupEntity, GroupEntityBuilder> {
+  factory GroupEntity() {
+    return _$GroupEntity._(
+      name: '',
+      settings: SettingsEntity(),
+    );
+  }
 
   GroupEntity._();
 

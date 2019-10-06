@@ -659,38 +659,7 @@ class _$SettingsEntitySerializer
   @override
   Iterable<Object> serialize(Serializers serializers, SettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'timezone_id',
-      serializers.serialize(object.timezoneId,
-          specifiedType: const FullType(String)),
-      'date_format_id',
-      serializers.serialize(object.dateFormatId,
-          specifiedType: const FullType(String)),
-      'datetime_format_id',
-      serializers.serialize(object.datetimeFormatId,
-          specifiedType: const FullType(String)),
-      'military_time',
-      serializers.serialize(object.enableMilitaryTime,
-          specifiedType: const FullType(bool)),
-      'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
-      'show_currency_code',
-      serializers.serialize(object.showCurrencyCode,
-          specifiedType: const FullType(bool)),
-      'default_task_rate',
-      serializers.serialize(object.defaultTaskRate,
-          specifiedType: const FullType(double)),
-      'inclusive_taxes',
-      serializers.serialize(object.enableInclusiveTaxes,
-          specifiedType: const FullType(bool)),
-      'custom_invoice_taxes1',
-      serializers.serialize(object.enableCustomInvoiceTaxes1,
-          specifiedType: const FullType(bool)),
-      'custom_invoice_taxes2',
-      serializers.serialize(object.enableCustomInvoiceTaxes2,
-          specifiedType: const FullType(bool)),
-    ];
+    final result = <Object>[];
     if (object.name != null) {
       result
         ..add('name')
@@ -767,6 +736,36 @@ class _$SettingsEntitySerializer
       result
         ..add('website')
         ..add(serializers.serialize(object.website,
+            specifiedType: const FullType(String)));
+    }
+    if (object.timezoneId != null) {
+      result
+        ..add('timezone_id')
+        ..add(serializers.serialize(object.timezoneId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.dateFormatId != null) {
+      result
+        ..add('date_format_id')
+        ..add(serializers.serialize(object.dateFormatId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.datetimeFormatId != null) {
+      result
+        ..add('datetime_format_id')
+        ..add(serializers.serialize(object.datetimeFormatId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.enableMilitaryTime != null) {
+      result
+        ..add('military_time')
+        ..add(serializers.serialize(object.enableMilitaryTime,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.languageId != null) {
+      result
+        ..add('language_id')
+        ..add(serializers.serialize(object.languageId,
             specifiedType: const FullType(String)));
     }
     if (object.currencyId != null) {
@@ -847,6 +846,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultQuoteTerms,
             specifiedType: const FullType(String)));
     }
+    if (object.showCurrencyCode != null) {
+      result
+        ..add('show_currency_code')
+        ..add(serializers.serialize(object.showCurrencyCode,
+            specifiedType: const FullType(bool)));
+    }
     if (object.enableSecondTaxRate != null) {
       result
         ..add('enable_second_tax_rate')
@@ -865,10 +870,34 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultPaymentTypeId,
             specifiedType: const FullType(String)));
     }
+    if (object.defaultTaskRate != null) {
+      result
+        ..add('default_task_rate')
+        ..add(serializers.serialize(object.defaultTaskRate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.enableInclusiveTaxes != null) {
+      result
+        ..add('inclusive_taxes')
+        ..add(serializers.serialize(object.enableInclusiveTaxes,
+            specifiedType: const FullType(bool)));
+    }
     if (object.convertProductExchangeRate != null) {
       result
         ..add('convert_products')
         ..add(serializers.serialize(object.convertProductExchangeRate,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomInvoiceTaxes1 != null) {
+      result
+        ..add('custom_invoice_taxes1')
+        ..add(serializers.serialize(object.enableCustomInvoiceTaxes1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomInvoiceTaxes2 != null) {
+      result
+        ..add('custom_invoice_taxes2')
+        ..add(serializers.serialize(object.enableCustomInvoiceTaxes2,
             specifiedType: const FullType(bool)));
     }
     if (object.customPaymentTerms != null) {
@@ -1360,7 +1389,48 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
-
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isDeleted != null) {
+      result
+        ..add('is_deleted')
+        ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -1382,6 +1452,34 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -2647,42 +2745,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.hasCustomDesign1,
       this.hasCustomDesign2,
       this.hasCustomDesign3})
-      : super._() {
-    if (timezoneId == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'timezoneId');
-    }
-    if (dateFormatId == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'dateFormatId');
-    }
-    if (datetimeFormatId == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'datetimeFormatId');
-    }
-    if (enableMilitaryTime == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'enableMilitaryTime');
-    }
-    if (languageId == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'languageId');
-    }
-    if (showCurrencyCode == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'showCurrencyCode');
-    }
-    if (defaultTaskRate == null) {
-      throw new BuiltValueNullFieldError('SettingsEntity', 'defaultTaskRate');
-    }
-    if (enableInclusiveTaxes == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'enableInclusiveTaxes');
-    }
-    if (enableCustomInvoiceTaxes1 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'enableCustomInvoiceTaxes1');
-    }
-    if (enableCustomInvoiceTaxes2 == null) {
-      throw new BuiltValueNullFieldError(
-          'SettingsEntity', 'enableCustomInvoiceTaxes2');
-    }
-  }
+      : super._();
 
   @override
   SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
@@ -3508,11 +3571,35 @@ class _$GroupEntity extends GroupEntity {
   final String name;
   @override
   final SettingsEntity settings;
+  @override
+  final bool isChanged;
+  @override
+  final int createdAt;
+  @override
+  final int updatedAt;
+  @override
+  final int archivedAt;
+  @override
+  final bool isDeleted;
+  @override
+  final bool isOwner;
+  @override
+  final String id;
 
   factory _$GroupEntity([void Function(GroupEntityBuilder) updates]) =>
       (new GroupEntityBuilder()..update(updates)).build();
 
-  _$GroupEntity._({this.name, this.settings}) : super._() {
+  _$GroupEntity._(
+      {this.name,
+      this.settings,
+      this.isChanged,
+      this.createdAt,
+      this.updatedAt,
+      this.archivedAt,
+      this.isDeleted,
+      this.isOwner,
+      this.id})
+      : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'name');
     }
@@ -3533,19 +3620,46 @@ class _$GroupEntity extends GroupEntity {
     if (identical(other, this)) return true;
     return other is GroupEntity &&
         name == other.name &&
-        settings == other.settings;
+        settings == other.settings &&
+        isChanged == other.isChanged &&
+        createdAt == other.createdAt &&
+        updatedAt == other.updatedAt &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted &&
+        isOwner == other.isOwner &&
+        id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), settings.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc($jc(0, name.hashCode), settings.hashCode),
+                                isChanged.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GroupEntity')
           ..add('name', name)
-          ..add('settings', settings))
+          ..add('settings', settings)
+          ..add('isChanged', isChanged)
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner)
+          ..add('id', id))
         .toString();
   }
 }
@@ -3562,12 +3676,47 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
       _$this._settings ??= new SettingsEntityBuilder();
   set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool _isDeleted;
+  bool get isDeleted => _$this._isDeleted;
+  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   GroupEntityBuilder();
 
   GroupEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
       _settings = _$v.settings?.toBuilder();
+      _isChanged = _$v.isChanged;
+      _createdAt = _$v.createdAt;
+      _updatedAt = _$v.updatedAt;
+      _archivedAt = _$v.archivedAt;
+      _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -3590,8 +3739,17 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   _$GroupEntity build() {
     _$GroupEntity _$result;
     try {
-      _$result =
-          _$v ?? new _$GroupEntity._(name: name, settings: settings.build());
+      _$result = _$v ??
+          new _$GroupEntity._(
+              name: name,
+              settings: settings.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              isOwner: isOwner,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {
