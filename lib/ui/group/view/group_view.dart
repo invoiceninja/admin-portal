@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({
@@ -27,6 +28,12 @@ class _GroupViewState extends State<GroupView> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: !isMobile(context)
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: viewModel.onBackPressed,
+              )
+            : null,
         title: EntityStateTitle(entity: group),
         actions: [
           userCompany.canEditEntity(group)
