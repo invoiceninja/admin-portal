@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -35,7 +36,6 @@ class StubListItem extends StatelessWidget {
     final subtitle = filterMatch;
 
     return DismissibleEntity(
-      user: user,
       entity: stub,
       onEntityAction: onEntityAction,
       child: ListTile(

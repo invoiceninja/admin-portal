@@ -48,7 +48,6 @@ class GroupList extends StatelessWidget {
                             void showDialog() => showEntityActionsDialog(
                                 entity: group,
                                 context: context,
-                                user: user,
                                 onEntityAction: viewModel.onEntityAction);
 
                             return GroupListItem(

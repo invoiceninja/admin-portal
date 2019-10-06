@@ -264,6 +264,8 @@ class CustomFieldType {
   static const String invoice2 = 'invoice_text2';
   static const String surcharge1 = 'invoice1';
   static const String surcharge2 = 'invoice2';
+  static const String group1 = 'group1';
+  static const String group2 = 'group2';
 }
 
 abstract class DashboardEntity

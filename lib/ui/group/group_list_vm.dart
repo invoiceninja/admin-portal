@@ -85,7 +85,7 @@ class GroupListVM {
   }
 
   final UserEntity user;
-  final List<int> groupList;
+  final List<String> groupList;
   final BuiltMap<String, GroupEntity> groupMap;
   final ListUIState listState;
   final String filter;

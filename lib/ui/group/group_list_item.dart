@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +7,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class GroupListItem extends StatelessWidget {
-
   const GroupListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -35,7 +35,6 @@ class GroupListItem extends StatelessWidget {
     final subtitle = filterMatch;
 
     return DismissibleEntity(
-      user: user,
       entity: group,
       onEntityAction: onEntityAction,
       child: ListTile(
@@ -70,12 +69,13 @@ class GroupListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty ?
-            Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ) : Container(),
+            subtitle != null && subtitle.isNotEmpty
+                ? Text(
+                    subtitle,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Container(),
             EntityStateLabel(group),
           ],
         ),

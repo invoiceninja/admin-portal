@@ -23,7 +23,7 @@ class ViewGroup implements PersistUI {
     this.force = false,
   });
 
-  final int groupId;
+  final String groupId;
   final BuildContext context;
   final bool force;
 }

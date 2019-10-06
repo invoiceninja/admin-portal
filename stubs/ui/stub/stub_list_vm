@@ -87,7 +87,7 @@ class StubListVM {
   }
 
   final UserEntity user;
-  final List<int> stubList;
+  final List<String> stubList;
   final BuiltMap<String, StubEntity> stubMap;
   final ListUIState listState;
   final String filter;

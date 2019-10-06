@@ -51,7 +51,6 @@ class StubList extends StatelessWidget {
                               void showDialog() => showEntityActionsDialog(
                                   entity: stub,
                                   context: context,
-                                  user: user,
                                   onEntityAction: viewModel.onEntityAction);
 
 
