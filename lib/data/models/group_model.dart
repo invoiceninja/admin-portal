@@ -44,8 +44,11 @@ abstract class GroupEntity extends Object
   factory GroupEntity({String id}) {
     return _$GroupEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       settings: SettingsEntity(),
+      customValue1: '',
+      customValue2: '',
     );
   }
 

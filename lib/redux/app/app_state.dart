@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
@@ -33,6 +34,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 part 'app_state.g.dart';
@@ -254,6 +256,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return hasVendorChanges(vendorUIState.editing, vendorState.map);
       case ExpenseEditScreen.route:
         return hasExpenseChanges(expenseUIState.editing, expenseState.map);
+      case GroupEditScreen.route:
+        return hasGroupChanges(groupUIState.editing, groupState.map);
       // TODO add to stater.sh
     }
 

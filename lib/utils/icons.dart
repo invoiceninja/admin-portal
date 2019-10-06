@@ -65,6 +65,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.fileImage;
     case EntityType.task:
       return FontAwesomeIcons.clock;
+    case EntityType.group:
+      return FontAwesomeIcons.tags;
     default:
       return null;
   }
