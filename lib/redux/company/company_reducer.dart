@@ -43,6 +43,8 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
 Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
   TypedReducer<UserCompanyEntity, LoadCompanySuccess>(
       loadCompanySuccessReducer),
+  TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
+      saveCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveUserSuccess>((userCompany, action) =>
       userCompany.rebuild((b) => b..user.replace(action.user))),
 ]);
@@ -91,4 +93,22 @@ UserCompanyEntity loadCompanySuccessReducer(
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
       )));
+}
+
+UserCompanyEntity saveCompanySuccessReducer(
+    UserCompanyEntity userCompany, SaveCompanySuccess action) {
+  final company = action.company.rebuild((b) => b
+      //..taxRates.replace(userCompany.company.taxRates)
+      //..taskStatuses.replace(userCompany.company.taskStatuses)
+      //..taskStatusMap.replace(userCompany.company.taskStatusMap)
+      //..expenseCategories.replace(userCompany.company.expenseCategories)
+      //..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
+      //..users.replace(userCompany.company.users)
+      //..userMap.replace(userCompany.company.userMap)
+      //..customFields.replace(userCompany.company.customFields)
+      );
+
+  userCompany = userCompany.rebuild((b) => b..company.replace(company));
+
+  return userCompany;
 }

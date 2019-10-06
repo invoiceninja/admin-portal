@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -14,7 +13,7 @@ class SettingsRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponse> saveCompany(
+  Future<CompanyEntity> saveCompany(
       Credentials credentials, CompanyEntity company,
       [EntityAction action]) async {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
@@ -24,10 +23,10 @@ class SettingsRepository {
     response =
         await webClient.put(url, credentials.token, data: json.encode(data));
 
-    final LoginResponse clientResponse =
-        serializers.deserializeWith(LoginResponse.serializer, response);
+    final CompanyItemResponse companyResponse =
+        serializers.deserializeWith(CompanyItemResponse.serializer, response);
 
-    return clientResponse;
+    return companyResponse.data;
   }
 
   Future<UserEntity> saveUser(Credentials credentials, UserEntity user) async {
@@ -54,16 +53,6 @@ class SettingsRepository {
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);
 
-    debugPrint(
-        '### UPLOAD LOGO RESPONSE: ${companyResponse.data.settings.logoUrl}');
-
     return companyResponse.data;
-
-    /*
-    final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
-
-    return userResponse.data;
-     */
   }
 }

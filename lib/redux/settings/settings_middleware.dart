@@ -63,8 +63,9 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
 
     settingsRepository
         .saveCompany(store.state.credentials, action.company)
-        .then((response) {
-      print('Done: $response');
+        .then((company) {
+      store.dispatch(SaveCompanySuccess(company));
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveCompanyFailure(error));
@@ -101,12 +102,12 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     settingsRepository
         .uploadLogo(store.state.credentials, store.state.selectedCompany.id,
             action.path)
-        .then((user) {
-      store.dispatch(UploadLogoSuccess(null));
+        .then((company) {
+      store.dispatch(SaveCompanySuccess(company));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);
-      store.dispatch(UploadLogoFailure(error));
+      store.dispatch(SaveCompanyFailure(error));
       action.completer.completeError(error);
     });
 
