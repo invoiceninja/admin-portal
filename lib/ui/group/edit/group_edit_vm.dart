@@ -62,9 +62,9 @@ class GroupEditVM {
         store.dispatch(UpdateGroup(group));
       },
       onBackPressed: () {
-        if (state.uiState.currentRoute.contains(GroupScreen.route)) {
+        if (state.uiState.currentRoute.contains(GroupSettingsScreen.route)) {
           store.dispatch(UpdateCurrentRoute(
-              group.isNew ? GroupScreen.route : GroupViewScreen.route));
+              group.isNew ? GroupSettingsScreen.route : GroupViewScreen.route));
         }
       },
       onCancelPressed: (BuildContext context) {

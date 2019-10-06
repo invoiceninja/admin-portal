@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -169,7 +170,7 @@ class SettingsScreens extends StatelessWidget {
               NotificationsSettingsScreen(),
               ImportExportScreen(),
               DeviceSettingsScreen(),
-              //GroupSettingsScreen(),
+              GroupSettingsScreen(),
               InvoiceSettingsScreen(),
               InvoiceDesignScreen(),
               ClientPortalScreen(),

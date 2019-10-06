@@ -96,11 +96,11 @@ Middleware<AppState> _viewGroupList() {
       store.dispatch(LoadGroups());
     }
 
-    store.dispatch(UpdateCurrentRoute(GroupScreen.route));
+    store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
-          GroupScreen.route, (Route<dynamic> route) => false);
+          GroupSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };
 }

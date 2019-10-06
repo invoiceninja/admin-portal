@@ -1,4 +1,3 @@
-import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';

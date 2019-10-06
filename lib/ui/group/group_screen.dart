@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -11,8 +12,8 @@ import 'package:invoiceninja_flutter/ui/group/group_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
-class GroupScreen extends StatelessWidget {
-  static const String route = '/group';
+class GroupSettingsScreen extends StatelessWidget {
+  static const String route = '/$kSettings/$kSettingsGroupSettings';
 
   @override
   Widget build(BuildContext context) {

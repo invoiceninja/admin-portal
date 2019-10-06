@@ -312,7 +312,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-            GroupScreen.route: (context) => GroupScreen(),
+            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
@@ -326,6 +326,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 NotificationsSettingsScreen(),
             ImportExportScreen.route: (context) => ImportExportScreen(),
             DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),
             InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
             ClientPortalScreen.route: (context) => ClientPortalScreen(),
