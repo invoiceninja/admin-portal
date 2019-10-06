@@ -96,6 +96,7 @@ const String kSettingsNotifications = 'notifications';
 const String kSettingsProducts = 'products';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
+const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsInvoiceSettings = 'invoice_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
 const String kSettingsClientPortal = 'client_portal';
@@ -115,6 +116,7 @@ const List<String> kSettingsSections = [
   kSettingsNotifications,
   kSettingsImportExport,
   kSettingsDeviceSettings,
+  kSettingsGroupSettings,
   kSettingsInvoiceSettings,
   kSettingsInvoiceDesign,
   kSettingsClientPortal,
