@@ -39,7 +39,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.play_arrow;
     case EntityAction.stop:
       return Icons.stop;
-    case EntityAction.configureSettings:
+    case EntityAction.settings:
       return Icons.settings;
     default:
       return null;

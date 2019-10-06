@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -245,6 +247,10 @@ void handleGroupAction(
   switch (action) {
     case EntityAction.edit:
       store.dispatch(EditGroup(context: context, group: group));
+      break;
+    case EntityAction.settings:
+      store.dispatch(ViewSettings(
+          context: context, group: group, section: kSettingsCompanyDetails));
       break;
     case EntityAction.newClient:
       store.dispatch(EditClient(

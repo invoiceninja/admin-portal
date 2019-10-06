@@ -14,7 +14,6 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
-      'configure_settings': 'Configure Settings',
       'group_settings': 'Group Settings',
       'groups': 'Groups',
       'new_group': 'New Group',
@@ -14715,9 +14714,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get groups => _localizedValues[localeCode]['groups'];
 
   String get groupSettings => _localizedValues[localeCode]['group_settings'];
-
-  String get configureSettings =>
-      _localizedValues[localeCode]['configure_settings'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

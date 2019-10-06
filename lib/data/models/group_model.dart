@@ -137,7 +137,7 @@ abstract class GroupEntity extends Object
       }
 
       if (userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.configureSettings);
+        actions.add(EntityAction.settings);
       }
 
       if (userCompany.canCreate(EntityType.client)) {
