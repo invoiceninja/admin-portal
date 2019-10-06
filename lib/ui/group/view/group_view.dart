@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class GroupView extends StatefulWidget {
-
   const GroupView({
     Key key,
     @required this.viewModel,
@@ -37,18 +36,15 @@ class _GroupViewState extends State<GroupView> {
                   },
                 ),
                 ActionMenuButton(
-                  user: viewModel.company.user,
                   isSaving: viewModel.isSaving,
                   entity: group,
                   onSelected: viewModel.onEntityAction,
                 ),
               ],
       ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
-      ),
+      body: FormCard(children: [
+        // STARTER: widgets - do not remove comment
+      ]),
     );
   }
 }

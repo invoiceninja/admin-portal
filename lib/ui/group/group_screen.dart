@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -20,6 +21,7 @@ class GroupScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
+    final user = state.user;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -51,13 +53,13 @@ class GroupScreen extends StatelessWidget {
         onSelectedCustom2: (value) =>
             store.dispatch(FilterGroupsByCustom2(value)),
         sortFields: [
-          GroupFields.updatedAt,
+          GroupFields.name,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterGroupsByState(state));
         },
       ),
-      floatingActionButton: user.canCreate(EntityType.group)
+      floatingActionButton: state.userCompany.canCreate(EntityType.group)
           ? FloatingActionButton(
               heroTag: 'group_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

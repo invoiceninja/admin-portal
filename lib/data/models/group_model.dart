@@ -41,8 +41,9 @@ class GroupFields {
 abstract class GroupEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<GroupEntity, GroupEntityBuilder> {
-  factory GroupEntity() {
+  factory GroupEntity({String id}) {
     return _$GroupEntity._(
+      id: id ?? BaseEntity.nextId,
       name: '',
       settings: SettingsEntity(),
     );

@@ -169,7 +169,7 @@ class SettingsScreens extends StatelessWidget {
               NotificationsSettingsScreen(),
               ImportExportScreen(),
               DeviceSettingsScreen(),
-              GroupSettingsScreen(),
+              //GroupSettingsScreen(),
               InvoiceSettingsScreen(),
               InvoiceDesignScreen(),
               ClientPortalScreen(),
