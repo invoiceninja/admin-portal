@@ -86,11 +86,15 @@ abstract class UserCompanyState
 
 abstract class SettingsUIState extends Object
     implements Built<SettingsUIState, SettingsUIStateBuilder> {
-  factory SettingsUIState({UserCompanyEntity userCompany, String section}) {
+  factory SettingsUIState(
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      GroupEntity group,
+      String section}) {
     return _$SettingsUIState._(
       userCompany: userCompany ?? UserCompanyEntity(),
-      client: ClientEntity(),
-      group: GroupEntity(),
+      client: client ?? ClientEntity(),
+      group: group ?? GroupEntity(),
       entityType: EntityType.company,
       isChanged: false,
       updatedAt: 0,

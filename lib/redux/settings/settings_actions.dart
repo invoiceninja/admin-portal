@@ -1,18 +1,23 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewSettings implements PersistUI {
   ViewSettings({
     @required this.context,
-    @required this.userCompany,
+    this.userCompany,
+    this.group,
+    this.client,
     this.force = false,
     this.section,
   });
 
   final UserCompanyEntity userCompany;
+  final GroupEntity group;
+  final ClientEntity client;
   final BuildContext context;
   final bool force;
   final String section;
