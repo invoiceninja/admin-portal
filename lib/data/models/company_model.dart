@@ -5,14 +5,17 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'company_model.g.dart';
 
-abstract class CompanyEntity
+abstract class CompanyEntity extends Object
+    with BaseEntity
     implements Built<CompanyEntity, CompanyEntityBuilder> {
   factory CompanyEntity() {
     return _$CompanyEntity._(
       id: '',
+      updatedAt: 0,
       companyKey: '',
       plan: '',
       settings: SettingsEntity(),
@@ -32,8 +35,6 @@ abstract class CompanyEntity
   }
 
   CompanyEntity._();
-
-  String get id;
 
   @nullable
   @BuiltValueField(wireName: 'size_id')
@@ -109,6 +110,21 @@ abstract class CompanyEntity
   //@BuiltValueField(wireName: 'invoice_labels')
 
   String get displayName => settings.name ?? '';
+
+  @override
+  bool matchesFilter(String filter) => false;
+
+  @override
+  String matchesFilterValue(String filter) => null;
+
+  @override
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => null;
+
+  @override
+  String get listDisplayName => null;
 
   String getCustomFieldLabel(String field) {
     // TODO remove this

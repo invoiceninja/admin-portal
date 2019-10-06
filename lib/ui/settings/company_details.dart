@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -250,25 +251,35 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
-              Center(
-                child: Builder(
-                  builder: (context) {
-                    return ElevatedButton(
-                      width: 300,
-                      label: localization.uploadLogo,
-                      icon: Icons.cloud_upload,
-                      onPressed: () async {
-                        final image = await ImagePicker.pickImage(
-                            source: kReleaseMode
-                                ? ImageSource.gallery
-                                : ImageSource.camera);
-                        if (image != null) {
-                          viewModel.onUploadLogo(context, image.path);
-                        }
-                      },
-                    );
-                  },
-                ),
+              Column(
+                children: <Widget>[
+                  if (settings.logoUrl != null && settings.logoUrl.isNotEmpty)
+                    Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: CachedImage(
+                          width: double.infinity,
+                          url: settings.logoUrl,
+                          //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
+                        )),
+                  Builder(
+                    builder: (context) {
+                      return ElevatedButton(
+                        width: 300,
+                        label: localization.uploadLogo,
+                        icon: Icons.cloud_upload,
+                        onPressed: () async {
+                          final image = await ImagePicker.pickImage(
+                              source: kReleaseMode
+                                  ? ImageSource.gallery
+                                  : ImageSource.camera);
+                          if (image != null) {
+                            viewModel.onUploadLogo(context, image.path);
+                          }
+                        },
+                      );
+                    },
+                  )
+                ],
               ),
               ListView(
                 children: <Widget>[

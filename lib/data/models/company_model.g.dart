@@ -142,6 +142,42 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.enabledModules,
             specifiedType: const FullType(int)));
     }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isDeleted != null) {
+      result
+        ..add('is_deleted')
+        ..add(serializers.serialize(object.isDeleted,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.isOwner != null) {
+      result
+        ..add('is_owner')
+        ..add(serializers.serialize(object.isOwner,
+            specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -248,6 +284,30 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'enabled_modules':
           result.enabledModules = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_owner':
+          result.isOwner = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -1363,6 +1423,18 @@ class _$CompanyEntity extends CompanyEntity {
   final SettingsEntity settings;
   @override
   final int enabledModules;
+  @override
+  final bool isChanged;
+  @override
+  final int createdAt;
+  @override
+  final int updatedAt;
+  @override
+  final int archivedAt;
+  @override
+  final bool isDeleted;
+  @override
+  final bool isOwner;
 
   factory _$CompanyEntity([void Function(CompanyEntityBuilder) updates]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
@@ -1385,7 +1457,13 @@ class _$CompanyEntity extends CompanyEntity {
       this.userMap,
       this.customFields,
       this.settings,
-      this.enabledModules})
+      this.enabledModules,
+      this.isChanged,
+      this.createdAt,
+      this.updatedAt,
+      this.archivedAt,
+      this.isDeleted,
+      this.isOwner})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'id');
@@ -1429,7 +1507,13 @@ class _$CompanyEntity extends CompanyEntity {
         userMap == other.userMap &&
         customFields == other.customFields &&
         settings == other.settings &&
-        enabledModules == other.enabledModules;
+        enabledModules == other.enabledModules &&
+        isChanged == other.isChanged &&
+        createdAt == other.createdAt &&
+        updatedAt == other.updatedAt &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted &&
+        isOwner == other.isOwner;
   }
 
   @override
@@ -1452,29 +1536,26 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            id
-                                                                                .hashCode),
-                                                                        sizeId
-                                                                            .hashCode),
-                                                                    industryId
-                                                                        .hashCode),
-                                                                plan.hashCode),
-                                                            companyKey
-                                                                .hashCode),
-                                                        appUrl.hashCode),
-                                                    startOfWeek.hashCode),
-                                                financialYearStart.hashCode),
-                                            taxRates.hashCode),
-                                        taskStatuses.hashCode),
-                                    taskStatusMap.hashCode),
-                                expenseCategories.hashCode),
-                            expenseCategoryMap.hashCode),
-                        users.hashCode),
-                    userMap.hashCode),
-                customFields.hashCode),
-            settings.hashCode),
-        enabledModules.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc(0, id.hashCode), sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode),
+                                                                                appUrl.hashCode),
+                                                                            startOfWeek.hashCode),
+                                                                        financialYearStart.hashCode),
+                                                                    taxRates.hashCode),
+                                                                taskStatuses.hashCode),
+                                                            taskStatusMap.hashCode),
+                                                        expenseCategories.hashCode),
+                                                    expenseCategoryMap.hashCode),
+                                                users.hashCode),
+                                            userMap.hashCode),
+                                        customFields.hashCode),
+                                    settings.hashCode),
+                                enabledModules.hashCode),
+                            isChanged.hashCode),
+                        createdAt.hashCode),
+                    updatedAt.hashCode),
+                archivedAt.hashCode),
+            isDeleted.hashCode),
+        isOwner.hashCode));
   }
 
   @override
@@ -1497,7 +1578,13 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('settings', settings)
-          ..add('enabledModules', enabledModules))
+          ..add('enabledModules', enabledModules)
+          ..add('isChanged', isChanged)
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted)
+          ..add('isOwner', isOwner))
         .toString();
   }
 }
@@ -1598,6 +1685,30 @@ class CompanyEntityBuilder
   set enabledModules(int enabledModules) =>
       _$this._enabledModules = enabledModules;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  int _archivedAt;
+  int get archivedAt => _$this._archivedAt;
+  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool _isDeleted;
+  bool get isDeleted => _$this._isDeleted;
+  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+
+  bool _isOwner;
+  bool get isOwner => _$this._isOwner;
+  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
@@ -1620,6 +1731,12 @@ class CompanyEntityBuilder
       _customFields = _$v.customFields?.toBuilder();
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
+      _isChanged = _$v.isChanged;
+      _createdAt = _$v.createdAt;
+      _updatedAt = _$v.updatedAt;
+      _archivedAt = _$v.archivedAt;
+      _isDeleted = _$v.isDeleted;
+      _isOwner = _$v.isOwner;
       _$v = null;
     }
     return this;
@@ -1661,7 +1778,13 @@ class CompanyEntityBuilder
               userMap: _userMap?.build(),
               customFields: _customFields?.build(),
               settings: settings.build(),
-              enabledModules: enabledModules);
+              enabledModules: enabledModules,
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              isOwner: isOwner);
     } catch (_) {
       String _$failedField;
       try {
