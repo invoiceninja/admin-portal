@@ -327,6 +327,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ImportExportScreen.route: (context) => ImportExportScreen(),
             DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
             GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
+            GroupEditScreen.route: (context) => GroupEditScreen(),
+            GroupViewScreen.route: (context) => GroupViewScreen(),
             InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),
             InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
             ClientPortalScreen.route: (context) => ClientPortalScreen(),

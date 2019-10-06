@@ -82,6 +82,11 @@ class SettingsList extends StatelessWidget {
           ),
         ),
         SettingsListTile(
+          section: kSettingsGroupSettings,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.tags,
+        ),
+        SettingsListTile(
           section: kSettingsInvoiceSettings,
           viewModel: viewModel,
           icon: FontAwesomeIcons.fileInvoice,
