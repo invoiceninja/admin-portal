@@ -49,6 +49,9 @@ abstract class GroupEntity extends Object
       settings: SettingsEntity(),
       customValue1: '',
       customValue2: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
     );
   }
 
