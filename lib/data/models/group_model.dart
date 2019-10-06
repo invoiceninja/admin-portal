@@ -57,6 +57,11 @@ abstract class GroupEntity extends Object
 
   GroupEntity._();
 
+  @override
+  EntityType get entityType {
+    return EntityType.group;
+  }
+
   String get name;
 
   // TODO remove this

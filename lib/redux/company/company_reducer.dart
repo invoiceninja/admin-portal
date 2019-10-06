@@ -53,7 +53,7 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
 
 UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity company, LoadCompanySuccess action) {
-  var userCompany = action.company;
+  var userCompany = action.userCompany;
 
   userCompany = userCompany.rebuild((b) => b.company
     ..taxRates.replace(<TaxRateEntity>[])
@@ -93,7 +93,7 @@ UserCompanyEntity loadCompanySuccessReducer(
   return userCompany
     ..company.rebuild((b) => b
       ..userMap.addAll(Map.fromIterable(
-        action.company.company.users,
+        action.userCompany.company.users,
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
       )));

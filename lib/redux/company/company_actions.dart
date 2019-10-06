@@ -8,7 +8,7 @@ class SelectCompany {
 }
 
 class LoadCompanySuccess {
-  LoadCompanySuccess(this.company);
+  LoadCompanySuccess(this.userCompany);
 
-  final UserCompanyEntity company;
+  final UserCompanyEntity userCompany;
 }

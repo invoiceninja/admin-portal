@@ -107,6 +107,7 @@ final groupsReducer = combineReducers<GroupState>([
   TypedReducer<GroupState, AddGroupSuccess>(_addGroup),
   TypedReducer<GroupState, LoadGroupsSuccess>(_setLoadedGroups),
   TypedReducer<GroupState, LoadGroupSuccess>(_setLoadedGroup),
+  TypedReducer<GroupState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<GroupState, ArchiveGroupRequest>(_archiveGroupRequest),
   TypedReducer<GroupState, ArchiveGroupSuccess>(_archiveGroupSuccess),
   TypedReducer<GroupState, ArchiveGroupFailure>(_archiveGroupFailure),
@@ -192,6 +193,18 @@ GroupState _setLoadedGroups(GroupState groupState, LoadGroupsSuccess action) {
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.groups,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+GroupState _setLoadedCompany(GroupState groupState, LoadCompanySuccess action) {
+  final state = groupState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.userCompany.company.groups,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));
