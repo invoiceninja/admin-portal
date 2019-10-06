@@ -27,6 +27,7 @@ class ListFilterMessage extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),

@@ -36,7 +36,9 @@ class SettingsList extends StatelessWidget {
             color: Colors.orangeAccent,
             child: ListFilterMessage(
               title: title,
-              onPressed: null,
+              onPressed: settingsUIState.entityType == EntityType.client
+                  ? viewModel.onViewClientPressed
+                  : viewModel.onViewGroupPressed,
               onClearPressed: null,
             ),
           ),
@@ -105,12 +107,11 @@ class SettingsList extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
         ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsGroupSettings,
-            viewModel: viewModel,
-            icon: FontAwesomeIcons.tags,
-          ),
+        SettingsListTile(
+          section: kSettingsGroupSettings,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.tags,
+        ),
         SettingsListTile(
           section: kSettingsInvoiceSettings,
           viewModel: viewModel,
