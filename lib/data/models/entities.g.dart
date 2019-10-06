@@ -6,6 +6,7 @@ part of 'entities.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const EntityType _$company = const EntityType._('company');
 const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
@@ -29,9 +30,12 @@ const EntityType _$size = const EntityType._('size');
 const EntityType _$paymentType = const EntityType._('paymentType');
 const EntityType _$taskStatus = const EntityType._('taskStatus');
 const EntityType _$document = const EntityType._('document');
+const EntityType _$group = const EntityType._('group');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
+    case 'company':
+      return _$company;
     case 'invoice':
       return _$invoice;
     case 'recurringInvoice':
@@ -78,6 +82,8 @@ EntityType _$typeValueOf(String name) {
       return _$taskStatus;
     case 'document':
       return _$document;
+    case 'group':
+      return _$group;
     default:
       throw new ArgumentError(name);
   }
@@ -85,6 +91,7 @@ EntityType _$typeValueOf(String name) {
 
 final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
+  _$company,
   _$invoice,
   _$recurringInvoice,
   _$invoiceItem,
@@ -108,6 +115,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$paymentType,
   _$taskStatus,
   _$document,
+  _$group,
 ]);
 
 const EntityState _$active = const EntityState._('active');

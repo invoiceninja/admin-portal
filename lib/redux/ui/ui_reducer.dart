@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -176,18 +177,19 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..isChanged = true);
   }),
   TypedReducer<SettingsUIState, UpdateSettings>((state, action) {
-    if (state.client != null) {
-      return state.rebuild((b) => b
-        //..client.settings.replace(action.settings)
-        ..isChanged = true);
-    } else if (state.group != null) {
-      return state.rebuild((b) => b
-        ..group.settings.replace(action.settings)
-        ..isChanged = true);
-    } else {
-      return state.rebuild((b) => b
-        ..userCompany.company.settings.replace(action.settings)
-        ..isChanged = true);
+    switch (state.entityType) {
+      case EntityType.client:
+        return state.rebuild((b) => b
+          //..client.settings.replace(action.settings)
+          ..isChanged = true);
+      case EntityType.group:
+        return state.rebuild((b) => b
+          ..group.settings.replace(action.settings)
+          ..isChanged = true);
+      default:
+        return state.rebuild((b) => b
+          ..userCompany.company.settings.replace(action.settings)
+          ..isChanged = true);
     }
   }),
   TypedReducer<SettingsUIState, UpdateUser>((state, action) {

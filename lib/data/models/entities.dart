@@ -12,6 +12,7 @@ class EntityType extends EnumClass {
 
   static Serializer<EntityType> get serializer => _$entityTypeSerializer;
 
+  static const EntityType company = _$company;
   static const EntityType invoice = _$invoice;
   static const EntityType recurringInvoice = _$recurringInvoice;
   static const EntityType invoiceItem = _$invoiceItem;
@@ -35,6 +36,7 @@ class EntityType extends EnumClass {
   static const EntityType paymentType = _$paymentType;
   static const EntityType taskStatus = _$taskStatus;
   static const EntityType document = _$document;
+  static const EntityType group = _$group;
 
   String get plural {
     return toString() + 's';

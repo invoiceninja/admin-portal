@@ -34,8 +34,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -178,6 +176,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.isOwner,
             specifiedType: const FullType(bool)));
     }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -193,10 +197,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'size_id':
           result.sizeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -308,6 +308,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'is_owner':
           result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -1388,8 +1392,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
 
 class _$CompanyEntity extends CompanyEntity {
   @override
-  final String id;
-  @override
   final String sizeId;
   @override
   final String industryId;
@@ -1435,13 +1437,14 @@ class _$CompanyEntity extends CompanyEntity {
   final bool isDeleted;
   @override
   final bool isOwner;
+  @override
+  final String id;
 
   factory _$CompanyEntity([void Function(CompanyEntityBuilder) updates]) =>
       (new CompanyEntityBuilder()..update(updates)).build();
 
   _$CompanyEntity._(
-      {this.id,
-      this.sizeId,
+      {this.sizeId,
       this.industryId,
       this.plan,
       this.companyKey,
@@ -1463,11 +1466,9 @@ class _$CompanyEntity extends CompanyEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner})
+      this.isOwner,
+      this.id})
       : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'id');
-    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
@@ -1490,7 +1491,6 @@ class _$CompanyEntity extends CompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyEntity &&
-        id == other.id &&
         sizeId == other.sizeId &&
         industryId == other.industryId &&
         plan == other.plan &&
@@ -1513,7 +1513,8 @@ class _$CompanyEntity extends CompanyEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner;
+        isOwner == other.isOwner &&
+        id == other.id;
   }
 
   @override
@@ -1536,32 +1537,31 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, id.hashCode), sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode),
-                                                                                appUrl.hashCode),
-                                                                            startOfWeek.hashCode),
-                                                                        financialYearStart.hashCode),
-                                                                    taxRates.hashCode),
-                                                                taskStatuses.hashCode),
-                                                            taskStatusMap.hashCode),
-                                                        expenseCategories.hashCode),
-                                                    expenseCategoryMap.hashCode),
-                                                users.hashCode),
-                                            userMap.hashCode),
-                                        customFields.hashCode),
-                                    settings.hashCode),
-                                enabledModules.hashCode),
-                            isChanged.hashCode),
-                        createdAt.hashCode),
-                    updatedAt.hashCode),
-                archivedAt.hashCode),
-            isDeleted.hashCode),
-        isOwner.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode),
+                                                                                startOfWeek.hashCode),
+                                                                            financialYearStart.hashCode),
+                                                                        taxRates.hashCode),
+                                                                    taskStatuses.hashCode),
+                                                                taskStatusMap.hashCode),
+                                                            expenseCategories.hashCode),
+                                                        expenseCategoryMap.hashCode),
+                                                    users.hashCode),
+                                                userMap.hashCode),
+                                            customFields.hashCode),
+                                        settings.hashCode),
+                                    enabledModules.hashCode),
+                                isChanged.hashCode),
+                            createdAt.hashCode),
+                        updatedAt.hashCode),
+                    archivedAt.hashCode),
+                isDeleted.hashCode),
+            isOwner.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyEntity')
-          ..add('id', id)
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
           ..add('plan', plan)
@@ -1584,7 +1584,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner))
+          ..add('isOwner', isOwner)
+          ..add('id', id))
         .toString();
   }
 }
@@ -1592,10 +1593,6 @@ class _$CompanyEntity extends CompanyEntity {
 class CompanyEntityBuilder
     implements Builder<CompanyEntity, CompanyEntityBuilder> {
   _$CompanyEntity _$v;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
 
   String _sizeId;
   String get sizeId => _$this._sizeId;
@@ -1709,11 +1706,14 @@ class CompanyEntityBuilder
   bool get isOwner => _$this._isOwner;
   set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   CompanyEntityBuilder();
 
   CompanyEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
       _plan = _$v.plan;
@@ -1737,6 +1737,7 @@ class CompanyEntityBuilder
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
       _isOwner = _$v.isOwner;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -1761,7 +1762,6 @@ class CompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyEntity._(
-              id: id,
               sizeId: sizeId,
               industryId: industryId,
               plan: plan,
@@ -1784,7 +1784,8 @@ class CompanyEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
-              isOwner: isOwner);
+              isOwner: isOwner,
+              id: id);
     } catch (_) {
       String _$failedField;
       try {

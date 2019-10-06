@@ -89,6 +89,9 @@ abstract class SettingsUIState extends Object
   factory SettingsUIState({UserCompanyEntity userCompany, String section}) {
     return _$SettingsUIState._(
       userCompany: userCompany ?? UserCompanyEntity(),
+      client: ClientEntity(),
+      group: GroupEntity(),
+      entityType: EntityType.company,
       isChanged: false,
       updatedAt: 0,
       section: section ?? kSettingsCompanyDetails,
@@ -97,14 +100,13 @@ abstract class SettingsUIState extends Object
 
   SettingsUIState._();
 
-  @nullable
   UserCompanyEntity get userCompany;
 
-  @nullable
   ClientEntity get client;
 
-  @nullable
   GroupEntity get group;
+
+  EntityType get entityType;
 
   bool get isChanged;
 
@@ -112,9 +114,16 @@ abstract class SettingsUIState extends Object
 
   String get section;
 
-  SettingsEntity get settings => client != null
-      ? null
-      : group != null ? group.settings : userCompany.company.settings;
+  SettingsEntity get settings {
+    switch (entityType) {
+      case EntityType.client:
+        return null;
+      case EntityType.group:
+        return group.settings;
+      default:
+        return userCompany.company.settings;
+    }
+  }
 
   static Serializer<SettingsUIState> get serializer =>
       _$settingsUIStateSerializer;

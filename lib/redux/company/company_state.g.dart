@@ -144,6 +144,18 @@ class _$SettingsUIStateSerializer
   Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'userCompany',
+      serializers.serialize(object.userCompany,
+          specifiedType: const FullType(UserCompanyEntity)),
+      'client',
+      serializers.serialize(object.client,
+          specifiedType: const FullType(ClientEntity)),
+      'group',
+      serializers.serialize(object.group,
+          specifiedType: const FullType(GroupEntity)),
+      'entityType',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(EntityType)),
       'isChanged',
       serializers.serialize(object.isChanged,
           specifiedType: const FullType(bool)),
@@ -154,24 +166,7 @@ class _$SettingsUIStateSerializer
       serializers.serialize(object.section,
           specifiedType: const FullType(String)),
     ];
-    if (object.userCompany != null) {
-      result
-        ..add('userCompany')
-        ..add(serializers.serialize(object.userCompany,
-            specifiedType: const FullType(UserCompanyEntity)));
-    }
-    if (object.client != null) {
-      result
-        ..add('client')
-        ..add(serializers.serialize(object.client,
-            specifiedType: const FullType(ClientEntity)));
-    }
-    if (object.group != null) {
-      result
-        ..add('group')
-        ..add(serializers.serialize(object.group,
-            specifiedType: const FullType(GroupEntity)));
-    }
+
     return result;
   }
 
@@ -199,6 +194,10 @@ class _$SettingsUIStateSerializer
         case 'group':
           result.group.replace(serializers.deserialize(value,
               specifiedType: const FullType(GroupEntity)) as GroupEntity);
+          break;
+        case 'entityType':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -542,6 +541,8 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final GroupEntity group;
   @override
+  final EntityType entityType;
+  @override
   final bool isChanged;
   @override
   final int updatedAt;
@@ -555,10 +556,23 @@ class _$SettingsUIState extends SettingsUIState {
       {this.userCompany,
       this.client,
       this.group,
+      this.entityType,
       this.isChanged,
       this.updatedAt,
       this.section})
       : super._() {
+    if (userCompany == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'userCompany');
+    }
+    if (client == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'client');
+    }
+    if (group == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'group');
+    }
+    if (entityType == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'entityType');
+    }
     if (isChanged == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
     }
@@ -585,6 +599,7 @@ class _$SettingsUIState extends SettingsUIState {
         userCompany == other.userCompany &&
         client == other.client &&
         group == other.group &&
+        entityType == other.entityType &&
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
         section == other.section;
@@ -595,8 +610,10 @@ class _$SettingsUIState extends SettingsUIState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, userCompany.hashCode), client.hashCode),
-                    group.hashCode),
+                $jc(
+                    $jc($jc($jc(0, userCompany.hashCode), client.hashCode),
+                        group.hashCode),
+                    entityType.hashCode),
                 isChanged.hashCode),
             updatedAt.hashCode),
         section.hashCode));
@@ -608,6 +625,7 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('userCompany', userCompany)
           ..add('client', client)
           ..add('group', group)
+          ..add('entityType', entityType)
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
           ..add('section', section))
@@ -634,6 +652,10 @@ class SettingsUIStateBuilder
   GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
   set group(GroupEntityBuilder group) => _$this._group = group;
 
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -653,6 +675,7 @@ class SettingsUIStateBuilder
       _userCompany = _$v.userCompany?.toBuilder();
       _client = _$v.client?.toBuilder();
       _group = _$v.group?.toBuilder();
+      _entityType = _$v.entityType;
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
@@ -680,9 +703,10 @@ class SettingsUIStateBuilder
     try {
       _$result = _$v ??
           new _$SettingsUIState._(
-              userCompany: _userCompany?.build(),
-              client: _client?.build(),
-              group: _group?.build(),
+              userCompany: userCompany.build(),
+              client: client.build(),
+              group: group.build(),
+              entityType: entityType,
               isChanged: isChanged,
               updatedAt: updatedAt,
               section: section);
@@ -690,11 +714,11 @@ class SettingsUIStateBuilder
       String _$failedField;
       try {
         _$failedField = 'userCompany';
-        _userCompany?.build();
+        userCompany.build();
         _$failedField = 'client';
-        _client?.build();
+        client.build();
         _$failedField = 'group';
-        _group?.build();
+        group.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsUIState', _$failedField, e.toString());
