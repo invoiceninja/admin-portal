@@ -4,14 +4,17 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-Future<void> showEntityActionsDialog({
-  @required BuildContext context,
-  @required List<BaseEntity> entities,
-  @required UserCompanyEntity userCompany,
-  @required
-      Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction,
-  ClientEntity client,
-}) async {
+Future<void> showEntityActionsDialog(
+    {@required
+        BuildContext context,
+    @required
+        List<BaseEntity> entities,
+    @required
+        UserCompanyEntity userCompany,
+    @required
+        Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction,
+    ClientEntity client,
+    bool multiselect = false}) async {
   if (entities == null) {
     return;
   }
@@ -22,7 +25,10 @@ Future<void> showEntityActionsDialog({
         final actions = <Widget>[];
         actions.addAll(entities[0]
             .getActions(
-                userCompany: userCompany, includeEdit: true, client: client)
+                userCompany: userCompany,
+                includeEdit: true,
+                client: client,
+                multiselect: multiselect)
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();

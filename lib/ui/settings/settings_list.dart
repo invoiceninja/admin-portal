@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -62,6 +61,11 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
             icon: FontAwesomeIcons.user,
           ),
+        SettingsListTile(
+          section: kSettingsUserDetails,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.user,
+        ),
         SettingsListTile(
           section: kSettingsLocalization,
           viewModel: viewModel,

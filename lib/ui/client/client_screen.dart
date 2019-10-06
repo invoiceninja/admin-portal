@@ -113,7 +113,8 @@ class ClientScreen extends StatelessWidget {
           entities: store.state.clientListState.selectedEntities,
           userCompany: viewModel.userCompany,
           context: context,
-          onEntityAction: viewModel.onEntityAction);
+          onEntityAction: viewModel.onEntityAction,
+          multiselect: true);
     }
     store.dispatch(ClearMultiselect(context: context));
   }

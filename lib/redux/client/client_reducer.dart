@@ -175,7 +175,6 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState clientListState, ClearMultiselect action) {
-  // TODO: Notify UI which IDs were selected
   return clientListState.rebuild((b) => b..selectedEntities = null);
 }
 

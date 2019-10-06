@@ -67,7 +67,7 @@ class ProductListVM {
       onProductTap: (context, product) {
         store.dispatch(ViewProduct(productId: product.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> products,
+      onEntityAction: (BuildContext context, List<ProductEntity> products,
               EntityAction action) =>
           handleProductAction(context, products, action),
       onRefreshed: (context) => _handleRefresh(context),

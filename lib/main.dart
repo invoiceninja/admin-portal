@@ -17,15 +17,11 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
-import 'package:sentry/sentry.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
+import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
@@ -280,7 +276,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             LoginScreen.route: (context) => LoginScreen(),
             MainScreen.route: (context) => MainScreen(),
             DashboardScreen.route: (context) => DashboardScreen(),
-            ProductScreen.route: (context) => ProductScreen(),
+            ProductScreen.route: (context) => ProductScreenBuilder(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
             ClientScreen.route: (context) => ClientScreenBuilder(),

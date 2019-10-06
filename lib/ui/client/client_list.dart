@@ -64,13 +64,16 @@ class ClientList extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Checkbox(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onChanged: (value) =>
-                          _toggleSelectionForAll(store, context),
-                      value:
-                          store.state.clientListState.selectedEntities.length ==
-                              viewModel.clientList.length)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onChanged: (value) =>
+                            _toggleSelectionForAll(store, context),
+                        activeColor: Theme.of(context).accentColor,
+                        value: listUIState.selectedEntities.length ==
+                            viewModel.clientList.length),
+                  ),
                 ],
               );
             }

@@ -193,7 +193,7 @@ abstract class ProductEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
+    if (!isDeleted && !multiselect) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
@@ -203,7 +203,7 @@ abstract class ProductEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.product)) {
+    if (userCompany.canCreate(EntityType.product) && !multiselect) {
       actions.add(EntityAction.clone);
     }
 
