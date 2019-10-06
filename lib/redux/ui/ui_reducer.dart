@@ -212,4 +212,11 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
+  TypedReducer<SettingsUIState, SaveCompanySuccess>((state, action) {
+    return state.rebuild((b) => b..userCompany.company.replace(action.company));
+  }),
+  TypedReducer<SettingsUIState, UploadLogoSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..userCompany.company.settings.logoUrl = action.company.settings.logoUrl);
+  })
 ]);

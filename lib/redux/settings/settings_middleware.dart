@@ -103,11 +103,11 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
         .uploadLogo(store.state.credentials, store.state.selectedCompany.id,
             action.path)
         .then((company) {
-      store.dispatch(SaveCompanySuccess(company));
+      store.dispatch(UploadLogoSuccess(company));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SaveCompanyFailure(error));
+      store.dispatch(UploadLogoFailure(error));
       action.completer.completeError(error);
     });
 
