@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -61,27 +62,25 @@ class GroupListVM {
     final state = store.state;
 
     return GroupListVM(
-        user: state.user,
-        listState: state.groupListState,
-        groupList: memoizedFilteredGroupList(state.groupState.map,
-            state.groupState.list, state.groupListState),
-        groupMap: state.groupState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.groupState.isLoaded,
-        filter: state.groupUIState.listUIState.filter,
-          onClearEntityFilterPressed: () =>
-              store.dispatch(FilterGroupsByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.groupListState.filterEntityId,
-                  context: context)),
-        onGroupTap: (context, group) {
-          store.dispatch(ViewGroup(groupId: group.id, context: context));
-        },
+      user: state.user,
+      listState: state.groupListState,
+      groupList: memoizedFilteredGroupList(
+          state.groupState.map, state.groupState.list, state.groupListState),
+      groupMap: state.groupState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.groupState.isLoaded,
+      filter: state.groupUIState.listUIState.filter,
+      onClearEntityFilterPressed: () => store.dispatch(FilterGroupsByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.groupListState.filterEntityId, context: context)),
+      onGroupTap: (context, group) {
+        store.dispatch(ViewGroup(groupId: group.id, context: context));
+      },
       onEntityAction:
           (BuildContext context, BaseEntity group, EntityAction action) =>
-          handleGroupAction(context, group, action),
-        onRefreshed: (context) => _handleRefresh(context),
+              handleGroupAction(context, group, action),
+      onRefreshed: (context) => _handleRefresh(context),
     );
   }
 
@@ -97,5 +96,4 @@ class GroupListVM {
   final Function(BuildContext, GroupEntity, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
 }

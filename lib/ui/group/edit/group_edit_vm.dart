@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -62,25 +63,26 @@ class GroupEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(GroupScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(group.isNew ? GroupScreen.route : GroupViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              group.isNew ? GroupScreen.route : GroupViewScreen.route));
         }
       },
-    onCancelPressed: (BuildContext context) {
-      store.dispatch(EditGroup(
-          group: GroupEntity(), context: context, force: true));
-      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
-    },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(
+            EditGroup(group: GroupEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onSavePressed: (BuildContext context) {
         final Completer<GroupEntity> completer = new Completer<GroupEntity>();
         store.dispatch(SaveGroupRequest(completer: completer, group: group));
         return completer.future.then((savedGroup) {
           store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
           if (isMobile(context)) {
-              if (group.isNew) {
-                Navigator.of(context).pushReplacementNamed(GroupViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedGroup);
-              }
+            if (group.isNew) {
+              Navigator.of(context).pushReplacementNamed(GroupViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedGroup);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

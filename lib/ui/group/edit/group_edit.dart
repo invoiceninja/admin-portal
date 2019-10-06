@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GroupEdit extends StatefulWidget {
   const GroupEdit({
@@ -26,7 +27,6 @@ class _GroupEditState extends State<GroupEdit> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       // STARTER: array - do not remove comment
     ];
@@ -53,8 +53,8 @@ class _GroupEditState extends State<GroupEdit> {
 
   void _onChanged() {
     final group = widget.viewModel.group.rebuild((b) => b
-      // STARTER: set value - do not remove comment
-    );
+        // STARTER: set value - do not remove comment
+        );
     if (group != widget.viewModel.group) {
       widget.viewModel.onChanged(group);
     }
@@ -72,33 +72,33 @@ class _GroupEditState extends State<GroupEdit> {
         return true;
       },
       child: Scaffold(
-        automaticallyImplyLeading: isMobile(context),
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text(viewModel.group.isNew
               ? localization.newGroup
               : localization.editGroup),
           actions: <Widget>[
-                if (!isMobile(context))
-                  FlatButton(
-                    child: Text(
-                      localization.cancel,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => viewModel.onCancelPressed(context),
-                  ),
-                ActionIconButton(
-                  icon: Icons.cloud_upload,
-                  tooltip: localization.save,
-                  isVisible: !group.isDeleted,
-                  isDirty: group.isNew || group != viewModel.origGroup,
-                  isSaving: viewModel.isSaving,
-                  onPressed: () {
-                    if (! _formKey.currentState.validate()) {
-                      return;
-                    }
-                    viewModel.onSavePressed(context);
-                  },
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
                 ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
+            ActionIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
+              isVisible: !group.isDeleted,
+              isDirty: group.isNew || group != viewModel.origGroup,
+              isSaving: viewModel.isSaving,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+                viewModel.onSavePressed(context);
+              },
+            ),
           ],
         ),
         body: Form(
@@ -113,8 +113,7 @@ class _GroupEditState extends State<GroupEdit> {
                   ),
                 ],
               );
-            })
-        ),
+            })),
       ),
     );
   }

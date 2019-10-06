@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'new_group': 'New Group',
+      'edit_group': 'Edit Group',
       'created_group': 'Successfully created group',
       'updated_group': 'Successfully updated group',
       'archived_group': 'Successfully archived group',
@@ -14705,6 +14706,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get deletedGroup => _localizedValues[localeCode]['deleted_group'];
 
   String get restoredGroup => _localizedValues[localeCode]['restored_group'];
+
+  String get editGroup => _localizedValues[localeCode]['edit_group'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
