@@ -34,7 +34,6 @@ class GroupViewScreen extends StatelessWidget {
 }
 
 class GroupViewVM {
-
   GroupViewVM({
     @required this.state,
     @required this.group,
@@ -61,32 +60,32 @@ class GroupViewVM {
     }
 
     return GroupViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: group.isNew,
-        group: group,
-        onEditPressed: (BuildContext context) {
-          final Completer<GroupEntity> completer = Completer<GroupEntity>();
-          store.dispatch(EditGroup(
-              group: group, context: context, completer: completer));
-          completer.future.then((group) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedGroup,
-                )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(GroupScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(GroupScreen.route));
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: group.isNew,
+      group: group,
+      onEditPressed: (BuildContext context) {
+        final Completer<GroupEntity> completer = Completer<GroupEntity>();
+        store.dispatch(
+            EditGroup(group: group, context: context, completer: completer));
+        completer.future.then((group) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedGroup,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(GroupScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(GroupScreen.route));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleGroupAction(context, group, action),
-        );
+    );
   }
 
   final AppState state;

@@ -55,7 +55,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-groupUIState: GroupUIState(),
+      groupUIState: GroupUIState(),
 
       documentUIState: DocumentUIState(),
       expenseUIState: ExpenseUIState(),
@@ -106,7 +106,7 @@ groupUIState: GroupUIState(),
   InvoiceUIState get invoiceUIState;
 
   // STARTER: properties - do not remove comment
-GroupUIState get groupUIState;
+  GroupUIState get groupUIState;
 
   DocumentUIState get documentUIState;
 

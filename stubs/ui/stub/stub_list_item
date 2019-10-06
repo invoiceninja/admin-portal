@@ -33,7 +33,8 @@ class StubListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = store.state;
+    final uiState = state.uiState;
     final stubUIState = uiState.stubUIState;
 
     final filterMatch = filter != null && filter.isNotEmpty
@@ -42,6 +43,7 @@ class StubListItem extends StatelessWidget {
     final subtitle = filterMatch;
 
     return DismissibleEntity(
+       userCompany: state.userCompany,
       entity: stub,
       isSelected: stub.id ==
           (uiState.isEditing

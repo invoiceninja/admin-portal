@@ -141,8 +141,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.group:
-return groupUIState;
+      case EntityType.group:
+        return groupUIState;
 
       case EntityType.document:
         return documentUIState;
@@ -186,10 +186,9 @@ return groupUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-GroupState get groupState => selectedCompanyState.groupState;
-ListUIState get groupListState => uiState.groupUIState.listUIState;
-GroupUIState get groupUIState => uiState.groupUIState;
-
+  GroupState get groupState => selectedCompanyState.groupState;
+  ListUIState get groupListState => uiState.groupUIState.listUIState;
+  GroupUIState get groupUIState => uiState.groupUIState;
 
   DocumentState get documentState => selectedCompanyState.documentState;
 
