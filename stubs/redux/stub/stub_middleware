@@ -77,7 +77,10 @@ Middleware<AppState> _viewStub() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-    Navigator.of(action.context).pushNamed(StubViewScreen.route);
+
+    if (isMobile(action.context)) {
+        Navigator.of(action.context).pushNamed(StubViewScreen.route);
+    }
   };
 }
 

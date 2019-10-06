@@ -77,6 +77,11 @@ abstract class GroupEntity extends Object
   @BuiltValueField(serialize: false)
   SettingsEntity get settings;
 
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
   int compareTo(GroupEntity group, String sortField, bool sortAscending) {
     const int response = 0;
     final GroupEntity groupA = sortAscending ? this : group;

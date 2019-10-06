@@ -100,7 +100,7 @@ class _GroupEditState extends State<GroupEdit> {
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
-              isVisible: !group.isDeleted,
+              isVisible: !(group.isDeleted ?? false), // TODO remove this
               isDirty: group.isNew || group != viewModel.origGroup,
               isSaving: viewModel.isSaving,
               onPressed: () {

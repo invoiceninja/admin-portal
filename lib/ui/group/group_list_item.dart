@@ -33,9 +33,6 @@ class GroupListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final uiState = state.uiState;
-    final groupUIState = uiState.groupUIState;
-
     final filterMatch = filter != null && filter.isNotEmpty
         ? group.matchesFilterValue(filter)
         : null;
@@ -44,10 +41,7 @@ class GroupListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: group,
-      isSelected: group.id ==
-          (uiState.isEditing
-              ? groupUIState.editing.id
-              : groupUIState.selectedId),
+      isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,

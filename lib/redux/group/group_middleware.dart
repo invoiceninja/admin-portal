@@ -77,7 +77,10 @@ Middleware<AppState> _viewGroup() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
-    Navigator.of(action.context).pushNamed(GroupViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(GroupViewScreen.route);
+    }
   };
 }
 
