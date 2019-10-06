@@ -54,12 +54,14 @@ UserCompanyEntity loadCompanySuccessReducer(
   var userCompany = action.company;
 
   userCompany = userCompany.rebuild((b) => b.company
+    ..taxRates.replace(<TaxRateEntity>[])
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
     ..expenseCategories.replace(<ExpenseCategoryEntity>[])
     ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>())
     ..users.replace(<UserEntity>[])
-    ..userMap.replace(BuiltMap<String, UserEntity>()));
+    ..userMap.replace(BuiltMap<String, UserEntity>())
+    ..customFields.replace(BuiltMap<String, String>()));
 
   print(
       '${userCompany.company.companyKey} map: ${userCompany.company.expenseCategoryMap}');
@@ -98,15 +100,14 @@ UserCompanyEntity loadCompanySuccessReducer(
 UserCompanyEntity saveCompanySuccessReducer(
     UserCompanyEntity userCompany, SaveCompanySuccess action) {
   final company = action.company.rebuild((b) => b
-      //..taxRates.replace(userCompany.company.taxRates)
-      //..taskStatuses.replace(userCompany.company.taskStatuses)
-      //..taskStatusMap.replace(userCompany.company.taskStatusMap)
-      //..expenseCategories.replace(userCompany.company.expenseCategories)
-      //..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
-      //..users.replace(userCompany.company.users)
-      //..userMap.replace(userCompany.company.userMap)
-      //..customFields.replace(userCompany.company.customFields)
-      );
+    ..taxRates.replace(userCompany.company.taxRates)
+    ..taskStatuses.replace(userCompany.company.taskStatuses)
+    ..taskStatusMap.replace(userCompany.company.taskStatusMap)
+    ..expenseCategories.replace(userCompany.company.expenseCategories)
+    ..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
+    ..users.replace(userCompany.company.users)
+    ..userMap.replace(userCompany.company.userMap)
+    ..customFields.replace(userCompany.company.customFields));
 
   userCompany = userCompany.rebuild((b) => b..company.replace(company));
 

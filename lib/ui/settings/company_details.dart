@@ -251,18 +251,22 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 ],
               ),
               Center(
-                child: ElevatedButton(
-                  width: 300,
-                  label: localization.uploadLogo,
-                  icon: Icons.cloud_upload,
-                  onPressed: () async {
-                    final image = await ImagePicker.pickImage(
-                        source: kReleaseMode
-                            ? ImageSource.gallery
-                            : ImageSource.camera);
-                    if (image != null) {
-                      viewModel.onUploadLogo(context, image.path);
-                    }
+                child: Builder(
+                  builder: (context) {
+                    return ElevatedButton(
+                      width: 300,
+                      label: localization.uploadLogo,
+                      icon: Icons.cloud_upload,
+                      onPressed: () async {
+                        final image = await ImagePicker.pickImage(
+                            source: kReleaseMode
+                                ? ImageSource.gallery
+                                : ImageSource.camera);
+                        if (image != null) {
+                          viewModel.onUploadLogo(context, image.path);
+                        }
+                      },
+                    );
                   },
                 ),
               ),
