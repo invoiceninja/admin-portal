@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -30,6 +31,8 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 
 part 'serializers.g.dart';
@@ -91,6 +94,8 @@ part 'serializers.g.dart';
   TaskStatusEntity,
   ExpenseStatusEntity,
   // STARTER: serializers - do not remove comment
+  GroupEntity,
+
   DocumentEntity,
 ])
 final Serializers serializers =

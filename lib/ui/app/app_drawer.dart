@@ -25,6 +25,8 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -317,6 +319,19 @@ class AppDrawer extends StatelessWidget {
                       ),
                       */
                       // STARTER: menu - do not remove comment
+DrawerTile(
+company: company,
+entityType: EntityType.group,
+icon: getEntityIcon(EntityType.group),
+title: localization.groups,
+onTap: () => store.dispatch(ViewGroupList(context)),
+onCreateTap: () {
+navigator.pop();
+store.dispatch(EditGroup(
+group: GroupEntity(), context: context));
+},
+),
+
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.cog,

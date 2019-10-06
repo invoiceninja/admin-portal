@@ -6,19 +6,19 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_state.dart';
 
-EntityUIState stubUIReducer(StubUIState state, dynamic dynamicAction) {
+EntityUIState stubUIReducer(StubUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(stubListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewStub>(
-      (int selectedId, dynamic dynamicAction) => action.stubId),
-  TypedReducer<int, AddStubSuccess>(
-      (int selectedId, dynamic dynamicAction) => action.stub.id),
-  TypedReducer<int, FilterStubsByEntity>((selectedId, action) => action.entityId == null ? selectedId : 0)
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewStub>(
+      (String selectedId, dynamic action) => action.stubId),
+  TypedReducer<String, AddStubSuccess>(
+      (String selectedId, dynamic action) => action.stub.id),
+  TypedReducer<String, FilterStubsByEntity>((selectedId, action) => action.entityId == null ? selectedId : 0)
 ]);
 
 final editingReducer = combineReducers<StubEntity>([
@@ -34,11 +34,11 @@ final editingReducer = combineReducers<StubEntity>([
   TypedReducer<StubEntity, SelectCompany>(_clearEditing),
 ]);
 
-StubEntity _clearEditing(StubEntity stub, dynamic dynamicAction) {
+StubEntity _clearEditing(StubEntity stub, dynamic action) {
   return StubEntity();
 }
 
-StubEntity _updateEditing(StubEntity stub, dynamic dynamicAction) {
+StubEntity _updateEditing(StubEntity stub, dynamic action) {
   return action.stub;
 }
 

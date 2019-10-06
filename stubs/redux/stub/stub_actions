@@ -22,7 +22,7 @@ class ViewStub implements PersistUI {
               this.force = false,
             });
 
-  final int stubId;
+  final String stubId;
   final BuildContext context;
   final bool force;
 }
@@ -32,7 +32,7 @@ class EditStub implements PersistUI {
                 {@required this.stub,
                 @required this.context,
                 this.completer,
-                this.force = false);
+                this.force = false});
 
   final StubEntity stub;
   final BuildContext context;
@@ -50,7 +50,7 @@ class LoadStub {
   LoadStub({this.completer, this.stubId, this.loadActivities = false});
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
   final bool loadActivities;
 }
 
@@ -58,7 +58,7 @@ class LoadStubActivity {
   LoadStubActivity({this.completer, this.stubId});
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
 }
 
 class LoadStubs {
@@ -146,7 +146,7 @@ class ArchiveStubRequest implements StartSaving {
   ArchiveStubRequest(this.completer, this.stubId);
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
 }
 
 class ArchiveStubSuccess implements StopSaving, PersistData {
@@ -165,7 +165,7 @@ class DeleteStubRequest implements StartSaving {
   DeleteStubRequest(this.completer, this.stubId);
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
 }
 
 class DeleteStubSuccess implements StopSaving, PersistData {
@@ -184,7 +184,7 @@ class RestoreStubRequest implements StartSaving {
   RestoreStubRequest(this.completer, this.stubId);
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
 }
 
 class RestoreStubSuccess implements StopSaving, PersistData {

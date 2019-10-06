@@ -40,13 +40,15 @@ List<Middleware<AppState>> createStoreStubsMiddleware([
 
 Middleware<AppState> _editStub() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
-    next(action);
+
+    final action = dynamicAction as EditStub;
 
     if (hasChanges(
         store: store, context: action.context, force: action.force)) {
       return;
     }
 
+    next(action);
 
     store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
 
@@ -63,6 +65,15 @@ Middleware<AppState> _editStub() {
 
 Middleware<AppState> _viewStub() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+
+      final action = dynamicAction as ViewStub;
+
+      if (hasChanges(
+          store: store, context: action.context, force: action.force)) {
+        return;
+      }
+
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
@@ -96,6 +107,7 @@ Middleware<AppState> _viewStubList() {
 
 Middleware<AppState> _archiveStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+  final action = dynamicAction as ArchiveStubRequest;
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.credentials,
@@ -119,6 +131,7 @@ Middleware<AppState> _archiveStub(StubRepository repository) {
 
 Middleware<AppState> _deleteStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteStubRequest;
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.credentials,
@@ -142,6 +155,7 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
 
 Middleware<AppState> _restoreStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+  final action = dynamicAction as RestoreStubRequest;
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.credentials,
@@ -165,6 +179,7 @@ Middleware<AppState> _restoreStub(StubRepository repository) {
 
 Middleware<AppState> _saveStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveStubRequest;
     repository
         .saveData(
             store.state.credentials, action.stub)
@@ -187,6 +202,7 @@ Middleware<AppState> _saveStub(StubRepository repository) {
 
 Middleware<AppState> _loadStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+  final action = dynamicAction as LoadStub;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -217,6 +233,7 @@ Middleware<AppState> _loadStub(StubRepository repository) {
 
 Middleware<AppState> _loadStubs(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+  final action = dynamicAction as LoadStubs;
     final AppState state = store.state;
 
     if (!state.stubState.isStale && !action.force) {

@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
@@ -8,6 +9,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
@@ -41,6 +44,7 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+      groupState: GroupState(),
     );
   }
 
@@ -72,6 +76,7 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+  GroupState get groupState;
 
   CompanyEntity get company => userCompany.company;
 

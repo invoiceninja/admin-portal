@@ -297,10 +297,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: routes - do not remove comment"
-    code="${Module}Screen.route: (context) {${lineBreak}"
-    code="${code}widget.store.dispatch(Load${Module}s());${lineBreak}"
-    code="${code}return ${Module}Screen();${lineBreak}"
-    code="${code}},${lineBreak}"
+    code="${Module}Screen.route: (context) => ${Module}Screen(),${lineBreak}"
     code="${code}${Module}ViewScreen.route: (context) => ${Module}ViewScreen(),${lineBreak}"
     code="${code}${Module}EditScreen.route: (context) => ${Module}EditScreen(),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart

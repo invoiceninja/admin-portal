@@ -52,7 +52,13 @@ import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
 
 void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
@@ -92,6 +98,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreGroupsMiddleware())
         ..addAll(isTesting
             ? []
             : [
@@ -306,6 +313,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
+            GroupScreen.route: (context) => GroupScreen(),
+            GroupViewScreen.route: (context) => GroupViewScreen(),
+            GroupEditScreen.route: (context) => GroupEditScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
             UserDetailsScreen.route: (context) => UserDetailsScreen(),
@@ -317,7 +327,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 NotificationsSettingsScreen(),
             ImportExportScreen.route: (context) => ImportExportScreen(),
             DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
-            GroupSettingsScreen.route: (context) GroupSettingsScreen(),
             InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),
             InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
             ClientPortalScreen.route: (context) => ClientPortalScreen(),

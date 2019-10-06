@@ -21,6 +21,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
@@ -139,6 +141,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+case EntityType.group:
+return groupUIState;
+
       case EntityType.document:
         return documentUIState;
       case EntityType.expense:
@@ -181,6 +186,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+GroupState get groupState => selectedCompanyState.groupState;
+ListUIState get groupListState => uiState.groupUIState.listUIState;
+GroupUIState get groupUIState => uiState.groupUIState;
+
+
   DocumentState get documentState => selectedCompanyState.documentState;
 
   ListUIState get documentListState => uiState.documentUIState.listUIState;

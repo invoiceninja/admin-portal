@@ -46,6 +46,7 @@ class EntityAction extends EnumClass {
   static const EntityAction download = _$download;
   static const EntityAction sendEmail = _$sendEmail;
   static const EntityAction markSent = _$markSent;
+  static const EntityAction newClient = _$newClient;
   static const EntityAction newInvoice = _$newInvoice;
   static const EntityAction newExpense = _$newExpense;
   static const EntityAction newTask = _$newTask;

@@ -744,22 +744,3 @@ abstract class CompanyItemResponse
   static Serializer<CompanyItemResponse> get serializer =>
       _$companyItemResponseSerializer;
 }
-
-abstract class GroupEntity extends Object
-    with BaseEntity, SelectableEntity
-    implements Built<GroupEntity, GroupEntityBuilder> {
-  factory GroupEntity() {
-    return _$GroupEntity._(
-      name: '',
-      settings: SettingsEntity(),
-    );
-  }
-
-  GroupEntity._();
-
-  String get name;
-
-  SettingsEntity get settings;
-
-  static Serializer<GroupEntity> get serializer => _$groupEntitySerializer;
-}

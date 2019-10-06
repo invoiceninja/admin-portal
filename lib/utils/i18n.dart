@@ -14,6 +14,12 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'new_group': 'New Group',
+      'created_group': 'Successfully created group',
+      'updated_group': 'Successfully updated group',
+      'archived_group': 'Successfully archived group',
+      'deleted_group': 'Successfully deleted group',
+      'restored_group': 'Successfully restored group',
       'upload_logo': 'Upload Logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
@@ -14687,6 +14693,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get uploadLogo => _localizedValues[localeCode]['upload_logo'];
 
   String get uploadedLogo => _localizedValues[localeCode]['uploaded_logo'];
+
+  String get newGroup => _localizedValues[localeCode]['new_group'];
+
+  String get createdGroup => _localizedValues[localeCode]['created_group'];
+
+  String get updatedGroup => _localizedValues[localeCode]['updated_group'];
+
+  String get archivedGroup => _localizedValues[localeCode]['archived_group'];
+
+  String get deletedGroup => _localizedValues[localeCode]['deleted_group'];
+
+  String get restoredGroup => _localizedValues[localeCode]['restored_group'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

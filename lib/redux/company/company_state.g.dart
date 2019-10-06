@@ -55,6 +55,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'groupState',
+      serializers.serialize(object.groupState,
+          specifiedType: const FullType(GroupState)),
     ];
     if (object.userCompany != null) {
       result
@@ -125,6 +128,10 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'groupState':
+          result.groupState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupState)) as GroupState);
           break;
       }
     }
@@ -243,6 +250,8 @@ class _$UserCompanyState extends UserCompanyState {
   final PaymentState paymentState;
   @override
   final QuoteState quoteState;
+  @override
+  final GroupState groupState;
 
   factory _$UserCompanyState(
           [void Function(UserCompanyStateBuilder) updates]) =>
@@ -260,7 +269,8 @@ class _$UserCompanyState extends UserCompanyState {
       this.taskState,
       this.projectState,
       this.paymentState,
-      this.quoteState})
+      this.quoteState,
+      this.groupState})
       : super._() {
     if (documentState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
@@ -295,6 +305,9 @@ class _$UserCompanyState extends UserCompanyState {
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
     }
+    if (groupState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'groupState');
+    }
   }
 
   @override
@@ -320,7 +333,8 @@ class _$UserCompanyState extends UserCompanyState {
         taskState == other.taskState &&
         projectState == other.projectState &&
         paymentState == other.paymentState &&
-        quoteState == other.quoteState;
+        quoteState == other.quoteState &&
+        groupState == other.groupState;
   }
 
   @override
@@ -335,18 +349,22 @@ class _$UserCompanyState extends UserCompanyState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, userCompany.hashCode),
-                                                documentState.hashCode),
-                                            dashboardState.hashCode),
-                                        productState.hashCode),
-                                    clientState.hashCode),
-                                invoiceState.hashCode),
-                            expenseState.hashCode),
-                        vendorState.hashCode),
-                    taskState.hashCode),
-                projectState.hashCode),
-            paymentState.hashCode),
-        quoteState.hashCode));
+                                            $jc(
+                                                $jc(
+                                                    $jc(0,
+                                                        userCompany.hashCode),
+                                                    documentState.hashCode),
+                                                dashboardState.hashCode),
+                                            productState.hashCode),
+                                        clientState.hashCode),
+                                    invoiceState.hashCode),
+                                expenseState.hashCode),
+                            vendorState.hashCode),
+                        taskState.hashCode),
+                    projectState.hashCode),
+                paymentState.hashCode),
+            quoteState.hashCode),
+        groupState.hashCode));
   }
 
   @override
@@ -363,7 +381,8 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('taskState', taskState)
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
-          ..add('quoteState', quoteState))
+          ..add('quoteState', quoteState)
+          ..add('groupState', groupState))
         .toString();
   }
 }
@@ -443,6 +462,12 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  GroupStateBuilder _groupState;
+  GroupStateBuilder get groupState =>
+      _$this._groupState ??= new GroupStateBuilder();
+  set groupState(GroupStateBuilder groupState) =>
+      _$this._groupState = groupState;
+
   UserCompanyStateBuilder();
 
   UserCompanyStateBuilder get _$this {
@@ -459,6 +484,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _groupState = _$v.groupState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -494,7 +520,8 @@ class UserCompanyStateBuilder
               taskState: taskState.build(),
               projectState: projectState.build(),
               paymentState: paymentState.build(),
-              quoteState: quoteState.build());
+              quoteState: quoteState.build(),
+              groupState: groupState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -522,6 +549,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'groupState';
+        groupState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyState', _$failedField, e.toString());

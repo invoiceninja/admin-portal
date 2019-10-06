@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
   if (action is RefreshData && action.loadCompanies) {
@@ -33,11 +34,11 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..expenseState.replace(expensesReducer(state.expenseState, action))
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
+    // STARTER: reducer - do not remove comment
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
-    ..quoteState.replace(quotesReducer(state.quoteState, action)));
-
-  // STARTER: reducer - do not remove comment
+    ..quoteState.replace(quotesReducer(state.quoteState, action))
+    ..groupState.replace(groupsReducer(state.groupState, action)));
 }
 
 Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
