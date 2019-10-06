@@ -162,7 +162,9 @@ abstract class BaseEntity implements SelectableEntity {
       bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (userCompany.canEditEntity(this) && (isArchived || isDeleted)) {
+    // TODO remove ?? check
+    if (userCompany.canEditEntity(this) &&
+        (isArchived || (isDeleted ?? false))) {
       actions.add(EntityAction.restore);
     }
 

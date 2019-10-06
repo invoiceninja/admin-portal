@@ -130,7 +130,8 @@ abstract class GroupEntity extends Object
       bool includeEdit = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
+    // TODO remove ??
+    if (!(isDeleted ?? false)) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
