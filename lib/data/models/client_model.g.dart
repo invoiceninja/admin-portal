@@ -206,6 +206,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
     ];
+    if (object.groupId != null) {
+      result
+        ..add('group_id')
+        ..add(serializers.serialize(object.groupId,
+            specifiedType: const FullType(String)));
+    }
     if (object.lastUpdatedActivities != null) {
       result
         ..add('lastUpdatedActivities')
@@ -304,6 +310,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'group_id':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'lastUpdatedActivities':
           result.lastUpdatedActivities = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -862,6 +872,8 @@ class ClientItemResponseBuilder
 
 class _$ClientEntity extends ClientEntity {
   @override
+  final String groupId;
+  @override
   final int lastUpdatedActivities;
   @override
   final String name;
@@ -956,7 +968,8 @@ class _$ClientEntity extends ClientEntity {
       (new ClientEntityBuilder()..update(updates)).build();
 
   _$ClientEntity._(
-      {this.lastUpdatedActivities,
+      {this.groupId,
+      this.lastUpdatedActivities,
       this.name,
       this.displayName,
       this.balance,
@@ -1109,6 +1122,7 @@ class _$ClientEntity extends ClientEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ClientEntity &&
+        groupId == other.groupId &&
         lastUpdatedActivities == other.lastUpdatedActivities &&
         name == other.name &&
         displayName == other.displayName &&
@@ -1176,7 +1190,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode), shippingAddress1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode), shippingAddress1.hashCode),
                                                                                 shippingAddress2.hashCode),
                                                                             shippingCity.hashCode),
                                                                         shippingState.hashCode),
@@ -1201,6 +1215,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientEntity')
+          ..add('groupId', groupId)
           ..add('lastUpdatedActivities', lastUpdatedActivities)
           ..add('name', name)
           ..add('displayName', displayName)
@@ -1253,6 +1268,10 @@ class _$ClientEntity extends ClientEntity {
 class ClientEntityBuilder
     implements Builder<ClientEntity, ClientEntityBuilder> {
   _$ClientEntity _$v;
+
+  String _groupId;
+  String get groupId => _$this._groupId;
+  set groupId(String groupId) => _$this._groupId = groupId;
 
   int _lastUpdatedActivities;
   int get lastUpdatedActivities => _$this._lastUpdatedActivities;
@@ -1453,6 +1472,7 @@ class ClientEntityBuilder
 
   ClientEntityBuilder get _$this {
     if (_$v != null) {
+      _groupId = _$v.groupId;
       _lastUpdatedActivities = _$v.lastUpdatedActivities;
       _name = _$v.name;
       _displayName = _$v.displayName;
@@ -1522,6 +1542,7 @@ class ClientEntityBuilder
     try {
       _$result = _$v ??
           new _$ClientEntity._(
+              groupId: groupId,
               lastUpdatedActivities: lastUpdatedActivities,
               name: name,
               displayName: displayName,

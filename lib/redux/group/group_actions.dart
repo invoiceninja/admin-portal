@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -244,6 +245,11 @@ void handleGroupAction(
   switch (action) {
     case EntityAction.edit:
       store.dispatch(EditGroup(context: context, group: group));
+      break;
+    case EntityAction.newClient:
+      store.dispatch(EditClient(
+          context: context,
+          client: ClientEntity().rebuild((b) => b..groupId = group.id)));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreGroupRequest(

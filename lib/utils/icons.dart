@@ -31,6 +31,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newInvoice:
     case EntityAction.newExpense:
     case EntityAction.newTask:
+    case EntityAction.newClient:
     case EntityAction.enterPayment:
       return Icons.add_circle_outline;
     case EntityAction.resume:
