@@ -251,35 +251,38 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
-              Column(
-                children: <Widget>[
-                  if (settings.logoUrl != null && settings.logoUrl.isNotEmpty)
-                    Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: CachedImage(
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  children: <Widget>[
+                    if (settings.logoUrl != null && settings.logoUrl.isNotEmpty)
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 30),
+                          child: CachedImage(
+                            width: double.infinity,
+                            url: settings.logoUrl,
+                            //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
+                          )),
+                    Builder(
+                      builder: (context) {
+                        return ElevatedButton(
                           width: double.infinity,
-                          url: settings.logoUrl,
-                          //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
-                        )),
-                  Builder(
-                    builder: (context) {
-                      return ElevatedButton(
-                        width: 300,
-                        label: localization.uploadLogo,
-                        icon: Icons.cloud_upload,
-                        onPressed: () async {
-                          final image = await ImagePicker.pickImage(
-                              source: kReleaseMode
-                                  ? ImageSource.gallery
-                                  : ImageSource.camera);
-                          if (image != null) {
-                            viewModel.onUploadLogo(context, image.path);
-                          }
-                        },
-                      );
-                    },
-                  )
-                ],
+                          label: localization.uploadLogo,
+                          icon: Icons.cloud_upload,
+                          onPressed: () async {
+                            final image = await ImagePicker.pickImage(
+                                source: kReleaseMode
+                                    ? ImageSource.gallery
+                                    : ImageSource.camera);
+                            if (image != null) {
+                              viewModel.onUploadLogo(context, image.path);
+                            }
+                          },
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
               ListView(
                 children: <Widget>[
