@@ -1,4 +1,6 @@
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +31,10 @@ class GroupListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final groupUIState = uiState.groupUIState;
+
     final filterMatch = filter != null && filter.isNotEmpty
         ? group.matchesFilterValue(filter)
         : null;
@@ -36,6 +42,10 @@ class GroupListItem extends StatelessWidget {
 
     return DismissibleEntity(
       entity: group,
+      isSelected: group.id ==
+          (uiState.isEditing
+              ? groupUIState.editing.id
+              : groupUIState.selectedId),
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,
