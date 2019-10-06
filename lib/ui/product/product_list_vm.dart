@@ -67,7 +67,7 @@ class ProductListVM {
       onProductTap: (context, product) {
         store.dispatch(ViewProduct(productId: product.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<ProductEntity> products,
+      onEntityAction: (BuildContext context, List<BaseEntity> products,
               EntityAction action) =>
           handleProductAction(context, products, action),
       onRefreshed: (context) => _handleRefresh(context),
@@ -82,6 +82,6 @@ class ProductListVM {
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<ProductEntity>, EntityAction)
+  final Function(BuildContext, List<BaseEntity>, EntityAction)
       onEntityAction;
 }

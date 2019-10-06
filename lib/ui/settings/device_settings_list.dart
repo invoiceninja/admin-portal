@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -80,6 +80,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       activeColor: Theme.of(context).accentColor,
                     )
                   : SizedBox(),
+              SwitchListTile(
+                title: Text(
+                    AppLocalization.of(context).longPressSelectionIsDefault),
+                value: widget.viewModel.longPressSelectionIsDefault,
+                onChanged: (value) => widget.viewModel
+                    .onLongPressSelectionIsDefault(context, value),
+                secondary: Icon(FontAwesomeIcons.checkSquare),
+                activeColor: Theme.of(context).accentColor,
+              ),
               ListTile(
                 leading: Icon(FontAwesomeIcons.syncAlt),
                 title: Text(AppLocalization.of(context).refreshData),

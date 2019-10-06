@@ -60,8 +60,8 @@ class ClientRepository {
         if (action != null) {
           url += '&action=' + action.toString();
         }
-        response =
-            await webClient.put(url, credentials.token, json.encode([ids]));
+        response = await webClient.put(url, credentials.token,
+            data: json.encode([ids]));
         break;
       default:
         // Might have other actions in the future
@@ -84,10 +84,7 @@ class ClientRepository {
           credentials.url + '/clients?include=activities', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/clients/${client.id}?include=activities';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      final url = credentials.url + '/clients/${client.id}?include=activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

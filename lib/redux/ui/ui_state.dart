@@ -30,6 +30,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     CompanyEntity company, {
     bool enableDarkMode,
     bool requireAuthentication,
+    bool longPressSelectionIsDefault,
     AppLayout layout,
     bool isTesting,
   }) {
