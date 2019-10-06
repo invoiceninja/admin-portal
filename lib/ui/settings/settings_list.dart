@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -17,6 +18,9 @@ class SettingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = viewModel.state;
+    final showAll =
+        state.uiState.settingsUIState.entityType == EntityType.company;
 
     return ListView(
       children: <Widget>[
@@ -33,11 +37,12 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.building,
         ),
-        SettingsListTile(
-          section: kSettingsUserDetails,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.user,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsUserDetails,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.user,
+          ),
         SettingsListTile(
           section: kSettingsLocalization,
           viewModel: viewModel,
@@ -58,21 +63,24 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.cube,
         ),
-        SettingsListTile(
-          section: kSettingsNotifications,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.bell,
-        ),
-        SettingsListTile(
-          section: kSettingsImportExport,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.fileExport,
-        ),
-        SettingsListTile(
-          section: kSettingsDeviceSettings,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.cogs,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsNotifications,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.bell,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsImportExport,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.fileExport,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsDeviceSettings,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.cogs,
+          ),
         Container(
           color: Theme.of(context).backgroundColor,
           padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
@@ -81,11 +89,12 @@ class SettingsList extends StatelessWidget {
             style: Theme.of(context).textTheme.title,
           ),
         ),
-        SettingsListTile(
-          section: kSettingsGroupSettings,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.tags,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsGroupSettings,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.tags,
+          ),
         SettingsListTile(
           section: kSettingsInvoiceSettings,
           viewModel: viewModel,
@@ -96,16 +105,18 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.paintBrush,
         ),
-        SettingsListTile(
-          section: kSettingsClientPortal,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.cloud,
-        ),
-        SettingsListTile(
-          section: kSettingsBuyNowButtons,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.link,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsClientPortal,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.cloud,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsBuyNowButtons,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.link,
+          ),
         SettingsListTile(
           section: kSettingsEmailSettings,
           viewModel: viewModel,

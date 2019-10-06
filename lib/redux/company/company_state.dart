@@ -126,13 +126,13 @@ abstract class SettingsUIState extends Object
   String get section;
 
   SettingsEntity get settings {
-    switch (entityType) {
-      case EntityType.client:
-        return null;
-      case EntityType.group:
-        return group.settings;
-      default:
-        return userCompany.company.settings;
+    if (entityType == EntityType.client && client != null) {
+      return userCompany
+          .company.settings; // TODO fix this, change to client.settings
+    } else if (entityType == EntityType.group && group != null) {
+      return group.settings;
+    } else {
+      return userCompany.company.settings;
     }
   }
 
