@@ -62,6 +62,7 @@ class ClientList extends StatelessWidget {
                                 onEntityAction: viewModel.onEntityAction);
 
                             return ClientListItem(
+                              user: state.user,
                               filter: viewModel.filter,
                               client: client,
                               onTap: () =>

@@ -60,7 +60,6 @@ class WebClient {
       {dynamic data, String filePath, String fileIndex = 'file'}) async {
     url = _checkUrl(url);
     print('PUT: $url');
-    print('Data: $data');
 
     http.Response response;
 
