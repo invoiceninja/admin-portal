@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -59,6 +60,39 @@ List<String> filteredGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
   });
 
   return list;
+}
+
+var memoizedClientStatsForGroup = memo4(
+    (BuiltMap<String, ClientEntity> clientMap, String groupId,
+            String activeLabel, String archivedLabel) =>
+        clientStatsForGroup(clientMap, groupId, activeLabel, archivedLabel));
+
+String clientStatsForGroup(BuiltMap<String, ClientEntity> clientMap,
+    String groupId, String activeLabel, String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  clientMap.forEach((clientId, client) {
+    if (client.groupId == groupId) {
+      if (client.isActive) {
+        countActive++;
+      } else if (client.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
 }
 
 bool hasGroupChanges(

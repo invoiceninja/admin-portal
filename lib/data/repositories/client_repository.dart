@@ -49,7 +49,6 @@ class ClientRepository {
 
   Future<ClientEntity> saveData(Credentials credentials, ClientEntity client,
       [EntityAction action]) async {
-    print('## GROUP: ${client.groupId}');
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;
 

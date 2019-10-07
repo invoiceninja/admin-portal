@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
@@ -29,7 +30,8 @@ class _GroupViewState extends State<GroupView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
+    final state = viewModel.state;
+    final userCompany = state.userCompany;
     final group = viewModel.group;
 
     return Scaffold(
@@ -71,14 +73,8 @@ class _GroupViewState extends State<GroupView> {
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),
-            /*
-            subtitle: memoizedPaymentStatsForClient(
-                client.id,
-                state.paymentState.map,
-                state.invoiceState.map,
-                localization.active,
-                localization.archived),
-             */
+            subtitle: memoizedClientStatsForGroup(state.clientState.map,
+                group.id, localization.active, localization.archived),
           ),
           Container(
             color: Theme.of(context).backgroundColor,

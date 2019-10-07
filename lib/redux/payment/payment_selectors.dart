@@ -105,10 +105,10 @@ var memoizedPaymentStatsForClient = memo5((String clientId,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         String activeLabel,
         String archivedLabel) =>
-    invoiceStatsForClient(
+    paymentStatsForClient(
         clientId, paymentMap, invoiceMap, activeLabel, archivedLabel));
 
-String invoiceStatsForClient(
+String paymentStatsForClient(
     String clientId,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
