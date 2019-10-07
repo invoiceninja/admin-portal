@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'timezone': 'Timezone',
       'filtered_by_group': 'Filtered by Group',
       'filtered_by_client': 'Filtered by Client',
       'group_settings': 'Group Settings',
@@ -14725,6 +14726,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['filtered_by_client'];
 
   String get group => _localizedValues[localeCode]['group'];
+
+  String get timezone => _localizedValues[localeCode]['timezone'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

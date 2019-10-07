@@ -729,6 +729,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
   bool get hasCustomDesign3;
 
+  bool get hasAddress => address1 != null && address1.isNotEmpty;
+
+  bool get hasLogo => logoUrl != null && logoUrl.isNotEmpty;
+
+  bool get hasTimezone => timezoneId != null && timezoneId.isNotEmpty;
+
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {
     if (invoiceFields != null && invoiceFields.isNotEmpty) {

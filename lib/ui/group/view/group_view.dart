@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
@@ -9,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -80,8 +83,39 @@ class _GroupViewState extends State<GroupView> {
             color: Theme.of(context).backgroundColor,
             height: 12.0,
           ),
+          SettingsViewer(
+            settings: group.settings,
+            state: state,
+          )
         ],
       ),
     );
+  }
+}
+
+class SettingsViewer extends StatelessWidget {
+  const SettingsViewer({this.settings, this.state});
+
+  final SettingsEntity settings;
+  final AppState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return FieldGrid({
+      localization.name: settings.name,
+      localization.address:
+          settings.hasAddress ? formatAddress(object: settings) : null,
+      localization.phone: settings.phone,
+      localization.email: settings.email,
+      localization.logo: settings.hasLogo ? localization.enabled : null,
+      localization.idNumber: settings.idNumber,
+      localization.vatNumber: settings.vatNumber,
+      localization.website: settings.website,
+      localization.timezone: settings.hasTimezone
+          ? state.staticState.timezoneMap[settings.timezoneId]?.name
+          : null,
+    });
   }
 }
