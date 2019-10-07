@@ -208,7 +208,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
     ];
     if (object.groupId != null) {
       result
-        ..add('group_id')
+        ..add('group_setting_id')
         ..add(serializers.serialize(object.groupId,
             specifiedType: const FullType(String)));
     }
@@ -310,7 +310,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'group_id':
+        case 'group_setting_id':
           result.groupId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;

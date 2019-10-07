@@ -46,8 +46,7 @@ class LocalizationSettingsVM {
         onChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onCancelPressed: (context) =>
-            store.dispatch(ResetCompany(company: state.selectedCompany)),
+        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).savedSettings);

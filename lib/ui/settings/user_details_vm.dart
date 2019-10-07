@@ -43,8 +43,7 @@ class UserDetailsVM {
         state: state,
         user: state.uiState.settingsUIState.userCompany.user,
         onChanged: (user) => store.dispatch(UpdateUser(user: user)),
-        onCancelPressed: (context) =>
-            store.dispatch(ResetUser(user: state.user)),
+        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).savedSettings);

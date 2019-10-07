@@ -95,6 +95,9 @@ abstract class SettingsUIState extends Object
       {UserCompanyEntity userCompany,
       ClientEntity client,
       GroupEntity group,
+      UserCompanyEntity origUserCompany,
+      ClientEntity origClient,
+      GroupEntity origGroup,
       String section}) {
     return _$SettingsUIState._(
       userCompany: userCompany ?? UserCompanyEntity(),
@@ -103,6 +106,9 @@ abstract class SettingsUIState extends Object
       entityType: client != null
           ? EntityType.client
           : group != null ? EntityType.group : EntityType.company,
+      origClient: origClient ?? ClientEntity(),
+      origGroup: origGroup ?? GroupEntity(),
+      origUserCompany: origUserCompany ?? UserCompanyEntity(),
       isChanged: false,
       updatedAt: 0,
       section: section ?? kSettingsCompanyDetails,
@@ -113,9 +119,15 @@ abstract class SettingsUIState extends Object
 
   UserCompanyEntity get userCompany;
 
+  UserCompanyEntity get origUserCompany;
+
   ClientEntity get client;
 
+  ClientEntity get origClient;
+
   GroupEntity get group;
+
+  GroupEntity get origGroup;
 
   EntityType get entityType;
 

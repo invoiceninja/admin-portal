@@ -24,20 +24,9 @@ class ViewSettings implements PersistUI {
   final String section;
 }
 
-class ClearSettingsFilter {
-  ClearSettingsFilter({@required this.userCompany});
-  final UserCompanyEntity userCompany;
-}
+class ClearSettingsFilter {}
 
-class ResetCompany {
-  ResetCompany({@required this.company});
-  final CompanyEntity company;
-}
-
-class ResetUser {
-  ResetUser({@required this.user});
-  final UserEntity user;
-}
+class ResetSettings {}
 
 class UpdateCompany {
   UpdateCompany({@required this.company});

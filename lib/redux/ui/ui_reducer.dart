@@ -172,14 +172,17 @@ int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
     return state.rebuild((b) => b
-      ..userCompany.replace(action.userCompany ?? state.userCompany)
+      ..userCompany.replace(state.origUserCompany)
       ..entityType = EntityType.company);
   }),
   TypedReducer<SettingsUIState, ViewSettings>((state, action) {
     return state.rebuild((b) => b
       ..userCompany.replace(action.userCompany ?? state.userCompany)
+      ..origUserCompany.replace(action.userCompany ?? state.origUserCompany)
       ..group.replace(action.group ?? state.group)
+      ..origGroup.replace(action.group ?? state.origGroup)
       ..client.replace(action.client ?? state.client)
+      ..origClient.replace(action.client ?? state.origClient)
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null ? EntityType.group : state.entityType);
@@ -210,15 +213,11 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..userCompany.user.replace(action.user)
       ..isChanged = true);
   }),
-  TypedReducer<SettingsUIState, ResetCompany>((state, action) {
+  TypedReducer<SettingsUIState, ResetSettings>((state, action) {
     return state.rebuild((b) => b
-      ..userCompany.company.replace(action.company)
-      ..isChanged = false
-      ..updatedAt = DateTime.now().millisecondsSinceEpoch);
-  }),
-  TypedReducer<SettingsUIState, ResetUser>((state, action) {
-    return state.rebuild((b) => b
-      ..userCompany.user.replace(action.user)
+      ..userCompany.replace(state.origUserCompany)
+      ..group.replace(state.origGroup)
+      ..client.replace(state.origClient)
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
