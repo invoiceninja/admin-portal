@@ -12,10 +12,10 @@ import 'app_drawer_vm.dart';
 class AppScaffold extends StatelessWidget {
   const AppScaffold(
       {@required this.appBarTitle,
-      @required this.appBarActions,
       @required this.body,
-      @required this.bottomNavigationBar,
-      @required this.floatingActionButton,
+      this.appBarActions,
+      this.bottomNavigationBar,
+      this.floatingActionButton,
       this.hideHamburgerButton = false});
 
   final Widget body;
