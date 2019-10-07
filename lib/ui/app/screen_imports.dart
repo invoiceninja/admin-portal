@@ -2,7 +2,6 @@ export 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 export 'package:invoiceninja_flutter/ui/client/client_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 export 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-export 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 export 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 export 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 export 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';

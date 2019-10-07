@@ -25,6 +25,7 @@ class ClientList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final listState = viewModel.state.clientListState;
@@ -57,65 +58,70 @@ class ClientList extends StatelessWidget {
                             final client =
                                 viewModel.clientMap[clientId] ?? ClientEntity();
 
-    final isInMultiselect = store.state.clientListState.isInMultiselect();
+                            final isInMultiselect =
+                                state.clientListState.isInMultiselect();
 
-            // Add header
-            if (index == 0 && isInMultiselect) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Checkbox(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        onChanged: (value) =>
-                            _toggleSelectionForAll(store, context),
-                        activeColor: Theme.of(context).accentColor,
-                        value: listUIState.selectedEntities.length ==
-                            viewModel.clientList.length),
-                  ),
-                ],
-              );
-            }
+                            // Add header
+                            if (index == 0 && isInMultiselect) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 20.0),
+                                    child: Checkbox(
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        onChanged: (value) =>
+                                            _toggleSelectionForAll(
+                                                store, context),
+                                        activeColor:
+                                            Theme.of(context).accentColor,
+                                        value: state.clientListState
+                                                .selectedEntities.length ==
+                                            viewModel.clientList.length),
+                                  ),
+                                ],
+                              );
+                            }
 
-            if (isInMultiselect) {
-              index--;
-            }
+                            if (isInMultiselect) {
+                              index--;
+                            }
+                            final userCompany = viewModel.state.userCompany;
 
-            final clientId = viewModel.clientList[index];
-            final client = viewModel.clientMap[clientId];
-            final userCompany = viewModel.state.userCompany;
+                            void showDialog() => showEntityActionsDialog(
+                                entities: [client],
+                                context: context,
+                                userCompany: userCompany,
+                                onEntityAction: viewModel.onEntityAction);
 
-            void showDialog() => showEntityActionsDialog(
-                entities: [client],
-                context: context,
-                userCompany: userCompany,
-                onEntityAction: viewModel.onEntityAction);
-
-            return ClientListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                client: client,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    viewModel.onEntityAction(context, [client], action);
-                  }
-                },
-                onTap: () => viewModel.onClientTap(context, client),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      store.state.uiState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection) {
-                    viewModel.onEntityAction(
-                        context, [client], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                        }
+                            return ClientListItem(
+                              user: viewModel.state.user,
+                              filter: viewModel.filter,
+                              client: client,
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  showDialog();
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, [client], action);
+                                }
+                              },
+                              onTap: () =>
+                                  viewModel.onClientTap(context, client),
+                              onLongPress: () async {
+                                final longPressIsSelection = store.state.uiState
+                                        .longPressSelectionIsDefault ??
+                                    true;
+                                if (longPressIsSelection) {
+                                  viewModel.onEntityAction(context, [client],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
                             );
-                          },
-                        ),
+                          }),
                 ),
         ),
       ],

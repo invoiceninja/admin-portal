@@ -197,40 +197,45 @@ class FilterProductDropdown {
 
 void handleProductAction(
     BuildContext context, List<BaseEntity> products, EntityAction action) {
+  assert(
+      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
+              .contains(action) ||
+          products.length == 1,
+      'Cannot perform this action on more than one product');
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
+  final product = products[0];
 
   switch (action) {
     case EntityAction.newInvoice:
       final item =
-          convertProductToInvoiceItem(context: context, product: products[0]);
+          convertProductToInvoiceItem(context: context, product: product);
       store.dispatch(EditInvoice(
           context: context,
           invoice: InvoiceEntity(company: state.selectedCompany)
               .rebuild((b) => b..invoiceItems.add(item))));
       break;
     case EntityAction.edit:
-      store.dispatch(EditProduct(context: context, product: products[0]));
+      store.dispatch(EditProduct(context: context, product: product));
       break;
     case EntityAction.clone:
       store.dispatch(EditProduct(
-          context: context, product: (products[0] as ProductEntity).clone));
+          context: context, product: (product as ProductEntity).clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(
           snackBarCompleter(context, localization.restoredProduct),
-          products[0].id));
+          product.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProductRequest(
           snackBarCompleter(context, localization.archivedProduct),
-          products[0].id));
+          product.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProductRequest(
-          snackBarCompleter(context, localization.deletedProduct),
-          products[0].id));
+          snackBarCompleter(context, localization.deletedProduct), product.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
@@ -241,7 +246,7 @@ void handleProductAction(
         break;
       }
 
-      final select = !store.state.productListState.isSelected(products[0]);
+      final select = !store.state.productListState.isSelected(product);
       for (final product in products) {
         if (select) {
           store.dispatch(AddToMultiselect(context: context, entity: product));

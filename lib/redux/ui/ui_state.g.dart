@@ -543,8 +543,8 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode),
-                                                                                enableDarkMode.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode),
+                                                                                longPressSelectionIsDefault.hashCode),
                                                                             requireAuthentication.hashCode),
                                                                         emailPayment.hashCode),
                                                                     autoStartTasks.hashCode),

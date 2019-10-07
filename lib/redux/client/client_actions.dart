@@ -280,27 +280,28 @@ void handleClientAction(
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
   final clientIds = clients.map((client) => client.id).toList();
+  final client = clients[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditClient(context: context, client: clients[0]));
+      store.dispatch(EditClient(context: context, client: client));
       break;
     case EntityAction.newInvoice:
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company)
-              .rebuild((b) => b.clientId = clients[0].id),
+              .rebuild((b) => b.clientId = client.id),
           context: context));
       break;
     case EntityAction.newExpense:
       store.dispatch(EditExpense(
           expense: ExpenseEntity(
-              company: company, client: clients[0], uiState: state.uiState),
+              company: company, client: client, uiState: state.uiState),
           context: context));
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
           payment: PaymentEntity(company: company)
-              .rebuild((b) => b.clientId = clients[0].id),
+              .rebuild((b) => b.clientId = client.id),
           context: context));
       break;
     case EntityAction.restore:
@@ -324,7 +325,7 @@ void handleClientAction(
         break;
       }
 
-      final select = !store.state.clientListState.isSelected(clients[0]);
+      final select = !store.state.clientListState.isSelected(client);
       for (final client in clients) {
         if (select) {
           store.dispatch(AddToMultiselect(context: context, entity: client));

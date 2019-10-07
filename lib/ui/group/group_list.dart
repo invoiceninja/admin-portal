@@ -47,7 +47,7 @@ class GroupList extends StatelessWidget {
 
                             void showDialog() => showEntityActionsDialog(
                                 userCompany: userCompany,
-                                entity: group,
+                                entities: [group],
                                 context: context,
                                 onEntityAction: viewModel.onEntityAction);
 
@@ -61,7 +61,7 @@ class GroupList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, group, action);
+                                      context, [group], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

@@ -1,20 +1,21 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/group/view/group_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/view/group_view.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/redux.dart';
 
 class GroupViewScreen extends StatelessWidget {
   const GroupViewScreen({Key key}) : super(key: key);
@@ -85,10 +86,10 @@ class GroupViewVM {
           store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
-            handleGroupAction(context, group, action),
+            handleGroupAction(context, [group], action),
         onClientsPressed: (context, [longPress = false]) {
           if (longPress) {
-            handleGroupAction(context, group, EntityAction.newClient);
+            handleGroupAction(context, [group], EntityAction.newClient);
           } else {
             store.dispatch(FilterClientsByEntity(
                 entityId: group.id, entityType: EntityType.group));
