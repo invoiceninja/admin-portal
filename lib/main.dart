@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';

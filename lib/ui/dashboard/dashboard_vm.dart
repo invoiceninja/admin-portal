@@ -17,8 +17,9 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
-class DashboardBuilder extends StatelessWidget {
-  const DashboardBuilder({Key key}) : super(key: key);
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({Key key}) : super(key: key);
+  static const String route = '/dashboard';
 
   @override
   Widget build(BuildContext context) {
