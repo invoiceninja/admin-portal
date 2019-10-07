@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -41,6 +42,8 @@ class ClientListVM {
     @required this.onClientTap,
     @required this.onRefreshed,
     @required this.onEntityAction,
+    @required this.onClearEntityFilterPressed,
+    @required this.onViewEntityFilterPressed,
   });
 
   final AppState state;
@@ -52,6 +55,8 @@ class ClientListVM {
   final Function(BuildContext, ClientEntity) onClientTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, ClientEntity, EntityAction) onEntityAction;
+  final Function onClearEntityFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -81,6 +86,10 @@ class ClientListVM {
       onEntityAction:
           (BuildContext context, BaseEntity client, EntityAction action) =>
               handleClientAction(context, client, action),
+      onClearEntityFilterPressed: () => store.dispatch(FilterClientsByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewGroup(
+              groupId: state.clientListState.filterEntityId, context: context)),
     );
   }
 }
