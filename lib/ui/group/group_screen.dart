@@ -23,6 +23,7 @@ class GroupSettingsScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
+      hideHamburgerButton: true,
       appBarTitle: ListFilter(
         key: ValueKey(state.groupListState.filterClearedAt),
         entityType: EntityType.group,

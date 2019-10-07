@@ -15,14 +15,15 @@ class AppScaffold extends StatelessWidget {
       @required this.appBarActions,
       @required this.body,
       @required this.bottomNavigationBar,
-      @required this.floatingActionButton});
+      @required this.floatingActionButton,
+      this.hideHamburgerButton = false});
 
   final Widget body;
   final AppBottomBar bottomNavigationBar;
   final FloatingActionButton floatingActionButton;
-
   final Widget appBarTitle;
   final List<Widget> appBarActions;
+  final bool hideHamburgerButton;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class AppScaffold extends StatelessWidget {
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
-            leading: !isMobile(context)
+            leading: !isMobile(context) && !hideHamburgerButton
                 ? IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () =>
