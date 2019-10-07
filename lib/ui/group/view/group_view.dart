@@ -1,9 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -19,22 +24,7 @@ class GroupView extends StatefulWidget {
   _GroupViewState createState() => new _GroupViewState();
 }
 
-class _GroupViewState extends State<GroupView>
-    with SingleTickerProviderStateMixin {
-  TabController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(vsync: this, length: 2);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class _GroupViewState extends State<GroupView> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -51,17 +41,6 @@ class _GroupViewState extends State<GroupView>
               )
             : null,
         title: EntityStateTitle(entity: group),
-        bottom: TabBar(
-          controller: _controller,
-          tabs: [
-            Tab(
-              text: localization.settings,
-            ),
-            Tab(
-              text: localization.clients,
-            ),
-          ],
-        ),
         actions: [
           userCompany.canEditEntity(group)
               ? EditIconButton(
@@ -77,11 +56,35 @@ class _GroupViewState extends State<GroupView>
           )
         ],
       ),
-      body: TabBarView(
-        controller: _controller,
+      body: ListView(
         children: <Widget>[
-          ListView(),
-          ListView(),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
+          FieldGrid({
+            GroupFields.custom1: group.customValue1,
+            GroupFields.custom2: group.customValue2,
+          }),
+          EntityListTile(
+            icon: getEntityIcon(EntityType.client),
+            title: localization.clients,
+            /*
+            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+            onLongPress: () =>
+                viewModel.onEntityPressed(context, EntityType.payment, true),
+            subtitle: memoizedPaymentStatsForClient(
+                client.id,
+                state.paymentState.map,
+                state.invoiceState.map,
+                localization.active,
+                localization.archived),
+             */
+          ),
+          Container(
+            color: Theme.of(context).backgroundColor,
+            height: 12.0,
+          ),
         ],
       ),
     );
