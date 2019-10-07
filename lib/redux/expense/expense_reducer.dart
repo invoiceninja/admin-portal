@@ -18,7 +18,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
   TypedReducer<String, FilterExpensesByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity>([

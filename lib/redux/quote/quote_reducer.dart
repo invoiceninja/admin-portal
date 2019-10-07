@@ -39,7 +39,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.quote.id),
   TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
   TypedReducer<String, FilterQuotesByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([

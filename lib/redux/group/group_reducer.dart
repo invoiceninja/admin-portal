@@ -19,7 +19,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, dynamic action) => action.group.id),
   TypedReducer<String, FilterGroupsByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<GroupEntity>([
