@@ -44,10 +44,10 @@ class SettingsList extends StatelessWidget {
           ),
         Container(
           color: Theme.of(context).backgroundColor,
-          padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.basicSettings,
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.body2,
           ),
         ),
         SettingsListTile(
@@ -101,10 +101,10 @@ class SettingsList extends StatelessWidget {
           ),
         Container(
           color: Theme.of(context).backgroundColor,
-          padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+          padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.advancedSettings,
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.body2,
           ),
         ),
         SettingsListTile(
