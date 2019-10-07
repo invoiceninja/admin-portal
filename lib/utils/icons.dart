@@ -69,7 +69,7 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.task:
       return FontAwesomeIcons.clock;
     case EntityType.group:
-      return FontAwesomeIcons.tags;
+      return FontAwesomeIcons.layerGroup;
     default:
       return null;
   }
