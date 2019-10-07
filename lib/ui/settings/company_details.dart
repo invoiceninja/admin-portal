@@ -146,6 +146,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
       onCancelPressed: viewModel.onCancelPressed,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
+        key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         controller: _controller,
         tabs: [
           Tab(
@@ -167,6 +168,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
         child: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.state.settingsUIState.updatedAt),
             controller: _controller,
             children: <Widget>[
               ListView(

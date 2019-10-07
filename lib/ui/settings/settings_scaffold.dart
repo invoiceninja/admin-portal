@@ -8,12 +8,13 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsScaffold extends StatelessWidget {
   const SettingsScaffold({
+    Key key,
     @required this.title,
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.body,
     this.appBarBottom,
-  });
+  }) : super(key: key);
 
   final String title;
   final Function(BuildContext) onSavePressed;
