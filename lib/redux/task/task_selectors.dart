@@ -146,8 +146,8 @@ double taskRateSelector(
     {CompanyEntity company, ProjectEntity project, ClientEntity client}) {
   if (project != null && project.taskRate > 0) {
     return project.taskRate;
-  } else if (client != null && client.taskRate > 0) {
-    return client.taskRate;
+  } else if (client != null && client.settings.defaultTaskRate > 0) {
+    return client.settings.defaultTaskRate;
   } else if (company != null && company.settings.defaultTaskRate > 0) {
     return company.settings.defaultTaskRate;
   }

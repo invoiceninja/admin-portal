@@ -40,7 +40,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
-    _taskRateController.text = formatNumber(client.taskRate, context,
+    _taskRateController.text = formatNumber(
+        client.settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
     _paymentTermsController.text = client.getPaymentTerm(localization.net);
 
@@ -62,8 +63,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client
-        .rebuild((b) => b..taskRate = parseDouble(_taskRateController.text));
+    final client = viewModel.client.rebuild((b) =>
+        b..settings.defaultTaskRate = parseDouble(_taskRateController.text));
     if (client != viewModel.client) {
       viewModel.onChanged(client);
     }
@@ -119,8 +120,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                       ))
                   .toList(),
               onSelected: (paymentTerm) {
-                viewModel.onChanged(client
-                    .rebuild((b) => b..paymentTerms = paymentTerm.numDays));
+                viewModel.onChanged(client.rebuild((b) =>
+                    b..settings.defaultPaymentTerms = paymentTerm.numDays));
                 _paymentTermsController.text =
                     paymentTerm.getPaymentTerm(localization.net);
               },
@@ -150,17 +151,17 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.clientPortal),
             subtitle: Text(localization.showTasks),
-            value: client.showTasksInPortal,
-            onChanged: (value) => viewModel
-                .onChanged(client.rebuild((b) => b..showTasksInPortal = value)),
+            //value: client.showTasksInPortal,
+            //onChanged: (value) => viewModel
+            //.onChanged(client.rebuild((b) => b..showTasksInPortal = value)),
           ),
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.emailReminders),
             subtitle: Text(localization.enabled),
-            value: client.sendReminders,
-            onChanged: (value) => viewModel
-                .onChanged(client.rebuild((b) => b..sendReminders = value)),
+            //value: client.settings.sendReminders,
+            //onChanged: (value) => viewModel
+            //.onChanged(client.rebuild((b) => b..sendReminders = value)),
           ),
         ]),
       ],

@@ -58,6 +58,7 @@ abstract class ClientEntity extends Object
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      settings: SettingsEntity(),
       name: '',
       displayName: '',
       balance: 0.0,
@@ -74,23 +75,16 @@ abstract class ClientEntity extends Object
       website: '',
       industryId: '',
       sizeId: '',
-      paymentTerms: 0,
       vatNumber: '',
       idNumber: '',
       languageId: '',
       currencyId: '',
-      invoiceNumberCounter: 0,
-      quoteNumberCounter: 0,
-      taskRate: 0.0,
       shippingAddress1: '',
       shippingAddress2: '',
       shippingCity: '',
       shippingState: '',
       shippingPostalCode: '',
       shippingCountryId: '',
-      showTasksInPortal: false,
-      sendReminders: false,
-      creditNumberCounter: 0,
       customValue1: '',
       customValue2: '',
       contacts: BuiltList<ContactEntity>(
@@ -181,10 +175,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
-  @nullable
-  @BuiltValueField(wireName: 'payment_terms')
-  int get paymentTerms;
-
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;
 
@@ -198,15 +188,6 @@ abstract class ClientEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
-
-  @BuiltValueField(wireName: 'invoice_number_counter')
-  int get invoiceNumberCounter;
-
-  @BuiltValueField(wireName: 'quote_number_counter')
-  int get quoteNumberCounter;
-
-  @BuiltValueField(wireName: 'task_rate')
-  double get taskRate;
 
   @BuiltValueField(wireName: 'shipping_address1')
   String get shippingAddress1;
@@ -226,14 +207,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'shipping_country_id')
   String get shippingCountryId;
 
-  @BuiltValueField(wireName: 'show_tasks_in_portal')
-  bool get showTasksInPortal;
-
-  @BuiltValueField(wireName: 'send_reminders')
-  bool get sendReminders;
-
-  @BuiltValueField(wireName: 'credit_number_counter')
-  int get creditNumberCounter;
+  SettingsEntity get settings;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -282,12 +256,12 @@ abstract class ClientEntity extends Object
   }
 
   String getPaymentTerm(String netLabel) {
-    if (paymentTerms == 0) {
+    if (settings.defaultPaymentTerms == 0) {
       return '';
-    } else if (paymentTerms == -1) {
+    } else if (settings.defaultPaymentTerms == -1) {
       return '$netLabel 0';
     } else {
-      return '$netLabel $paymentTerms';
+      return '$netLabel ${settings.defaultPaymentTerms}';
     }
   }
 

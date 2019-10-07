@@ -152,15 +152,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
-      'invoice_number_counter',
-      serializers.serialize(object.invoiceNumberCounter,
-          specifiedType: const FullType(int)),
-      'quote_number_counter',
-      serializers.serialize(object.quoteNumberCounter,
-          specifiedType: const FullType(int)),
-      'task_rate',
-      serializers.serialize(object.taskRate,
-          specifiedType: const FullType(double)),
       'shipping_address1',
       serializers.serialize(object.shippingAddress1,
           specifiedType: const FullType(String)),
@@ -179,15 +170,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'shipping_country_id',
       serializers.serialize(object.shippingCountryId,
           specifiedType: const FullType(String)),
-      'show_tasks_in_portal',
-      serializers.serialize(object.showTasksInPortal,
-          specifiedType: const FullType(bool)),
-      'send_reminders',
-      serializers.serialize(object.sendReminders,
-          specifiedType: const FullType(bool)),
-      'credit_number_counter',
-      serializers.serialize(object.creditNumberCounter,
-          specifiedType: const FullType(int)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -238,12 +223,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('size_id')
         ..add(serializers.serialize(object.sizeId,
             specifiedType: const FullType(String)));
-    }
-    if (object.paymentTerms != null) {
-      result
-        ..add('payment_terms')
-        ..add(serializers.serialize(object.paymentTerms,
-            specifiedType: const FullType(int)));
     }
     if (object.languageId != null) {
       result
@@ -385,10 +364,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.sizeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'payment_terms':
-          result.paymentTerms = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'vat_number':
           result.vatNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -404,18 +379,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_number_counter':
-          result.invoiceNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'quote_number_counter':
-          result.quoteNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'task_rate':
-          result.taskRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
           break;
         case 'shipping_address1':
           result.shippingAddress1 = serializers.deserialize(value,
@@ -441,17 +404,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.shippingCountryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'show_tasks_in_portal':
-          result.showTasksInPortal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'send_reminders':
-          result.sendReminders = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'credit_number_counter':
-          result.creditNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -911,8 +866,6 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String sizeId;
   @override
-  final int paymentTerms;
-  @override
   final String vatNumber;
   @override
   final String idNumber;
@@ -920,12 +873,6 @@ class _$ClientEntity extends ClientEntity {
   final String languageId;
   @override
   final String currencyId;
-  @override
-  final int invoiceNumberCounter;
-  @override
-  final int quoteNumberCounter;
-  @override
-  final double taskRate;
   @override
   final String shippingAddress1;
   @override
@@ -939,11 +886,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String shippingCountryId;
   @override
-  final bool showTasksInPortal;
-  @override
-  final bool sendReminders;
-  @override
-  final int creditNumberCounter;
+  final SettingsEntity settings;
   @override
   final String customValue1;
   @override
@@ -989,23 +932,17 @@ class _$ClientEntity extends ClientEntity {
       this.website,
       this.industryId,
       this.sizeId,
-      this.paymentTerms,
       this.vatNumber,
       this.idNumber,
       this.languageId,
       this.currencyId,
-      this.invoiceNumberCounter,
-      this.quoteNumberCounter,
-      this.taskRate,
       this.shippingAddress1,
       this.shippingAddress2,
       this.shippingCity,
       this.shippingState,
       this.shippingPostalCode,
       this.shippingCountryId,
-      this.showTasksInPortal,
-      this.sendReminders,
-      this.creditNumberCounter,
+      this.settings,
       this.customValue1,
       this.customValue2,
       this.contacts,
@@ -1060,16 +997,6 @@ class _$ClientEntity extends ClientEntity {
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
     }
-    if (invoiceNumberCounter == null) {
-      throw new BuiltValueNullFieldError(
-          'ClientEntity', 'invoiceNumberCounter');
-    }
-    if (quoteNumberCounter == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'quoteNumberCounter');
-    }
-    if (taskRate == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'taskRate');
-    }
     if (shippingAddress1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
     }
@@ -1088,14 +1015,8 @@ class _$ClientEntity extends ClientEntity {
     if (shippingCountryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
     }
-    if (showTasksInPortal == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'showTasksInPortal');
-    }
-    if (sendReminders == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'sendReminders');
-    }
-    if (creditNumberCounter == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'creditNumberCounter');
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'settings');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
@@ -1140,23 +1061,17 @@ class _$ClientEntity extends ClientEntity {
         website == other.website &&
         industryId == other.industryId &&
         sizeId == other.sizeId &&
-        paymentTerms == other.paymentTerms &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
         languageId == other.languageId &&
         currencyId == other.currencyId &&
-        invoiceNumberCounter == other.invoiceNumberCounter &&
-        quoteNumberCounter == other.quoteNumberCounter &&
-        taskRate == other.taskRate &&
         shippingAddress1 == other.shippingAddress1 &&
         shippingAddress2 == other.shippingAddress2 &&
         shippingCity == other.shippingCity &&
         shippingState == other.shippingState &&
         shippingPostalCode == other.shippingPostalCode &&
         shippingCountryId == other.shippingCountryId &&
-        showTasksInPortal == other.showTasksInPortal &&
-        sendReminders == other.sendReminders &&
-        creditNumberCounter == other.creditNumberCounter &&
+        settings == other.settings &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
@@ -1190,15 +1105,15 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode), shippingAddress1.hashCode),
-                                                                                shippingAddress2.hashCode),
-                                                                            shippingCity.hashCode),
-                                                                        shippingState.hashCode),
-                                                                    shippingPostalCode.hashCode),
-                                                                shippingCountryId.hashCode),
-                                                            showTasksInPortal.hashCode),
-                                                        sendReminders.hashCode),
-                                                    creditNumberCounter.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
+                                                                                currencyId.hashCode),
+                                                                            shippingAddress1.hashCode),
+                                                                        shippingAddress2.hashCode),
+                                                                    shippingCity.hashCode),
+                                                                shippingState.hashCode),
+                                                            shippingPostalCode.hashCode),
+                                                        shippingCountryId.hashCode),
+                                                    settings.hashCode),
                                                 customValue1.hashCode),
                                             customValue2.hashCode),
                                         contacts.hashCode),
@@ -1233,23 +1148,17 @@ class _$ClientEntity extends ClientEntity {
           ..add('website', website)
           ..add('industryId', industryId)
           ..add('sizeId', sizeId)
-          ..add('paymentTerms', paymentTerms)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
           ..add('languageId', languageId)
           ..add('currencyId', currencyId)
-          ..add('invoiceNumberCounter', invoiceNumberCounter)
-          ..add('quoteNumberCounter', quoteNumberCounter)
-          ..add('taskRate', taskRate)
           ..add('shippingAddress1', shippingAddress1)
           ..add('shippingAddress2', shippingAddress2)
           ..add('shippingCity', shippingCity)
           ..add('shippingState', shippingState)
           ..add('shippingPostalCode', shippingPostalCode)
           ..add('shippingCountryId', shippingCountryId)
-          ..add('showTasksInPortal', showTasksInPortal)
-          ..add('sendReminders', sendReminders)
-          ..add('creditNumberCounter', creditNumberCounter)
+          ..add('settings', settings)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
@@ -1342,10 +1251,6 @@ class ClientEntityBuilder
   String get sizeId => _$this._sizeId;
   set sizeId(String sizeId) => _$this._sizeId = sizeId;
 
-  int _paymentTerms;
-  int get paymentTerms => _$this._paymentTerms;
-  set paymentTerms(int paymentTerms) => _$this._paymentTerms = paymentTerms;
-
   String _vatNumber;
   String get vatNumber => _$this._vatNumber;
   set vatNumber(String vatNumber) => _$this._vatNumber = vatNumber;
@@ -1361,20 +1266,6 @@ class ClientEntityBuilder
   String _currencyId;
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
-
-  int _invoiceNumberCounter;
-  int get invoiceNumberCounter => _$this._invoiceNumberCounter;
-  set invoiceNumberCounter(int invoiceNumberCounter) =>
-      _$this._invoiceNumberCounter = invoiceNumberCounter;
-
-  int _quoteNumberCounter;
-  int get quoteNumberCounter => _$this._quoteNumberCounter;
-  set quoteNumberCounter(int quoteNumberCounter) =>
-      _$this._quoteNumberCounter = quoteNumberCounter;
-
-  double _taskRate;
-  double get taskRate => _$this._taskRate;
-  set taskRate(double taskRate) => _$this._taskRate = taskRate;
 
   String _shippingAddress1;
   String get shippingAddress1 => _$this._shippingAddress1;
@@ -1405,20 +1296,10 @@ class ClientEntityBuilder
   set shippingCountryId(String shippingCountryId) =>
       _$this._shippingCountryId = shippingCountryId;
 
-  bool _showTasksInPortal;
-  bool get showTasksInPortal => _$this._showTasksInPortal;
-  set showTasksInPortal(bool showTasksInPortal) =>
-      _$this._showTasksInPortal = showTasksInPortal;
-
-  bool _sendReminders;
-  bool get sendReminders => _$this._sendReminders;
-  set sendReminders(bool sendReminders) =>
-      _$this._sendReminders = sendReminders;
-
-  int _creditNumberCounter;
-  int get creditNumberCounter => _$this._creditNumberCounter;
-  set creditNumberCounter(int creditNumberCounter) =>
-      _$this._creditNumberCounter = creditNumberCounter;
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1490,23 +1371,17 @@ class ClientEntityBuilder
       _website = _$v.website;
       _industryId = _$v.industryId;
       _sizeId = _$v.sizeId;
-      _paymentTerms = _$v.paymentTerms;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
       _languageId = _$v.languageId;
       _currencyId = _$v.currencyId;
-      _invoiceNumberCounter = _$v.invoiceNumberCounter;
-      _quoteNumberCounter = _$v.quoteNumberCounter;
-      _taskRate = _$v.taskRate;
       _shippingAddress1 = _$v.shippingAddress1;
       _shippingAddress2 = _$v.shippingAddress2;
       _shippingCity = _$v.shippingCity;
       _shippingState = _$v.shippingState;
       _shippingPostalCode = _$v.shippingPostalCode;
       _shippingCountryId = _$v.shippingCountryId;
-      _showTasksInPortal = _$v.showTasksInPortal;
-      _sendReminders = _$v.sendReminders;
-      _creditNumberCounter = _$v.creditNumberCounter;
+      _settings = _$v.settings?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
@@ -1560,23 +1435,17 @@ class ClientEntityBuilder
               website: website,
               industryId: industryId,
               sizeId: sizeId,
-              paymentTerms: paymentTerms,
               vatNumber: vatNumber,
               idNumber: idNumber,
               languageId: languageId,
               currencyId: currencyId,
-              invoiceNumberCounter: invoiceNumberCounter,
-              quoteNumberCounter: quoteNumberCounter,
-              taskRate: taskRate,
               shippingAddress1: shippingAddress1,
               shippingAddress2: shippingAddress2,
               shippingCity: shippingCity,
               shippingState: shippingState,
               shippingPostalCode: shippingPostalCode,
               shippingCountryId: shippingCountryId,
-              showTasksInPortal: showTasksInPortal,
-              sendReminders: sendReminders,
-              creditNumberCounter: creditNumberCounter,
+              settings: settings.build(),
               customValue1: customValue1,
               customValue2: customValue2,
               contacts: contacts.build(),
@@ -1591,6 +1460,9 @@ class ClientEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'settings';
+        settings.build();
+
         _$failedField = 'contacts';
         contacts.build();
         _$failedField = 'activities';
