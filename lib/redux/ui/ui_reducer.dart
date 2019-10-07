@@ -172,6 +172,7 @@ int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
     return state.rebuild((b) => b
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..userCompany.replace(state.origUserCompany)
       ..entityType = EntityType.company);
   }),
@@ -183,6 +184,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origGroup.replace(action.group ?? state.origGroup)
       ..client.replace(action.client ?? state.client)
       ..origClient.replace(action.client ?? state.origClient)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
+      ..isChanged = false
       ..entityType = action.client != null
           ? EntityType.client
           : action.group != null ? EntityType.group : state.entityType);
