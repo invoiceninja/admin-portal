@@ -181,6 +181,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
+  @nullable
   @BuiltValueField(wireName: 'payment_terms')
   int get paymentTerms;
 

@@ -146,9 +146,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'website',
       serializers.serialize(object.website,
           specifiedType: const FullType(String)),
-      'payment_terms',
-      serializers.serialize(object.paymentTerms,
-          specifiedType: const FullType(int)),
       'vat_number',
       serializers.serialize(object.vatNumber,
           specifiedType: const FullType(String)),
@@ -241,6 +238,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('size_id')
         ..add(serializers.serialize(object.sizeId,
             specifiedType: const FullType(String)));
+    }
+    if (object.paymentTerms != null) {
+      result
+        ..add('payment_terms')
+        ..add(serializers.serialize(object.paymentTerms,
+            specifiedType: const FullType(int)));
     }
     if (object.languageId != null) {
       result
@@ -1050,9 +1053,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (website == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'website');
-    }
-    if (paymentTerms == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'paymentTerms');
     }
     if (vatNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'vatNumber');

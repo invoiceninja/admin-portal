@@ -42,7 +42,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   void initState() {
-    print('## INIT STATE ');
     super.initState();
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {

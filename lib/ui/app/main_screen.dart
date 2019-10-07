@@ -131,6 +131,7 @@ class MainScreen extends StatelessWidget {
                     ),
                     // TODO profile/time to see if this optimization helps
                     mainRoute == 'settings' ? SettingsScreens() : SizedBox(),
+                    //SettingsScreens(),
                   ],
                 ),
               ),
