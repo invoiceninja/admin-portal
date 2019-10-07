@@ -744,6 +744,9 @@ abstract class SettingsEntity
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
+  bool get hasDefaultPaymentTypeId =>
+      defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
+
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {
     if (invoiceFields != null && invoiceFields.isNotEmpty) {

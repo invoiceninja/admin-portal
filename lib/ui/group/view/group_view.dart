@@ -135,6 +135,15 @@ class SettingsViewer extends StatelessWidget {
           settings.sendReminders ? localization.enabled : null,
       localization.showTasks:
           settings.showTasksInPortal ? localization.enabled : null,
+      localization.paymentType: settings.hasDefaultPaymentTypeId
+          ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
+          : null,
+      localization.paymentTerms: settings.defaultPaymentTerms >= 0
+          ? '${localization.net} ${settings.defaultPaymentTerms}'
+          : null,
+      localization.taskRate: settings.defaultTaskRate > 0
+          ? formatNumber(settings.defaultTaskRate, context)
+          : null,
     });
   }
 }
