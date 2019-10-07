@@ -42,13 +42,19 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   void initState() {
+    print('## INIT STATE ');
     super.initState();
-    _textController.text = widget.initialValue;
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
         _showOptions();
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _textController.text = widget.initialValue;
+    super.didChangeDependencies();
   }
 
   @override

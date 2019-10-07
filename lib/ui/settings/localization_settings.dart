@@ -81,6 +81,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
         formKey: _formKey,
         children: <Widget>[
           EntityDropdown(
+            key: ValueKey('__currency_${settings.currencyId}'),
             entityType: EntityType.currency,
             entityMap: state.staticState.currencyMap,
             entityList: memoizedCurrencyList(state.staticState.currencyMap),
@@ -91,6 +92,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 settings.rebuild((b) => b..currencyId = currency.id)),
           ),
           EntityDropdown(
+            key: ValueKey('__language_${settings.languageId}'),
             entityType: EntityType.language,
             entityMap: state.staticState.languageMap,
             entityList: memoizedLanguageList(state.staticState.languageMap),

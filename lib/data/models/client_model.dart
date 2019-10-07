@@ -111,7 +111,7 @@ abstract class ClientEntity extends Object
     ..isDeleted = false);
 
   @nullable
-  @BuiltValueField(wireName: 'group_id')
+  @BuiltValueField(wireName: 'group_setting_id')
   String get groupId;
 
   @nullable
