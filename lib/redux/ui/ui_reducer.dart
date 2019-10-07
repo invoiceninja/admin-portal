@@ -174,7 +174,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return state.rebuild((b) => b
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..userCompany.replace(state.origUserCompany)
-      ..entityType = EntityType.company);
+      ..entityType = EntityType.company
+      ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, ViewSettings>((state, action) {
     return state.rebuild((b) => b

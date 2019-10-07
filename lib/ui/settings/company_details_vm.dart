@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -52,11 +54,22 @@ class CompanyDetailsVM {
           store.dispatch(UpdateCompany(company: company)),
       onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
+        final settingsUIState = state.uiState.settingsUIState;
         final completer = snackBarCompleter(
             context, AppLocalization.of(context).savedSettings);
-        store.dispatch(SaveCompanyRequest(
-            completer: completer,
-            company: state.uiState.settingsUIState.userCompany.company));
+        switch (settingsUIState.entityType) {
+          case EntityType.company:
+            store.dispatch(SaveCompanyRequest(
+                completer: completer,
+                company: settingsUIState.userCompany.company));
+            break;
+          case EntityType.group:
+            store.dispatch(SaveGroupRequest(
+                completer: completer, group: settingsUIState.group));
+            break;
+          case EntityType.client:
+            break;
+        }
       },
       onUploadLogo: (context, path) {
         final completer = snackBarCompleter(

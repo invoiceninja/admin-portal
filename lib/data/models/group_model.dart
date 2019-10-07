@@ -74,7 +74,6 @@ abstract class GroupEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @BuiltValueField(serialize: false)
   SettingsEntity get settings;
 
   @override
