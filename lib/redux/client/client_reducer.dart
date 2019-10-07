@@ -46,6 +46,8 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
+  TypedReducer<String, FilterClientsByEntity>(
+      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<ClientEntity>([
@@ -95,6 +97,7 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, FilterClients>(_filterClients),
+  TypedReducer<ListUIState, FilterClientsByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
 ]);
@@ -126,6 +129,13 @@ ListUIState _filterClientsByState(
   } else {
     return clientListState.rebuild((b) => b..stateFilters.add(action.state));
   }
+}
+
+ListUIState _filterClientsByEntity(
+    ListUIState invoiceListState, FilterClientsByEntity action) {
+  return invoiceListState.rebuild((b) => b
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
