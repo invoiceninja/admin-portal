@@ -1,9 +1,11 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -226,7 +228,19 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
   TypedReducer<SettingsUIState, SaveCompanySuccess>((state, action) {
-    return state.rebuild((b) => b..userCompany.company.replace(action.company));
+    return state.rebuild((b) => b
+      ..userCompany.company.replace(action.company)
+      ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, SaveGroupSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..group.replace(action.group)
+      ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, SaveClientSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..client.replace(action.client)
+      ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, UploadLogoSuccess>((state, action) {
     return state.rebuild((b) => b
