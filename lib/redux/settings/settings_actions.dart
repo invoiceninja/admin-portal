@@ -28,17 +28,17 @@ class ClearSettingsFilter {}
 
 class ResetSettings {}
 
-class UpdateCompany {
+class UpdateCompany implements PersistUI {
   UpdateCompany({@required this.company});
   final CompanyEntity company;
 }
 
-class UpdateSettings {
+class UpdateSettings implements PersistUI {
   UpdateSettings({@required this.settings});
   final SettingsEntity settings;
 }
 
-class UpdateUser {
+class UpdateUser implements PersistUI {
   UpdateUser({@required this.user});
   final UserEntity user;
 }

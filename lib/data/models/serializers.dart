@@ -95,7 +95,7 @@ part 'serializers.g.dart';
   ExpenseStatusEntity,
   // STARTER: serializers - do not remove comment
   GroupEntity,
-
+  GroupItemResponse,
   DocumentEntity,
 ])
 final Serializers serializers =
