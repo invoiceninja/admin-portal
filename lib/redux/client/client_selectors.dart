@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -21,15 +22,30 @@ List<String> dropdownClientsSelector(
   return list;
 }
 
-var memoizedFilteredClientList = memo3(
-    (BuiltMap<String, ClientEntity> clientMap, BuiltList<String> clientList,
-            ListUIState clientListState) =>
-        filteredClientsSelector(clientMap, clientList, clientListState));
+var memoizedFilteredClientList = memo4((BuiltMap<String, ClientEntity>
+            clientMap,
+        BuiltList<String> clientList,
+        BuiltMap<String, GroupEntity> groupMap,
+        ListUIState clientListState) =>
+    filteredClientsSelector(clientMap, clientList, groupMap, clientListState));
 
-List<String> filteredClientsSelector(BuiltMap<String, ClientEntity> clientMap,
-    BuiltList<String> clientList, ListUIState clientListState) {
+List<String> filteredClientsSelector(
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> clientList,
+    BuiltMap<String, GroupEntity> groupMap,
+    ListUIState clientListState) {
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];
+    final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
+
+    if (clientListState.filterEntityId != null) {
+      if (!clientListState.entityMatchesFilter(group)) {
+        return false;
+      }
+    } else if (!client.isActive) {
+      return false;
+    }
+
     if (!client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
@@ -41,7 +57,12 @@ List<String> filteredClientsSelector(BuiltMap<String, ClientEntity> clientMap,
         !clientListState.custom2Filters.contains(client.customValue2)) {
       return false;
     }
-    return client.matchesFilter(clientListState.filter);
+    if (!client.matchesFilter(clientListState.filter) &&
+        !group.matchesFilter(clientListState.filter)) {
+      return false;
+    }
+
+    return true;
   }).toList();
 
   list.sort((clientAId, clientBId) {
