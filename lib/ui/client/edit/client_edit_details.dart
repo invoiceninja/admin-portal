@@ -114,7 +114,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               labelText: localization.group,
               initialValue: state.groupState.map[client.groupId]?.name,
               onSelected: (SelectableEntity group) => viewModel
-                  .onChanged(client.rebuild((b) => b..groupId = group.id)),
+                  .onChanged(client.rebuild((b) => b..groupId = group?.id)),
+              allowClearing: true,
             ),
             DecoratedFormField(
               label: localization.idNumber,

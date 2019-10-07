@@ -14,8 +14,9 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityMap,
     @required this.entityList,
     @required this.onSelected,
-    this.validator,
+    this.allowClearing = false,
     this.autoValidate = false,
+    this.validator,
     this.initialValue,
     this.onAddPressed,
     this.onFieldSubmitted,
@@ -29,6 +30,7 @@ class EntityDropdown extends StatefulWidget {
   final Function(SelectableEntity) onSelected;
   final Function validator;
   final bool autoValidate;
+  final bool allowClearing;
   final Function(String) onFieldSubmitted;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
 
@@ -84,24 +86,42 @@ class _EntityDropdownState extends State<EntityDropdown> {
         });
   }
 
+  bool get showClear =>
+      widget.allowClearing &&
+      widget.initialValue != null &&
+      widget.initialValue.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      key: ValueKey(widget.labelText),
-      onTap: () => _showOptions(),
-      child: IgnorePointer(
-        child: TextFormField(
-          focusNode: _focusNode,
-          readOnly: true,
-          validator: widget.validator,
-          autovalidate: widget.autoValidate,
-          controller: _textController,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            suffixIcon: const Icon(Icons.search),
+    return Stack(
+      alignment: Alignment.centerRight,
+      children: <Widget>[
+        InkWell(
+          key: ValueKey(widget.labelText),
+          onTap: () => _showOptions(),
+          child: IgnorePointer(
+            child: TextFormField(
+              focusNode: _focusNode,
+              readOnly: true,
+              validator: widget.validator,
+              autovalidate: widget.autoValidate,
+              controller: _textController,
+              decoration: InputDecoration(
+                labelText: widget.labelText,
+                suffixIcon: showClear ? null : const Icon(Icons.search),
+              ),
+            ),
           ),
         ),
-      ),
+        if (showClear)
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _textController.text = '';
+              widget.onSelected(null);
+            },
+          ),
+      ],
     );
   }
 }
