@@ -48,7 +48,7 @@ class SettingsRepository {
     final url = '${credentials.url}/companies/$companyId';
 
     final dynamic response = await webClient.post(url, credentials.token,
-        data: {'_method': 'PUT'}, filePath: path, fileIndex: 'logo');
+        data: {'_method': 'PUT'}, filePath: path, fileIndex: 'company_logo');
 
     final CompanyItemResponse companyResponse =
         serializers.deserializeWith(CompanyItemResponse.serializer, response);

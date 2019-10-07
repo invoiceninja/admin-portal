@@ -69,10 +69,9 @@ class _GroupViewState extends State<GroupView> {
           EntityListTile(
             icon: getEntityIcon(EntityType.client),
             title: localization.clients,
+            onTap: () => viewModel.onClientsPressed(context),
+            onLongPress: () => viewModel.onClientsPressed(context, true),
             /*
-            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-            onLongPress: () =>
-                viewModel.onEntityPressed(context, EntityType.payment, true),
             subtitle: memoizedPaymentStatsForClient(
                 client.id,
                 state.paymentState.map,

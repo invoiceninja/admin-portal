@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class GroupViewVM {
     @required this.onEntityAction,
     @required this.onEditPressed,
     @required this.onBackPressed,
+    @required this.onClientsPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -61,30 +63,38 @@ class GroupViewVM {
     }
 
     return GroupViewVM(
-      state: state,
-      company: state.selectedCompany,
-      isSaving: state.isSaving,
-      isLoading: state.isLoading,
-      isDirty: group.isNew,
-      group: group,
-      onEditPressed: (BuildContext context) {
-        final Completer<GroupEntity> completer = Completer<GroupEntity>();
-        store.dispatch(
-            EditGroup(group: group, context: context, completer: completer));
-        completer.future.then((group) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedGroup,
-          )));
+        state: state,
+        company: state.selectedCompany,
+        isSaving: state.isSaving,
+        isLoading: state.isLoading,
+        isDirty: group.isNew,
+        group: group,
+        onEditPressed: (BuildContext context) {
+          final Completer<GroupEntity> completer = Completer<GroupEntity>();
+          store.dispatch(
+              EditGroup(group: group, context: context, completer: completer));
+          completer.future.then((group) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                content: SnackBarRow(
+              message: AppLocalization.of(context).updatedGroup,
+            )));
+          });
+        },
+        onRefreshed: (context) => _handleRefresh(context),
+        onBackPressed: () {
+          store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
+        },
+        onEntityAction: (BuildContext context, EntityAction action) =>
+            handleGroupAction(context, group, action),
+        onClientsPressed: (context, [longPress = false]) {
+          if (longPress) {
+            handleGroupAction(context, group, EntityAction.newClient);
+          } else {
+            //store.dispatch(FilterClientByEntity(
+            //entityId: client.id, entityType: EntityType.client));
+            store.dispatch(ViewClientList(context: context));
+          }
         });
-      },
-      onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
-      },
-      onEntityAction: (BuildContext context, EntityAction action) =>
-          handleGroupAction(context, group, action),
-    );
   }
 
   final AppState state;
@@ -92,6 +102,7 @@ class GroupViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
+  final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
