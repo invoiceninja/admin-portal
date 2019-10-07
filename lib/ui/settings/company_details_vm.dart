@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details.dart';
@@ -68,6 +69,8 @@ class CompanyDetailsVM {
                 completer: completer, group: settingsUIState.group));
             break;
           case EntityType.client:
+            store.dispatch(SaveClientRequest(
+                completer: completer, client: settingsUIState.client));
             break;
         }
       },
