@@ -175,8 +175,18 @@ abstract class CompanyEntity extends Object
 
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
-    return true;
+    if ([
+      EntityType.recurringInvoice,
+      EntityType.credit,
+      EntityType.project,
+      EntityType.task,
+      EntityType.expense,
+      EntityType.vendor,
+    ].contains(entityType)) {
+      return false;
+    }
 
+    /*
     if (entityType == EntityType.recurringInvoice &&
         enabledModules & kModuleRecurringInvoice == 0) {
       return false;
@@ -193,6 +203,7 @@ abstract class CompanyEntity extends Object
         enabledModules & kModuleExpense == 0) {
       return false;
     }
+    */
 
     return true;
   }
