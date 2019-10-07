@@ -14,8 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
-      'filtered_by_group': 'Filtered by group',
-      'filtered_by_client': 'Filtered by client',
+      'filtered_by_group': 'Filtered by Group',
+      'filtered_by_client': 'Filtered by Client',
       'group_settings': 'Group Settings',
       'groups': 'Groups',
       'new_group': 'New Group',
