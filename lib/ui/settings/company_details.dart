@@ -219,38 +219,40 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       ),
                     ],
                   ),
-                  FormCard(
-                    children: <Widget>[
-                      EntityDropdown(
-                        key: ValueKey('__size_${company.sizeId}__'),
-                        entityType: EntityType.size,
-                        entityMap: state.staticState.sizeMap,
-                        entityList: memoizedSizeList(state.staticState.sizeMap),
-                        labelText: localization.size,
-                        initialValue:
-                            state.staticState.sizeMap[company.sizeId]?.name,
-                        onSelected: (SelectableEntity size) =>
-                            viewModel.onCompanyChanged(
-                          company.rebuild((b) => b..sizeId = size.id),
+                  if (!state.settingsUIState.isFiltered)
+                    FormCard(
+                      children: <Widget>[
+                        EntityDropdown(
+                          key: ValueKey('__size_${company.sizeId}__'),
+                          entityType: EntityType.size,
+                          entityMap: state.staticState.sizeMap,
+                          entityList:
+                              memoizedSizeList(state.staticState.sizeMap),
+                          labelText: localization.size,
+                          initialValue:
+                              state.staticState.sizeMap[company.sizeId]?.name,
+                          onSelected: (SelectableEntity size) =>
+                              viewModel.onCompanyChanged(
+                            company.rebuild((b) => b..sizeId = size.id),
+                          ),
+                          //onFieldSubmitted: (String value) => _node.nextFocus(),
                         ),
-                        //onFieldSubmitted: (String value) => _node.nextFocus(),
-                      ),
-                      EntityDropdown(
-                        key: ValueKey('__industry_${company.industryId}__'),
-                        entityType: EntityType.industry,
-                        entityMap: state.staticState.industryMap,
-                        entityList:
-                            memoizedIndustryList(state.staticState.industryMap),
-                        labelText: localization.industry,
-                        initialValue: state
-                            .staticState.industryMap[company.industryId]?.name,
-                        onSelected: (SelectableEntity industry) =>
-                            viewModel.onCompanyChanged(
-                          company.rebuild((b) => b..industryId = industry.id),
+                        EntityDropdown(
+                          key: ValueKey('__industry_${company.industryId}__'),
+                          entityType: EntityType.industry,
+                          entityMap: state.staticState.industryMap,
+                          entityList: memoizedIndustryList(
+                              state.staticState.industryMap),
+                          labelText: localization.industry,
+                          initialValue: state.staticState
+                              .industryMap[company.industryId]?.name,
+                          onSelected: (SelectableEntity industry) =>
+                              viewModel.onCompanyChanged(
+                            company.rebuild((b) => b..industryId = industry.id),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
                 ],
               ),
               Padding(
