@@ -37,6 +37,7 @@ class ClientEditScreen extends StatelessWidget {
 
 class ClientEditVM {
   ClientEditVM({
+    @required this.state,
     @required this.company,
     @required this.isSaving,
     @required this.client,
@@ -55,6 +56,7 @@ class ClientEditVM {
     final client = state.clientUIState.editing;
 
     return ClientEditVM(
+        state: state,
         company: state.selectedCompany,
         client: client,
         origClient: state.clientState.map[client.id],
@@ -126,6 +128,7 @@ class ClientEditVM {
         });
   }
 
+  final AppState state;
   final CompanyEntity company;
   final bool isSaving;
   final ClientEntity client;

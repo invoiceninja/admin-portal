@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:memoize/memoize.dart';
 
@@ -11,6 +12,18 @@ List<String> countryList(BuiltMap<String, CountryEntity> countryMap) {
   list.sort((idA, idB) => countryMap[idA]
       .listDisplayName
       .compareTo(countryMap[idB].listDisplayName));
+
+  return list;
+}
+
+var memoizedGroupList =
+    memo1((BuiltMap<String, GroupEntity> groupMap) => groupList(groupMap));
+
+List<String> groupList(BuiltMap<String, GroupEntity> groupMap) {
+  final list = groupMap.keys.toList();
+
+  list.sort((idA, idB) =>
+      groupMap[idA].listDisplayName.compareTo(groupMap[idB].listDisplayName));
 
   return list;
 }

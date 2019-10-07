@@ -17,6 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_group': 'Filtered by Group',
       'filtered_by_client': 'Filtered by Client',
       'group_settings': 'Group Settings',
+      'group': 'Group',
       'groups': 'Groups',
       'new_group': 'New Group',
       'edit_group': 'Edit Group',
@@ -14722,6 +14723,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get filteredByClient =>
       _localizedValues[localeCode]['filtered_by_client'];
+
+  String get group => _localizedValues[localeCode]['group'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

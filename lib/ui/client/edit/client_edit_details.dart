@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
@@ -89,7 +91,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final company = viewModel.company;
+    final client = viewModel.client;
 
     return ListView(
       shrinkWrap: true,
@@ -102,6 +106,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
+            ),
+            EntityDropdown(
+              entityType: EntityType.group,
+              entityMap: state.groupState.map,
+              entityList: memoizedGroupList(state.groupState.map),
+              labelText: localization.group,
+              initialValue: state.groupState.map[client.groupId]?.name,
+              onSelected: (SelectableEntity group) => viewModel
+                  .onChanged(client.rebuild((b) => b..groupId = group.id)),
             ),
             DecoratedFormField(
               label: localization.idNumber,
