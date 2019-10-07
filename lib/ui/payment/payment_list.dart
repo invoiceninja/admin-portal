@@ -28,14 +28,17 @@ class PaymentList extends StatelessWidget {
     final filteredEntityId = listState.filterEntityId;
 
     BaseEntity filteredEntity;
+    String label;
+
     switch (listState.filterEntityType) {
       case EntityType.client:
+        label = localization.filteredByClient;
         filteredEntity = filteredEntityId != null
             ? state.clientState.map[filteredEntityId]
             : null;
         break;
       case EntityType.invoice:
-      case EntityType.quote:
+        label = localization.filteredByInvoice;
         filteredEntity = filteredEntityId != null
             ? state.invoiceState.map[filteredEntityId]
             : null;
@@ -55,7 +58,7 @@ class PaymentList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          '${localization.filteredBy} ${filteredEntity.listDisplayName}',
+                          '$label: ${filteredEntity.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,

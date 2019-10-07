@@ -38,7 +38,8 @@ class ExpenseList extends StatelessWidget {
 
     if (filteredEntity != null) {
       widgets.add(ListFilterMessage(
-        title: '${localization.filteredBy} ${filteredEntity.listDisplayName}',
+        title:
+            '${listState.filterEntityType == EntityType.vendor ? localization.filteredByVendor : localization.filteredByClient}: ${filteredEntity.listDisplayName}',
         onPressed: viewModel.onViewEntityFilterPressed,
         onClearPressed: viewModel.onClearEntityFilterPressed,
       ));

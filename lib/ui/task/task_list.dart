@@ -24,13 +24,16 @@ class TaskList extends StatelessWidget {
     final listState = viewModel.listState;
 
     BaseEntity filteredEntity;
+    String label;
 
     if (listState.filterEntityType == EntityType.client) {
+      label = localization.filteredByClient;
       final filteredClientId = listState.filterEntityId;
       filteredEntity = filteredClientId != null
           ? viewModel.clientMap[filteredClientId]
           : null;
     } else if (listState.filterEntityType == EntityType.project) {
+      label = localization.filteredByProject;
       final filteredProjectId = listState.filterEntityId;
       filteredEntity = filteredProjectId != null
           ? state.projectState.map[filteredProjectId]
@@ -50,7 +53,7 @@ class TaskList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          '${localization.filteredBy} ${filteredEntity.listDisplayName}',
+                          '$label: ${filteredEntity.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,

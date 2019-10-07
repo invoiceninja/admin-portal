@@ -38,7 +38,7 @@ class ProjectList extends StatelessWidget {
                       SizedBox(width: 18.0),
                       Expanded(
                         child: Text(
-                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
+                          '${localization.filteredByClient}: ${filteredClient.listDisplayName}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.0,

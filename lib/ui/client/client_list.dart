@@ -34,7 +34,7 @@ class ClientList extends StatelessWidget {
         if (filteredGroup != null)
           ListFilterMessage(
             title:
-                '${localization.filteredBy} ${filteredGroup.listDisplayName}',
+                '${localization.filteredByGroup}: ${filteredGroup.listDisplayName}',
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

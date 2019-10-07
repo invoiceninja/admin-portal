@@ -19,8 +19,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'military_time': 'Military Time',
       'send_reminders': 'Send Reminders',
       'timezone': 'Timezone',
+      'filtered_by_group': 'Filtered by Project',
       'filtered_by_group': 'Filtered by Group',
+      'filtered_by_invoice': 'Filtered by Invoice',
       'filtered_by_client': 'Filtered by Client',
+      'filtered_by_vendor': 'Filtered by Vendor',
       'group_settings': 'Group Settings',
       'group': 'Group',
       'groups': 'Groups',
@@ -355,7 +358,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax': 'Tax',
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Please enter a quote number',
-      'filtered_by': 'Filtered by',
       'past_due': 'Past Due',
       'draft': 'Draft',
       'sent': 'Sent',
@@ -14213,8 +14215,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get pleaseEnterAQuoteNumber =>
       _localizedValues[localeCode]['please_enter_a_quote_number'];
 
-  String get filteredBy => _localizedValues[localeCode]['filtered_by'];
-
   String get pastDue => _localizedValues[localeCode]['past_due'];
 
   String get draft => _localizedValues[localeCode]['draft'];
@@ -14728,6 +14728,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get filteredByClient =>
       _localizedValues[localeCode]['filtered_by_client'];
+
+  String get filteredByVendor =>
+      _localizedValues[localeCode]['filtered_by_vendor'];
+
+  String get filteredByInvoice =>
+      _localizedValues[localeCode]['filtered_by_invoice'];
+
+  String get filteredByProject =>
+      _localizedValues[localeCode]['filtered_by_project'];
 
   String get group => _localizedValues[localeCode]['group'];
 
