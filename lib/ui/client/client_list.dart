@@ -4,10 +4,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+import 'client_list_vm.dart';
 
 class ClientList extends StatelessWidget {
   const ClientList({
@@ -19,47 +22,65 @@ class ClientList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!viewModel.isLoaded) {
-      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (viewModel.clientList.isEmpty) {
-      return HelpText(AppLocalization.of(context).noRecordsFound);
-    }
+    final state = viewModel.state;
+    final localization = AppLocalization.of(context);
+    final listState = viewModel.state.clientListState;
+    final filteredGroupId = listState.filterEntityId;
+    final filteredGroup =
+        filteredGroupId != null ? state.groupState.map[filteredGroupId] : null;
 
-    return _buildListView(context);
-  }
+    return Column(
+      children: <Widget>[
+        if (filteredGroup != null)
+          ListFilterMessage(
+            title:
+                '${localization.filteredBy} ${filteredGroup.listDisplayName}',
+            //onPressed: ,
+            //onClearPressed: ,
+          ),
+        Expanded(
+          child: !viewModel.isLoaded
+              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.clientList.isEmpty
+                      ? HelpText(AppLocalization.of(context).noRecordsFound)
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
+                          itemCount: viewModel.clientList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final clientId = viewModel.clientList[index];
+                            final client =
+                                viewModel.clientMap[clientId] ?? ClientEntity();
 
-  Widget _buildListView(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () => viewModel.onRefreshed(context),
-      child: ListView.separated(
-          separatorBuilder: (context, index) => ListDivider(),
-          itemCount: viewModel.clientList.length,
-          itemBuilder: (BuildContext context, index) {
-            final clientId = viewModel.clientList[index];
-            final client = viewModel.clientMap[clientId];
-            final userCompany = viewModel.state.userCompany;
+                            void showDialog() => showEntityActionsDialog(
+                                entity: client,
+                                context: context,
+                                userCompany: state.userCompany,
+                                client: client,
+                                onEntityAction: viewModel.onEntityAction);
 
-            void showDialog() => showEntityActionsDialog(
-                entity: client,
-                context: context,
-                userCompany: userCompany,
-                onEntityAction: viewModel.onEntityAction);
-
-            return ClientListItem(
-              user: viewModel.state.user,
-              filter: viewModel.filter,
-              client: client,
-              onEntityAction: (EntityAction action) {
-                if (action == EntityAction.more) {
-                  showDialog();
-                } else {
-                  viewModel.onEntityAction(context, client, action);
-                }
-              },
-              onTap: () => viewModel.onClientTap(context, client),
-              onLongPress: () => showDialog(),
-            );
-          }),
+                            return ClientListItem(
+                              filter: viewModel.filter,
+                              client: client,
+                              onTap: () =>
+                                  viewModel.onClientTap(context, client),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  showDialog();
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, client, action);
+                                }
+                              },
+                              onLongPress: () => showDialog(),
+                            );
+                          },
+                        ),
+                ),
+        ),
+      ],
     );
   }
 }
