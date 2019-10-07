@@ -411,6 +411,8 @@ abstract class SettingsEntity
       defaultTaxRate1: 0,
       defaultTaxName2: '',
       defaultTaxRate2: 0,
+      sendReminders: true,
+      showTasksInPortal: false,
       enableCustomInvoiceTaxes1: false,
       enableCustomInvoiceTaxes2: false,
       enableInclusiveTaxes: false,
@@ -514,6 +516,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
+
+  @nullable
+  @BuiltValueField(wireName: 'send_reminders')
+  bool get sendReminders;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_tasks_in_portal')
+  bool get showTasksInPortal;
 
   // TODO remove this
   @nullable

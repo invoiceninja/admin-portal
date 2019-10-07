@@ -151,17 +151,17 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.clientPortal),
             subtitle: Text(localization.showTasks),
-            //value: client.showTasksInPortal,
-            //onChanged: (value) => viewModel
-            //.onChanged(client.rebuild((b) => b..showTasksInPortal = value)),
+            value: client.settings.showTasksInPortal,
+            onChanged: (value) => viewModel.onChanged(
+                client.rebuild((b) => b..settings.showTasksInPortal = value)),
           ),
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.emailReminders),
             subtitle: Text(localization.enabled),
-            //value: client.settings.sendReminders,
-            //onChanged: (value) => viewModel
-            //.onChanged(client.rebuild((b) => b..sendReminders = value)),
+            value: client.settings.sendReminders,
+            onChanged: (value) => viewModel.onChanged(
+                client.rebuild((b) => b..settings.sendReminders = value)),
           ),
         ]),
       ],

@@ -783,6 +783,18 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.currencyId,
             specifiedType: const FullType(String)));
     }
+    if (object.sendReminders != null) {
+      result
+        ..add('send_reminders')
+        ..add(serializers.serialize(object.sendReminders,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.showTasksInPortal != null) {
+      result
+        ..add('show_tasks_in_portal')
+        ..add(serializers.serialize(object.showTasksInPortal,
+            specifiedType: const FullType(bool)));
+    }
     if (object.defaultInvoiceTerms != null) {
       result
         ..add('invoice_terms')
@@ -1120,6 +1132,14 @@ class _$SettingsEntitySerializer
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'send_reminders':
+          result.sendReminders = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_tasks_in_portal':
+          result.showTasksInPortal = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'invoice_terms':
           result.defaultInvoiceTerms = serializers.deserialize(value,
@@ -2510,6 +2530,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String currencyId;
   @override
+  final bool sendReminders;
+  @override
+  final bool showTasksInPortal;
+  @override
   final String defaultInvoiceTerms;
   @override
   final bool enableInvoiceTaxes;
@@ -2615,6 +2639,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.enableMilitaryTime,
       this.languageId,
       this.currencyId,
+      this.sendReminders,
+      this.showTasksInPortal,
       this.defaultInvoiceTerms,
       this.enableInvoiceTaxes,
       this.enableInvoiceItemTaxes,
@@ -2689,6 +2715,8 @@ class _$SettingsEntity extends SettingsEntity {
         enableMilitaryTime == other.enableMilitaryTime &&
         languageId == other.languageId &&
         currencyId == other.currencyId &&
+        sendReminders == other.sendReminders &&
+        showTasksInPortal == other.showTasksInPortal &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
         enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
@@ -2752,7 +2780,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), logoUrl.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), logoUrl.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2796,6 +2824,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enableMilitaryTime', enableMilitaryTime)
           ..add('languageId', languageId)
           ..add('currencyId', currencyId)
+          ..add('sendReminders', sendReminders)
+          ..add('showTasksInPortal', showTasksInPortal)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
           ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
@@ -2922,6 +2952,16 @@ class SettingsEntityBuilder
   String _currencyId;
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
+
+  bool _sendReminders;
+  bool get sendReminders => _$this._sendReminders;
+  set sendReminders(bool sendReminders) =>
+      _$this._sendReminders = sendReminders;
+
+  bool _showTasksInPortal;
+  bool get showTasksInPortal => _$this._showTasksInPortal;
+  set showTasksInPortal(bool showTasksInPortal) =>
+      _$this._showTasksInPortal = showTasksInPortal;
 
   String _defaultInvoiceTerms;
   String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
@@ -3150,6 +3190,8 @@ class SettingsEntityBuilder
       _enableMilitaryTime = _$v.enableMilitaryTime;
       _languageId = _$v.languageId;
       _currencyId = _$v.currencyId;
+      _sendReminders = _$v.sendReminders;
+      _showTasksInPortal = _$v.showTasksInPortal;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
       _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
@@ -3234,6 +3276,8 @@ class SettingsEntityBuilder
               enableMilitaryTime: enableMilitaryTime,
               languageId: languageId,
               currencyId: currencyId,
+              sendReminders: sendReminders,
+              showTasksInPortal: showTasksInPortal,
               defaultInvoiceTerms: defaultInvoiceTerms,
               enableInvoiceTaxes: enableInvoiceTaxes,
               enableInvoiceItemTaxes: enableInvoiceItemTaxes,
