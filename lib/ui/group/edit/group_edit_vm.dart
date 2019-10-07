@@ -28,6 +28,7 @@ class GroupEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return GroupEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.group.id),
         );
       },
     );
