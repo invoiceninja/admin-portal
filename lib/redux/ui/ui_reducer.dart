@@ -188,6 +188,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..client.replace(action.client ?? state.client)
       ..origClient.replace(action.client ?? state.origClient)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
+      ..section = action.section ?? state.section
       ..isChanged = false
       ..entityType = action.client != null
           ? EntityType.client

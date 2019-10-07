@@ -90,8 +90,8 @@ class GroupViewVM {
           if (longPress) {
             handleGroupAction(context, group, EntityAction.newClient);
           } else {
-            //store.dispatch(FilterClientByEntity(
-            //entityId: client.id, entityType: EntityType.client));
+            store.dispatch(FilterClientsByEntity(
+                entityId: group.id, entityType: EntityType.group));
             store.dispatch(ViewClientList(context: context));
           }
         });

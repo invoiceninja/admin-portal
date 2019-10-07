@@ -242,6 +242,13 @@ class SortClients implements PersistUI {
   final String field;
 }
 
+class FilterClientsByEntity implements PersistUI {
+  FilterClientsByEntity({this.entityId, this.entityType});
+
+  final String entityId;
+  final EntityType entityType;
+}
+
 class FilterClientsByState implements PersistUI {
   FilterClientsByState(this.state);
 
