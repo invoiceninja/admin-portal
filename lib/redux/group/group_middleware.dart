@@ -192,7 +192,6 @@ Middleware<AppState> _saveGroup(GroupRepository repository) {
       if (groupUIState.saveCompleter != null) {
         groupUIState.saveCompleter.complete(group);
       }
-      action.completer.complete(group);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveGroupFailure(error));
