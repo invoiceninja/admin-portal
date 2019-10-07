@@ -735,6 +735,15 @@ abstract class SettingsEntity
 
   bool get hasTimezone => timezoneId != null && timezoneId.isNotEmpty;
 
+  bool get hasDateFormat => dateFormatId != null && dateFormatId.isNotEmpty;
+
+  bool get hasDatetimeFormat =>
+      datetimeFormatId != null && datetimeFormatId.isNotEmpty;
+
+  bool get hasLanguage => languageId != null && languageId.isNotEmpty;
+
+  bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
+
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {
     if (invoiceFields != null && invoiceFields.isNotEmpty) {

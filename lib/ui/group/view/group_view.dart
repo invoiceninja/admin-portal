@@ -102,6 +102,7 @@ class SettingsViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final staticState = state.staticState;
 
     return FieldGrid({
       localization.name: settings.name,
@@ -114,8 +115,26 @@ class SettingsViewer extends StatelessWidget {
       localization.vatNumber: settings.vatNumber,
       localization.website: settings.website,
       localization.timezone: settings.hasTimezone
-          ? state.staticState.timezoneMap[settings.timezoneId]?.name
+          ? staticState.timezoneMap[settings.timezoneId]?.name
           : null,
+      localization.dateFormat: settings.hasDateFormat
+          ? staticState.dateFormatMap[settings.dateFormatId]?.format
+          : null,
+      localization.datetimeFormat: settings.hasDatetimeFormat
+          ? staticState.datetimeFormatMap[settings.datetimeFormatId]?.format
+          : null,
+      localization.militaryTime:
+          settings.enableMilitaryTime ? localization.enabled : null,
+      localization.language: settings.hasLanguage
+          ? staticState.languageMap[settings.languageId]?.name
+          : null,
+      localization.currency: settings.hasCurrency
+          ? staticState.currencyMap[settings.currencyId]?.name
+          : null,
+      localization.sendReminders:
+          settings.sendReminders ? localization.enabled : null,
+      localization.showTasks:
+          settings.showTasksInPortal ? localization.enabled : null,
     });
   }
 }

@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'date_format': 'Date Format',
+      'datetime_format': 'Datetime Format',
+      'military_time': 'Military Time',
+      'send_reminders': 'Send Reminders',
       'timezone': 'Timezone',
       'filtered_by_group': 'Filtered by Group',
       'filtered_by_client': 'Filtered by Client',
@@ -14728,6 +14732,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get group => _localizedValues[localeCode]['group'];
 
   String get timezone => _localizedValues[localeCode]['timezone'];
+
+  String get dateFormat => _localizedValues[localeCode]['date_format'];
+
+  String get datetimeFormat => _localizedValues[localeCode]['datetime_format'];
+
+  String get militaryTime => _localizedValues[localeCode]['military_time'];
+
+  String get sendReminders => _localizedValues[localeCode]['send_reminders'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
