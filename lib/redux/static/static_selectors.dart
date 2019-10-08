@@ -56,6 +56,20 @@ List<String> currencyList(BuiltMap<String, CurrencyEntity> currencyMap) {
   return list;
 }
 
+var memoizedTimezoneList = memo1(
+        (BuiltMap<String, TimezoneEntity> timezoneMap) =>
+        timezoneList(timezoneMap));
+
+List<String> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
+  final list = timezoneMap.keys.toList();
+
+  list.sort((idA, idB) => timezoneMap[idA]
+      .listDisplayName
+      .compareTo(timezoneMap[idB].listDisplayName));
+
+  return list;
+}
+
 var memoizedIndustryList = memo1(
     (BuiltMap<String, IndustryEntity> industryMap) =>
         industryList(industryMap));

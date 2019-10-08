@@ -37,6 +37,7 @@ class EntityType extends EnumClass {
   static const EntityType taskStatus = _$taskStatus;
   static const EntityType document = _$document;
   static const EntityType group = _$group;
+  static const EntityType timezone = _$timezone;
 
   String get plural {
     return toString() + 's';

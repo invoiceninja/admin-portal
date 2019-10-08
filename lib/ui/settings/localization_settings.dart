@@ -140,6 +140,17 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             onSelected: (SelectableEntity language) => viewModel.onChanged(
                 settings.rebuild((b) => b..languageId = language.id)),
           ),
+          EntityDropdown(
+            key: ValueKey('__timezone_${settings.timezoneId}'),
+            entityType: EntityType.timezone,
+            entityMap: state.staticState.timezoneMap,
+            entityList: memoizedTimezoneList(state.staticState.timezoneMap),
+            labelText: localization.timezone,
+            initialValue:
+            state.staticState.timezoneMap[settings.timezoneId]?.name,
+            onSelected: (SelectableEntity timezone) => viewModel.onChanged(
+                settings.rebuild((b) => b..timezoneId = timezone.id)),
+          ),
         ],
       ),
     );

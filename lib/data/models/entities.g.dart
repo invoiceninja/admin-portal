@@ -31,6 +31,7 @@ const EntityType _$paymentType = const EntityType._('paymentType');
 const EntityType _$taskStatus = const EntityType._('taskStatus');
 const EntityType _$document = const EntityType._('document');
 const EntityType _$group = const EntityType._('group');
+const EntityType _$timezone = const EntityType._('timezone');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -84,6 +85,8 @@ EntityType _$typeValueOf(String name) {
       return _$document;
     case 'group':
       return _$group;
+    case 'timezone':
+      return _$timezone;
     default:
       throw new ArgumentError(name);
   }
@@ -116,6 +119,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$taskStatus,
   _$document,
   _$group,
+  _$timezone,
 ]);
 
 const EntityState _$active = const EntityState._('active');

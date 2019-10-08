@@ -119,15 +119,18 @@ class _$TimezoneEntitySerializer
   Iterable<Object> serialize(Serializers serializers, TimezoneEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(String)),
     ];
-
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -143,16 +146,16 @@ class _$TimezoneEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'location':
           result.location = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -354,19 +357,16 @@ class TimezoneItemResponseBuilder
 
 class _$TimezoneEntity extends TimezoneEntity {
   @override
-  final String id;
-  @override
   final String name;
   @override
   final String location;
+  @override
+  final String id;
 
   factory _$TimezoneEntity([void Function(TimezoneEntityBuilder) updates]) =>
       (new TimezoneEntityBuilder()..update(updates)).build();
 
-  _$TimezoneEntity._({this.id, this.name, this.location}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
-    }
+  _$TimezoneEntity._({this.name, this.location, this.id}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('TimezoneEntity', 'name');
     }
@@ -387,22 +387,22 @@ class _$TimezoneEntity extends TimezoneEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is TimezoneEntity &&
-        id == other.id &&
         name == other.name &&
-        location == other.location;
+        location == other.location &&
+        id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, id.hashCode), name.hashCode), location.hashCode));
+    return $jf($jc($jc($jc(0, name.hashCode), location.hashCode), id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TimezoneEntity')
-          ..add('id', id)
           ..add('name', name)
-          ..add('location', location))
+          ..add('location', location)
+          ..add('id', id))
         .toString();
   }
 }
@@ -410,10 +410,6 @@ class _$TimezoneEntity extends TimezoneEntity {
 class TimezoneEntityBuilder
     implements Builder<TimezoneEntity, TimezoneEntityBuilder> {
   _$TimezoneEntity _$v;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -423,13 +419,17 @@ class TimezoneEntityBuilder
   String get location => _$this._location;
   set location(String location) => _$this._location = location;
 
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   TimezoneEntityBuilder();
 
   TimezoneEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
       _name = _$v.name;
       _location = _$v.location;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -451,7 +451,7 @@ class TimezoneEntityBuilder
   @override
   _$TimezoneEntity build() {
     final _$result =
-        _$v ?? new _$TimezoneEntity._(id: id, name: name, location: location);
+        _$v ?? new _$TimezoneEntity._(name: name, location: location, id: id);
     replace(_$result);
     return _$result;
   }
