@@ -53,7 +53,7 @@ android {
         release {
             signingConfig signingConfigs.debug
         }
-    }}
+    }
 }
 
 flutter {
