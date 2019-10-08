@@ -498,7 +498,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
-      'long_press_selection_is_default': 'Long-Press causes multiselect'
+      'long_press_multiselect': 'Long-press Multiselect'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -14650,7 +14650,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get select => _localizedValues[localeCode]['select'];
 
   String get longPressSelectionIsDefault =>
-      _localizedValues[localeCode]['long_press_selection_is_default'];
+      _localizedValues[localeCode]['long_press_multiselect'];
 
   String get all => _localizedValues[localeCode]['all'];
   String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];

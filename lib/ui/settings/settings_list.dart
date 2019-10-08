@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsList extends StatelessWidget {
   const SettingsList({
@@ -102,7 +103,9 @@ class SettingsList extends StatelessWidget {
           SettingsListTile(
             section: kSettingsDeviceSettings,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.cogs,
+            icon: isMobile(context)
+                ? FontAwesomeIcons.mobileAlt
+                : FontAwesomeIcons.desktop,
           ),
         Container(
           color: Theme.of(context).backgroundColor,
