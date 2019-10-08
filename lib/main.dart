@@ -1,5 +1,41 @@
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
+import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
+import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
+import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
+import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
+import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
+import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -17,48 +53,12 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
-import 'package:sentry/sentry.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:redux/redux.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux_logging/redux_logging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:invoiceninja_flutter/.env.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
-import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
-import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
-import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
-import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
-import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
-import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
-import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:sentry/sentry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
@@ -72,12 +72,15 @@ void main({bool isTesting = false}) async {
 
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
+  final longPressSelectionIsDefault =
+      prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? true;
   final requireAuthentication =
       prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
         enableDarkMode: enableDarkMode || isTesting,
+        longPressSelectionIsDefault: longPressSelectionIsDefault,
         requireAuthentication: requireAuthentication,
         layout: AppLayout.tablet,
         isTesting: isTesting,
@@ -280,10 +283,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             LoginScreen.route: (context) => LoginScreen(),
             MainScreen.route: (context) => MainScreen(),
             DashboardScreen.route: (context) => DashboardScreen(),
-            ProductScreen.route: (context) => ProductScreen(),
+            ProductScreen.route: (context) => ProductScreenBuilder(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
-            ClientScreen.route: (context) => ClientScreen(),
+            ClientScreen.route: (context) => ClientScreenBuilder(),
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),
             InvoiceScreen.route: (context) => InvoiceScreen(),

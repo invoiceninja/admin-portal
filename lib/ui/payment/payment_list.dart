@@ -95,7 +95,7 @@ class PaymentList extends StatelessWidget {
                                 paymentClientSelector(paymentId, state);
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: payment,
+                                entities: [payment],
                                 context: context,
                                 userCompany: state.userCompany,
                                 client: client,
@@ -112,7 +112,7 @@ class PaymentList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, payment, action);
+                                      context, [payment], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

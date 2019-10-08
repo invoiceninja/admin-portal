@@ -62,6 +62,11 @@ class SettingsList extends StatelessWidget {
             icon: FontAwesomeIcons.user,
           ),
         SettingsListTile(
+          section: kSettingsUserDetails,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.user,
+        ),
+        SettingsListTile(
           section: kSettingsLocalization,
           viewModel: viewModel,
           icon: FontAwesomeIcons.globe,

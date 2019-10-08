@@ -1,16 +1,17 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:flutter/material.dart';
 
 class ViewQuoteList implements PersistUI {
   ViewQuoteList({this.context, this.force = false});
@@ -338,10 +339,11 @@ class ConvertQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-Future handleQuoteAction(
-    BuildContext context, InvoiceEntity quote, EntityAction action) async {
+Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
+    EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final quote = quotes[0];
 
   switch (action) {
     case EntityAction.edit:

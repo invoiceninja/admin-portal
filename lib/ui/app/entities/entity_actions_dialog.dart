@@ -4,14 +4,18 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showEntityActionsDialog({
-  @required BuildContext context,
-  @required BaseEntity entity,
-  @required UserCompanyEntity userCompany,
-  @required Function(BuildContext, BaseEntity, EntityAction) onEntityAction,
-  ClientEntity client,
-}) async {
-  if (entity == null) {
+Future<void> showEntityActionsDialog(
+    {@required
+        BuildContext context,
+    @required
+        List<BaseEntity> entities,
+    @required
+        UserCompanyEntity userCompany,
+    @required
+        Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction,
+    ClientEntity client,
+    bool multiselect = false}) async {
+  if (entities == null) {
     return;
   }
   final mainContext = context;
@@ -19,15 +23,18 @@ void showEntityActionsDialog({
       context: context,
       builder: (BuildContext dialogContext) {
         final actions = <Widget>[];
-        actions.addAll(entity
+        actions.addAll(entities[0]
             .getActions(
-                userCompany: userCompany, includeEdit: true, client: client)
+                userCompany: userCompany,
+                includeEdit: true,
+                client: client,
+                multiselect: multiselect)
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();
           } else {
             return EntityActionListTile(
-              entity: entity,
+              entities: entities,
               entityAction: entityAction,
               mainContext: mainContext,
               onEntityAction: onEntityAction,
@@ -41,12 +48,15 @@ void showEntityActionsDialog({
 
 class EntityActionListTile extends StatelessWidget {
   const EntityActionListTile(
-      {this.entity, this.entityAction, this.onEntityAction, this.mainContext});
+      {this.entities,
+      this.entityAction,
+      this.onEntityAction,
+      this.mainContext});
 
-  final BaseEntity entity;
+  final List<BaseEntity> entities;
   final EntityAction entityAction;
   final BuildContext mainContext;
-  final Function(BuildContext, BaseEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +67,7 @@ class EntityActionListTile extends StatelessWidget {
       title: Text(localization.lookup(entityAction.toString())),
       onTap: () {
         Navigator.of(context).pop();
-        onEntityAction(mainContext, entity, entityAction);
+        onEntityAction(context, entities, entityAction);
       },
     );
   }

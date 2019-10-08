@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -251,9 +252,10 @@ class FilterPaymentsByEntity implements PersistUI {
 }
 
 void handlePaymentAction(
-    BuildContext context, PaymentEntity payment, EntityAction action) {
+    BuildContext context, List<PaymentEntity> payments, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final payment = payments[0];
 
   switch (action) {
     case EntityAction.edit:

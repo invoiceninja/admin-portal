@@ -65,7 +65,7 @@ class ExpenseList extends StatelessWidget {
                             viewModel.state.vendorState.map[expense.vendorId];
 
                         void showDialog() => showEntityActionsDialog(
-                            entity: expense,
+                            entities: [expense],
                             context: context,
                             userCompany: state.userCompany,
                             client: client,
@@ -84,7 +84,7 @@ class ExpenseList extends StatelessWidget {
                               showDialog();
                             } else {
                               viewModel.onEntityAction(
-                                  context, expense, action);
+                                  context, [expense], action);
                             }
                           },
                           onLongPress: () => showDialog(),

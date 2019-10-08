@@ -1,19 +1,20 @@
 import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
   const InvoiceListBuilder({Key key}) : super(key: key);
@@ -64,7 +65,8 @@ class EntityListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-  final Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<InvoiceEntity>, EntityAction)
+      onEntityAction;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -82,7 +84,7 @@ class InvoiceListVM extends EntityListVM {
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
-    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
   }) : super(
           state: state,
           user: user,
@@ -137,9 +139,9 @@ class InvoiceListVM extends EntityListVM {
           ViewClient(
               clientId: state.invoiceListState.filterEntityId,
               context: context)),
-      onEntityAction:
-          (BuildContext context, BaseEntity invoice, EntityAction action) =>
-              handleInvoiceAction(context, invoice, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> invoices,
+              EntityAction action) =>
+          handleInvoiceAction(context, invoices, action),
     );
   }
 }

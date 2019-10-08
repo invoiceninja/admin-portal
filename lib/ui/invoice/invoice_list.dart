@@ -81,7 +81,7 @@ class InvoiceList extends StatelessWidget {
                                     ClientEntity();
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: invoice,
+                                entities: [invoice],
                                 context: context,
                                 userCompany: state.userCompany,
                                 client: client,
@@ -101,7 +101,7 @@ class InvoiceList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, invoice, action);
+                                      context, [invoice], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

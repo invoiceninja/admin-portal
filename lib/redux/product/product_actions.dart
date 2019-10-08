@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -195,10 +196,16 @@ class FilterProductDropdown {
 }
 
 void handleProductAction(
-    BuildContext context, ProductEntity product, EntityAction action) {
+    BuildContext context, List<BaseEntity> products, EntityAction action) {
+  assert(
+      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
+              .contains(action) ||
+          products.length == 1,
+      'Cannot perform this action on more than one product');
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
+  final product = products[0];
 
   switch (action) {
     case EntityAction.newInvoice:
@@ -213,7 +220,8 @@ void handleProductAction(
       store.dispatch(EditProduct(context: context, product: product));
       break;
     case EntityAction.clone:
-      store.dispatch(EditProduct(context: context, product: product.clone));
+      store.dispatch(EditProduct(
+          context: context, product: (product as ProductEntity).clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(
@@ -229,5 +237,50 @@ void handleProductAction(
       store.dispatch(DeleteProductRequest(
           snackBarCompleter(context, localization.deletedProduct), product.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.productListState.isInMultiselect()) {
+        store.dispatch(StartMultiselect(context: context));
+      }
+
+      if (products.isEmpty) {
+        break;
+      }
+
+      final select = !store.state.productListState.isSelected(product);
+      for (final product in products) {
+        if (select) {
+          store.dispatch(AddToMultiselect(context: context, entity: product));
+        } else {
+          store.dispatch(
+              RemoveFromMultiselect(context: context, entity: product));
+        }
+      }
+      break;
   }
+}
+
+class StartMultiselect {
+  StartMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToMultiselect {
+  AddToMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromMultiselect {
+  RemoveFromMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearMultiselect {
+  ClearMultiselect({@required this.context});
+
+  final BuildContext context;
 }

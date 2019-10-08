@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/project/project_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/project/project_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:redux/redux.dart';
 
 class ProjectListBuilder extends StatelessWidget {
   const ProjectListBuilder({Key key}) : super(key: key);
@@ -83,9 +84,9 @@ class ProjectListVM {
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity project, EntityAction action) =>
-              handleProjectAction(context, project, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> projects,
+              EntityAction action) =>
+          handleProjectAction(context, projects, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -100,7 +101,8 @@ class ProjectListVM {
   final bool isLoaded;
   final Function(BuildContext, ProjectEntity) onProjectTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<ProjectEntity>, EntityAction)
+      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

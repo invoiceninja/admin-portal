@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -36,6 +36,22 @@ class DismissibleEntity extends StatelessWidget {
       actionPane: SlidableDrawerActionPane(),
       key: Key(entity.entityKey + Random().nextInt(100000).toString()),
       actions: <Widget>[
+        IconSlideAction(
+          caption: localization.select,
+          color: Colors.teal,
+          foregroundColor: Colors.white,
+          icon: Icons.check_box,
+          onTap: () => onEntityAction(EntityAction.toggleMultiselect),
+        ),
+        IconSlideAction(
+          caption: localization.more,
+          color: Colors.black45,
+          foregroundColor: Colors.white,
+          icon: Icons.more_vert,
+          onTap: () => onEntityAction(EntityAction.more),
+        ),
+      ],
+      secondaryActions: <Widget>[
         entity.isActive
             ? IconSlideAction(
                 caption: localization.archive,
@@ -51,15 +67,6 @@ class DismissibleEntity extends StatelessWidget {
                 icon: Icons.restore,
                 onTap: () => onEntityAction(EntityAction.restore),
               ),
-        IconSlideAction(
-          caption: localization.more,
-          color: Colors.black45,
-          foregroundColor: Colors.white,
-          icon: Icons.more_vert,
-          onTap: () => onEntityAction(EntityAction.more),
-        ),
-      ],
-      secondaryActions: <Widget>[
         entity.isDeleted ?? false
             ? IconSlideAction(
                 caption: localization.restore,

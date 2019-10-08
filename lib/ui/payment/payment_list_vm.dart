@@ -1,20 +1,21 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/payment/payment_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:redux/redux.dart';
 
 class PaymentListBuilder extends StatelessWidget {
   const PaymentListBuilder({Key key}) : super(key: key);
@@ -79,9 +80,9 @@ class PaymentListVM {
       onPaymentTap: (context, payment) {
         store.dispatch(ViewPayment(paymentId: payment.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity payment, EntityAction action) =>
-              handlePaymentAction(context, payment, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> payments,
+              EntityAction action) =>
+          handlePaymentAction(context, payments, action),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
       onViewClientFilterPressed: (BuildContext context) {
@@ -114,5 +115,6 @@ class PaymentListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewClientFilterPressed;
-  final Function(BuildContext, PaymentEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<PaymentEntity>, EntityAction)
+      onEntityAction;
 }

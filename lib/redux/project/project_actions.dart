@@ -1,16 +1,17 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProjectList implements PersistUI {
   ViewProjectList({@required this.context, this.force = false});
@@ -242,10 +243,11 @@ class FilterProjectsByEntity implements PersistUI {
 }
 
 void handleProjectAction(
-    BuildContext context, ProjectEntity project, EntityAction action) {
+    BuildContext context, List<ProjectEntity> projects, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
+  final project = projects[0];
 
   switch (action) {
     case EntityAction.edit:

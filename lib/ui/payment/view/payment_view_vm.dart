@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
   const PaymentViewScreen({Key key}) : super(key: key);
@@ -69,10 +69,10 @@ class PaymentViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
+              entities: [client],
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -82,9 +82,9 @@ class PaymentViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: invoice,
+              entities: [invoice],
               client: client,
-              onEntityAction: (BuildContext context, BaseEntity invoice,
+              onEntityAction: (BuildContext context, List<BaseEntity> invoice,
                       EntityAction action) =>
                   handleInvoiceAction(context, invoice, action));
         } else {
@@ -92,7 +92,7 @@ class PaymentViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handlePaymentAction(context, payment, action),
+          handlePaymentAction(context, [payment], action),
     );
   }
 

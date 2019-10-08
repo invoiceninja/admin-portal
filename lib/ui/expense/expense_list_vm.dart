@@ -1,20 +1,21 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/expense/expense_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:redux/redux.dart';
 
 class ExpenseListBuilder extends StatelessWidget {
   const ExpenseListBuilder({Key key}) : super(key: key);
@@ -95,9 +96,9 @@ class ExpenseListVM {
       onExpenseTap: (context, expense) {
         store.dispatch(ViewExpense(expenseId: expense.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity expense, EntityAction action) =>
-              handleExpenseAction(context, expense, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> expenses,
+              EntityAction action) =>
+          handleExpenseAction(context, expenses[0], action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -112,7 +113,8 @@ class ExpenseListVM {
   final bool isLoaded;
   final Function(BuildContext, ExpenseEntity) onExpenseTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ExpenseEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<ExpenseEntity>, EntityAction)
+      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

@@ -1,10 +1,11 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/product_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 
 EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -55,6 +56,10 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, FilterProductsByCustom1>(_filterProductsByCustom1),
   TypedReducer<ListUIState, FilterProductsByCustom2>(_filterProductsByCustom2),
+  TypedReducer<ListUIState, StartMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterProductsByState(
@@ -100,6 +105,28 @@ ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
   return productListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState productListState, StartMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState productListState, AddToMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState productListState, RemoveFromMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState productListState, ClearMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final productsReducer = combineReducers<ProductState>([

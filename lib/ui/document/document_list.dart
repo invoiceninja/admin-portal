@@ -47,7 +47,7 @@ class DocumentList extends StatelessWidget {
                             final document = viewModel.documentMap[documentId];
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: document,
+                                entities: [document],
                                 context: context,
                                 userCompany: userCompany,
                                 onEntityAction: viewModel.onEntityAction);
@@ -63,7 +63,7 @@ class DocumentList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, document, action);
+                                      context, [document], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';

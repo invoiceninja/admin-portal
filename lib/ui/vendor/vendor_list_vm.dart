@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/vendor/vendor_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:redux/redux.dart';
 
 class VendorListBuilder extends StatelessWidget {
   const VendorListBuilder({Key key}) : super(key: key);
@@ -77,9 +78,9 @@ class VendorListVM {
       onVendorTap: (context, vendor) {
         store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity vendor, EntityAction action) =>
-              handleVendorAction(context, vendor, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> vendors,
+              EntityAction action) =>
+          handleVendorAction(context, vendors, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -93,7 +94,7 @@ class VendorListVM {
   final bool isLoaded;
   final Function(BuildContext, VendorEntity) onVendorTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, VendorEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<VendorEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

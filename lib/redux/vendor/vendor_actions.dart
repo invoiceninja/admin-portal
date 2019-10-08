@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewVendorList implements PersistUI {
   ViewVendorList({@required this.context, this.force = false});
@@ -266,11 +267,12 @@ class FilterVendorsByEntity implements PersistUI {
 }
 
 void handleVendorAction(
-    BuildContext context, VendorEntity vendor, EntityAction action) {
+    BuildContext context, List<VendorEntity> vendors, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final vendor = vendors[0];
 
   switch (action) {
     case EntityAction.edit:

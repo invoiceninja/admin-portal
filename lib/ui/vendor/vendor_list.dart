@@ -38,7 +38,7 @@ class VendorList extends StatelessWidget {
                             final vendor = viewModel.vendorMap[vendorId];
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: vendor,
+                                entities: [vendor],
                                 context: context,
                                 userCompany: userCompany,
                                 onEntityAction: viewModel.onEntityAction);
@@ -54,7 +54,7 @@ class VendorList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, vendor, action);
+                                      context, [vendor], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

@@ -1,22 +1,23 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class QuoteViewScreen extends StatelessWidget {
   const QuoteViewScreen({Key key}) : super(key: key);
@@ -123,16 +124,16 @@ class QuoteViewVM extends EntityViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
+              entities: [client],
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleQuoteAction(context, quote, action),
+          handleQuoteAction(context, [quote], action),
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b

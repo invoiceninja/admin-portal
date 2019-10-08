@@ -90,7 +90,7 @@ class TaskList extends StatelessWidget {
                                 ClientEntity();
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: task,
+                                entities: [task],
                                 context: context,
                                 userCompany: state.userCompany,
                                 client: client,
@@ -110,7 +110,7 @@ class TaskList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, task, action);
+                                      context, [task], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

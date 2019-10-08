@@ -1,8 +1,9 @@
 import 'dart:async';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
@@ -174,60 +175,60 @@ class SaveClientFailure implements StopSaving {
 }
 
 class ArchiveClientRequest implements StartSaving {
-  ArchiveClientRequest(this.completer, this.clientId);
+  ArchiveClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class ArchiveClientSuccess implements StopSaving, PersistData {
-  ArchiveClientSuccess(this.client);
+  ArchiveClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class ArchiveClientFailure implements StopSaving {
-  ArchiveClientFailure(this.client);
+  ArchiveClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class DeleteClientRequest implements StartSaving {
-  DeleteClientRequest(this.completer, this.clientId);
+  DeleteClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class DeleteClientSuccess implements StopSaving, PersistData {
-  DeleteClientSuccess(this.client);
+  DeleteClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class DeleteClientFailure implements StopSaving {
-  DeleteClientFailure(this.client);
+  DeleteClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class RestoreClientRequest implements StartSaving {
-  RestoreClientRequest(this.completer, this.clientId);
+  RestoreClientRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final String clientId;
+  final List<String> clientIds;
 }
 
 class RestoreClientSuccess implements StopSaving, PersistData {
-  RestoreClientSuccess(this.client);
+  RestoreClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class RestoreClientFailure implements StopSaving {
-  RestoreClientFailure(this.client);
+  RestoreClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class FilterClients {
@@ -268,11 +269,18 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, ClientEntity client, EntityAction action) {
+    BuildContext context, List<ClientEntity> clients, EntityAction action) {
+  assert(
+      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
+              .contains(action) ||
+          clients.length == 1,
+      'Cannot perform this action on more than one client');
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final clientIds = clients.map((client) => client.id).toList();
+  final client = clients[0];
 
   switch (action) {
     case EntityAction.edit:
@@ -298,15 +306,60 @@ void handleClientAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreClientRequest(
-          snackBarCompleter(context, localization.restoredClient), client.id));
+          snackBarCompleter(context, localization.restoredClient), clientIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveClientRequest(
-          snackBarCompleter(context, localization.archivedClient), client.id));
+          snackBarCompleter(context, localization.archivedClient), clientIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteClientRequest(
-          snackBarCompleter(context, localization.deletedClient), client.id));
+          snackBarCompleter(context, localization.deletedClient), clientIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.clientListState.isInMultiselect()) {
+        store.dispatch(StartMultiselect(context: context));
+      }
+
+      if (clients.isEmpty) {
+        break;
+      }
+
+      final select = !store.state.clientListState.isSelected(client);
+      for (final client in clients) {
+        if (select) {
+          store.dispatch(AddToMultiselect(context: context, entity: client));
+        } else {
+          store.dispatch(
+              RemoveFromMultiselect(context: context, entity: client));
+        }
+      }
       break;
   }
+}
+
+class StartMultiselect {
+  StartMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToMultiselect {
+  AddToMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromMultiselect {
+  RemoveFromMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearMultiselect {
+  ClearMultiselect({@required this.context});
+
+  final BuildContext context;
 }

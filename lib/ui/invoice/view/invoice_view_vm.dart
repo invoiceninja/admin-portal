@@ -1,23 +1,24 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:redux/redux.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:redux/redux.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
   const InvoiceViewScreen({Key key}) : super(key: key);
@@ -158,10 +159,10 @@ class InvoiceViewVM extends EntityViewVM {
           showEntityActionsDialog(
               userCompany: state.userCompany,
               context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
+              entities: [client],
+              onEntityAction: (BuildContext context, List<BaseEntity> clients,
                       EntityAction action) =>
-                  handleClientAction(context, client, action));
+                  handleClientAction(context, clients, action));
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -173,10 +174,10 @@ class InvoiceViewVM extends EntityViewVM {
               userCompany: state.userCompany,
               context: context,
               client: client,
-              entity: payment,
-              onEntityAction: (BuildContext context, BaseEntity payment,
+              entities: [payment],
+              onEntityAction: (BuildContext context, List<BaseEntity> payments,
                       EntityAction action) =>
-                  handlePaymentAction(context, payment, action));
+                  handlePaymentAction(context, payments, action));
         } else {
           store.dispatch(ViewPayment(paymentId: payment.id, context: context));
         }
@@ -187,7 +188,7 @@ class InvoiceViewVM extends EntityViewVM {
         store.dispatch(ViewPaymentList(context: context));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleInvoiceAction(context, invoice, action),
+          handleInvoiceAction(context, [invoice], action),
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b

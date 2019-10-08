@@ -76,7 +76,7 @@ class ProjectList extends StatelessWidget {
                                     ClientEntity(id: project.clientId);
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: project,
+                                entities: [project],
                                 context: context,
                                 userCompany: viewModel.state.userCompany,
                                 client: client,
@@ -95,7 +95,7 @@ class ProjectList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, project, action);
+                                      context, [project], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

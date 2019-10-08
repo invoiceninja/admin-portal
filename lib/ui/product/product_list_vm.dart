@@ -1,17 +1,18 @@
 import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/ui/product/product_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/product/product_list.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 
 class ProductListBuilder extends StatelessWidget {
   const ProductListBuilder({Key key}) : super(key: key);
@@ -66,9 +67,9 @@ class ProductListVM {
       onProductTap: (context, product) {
         store.dispatch(ViewProduct(productId: product.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity product, EntityAction action) =>
-              handleProductAction(context, product, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> products,
+              EntityAction action) =>
+          handleProductAction(context, products, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -81,5 +82,6 @@ class ProductListVM {
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ProductEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction)
+      onEntityAction;
 }

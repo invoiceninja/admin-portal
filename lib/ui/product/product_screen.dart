@@ -1,17 +1,27 @@
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/src/store.dart';
 
 class ProductScreen extends StatelessWidget {
+  const ProductScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/product';
+
+  final ProductScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +39,31 @@ class ProductScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.product,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterProducts(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.product,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterProducts(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.done,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => _finishMultiselect(context, 'done', store),
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () => _finishMultiselect(context, 'cancel', store),
+          ),
       ],
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
@@ -73,5 +102,18 @@ class ProductScreen extends StatelessWidget {
             )
           : null,
     );
+  }
+
+  void _finishMultiselect(
+      BuildContext context, String mode, Store<AppState> store) async {
+    if (mode == 'done') {
+      await showEntityActionsDialog(
+          entities: store.state.productListState.selectedEntities,
+          userCompany: viewModel.userCompany,
+          context: context,
+          onEntityAction: viewModel.onEntityAction,
+          multiselect: true);
+    }
+    store.dispatch(ClearMultiselect(context: context));
   }
 }

@@ -78,7 +78,7 @@ class GroupListVM {
         store.dispatch(ViewGroup(groupId: group.id, context: context));
       },
       onEntityAction:
-          (BuildContext context, BaseEntity group, EntityAction action) =>
+          (BuildContext context, List<BaseEntity> group, EntityAction action) =>
               handleGroupAction(context, group, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
@@ -93,7 +93,7 @@ class GroupListVM {
   final bool isLoaded;
   final Function(BuildContext, GroupEntity) onGroupTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, GroupEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }
