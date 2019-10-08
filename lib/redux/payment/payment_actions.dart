@@ -255,30 +255,29 @@ void handlePaymentAction(
     BuildContext context, List<PaymentEntity> payments, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final payment = payments[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditPayment(context: context, payment: payments[0]));
+      store.dispatch(EditPayment(context: context, payment: payment));
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter(context, localization.emailedPayment),
-          payments[0]));
+          snackBarCompleter(context, localization.emailedPayment), payment));
       break;
     case EntityAction.restore:
       store.dispatch(RestorePaymentRequest(
           snackBarCompleter(context, localization.restoredPayment),
-          payments[0].id));
+          payment.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchivePaymentRequest(
           snackBarCompleter(context, localization.archivedPayment),
-          payments[0].id));
+          payment.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeletePaymentRequest(
-          snackBarCompleter(context, localization.deletedPayment),
-          payments[0].id));
+          snackBarCompleter(context, localization.deletedPayment), payment.id));
       break;
   }
 }

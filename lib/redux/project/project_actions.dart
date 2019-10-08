@@ -1,16 +1,17 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProjectList implements PersistUI {
   ViewProjectList({@required this.context, this.force = false});
@@ -246,49 +247,50 @@ void handleProjectAction(
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
+  final project = projects[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditProject(context: context, project: projects[0]));
+      store.dispatch(EditProject(context: context, project: project));
       break;
     case EntityAction.newTask:
       store.dispatch(EditTask(
           task: TaskEntity(isRunning: state.uiState.autoStartTasks)
               .rebuild((b) => b
-                ..projectId = projects[0].id
-                ..clientId = projects[0].clientId),
+                ..projectId = project.id
+                ..clientId = project.clientId),
           context: context));
       break;
     case EntityAction.newInvoice:
       final items =
-          convertProjectToInvoiceItem(project: projects[0], context: context);
+          convertProjectToInvoiceItem(project: project, context: context);
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = projects[0].clientId
+            ..clientId = project.clientId
             ..invoiceItems.addAll(items)),
           context: context));
       break;
     case EntityAction.clone:
-      store.dispatch(EditProject(context: context, project: projects[0].clone));
+      store.dispatch(EditProject(context: context, project: project.clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).restoredProject),
-          projects[0].id));
+          project.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).archivedProject),
-          projects[0].id));
+          project.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).deletedProject),
-          projects[0].id));
+          project.id));
       break;
   }
 }

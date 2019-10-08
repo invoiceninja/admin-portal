@@ -343,27 +343,28 @@ Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
     EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final quote = quotes[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditQuote(context: context, quote: quotes[0]));
+      store.dispatch(EditQuote(context: context, quote: quote));
       break;
     case EntityAction.pdf:
-      viewPdf(quotes[0], context);
+      viewPdf(quote, context);
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(quotes[0].invitationSilentLink)) {
-        await launch(quotes[0].invitationSilentLink,
+      if (await canLaunch(quote.invitationSilentLink)) {
+        await launch(quote.invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
       break;
     case EntityAction.viewInvoice:
       store.dispatch(
-          ViewInvoice(context: context, invoiceId: quotes[0].quoteInvoiceId));
+          ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
       break;
     case EntityAction.convert:
       final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertQuote(completer, quotes[0].id));
+      store.dispatch(ConvertQuote(completer, quote.id));
       completer.future.then((InvoiceEntity invoice) {
         store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
       });
@@ -371,35 +372,32 @@ Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
     case EntityAction.markSent:
       store.dispatch(MarkSentQuoteRequest(
           snackBarCompleter(context, localization.markedQuoteAsSent),
-          quotes[0].id));
+          quote.id));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailQuote(
           completer: snackBarCompleter(context, localization.emailedQuote),
-          quote: quotes[0],
+          quote: quote,
           context: context));
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: quotes[0].cloneToInvoice));
+          EditInvoice(context: context, invoice: quote.cloneToInvoice));
       break;
     case EntityAction.cloneToQuote:
-      store
-          .dispatch(EditQuote(context: context, quote: quotes[0].cloneToQuote));
+      store.dispatch(EditQuote(context: context, quote: quote.cloneToQuote));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(
-          snackBarCompleter(context, localization.restoredQuote),
-          quotes[0].id));
+          snackBarCompleter(context, localization.restoredQuote), quote.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveQuoteRequest(
-          snackBarCompleter(context, localization.archivedQuote),
-          quotes[0].id));
+          snackBarCompleter(context, localization.archivedQuote), quote.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteQuoteRequest(
-          snackBarCompleter(context, localization.deletedQuote), quotes[0].id));
+          snackBarCompleter(context, localization.deletedQuote), quote.id));
       break;
   }
 }

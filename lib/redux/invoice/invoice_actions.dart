@@ -329,30 +329,31 @@ void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final invoice = invoices[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditInvoice(context: context, invoice: invoices[0]));
+      store.dispatch(EditInvoice(context: context, invoice: invoice));
       break;
     case EntityAction.pdf:
-      viewPdf(invoices[0], context);
+      viewPdf(invoice, context);
       break;
     case EntityAction.clientPortal:
-      if (await canLaunch(invoices[0].invitationSilentLink)) {
-        await launch(invoices[0].invitationSilentLink,
+      if (await canLaunch(invoice.invitationSilentLink)) {
+        await launch(invoice.invitationSilentLink,
             forceSafariVC: false, forceWebView: false);
       }
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentInvoiceRequest(
           snackBarCompleter(context, localization.markedInvoiceAsSent),
-          invoices[0].id));
+          invoice.id));
       break;
     case EntityAction.sendEmail:
       if (isMobile(context)) {
         store.dispatch(ShowEmailInvoice(
             completer: snackBarCompleter(context, localization.emailedInvoice),
-            invoice: invoices[0],
+            invoice: invoice,
             context: context));
       } else {
         showDialog<ResponsivePadding>(
@@ -364,30 +365,28 @@ void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: invoices[0].cloneToInvoice));
+          EditInvoice(context: context, invoice: invoice.cloneToInvoice));
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(
-          EditQuote(context: context, quote: invoices[0].cloneToQuote));
+      store.dispatch(EditQuote(context: context, quote: invoice.cloneToQuote));
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
-          context: context, payment: invoices[0].createPayment(company)));
+          context: context, payment: invoice.createPayment(company)));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(
           snackBarCompleter(context, localization.restoredInvoice),
-          invoices[0].id));
+          invoice.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveInvoiceRequest(
           snackBarCompleter(context, localization.archivedInvoice),
-          invoices[0].id));
+          invoice.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter(context, localization.deletedInvoice),
-          invoices[0].id));
+          snackBarCompleter(context, localization.deletedInvoice), invoice.id));
       break;
   }
 }

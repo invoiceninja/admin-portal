@@ -272,30 +272,28 @@ void handleVendorAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final vendor = vendors[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditVendor(context: context, vendor: vendors[0]));
+      store.dispatch(EditVendor(context: context, vendor: vendor));
       break;
     case EntityAction.newExpense:
       store.dispatch(EditExpense(
-          expense: ExpenseEntity(company: company, vendor: vendors[0]),
+          expense: ExpenseEntity(company: company, vendor: vendor),
           context: context));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
-          snackBarCompleter(context, localization.restoredVendor),
-          vendors[0].id));
+          snackBarCompleter(context, localization.restoredVendor), vendor.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter(context, localization.archivedVendor),
-          vendors[0].id));
+          snackBarCompleter(context, localization.archivedVendor), vendor.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteVendorRequest(
-          snackBarCompleter(context, localization.deletedVendor),
-          vendors[0].id));
+          snackBarCompleter(context, localization.deletedVendor), vendor.id));
       break;
   }
 }

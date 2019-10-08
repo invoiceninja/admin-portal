@@ -282,18 +282,19 @@ void handleTaskAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final task = tasks[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditTask(context: context, task: tasks[0]));
+      store.dispatch(EditTask(context: context, task: task));
       break;
     case EntityAction.start:
     case EntityAction.stop:
     case EntityAction.resume:
       final Completer<TaskEntity> completer = new Completer<TaskEntity>();
       final localization = AppLocalization.of(context);
-      store.dispatch(
-          SaveTaskRequest(completer: completer, task: tasks[0].toggle()));
+      store
+          .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
       completer.future.then((savedTask) {
         Scaffold.of(context).showSnackBar(SnackBar(
             content: SnackBarRow(
@@ -313,32 +314,31 @@ void handleTaskAction(
 
       break;
     case EntityAction.newInvoice:
-      final item = convertTaskToInvoiceItem(task: tasks[0], context: context);
+      final item = convertTaskToInvoiceItem(task: task, context: context);
       store.dispatch(EditInvoice(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
-            ..clientId = tasks[0].clientId
+            ..clientId = task.clientId
             ..invoiceItems.add(item)),
           context: context));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(
-          ViewInvoice(invoiceId: tasks[0].invoiceId, context: context));
+      store.dispatch(ViewInvoice(invoiceId: task.invoiceId, context: context));
       break;
     case EntityAction.clone:
-      store.dispatch(EditTask(context: context, task: tasks[0].clone));
+      store.dispatch(EditTask(context: context, task: task.clone));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter(context, localization.restoredTask), tasks[0].id));
+          snackBarCompleter(context, localization.restoredTask), task.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter(context, localization.archivedTask), tasks[0].id));
+          snackBarCompleter(context, localization.archivedTask), task.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter(context, localization.deletedTask), tasks[0].id));
+          snackBarCompleter(context, localization.deletedTask), task.id));
       break;
   }
 }
