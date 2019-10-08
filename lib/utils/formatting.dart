@@ -43,6 +43,7 @@ String formatNumber(
   String clientId,
   String currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
+  bool showCurrencyCode,
   bool zeroIsNull = false,
   bool roundToTwo = false,
 }) {
@@ -134,7 +135,8 @@ String formatNumber(
 
   if (formatNumberType == FormatNumberType.percent) {
     return '$formatted%';
-  } else if (company.settings.showCurrencyCode || currency.symbol.isEmpty) {
+  } else if ((showCurrencyCode ?? company.settings.showCurrencyCode) ||
+      currency.symbol.isEmpty) {
     return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {
     return '$formatted ${currency.symbol.trim()}';

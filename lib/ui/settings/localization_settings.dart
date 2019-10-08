@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LocalizationSettings extends StatefulWidget {
@@ -91,6 +92,43 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             onSelected: (SelectableEntity currency) => viewModel.onChanged(
                 settings.rebuild((b) => b..currencyId = currency.id)),
           ),
+          SizedBox(height: 12),
+          Row(
+            children: <Widget>[
+              Radio(
+                value: false,
+                groupValue: settings.showCurrencyCode,
+                activeColor: Theme.of(context).accentColor,
+                onChanged: (bool value) => viewModel.onChanged(
+                    settings.rebuild((b) => b..showCurrencyCode = false)),
+              ),
+              GestureDetector(
+                child: Text('${localization.symbol}: ' +
+                    formatNumber(1000, context,
+                        showCurrencyCode: false,
+                        currencyId: settings.currencyId)),
+                onTap: () => viewModel.onChanged(
+                    settings.rebuild((b) => b..showCurrencyCode = false)),
+              ),
+              SizedBox(width: 10),
+              Radio(
+                value: true,
+                groupValue: settings.showCurrencyCode,
+                activeColor: Theme.of(context).accentColor,
+                onChanged: (bool value) => viewModel.onChanged(
+                    settings.rebuild((b) => b..showCurrencyCode = true)),
+              ),
+              GestureDetector(
+                child: Text('${localization.code}: ' +
+                    formatNumber(1000, context,
+                        showCurrencyCode: true,
+                        currencyId: settings.currencyId)),
+                onTap: () => viewModel.onChanged(
+                    settings.rebuild((b) => b..showCurrencyCode = true)),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
           EntityDropdown(
             key: ValueKey('__language_${settings.languageId}'),
             entityType: EntityType.language,
