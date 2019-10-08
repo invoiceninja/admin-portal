@@ -8,20 +8,15 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 
 part 'ui_state.g.dart';
 

@@ -12,22 +12,15 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:redux/redux.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-import 'package:redux/redux.dart';
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);

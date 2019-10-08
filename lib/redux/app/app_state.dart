@@ -26,24 +26,14 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
-import 'package:invoiceninja_flutter/redux/company/company_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_state.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-
-import 'package:invoiceninja_flutter/redux/document/document_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 
 part 'app_state.g.dart';
 

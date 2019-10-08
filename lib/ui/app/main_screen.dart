@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -85,7 +86,7 @@ class MainScreen extends StatelessWidget {
                         editWidget: ClientEditScreen()),
                     EntityScreens(
                       entityType: EntityType.product,
-                      listWidget: ProductScreen(),
+                      listWidget: ProductScreenBuilder(),
                       viewWidget: ProductViewScreen(),
                       editWidget: ProductEditScreen(),
                     ),
