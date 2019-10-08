@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/src/store.dart';
 
 class ProductList extends StatelessWidget {
   const ProductList({
@@ -53,8 +52,15 @@ class ProductList extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20.0),
                     child: Checkbox(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        onChanged: (value) =>
-                            _toggleSelectionForAll(store, context),
+                        onChanged: (value) {
+                          final products = viewModel.productList
+                              .map<ProductEntity>((productId) =>
+                                  viewModel.productMap[productId])
+                              .toList();
+
+                          viewModel.onEntityAction(context, products,
+                              EntityAction.toggleMultiselect);
+                        },
                         activeColor: Theme.of(context).accentColor,
                         value: listUIState.selectedEntities.length ==
                             viewModel.productList.length),
@@ -102,13 +108,5 @@ class ProductList extends StatelessWidget {
             );
           }),
     );
-  }
-
-  void _toggleSelectionForAll(Store<AppState> store, BuildContext context) {
-    final products = viewModel.productList
-        .map<ProductEntity>((productId) => viewModel.productMap[productId])
-        .toList();
-
-    viewModel.onEntityAction(context, products, EntityAction.toggleMultiselect);
   }
 }

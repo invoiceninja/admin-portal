@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/src/store.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({
@@ -26,8 +25,9 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
-    final userCompany = store.state.userCompany;
+    final state = store.state;
+    final company = state.selectedCompany;
+    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -53,7 +53,15 @@ class ProductScreen extends StatelessWidget {
               localization.done,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => _finishMultiselect(context, 'done', store),
+            onPressed: () async {
+              await showEntityActionsDialog(
+                  entities: state.productListState.selectedEntities,
+                  userCompany: userCompany,
+                  context: context,
+                  onEntityAction: viewModel.onEntityAction,
+                  multiselect: true);
+              store.dispatch(ClearMultiselect(context: context));
+            },
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
@@ -62,7 +70,9 @@ class ProductScreen extends StatelessWidget {
               localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => _finishMultiselect(context, 'cancel', store),
+            onPressed: () {
+              store.dispatch(ClearMultiselect(context: context));
+            },
           ),
       ],
       body: ProductListBuilder(),
@@ -102,18 +112,5 @@ class ProductScreen extends StatelessWidget {
             )
           : null,
     );
-  }
-
-  void _finishMultiselect(
-      BuildContext context, String mode, Store<AppState> store) async {
-    if (mode == 'done') {
-      await showEntityActionsDialog(
-          entities: store.state.productListState.selectedEntities,
-          userCompany: viewModel.userCompany,
-          context: context,
-          onEntityAction: viewModel.onEntityAction,
-          multiselect: true);
-    }
-    store.dispatch(ClearMultiselect(context: context));
   }
 }

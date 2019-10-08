@@ -11,9 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/src/store.dart';
-
-import 'client_list_vm.dart';
 
 class ClientList extends StatelessWidget {
   const ClientList({
@@ -71,9 +68,17 @@ class ClientList extends StatelessWidget {
                                     child: Checkbox(
                                         materialTapTargetSize:
                                             MaterialTapTargetSize.shrinkWrap,
-                                        onChanged: (value) =>
-                                            _toggleSelectionForAll(
-                                                store, context),
+                                        onChanged: (value) {
+                                          final clients = viewModel.clientList
+                                              .map<ClientEntity>((clientId) =>
+                                                  viewModel.clientMap[clientId])
+                                              .toList();
+
+                                          viewModel.onEntityAction(
+                                              context,
+                                              clients,
+                                              EntityAction.toggleMultiselect);
+                                        },
                                         activeColor:
                                             Theme.of(context).accentColor,
                                         value: state.clientListState
@@ -126,13 +131,5 @@ class ClientList extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  void _toggleSelectionForAll(Store<AppState> store, BuildContext context) {
-    final clients = viewModel.clientList
-        .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
-        .toList();
-
-    viewModel.onEntityAction(context, clients, EntityAction.toggleMultiselect);
   }
 }

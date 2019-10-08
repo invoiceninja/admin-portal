@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/src/store.dart';
 
 import 'client_screen_vm.dart';
 
@@ -55,7 +54,15 @@ class ClientScreen extends StatelessWidget {
               localization.done,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => _finishMultiselect(context, 'done', store),
+            onPressed: () async {
+              await showEntityActionsDialog(
+                  entities: state.clientListState.selectedEntities,
+                  userCompany: userCompany,
+                  context: context,
+                  onEntityAction: viewModel.onEntityAction,
+                  multiselect: true);
+              store.dispatch(ClearMultiselect(context: context));
+            },
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
@@ -64,7 +71,7 @@ class ClientScreen extends StatelessWidget {
               localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => _finishMultiselect(context, 'cancel', store),
+            onPressed: () => store.dispatch(ClearMultiselect(context: context)),
           ),
       ],
       body: ClientListBuilder(),
@@ -104,18 +111,5 @@ class ClientScreen extends StatelessWidget {
             )
           : null,
     );
-  }
-
-  void _finishMultiselect(
-      BuildContext context, String mode, Store<AppState> store) async {
-    if (mode == 'done') {
-      await showEntityActionsDialog(
-          entities: store.state.clientListState.selectedEntities,
-          userCompany: viewModel.userCompany,
-          context: context,
-          onEntityAction: viewModel.onEntityAction,
-          multiselect: true);
-    }
-    store.dispatch(ClearMultiselect(context: context));
   }
 }
