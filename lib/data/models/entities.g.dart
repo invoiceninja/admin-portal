@@ -32,6 +32,7 @@ const EntityType _$taskStatus = const EntityType._('taskStatus');
 const EntityType _$document = const EntityType._('document');
 const EntityType _$group = const EntityType._('group');
 const EntityType _$timezone = const EntityType._('timezone');
+const EntityType _$dateFormat = const EntityType._('dateFormat');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
@@ -87,6 +88,8 @@ EntityType _$typeValueOf(String name) {
       return _$group;
     case 'timezone':
       return _$timezone;
+    case 'dateFormat':
+      return _$dateFormat;
     default:
       throw new ArgumentError(name);
   }
@@ -120,6 +123,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$document,
   _$group,
   _$timezone,
+  _$dateFormat,
 ]);
 
 const EntityState _$active = const EntityState._('active');

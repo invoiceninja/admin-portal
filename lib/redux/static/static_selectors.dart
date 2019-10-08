@@ -70,6 +70,21 @@ List<String> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
   return list;
 }
 
+var memoizedDateFormatList = memo1(
+        (BuiltMap<String, DateFormatEntity> dateFormatMap) =>
+            dateFormatList(dateFormatMap));
+
+List<String> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
+  final list = dateFormatMap.keys.toList();
+
+  list.sort((idA, idB) => dateFormatMap[idA]
+      .listDisplayName
+      .compareTo(dateFormatMap[idB].listDisplayName));
+
+  return list;
+}
+
+
 var memoizedIndustryList = memo1(
     (BuiltMap<String, IndustryEntity> industryMap) =>
         industryList(industryMap));

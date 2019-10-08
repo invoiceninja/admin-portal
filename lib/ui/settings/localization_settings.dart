@@ -151,6 +151,17 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             onSelected: (SelectableEntity timezone) => viewModel.onChanged(
                 settings.rebuild((b) => b..timezoneId = timezone.id)),
           ),
+          EntityDropdown(
+            key: ValueKey('__date_format_${settings.dateFormatId}'),
+            entityType: EntityType.dateFormat,
+            entityMap: state.staticState.dateFormatMap,
+            entityList: memoizedDateFormatList(state.staticState.dateFormatMap),
+            labelText: localization.dateFormat,
+            initialValue:
+            state.staticState.dateFormatMap[settings.dateFormatId]?.preview,
+            onSelected: (SelectableEntity dateFormat) => viewModel.onChanged(
+                settings.rebuild((b) => b..dateFormatId = dateFormat.id)),
+          ),
         ],
       ),
     );
