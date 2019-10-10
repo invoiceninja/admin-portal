@@ -96,44 +96,41 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..currencyId = currency?.id)),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 20),
-            child: Row(
-              children: <Widget>[
-                Radio(
-                  value: false,
-                  groupValue: settings.showCurrencyCode,
-                  activeColor: Theme.of(context).accentColor,
-                  onChanged: (bool value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showCurrencyCode = false)),
+          InputDecorator(
+              decoration: InputDecoration(
+                labelText: localization.currencyFormat,
+              ),
+              isEmpty: settings.showCurrencyCode == null,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<bool>(
+                  value: settings.showCurrencyCode,
+                  isExpanded: true,
+                  isDense: true,
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..showCurrencyCode = value)),
+                  items: [
+                    if (state.settingsUIState.isFiltered)
+                      DropdownMenuItem(
+                        child: Text(''),
+                        value: null,
+                      ),
+                    DropdownMenuItem(
+                      child: Text('${localization.symbol}: ' +
+                          formatNumber(1000, context,
+                              showCurrencyCode: false,
+                              currencyId: settings.currencyId)),
+                      value: false,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('${localization.code}: ' +
+                          formatNumber(1000, context,
+                              showCurrencyCode: true,
+                              currencyId: settings.currencyId)),
+                      value: true,
+                    ),
+                  ].toList(),
                 ),
-                GestureDetector(
-                  child: Text('${localization.symbol}: ' +
-                      formatNumber(1000, context,
-                          showCurrencyCode: false,
-                          currencyId: settings.currencyId)),
-                  onTap: () => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showCurrencyCode = false)),
-                ),
-                SizedBox(width: 10),
-                Radio(
-                  value: true,
-                  groupValue: settings.showCurrencyCode,
-                  activeColor: Theme.of(context).accentColor,
-                  onChanged: (bool value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showCurrencyCode = true)),
-                ),
-                GestureDetector(
-                  child: Text('${localization.code}: ' +
-                      formatNumber(1000, context,
-                          showCurrencyCode: true,
-                          currencyId: settings.currencyId)),
-                  onTap: () => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..showCurrencyCode = true)),
-                ),
-              ],
-            ),
-          ),
+              )),
           EntityDropdown(
             allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__language_${settings.languageId}'),

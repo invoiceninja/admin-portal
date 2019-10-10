@@ -24,9 +24,9 @@ class ResponsivePadding extends StatelessWidget {
         child: Padding(
             child: child,
             padding: EdgeInsets.only(
-                top: kMobileDialogPadding * 2,
-                bottom: (kMobileDialogPadding * 2) +
-                    MediaQuery.of(context).viewInsets.bottom)),
+                top: kMobileDialogPadding * 2)),
+                //bottom: (kMobileDialogPadding * 2) +
+                    //MediaQuery.of(context).viewInsets.bottom)),
         widthFactor: .7,
       );
     }

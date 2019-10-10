@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'currency_format': 'Currency Format',
       'first_day_of_the_week': 'First day of the week',
       'first_month_of_the_year': 'First month of the year',
       'sunday': 'Sunday',
@@ -14825,6 +14826,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get firstDayOfTheWeek => _localizedValues[localeCode]['first_day_of_the_week'];
 
   String get firstMonthOfTheYear => _localizedValues[localeCode]['first_month_of_the_year'];
+
+  String get currencyFormat => _localizedValues[localeCode]['currency_format'];
 
 
   String lookup(String key) {

@@ -302,7 +302,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'Group ID: ${uiState.clientUIState.editing.groupId}';
+    return 'showCurrencyCode: ${uiState.settingsUIState.settings.showCurrencyCode}';
     //return 'Section: ${uiState.settingsUIState.section}';
     //return 'URL: ${userCompany.token.token}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
