@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -96,41 +97,21 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..currencyId = currency?.id)),
           ),
-          InputDecorator(
-              decoration: InputDecoration(
-                labelText: localization.currencyFormat,
-              ),
-              isEmpty: settings.showCurrencyCode == null,
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<bool>(
-                  value: settings.showCurrencyCode,
-                  isExpanded: true,
-                  isDense: true,
-                  onChanged: (value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..showCurrencyCode = value)),
-                  items: [
-                    if (state.settingsUIState.isFiltered)
-                      DropdownMenuItem(
-                        child: Text(''),
-                        value: null,
-                      ),
-                    DropdownMenuItem(
-                      child: Text('${localization.symbol}: ' +
-                          formatNumber(1000, context,
-                              showCurrencyCode: false,
-                              currencyId: settings.currencyId)),
-                      value: false,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('${localization.code}: ' +
-                          formatNumber(1000, context,
-                              showCurrencyCode: true,
-                              currencyId: settings.currencyId)),
-                      value: true,
-                    ),
-                  ].toList(),
-                ),
-              )),
+          BoolDropdownButton(
+            value: settings.showCurrencyCode,
+            label: localization.currencyFormat,
+            onChanged: (value) => viewModel.onSettingsChanged(settings
+                .rebuild((b) => b..showCurrencyCode = value)),
+            showBlank: state.settingsUIState.isFiltered,
+            trueLabel: '${localization.code}: ' +
+                formatNumber(1000, context,
+                    showCurrencyCode: true,
+                    currencyId: settings.currencyId),
+            falseLabel: '${localization.symbol}: ' +
+                formatNumber(1000, context,
+                    showCurrencyCode: false,
+                    currencyId: settings.currencyId),
+          ),
           EntityDropdown(
             allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__language_${settings.languageId}'),
@@ -170,16 +151,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..dateFormatId = dateFormat?.id)),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 20),
-            child: CheckboxListTile(
-              title: Text(localization.militaryTime),
-              value: settings.enableMilitaryTime,
-              activeColor: Theme.of(context).accentColor,
-              controlAffinity: ListTileControlAffinity.leading,
-              onChanged: (value) => viewModel.onSettingsChanged(
-                  settings.rebuild((b) => b..enableMilitaryTime = value)),
-            ),
+          BoolDropdownButton(
+            label: localization.militaryTime,
+            showBlank: state.settingsUIState.isFiltered,
+            value: settings.enableMilitaryTime,
+            onChanged: (value) => viewModel.onSettingsChanged(
+                settings.rebuild((b) => b..enableMilitaryTime = value)),
           ),
           if (!state.settingsUIState.isFiltered)
             InputDecorator(

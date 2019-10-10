@@ -123,16 +123,18 @@ class SettingsViewer extends StatelessWidget {
       localization.datetimeFormat: settings.hasDatetimeFormat
           ? staticState.datetimeFormatMap[settings.datetimeFormatId]?.format
           : null,
-      localization.militaryTime:
-          settings.enableMilitaryTime ? localization.enabled : null,
+      localization.militaryTime: settings.enableMilitaryTime == true
+          ? localization.enabled
+          : settings.enableMilitaryTime == false ? localization.disabled : null,
       localization.language: settings.hasLanguage
           ? staticState.languageMap[settings.languageId]?.name
           : null,
       localization.currency: settings.hasCurrency
           ? staticState.currencyMap[settings.currencyId]?.name
           : null,
-      localization.sendReminders:
-          settings.sendReminders ? localization.enabled : null,
+      localization.sendReminders: settings.sendReminders == true
+          ? localization.enabled
+          : settings.sendReminders == false ? localization.disabled : null,
       localization.showTasks:
           settings.showTasksInPortal ? localization.enabled : null,
       localization.paymentType: settings.hasDefaultPaymentTypeId
