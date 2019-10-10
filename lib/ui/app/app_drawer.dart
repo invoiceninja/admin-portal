@@ -477,7 +477,7 @@ class SidebarFooter extends StatelessWidget {
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.mail),
-            onPressed: () => launch('https://www.invoiceninja.com/contact'),
+            onPressed: () => launch('mailto:contact@invoiceninja.com?subject=Mobile%20App%20-%20v$kAppVersion'),
           ),
           IconButton(
             icon: Icon(Icons.help_outline),
