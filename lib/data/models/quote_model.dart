@@ -71,6 +71,7 @@ abstract class QuoteEntity extends Object
     return _$QuoteEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      settings: SettingsEntity(),
       amount: 0.0,
       balance: 0.0,
       clientId: '',

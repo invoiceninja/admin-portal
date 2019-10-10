@@ -71,6 +71,7 @@ abstract class InvoiceEntity extends Object
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      settings: SettingsEntity(),
       amount: 0.0,
       balance: 0.0,
       clientId: '',
