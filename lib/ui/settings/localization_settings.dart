@@ -103,11 +103,11 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             onChanged: (value) => viewModel.onSettingsChanged(settings
                 .rebuild((b) => b..showCurrencyCode = value)),
             showBlank: state.settingsUIState.isFiltered,
-            trueLabel: '${localization.code}: ' +
+            enabledLabel: '${localization.code}: ' +
                 formatNumber(1000, context,
                     showCurrencyCode: true,
                     currencyId: settings.currencyId),
-            falseLabel: '${localization.symbol}: ' +
+            disabledLabel: '${localization.symbol}: ' +
                 formatNumber(1000, context,
                     showCurrencyCode: false,
                     currencyId: settings.currencyId),

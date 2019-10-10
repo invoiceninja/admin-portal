@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'default_value': 'Default value',
       'disabled': 'Disabled',
       'currency_format': 'Currency Format',
       'first_day_of_the_week': 'First day of the week',
@@ -14831,6 +14832,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get currencyFormat => _localizedValues[localeCode]['currency_format'];
 
   String get disabled => _localizedValues[localeCode]['disabled'];
+
+  String get defaultValue => _localizedValues[localeCode]['default_value'];
 
 
   String lookup(String key) {

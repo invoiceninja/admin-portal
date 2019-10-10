@@ -7,20 +7,22 @@ class BoolDropdownButton extends StatelessWidget {
     @required this.value,
     @required this.onChanged,
     @required this.showBlank,
-    this.trueLabel,
-    this.falseLabel,
+    this.enabledLabel,
+    this.disabledLabel,
   });
 
   final String label;
   final bool value;
   final Function(bool) onChanged;
   final bool showBlank;
-  final String trueLabel;
-  final String falseLabel;
+  final String enabledLabel;
+  final String disabledLabel;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final trueLabel = enabledLabel ?? localization.enabled;
+    final falseLabel = disabledLabel ?? localization.disabled;
 
     return InputDecorator(
         decoration: InputDecoration(
@@ -41,11 +43,11 @@ class BoolDropdownButton extends StatelessWidget {
                       value: null,
                     ),
                     DropdownMenuItem(
-                      child: Text(falseLabel ?? localization.disabled),
+                      child: Text(trueLabel),
                       value: false,
                     ),
                     DropdownMenuItem(
-                      child: Text(trueLabel ?? localization.enabled),
+                      child: Text(falseLabel),
                       value: true,
                     ),
                   ].toList(),
@@ -60,7 +62,7 @@ class BoolDropdownButton extends StatelessWidget {
                     activeColor: Theme.of(context).accentColor,
                   ),
                   GestureDetector(
-                    child: Text(falseLabel ?? localization.disabled),
+                    child: Text(falseLabel),
                     onTap: () => onChanged(false),
                   ),
                   Radio<bool>(
@@ -70,7 +72,7 @@ class BoolDropdownButton extends StatelessWidget {
                     activeColor: Theme.of(context).accentColor,
                   ),
                   GestureDetector(
-                    child: Text(trueLabel ?? localization.enabled),
+                    child: Text(trueLabel),
                     onTap: () => onChanged(true),
                   ),
                 ],
