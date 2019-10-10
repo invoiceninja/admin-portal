@@ -59,6 +59,7 @@ class ProductScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.product)
           ? FloatingActionButton(
+              heroTag: 'product_screen',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(

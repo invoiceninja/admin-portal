@@ -150,6 +150,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: FloatingActionButton(
+          heroTag: 'invoice_edit',
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
             showDialog<InvoiceItemSelector>(

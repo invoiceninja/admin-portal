@@ -90,6 +90,7 @@ class QuoteScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.quote)
           ? FloatingActionButton(
+              heroTag: 'quote_screen',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(EditQuote(

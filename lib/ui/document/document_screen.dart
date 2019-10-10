@@ -54,6 +54,7 @@ class DocumentScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.document)
           ? FloatingActionButton(
+              heroTag: 'document_screen',
               //key: Key(DocumentKeys.documentScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {

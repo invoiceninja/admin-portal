@@ -78,6 +78,7 @@ class ExpenseScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.expense)
           ? FloatingActionButton(
+              heroTag: 'expense_screen',
               //key: Key(ExpenseKeys.expenseScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {

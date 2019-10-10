@@ -137,6 +137,7 @@ class _TaskEditState extends State<TaskEdit>
         floatingActionButton: task.isInvoiced || task.isDeleted
             ? SizedBox()
             : FloatingActionButton(
+                heroTag: 'task_edit',
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () => viewModel.onFabPressed(),
                 child: Icon(

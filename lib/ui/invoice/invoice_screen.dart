@@ -97,6 +97,7 @@ class InvoiceScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.invoice)
           ? FloatingActionButton(
+              heroTag: 'invoice_screen',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 store.dispatch(EditInvoice(

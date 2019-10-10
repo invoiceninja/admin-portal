@@ -58,6 +58,7 @@ class VendorScreen extends StatelessWidget {
       ),
       floatingActionButton: user.canCreate(EntityType.vendor)
           ? FloatingActionButton(
+              heroTag: 'vendor_screen',
               //key: Key(VendorKeys.vendorScreenFABKeyString),
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {

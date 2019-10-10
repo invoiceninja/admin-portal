@@ -219,6 +219,7 @@ class _TaskViewState extends State<TaskView> {
           return task.isInvoiced || task.isDeleted
               ? SizedBox()
               : FloatingActionButton(
+                  heroTag: 'task_view',
                   backgroundColor: Theme.of(context).primaryColorDark,
                   onPressed: () => viewModel.onFabPressed(context),
                   child: Icon(

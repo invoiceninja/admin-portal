@@ -71,6 +71,7 @@ class _ClientViewState extends State<ClientView>
           controller: _controller,
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: 'client_view',
           backgroundColor: Theme.of(context).primaryColorDark,
           onPressed: () {
             showDialog<SimpleDialog>(
