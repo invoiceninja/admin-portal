@@ -180,54 +180,55 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                   settings.rebuild((b) => b..enableMilitaryTime = value)),
             ),
           ),
-          InputDecorator(
-            decoration: InputDecoration(
-              labelText: localization.firstDayOfTheWeek,
+          if (!state.settingsUIState.isFiltered)
+            InputDecorator(
+              decoration: InputDecoration(
+                labelText: localization.firstDayOfTheWeek,
+              ),
+              isEmpty: company.startOfWeek == null,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                    value: company.startOfWeek,
+                    isExpanded: true,
+                    isDense: true,
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..startOfWeek = value)),
+                    items: kDaysOfTheWeek
+                        .map((id, day) => MapEntry<int, DropdownMenuItem<int>>(
+                            id,
+                            DropdownMenuItem<int>(
+                              child: Text(localization.lookup(day)),
+                              value: id,
+                            )))
+                        .values
+                        .toList()),
+              ),
             ),
-            isEmpty: company.startOfWeek == null,
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<int>(
-                  value: company.startOfWeek,
-                  isExpanded: true,
-                  isDense: true,
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..startOfWeek = value)),
-                  items: kDaysOfTheWeek
-                      .map(
-                          (id, day) => MapEntry<int, DropdownMenuItem<int>>(
-                          id,
-                          DropdownMenuItem<int>(
-                            child: Text(localization.lookup(day)),
-                            value: id,
-                          )))
-                      .values
-                      .toList()),
+          if (!state.settingsUIState.isFiltered)
+            InputDecorator(
+              decoration: InputDecoration(
+                labelText: localization.firstMonthOfTheYear,
+              ),
+              isEmpty: company.financialYearStart == null,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<int>(
+                    value: company.financialYearStart,
+                    isExpanded: true,
+                    isDense: true,
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..financialYearStart = value)),
+                    items: kMonthsOfTheYear
+                        .map(
+                            (id, month) => MapEntry<int, DropdownMenuItem<int>>(
+                                id,
+                                DropdownMenuItem<int>(
+                                  child: Text(localization.lookup(month)),
+                                  value: id,
+                                )))
+                        .values
+                        .toList()),
+              ),
             ),
-          ),
-          InputDecorator(
-            decoration: InputDecoration(
-              labelText: localization.firstMonthOfTheYear,
-            ),
-            isEmpty: company.financialYearStart == null,
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<int>(
-                  value: company.financialYearStart,
-                  isExpanded: true,
-                  isDense: true,
-                  onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..financialYearStart = value)),
-                  items: kMonthsOfTheYear
-                      .map(
-                          (id, month) => MapEntry<int, DropdownMenuItem<int>>(
-                          id,
-                          DropdownMenuItem<int>(
-                            child: Text(localization.lookup(month)),
-                            value: id,
-                          )))
-                      .values
-                      .toList()),
-            ),
-          ),
         ],
       ),
     );
