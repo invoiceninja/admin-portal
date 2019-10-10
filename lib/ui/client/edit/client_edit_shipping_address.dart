@@ -121,7 +121,6 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
             decoration: InputDecoration(
               labelText: localization.postalCode,
             ),
-            keyboardType: TextInputType.phone,
           ),
           EntityDropdown(
             key: ValueKey(client.shippingCountryId),
