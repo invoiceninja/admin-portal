@@ -70,8 +70,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text =
-        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
+    _designController.text = invoice.settings.defaultInvoiceDesignId != null
+        ? kInvoiceDesigns[invoice.settings.defaultInvoiceDesignId]
+        : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -295,14 +296,14 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
-            invoice.designId == null // TODO Remove check in v2
+            invoice.settings.defaultInvoiceDesignId == null // TODO Remove check in v2
                 ? SizedBox()
                 : PopupMenuButton<String>(
                     padding: EdgeInsets.zero,
                     onSelected: (String design) {
                       _designController.text = design;
                       viewModel.onChanged(
-                          invoice.rebuild((b) => b..designId = design));
+                          invoice.rebuild((b) => b..settings.defaultInvoiceDesignId = design));
                     },
                     child: InkWell(
                       child: IgnorePointer(

@@ -74,28 +74,17 @@ abstract class QuoteEntity extends Object
       amount: 0.0,
       balance: 0.0,
       clientId: '',
-      quoteStatusId: '',
-      quoteNumber: '',
       discount: 0.0,
       poNumber: '',
-      quoteDate: convertDateTimeToSqlDate(),
       dueDate: '',
-      terms: '',
       publicNotes: '',
       privateNotes: '',
       isQuote: isQuote,
-      isRecurring: false,
-      frequencyId: 0,
-      startDate: '',
-      endDate: '',
-      lastSentDate: '',
-      recurringQuoteId: '',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
       taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
       isAmountDiscount: false,
-      quoteFooter: '',
       partial: 0.0,
       partialDueDate: '',
       hasTasks: false,
@@ -105,21 +94,14 @@ abstract class QuoteEntity extends Object
       customTaxes1: false,
       customTaxes2: false,
       hasExpenses: false,
-      quoteQuoteId: '',
       customTextValue1: '',
       customTextValue2: '',
-      isPublic: false,
       filename: '',
       invoiceItems: BuiltList<InvoiceItemEntity>(),
       invitations: BuiltList<InvitationEntity>(),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      designId: company != null
-          ? (isQuote
-              ? company.settings.defaultQuoteDesignId
-              : company.settings.defaultQuoteDesignId)
-          : '1',
     );
   }
 
@@ -128,11 +110,11 @@ abstract class QuoteEntity extends Object
   QuoteEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false
-    ..quoteQuoteId = null
-    ..quoteNumber = ''
-    ..quoteDate = convertDateTimeToSqlDate()
+    ..quoteInvoiceId = null
+    ..invoiceNumber = ''
+    ..invoiceDate = convertDateTimeToSqlDate()
     ..dueDate = ''
-    ..isPublic = false);
+    ..invoiceStatusId = kQuoteStatusDraft);
 
   QuoteEntity get cloneToQuote => clone.rebuild((b) => b..isQuote = false);
 
@@ -151,11 +133,11 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @BuiltValueField(wireName: 'quote_status_id')
-  String get quoteStatusId;
+  @BuiltValueField(wireName: 'invoice_status_id')
+  String get invoiceStatusId;
 
-  @BuiltValueField(wireName: 'quote_number')
-  String get quoteNumber;
+  @BuiltValueField(wireName: 'invoice_number')
+  String get invoiceNumber;
 
   @override
   double get discount;
@@ -163,13 +145,11 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'po_number')
   String get poNumber;
 
-  @BuiltValueField(wireName: 'quote_date')
-  String get quoteDate;
+  @BuiltValueField(wireName: 'invoice_date')
+  String get invoiceDate;
 
   @BuiltValueField(wireName: 'due_date')
   String get dueDate;
-
-  String get terms;
 
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
@@ -177,9 +157,7 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @BuiltValueField(wireName: 'is_recurring')
-  bool get isRecurring;
-
+  /*
   @BuiltValueField(wireName: 'frequency_id')
   int get frequencyId;
 
@@ -192,8 +170,9 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'last_sent_date')
   String get lastSentDate;
 
-  @BuiltValueField(wireName: 'recurring_quote_id')
-  String get recurringQuoteId;
+  @BuiltValueField(wireName: 'recurring_invoice_id')
+  String get recurringInvoiceId;
+  */
 
   @override
   @BuiltValueField(wireName: 'tax_name1')
@@ -214,9 +193,6 @@ abstract class QuoteEntity extends Object
   @override
   @BuiltValueField(wireName: 'is_amount_discount')
   bool get isAmountDiscount;
-
-  @BuiltValueField(wireName: 'quote_footer')
-  String get quoteFooter;
 
   double get partial;
 
@@ -248,8 +224,8 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;
 
-  @BuiltValueField(wireName: 'quote_quote_id')
-  String get quoteQuoteId;
+  @BuiltValueField(wireName: 'quote_invoice_id')
+  String get quoteInvoiceId;
 
   @BuiltValueField(wireName: 'custom_text_value1')
   String get customTextValue1;
@@ -257,22 +233,17 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'custom_text_value2')
   String get customTextValue2;
 
-  @BuiltValueField(wireName: 'is_public')
-  bool get isPublic;
-
   String get filename;
 
+  SettingsEntity get settings;
+
   @override
-  @BuiltValueField(wireName: 'quote_items')
+  @BuiltValueField(wireName: 'invoice_items')
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
   BuiltList<InvitationEntity> get invitations;
 
-  @nullable
-  @BuiltValueField(wireName: 'quote_design_id')
-  String get designId;
-
-  bool get isApproved => (quoteQuoteId ?? '').isNotEmpty;
+  bool get isApproved => (quoteInvoiceId ?? '').isNotEmpty;
 
   //String get last_login;
   //String get custom_messages;
@@ -290,12 +261,12 @@ abstract class QuoteEntity extends Object
         response = quoteA.updatedAt.compareTo(quoteB.updatedAt);
         break;
       case QuoteFields.quoteDate:
-        response = quoteA.quoteDate.compareTo(quoteB.quoteDate);
+        response = quoteA.invoiceDate.compareTo(quoteB.invoiceDate);
         break;
     }
 
     if (response == 0) {
-      return quoteA.quoteNumber.compareTo(quoteB.quoteNumber);
+      return quoteA.invoiceNumber.compareTo(quoteB.invoiceNumber);
     } else {
       return response;
     }
@@ -308,7 +279,7 @@ abstract class QuoteEntity extends Object
     }
 
     for (final status in statuses) {
-      if (status.id == quoteStatusId) {
+      if (status.id == invoiceStatusId) {
         return true;
       }
 
@@ -326,7 +297,7 @@ abstract class QuoteEntity extends Object
       return true;
     }
 
-    if (quoteNumber.toLowerCase().contains(filter)) {
+    if (invoiceNumber.toLowerCase().contains(filter)) {
       return true;
     } else if (customTextValue1.isNotEmpty &&
         customTextValue1.toLowerCase().contains(filter)) {
@@ -372,12 +343,12 @@ abstract class QuoteEntity extends Object
       if (userCompany.canCreate(EntityType.quote)) {
         if (isQuote &&
             userCompany.canEditEntity(this) &&
-            quoteQuoteId == null) {
+            quoteInvoiceId == null) {
           actions.add(EntityAction.convert);
         }
       }
 
-      if (userCompany.canEditEntity(this) && !isPublic) {
+      if (userCompany.canEditEntity(this) && !isSent) {
         actions.add(EntityAction.markSent);
       }
 
@@ -391,7 +362,7 @@ abstract class QuoteEntity extends Object
         actions.add(EntityAction.enterPayment);
       }
 
-      if (isQuote && (quoteQuoteId ?? '').isNotEmpty) {
+      if (isQuote && (quoteInvoiceId ?? '').isNotEmpty) {
         actions.add(EntityAction.viewQuote);
       }
 
@@ -440,7 +411,7 @@ abstract class QuoteEntity extends Object
 
   @override
   String get listDisplayName {
-    return quoteNumber;
+    return invoiceNumber;
   }
 
   @override
@@ -450,11 +421,13 @@ abstract class QuoteEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(quoteDate) <= 0 &&
-        endDate.compareTo(quoteDate) >= 0;
+    return startDate.compareTo(invoiceDate) <= 0 &&
+        endDate.compareTo(invoiceDate) >= 0;
   }
 
   double get requestedAmount => partial > 0 ? partial : amount;
+
+  bool get isSent => invoiceStatusId != kQuoteStatusDraft;
 
   bool get isPastDue {
     if (dueDate.isEmpty) {
@@ -462,7 +435,7 @@ abstract class QuoteEntity extends Object
     }
 
     return !isDeleted &&
-        isPublic &&
+        isSent &&
         DateTime.tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }

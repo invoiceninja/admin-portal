@@ -152,32 +152,11 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'due_date',
       serializers.serialize(object.dueDate,
           specifiedType: const FullType(String)),
-      'terms',
-      serializers.serialize(object.terms,
-          specifiedType: const FullType(String)),
       'public_notes',
       serializers.serialize(object.publicNotes,
           specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
-          specifiedType: const FullType(String)),
-      'is_recurring',
-      serializers.serialize(object.isRecurring,
-          specifiedType: const FullType(bool)),
-      'frequency_id',
-      serializers.serialize(object.frequencyId,
-          specifiedType: const FullType(int)),
-      'start_date',
-      serializers.serialize(object.startDate,
-          specifiedType: const FullType(String)),
-      'end_date',
-      serializers.serialize(object.endDate,
-          specifiedType: const FullType(String)),
-      'last_sent_date',
-      serializers.serialize(object.lastSentDate,
-          specifiedType: const FullType(String)),
-      'recurring_invoice_id',
-      serializers.serialize(object.recurringInvoiceId,
           specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
@@ -194,9 +173,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'is_amount_discount',
       serializers.serialize(object.isAmountDiscount,
           specifiedType: const FullType(bool)),
-      'invoice_footer',
-      serializers.serialize(object.invoiceFooter,
-          specifiedType: const FullType(String)),
       'partial',
       serializers.serialize(object.partial,
           specifiedType: const FullType(double)),
@@ -233,12 +209,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'custom_text_value2',
       serializers.serialize(object.customTextValue2,
           specifiedType: const FullType(String)),
-      'is_public',
-      serializers.serialize(object.isPublic,
-          specifiedType: const FullType(bool)),
       'filename',
       serializers.serialize(object.filename,
           specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
       'invoice_items',
       serializers.serialize(object.invoiceItems,
           specifiedType: const FullType(
@@ -248,12 +224,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
-    if (object.designId != null) {
-      result
-        ..add('invoice_design_id')
-        ..add(serializers.serialize(object.designId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -351,40 +321,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.dueDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'terms':
-          result.terms = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'public_notes':
           result.publicNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'is_recurring':
-          result.isRecurring = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'frequency_id':
-          result.frequencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'start_date':
-          result.startDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'end_date':
-          result.endDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'last_sent_date':
-          result.lastSentDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'recurring_invoice_id':
-          result.recurringInvoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'tax_name1':
@@ -406,10 +348,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'is_amount_discount':
           result.isAmountDiscount = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'invoice_footer':
-          result.invoiceFooter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'partial':
           result.partial = serializers.deserialize(value,
@@ -459,13 +397,13 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.customTextValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'is_public':
-          result.isPublic = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'filename':
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'invoice_items':
           result.invoiceItems.replace(serializers.deserialize(value,
@@ -478,10 +416,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvitationEntity)]))
               as BuiltList<dynamic>);
-          break;
-        case 'invoice_design_id':
-          result.designId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1065,23 +999,9 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String dueDate;
   @override
-  final String terms;
-  @override
   final String publicNotes;
   @override
   final String privateNotes;
-  @override
-  final bool isRecurring;
-  @override
-  final int frequencyId;
-  @override
-  final String startDate;
-  @override
-  final String endDate;
-  @override
-  final String lastSentDate;
-  @override
-  final String recurringInvoiceId;
   @override
   final String taxName1;
   @override
@@ -1092,8 +1012,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   final double taxRate2;
   @override
   final bool isAmountDiscount;
-  @override
-  final String invoiceFooter;
   @override
   final double partial;
   @override
@@ -1119,15 +1037,13 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String customTextValue2;
   @override
-  final bool isPublic;
-  @override
   final String filename;
+  @override
+  final SettingsEntity settings;
   @override
   final BuiltList<InvoiceItemEntity> invoiceItems;
   @override
   final BuiltList<InvitationEntity> invitations;
-  @override
-  final String designId;
   @override
   final bool isChanged;
   @override
@@ -1157,21 +1073,13 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.poNumber,
       this.invoiceDate,
       this.dueDate,
-      this.terms,
       this.publicNotes,
       this.privateNotes,
-      this.isRecurring,
-      this.frequencyId,
-      this.startDate,
-      this.endDate,
-      this.lastSentDate,
-      this.recurringInvoiceId,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
       this.taxRate2,
       this.isAmountDiscount,
-      this.invoiceFooter,
       this.partial,
       this.partialDueDate,
       this.hasTasks,
@@ -1184,11 +1092,10 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.quoteInvoiceId,
       this.customTextValue1,
       this.customTextValue2,
-      this.isPublic,
       this.filename,
+      this.settings,
       this.invoiceItems,
       this.invitations,
-      this.designId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1227,32 +1134,11 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (dueDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'dueDate');
     }
-    if (terms == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'terms');
-    }
     if (publicNotes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'publicNotes');
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'privateNotes');
-    }
-    if (isRecurring == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'isRecurring');
-    }
-    if (frequencyId == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'frequencyId');
-    }
-    if (startDate == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'startDate');
-    }
-    if (endDate == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'endDate');
-    }
-    if (lastSentDate == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'lastSentDate');
-    }
-    if (recurringInvoiceId == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'recurringInvoiceId');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxName1');
@@ -1268,9 +1154,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (isAmountDiscount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'isAmountDiscount');
-    }
-    if (invoiceFooter == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceFooter');
     }
     if (partial == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'partial');
@@ -1308,11 +1191,11 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (customTextValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customTextValue2');
     }
-    if (isPublic == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'isPublic');
-    }
     if (filename == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'filename');
+    }
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'settings');
     }
     if (invoiceItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceItems');
@@ -1343,21 +1226,13 @@ class _$InvoiceEntity extends InvoiceEntity {
         poNumber == other.poNumber &&
         invoiceDate == other.invoiceDate &&
         dueDate == other.dueDate &&
-        terms == other.terms &&
         publicNotes == other.publicNotes &&
         privateNotes == other.privateNotes &&
-        isRecurring == other.isRecurring &&
-        frequencyId == other.frequencyId &&
-        startDate == other.startDate &&
-        endDate == other.endDate &&
-        lastSentDate == other.lastSentDate &&
-        recurringInvoiceId == other.recurringInvoiceId &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
         taxRate2 == other.taxRate2 &&
         isAmountDiscount == other.isAmountDiscount &&
-        invoiceFooter == other.invoiceFooter &&
         partial == other.partial &&
         partialDueDate == other.partialDueDate &&
         hasTasks == other.hasTasks &&
@@ -1370,11 +1245,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         quoteInvoiceId == other.quoteInvoiceId &&
         customTextValue1 == other.customTextValue1 &&
         customTextValue2 == other.customTextValue2 &&
-        isPublic == other.isPublic &&
         filename == other.filename &&
+        settings == other.settings &&
         invoiceItems == other.invoiceItems &&
         invitations == other.invitations &&
-        designId == other.designId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1404,19 +1278,19 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), terms.hashCode), publicNotes.hashCode), privateNotes.hashCode), isRecurring.hashCode), frequencyId.hashCode), startDate.hashCode), endDate.hashCode), lastSentDate.hashCode), recurringInvoiceId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), invoiceFooter.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode),
-                                                                                customValue2.hashCode),
-                                                                            customTaxes1.hashCode),
-                                                                        customTaxes2.hashCode),
-                                                                    hasExpenses.hashCode),
-                                                                quoteInvoiceId.hashCode),
-                                                            customTextValue1.hashCode),
-                                                        customTextValue2.hashCode),
-                                                    isPublic.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customTaxes1.hashCode),
+                                                                    customTaxes2.hashCode),
+                                                                hasExpenses.hashCode),
+                                                            quoteInvoiceId.hashCode),
+                                                        customTextValue1.hashCode),
+                                                    customTextValue2.hashCode),
                                                 filename.hashCode),
-                                            invoiceItems.hashCode),
-                                        invitations.hashCode),
-                                    designId.hashCode),
+                                            settings.hashCode),
+                                        invoiceItems.hashCode),
+                                    invitations.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
@@ -1439,21 +1313,13 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('poNumber', poNumber)
           ..add('invoiceDate', invoiceDate)
           ..add('dueDate', dueDate)
-          ..add('terms', terms)
           ..add('publicNotes', publicNotes)
           ..add('privateNotes', privateNotes)
-          ..add('isRecurring', isRecurring)
-          ..add('frequencyId', frequencyId)
-          ..add('startDate', startDate)
-          ..add('endDate', endDate)
-          ..add('lastSentDate', lastSentDate)
-          ..add('recurringInvoiceId', recurringInvoiceId)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
           ..add('taxRate2', taxRate2)
           ..add('isAmountDiscount', isAmountDiscount)
-          ..add('invoiceFooter', invoiceFooter)
           ..add('partial', partial)
           ..add('partialDueDate', partialDueDate)
           ..add('hasTasks', hasTasks)
@@ -1466,11 +1332,10 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('quoteInvoiceId', quoteInvoiceId)
           ..add('customTextValue1', customTextValue1)
           ..add('customTextValue2', customTextValue2)
-          ..add('isPublic', isPublic)
           ..add('filename', filename)
+          ..add('settings', settings)
           ..add('invoiceItems', invoiceItems)
           ..add('invitations', invitations)
-          ..add('designId', designId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1528,10 +1393,6 @@ class InvoiceEntityBuilder
   String get dueDate => _$this._dueDate;
   set dueDate(String dueDate) => _$this._dueDate = dueDate;
 
-  String _terms;
-  String get terms => _$this._terms;
-  set terms(String terms) => _$this._terms = terms;
-
   String _publicNotes;
   String get publicNotes => _$this._publicNotes;
   set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
@@ -1539,31 +1400,6 @@ class InvoiceEntityBuilder
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
-
-  bool _isRecurring;
-  bool get isRecurring => _$this._isRecurring;
-  set isRecurring(bool isRecurring) => _$this._isRecurring = isRecurring;
-
-  int _frequencyId;
-  int get frequencyId => _$this._frequencyId;
-  set frequencyId(int frequencyId) => _$this._frequencyId = frequencyId;
-
-  String _startDate;
-  String get startDate => _$this._startDate;
-  set startDate(String startDate) => _$this._startDate = startDate;
-
-  String _endDate;
-  String get endDate => _$this._endDate;
-  set endDate(String endDate) => _$this._endDate = endDate;
-
-  String _lastSentDate;
-  String get lastSentDate => _$this._lastSentDate;
-  set lastSentDate(String lastSentDate) => _$this._lastSentDate = lastSentDate;
-
-  String _recurringInvoiceId;
-  String get recurringInvoiceId => _$this._recurringInvoiceId;
-  set recurringInvoiceId(String recurringInvoiceId) =>
-      _$this._recurringInvoiceId = recurringInvoiceId;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1585,11 +1421,6 @@ class InvoiceEntityBuilder
   bool get isAmountDiscount => _$this._isAmountDiscount;
   set isAmountDiscount(bool isAmountDiscount) =>
       _$this._isAmountDiscount = isAmountDiscount;
-
-  String _invoiceFooter;
-  String get invoiceFooter => _$this._invoiceFooter;
-  set invoiceFooter(String invoiceFooter) =>
-      _$this._invoiceFooter = invoiceFooter;
 
   double _partial;
   double get partial => _$this._partial;
@@ -1643,13 +1474,14 @@ class InvoiceEntityBuilder
   set customTextValue2(String customTextValue2) =>
       _$this._customTextValue2 = customTextValue2;
 
-  bool _isPublic;
-  bool get isPublic => _$this._isPublic;
-  set isPublic(bool isPublic) => _$this._isPublic = isPublic;
-
   String _filename;
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
+
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
   ListBuilder<InvoiceItemEntity> _invoiceItems;
   ListBuilder<InvoiceItemEntity> get invoiceItems =>
@@ -1662,10 +1494,6 @@ class InvoiceEntityBuilder
       _$this._invitations ??= new ListBuilder<InvitationEntity>();
   set invitations(ListBuilder<InvitationEntity> invitations) =>
       _$this._invitations = invitations;
-
-  String _designId;
-  String get designId => _$this._designId;
-  set designId(String designId) => _$this._designId = designId;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -1709,21 +1537,13 @@ class InvoiceEntityBuilder
       _poNumber = _$v.poNumber;
       _invoiceDate = _$v.invoiceDate;
       _dueDate = _$v.dueDate;
-      _terms = _$v.terms;
       _publicNotes = _$v.publicNotes;
       _privateNotes = _$v.privateNotes;
-      _isRecurring = _$v.isRecurring;
-      _frequencyId = _$v.frequencyId;
-      _startDate = _$v.startDate;
-      _endDate = _$v.endDate;
-      _lastSentDate = _$v.lastSentDate;
-      _recurringInvoiceId = _$v.recurringInvoiceId;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
       _taxRate2 = _$v.taxRate2;
       _isAmountDiscount = _$v.isAmountDiscount;
-      _invoiceFooter = _$v.invoiceFooter;
       _partial = _$v.partial;
       _partialDueDate = _$v.partialDueDate;
       _hasTasks = _$v.hasTasks;
@@ -1736,11 +1556,10 @@ class InvoiceEntityBuilder
       _quoteInvoiceId = _$v.quoteInvoiceId;
       _customTextValue1 = _$v.customTextValue1;
       _customTextValue2 = _$v.customTextValue2;
-      _isPublic = _$v.isPublic;
       _filename = _$v.filename;
+      _settings = _$v.settings?.toBuilder();
       _invoiceItems = _$v.invoiceItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
-      _designId = _$v.designId;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1782,21 +1601,13 @@ class InvoiceEntityBuilder
               poNumber: poNumber,
               invoiceDate: invoiceDate,
               dueDate: dueDate,
-              terms: terms,
               publicNotes: publicNotes,
               privateNotes: privateNotes,
-              isRecurring: isRecurring,
-              frequencyId: frequencyId,
-              startDate: startDate,
-              endDate: endDate,
-              lastSentDate: lastSentDate,
-              recurringInvoiceId: recurringInvoiceId,
               taxName1: taxName1,
               taxRate1: taxRate1,
               taxName2: taxName2,
               taxRate2: taxRate2,
               isAmountDiscount: isAmountDiscount,
-              invoiceFooter: invoiceFooter,
               partial: partial,
               partialDueDate: partialDueDate,
               hasTasks: hasTasks,
@@ -1809,11 +1620,10 @@ class InvoiceEntityBuilder
               quoteInvoiceId: quoteInvoiceId,
               customTextValue1: customTextValue1,
               customTextValue2: customTextValue2,
-              isPublic: isPublic,
               filename: filename,
+              settings: settings.build(),
               invoiceItems: invoiceItems.build(),
               invitations: invitations.build(),
-              designId: designId,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1824,6 +1634,8 @@ class InvoiceEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'settings';
+        settings.build();
         _$failedField = 'invoiceItems';
         invoiceItems.build();
         _$failedField = 'invitations';

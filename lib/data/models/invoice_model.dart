@@ -80,22 +80,14 @@ abstract class InvoiceEntity extends Object
       poNumber: '',
       invoiceDate: convertDateTimeToSqlDate(),
       dueDate: '',
-      terms: '',
       publicNotes: '',
       privateNotes: '',
       isQuote: isQuote,
-      isRecurring: false,
-      frequencyId: 0,
-      startDate: '',
-      endDate: '',
-      lastSentDate: '',
-      recurringInvoiceId: '',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
       taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
       isAmountDiscount: false,
-      invoiceFooter: '',
       partial: 0.0,
       partialDueDate: '',
       hasTasks: false,
@@ -108,18 +100,12 @@ abstract class InvoiceEntity extends Object
       quoteInvoiceId: '',
       customTextValue1: '',
       customTextValue2: '',
-      isPublic: false,
       filename: '',
       invoiceItems: BuiltList<InvoiceItemEntity>(),
       invitations: BuiltList<InvitationEntity>(),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
-      designId: company != null
-          ? (isQuote
-              ? company.settings.defaultQuoteDesignId
-              : company.settings.defaultInvoiceDesignId)
-          : '1',
     );
   }
 
@@ -132,8 +118,7 @@ abstract class InvoiceEntity extends Object
     ..quoteInvoiceId = null
     ..invoiceNumber = ''
     ..invoiceDate = convertDateTimeToSqlDate()
-    ..dueDate = ''
-    ..isPublic = false);
+    ..dueDate = '');
 
   @override
   EntityType get entityType {
@@ -168,17 +153,13 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'due_date')
   String get dueDate;
 
-  String get terms;
-
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  @BuiltValueField(wireName: 'is_recurring')
-  bool get isRecurring;
-
+  /*
   @BuiltValueField(wireName: 'frequency_id')
   int get frequencyId;
 
@@ -193,6 +174,7 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'recurring_invoice_id')
   String get recurringInvoiceId;
+  */
 
   @override
   @BuiltValueField(wireName: 'tax_name1')
@@ -213,9 +195,6 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'is_amount_discount')
   bool get isAmountDiscount;
-
-  @BuiltValueField(wireName: 'invoice_footer')
-  String get invoiceFooter;
 
   double get partial;
 
@@ -256,20 +235,15 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'custom_text_value2')
   String get customTextValue2;
 
-  @BuiltValueField(wireName: 'is_public')
-  bool get isPublic;
-
   String get filename;
+
+  SettingsEntity get settings;
 
   @override
   @BuiltValueField(wireName: 'invoice_items')
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
   BuiltList<InvitationEntity> get invitations;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_design_id')
-  String get designId;
 
   bool get isApproved =>
       invoiceStatusId == kInvoiceStatusApproved ||
@@ -379,7 +353,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (userCompany.canEditEntity(this) && !isPublic) {
+      if (userCompany.canEditEntity(this) && !isSent) {
         actions.add(EntityAction.markSent);
       }
 
@@ -459,6 +433,8 @@ abstract class InvoiceEntity extends Object
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
+  bool get isSent => invoiceStatusId != kInvoiceStatusDraft;
+
   bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
 
   bool get isPaid => invoiceStatusId == kInvoiceStatusPaid;
@@ -469,7 +445,7 @@ abstract class InvoiceEntity extends Object
     }
 
     return !isDeleted &&
-        isPublic &&
+        isSent &&
         isUnpaid &&
         DateTime.tryParse(dueDate)
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
