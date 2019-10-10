@@ -119,7 +119,6 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             decoration: InputDecoration(
               labelText: localization.postalCode,
             ),
-            keyboardType: TextInputType.phone,
           ),
           EntityDropdown(
             key: ValueKey(vendor.countryId),
