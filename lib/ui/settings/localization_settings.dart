@@ -84,6 +84,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
         formKey: _formKey,
         children: <Widget>[
           EntityDropdown(
+            allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__currency_${settings.currencyId}'),
             entityType: EntityType.currency,
             entityMap: state.staticState.currencyMap,
@@ -93,7 +94,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 state.staticState.currencyMap[settings.currencyId]?.name,
             onSelected: (SelectableEntity currency) =>
                 viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..currencyId = currency.id)),
+                    settings.rebuild((b) => b..currencyId = currency?.id)),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 20),
@@ -134,6 +135,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             ),
           ),
           EntityDropdown(
+            allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__language_${settings.languageId}'),
             entityType: EntityType.language,
             entityMap: state.staticState.languageMap,
@@ -143,9 +145,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 state.staticState.languageMap[settings.languageId]?.name,
             onSelected: (SelectableEntity language) =>
                 viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..languageId = language.id)),
+                    settings.rebuild((b) => b..languageId = language?.id)),
           ),
           EntityDropdown(
+            allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__timezone_${settings.timezoneId}'),
             entityType: EntityType.timezone,
             entityMap: state.staticState.timezoneMap,
@@ -155,9 +158,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 state.staticState.timezoneMap[settings.timezoneId]?.name,
             onSelected: (SelectableEntity timezone) =>
                 viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..timezoneId = timezone.id)),
+                    settings.rebuild((b) => b..timezoneId = timezone?.id)),
           ),
           EntityDropdown(
+            allowClearing: state.settingsUIState.isFiltered,
             key: ValueKey('__date_format_${settings.dateFormatId}'),
             entityType: EntityType.dateFormat,
             entityMap: state.staticState.dateFormatMap,
@@ -167,7 +171,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 state.staticState.dateFormatMap[settings.dateFormatId]?.preview,
             onSelected: (SelectableEntity dateFormat) =>
                 viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..dateFormatId = dateFormat.id)),
+                    settings.rebuild((b) => b..dateFormatId = dateFormat?.id)),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 20),

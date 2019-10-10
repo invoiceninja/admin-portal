@@ -323,6 +323,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
                       EntityDropdown(
+                        allowClearing: state.settingsUIState.isFiltered,
                         key: ValueKey('__country_${settings.countryId}__'),
                         entityType: EntityType.country,
                         entityMap: state.staticState.countryMap,
@@ -333,7 +334,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             .staticState.countryMap[settings.countryId]?.name,
                         onSelected: (SelectableEntity country) =>
                             viewModel.onSettingsChanged(settings
-                                .rebuild((b) => b..countryId = country.id)),
+                                .rebuild((b) => b..countryId = country?.id)),
                       ),
                     ],
                   )
