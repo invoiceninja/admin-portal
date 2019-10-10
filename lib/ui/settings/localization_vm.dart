@@ -34,8 +34,10 @@ class LocalizationScreen extends StatelessWidget {
 class LocalizationSettingsVM {
   LocalizationSettingsVM({
     @required this.state,
+    @required this.company,
     @required this.settings,
-    @required this.onChanged,
+    @required this.onSettingsChanged,
+    @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
@@ -46,9 +48,12 @@ class LocalizationSettingsVM {
     return LocalizationSettingsVM(
         state: state,
         settings: state.uiState.settingsUIState.settings,
-        onChanged: (settings) {
+        company: state.uiState.settingsUIState.userCompany.company,
+        onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
+        onCompanyChanged: (company) =>
+            store.dispatch(UpdateCompany(company: company)),
         onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
@@ -73,8 +78,10 @@ class LocalizationSettingsVM {
   }
 
   final AppState state;
+  final CompanyEntity company;
   final SettingsEntity settings;
-  final Function(SettingsEntity) onChanged;
+  final Function(CompanyEntity) onCompanyChanged;
+  final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
 }

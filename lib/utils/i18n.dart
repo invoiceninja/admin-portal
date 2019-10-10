@@ -14,6 +14,27 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'first_day_of_the_week': 'First day of the week',
+      'first_month_of_the_year': 'First month of the year',
+      'sunday': 'Sunday',
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'friday': 'Friday',
+      'saturday': 'Saturday',
+      'january': 'January',
+      'february': 'February',
+      'march': 'March',
+      'april': 'April',
+      'may': 'May',
+      'june': 'June',
+      'july': 'July',
+      'august': 'August',
+      'september': 'September',
+      'october': 'October',
+      'november': 'November',
+      'december': 'December',
       'symbol': 'Symbol',
       'ocde': 'Code',
       'date_format': 'Date Format',
@@ -14655,6 +14676,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['long_press_multiselect'];
 
   String get all => _localizedValues[localeCode]['all'];
+
   String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];
 
   String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];
@@ -14761,6 +14783,49 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get symbol => _localizedValues[localeCode]['symbol'];
 
   String get code => _localizedValues[localeCode]['ocde'];
+
+  String get sunday => _localizedValues[localeCode]['sunday'];
+
+  String get monday => _localizedValues[localeCode]['monday'];
+
+  String get tuesday => _localizedValues[localeCode]['tuesday'];
+
+  String get wednesday => _localizedValues[localeCode]['wednesday'];
+
+  String get thursday => _localizedValues[localeCode]['thursday'];
+
+  String get friday => _localizedValues[localeCode]['friday'];
+
+  String get saturday => _localizedValues[localeCode]['saturday'];
+
+  String get january => _localizedValues[localeCode]['january'];
+
+  String get february => _localizedValues[localeCode]['february'];
+
+  String get march => _localizedValues[localeCode]['march'];
+
+  String get april => _localizedValues[localeCode]['april'];
+
+  String get may => _localizedValues[localeCode]['may'];
+
+  String get june => _localizedValues[localeCode]['june'];
+
+  String get july => _localizedValues[localeCode]['july'];
+
+  String get august => _localizedValues[localeCode]['august'];
+
+  String get september => _localizedValues[localeCode]['september'];
+
+  String get october => _localizedValues[localeCode]['october'];
+
+  String get november => _localizedValues[localeCode]['november'];
+
+  String get december => _localizedValues[localeCode]['december'];
+
+  String get firstDayOfTheWeek => _localizedValues[localeCode]['first_day_of_the_week'];
+
+  String get firstMonthOfTheYear => _localizedValues[localeCode]['first_month_of_the_year'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

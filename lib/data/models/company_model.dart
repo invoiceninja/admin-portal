@@ -536,17 +536,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_tasks_in_portal')
   bool get showTasksInPortal;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_terms')
   String get defaultInvoiceTerms;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_taxes')
   bool get enableInvoiceTaxes;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_item_taxes')
   bool get enableInvoiceItemTaxes;
@@ -559,37 +556,30 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'quote_design_id')
   String get defaultQuoteDesignId;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_footer')
   String get defaultInvoiceFooter;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'show_item_taxes')
   bool get showInvoiceItemTaxes;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get defaultTaxName1;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'tax_rate1_HIDDEN')
   double get defaultTaxRate1;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'tax_name2')
   String get defaultTaxName2;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'tax_rate2_HIDDEN')
   double get defaultTaxRate2;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'quote_terms')
   String get defaultQuoteTerms;
@@ -598,17 +588,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_currency_code')
   bool get showCurrencyCode;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
 
-  // TODO change to int/remove nullable
   @nullable
   @BuiltValueField(wireName: 'payment_terms_HIDDEN')
   int get defaultPaymentTerms;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
@@ -621,7 +608,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'inclusive_taxes')
   bool get enableInclusiveTaxes;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
@@ -634,37 +620,30 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'custom_invoice_taxes2')
   bool get enableCustomInvoiceTaxes2;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
   BuiltList<PaymentTermEntity> get customPaymentTerms;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_footer')
   String get emailFooter;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_invoice')
   String get emailSubjectInvoice;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_quote')
   String get emailSubjectQuote;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_payment')
   String get emailSubjectPayment;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
@@ -674,37 +653,30 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_quote')
   String get emailBodyQuote;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_payment')
   String get emailBodyPayment;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder1')
   String get emailSubjectReminder1;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder2')
   String get emailSubjectReminder2;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder3')
   String get emailSubjectReminder3;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_reminder1')
   String get emailBodyReminder1;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_reminder2')
   String get emailBodyReminder2;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;

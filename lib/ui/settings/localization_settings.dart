@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -73,6 +74,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
+    final company = viewModel.company;
 
     return SettingsScaffold(
       title: localization.localization,
@@ -89,46 +91,48 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             labelText: localization.currency,
             initialValue:
                 state.staticState.currencyMap[settings.currencyId]?.name,
-            onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                settings.rebuild((b) => b..currencyId = currency.id)),
+            onSelected: (SelectableEntity currency) =>
+                viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..currencyId = currency.id)),
           ),
-          SizedBox(height: 12),
-          Row(
-            children: <Widget>[
-              Radio(
-                value: false,
-                groupValue: settings.showCurrencyCode,
-                activeColor: Theme.of(context).accentColor,
-                onChanged: (bool value) => viewModel.onChanged(
-                    settings.rebuild((b) => b..showCurrencyCode = false)),
-              ),
-              GestureDetector(
-                child: Text('${localization.symbol}: ' +
-                    formatNumber(1000, context,
-                        showCurrencyCode: false,
-                        currencyId: settings.currencyId)),
-                onTap: () => viewModel.onChanged(
-                    settings.rebuild((b) => b..showCurrencyCode = false)),
-              ),
-              SizedBox(width: 10),
-              Radio(
-                value: true,
-                groupValue: settings.showCurrencyCode,
-                activeColor: Theme.of(context).accentColor,
-                onChanged: (bool value) => viewModel.onChanged(
-                    settings.rebuild((b) => b..showCurrencyCode = true)),
-              ),
-              GestureDetector(
-                child: Text('${localization.code}: ' +
-                    formatNumber(1000, context,
-                        showCurrencyCode: true,
-                        currencyId: settings.currencyId)),
-                onTap: () => viewModel.onChanged(
-                    settings.rebuild((b) => b..showCurrencyCode = true)),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 20),
+            child: Row(
+              children: <Widget>[
+                Radio(
+                  value: false,
+                  groupValue: settings.showCurrencyCode,
+                  activeColor: Theme.of(context).accentColor,
+                  onChanged: (bool value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showCurrencyCode = false)),
+                ),
+                GestureDetector(
+                  child: Text('${localization.symbol}: ' +
+                      formatNumber(1000, context,
+                          showCurrencyCode: false,
+                          currencyId: settings.currencyId)),
+                  onTap: () => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showCurrencyCode = false)),
+                ),
+                SizedBox(width: 10),
+                Radio(
+                  value: true,
+                  groupValue: settings.showCurrencyCode,
+                  activeColor: Theme.of(context).accentColor,
+                  onChanged: (bool value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showCurrencyCode = true)),
+                ),
+                GestureDetector(
+                  child: Text('${localization.code}: ' +
+                      formatNumber(1000, context,
+                          showCurrencyCode: true,
+                          currencyId: settings.currencyId)),
+                  onTap: () => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showCurrencyCode = true)),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 20),
           EntityDropdown(
             key: ValueKey('__language_${settings.languageId}'),
             entityType: EntityType.language,
@@ -137,8 +141,9 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             labelText: localization.language,
             initialValue:
                 state.staticState.languageMap[settings.languageId]?.name,
-            onSelected: (SelectableEntity language) => viewModel.onChanged(
-                settings.rebuild((b) => b..languageId = language.id)),
+            onSelected: (SelectableEntity language) =>
+                viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..languageId = language.id)),
           ),
           EntityDropdown(
             key: ValueKey('__timezone_${settings.timezoneId}'),
@@ -147,9 +152,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             entityList: memoizedTimezoneList(state.staticState.timezoneMap),
             labelText: localization.timezone,
             initialValue:
-            state.staticState.timezoneMap[settings.timezoneId]?.name,
-            onSelected: (SelectableEntity timezone) => viewModel.onChanged(
-                settings.rebuild((b) => b..timezoneId = timezone.id)),
+                state.staticState.timezoneMap[settings.timezoneId]?.name,
+            onSelected: (SelectableEntity timezone) =>
+                viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..timezoneId = timezone.id)),
           ),
           EntityDropdown(
             key: ValueKey('__date_format_${settings.dateFormatId}'),
@@ -158,9 +164,69 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
             entityList: memoizedDateFormatList(state.staticState.dateFormatMap),
             labelText: localization.dateFormat,
             initialValue:
-            state.staticState.dateFormatMap[settings.dateFormatId]?.preview,
-            onSelected: (SelectableEntity dateFormat) => viewModel.onChanged(
-                settings.rebuild((b) => b..dateFormatId = dateFormat.id)),
+                state.staticState.dateFormatMap[settings.dateFormatId]?.preview,
+            onSelected: (SelectableEntity dateFormat) =>
+                viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..dateFormatId = dateFormat.id)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 20),
+            child: CheckboxListTile(
+              title: Text(localization.militaryTime),
+              value: settings.enableMilitaryTime,
+              activeColor: Theme.of(context).accentColor,
+              controlAffinity: ListTileControlAffinity.leading,
+              onChanged: (value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..enableMilitaryTime = value)),
+            ),
+          ),
+          InputDecorator(
+            decoration: InputDecoration(
+              labelText: localization.firstDayOfTheWeek,
+            ),
+            isEmpty: company.startOfWeek == null,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<int>(
+                  value: company.startOfWeek,
+                  isExpanded: true,
+                  isDense: true,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..startOfWeek = value)),
+                  items: kDaysOfTheWeek
+                      .map(
+                          (id, day) => MapEntry<int, DropdownMenuItem<int>>(
+                          id,
+                          DropdownMenuItem<int>(
+                            child: Text(localization.lookup(day)),
+                            value: id,
+                          )))
+                      .values
+                      .toList()),
+            ),
+          ),
+          InputDecorator(
+            decoration: InputDecoration(
+              labelText: localization.firstMonthOfTheYear,
+            ),
+            isEmpty: company.financialYearStart == null,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<int>(
+                  value: company.financialYearStart,
+                  isExpanded: true,
+                  isDense: true,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..financialYearStart = value)),
+                  items: kMonthsOfTheYear
+                      .map(
+                          (id, month) => MapEntry<int, DropdownMenuItem<int>>(
+                          id,
+                          DropdownMenuItem<int>(
+                            child: Text(localization.lookup(month)),
+                            value: id,
+                          )))
+                      .values
+                      .toList()),
+            ),
           ),
         ],
       ),
