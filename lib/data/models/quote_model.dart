@@ -80,7 +80,6 @@ abstract class QuoteEntity extends Object
       dueDate: '',
       publicNotes: '',
       privateNotes: '',
-      isQuote: isQuote,
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
@@ -117,8 +116,6 @@ abstract class QuoteEntity extends Object
     ..dueDate = ''
     ..invoiceStatusId = kQuoteStatusDraft);
 
-  QuoteEntity get cloneToQuote => clone.rebuild((b) => b..isQuote = false);
-
   @override
   EntityType get entityType {
     return EntityType.quote;
@@ -127,9 +124,6 @@ abstract class QuoteEntity extends Object
   double get amount;
 
   double get balance;
-
-  @BuiltValueField(wireName: 'is_quote')
-  bool get isQuote;
 
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
@@ -342,8 +336,7 @@ abstract class QuoteEntity extends Object
       }
 
       if (userCompany.canCreate(EntityType.quote)) {
-        if (isQuote &&
-            userCompany.canEditEntity(this) &&
+        if (userCompany.canEditEntity(this) &&
             quoteInvoiceId == null) {
           actions.add(EntityAction.convert);
         }
@@ -358,12 +351,11 @@ abstract class QuoteEntity extends Object
       }
 
       if (userCompany.canEditEntity(this) &&
-          userCompany.canCreate(EntityType.payment) &&
-          !isQuote) {
+          userCompany.canCreate(EntityType.payment)) {
         actions.add(EntityAction.enterPayment);
       }
 
-      if (isQuote && (quoteInvoiceId ?? '').isNotEmpty) {
+      if ((quoteInvoiceId ?? '').isNotEmpty) {
         actions.add(EntityAction.viewQuote);
       }
 

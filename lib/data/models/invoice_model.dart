@@ -83,7 +83,6 @@ abstract class InvoiceEntity extends Object
       dueDate: '',
       publicNotes: '',
       privateNotes: '',
-      isQuote: isQuote,
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
@@ -129,9 +128,6 @@ abstract class InvoiceEntity extends Object
   double get amount;
 
   double get balance;
-
-  @BuiltValueField(wireName: 'is_quote')
-  bool get isQuote;
 
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
@@ -346,14 +342,6 @@ abstract class InvoiceEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canCreate(EntityType.invoice)) {
-        if (isQuote &&
-            userCompany.canEditEntity(this) &&
-            quoteInvoiceId == null) {
-          actions.add(EntityAction.convert);
-        }
-      }
-
       if (userCompany.canEditEntity(this) && !isSent) {
         actions.add(EntityAction.markSent);
       }
@@ -364,13 +352,8 @@ abstract class InvoiceEntity extends Object
 
       if (userCompany.canEditEntity(this) &&
           userCompany.canCreate(EntityType.payment) &&
-          isUnpaid &&
-          !isQuote) {
+          isUnpaid) {
         actions.add(EntityAction.enterPayment);
-      }
-
-      if (isQuote && (quoteInvoiceId ?? '').isNotEmpty) {
-        actions.add(EntityAction.viewInvoice);
       }
 
       if (invitations.isNotEmpty) {

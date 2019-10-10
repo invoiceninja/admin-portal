@@ -74,6 +74,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     switch (template) {
       case EmailTemplate.initial:
+        /*
         if (viewModel.invoice.isQuote) {
           emailSubject = company.settings.emailSubjectQuote;
           emailBody = company.settings.emailBodyQuote;
@@ -81,6 +82,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
           emailSubject = company.settings.emailSubjectInvoice;
           emailBody = company.settings.emailBodyInvoice;
         }
+         */
         break;
       case EmailTemplate.reminder1:
         emailSubject = company.settings.emailSubjectReminder1;

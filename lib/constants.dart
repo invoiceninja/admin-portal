@@ -172,6 +172,15 @@ class InvoiceStatusColors {
   };
 }
 
+class QuoteStatusColors {
+  static const colors = {
+    kQuoteStatusDraft: Colors.grey,
+    kQuoteStatusSent: Colors.blue,
+    kQuoteStatusViewed: Colors.orange,
+    kQuoteStatusApproved: Colors.green,
+  };
+}
+
 class PaymentStatusColors {
   static const colors = {
     kPaymentStatusPending: Colors.grey,

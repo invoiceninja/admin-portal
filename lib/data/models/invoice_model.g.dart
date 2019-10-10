@@ -128,9 +128,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
-      'is_quote',
-      serializers.serialize(object.isQuote,
-          specifiedType: const FullType(bool)),
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
@@ -288,10 +285,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'balance':
           result.balance = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
-          break;
-        case 'is_quote':
-          result.isQuote = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
@@ -983,8 +976,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final double balance;
   @override
-  final bool isQuote;
-  @override
   final String clientId;
   @override
   final String invoiceStatusId;
@@ -1065,7 +1056,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   _$InvoiceEntity._(
       {this.amount,
       this.balance,
-      this.isQuote,
       this.clientId,
       this.invoiceStatusId,
       this.invoiceNumber,
@@ -1109,9 +1099,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
-    }
-    if (isQuote == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'isQuote');
     }
     if (clientId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
@@ -1218,7 +1205,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     return other is InvoiceEntity &&
         amount == other.amount &&
         balance == other.balance &&
-        isQuote == other.isQuote &&
         clientId == other.clientId &&
         invoiceStatusId == other.invoiceStatusId &&
         invoiceNumber == other.invoiceNumber &&
@@ -1278,7 +1264,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), isQuote.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
                                                                                 customValue1.hashCode),
                                                                             customValue2.hashCode),
                                                                         customTaxes1.hashCode),
@@ -1305,7 +1291,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     return (newBuiltValueToStringHelper('InvoiceEntity')
           ..add('amount', amount)
           ..add('balance', balance)
-          ..add('isQuote', isQuote)
           ..add('clientId', clientId)
           ..add('invoiceStatusId', invoiceStatusId)
           ..add('invoiceNumber', invoiceNumber)
@@ -1358,10 +1343,6 @@ class InvoiceEntityBuilder
   double _balance;
   double get balance => _$this._balance;
   set balance(double balance) => _$this._balance = balance;
-
-  bool _isQuote;
-  bool get isQuote => _$this._isQuote;
-  set isQuote(bool isQuote) => _$this._isQuote = isQuote;
 
   String _clientId;
   String get clientId => _$this._clientId;
@@ -1529,7 +1510,6 @@ class InvoiceEntityBuilder
     if (_$v != null) {
       _amount = _$v.amount;
       _balance = _$v.balance;
-      _isQuote = _$v.isQuote;
       _clientId = _$v.clientId;
       _invoiceStatusId = _$v.invoiceStatusId;
       _invoiceNumber = _$v.invoiceNumber;
@@ -1593,7 +1573,6 @@ class InvoiceEntityBuilder
           new _$InvoiceEntity._(
               amount: amount,
               balance: balance,
-              isQuote: isQuote,
               clientId: clientId,
               invoiceStatusId: invoiceStatusId,
               invoiceNumber: invoiceNumber,
