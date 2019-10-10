@@ -17,6 +17,7 @@ class EntityType extends EnumClass {
   static const EntityType recurringInvoice = _$recurringInvoice;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType quote = _$quote;
+  static const EntityType quoteItem = _$quoteItem;
   static const EntityType product = _$product;
   static const EntityType client = _$client;
   static const EntityType contact = _$contact;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -53,7 +54,7 @@ class QuoteScreen extends StatelessWidget {
           QuoteFields.quoteNumber,
           QuoteFields.quoteDate,
           QuoteFields.validUntil,
-          InvoiceFields.updatedAt,
+          QuoteFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterQuotesByState(state));

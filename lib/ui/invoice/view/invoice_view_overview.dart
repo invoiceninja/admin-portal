@@ -146,8 +146,7 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     widgets.addAll([
-      FieldGrid(fields,
-          fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
+      FieldGrid(fields),
     ]);
 
     if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {

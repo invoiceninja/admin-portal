@@ -76,6 +76,12 @@ const String kInvoiceStatusApproved = '4';
 const String kInvoiceStatusPartial = '5';
 const String kInvoiceStatusPaid = '6';
 
+const String kQuoteStatusPastDue = '-1';
+const String kQuoteStatusDraft = '1';
+const String kQuoteStatusSent = '2';
+const String kQuoteStatusViewed = '3';
+const String kQuoteStatusApproved = '4';
+
 const String kEntityStateActive = 'active';
 const String kEntityStateArchived = 'archived';
 const String kEntityStateDeleted = 'deleted';
@@ -146,9 +152,6 @@ const String kExpenseStatusInvoiced = '3';
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultDateTimeFormat = '5';
-
-const int kInvoiceTypeStandard = 1;
-const int kInvoiceTypeQuote = 2;
 
 const String kActivityEmailInvoice = '6';
 

@@ -11,6 +11,7 @@ const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
 const EntityType _$quote = const EntityType._('quote');
+const EntityType _$quoteItem = const EntityType._('quoteItem');
 const EntityType _$product = const EntityType._('product');
 const EntityType _$client = const EntityType._('client');
 const EntityType _$contact = const EntityType._('contact');
@@ -46,6 +47,8 @@ EntityType _$typeValueOf(String name) {
       return _$invoiceItem;
     case 'quote':
       return _$quote;
+    case 'quoteItem':
+      return _$quoteItem;
     case 'product':
       return _$product;
     case 'client':
@@ -102,6 +105,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$recurringInvoice,
   _$invoiceItem,
   _$quote,
+  _$quoteItem,
   _$product,
   _$client,
   _$contact,

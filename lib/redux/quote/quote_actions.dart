@@ -382,10 +382,10 @@ Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: quote.cloneToInvoice));
+          EditInvoice(context: context, invoice: quote.clone));
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: quote.cloneToQuote));
+      store.dispatch(EditQuote(context: context, quote: quote.clone)); // TODO fix this
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(

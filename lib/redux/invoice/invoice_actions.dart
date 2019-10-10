@@ -353,10 +353,10 @@ void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
       break;
     case EntityAction.cloneToInvoice:
       store.dispatch(
-          EditInvoice(context: context, invoice: invoice.cloneToInvoice));
+          EditInvoice(context: context, invoice: invoice.clone));
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: invoice.cloneToQuote));
+      store.dispatch(EditQuote(context: context, quote: invoice.clone)); // TODO fix this
       break;
     case EntityAction.enterPayment:
       store.dispatch(EditPayment(
