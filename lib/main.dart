@@ -59,6 +59,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// STARTER: import - do not remove comment
 
 void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
