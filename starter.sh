@@ -176,7 +176,7 @@ else
        echo "Creating file: $filename.dart"
        cp $i "$filename.dart"
        sed -i -e "s/stub_/$module_snake_/g" "$filename.dart"
-       sed -i -e "s/stub\//$module_snake\//g" "$filename.dart"
+       sed -i -e "s/\/stub/\/$module_snake/g" "$filename.dart"
        sed -i -e "s/stub/$module_camel/g" "$filename.dart"
        sed -i -e "s/Stub/$Module/g" "$filename.dart"
     done
