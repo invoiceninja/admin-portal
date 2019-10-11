@@ -119,7 +119,7 @@ UserCompanyEntity saveCompanySuccessReducer(
 UserCompanyEntity uploadLogoSuccessReducer(
     UserCompanyEntity userCompany, UploadLogoSuccess action) {
   userCompany = userCompany.rebuild(
-      (b) => b..company.settings.logoUrl = action.company.settings.logoUrl);
+      (b) => b..company.settings.companyLogo = action.company.settings.companyLogo);
 
   return userCompany;
 }

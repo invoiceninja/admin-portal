@@ -399,7 +399,7 @@ abstract class SettingsEntity
       state: '',
       postalCode: '',
       countryId: null,
-      logoUrl: '',
+      companyLogo: '',
       vatNumber: '',
       idNumber: '',
       website: '',
@@ -489,8 +489,8 @@ abstract class SettingsEntity
   String get countryId;
 
   @nullable
-  @BuiltValueField(wireName: 'logo_url')
-  String get logoUrl;
+  @BuiltValueField(wireName: 'company_logo')
+  String get companyLogo;
 
   @nullable
   @BuiltValueField(wireName: 'id_number')
@@ -703,7 +703,7 @@ abstract class SettingsEntity
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
-  bool get hasLogo => logoUrl != null && logoUrl.isNotEmpty;
+  bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;
 
   bool get hasTimezone => timezoneId != null && timezoneId.isNotEmpty;
 

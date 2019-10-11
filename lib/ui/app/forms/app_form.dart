@@ -14,10 +14,8 @@ class AppForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: SingleChildScrollView(
-        child: FormCard(
-          children: children,
-        ),
+      child: ListView(
+        children: children,
       ),
     );
   }

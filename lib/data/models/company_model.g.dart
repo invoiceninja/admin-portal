@@ -723,10 +723,10 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.countryId,
             specifiedType: const FullType(String)));
     }
-    if (object.logoUrl != null) {
+    if (object.companyLogo != null) {
       result
-        ..add('logo_url')
-        ..add(serializers.serialize(object.logoUrl,
+        ..add('company_logo')
+        ..add(serializers.serialize(object.companyLogo,
             specifiedType: const FullType(String)));
     }
     if (object.idNumber != null) {
@@ -1093,8 +1093,8 @@ class _$SettingsEntitySerializer
           result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'logo_url':
-          result.logoUrl = serializers.deserialize(value,
+        case 'company_logo':
+          result.companyLogo = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id_number':
@@ -2510,7 +2510,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String countryId;
   @override
-  final String logoUrl;
+  final String companyLogo;
   @override
   final String idNumber;
   @override
@@ -2629,7 +2629,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.phone,
       this.email,
       this.countryId,
-      this.logoUrl,
+      this.companyLogo,
       this.idNumber,
       this.vatNumber,
       this.website,
@@ -2705,7 +2705,7 @@ class _$SettingsEntity extends SettingsEntity {
         phone == other.phone &&
         email == other.email &&
         countryId == other.countryId &&
-        logoUrl == other.logoUrl &&
+        companyLogo == other.companyLogo &&
         idNumber == other.idNumber &&
         vatNumber == other.vatNumber &&
         website == other.website &&
@@ -2780,7 +2780,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), logoUrl.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2814,7 +2814,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('phone', phone)
           ..add('email', email)
           ..add('countryId', countryId)
-          ..add('logoUrl', logoUrl)
+          ..add('companyLogo', companyLogo)
           ..add('idNumber', idNumber)
           ..add('vatNumber', vatNumber)
           ..add('website', website)
@@ -2911,9 +2911,9 @@ class SettingsEntityBuilder
   String get countryId => _$this._countryId;
   set countryId(String countryId) => _$this._countryId = countryId;
 
-  String _logoUrl;
-  String get logoUrl => _$this._logoUrl;
-  set logoUrl(String logoUrl) => _$this._logoUrl = logoUrl;
+  String _companyLogo;
+  String get companyLogo => _$this._companyLogo;
+  set companyLogo(String companyLogo) => _$this._companyLogo = companyLogo;
 
   String _idNumber;
   String get idNumber => _$this._idNumber;
@@ -3180,7 +3180,7 @@ class SettingsEntityBuilder
       _phone = _$v.phone;
       _email = _$v.email;
       _countryId = _$v.countryId;
-      _logoUrl = _$v.logoUrl;
+      _companyLogo = _$v.companyLogo;
       _idNumber = _$v.idNumber;
       _vatNumber = _$v.vatNumber;
       _website = _$v.website;
@@ -3266,7 +3266,7 @@ class SettingsEntityBuilder
               phone: phone,
               email: email,
               countryId: countryId,
-              logoUrl: logoUrl,
+              companyLogo: companyLogo,
               idNumber: idNumber,
               vatNumber: vatNumber,
               website: website,

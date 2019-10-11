@@ -248,6 +248,6 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   }),
   TypedReducer<SettingsUIState, UploadLogoSuccess>((state, action) {
     return state.rebuild((b) => b
-      ..userCompany.company.settings.logoUrl = action.company.settings.logoUrl);
+      ..userCompany.company.settings.companyLogo = action.company.settings.companyLogo);
   })
 ]);

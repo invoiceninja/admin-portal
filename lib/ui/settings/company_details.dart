@@ -259,12 +259,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: <Widget>[
-                    if (settings.logoUrl != null && settings.logoUrl.isNotEmpty)
+                    if (settings.companyLogo != null && settings.companyLogo.isNotEmpty)
                       Padding(
                           padding: const EdgeInsets.only(bottom: 30),
                           child: CachedImage(
                             width: double.infinity,
-                            url: settings.logoUrl,
+                            url: settings.companyLogo,
                             //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
                           )),
                     Builder(
