@@ -118,37 +118,38 @@ if [ ${action} = "init" ]; then
 else
 
     package="$2"
-    module="$3"
-    Module="$(tr '[:lower:]' '[:upper:]' <<< ${module:0:1})${module:1}"
-    fields="$4"
+    module_snake="$3"
+    module_camel="$4"
+    Module="$(tr '[:lower:]' '[:upper:]' <<< ${module_camel:0:1})${module_camel:1}"
+    fields="$5"
     IFS=', ' read -r -a fieldsArray <<< "$fields"
 
     echo "Make..."
-    echo "Creating $module module"
+    echo "Creating module: $module_snake"
 
     # Create new directories
-    if [ ! -d "lib/redux/$module" ]
+    if [ ! -d "lib/redux/$module_snake" ]
     then
-       echo "Creating directory: lib/redux/$module"
-       mkdir "lib/redux/$module"
+       echo "Creating directory: lib/redux/$module_snake"
+       mkdir "lib/redux/$module_snake"
     fi
 
-    if [ ! -d "lib/ui/$module" ]
+    if [ ! -d "lib/ui/$module_snake" ]
     then
-       echo "Creating directory: lib/ui/$module"
-       mkdir "lib/ui/$module"
+       echo "Creating directory: lib/ui/$module_snake"
+       mkdir "lib/ui/$module_snake"
     fi
 
-    if [ ! -d "lib/ui/$module/view" ]
+    if [ ! -d "lib/ui/$module_snake/view" ]
     then
-       echo "Creating directory: lib/ui/$module/view"
-       mkdir "lib/ui/$module/view"
+       echo "Creating directory: lib/ui/$module_snake/view"
+       mkdir "lib/ui/$module_snake/view"
     fi
 
-    if [ ! -d "lib/ui/$module/edit" ]
+    if [ ! -d "lib/ui/$module_snake/edit" ]
     then
-       echo "Creating directory: lib/ui/$module/edit"
-       mkdir "lib/ui/$module/edit"
+       echo "Creating directory: lib/ui/$module_snake/edit"
+       mkdir "lib/ui/$module_snake/edit"
     fi
 
     # Create new module files
@@ -171,26 +172,27 @@ else
 
     for i in "${files[@]}"
     do
-       filename=$(echo $i | sed "s/stubs/lib/g" | sed "s/stub/$module/g")
+       filename=$(echo $i | sed "s/stubs/lib/g" | sed "s/stub/$module_snake/g")
        echo "Creating file: $filename.dart"
        cp $i "$filename.dart"
-       sed -i -e "s/stub/$module/g" "$filename.dart"
+       sed -i -e "s/stub_/$module_snake_/g" "$filename.dart"
+       sed -i -e "s/stub/$module_camel/g" "$filename.dart"
        sed -i -e "s/Stub/$Module/g" "$filename.dart"
     done
 
     # Link in new module
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: states switch - do not remove comment"
-    code="case EntityType.${module}:${lineBreak}return ${module}UIState;${lineBreak}"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}UIState;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: state getters - do not remove comment"
-    code="${Module}State get ${module}State => selectedCompanyState.${module}State;${lineBreak}"
-    code="${code}ListUIState get ${module}ListState => uiState.${module}UIState.listUIState;${lineBreak}"
-    code="${code}${Module}UIState get ${module}UIState => uiState.${module}UIState;${lineBreak}${lineBreak}"
+    code="${Module}State get ${module_camel}State => selectedCompanyState.${module_camel}State;${lineBreak}"
+    code="${code}ListUIState get ${module_camel}ListState => uiState.${module_camel}UIState.listUIState;${lineBreak}"
+    code="${code}${Module}UIState get ${module_camel}UIState => uiState.${module_camel}UIState;${lineBreak}${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do
@@ -203,42 +205,42 @@ else
 
         comment="STARTER: fields - do not remove comment"
         code="static const String ${element} = '${element}';${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: properties - do not remove comment"
         code="String get ${element};${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: sort switch - do not remove comment"
         code="case ${Module}Fields.${element}:${lineBreak}"
-        code="${code}response = ${module}A.${element}.compareTo(${module}B.${element});${lineBreak}break;${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        code="${code}response = ${module_snake}A.${element}.compareTo(${module_snake}B.${element});${lineBreak}break;${lineBreak}"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: filter - do not remove comment"
         code="if (${element}.toLowerCase().contains(filter)){${lineBreak}"
         code="${code}return true;${lineBreak}"
         code="${code}}${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: constructor - do not remove comment"
         code="${element}: '',${lineBreak}"
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
         comment="STARTER: controllers - do not remove comment"
         code="final _${element}Controller = TextEditingController();${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
 
         comment="STARTER: array - do not remove comment"
         code="_${element}Controller,${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
 
         comment="STARTER: read value - do not remove comment"
-        code="_${element}Controller.text = ${module}.${element};${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
+        code="_${element}Controller.text = ${module_snake}.${element};${lineBreak}"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
 
         comment="STARTER: set value - do not remove comment"
         code="..${element} = _${element}Controller.text.trim()${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
 
         comment="STARTER: widgets - do not remove comment"
         code="TextFormField(${lineBreak}"
@@ -251,45 +253,45 @@ else
         code="${code}labelText: '${Element}',${lineBreak}"
         code="${code}),${lineBreak}"
         code="${code}),${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/edit/${module}_edit.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
 
         #comment="STARTER: widgets - do not remove comment"
         #if [ ${element} = ${fieldsArray[0]} ]; then
-        #    code="Text(${module}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
+        #    code="Text(${module_snake}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
         #    code="${code}SizedBox(height: 12.0),${lineBreak}"
         #else
-        #    code="Text(${module}.${element}),"
+        #    code="Text(${module_snake}.${element}),"
         #fi
-        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/view/${module}_view.dart"
+        #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/view/${module_snake}_view.dart"
 
         comment="STARTER: sort - do not remove comment"
         code="${Module}Fields.${element},${lineBreak}"
-        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_screen.dart"
+        sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/${module_snake}_screen.dart"
 
         if [ "$idx" -eq 0 ]; then
             comment="STARTER: sort default - do not remove comment"
-            code="return ${module}A.${element}.compareTo(${module}B.${element});${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+            code="return ${module_camel}A.${element}.compareTo(${module_camel}B.${element});${lineBreak}"
+            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
             comment="STARTER: display name - do not remove comment"
             code="return ${element};${lineBreak}"
-            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module}_model.dart"
+            sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
         fi
 
         if [ "$idx" -eq 1 ]; then
             comment="STARTER: subtitle - do not remove comment"
-            code="subtitle: Text(${module}.${element}, maxLines: 4),${lineBreak}"
-            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module}/${module}_item.dart"
+            code="subtitle: Text(${module_camel}.${element}, maxLines: 4),${lineBreak}"
+            #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/${module_snake}_item.dart"
         fi
     done
 
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/ui\/${module}\/${module}_screen.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/ui\/${module}\/edit\/${module}_edit_vm.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/ui\/${module}\/view\/${module}_view_vm.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module}\/${module}_actions.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module}\/${module}_middleware.dart';${lineBreak}"
+    code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: middleware - do not remove comment"
@@ -303,9 +305,9 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: import - do not remove comment"
-    #code="import 'package:${package}\/data\/models\/${module}_model.dart';${lineBreak}"
-    #code="${code}import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
-    code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    #code="import 'package:${package}\/data\/models\/${module_snake}_model.dart';${lineBreak}"
+    #code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
@@ -313,62 +315,62 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: fields - do not remove comment"
-    code="${Module}State get ${module}State;${lineBreak}"
+    code="${Module}State get ${module_camel}State;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: constructor - do not remove comment"
-    code="${module}State: ${Module}State(),${lineBreak}"
+    code="${module_camel}State: ${Module}State(),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_state.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_reducer.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_reducer.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
 
     comment="STARTER: reducer - do not remove comment"
-    code="..${module}State.replace(${module}sReducer(state.${module}State, action))${lineBreak}"
+    code="..${module_camel}State.replace(${module_camel}sReducer(state.${module_camel}State, action))${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_actions.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 
     comment="STARTER: menu - do not remove comment"
     code="DrawerTile(${lineBreak}"
     code="${code}company: company,${lineBreak}"
-    code="${code}entityType: EntityType.${module},${lineBreak}"
-    code="${code}icon: getEntityIcon(EntityType.${module}),${lineBreak}"
-    code="${code}title: localization.${module}s,${lineBreak}"
-    code="${code}onTap: () => store.dispatch(View${Module}List(context)),${lineBreak}"
+    code="${code}entityType: EntityType.${module_camel},${lineBreak}"
+    code="${code}icon: getEntityIcon(EntityType.${module_camel}),${lineBreak}"
+    code="${code}title: localization.${module_camel}s,${lineBreak}"
+    code="${code}onTap: () => store.dispatch(View${module_camel}List(context)),${lineBreak}"
     code="${code}onCreateTap: () {${lineBreak}"
     code="${code}navigator.pop();${lineBreak}"
     code="${code}store.dispatch(Edit${Module}(${lineBreak}"
-    code="${code}${module}: ${Module}Entity(), context: context));${lineBreak}"
+    code="${code}${module_camel}: ${Module}Entity(), context: context));${lineBreak}"
     code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: properties - do not remove comment"
-    code="${Module}UIState get ${module}UIState;${lineBreak}"
+    code="${Module}UIState get ${module_camel}UIState;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: constructor - do not remove comment"
-    code="${module}UIState: ${Module}UIState(),${lineBreak}"
+    code="${module_camel}UIState: ${Module}UIState(),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_state.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module}\/${module}_reducer.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_reducer.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
 
     comment="STARTER: reducer - do not remove comment"
-    code="..${module}UIState.replace(${module}UIReducer(state.${module}UIState, action))${lineBreak}"
+    code="..${module_camel}UIState.replace(${module_camel}UIReducer(state.${module_camel}UIState, action))${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
 
     echo "Generating built files.."
