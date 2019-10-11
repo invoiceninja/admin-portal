@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'continue_editing': 'Continue Editing',
       'discard_changes': 'Discard Changes',
       'default_value': 'Default value',
       'disabled': 'Disabled',
@@ -14837,6 +14838,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get defaultValue => _localizedValues[localeCode]['default_value'];
 
   String get discardChanges => _localizedValues[localeCode]['discard_changes'];
+
+  String get continueEditing => _localizedValues[localeCode]['continue_editing'];
 
 
   String lookup(String key) {

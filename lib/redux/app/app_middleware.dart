@@ -464,7 +464,8 @@ bool hasChanges({
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext context) {
-          return MessageDialog(localization.errorUnsavedChanges, onDiscard: () {
+          return MessageDialog(localization.errorUnsavedChanges,
+              dismissLabel: localization.continueEditing, onDiscard: () {
             store.dispatch(DiscardChanges());
             store.dispatch(action);
           });
