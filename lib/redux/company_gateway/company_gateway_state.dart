@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'company_gateway_state.g.dart';
 
-abstract class CompanyGatewayState implements Built<CompanyGatewayState, CompanyGatewayStateBuilder> {
-
+abstract class CompanyGatewayState
+    implements Built<CompanyGatewayState, CompanyGatewayStateBuilder> {
   factory CompanyGatewayState() {
     return _$CompanyGatewayState._(
       lastUpdated: 0,
@@ -28,20 +28,23 @@ abstract class CompanyGatewayState implements Built<CompanyGatewayState, Company
   BuiltList<String> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
-  static Serializer<CompanyGatewayState> get serializer => _$companyGatewayStateSerializer;
+  static Serializer<CompanyGatewayState> get serializer =>
+      _$companyGatewayStateSerializer;
 }
 
-abstract class CompanyGatewayUIState extends Object with EntityUIState implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
-
+abstract class CompanyGatewayUIState extends Object
+    with EntityUIState
+    implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
   factory CompanyGatewayUIState() {
     return _$CompanyGatewayUIState._(
       listUIState: ListUIState(CompanyGatewayFields.name),
@@ -57,5 +60,6 @@ abstract class CompanyGatewayUIState extends Object with EntityUIState implement
   @override
   bool get isCreatingNew => editing.isNew;
 
-  static Serializer<CompanyGatewayUIState> get serializer => _$companyGatewayUIStateSerializer;
+  static Serializer<CompanyGatewayUIState> get serializer =>
+      _$companyGatewayUIStateSerializer;
 }

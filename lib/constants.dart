@@ -280,4 +280,3 @@ const kMonthsOfTheYear = {
   10: 'november',
   11: 'december',
 };
-

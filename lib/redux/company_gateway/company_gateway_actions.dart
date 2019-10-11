@@ -18,10 +18,10 @@ class ViewCompanyGatewayList implements PersistUI {
 
 class ViewCompanyGateway implements PersistUI {
   ViewCompanyGateway({
-              @required this.companyGatewayId,
-              @required this.context,
-              this.force = false,
-            });
+    @required this.companyGatewayId,
+    @required this.context,
+    this.force = false,
+  });
 
   final String companyGatewayId;
   final BuildContext context;
@@ -30,10 +30,10 @@ class ViewCompanyGateway implements PersistUI {
 
 class EditCompanyGateway implements PersistUI {
   EditCompanyGateway(
-                {@required this.companyGateway,
-                @required this.context,
-                this.completer,
-                this.force = false});
+      {@required this.companyGateway,
+      @required this.context,
+      this.completer,
+      this.force = false});
 
   final CompanyGatewayEntity companyGateway;
   final BuildContext context;
@@ -48,7 +48,8 @@ class UpdateCompanyGateway implements PersistUI {
 }
 
 class LoadCompanyGateway {
-  LoadCompanyGateway({this.completer, this.companyGatewayId, this.loadActivities = false});
+  LoadCompanyGateway(
+      {this.completer, this.companyGatewayId, this.loadActivities = false});
 
   final Completer completer;
   final String companyGatewayId;
@@ -117,7 +118,6 @@ class LoadCompanyGatewaysSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class SaveCompanyGatewayRequest implements StartSaving {
   SaveCompanyGatewayRequest({this.completer, this.companyGateway});
 
@@ -138,7 +138,7 @@ class AddCompanyGatewaySuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveCompanyGatewayFailure implements StopSaving {
-  SaveCompanyGatewayFailure (this.error);
+  SaveCompanyGatewayFailure(this.error);
 
   final Object error;
 }
@@ -200,9 +200,6 @@ class RestoreCompanyGatewayFailure implements StopSaving {
   final CompanyGatewayEntity companyGateway;
 }
 
-
-
-
 class FilterCompanyGateways {
   FilterCompanyGateways(this.filter);
 
@@ -240,28 +237,31 @@ class FilterCompanyGatewaysByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-
-void handleCompanyGatewayAction(
-    BuildContext context, List<CompanyGatewayEntity> companyGateways, EntityAction action) {
+void handleCompanyGatewayAction(BuildContext context,
+    List<CompanyGatewayEntity> companyGateways, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditCompanyGateway(context: context, companyGateway: companyGateway));
+      store.dispatch(
+          EditCompanyGateway(context: context, companyGateway: companyGateway));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreCompanyGatewayRequest(
-          snackBarCompleter(context, localization.restoredCompanyGateway), companyGateway.id));
+          snackBarCompleter(context, localization.restoredCompanyGateway),
+          companyGateway.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveCompanyGatewayRequest(
-          snackBarCompleter(context, localization.archivedCompanyGateway), companyGateway.id));
+          snackBarCompleter(context, localization.archivedCompanyGateway),
+          companyGateway.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteCompanyGatewayRequest(
-          snackBarCompleter(context, localization.deletedCompanyGateway), companyGateway.id));
+          snackBarCompleter(context, localization.deletedCompanyGateway),
+          companyGateway.id));
       break;
   }
 }

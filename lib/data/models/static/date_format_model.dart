@@ -88,8 +88,7 @@ abstract class DateFormatEntity extends Object
   }
 
   String get preview {
-    final formatter = DateFormat(
-        format, 'en');
+    final formatter = DateFormat(format, 'en');
     return formatter.format(DateTime.parse('2000-01-31'));
   }
 

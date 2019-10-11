@@ -296,14 +296,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
-            invoice.settings.defaultInvoiceDesignId == null // TODO Remove check in v2
+            invoice.settings.defaultInvoiceDesignId ==
+                    null // TODO Remove check in v2
                 ? SizedBox()
                 : PopupMenuButton<String>(
                     padding: EdgeInsets.zero,
                     onSelected: (String design) {
                       _designController.text = design;
-                      viewModel.onChanged(
-                          invoice.rebuild((b) => b..settings.defaultInvoiceDesignId = design));
+                      viewModel.onChanged(invoice.rebuild(
+                          (b) => b..settings.defaultInvoiceDesignId = design));
                     },
                     child: InkWell(
                       child: IgnorePointer(

@@ -82,6 +82,5 @@ class ProductListVM {
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction)
-      onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
 }

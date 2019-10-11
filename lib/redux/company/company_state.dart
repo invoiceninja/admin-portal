@@ -46,7 +46,7 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
-companyGatewayState: CompanyGatewayState(),
+      companyGatewayState: CompanyGatewayState(),
 
       groupState: GroupState(),
     );
@@ -80,7 +80,7 @@ companyGatewayState: CompanyGatewayState(),
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
-CompanyGatewayState get companyGatewayState;
+  CompanyGatewayState get companyGatewayState;
 
   GroupState get groupState;
 

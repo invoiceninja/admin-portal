@@ -64,9 +64,7 @@ List<ChartDataGroup> chartInvoices({
     final currencyId =
         client.hasCurrency ? client.currencyId : company.currencyId;
 
-    if (!invoice.isSent||
-        invoice.isDeleted ||
-        client.isDeleted) {
+    if (!invoice.isSent || invoice.isDeleted || client.isDeleted) {
       // skip it
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
@@ -178,9 +176,7 @@ List<ChartDataGroup> chartQuotes({
     final currencyId =
         client.hasCurrency ? client.currencyId : company.currencyId;
 
-    if (!quote.isSent ||
-        quote.isDeleted ||
-        client.isDeleted) {
+    if (!quote.isSent || quote.isDeleted || client.isDeleted) {
       // skip it
     } else if (!quote.isBetween(
         settings.startDate(company), settings.endDate(company))) {

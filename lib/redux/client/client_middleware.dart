@@ -63,10 +63,8 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (!action.force && hasChanges(
-        store: store,
-        context: action.context,
-        action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -84,10 +82,8 @@ Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
 
-    if (!action.force && hasChanges(
-        store: store,
-        context: action.context,
-        action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 

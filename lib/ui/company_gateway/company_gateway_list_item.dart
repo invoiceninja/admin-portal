@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class CompanyGatewayListItem extends StatelessWidget {
-
   const CompanyGatewayListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -28,7 +27,8 @@ class CompanyGatewayListItem extends StatelessWidget {
   final CompanyGatewayEntity companyGateway;
   final String filter;
 
-  static final companyGatewayItemKey = (int id) => Key('__company_gateway_item_${id}__');
+  static final companyGatewayItemKey =
+      (int id) => Key('__company_gateway_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class CompanyGatewayListItem extends StatelessWidget {
     final subtitle = filterMatch;
 
     return DismissibleEntity(
-       userCompany: state.userCompany,
+      userCompany: state.userCompany,
       entity: companyGateway,
       isSelected: companyGateway.id ==
           (uiState.isEditing
@@ -82,12 +82,13 @@ class CompanyGatewayListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty ?
-            Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ) : Container(),
+            subtitle != null && subtitle.isNotEmpty
+                ? Text(
+                    subtitle,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Container(),
             EntityStateLabel(companyGateway),
           ],
         ),

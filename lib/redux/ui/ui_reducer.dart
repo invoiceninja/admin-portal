@@ -54,8 +54,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
-..companyGatewayUIState.replace(companyGatewayUIReducer(state.companyGatewayUIState, action))
-
+    ..companyGatewayUIState
+        .replace(companyGatewayUIReducer(state.companyGatewayUIState, action))
     ..groupUIState.replace(groupUIReducer(state.groupUIState, action))
     ..documentUIState.replace(documentUIReducer(state.documentUIState, action))
     ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action))
@@ -252,6 +252,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   }),
   TypedReducer<SettingsUIState, UploadLogoSuccess>((state, action) {
     return state.rebuild((b) => b
-      ..userCompany.company.settings.companyLogo = action.company.settings.companyLogo);
+      ..userCompany.company.settings.companyLogo =
+          action.company.settings.companyLogo);
   })
 ]);

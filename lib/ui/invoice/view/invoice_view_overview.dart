@@ -41,14 +41,14 @@ class InvoiceOverview extends StatelessWidget {
         : InvoiceStatusColors.colors[invoice.invoiceStatusId];
     final widgets = <Widget>[
       TwoValueHeader(
-              backgroundColor: color,
-              label1: localization.totalAmount,
-              value1: formatNumber(invoice.amount, context,
-                  clientId: invoice.clientId),
-              label2: localization.balanceDue,
-              value2: formatNumber(invoice.balance, context,
-                  clientId: invoice.clientId),
-            ),
+        backgroundColor: color,
+        label1: localization.totalAmount,
+        value1:
+            formatNumber(invoice.amount, context, clientId: invoice.clientId),
+        label2: localization.balanceDue,
+        value2:
+            formatNumber(invoice.balance, context, clientId: invoice.clientId),
+      ),
     ];
 
     final Map<String, String> fields = {

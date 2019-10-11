@@ -62,27 +62,30 @@ class CompanyGatewayListVM {
     final state = store.state;
 
     return CompanyGatewayListVM(
-        userCompany: state.userCompany,
-        listState: state.companyGatewayListState,
-        companyGatewayList: memoizedFilteredCompanyGatewayList(state.companyGatewayState.map,
-            state.companyGatewayState.list, state.companyGatewayListState),
-        companyGatewayMap: state.companyGatewayState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.companyGatewayState.isLoaded,
-        filter: state.companyGatewayUIState.listUIState.filter,
-          onClearEntityFilterPressed: () =>
-              store.dispatch(FilterCompanyGatewaysByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.companyGatewayListState.filterEntityId,
-                  context: context)),
-        onCompanyGatewayTap: (context, companyGateway) {
-          store.dispatch(ViewCompanyGateway(companyGatewayId: companyGateway.id, context: context));
-        },
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> companyGateway, EntityAction action) =>
+      userCompany: state.userCompany,
+      listState: state.companyGatewayListState,
+      companyGatewayList: memoizedFilteredCompanyGatewayList(
+          state.companyGatewayState.map,
+          state.companyGatewayState.list,
+          state.companyGatewayListState),
+      companyGatewayMap: state.companyGatewayState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.companyGatewayState.isLoaded,
+      filter: state.companyGatewayUIState.listUIState.filter,
+      onClearEntityFilterPressed: () =>
+          store.dispatch(FilterCompanyGatewaysByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.companyGatewayListState.filterEntityId,
+              context: context)),
+      onCompanyGatewayTap: (context, companyGateway) {
+        store.dispatch(ViewCompanyGateway(
+            companyGatewayId: companyGateway.id, context: context));
+      },
+      onEntityAction: (BuildContext context, List<BaseEntity> companyGateway,
+              EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateway, action),
-        onRefreshed: (context) => _handleRefresh(context),
+      onRefreshed: (context) => _handleRefresh(context),
     );
   }
 

@@ -9,9 +9,11 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 part 'company_gateway_model.g.dart';
 
 abstract class CompanyGatewayListResponse
-    implements Built<CompanyGatewayListResponse, CompanyGatewayListResponseBuilder> {
-  factory CompanyGatewayListResponse([void updates(CompanyGatewayListResponseBuilder b)]) =
-  _$CompanyGatewayListResponse;
+    implements
+        Built<CompanyGatewayListResponse, CompanyGatewayListResponseBuilder> {
+  factory CompanyGatewayListResponse(
+          [void updates(CompanyGatewayListResponseBuilder b)]) =
+      _$CompanyGatewayListResponse;
 
   CompanyGatewayListResponse._();
 
@@ -22,9 +24,11 @@ abstract class CompanyGatewayListResponse
 }
 
 abstract class CompanyGatewayItemResponse
-    implements Built<CompanyGatewayItemResponse, CompanyGatewayItemResponseBuilder> {
-  factory CompanyGatewayItemResponse([void updates(CompanyGatewayItemResponseBuilder b)]) =
-  _$CompanyGatewayItemResponse;
+    implements
+        Built<CompanyGatewayItemResponse, CompanyGatewayItemResponseBuilder> {
+  factory CompanyGatewayItemResponse(
+          [void updates(CompanyGatewayItemResponseBuilder b)]) =
+      _$CompanyGatewayItemResponse;
 
   CompanyGatewayItemResponse._();
 
@@ -82,10 +86,13 @@ abstract class CompanyGatewayEntity extends Object
     return name;
   }
 
-  int compareTo(CompanyGatewayEntity companyGateway, String sortField, bool sortAscending) {
+  int compareTo(CompanyGatewayEntity companyGateway, String sortField,
+      bool sortAscending) {
     const int response = 0;
-    final CompanyGatewayEntity companyGatewayA = sortAscending ? this : companyGateway;
-    final CompanyGatewayEntity companyGatewayB = sortAscending ? companyGateway : this;
+    final CompanyGatewayEntity companyGatewayA =
+        sortAscending ? this : companyGateway;
+    final CompanyGatewayEntity companyGatewayB =
+        sortAscending ? companyGateway : this;
 
     switch (sortField) {
       case CompanyGatewayFields.name:
@@ -94,7 +101,9 @@ abstract class CompanyGatewayEntity extends Object
     }
 
     if (response == 0) {
-      return companyGatewayA.name.toLowerCase().compareTo(companyGatewayB.name.toLowerCase());
+      return companyGatewayA.name
+          .toLowerCase()
+          .compareTo(companyGatewayB.name.toLowerCase());
     } else {
       return response;
     }
@@ -126,9 +135,9 @@ abstract class CompanyGatewayEntity extends Object
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
-        ClientEntity client,
-        bool includeEdit = false,
-        bool multiselect = false}) {
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     // TODO remove ??
@@ -159,5 +168,6 @@ abstract class CompanyGatewayEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => null;
 
-  static Serializer<CompanyGatewayEntity> get serializer => _$companyGatewayEntitySerializer;
+  static Serializer<CompanyGatewayEntity> get serializer =>
+      _$companyGatewayEntitySerializer;
 }

@@ -336,8 +336,7 @@ abstract class QuoteEntity extends Object
       }
 
       if (userCompany.canCreate(EntityType.quote)) {
-        if (userCompany.canEditEntity(this) &&
-            quoteInvoiceId == null) {
+        if (userCompany.canEditEntity(this) && quoteInvoiceId == null) {
           actions.add(EntityAction.convert);
         }
       }

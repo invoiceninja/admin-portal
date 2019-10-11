@@ -64,25 +64,32 @@ class CompanyGatewayEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(CompanyGatewayScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(companyGateway.isNew ? CompanyGatewayScreen.route : CompanyGatewayViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(companyGateway.isNew
+              ? CompanyGatewayScreen.route
+              : CompanyGatewayViewScreen.route));
         }
       },
-    onCancelPressed: (BuildContext context) {
-      store.dispatch(EditCompanyGateway(
-          companyGateway: CompanyGatewayEntity(), context: context, force: true));
-      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
-    },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditCompanyGateway(
+            companyGateway: CompanyGatewayEntity(),
+            context: context,
+            force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onSavePressed: (BuildContext context) {
-        final Completer<CompanyGatewayEntity> completer = new Completer<CompanyGatewayEntity>();
-        store.dispatch(SaveCompanyGatewayRequest(completer: completer, companyGateway: companyGateway));
+        final Completer<CompanyGatewayEntity> completer =
+            new Completer<CompanyGatewayEntity>();
+        store.dispatch(SaveCompanyGatewayRequest(
+            completer: completer, companyGateway: companyGateway));
         return completer.future.then((savedCompanyGateway) {
           store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
           if (isMobile(context)) {
-              if (companyGateway.isNew) {
-                Navigator.of(context).pushReplacementNamed(CompanyGatewayViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedCompanyGateway);
-              }
+            if (companyGateway.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(CompanyGatewayViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedCompanyGateway);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

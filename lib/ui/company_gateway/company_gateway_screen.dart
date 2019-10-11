@@ -22,51 +22,52 @@ class CompanyGatewayScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
-                     appBarTitle: ListFilter(
-                       key: ValueKey(state.companyGatewayListState.filterClearedAt),
-                       entityType: EntityType.companyGateway,
-                       onFilterChanged: (value) {
-                         store.dispatch(FilterCompanyGateways(value));
-                       },
-                     ),
-                     appBarActions: [
-                       ListFilterButton(
-                         entityType: EntityType.companyGateway,
-                         onFilterPressed: (String value) {
-                           store.dispatch(FilterCompanyGateways(value));
-                         },
-                       ),
-                     ],
-                   body: CompanyGatewayListBuilder(),
-                   bottomNavigationBar: AppBottomBar(
-                     entityType: EntityType.companyGateway,
-                     onSelectedSortField: (value) => store.dispatch(SortCompanyGateways(value)),
-                     onSelectedCustom1: (value) =>
-                         store.dispatch(FilterCompanyGatewaysByCustom1(value)),
-                     onSelectedCustom2: (value) =>
-                         store.dispatch(FilterCompanyGatewaysByCustom2(value)),
-                     sortFields: [
-                       CompanyGatewayFields.updatedAt,
-                     ],
-                     onSelectedState: (EntityState state, value) {
-                       store.dispatch(FilterCompanyGatewaysByState(state));
-                     },
-                   ),
-                   floatingActionButton: userCompany.canCreate(EntityType.companyGateway)
-                       ? FloatingActionButton(
-                           heroTag: 'company_gateway_fab',
-                           backgroundColor: Theme.of(context).primaryColorDark,
-                           onPressed: () {
-                             store.dispatch(
-                                 EditCompanyGateway(companyGateway: CompanyGatewayEntity(), context: context));
-                           },
-                           child: Icon(
-                             Icons.add,
-                             color: Colors.white,
-                           ),
-                           tooltip: localization.newCompanyGateway,
-                         )
-                       : null,
-                 );
+      appBarTitle: ListFilter(
+        key: ValueKey(state.companyGatewayListState.filterClearedAt),
+        entityType: EntityType.companyGateway,
+        onFilterChanged: (value) {
+          store.dispatch(FilterCompanyGateways(value));
+        },
+      ),
+      appBarActions: [
+        ListFilterButton(
+          entityType: EntityType.companyGateway,
+          onFilterPressed: (String value) {
+            store.dispatch(FilterCompanyGateways(value));
+          },
+        ),
+      ],
+      body: CompanyGatewayListBuilder(),
+      bottomNavigationBar: AppBottomBar(
+        entityType: EntityType.companyGateway,
+        onSelectedSortField: (value) =>
+            store.dispatch(SortCompanyGateways(value)),
+        onSelectedCustom1: (value) =>
+            store.dispatch(FilterCompanyGatewaysByCustom1(value)),
+        onSelectedCustom2: (value) =>
+            store.dispatch(FilterCompanyGatewaysByCustom2(value)),
+        sortFields: [
+          CompanyGatewayFields.updatedAt,
+        ],
+        onSelectedState: (EntityState state, value) {
+          store.dispatch(FilterCompanyGatewaysByState(state));
+        },
+      ),
+      floatingActionButton: userCompany.canCreate(EntityType.companyGateway)
+          ? FloatingActionButton(
+              heroTag: 'company_gateway_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                store.dispatch(EditCompanyGateway(
+                    companyGateway: CompanyGatewayEntity(), context: context));
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newCompanyGateway,
+            )
+          : null,
+    );
   }
 }

@@ -3,7 +3,8 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MessageDialog extends StatelessWidget {
-  const MessageDialog(this.message, {this.onDismiss, this.onDiscard, this.dismissLabel});
+  const MessageDialog(this.message,
+      {this.onDismiss, this.onDiscard, this.dismissLabel});
 
   final String message;
   final String dismissLabel;
@@ -41,8 +42,7 @@ class MessageDialog extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 onDiscard();
-                              }
-                          ),
+                              }),
                         ),
                       ElevatedButton(
                         onPressed: () {

@@ -30,8 +30,8 @@ Middleware<AppState> _viewSettings() {
     final action = dynamicAction as ViewSettings;
     final uiState = store.state.uiState;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 

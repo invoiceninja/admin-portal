@@ -34,7 +34,6 @@ class CompanyGatewayViewScreen extends StatelessWidget {
 }
 
 class CompanyGatewayViewVM {
-
   CompanyGatewayViewVM({
     @required this.state,
     @required this.companyGateway,
@@ -50,43 +49,48 @@ class CompanyGatewayViewVM {
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final companyGateway = state.companyGatewayState.map[state.companyGatewayUIState.selectedId] ??
-        CompanyGatewayEntity(id: state.companyGatewayUIState.selectedId);
+    final companyGateway =
+        state.companyGatewayState.map[state.companyGatewayUIState.selectedId] ??
+            CompanyGatewayEntity(id: state.companyGatewayUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadCompanyGateway(completer: completer, companyGatewayId: companyGateway.id));
+      store.dispatch(LoadCompanyGateway(
+          completer: completer, companyGatewayId: companyGateway.id));
       return completer.future;
     }
 
     return CompanyGatewayViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: companyGateway.isNew,
-        companyGateway: companyGateway,
-        onEditPressed: (BuildContext context) {
-          final Completer<CompanyGatewayEntity> completer = Completer<CompanyGatewayEntity>();
-          store.dispatch(EditCompanyGateway(
-              companyGateway: companyGateway, context: context, completer: completer));
-          completer.future.then((companyGateway) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedCompanyGateway,
-                )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(CompanyGatewayScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: companyGateway.isNew,
+      companyGateway: companyGateway,
+      onEditPressed: (BuildContext context) {
+        final Completer<CompanyGatewayEntity> completer =
+            Completer<CompanyGatewayEntity>();
+        store.dispatch(EditCompanyGateway(
+            companyGateway: companyGateway,
+            context: context,
+            completer: completer));
+        completer.future.then((companyGateway) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedCompanyGateway,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(CompanyGatewayScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleCompanyGatewayAction(context, [companyGateway], action),
-        );
+    );
   }
 
   final AppState state;

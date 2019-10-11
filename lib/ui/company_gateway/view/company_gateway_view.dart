@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class CompanyGatewayView extends StatefulWidget {
-
   const CompanyGatewayView({
     Key key,
     @required this.viewModel,
@@ -29,26 +28,24 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     return Scaffold(
       appBar: AppBar(
         title: EntityStateTitle(entity: companyGateway),
-      actions: [
-        userCompany.canEditEntity(companyGateway)
-            ? EditIconButton(
-                isVisible: !companyGateway.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              )
-            : Container(),
-        ActionMenuButton(
-          entityActions: companyGateway.getActions(userCompany: userCompany),
-          isSaving: viewModel.isSaving,
-          entity: companyGateway,
-          onSelected: viewModel.onEntityAction,
-        )
-      ],
+        actions: [
+          userCompany.canEditEntity(companyGateway)
+              ? EditIconButton(
+                  isVisible: !companyGateway.isDeleted,
+                  onPressed: () => viewModel.onEditPressed(context),
+                )
+              : Container(),
+          ActionMenuButton(
+            entityActions: companyGateway.getActions(userCompany: userCompany),
+            isSaving: viewModel.isSaving,
+            entity: companyGateway,
+            onSelected: viewModel.onEntityAction,
+          )
+        ],
       ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
-      ),
+      body: FormCard(children: [
+        // STARTER: widgets - do not remove comment
+      ]),
     );
   }
 }

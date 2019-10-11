@@ -27,7 +27,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
       // STARTER: array - do not remove comment
     ];
@@ -54,8 +53,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
 
   void _onChanged() {
     final companyGateway = widget.viewModel.companyGateway.rebuild((b) => b
-      // STARTER: set value - do not remove comment
-    );
+        // STARTER: set value - do not remove comment
+        );
     if (companyGateway != widget.viewModel.companyGateway) {
       widget.viewModel.onChanged(companyGateway);
     }
@@ -79,27 +78,28 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
               ? localization.newCompanyGateway
               : localization.editCompanyGateway),
           actions: <Widget>[
-                if (!isMobile(context))
-                  FlatButton(
-                    child: Text(
-                      localization.cancel,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => viewModel.onCancelPressed(context),
-                  ),
-                ActionIconButton(
-                  icon: Icons.cloud_upload,
-                  tooltip: localization.save,
-                  isVisible: !companyGateway.isDeleted,
-                  isDirty: companyGateway.isNew || companyGateway != viewModel.origCompanyGateway,
-                  isSaving: viewModel.isSaving,
-                  onPressed: () {
-                    if (! _formKey.currentState.validate()) {
-                      return;
-                    }
-                    viewModel.onSavePressed(context);
-                  },
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
                 ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
+            ActionIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
+              isVisible: !companyGateway.isDeleted,
+              isDirty: companyGateway.isNew ||
+                  companyGateway != viewModel.origCompanyGateway,
+              isSaving: viewModel.isSaving,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+                viewModel.onSavePressed(context);
+              },
+            ),
           ],
         ),
         body: Form(
@@ -114,8 +114,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
                   ),
                 ],
               );
-            })
-        ),
+            })),
       ),
     );
   }

@@ -37,8 +37,8 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
-..companyGatewayState.replace(companyGatewaysReducer(state.companyGatewayState, action))
-
+    ..companyGatewayState
+        .replace(companyGatewaysReducer(state.companyGatewayState, action))
     ..projectState.replace(projectsReducer(state.projectState, action))
     ..paymentState.replace(paymentsReducer(state.paymentState, action))
     ..quoteState.replace(quotesReducer(state.quoteState, action))
@@ -122,8 +122,8 @@ UserCompanyEntity saveCompanySuccessReducer(
 
 UserCompanyEntity uploadLogoSuccessReducer(
     UserCompanyEntity userCompany, UploadLogoSuccess action) {
-  userCompany = userCompany.rebuild(
-      (b) => b..company.settings.companyLogo = action.company.settings.companyLogo);
+  userCompany = userCompany.rebuild((b) =>
+      b..company.settings.companyLogo = action.company.settings.companyLogo);
 
   return userCompany;
 }

@@ -57,7 +57,7 @@ List<String> currencyList(BuiltMap<String, CurrencyEntity> currencyMap) {
 }
 
 var memoizedTimezoneList = memo1(
-        (BuiltMap<String, TimezoneEntity> timezoneMap) =>
+    (BuiltMap<String, TimezoneEntity> timezoneMap) =>
         timezoneList(timezoneMap));
 
 List<String> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
@@ -71,8 +71,8 @@ List<String> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
 }
 
 var memoizedDateFormatList = memo1(
-        (BuiltMap<String, DateFormatEntity> dateFormatMap) =>
-            dateFormatList(dateFormatMap));
+    (BuiltMap<String, DateFormatEntity> dateFormatMap) =>
+        dateFormatList(dateFormatMap));
 
 List<String> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
   final list = dateFormatMap.keys.toList();
@@ -83,7 +83,6 @@ List<String> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
 
   return list;
 }
-
 
 var memoizedIndustryList = memo1(
     (BuiltMap<String, IndustryEntity> industryMap) =>

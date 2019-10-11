@@ -103,8 +103,7 @@ part 'serializers.g.dart';
   DocumentListResponse,
   DocumentItemResponse,
   // STARTER: serializers - do not remove comment
-CompanyGatewayEntity,
-
+  CompanyGatewayEntity,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

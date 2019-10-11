@@ -44,8 +44,8 @@ Middleware<AppState> _editGroup() {
       NextDispatcher next) async {
     final action = dynamicAction as EditGroup;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -69,8 +69,8 @@ Middleware<AppState> _viewGroup() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewGroup;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -88,8 +88,8 @@ Middleware<AppState> _viewGroupList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewGroupList;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 

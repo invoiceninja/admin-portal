@@ -99,9 +99,9 @@ class QuoteListVM extends EntityListVM {
       onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
           ViewClient(
               clientId: state.quoteListState.filterEntityId, context: context)),
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> quotes, EntityAction action) =>
-              handleQuoteAction(context, quotes, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> quotes,
+              EntityAction action) =>
+          handleQuoteAction(context, quotes, action),
     );
   }
 }

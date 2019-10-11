@@ -65,7 +65,6 @@ import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edi
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
-
 void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
@@ -107,8 +106,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
-..addAll(createStoreCompanyGatewaysMiddleware())
-
+        ..addAll(createStoreCompanyGatewaysMiddleware())
         ..addAll(createStoreGroupsMiddleware())
         ..addAll(isTesting
             ? []
@@ -324,9 +322,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
-CompanyGatewayViewScreen.route: (context) => CompanyGatewayViewScreen(),
-CompanyGatewayEditScreen.route: (context) => CompanyGatewayEditScreen(),
+            CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
+            CompanyGatewayViewScreen.route: (context) =>
+                CompanyGatewayViewScreen(),
+            CompanyGatewayEditScreen.route: (context) =>
+                CompanyGatewayEditScreen(),
 
             GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),

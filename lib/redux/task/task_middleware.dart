@@ -44,8 +44,8 @@ Middleware<AppState> _editTask() {
       NextDispatcher next) async {
     final action = dynamicAction as EditTask;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -69,8 +69,8 @@ Middleware<AppState> _viewTask() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewTask;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -88,8 +88,8 @@ Middleware<AppState> _viewTaskList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTaskList;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 

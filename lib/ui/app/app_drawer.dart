@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -25,9 +24,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -320,21 +317,6 @@ class AppDrawer extends StatelessWidget {
                       ),
                       */
                       // STARTER: menu - do not remove comment
-                      DrawerTile(
-                        company: company,
-                        entityType: EntityType.companyGateway,
-                        icon: getEntityIcon(EntityType.companyGateway),
-                        title: localization.companyGateways,
-                        onTap: () =>
-                            store.dispatch(ViewCompanyGatewayList(context: context)),
-                        onCreateTap: () {
-                          navigator.pop();
-                          store.dispatch(EditCompanyGateway(
-                              companyGateway: CompanyGatewayEntity(),
-                              context: context));
-                        },
-                      ),
-
                       DrawerTile(
                         company: company,
                         icon: FontAwesomeIcons.cog,

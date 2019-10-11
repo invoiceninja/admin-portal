@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class CompanyGatewayRepository {
-
   const CompanyGatewayRepository({
     this.webClient = const WebClient(),
   });
@@ -22,8 +21,8 @@ class CompanyGatewayRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/company_gateways/$entityId', credentials.token);
 
-    final CompanyGatewayItemResponse companyGatewayResponse =
-        serializers.deserializeWith(CompanyGatewayItemResponse.serializer, response);
+    final CompanyGatewayItemResponse companyGatewayResponse = serializers
+        .deserializeWith(CompanyGatewayItemResponse.serializer, response);
 
     return companyGatewayResponse.data;
   }
@@ -38,33 +37,35 @@ class CompanyGatewayRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final CompanyGatewayListResponse companyGatewayResponse =
-        serializers.deserializeWith(CompanyGatewayListResponse.serializer, response);
+    final CompanyGatewayListResponse companyGatewayResponse = serializers
+        .deserializeWith(CompanyGatewayListResponse.serializer, response);
 
     return companyGatewayResponse.data;
   }
-  
+
   Future<CompanyGatewayEntity> saveData(
       Credentials credentials, CompanyGatewayEntity companyGateway,
       [EntityAction action]) async {
-    final data = serializers.serializeWith(CompanyGatewayEntity.serializer, companyGateway);
+    final data = serializers.serializeWith(
+        CompanyGatewayEntity.serializer, companyGateway);
     dynamic response;
 
     if (companyGateway.isNew) {
       response = await webClient.post(
-          credentials.url + '/company_gateways',
-          credentials.token,
+          credentials.url + '/company_gateways', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/company_gateways/' + companyGateway.id.toString();
+      var url =
+          credentials.url + '/company_gateways/' + companyGateway.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, credentials.token, data: json.encode(data));
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
-    final CompanyGatewayItemResponse companyGatewayResponse =
-    serializers.deserializeWith(CompanyGatewayItemResponse.serializer, response);
+    final CompanyGatewayItemResponse companyGatewayResponse = serializers
+        .deserializeWith(CompanyGatewayItemResponse.serializer, response);
 
     return companyGatewayResponse.data;
   }
