@@ -33,6 +33,8 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
+
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 
 part 'app_state.g.dart';
@@ -143,6 +145,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+case EntityType.companyGateway:
+return companyGatewayUIState;
+
       case EntityType.group:
         return groupUIState;
 
@@ -188,6 +193,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+CompanyGatewayState get companyGatewayState => selectedCompanyState.companyGatewayState;
+ListUIState get companyGatewayListState => uiState.companyGatewayUIState.listUIState;
+CompanyGatewayUIState get companyGatewayUIState => uiState.companyGatewayUIState;
+
+
   GroupState get groupState => selectedCompanyState.groupState;
 
   ListUIState get groupListState => uiState.groupUIState.listUIState;

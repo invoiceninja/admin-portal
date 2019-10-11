@@ -31,6 +31,9 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
+
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
@@ -100,6 +103,8 @@ part 'serializers.g.dart';
   DocumentListResponse,
   DocumentItemResponse,
   // STARTER: serializers - do not remove comment
+CompanyGatewayEntity,
+
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

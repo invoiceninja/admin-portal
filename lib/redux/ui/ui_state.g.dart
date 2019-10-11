@@ -114,6 +114,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'companyGatewayUIState',
+      serializers.serialize(object.companyGatewayUIState,
+          specifiedType: const FullType(CompanyGatewayUIState)),
       'groupUIState',
       serializers.serialize(object.groupUIState,
           specifiedType: const FullType(GroupUIState)),
@@ -235,6 +238,11 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'companyGatewayUIState':
+          result.companyGatewayUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CompanyGatewayUIState))
+              as CompanyGatewayUIState);
+          break;
         case 'groupUIState':
           result.groupUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(GroupUIState)) as GroupUIState);
@@ -352,6 +360,8 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
+  final CompanyGatewayUIState companyGatewayUIState;
+  @override
   final GroupUIState groupUIState;
   @override
   final DocumentUIState documentUIState;
@@ -392,6 +402,7 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.companyGatewayUIState,
       this.groupUIState,
       this.documentUIState,
       this.expenseUIState,
@@ -454,6 +465,9 @@ class _$UIState extends UIState {
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
     }
+    if (companyGatewayUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'companyGatewayUIState');
+    }
     if (groupUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'groupUIState');
     }
@@ -512,6 +526,7 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        companyGatewayUIState == other.companyGatewayUIState &&
         groupUIState == other.groupUIState &&
         documentUIState == other.documentUIState &&
         expenseUIState == other.expenseUIState &&
@@ -543,17 +558,17 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode),
-                                                                                longPressSelectionIsDefault.hashCode),
-                                                                            requireAuthentication.hashCode),
-                                                                        emailPayment.hashCode),
-                                                                    autoStartTasks.hashCode),
-                                                                addDocumentsToInvoice.hashCode),
-                                                            filter.hashCode),
-                                                        dashboardUIState.hashCode),
-                                                    productUIState.hashCode),
-                                                clientUIState.hashCode),
-                                            invoiceUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), longPressSelectionIsDefault.hashCode),
+                                                                                requireAuthentication.hashCode),
+                                                                            emailPayment.hashCode),
+                                                                        autoStartTasks.hashCode),
+                                                                    addDocumentsToInvoice.hashCode),
+                                                                filter.hashCode),
+                                                            dashboardUIState.hashCode),
+                                                        productUIState.hashCode),
+                                                    clientUIState.hashCode),
+                                                invoiceUIState.hashCode),
+                                            companyGatewayUIState.hashCode),
                                         groupUIState.hashCode),
                                     documentUIState.hashCode),
                                 expenseUIState.hashCode),
@@ -586,6 +601,7 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('companyGatewayUIState', companyGatewayUIState)
           ..add('groupUIState', groupUIState)
           ..add('documentUIState', documentUIState)
           ..add('expenseUIState', expenseUIState)
@@ -691,6 +707,13 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
+  CompanyGatewayUIStateBuilder _companyGatewayUIState;
+  CompanyGatewayUIStateBuilder get companyGatewayUIState =>
+      _$this._companyGatewayUIState ??= new CompanyGatewayUIStateBuilder();
+  set companyGatewayUIState(
+          CompanyGatewayUIStateBuilder companyGatewayUIState) =>
+      _$this._companyGatewayUIState = companyGatewayUIState;
+
   GroupUIStateBuilder _groupUIState;
   GroupUIStateBuilder get groupUIState =>
       _$this._groupUIState ??= new GroupUIStateBuilder();
@@ -767,6 +790,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _companyGatewayUIState = _$v.companyGatewayUIState?.toBuilder();
       _groupUIState = _$v.groupUIState?.toBuilder();
       _documentUIState = _$v.documentUIState?.toBuilder();
       _expenseUIState = _$v.expenseUIState?.toBuilder();
@@ -818,6 +842,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              companyGatewayUIState: companyGatewayUIState.build(),
               groupUIState: groupUIState.build(),
               documentUIState: documentUIState.build(),
               expenseUIState: expenseUIState.build(),
@@ -838,6 +863,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'companyGatewayUIState';
+        companyGatewayUIState.build();
         _$failedField = 'groupUIState';
         groupUIState.build();
         _$failedField = 'documentUIState';

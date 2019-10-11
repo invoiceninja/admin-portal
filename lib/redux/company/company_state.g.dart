@@ -55,6 +55,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'companyGatewayState',
+      serializers.serialize(object.companyGatewayState,
+          specifiedType: const FullType(CompanyGatewayState)),
       'groupState',
       serializers.serialize(object.groupState,
           specifiedType: const FullType(GroupState)),
@@ -128,6 +131,11 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'companyGatewayState':
+          result.companyGatewayState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CompanyGatewayState))
+              as CompanyGatewayState);
           break;
         case 'groupState':
           result.groupState.replace(serializers.deserialize(value,
@@ -273,6 +281,8 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
   @override
+  final CompanyGatewayState companyGatewayState;
+  @override
   final GroupState groupState;
 
   factory _$UserCompanyState(
@@ -292,6 +302,7 @@ class _$UserCompanyState extends UserCompanyState {
       this.projectState,
       this.paymentState,
       this.quoteState,
+      this.companyGatewayState,
       this.groupState})
       : super._() {
     if (documentState == null) {
@@ -327,6 +338,10 @@ class _$UserCompanyState extends UserCompanyState {
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
     }
+    if (companyGatewayState == null) {
+      throw new BuiltValueNullFieldError(
+          'UserCompanyState', 'companyGatewayState');
+    }
     if (groupState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'groupState');
     }
@@ -356,6 +371,7 @@ class _$UserCompanyState extends UserCompanyState {
         projectState == other.projectState &&
         paymentState == other.paymentState &&
         quoteState == other.quoteState &&
+        companyGatewayState == other.companyGatewayState &&
         groupState == other.groupState;
   }
 
@@ -373,19 +389,23 @@ class _$UserCompanyState extends UserCompanyState {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc(0,
-                                                        userCompany.hashCode),
-                                                    documentState.hashCode),
-                                                dashboardState.hashCode),
-                                            productState.hashCode),
-                                        clientState.hashCode),
-                                    invoiceState.hashCode),
-                                expenseState.hashCode),
-                            vendorState.hashCode),
-                        taskState.hashCode),
-                    projectState.hashCode),
-                paymentState.hashCode),
-            quoteState.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            0,
+                                                            userCompany
+                                                                .hashCode),
+                                                        documentState.hashCode),
+                                                    dashboardState.hashCode),
+                                                productState.hashCode),
+                                            clientState.hashCode),
+                                        invoiceState.hashCode),
+                                    expenseState.hashCode),
+                                vendorState.hashCode),
+                            taskState.hashCode),
+                        projectState.hashCode),
+                    paymentState.hashCode),
+                quoteState.hashCode),
+            companyGatewayState.hashCode),
         groupState.hashCode));
   }
 
@@ -404,6 +424,7 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
           ..add('quoteState', quoteState)
+          ..add('companyGatewayState', companyGatewayState)
           ..add('groupState', groupState))
         .toString();
   }
@@ -484,6 +505,12 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  CompanyGatewayStateBuilder _companyGatewayState;
+  CompanyGatewayStateBuilder get companyGatewayState =>
+      _$this._companyGatewayState ??= new CompanyGatewayStateBuilder();
+  set companyGatewayState(CompanyGatewayStateBuilder companyGatewayState) =>
+      _$this._companyGatewayState = companyGatewayState;
+
   GroupStateBuilder _groupState;
   GroupStateBuilder get groupState =>
       _$this._groupState ??= new GroupStateBuilder();
@@ -506,6 +533,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _companyGatewayState = _$v.companyGatewayState?.toBuilder();
       _groupState = _$v.groupState?.toBuilder();
       _$v = null;
     }
@@ -543,6 +571,7 @@ class UserCompanyStateBuilder
               projectState: projectState.build(),
               paymentState: paymentState.build(),
               quoteState: quoteState.build(),
+              companyGatewayState: companyGatewayState.build(),
               groupState: groupState.build());
     } catch (_) {
       String _$failedField;
@@ -571,6 +600,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'companyGatewayState';
+        companyGatewayState.build();
         _$failedField = 'groupState';
         groupState.build();
       } catch (e) {

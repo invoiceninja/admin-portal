@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
@@ -52,6 +54,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
+..companyGatewayUIState.replace(companyGatewayUIReducer(state.companyGatewayUIState, action))
+
     ..groupUIState.replace(groupUIReducer(state.groupUIState, action))
     ..documentUIState.replace(documentUIReducer(state.documentUIState, action))
     ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action))
