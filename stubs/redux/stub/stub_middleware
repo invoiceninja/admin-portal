@@ -43,8 +43,8 @@ Middleware<AppState> _editStub() {
 
     final action = dynamicAction as EditStub;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -68,10 +68,10 @@ Middleware<AppState> _viewStub() {
 
       final action = dynamicAction as ViewStub;
 
-      if (hasChanges(
-          store: store, context: action.context, force: action.force)) {
-        return;
-      }
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
+      return;
+    }
 
 
     next(action);
@@ -88,8 +88,8 @@ Middleware<AppState> _viewStubList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewStubList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 

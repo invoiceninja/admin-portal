@@ -45,8 +45,8 @@ Middleware<AppState> _editProject() {
       NextDispatcher next) async {
     final action = dynamicAction as EditProject;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -70,8 +70,8 @@ Middleware<AppState> _viewProject() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProject;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -89,8 +89,8 @@ Middleware<AppState> _viewProjectList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProjectList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 

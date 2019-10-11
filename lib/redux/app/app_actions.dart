@@ -84,6 +84,8 @@ class RefreshData {
 
 class ClearLastError {}
 
+class DiscardChanges {}
+
 class FilterCompany {
   FilterCompany(this.filter);
 

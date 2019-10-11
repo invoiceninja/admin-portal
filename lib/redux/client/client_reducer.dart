@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -90,6 +91,9 @@ final editingReducer = combineReducers<ClientEntity>([
     return ClientEntity();
   }),
   TypedReducer<ClientEntity, SelectCompany>((client, action) {
+    return ClientEntity();
+  }),
+  TypedReducer<ClientEntity, DiscardChanges>((client, action) {
     return ClientEntity();
   }),
 ]);

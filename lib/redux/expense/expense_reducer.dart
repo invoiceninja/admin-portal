@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -32,6 +33,7 @@ final editingReducer = combineReducers<ExpenseEntity>([
     return action.expense.rebuild((b) => b..isChanged = true);
   }),
   TypedReducer<ExpenseEntity, SelectCompany>(_clearEditing),
+  TypedReducer<ExpenseEntity, DiscardChanges>(_clearEditing),
 ]);
 
 ExpenseEntity _clearEditing(ExpenseEntity expense, dynamic action) {

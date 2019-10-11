@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -63,6 +64,7 @@ final editingReducer = combineReducers<VendorEntity>([
   TypedReducer<VendorEntity, DeleteVendorContact>(_removeContact),
   TypedReducer<VendorEntity, UpdateVendorContact>(_updateContact),
   TypedReducer<VendorEntity, SelectCompany>(_clearEditing),
+  TypedReducer<VendorEntity, DiscardChanges>(_clearEditing),
 ]);
 
 VendorEntity _clearEditing(VendorEntity vendor, dynamic action) {

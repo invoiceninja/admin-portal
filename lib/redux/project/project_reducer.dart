@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -48,6 +49,7 @@ final editingReducer = combineReducers<ProjectEntity>([
   }),
   TypedReducer<ProjectEntity, UpdateProject>(_updateEditing),
   TypedReducer<ProjectEntity, SelectCompany>(_clearEditing),
+  TypedReducer<ProjectEntity, DiscardChanges>(_clearEditing),
 ]);
 
 ProjectEntity _clearEditing(ProjectEntity project, dynamic dynamicAction) {

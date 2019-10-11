@@ -45,8 +45,8 @@ Middleware<AppState> _editExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as EditExpense;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -70,8 +70,8 @@ Middleware<AppState> _viewExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -89,8 +89,8 @@ Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewExpenseList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 

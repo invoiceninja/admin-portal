@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -33,6 +34,7 @@ final editingReducer = combineReducers<GroupEntity>([
     return action.group.rebuild((b) => b..isChanged = true);
   }),
   TypedReducer<GroupEntity, SelectCompany>(_clearEditing),
+  TypedReducer<GroupEntity, DiscardChanges>(_clearEditing),
 ]);
 
 GroupEntity _clearEditing(GroupEntity group, dynamic action) {

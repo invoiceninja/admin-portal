@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -44,6 +45,7 @@ final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, DeleteTaskTime>(_removeTaskTime),
   TypedReducer<TaskEntity, UpdateTaskTime>(_updateTaskTime),
   TypedReducer<TaskEntity, SelectCompany>(_clearEditing),
+  TypedReducer<TaskEntity, DiscardChanges>(_clearEditing),
 ]);
 
 TaskEntity _clearEditing(TaskEntity task, dynamic action) {

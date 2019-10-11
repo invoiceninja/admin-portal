@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
@@ -57,6 +58,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),
   TypedReducer<InvoiceEntity, UpdateQuoteItem>(_updateQuoteItem),
   TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
+  TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
 ]);
 
 InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {

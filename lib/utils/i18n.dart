@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'discard_changes': 'Discard Changes',
       'default_value': 'Default value',
       'disabled': 'Disabled',
       'currency_format': 'Currency Format',
@@ -112,7 +113,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_login': 'Email Login',
       'create_new': 'Create New',
       'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please cancel or save your changes',
+      'error_unsaved_changes': 'Your changes have not been saved',
       'download': 'Download',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
       'take_picture': 'Take Picture',
@@ -14834,6 +14835,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disabled => _localizedValues[localeCode]['disabled'];
 
   String get defaultValue => _localizedValues[localeCode]['default_value'];
+
+  String get discardChanges => _localizedValues[localeCode]['discard_changes'];
 
 
   String lookup(String key) {

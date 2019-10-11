@@ -448,20 +448,26 @@ void _setLastLoadWasSuccesfull() async {
 }
 */
 
-bool hasChanges({Store<AppState> store, BuildContext context, bool force}) {
+bool hasChanges({
+  @required Store<AppState> store,
+  @required BuildContext context,
+  @required dynamic action,
+}) {
+  final localization = AppLocalization.of(context);
+
   if (context == null) {
     print('WARNING: context is null in hasChanges');
     return false;
-  } else if (force == null) {
-    print('WARNING: force is null in hasChanges');
-    return false;
   }
 
-  if (store.state.hasChanges() && !isMobile(context) && !force) {
+  if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext context) {
-          return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
+          return MessageDialog(localization.errorUnsavedChanges, onDiscard: () {
+            store.dispatch(DiscardChanges());
+            store.dispatch(action);
+          });
         });
     return true;
   } else {

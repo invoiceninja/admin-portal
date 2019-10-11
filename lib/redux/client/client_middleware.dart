@@ -43,8 +43,8 @@ Middleware<AppState> _editClient() {
       NextDispatcher next) async {
     final action = dynamicAction as EditClient;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -63,8 +63,10 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store,
+        context: action.context,
+        action: action)) {
       return;
     }
 
@@ -82,8 +84,10 @@ Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store,
+        context: action.context,
+        action: action)) {
       return;
     }
 

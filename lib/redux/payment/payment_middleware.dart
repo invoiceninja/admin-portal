@@ -47,8 +47,8 @@ Middleware<AppState> _editPayment() {
       NextDispatcher next) async {
     final action = dynamicAction as EditPayment;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -69,8 +69,8 @@ Middleware<AppState> _editPayment() {
 
 Middleware<AppState> _viewPayment() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -88,8 +88,8 @@ Middleware<AppState> _viewPaymentList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewPaymentList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 

@@ -3,10 +3,11 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MessageDialog extends StatelessWidget {
-  const MessageDialog(this.message, {this.onDismiss});
+  const MessageDialog(this.message, {this.onDismiss, this.onDiscard});
 
   final String message;
   final Function onDismiss;
+  final Function onDiscard;
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +23,36 @@ class MessageDialog extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  /*
-                  Text(localization.anErrorOccurred,
-                      style: Theme.of(context).textTheme.title),
-                      */
                   SizedBox(height: 20.0),
                   Text(
                     message,
                     style: Theme.of(context).textTheme.title,
                   ),
                   SizedBox(height: 40.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      if (onDismiss != null) {
-                        onDismiss();
-                      }
-                    },
-                    label: localization.dismiss,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      if (onDiscard != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: FlatButton(
+                              child: Text(localization.discardChanges),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                onDiscard();
+                              }
+                          ),
+                        ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          if (onDismiss != null) {
+                            onDismiss();
+                          }
+                        },
+                        label: localization.dismiss,
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -53,8 +53,8 @@ Middleware<AppState> _viewQuote() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -72,8 +72,8 @@ Middleware<AppState> _viewQuoteList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewQuoteList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -97,8 +97,8 @@ Middleware<AppState> _editQuote() {
       NextDispatcher next) async {
     final action = dynamicAction as EditQuote;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force && hasChanges(
+        store: store, context: action.context, action: action)) {
       return;
     }
 

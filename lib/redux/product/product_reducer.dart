@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/product_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
@@ -34,6 +35,7 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, ArchiveProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, DeleteProductSuccess>(_updateEditing),
   TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
+  TypedReducer<ProductEntity, DiscardChanges>(_clearEditing),
 ]);
 
 ProductEntity _clearEditing(ProductEntity client, dynamic action) {

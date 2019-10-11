@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class AppForm extends StatelessWidget {
   const AppForm({

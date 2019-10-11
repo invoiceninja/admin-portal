@@ -1,4 +1,5 @@
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -32,6 +33,7 @@ final editingReducer = combineReducers<StubEntity>([
    return action.stub.rebuild((b) => b..isChanged = true);
  }),
   TypedReducer<StubEntity, SelectCompany>(_clearEditing),
+  TypedReducer<StubEntity, DiscardChanges>(_clearEditing),
 ]);
 
 StubEntity _clearEditing(StubEntity stub, dynamic action) {
