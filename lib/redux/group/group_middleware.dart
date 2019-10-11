@@ -252,11 +252,6 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      /*
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
-      }
-      */
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadGroupsFailure(error));

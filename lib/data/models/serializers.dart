@@ -93,10 +93,13 @@ part 'serializers.g.dart';
   PaymentEntity,
   TaskStatusEntity,
   ExpenseStatusEntity,
-  // STARTER: serializers - do not remove comment
   GroupEntity,
   GroupItemResponse,
+  GroupListResponse,
   DocumentEntity,
+  DocumentListResponse,
+  DocumentItemResponse,
+  // STARTER: serializers - do not remove comment
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
