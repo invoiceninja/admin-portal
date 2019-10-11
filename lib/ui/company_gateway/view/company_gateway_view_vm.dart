@@ -85,7 +85,7 @@ class CompanyGatewayViewVM {
           }
         },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleCompanyGatewayAction(context, companyGateway, action),
+          handleCompanyGatewayAction(context, [companyGateway], action),
         );
   }
 

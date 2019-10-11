@@ -242,11 +242,10 @@ class FilterCompanyGatewaysByEntity implements PersistUI {
 
 
 void handleCompanyGatewayAction(
-    BuildContext context, CompanyGatewayEntity companyGateway, EntityAction action) {
+    BuildContext context, List<CompanyGatewayEntity> companyGateways, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final companyGateway = companyGateways.first;
 
   switch (action) {
     case EntityAction.edit:

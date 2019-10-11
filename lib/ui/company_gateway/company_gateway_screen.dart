@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -10,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
@@ -20,7 +18,7 @@ class CompanyGatewayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.selectedCompany;
+    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
@@ -43,10 +41,6 @@ class CompanyGatewayScreen extends StatelessWidget {
                    bottomNavigationBar: AppBottomBar(
                      entityType: EntityType.companyGateway,
                      onSelectedSortField: (value) => store.dispatch(SortCompanyGateways(value)),
-                     customValues1: company.getCustomFieldValues(CustomFieldType.companyGateway1,
-                         excludeBlank: true),
-                     customValues2: company.getCustomFieldValues(CustomFieldType.companyGateway2,
-                         excludeBlank: true),
                      onSelectedCustom1: (value) =>
                          store.dispatch(FilterCompanyGatewaysByCustom1(value)),
                      onSelectedCustom2: (value) =>
@@ -58,7 +52,7 @@ class CompanyGatewayScreen extends StatelessWidget {
                        store.dispatch(FilterCompanyGatewaysByState(state));
                      },
                    ),
-                   floatingActionButton: user.canCreate(EntityType.companyGateway)
+                   floatingActionButton: userCompany.canCreate(EntityType.companyGateway)
                        ? FloatingActionButton(
                            heroTag: 'company_gateway_fab',
                            backgroundColor: Theme.of(context).primaryColorDark,

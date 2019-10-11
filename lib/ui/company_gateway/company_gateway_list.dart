@@ -5,10 +5,8 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayList extends StatelessWidget {
@@ -31,52 +29,51 @@ class CompanyGatewayList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-      
-              Expanded(
-                child: !viewModel.isLoaded
-                    ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
-                    : RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
-                        child: viewModel.companyGatewayList.isEmpty
-                            ? HelpText(AppLocalization.of(context).noRecordsFound)
-                            : ListView.separated(
-                                shrinkWrap: true,
-                                separatorBuilder: (context, index) => ListDivider(),
-                                itemCount: viewModel.companyGatewayList.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  final companyGatewayId = viewModel.companyGatewayList[index];
-                                  final companyGateway = viewModel.companyGatewayMap[companyGatewayId];
-                                  final userCompany = viewModel.userCompany;
+        Expanded(
+          child: !viewModel.isLoaded
+              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
+              : RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: viewModel.companyGatewayList.isEmpty
+                      ? HelpText(AppLocalization.of(context).noRecordsFound)
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
+                          itemCount: viewModel.companyGatewayList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            final companyGatewayId =
+                                viewModel.companyGatewayList[index];
+                            final companyGateway =
+                                viewModel.companyGatewayMap[companyGatewayId];
+                            final userCompany = viewModel.userCompany;
 
-                              void showDialog() => showEntityActionsDialog(
-                                    userCompany: userCompany,
-                                  entity: companyGateway,
-                                  context: context,
-                                  onEntityAction: viewModel.onEntityAction);
+                            void showDialog() => showEntityActionsDialog(
+                                userCompany: userCompany,
+                                entities: [companyGateway],
+                                context: context,
+                                onEntityAction: viewModel.onEntityAction);
 
-                                  return CompanyGatewayListItem(
-                                     user: viewModel.userCompany.user,
-                                     filter: viewModel.filter,
-                                     companyGateway: companyGateway,
-                                     onTap: () =>
-                                         viewModel.onCompanyGatewayTap(context, companyGateway),
-                                     onEntityAction: (EntityAction action) {
-                                       if (action == EntityAction.more) {
-                                         showDialog();
-                                       } else {
-                                         viewModel.onEntityAction(
-                                             context, companyGateway, action);
-                                       }
-                                     },
-                                     onLongPress: () =>
-                                         showDialog(),
-                                   );
-                                },
-                              ),
-                      ),
-              ),
+                            return CompanyGatewayListItem(
+                              user: viewModel.userCompany.user,
+                              filter: viewModel.filter,
+                              companyGateway: companyGateway,
+                              onTap: () => viewModel.onCompanyGatewayTap(
+                                  context, companyGateway),
+                              onEntityAction: (EntityAction action) {
+                                if (action == EntityAction.more) {
+                                  showDialog();
+                                } else {
+                                  viewModel.onEntityAction(
+                                      context, [companyGateway], action);
+                                }
+                              },
+                              onLongPress: () => showDialog(),
+                            );
+                          },
+                        ),
+                ),
+        ),
 
-      
         /*
         filteredClient != null
             ? Material(

@@ -80,7 +80,7 @@ class CompanyGatewayListVM {
           store.dispatch(ViewCompanyGateway(companyGatewayId: companyGateway.id, context: context));
         },
       onEntityAction:
-          (BuildContext context, BaseEntity companyGateway, EntityAction action) =>
+          (BuildContext context, List<BaseEntity> companyGateway, EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateway, action),
         onRefreshed: (context) => _handleRefresh(context),
     );
@@ -95,8 +95,7 @@ class CompanyGatewayListVM {
   final bool isLoaded;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, CompanyGatewayEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
 }

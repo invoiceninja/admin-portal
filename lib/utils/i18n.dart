@@ -14,6 +14,15 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'company_gateway': 'Payment Gateway',
+      'company_gateways': 'Payment Gateways',
+      'new_company_gateway': 'New Gateway',
+      'edit_company_gateway': 'Edit Gateway',
+      'created_company_gateway': 'Successfully created gateway',
+      'updated_company_gateway': 'Successfully updated gateway',
+      'archived_company_gateway': 'Successfully archived gateway',
+      'deleted_company_gateway': 'Successfully deleted gateway',
+      'restored_company_gateway': 'Successfully restored gateway',
       'continue_editing': 'Continue Editing',
       'discard_changes': 'Discard Changes',
       'default_value': 'Default value',
@@ -14827,9 +14836,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get december => _localizedValues[localeCode]['december'];
 
-  String get firstDayOfTheWeek => _localizedValues[localeCode]['first_day_of_the_week'];
+  String get firstDayOfTheWeek =>
+      _localizedValues[localeCode]['first_day_of_the_week'];
 
-  String get firstMonthOfTheYear => _localizedValues[localeCode]['first_month_of_the_year'];
+  String get firstMonthOfTheYear =>
+      _localizedValues[localeCode]['first_month_of_the_year'];
 
   String get currencyFormat => _localizedValues[localeCode]['currency_format'];
 
@@ -14839,8 +14850,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get discardChanges => _localizedValues[localeCode]['discard_changes'];
 
-  String get continueEditing => _localizedValues[localeCode]['continue_editing'];
+  String get continueEditing =>
+      _localizedValues[localeCode]['continue_editing'];
 
+  String get editCompanyGateway =>
+      _localizedValues[localeCode]['edit_company_gateway'];
+
+  String get newCompanyGateway =>
+      _localizedValues[localeCode]['new_company_gateway'];
+
+  String get createdCompanyGateway =>
+      _localizedValues[localeCode]['created_company_gateway'];
+
+  String get updatedCompanyGateway =>
+      _localizedValues[localeCode]['updated_company_gateway'];
+
+  String get archivedCompanyGateway =>
+      _localizedValues[localeCode]['archived_company_gateway'];
+
+  String get deletedCompanyGateway =>
+      _localizedValues[localeCode]['deleted_company_gateway'];
+
+  String get restoredCompanyGateway =>
+      _localizedValues[localeCode]['restored_company_gateway'];
+
+  String get companyGateways =>
+      _localizedValues[localeCode]['company_gateways'];
+
+  String get companyGateway => _localizedValues[localeCode]['company_gateway'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

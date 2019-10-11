@@ -34,7 +34,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final companyGateway = widget.viewModel.companyGateway;
+    //final companyGateway = widget.viewModel.companyGateway;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));

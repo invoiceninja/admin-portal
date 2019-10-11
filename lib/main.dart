@@ -63,7 +63,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 
