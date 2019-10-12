@@ -98,6 +98,8 @@ const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
 const String kSettingsOnlinePayments = 'online_payments';
+const String kSettingsOnlinePaymentsView = 'online_payments_view';
+const String kSettingsOnlinePaymentsEdit = 'online_payments_edit';
 const String kSettingsTaxRates = 'tax_rates';
 const String kSettingsNotifications = 'notifications';
 const String kSettingsProducts = 'products';
@@ -120,6 +122,8 @@ const List<String> kSettingsSections = [
   kSettingsUserDetails,
   kSettingsLocalization,
   kSettingsOnlinePayments,
+  kSettingsOnlinePaymentsView,
+  kSettingsOnlinePaymentsEdit,
   kSettingsTaxRates,
   kSettingsProducts,
   kSettingsNotifications,

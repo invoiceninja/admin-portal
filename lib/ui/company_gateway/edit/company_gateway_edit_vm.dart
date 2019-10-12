@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -16,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CompanyGatewayEditScreen extends StatelessWidget {
   const CompanyGatewayEditScreen({Key key}) : super(key: key);
-  static const String route = '/company_gateway/edit';
+  static const String route = '/$kSettings/$kSettingsOnlinePaymentsEdit';
 
   @override
   Widget build(BuildContext context) {

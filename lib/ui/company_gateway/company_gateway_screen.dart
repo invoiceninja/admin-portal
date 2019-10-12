@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -12,7 +13,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
-  static const String route = '/company_gateway';
+  static const String route = '/$kSettings/$kSettingsOnlinePayments';
 
   @override
   Widget build(BuildContext context) {

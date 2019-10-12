@@ -59,6 +59,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
@@ -322,12 +323,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-            CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
-            CompanyGatewayViewScreen.route: (context) =>
-                CompanyGatewayViewScreen(),
-            CompanyGatewayEditScreen.route: (context) =>
-                CompanyGatewayEditScreen(),
-
             GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
@@ -335,6 +330,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
             UserDetailsScreen.route: (context) => UserDetailsScreen(),
             LocalizationScreen.route: (context) => LocalizationScreen(),
+            CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
+            CompanyGatewayViewScreen.route: (context) =>
+                CompanyGatewayViewScreen(),
+            CompanyGatewayEditScreen.route: (context) =>
+                CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
             TaxRatesScreen.route: (context) => TaxRatesScreen(),
             ProductSettingsScreen.route: (context) => ProductSettingsScreen(),

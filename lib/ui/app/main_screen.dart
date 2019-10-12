@@ -8,6 +8,9 @@ import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
@@ -25,7 +28,6 @@ import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
@@ -170,7 +172,9 @@ class SettingsScreens extends StatelessWidget {
               CompanyDetailsScreen(),
               UserDetailsScreen(),
               LocalizationScreen(),
-              OnlinePaymentsScreen(),
+              CompanyGatewayScreen(),
+              CompanyGatewayViewScreen(),
+              CompanyGatewayEditScreen(),
               TaxRatesScreen(),
               ProductSettingsScreen(),
               NotificationsSettingsScreen(),
