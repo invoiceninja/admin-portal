@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -467,6 +468,7 @@ bool hasChanges({
           return MessageDialog(localization.errorUnsavedChanges,
               dismissLabel: localization.continueEditing, onDiscard: () {
             store.dispatch(DiscardChanges());
+            store.dispatch(ResetSettings());
             store.dispatch(action);
           });
         });
