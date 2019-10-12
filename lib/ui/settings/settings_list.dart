@@ -178,6 +178,7 @@ class SettingsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final company = viewModel.state.selectedCompany;
 
     return SelectedIndicator(
       isSelected: viewModel.state.uiState.containsRoute('/$section'),
@@ -188,7 +189,16 @@ class SettingsListTile extends StatelessWidget {
         ),
         title: Text(localization.lookup(section)),
         onTap: () {
-          viewModel.loadSection(context, section);
+          if (section == kSettingsOnlinePayments &&
+              (company.companyGateways == null ||
+                  company.companyGateways.isEmpty)) {
+            viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
+          } else if (section == kSettingsGroupSettings &&
+              (company.groups == null || company.groups.isEmpty)) {
+            viewModel.loadSection(context, kSettingsGroupSettingsEdit);
+          } else {
+            viewModel.loadSection(context, section);
+          }
         },
       ),
     );

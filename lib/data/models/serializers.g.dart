@@ -242,11 +242,17 @@ Serializers _$serializers = (new Serializers().toBuilder()
           () => new MapBuilder<String, TaskStatusEntity>())
       ..addBuilderFactory(
           const FullType(
+              BuiltList, const [const FullType(CompanyGatewayEntity)]),
+          () => new ListBuilder<CompanyGatewayEntity>())
+      ..addBuilderFactory(
+          const FullType(
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ExpenseCategoryEntity)]),
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ExpenseCategoryEntity)
+          ]),
           () => new MapBuilder<String, ExpenseCategoryEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserEntity)]),
@@ -306,14 +312,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(UserCompanyEntity)]),
           () => new ListBuilder<UserCompanyEntity>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(VendorContactEntity)]),
-          () => new ListBuilder<VendorContactEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(VendorEntity)]),
-          () => new ListBuilder<VendorEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [const FullType(String), const FullType(ClientEntity)]), () => new MapBuilder<String, ClientEntity>())
+          const FullType(BuiltList, const [const FullType(VendorContactEntity)]), () => new ListBuilder<VendorContactEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(VendorEntity)]), () => new ListBuilder<VendorEntity>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(ClientEntity)]), () => new MapBuilder<String, ClientEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyGatewayEntity)]), () => new MapBuilder<String, CompanyGatewayEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())

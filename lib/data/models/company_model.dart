@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -28,6 +29,7 @@ abstract class CompanyEntity extends Object
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
       taskStatusMap: BuiltMap<String, TaskStatusEntity>(),
+      companyGateways: BuiltList<CompanyGatewayEntity>(),
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
       users: BuiltList<UserEntity>(),
@@ -81,6 +83,12 @@ abstract class CompanyEntity extends Object
 
   BuiltMap<String, TaskStatusEntity> get taskStatusMap;
 
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'company_gateways')
+  BuiltList<CompanyGatewayEntity> get companyGateways;
+
+  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;

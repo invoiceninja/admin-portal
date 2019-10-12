@@ -100,6 +100,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(TaskStatusEntity)])));
     }
+    if (object.companyGateways != null) {
+      result
+        ..add('company_gateways')
+        ..add(serializers.serialize(object.companyGateways,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(CompanyGatewayEntity)])));
+    }
     if (object.expenseCategories != null) {
       result
         ..add('expense_categories')
@@ -252,6 +259,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                 const FullType(String),
                 const FullType(TaskStatusEntity)
               ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'company_gateways':
+          result.companyGateways.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CompanyGatewayEntity)]))
+              as BuiltList<dynamic>);
           break;
         case 'expense_categories':
           result.expenseCategories.replace(serializers.deserialize(value,
@@ -1426,6 +1439,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltMap<String, TaskStatusEntity> taskStatusMap;
   @override
+  final BuiltList<CompanyGatewayEntity> companyGateways;
+  @override
   final BuiltList<ExpenseCategoryEntity> expenseCategories;
   @override
   final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
@@ -1469,6 +1484,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
+      this.companyGateways,
       this.expenseCategories,
       this.expenseCategoryMap,
       this.users,
@@ -1520,6 +1536,7 @@ class _$CompanyEntity extends CompanyEntity {
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
+        companyGateways == other.companyGateways &&
         expenseCategories == other.expenseCategories &&
         expenseCategoryMap == other.expenseCategoryMap &&
         users == other.users &&
@@ -1556,12 +1573,12 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode),
-                                                                                financialYearStart.hashCode),
-                                                                            groups.hashCode),
-                                                                        taxRates.hashCode),
-                                                                    taskStatuses.hashCode),
-                                                                taskStatusMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
+                                                                                groups.hashCode),
+                                                                            taxRates.hashCode),
+                                                                        taskStatuses.hashCode),
+                                                                    taskStatusMap.hashCode),
+                                                                companyGateways.hashCode),
                                                             expenseCategories.hashCode),
                                                         expenseCategoryMap.hashCode),
                                                     users.hashCode),
@@ -1592,6 +1609,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
+          ..add('companyGateways', companyGateways)
           ..add('expenseCategories', expenseCategories)
           ..add('expenseCategoryMap', expenseCategoryMap)
           ..add('users', users)
@@ -1665,6 +1683,12 @@ class CompanyEntityBuilder
       _$this._taskStatusMap ??= new MapBuilder<String, TaskStatusEntity>();
   set taskStatusMap(MapBuilder<String, TaskStatusEntity> taskStatusMap) =>
       _$this._taskStatusMap = taskStatusMap;
+
+  ListBuilder<CompanyGatewayEntity> _companyGateways;
+  ListBuilder<CompanyGatewayEntity> get companyGateways =>
+      _$this._companyGateways ??= new ListBuilder<CompanyGatewayEntity>();
+  set companyGateways(ListBuilder<CompanyGatewayEntity> companyGateways) =>
+      _$this._companyGateways = companyGateways;
 
   ListBuilder<ExpenseCategoryEntity> _expenseCategories;
   ListBuilder<ExpenseCategoryEntity> get expenseCategories =>
@@ -1750,6 +1774,7 @@ class CompanyEntityBuilder
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
+      _companyGateways = _$v.companyGateways?.toBuilder();
       _expenseCategories = _$v.expenseCategories?.toBuilder();
       _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
       _users = _$v.users?.toBuilder();
@@ -1799,6 +1824,7 @@ class CompanyEntityBuilder
               taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
+              companyGateways: _companyGateways?.build(),
               expenseCategories: _expenseCategories?.build(),
               expenseCategoryMap: _expenseCategoryMap?.build(),
               users: _users?.build(),
@@ -1824,6 +1850,8 @@ class CompanyEntityBuilder
         _taskStatuses?.build();
         _$failedField = 'taskStatusMap';
         taskStatusMap.build();
+        _$failedField = 'companyGateways';
+        _companyGateways?.build();
         _$failedField = 'expenseCategories';
         _expenseCategories?.build();
         _$failedField = 'expenseCategoryMap';
