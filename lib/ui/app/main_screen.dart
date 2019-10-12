@@ -134,9 +134,7 @@ class MainScreen extends StatelessWidget {
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
                     ),
-                    // TODO profile/time to see if this optimization helps
-                    mainRoute == 'settings' ? SettingsScreens() : SizedBox(),
-                    //SettingsScreens(),
+                    SettingsScreens(),
                   ],
                 ),
               ),
@@ -152,51 +150,89 @@ class SettingsScreens extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
-    final subRoute = uiState.subRoute;
-    final index = subRoute.isEmpty
-        ? kSettingsSections.length
-        : kSettingsSections.indexOf(subRoute);
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: SettingsScreen(),
-          flex: 2,
-        ),
-        VerticalDivider(width: isDarkMode(context) ? 1 : .5),
-        Expanded(
-          flex: 3,
-          child: IndexedStack(
-            index: index,
-            children: <Widget>[
-              CompanyDetailsScreen(),
-              UserDetailsScreen(),
-              LocalizationScreen(),
-              CompanyGatewayScreen(),
-              CompanyGatewayViewScreen(),
-              CompanyGatewayEditScreen(),
-              TaxRatesScreen(),
-              ProductSettingsScreen(),
-              NotificationsSettingsScreen(),
-              ImportExportScreen(),
-              DeviceSettingsScreen(),
-              GroupSettingsScreen(),
-              GroupViewScreen(),
-              GroupEditScreen(),
-              InvoiceSettingsScreen(),
-              InvoiceDesignScreen(),
-              ClientPortalScreen(),
-              BuyNowButtonsScreen(),
-              EmailSettingsScreen(),
-              TemplatesAndRemindersScreen(),
-              CreditCardsAndBanksScreen(),
-              DataVisualizationsScreen(),
-              BlankScreen(),
-            ],
-          ),
-        ),
-      ],
-    );
+    Widget screen = BlankScreen();
+
+    switch (uiState.subRoute) {
+      case kSettingsCompanyDetails:
+        screen = CompanyDetailsScreen();
+        break;
+      case kSettingsUserDetails:
+        screen = UserDetailsScreen();
+        break;
+      case kSettingsLocalization:
+        screen = LocalizationScreen();
+        break;
+      case kSettingsOnlinePayments:
+        screen = CompanyGatewayScreen();
+        break;
+      case kSettingsOnlinePaymentsView:
+        screen = CompanyGatewayViewScreen();
+        break;
+      case kSettingsOnlinePaymentsEdit:
+        screen = CompanyGatewayEditScreen();
+        break;
+      case kSettingsTaxRates:
+        screen = TaxRatesScreen();
+        break;
+      case kSettingsProducts:
+        screen = ProductSettingsScreen();
+        break;
+      case kSettingsNotifications:
+        screen = NotificationsSettingsScreen();
+        break;
+      case kSettingsImportExport:
+        screen = ImportExportScreen();
+        break;
+      case kSettingsDeviceSettings:
+        screen = DeviceSettingsScreen();
+        break;
+      case kSettingsGroupSettings:
+        screen = GroupSettingsScreen();
+        break;
+      case kSettingsGroupSettingsView:
+        screen = GroupViewScreen();
+        break;
+      case kSettingsGroupSettingsEdit:
+        screen = GroupEditScreen();
+        break;
+      case kSettingsInvoiceSettings:
+        screen = InvoiceSettingsScreen();
+        break;
+      case kSettingsInvoiceDesign:
+        screen = InvoiceDesignScreen();
+        break;
+      case kSettingsClientPortal:
+        screen = ClientPortalScreen();
+        break;
+      case kSettingsBuyNowButtons:
+        screen = BuyNowButtonsScreen();
+        break;
+      case kSettingsEmailSettings:
+        screen = EmailSettingsScreen();
+        break;
+      case kSettingsTemplatesAndReminders:
+        screen = TemplatesAndRemindersScreen();
+        break;
+      case kSettingsCreditCardsAndBanks:
+        screen = CreditCardsAndBanksScreen();
+        break;
+      case kSettingsDataVisualizations:
+        screen = DataVisualizationsScreen();
+        break;
+    }
+
+    return Row(children: <Widget>[
+      Expanded(
+        child: SettingsScreen(),
+        flex: 2,
+      ),
+      VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+      Expanded(
+        flex: 3,
+        child: screen,
+      )
+    ]);
   }
 }
 
@@ -247,6 +283,7 @@ class EntityScreens extends StatelessWidget {
 
 class BlankScreen extends StatelessWidget {
   const BlankScreen([this.message]);
+
   final String message;
 
   @override

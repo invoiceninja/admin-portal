@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CompanyDetailsScreen extends StatelessWidget {
   const CompanyDetailsScreen({Key key}) : super(key: key);
-  static const String route = '/settings/$kSettingsCompanyDetails';
+  static const String route = '/$kSettings/$kSettingsCompanyDetails';
 
   @override
   Widget build(BuildContext context) {
