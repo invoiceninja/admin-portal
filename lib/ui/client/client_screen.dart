@@ -51,27 +51,30 @@ class ClientScreen extends StatelessWidget {
           FlatButton(
             key: key,
             child: Text(
-              localization.done,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () async {
-              await showEntityActionsDialog(
-                  entities: state.clientListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearMultiselect(context: context));
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
               localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () => store.dispatch(ClearMultiselect(context: context)),
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.clientListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.clientListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearMultiselect(context: context));
+                  },
           ),
       ],
       body: ClientListBuilder(),
