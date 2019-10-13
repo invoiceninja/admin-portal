@@ -198,8 +198,12 @@ class FilterProductDropdown {
 void handleProductAction(
     BuildContext context, List<BaseEntity> products, EntityAction action) {
   assert(
-      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
-              .contains(action) ||
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
           products.length == 1,
       'Cannot perform this action on more than one product');
   final store = StoreProvider.of<AppState>(context);
@@ -246,9 +250,8 @@ void handleProductAction(
         break;
       }
 
-      final select = !store.state.productListState.isSelected(product);
       for (final product in products) {
-        if (select) {
+        if (!store.state.productListState.isSelected(product)) {
           store.dispatch(AddToMultiselect(context: context, entity: product));
         } else {
           store.dispatch(

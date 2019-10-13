@@ -271,8 +271,12 @@ class FilterClientsByCustom2 implements PersistUI {
 void handleClientAction(
     BuildContext context, List<ClientEntity> clients, EntityAction action) {
   assert(
-      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
-              .contains(action) ||
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
           clients.length == 1,
       'Cannot perform this action on more than one client');
   final store = StoreProvider.of<AppState>(context);
@@ -325,9 +329,8 @@ void handleClientAction(
         break;
       }
 
-      final select = !store.state.clientListState.isSelected(client);
       for (final client in clients) {
-        if (select) {
+        if (!state.clientListState.isSelected(client)) {
           store.dispatch(AddToMultiselect(context: context, entity: client));
         } else {
           store.dispatch(

@@ -16,6 +16,9 @@ class AppScaffold extends StatelessWidget {
       this.appBarActions,
       this.bottomNavigationBar,
       this.floatingActionButton,
+      this.showCheckbox,
+      this.isChecked,
+      this.onCheckboxChanged,
       this.hideHamburgerButton = false});
 
   final Widget body;
@@ -24,10 +27,15 @@ class AppScaffold extends StatelessWidget {
   final Widget appBarTitle;
   final List<Widget> appBarActions;
   final bool hideHamburgerButton;
+  final bool showCheckbox;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final showMenuIcon =
+        !showCheckbox && !isMobile(context) && !hideHamburgerButton;
 
     return WillPopScope(
         onWillPop: () async {
@@ -37,13 +45,19 @@ class AppScaffold extends StatelessWidget {
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
-            leading: !isMobile(context) && !hideHamburgerButton
-                ? IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: () =>
-                        store.dispatch(UpdateSidebar(AppSidebar.menu)),
-                  )
-                : null,
+            leading: showCheckbox
+                ? Checkbox(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: onCheckboxChanged,
+                    activeColor: Theme.of(context).accentColor,
+                    value: isChecked)
+                : showMenuIcon
+                    ? IconButton(
+                        icon: Icon(Icons.menu),
+                        onPressed: () =>
+                            store.dispatch(UpdateSidebar(AppSidebar.menu)),
+                      )
+                    : null,
             title: appBarTitle,
             actions: appBarActions,
           ),
