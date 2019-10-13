@@ -105,10 +105,10 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterClientsByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
-  TypedReducer<ListUIState, StartMultiselect>(_startListMultiselect),
-  TypedReducer<ListUIState, AddToMultiselect>(_addToListMultiselect),
-  TypedReducer<ListUIState, RemoveFromMultiselect>(_removeFromListMultiselect),
-  TypedReducer<ListUIState, ClearMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, StartClientMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToClientMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromClientMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterClientsByCustom1(
@@ -162,23 +162,23 @@ ListUIState _sortClients(ListUIState clientListState, SortClients action) {
 }
 
 ListUIState _startListMultiselect(
-    ListUIState clientListState, StartMultiselect action) {
+    ListUIState clientListState, StartClientMultiselect action) {
   return clientListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState clientListState, AddToMultiselect action) {
+    ListUIState clientListState, AddToClientMultiselect action) {
   return clientListState.rebuild((b) => b..selectedEntities.add(action.entity));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState clientListState, RemoveFromMultiselect action) {
+    ListUIState clientListState, RemoveFromClientMultiselect action) {
   return clientListState
       .rebuild((b) => b..selectedEntities.remove(action.entity));
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState clientListState, ClearMultiselect action) {
+    ListUIState clientListState, ClearClientMultiselect action) {
   return clientListState.rebuild((b) => b..selectedEntities = null);
 }
 

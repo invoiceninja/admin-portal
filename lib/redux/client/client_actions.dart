@@ -322,7 +322,7 @@ void handleClientAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {
-        store.dispatch(StartMultiselect(context: context));
+        store.dispatch(StartClientMultiselect(context: context));
       }
 
       if (clients.isEmpty) {
@@ -331,38 +331,38 @@ void handleClientAction(
 
       for (final client in clients) {
         if (!state.clientListState.isSelected(client)) {
-          store.dispatch(AddToMultiselect(context: context, entity: client));
+          store.dispatch(AddToClientMultiselect(context: context, entity: client));
         } else {
           store.dispatch(
-              RemoveFromMultiselect(context: context, entity: client));
+              RemoveFromClientMultiselect(context: context, entity: client));
         }
       }
       break;
   }
 }
 
-class StartMultiselect {
-  StartMultiselect({@required this.context});
+class StartClientMultiselect {
+  StartClientMultiselect({@required this.context});
 
   final BuildContext context;
 }
 
-class AddToMultiselect {
-  AddToMultiselect({@required this.context, @required this.entity});
-
-  final BuildContext context;
-  final BaseEntity entity;
-}
-
-class RemoveFromMultiselect {
-  RemoveFromMultiselect({@required this.context, @required this.entity});
+class AddToClientMultiselect {
+  AddToClientMultiselect({@required this.context, @required this.entity});
 
   final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearMultiselect {
-  ClearMultiselect({@required this.context});
+class RemoveFromClientMultiselect {
+  RemoveFromClientMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearClientMultiselect {
+  ClearClientMultiselect({@required this.context});
 
   final BuildContext context;
 }

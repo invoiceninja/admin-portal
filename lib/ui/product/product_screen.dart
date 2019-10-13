@@ -68,7 +68,7 @@ class ProductScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearMultiselect(context: context));
+              store.dispatch(ClearProductMultiselect(context: context));
             },
           ),
         if (viewModel.isInMultiselect)
@@ -88,7 +88,7 @@ class ProductScreen extends StatelessWidget {
                         context: context,
                         onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
-                    store.dispatch(ClearMultiselect(context: context));
+                    store.dispatch(ClearProductMultiselect(context: context));
                   },
           ),
       ],
