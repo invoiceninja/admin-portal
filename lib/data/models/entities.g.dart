@@ -8,6 +8,7 @@ part of 'entities.dart';
 
 const EntityType _$company = const EntityType._('company');
 const EntityType _$companyGateway = const EntityType._('companyGateway');
+const EntityType _$gateway = const EntityType._('gateway');
 const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
@@ -42,6 +43,8 @@ EntityType _$typeValueOf(String name) {
       return _$company;
     case 'companyGateway':
       return _$companyGateway;
+    case 'gateway':
+      return _$gateway;
     case 'invoice':
       return _$invoice;
     case 'recurringInvoice':
@@ -105,6 +108,7 @@ final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
   _$company,
   _$companyGateway,
+  _$gateway,
   _$invoice,
   _$recurringInvoice,
   _$invoiceItem,

@@ -50,13 +50,13 @@ abstract class CompanyGatewayEntity extends Object
     return _$CompanyGatewayEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      name: '',
-      settings: SettingsEntity(),
+      gateway: GatewayEntity(),
+      gatewayId: null,
+      showBillingAddress: true,
+      showShippingAddress: false,
+      updateDetails: true,
       customValue1: '',
       customValue2: '',
-      updatedAt: 0,
-      archivedAt: 0,
-      isDeleted: false,
     );
   }
 
@@ -67,23 +67,30 @@ abstract class CompanyGatewayEntity extends Object
     return EntityType.companyGateway;
   }
 
-  String get name;
+  GatewayEntity get gateway;
 
-  // TODO remove this
   @nullable
+  @BuiltValueField(wireName: 'gateway_key')
+  String get gatewayId;
+
+  @BuiltValueField(wireName: 'show_billing_address')
+  bool get showBillingAddress;
+
+  @BuiltValueField(wireName: 'show_shipping_address')
+  bool get showShippingAddress;
+
+  @BuiltValueField(wireName: 'update_details')
+  bool get updateDetails;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  SettingsEntity get settings;
-
   @override
   String get listDisplayName {
-    return name;
+    return gateway.name;
   }
 
   int compareTo(CompanyGatewayEntity companyGateway, String sortField,
@@ -101,9 +108,9 @@ abstract class CompanyGatewayEntity extends Object
     }
 
     if (response == 0) {
-      return companyGatewayA.name
+      return companyGatewayA.gateway.name
           .toLowerCase()
-          .compareTo(companyGatewayB.name.toLowerCase());
+          .compareTo(companyGatewayB.gateway.name.toLowerCase());
     } else {
       return response;
     }
@@ -116,7 +123,7 @@ abstract class CompanyGatewayEntity extends Object
     }
     filter = filter.toLowerCase();
 
-    if (name.toLowerCase().contains(filter)) {
+    if (gateway.name.toLowerCase().contains(filter)) {
       return true;
     }
 

@@ -304,6 +304,11 @@ abstract class GatewayEntity extends Object
 
   static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 
+  @override
+  @nullable
+  @BuiltValueField(wireName: 'key')
+  String get id;
+
   String get name;
 
   @BuiltValueField(wireName: 'sort_order')

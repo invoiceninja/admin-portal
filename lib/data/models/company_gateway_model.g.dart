@@ -124,22 +124,29 @@ class _$CompanyGatewayEntitySerializer
       Serializers serializers, CompanyGatewayEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
+      'gateway',
+      serializers.serialize(object.gateway,
+          specifiedType: const FullType(GatewayEntity)),
+      'show_billing_address',
+      serializers.serialize(object.showBillingAddress,
+          specifiedType: const FullType(bool)),
+      'show_shipping_address',
+      serializers.serialize(object.showShippingAddress,
+          specifiedType: const FullType(bool)),
+      'update_details',
+      serializers.serialize(object.updateDetails,
+          specifiedType: const FullType(bool)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
     ];
-    if (object.customValue1 != null) {
+    if (object.gatewayId != null) {
       result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
+        ..add('gateway_key')
+        ..add(serializers.serialize(object.gatewayId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -199,9 +206,25 @@ class _$CompanyGatewayEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
+        case 'gateway':
+          result.gateway.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GatewayEntity)) as GatewayEntity);
+          break;
+        case 'gateway_key':
+          result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'show_billing_address':
+          result.showBillingAddress = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_shipping_address':
+          result.showShippingAddress = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'update_details':
+          result.updateDetails = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -210,10 +233,6 @@ class _$CompanyGatewayEntitySerializer
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -444,13 +463,19 @@ class CompanyGatewayItemResponseBuilder
 
 class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
-  final String name;
+  final GatewayEntity gateway;
+  @override
+  final String gatewayId;
+  @override
+  final bool showBillingAddress;
+  @override
+  final bool showShippingAddress;
+  @override
+  final bool updateDetails;
   @override
   final String customValue1;
   @override
   final String customValue2;
-  @override
-  final SettingsEntity settings;
   @override
   final bool isChanged;
   @override
@@ -471,10 +496,13 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       (new CompanyGatewayEntityBuilder()..update(updates)).build();
 
   _$CompanyGatewayEntity._(
-      {this.name,
+      {this.gateway,
+      this.gatewayId,
+      this.showBillingAddress,
+      this.showShippingAddress,
+      this.updateDetails,
       this.customValue1,
       this.customValue2,
-      this.settings,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -483,11 +511,28 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'name');
+    if (gateway == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gateway');
     }
-    if (settings == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'settings');
+    if (showBillingAddress == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'showBillingAddress');
+    }
+    if (showShippingAddress == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'showShippingAddress');
+    }
+    if (updateDetails == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'updateDetails');
+    }
+    if (customValue1 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue1');
+    }
+    if (customValue2 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue2');
     }
   }
 
@@ -504,10 +549,13 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayEntity &&
-        name == other.name &&
+        gateway == other.gateway &&
+        gatewayId == other.gatewayId &&
+        showBillingAddress == other.showBillingAddress &&
+        showShippingAddress == other.showShippingAddress &&
+        updateDetails == other.updateDetails &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        settings == other.settings &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -528,10 +576,19 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
-                                    settings.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            gateway.hashCode),
+                                                        gatewayId.hashCode),
+                                                    showBillingAddress
+                                                        .hashCode),
+                                                showShippingAddress.hashCode),
+                                            updateDetails.hashCode),
+                                        customValue1.hashCode),
+                                    customValue2.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
@@ -544,10 +601,13 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
-          ..add('name', name)
+          ..add('gateway', gateway)
+          ..add('gatewayId', gatewayId)
+          ..add('showBillingAddress', showBillingAddress)
+          ..add('showShippingAddress', showShippingAddress)
+          ..add('updateDetails', updateDetails)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('settings', settings)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -563,9 +623,29 @@ class CompanyGatewayEntityBuilder
     implements Builder<CompanyGatewayEntity, CompanyGatewayEntityBuilder> {
   _$CompanyGatewayEntity _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  GatewayEntityBuilder _gateway;
+  GatewayEntityBuilder get gateway =>
+      _$this._gateway ??= new GatewayEntityBuilder();
+  set gateway(GatewayEntityBuilder gateway) => _$this._gateway = gateway;
+
+  String _gatewayId;
+  String get gatewayId => _$this._gatewayId;
+  set gatewayId(String gatewayId) => _$this._gatewayId = gatewayId;
+
+  bool _showBillingAddress;
+  bool get showBillingAddress => _$this._showBillingAddress;
+  set showBillingAddress(bool showBillingAddress) =>
+      _$this._showBillingAddress = showBillingAddress;
+
+  bool _showShippingAddress;
+  bool get showShippingAddress => _$this._showShippingAddress;
+  set showShippingAddress(bool showShippingAddress) =>
+      _$this._showShippingAddress = showShippingAddress;
+
+  bool _updateDetails;
+  bool get updateDetails => _$this._updateDetails;
+  set updateDetails(bool updateDetails) =>
+      _$this._updateDetails = updateDetails;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -574,11 +654,6 @@ class CompanyGatewayEntityBuilder
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
-
-  SettingsEntityBuilder _settings;
-  SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
-  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -612,10 +687,13 @@ class CompanyGatewayEntityBuilder
 
   CompanyGatewayEntityBuilder get _$this {
     if (_$v != null) {
-      _name = _$v.name;
+      _gateway = _$v.gateway?.toBuilder();
+      _gatewayId = _$v.gatewayId;
+      _showBillingAddress = _$v.showBillingAddress;
+      _showShippingAddress = _$v.showShippingAddress;
+      _updateDetails = _$v.updateDetails;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _settings = _$v.settings?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -647,10 +725,13 @@ class CompanyGatewayEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
-              name: name,
+              gateway: gateway.build(),
+              gatewayId: gatewayId,
+              showBillingAddress: showBillingAddress,
+              showShippingAddress: showShippingAddress,
+              updateDetails: updateDetails,
               customValue1: customValue1,
               customValue2: customValue2,
-              settings: settings.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -661,8 +742,8 @@ class CompanyGatewayEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'settings';
-        settings.build();
+        _$failedField = 'gateway';
+        gateway.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyGatewayEntity', _$failedField, e.toString());

@@ -500,7 +500,7 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
     ];
     if (object.id != null) {
       result
-        ..add('id')
+        ..add('key')
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
@@ -519,6 +519,10 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'key':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -529,10 +533,6 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
           break;
         case 'fields':
           result.fields = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -2174,18 +2174,18 @@ class TaxRateEntityBuilder
 
 class _$GatewayEntity extends GatewayEntity {
   @override
+  final String id;
+  @override
   final String name;
   @override
   final int sortOrder;
   @override
   final String fields;
-  @override
-  final String id;
 
   factory _$GatewayEntity([void Function(GatewayEntityBuilder) updates]) =>
       (new GatewayEntityBuilder()..update(updates)).build();
 
-  _$GatewayEntity._({this.name, this.sortOrder, this.fields, this.id})
+  _$GatewayEntity._({this.id, this.name, this.sortOrder, this.fields})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
@@ -2209,26 +2209,26 @@ class _$GatewayEntity extends GatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is GatewayEntity &&
+        id == other.id &&
         name == other.name &&
         sortOrder == other.sortOrder &&
-        fields == other.fields &&
-        id == other.id;
+        fields == other.fields;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, name.hashCode), sortOrder.hashCode), fields.hashCode),
-        id.hashCode));
+        $jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
+        fields.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GatewayEntity')
+          ..add('id', id)
           ..add('name', name)
           ..add('sortOrder', sortOrder)
-          ..add('fields', fields)
-          ..add('id', id))
+          ..add('fields', fields))
         .toString();
   }
 }
@@ -2236,6 +2236,10 @@ class _$GatewayEntity extends GatewayEntity {
 class GatewayEntityBuilder
     implements Builder<GatewayEntity, GatewayEntityBuilder> {
   _$GatewayEntity _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;
@@ -2249,18 +2253,14 @@ class GatewayEntityBuilder
   String get fields => _$this._fields;
   set fields(String fields) => _$this._fields = fields;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
   GatewayEntityBuilder();
 
   GatewayEntityBuilder get _$this {
     if (_$v != null) {
+      _id = _$v.id;
       _name = _$v.name;
       _sortOrder = _$v.sortOrder;
       _fields = _$v.fields;
-      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -2283,7 +2283,7 @@ class GatewayEntityBuilder
   _$GatewayEntity build() {
     final _$result = _$v ??
         new _$GatewayEntity._(
-            name: name, sortOrder: sortOrder, fields: fields, id: id);
+            id: id, name: name, sortOrder: sortOrder, fields: fields);
     replace(_$result);
     return _$result;
   }

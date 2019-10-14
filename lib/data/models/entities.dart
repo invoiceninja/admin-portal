@@ -14,6 +14,7 @@ class EntityType extends EnumClass {
 
   static const EntityType company = _$company;
   static const EntityType companyGateway = _$companyGateway;
+  static const EntityType gateway = _$gateway;
   static const EntityType invoice = _$invoice;
   static const EntityType recurringInvoice = _$recurringInvoice;
   static const EntityType invoiceItem = _$invoiceItem;

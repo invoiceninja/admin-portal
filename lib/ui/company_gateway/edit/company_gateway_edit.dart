@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
@@ -63,6 +66,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
 
@@ -73,12 +77,23 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
-
         formKey: _formKey,
         children: <Widget>[
           FormCard(
             children: <Widget>[
-
+              EntityDropdown(
+                key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
+                entityType: EntityType.gateway,
+                entityMap: state.staticState.sizeMap,
+                entityList: memoizedGatewayList(state.staticState.gatewayMap),
+                labelText: localization.size,
+                initialValue: state.staticState.gatewayMap[companyGateway.gatewayId]?.name,
+                onSelected: (SelectableEntity gateway) =>
+                    viewModel.onChanged(
+                  companyGateway.rebuild((b) => b..gatewayId = gateway.id),
+                ),
+                //onFieldSubmitted: (String value) => _node.nextFocus(),
+              ),
             ],
           )
         ],

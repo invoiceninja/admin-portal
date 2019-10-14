@@ -109,6 +109,19 @@ List<String> sizeList(BuiltMap<String, SizeEntity> sizeMap) {
   return list;
 }
 
+
+var memoizedGatewayList =
+memo1((BuiltMap<String, GatewayEntity> gatewayMap) => gatewayList(gatewayMap));
+
+List<String> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
+  final list = gatewayMap.keys.toList();
+
+  list.sort((idA, idB) => gatewayMap[idA].id.compareTo(gatewayMap[idB].id));
+
+  return list;
+}
+
+
 var memoizedPaymentTypeList = memo1(
     (BuiltMap<String, PaymentTypeEntity> paymentTypeMap) =>
         paymentTypeList(paymentTypeMap));

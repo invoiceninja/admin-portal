@@ -69,7 +69,7 @@ class CompanyGatewayListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  companyGateway.name,
+                  companyGateway.gateway.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
