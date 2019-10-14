@@ -65,6 +65,11 @@ StaticState staticLoadedReducer(
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
+    ..gatewayMap.addAll(Map.fromIterable(
+      action.data.gateways,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    ))
     ..frequencyMap.addAll(Map.fromIterable(
       action.data.frequencies,
       key: (dynamic item) => item.id,

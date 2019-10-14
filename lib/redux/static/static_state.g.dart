@@ -26,6 +26,10 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       serializers.serialize(object.sizeMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(SizeEntity)])),
+      'gatewayMap',
+      serializers.serialize(object.gatewayMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(GatewayEntity)])),
       'industryMap',
       serializers.serialize(object.industryMap,
           specifiedType: const FullType(BuiltMap,
@@ -109,6 +113,13 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(SizeEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
+        case 'gatewayMap':
+          result.gatewayMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(GatewayEntity)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
         case 'industryMap':
           result.industryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -187,6 +198,8 @@ class _$StaticState extends StaticState {
   @override
   final BuiltMap<String, SizeEntity> sizeMap;
   @override
+  final BuiltMap<String, GatewayEntity> gatewayMap;
+  @override
   final BuiltMap<String, IndustryEntity> industryMap;
   @override
   final BuiltMap<String, TimezoneEntity> timezoneMap;
@@ -212,6 +225,7 @@ class _$StaticState extends StaticState {
       {this.updatedAt,
       this.currencyMap,
       this.sizeMap,
+      this.gatewayMap,
       this.industryMap,
       this.timezoneMap,
       this.dateFormatMap,
@@ -227,6 +241,9 @@ class _$StaticState extends StaticState {
     }
     if (sizeMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'sizeMap');
+    }
+    if (gatewayMap == null) {
+      throw new BuiltValueNullFieldError('StaticState', 'gatewayMap');
     }
     if (industryMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'industryMap');
@@ -271,6 +288,7 @@ class _$StaticState extends StaticState {
         updatedAt == other.updatedAt &&
         currencyMap == other.currencyMap &&
         sizeMap == other.sizeMap &&
+        gatewayMap == other.gatewayMap &&
         industryMap == other.industryMap &&
         timezoneMap == other.timezoneMap &&
         dateFormatMap == other.dateFormatMap &&
@@ -294,9 +312,11 @@ class _$StaticState extends StaticState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, updatedAt.hashCode),
-                                                currencyMap.hashCode),
-                                            sizeMap.hashCode),
+                                            $jc(
+                                                $jc($jc(0, updatedAt.hashCode),
+                                                    currencyMap.hashCode),
+                                                sizeMap.hashCode),
+                                            gatewayMap.hashCode),
                                         industryMap.hashCode),
                                     timezoneMap.hashCode),
                                 dateFormatMap.hashCode),
@@ -314,6 +334,7 @@ class _$StaticState extends StaticState {
           ..add('updatedAt', updatedAt)
           ..add('currencyMap', currencyMap)
           ..add('sizeMap', sizeMap)
+          ..add('gatewayMap', gatewayMap)
           ..add('industryMap', industryMap)
           ..add('timezoneMap', timezoneMap)
           ..add('dateFormatMap', dateFormatMap)
@@ -345,6 +366,12 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _$this._sizeMap ??= new MapBuilder<String, SizeEntity>();
   set sizeMap(MapBuilder<String, SizeEntity> sizeMap) =>
       _$this._sizeMap = sizeMap;
+
+  MapBuilder<String, GatewayEntity> _gatewayMap;
+  MapBuilder<String, GatewayEntity> get gatewayMap =>
+      _$this._gatewayMap ??= new MapBuilder<String, GatewayEntity>();
+  set gatewayMap(MapBuilder<String, GatewayEntity> gatewayMap) =>
+      _$this._gatewayMap = gatewayMap;
 
   MapBuilder<String, IndustryEntity> _industryMap;
   MapBuilder<String, IndustryEntity> get industryMap =>
@@ -411,6 +438,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _updatedAt = _$v.updatedAt;
       _currencyMap = _$v.currencyMap?.toBuilder();
       _sizeMap = _$v.sizeMap?.toBuilder();
+      _gatewayMap = _$v.gatewayMap?.toBuilder();
       _industryMap = _$v.industryMap?.toBuilder();
       _timezoneMap = _$v.timezoneMap?.toBuilder();
       _dateFormatMap = _$v.dateFormatMap?.toBuilder();
@@ -447,6 +475,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               updatedAt: updatedAt,
               currencyMap: currencyMap.build(),
               sizeMap: sizeMap.build(),
+              gatewayMap: gatewayMap.build(),
               industryMap: industryMap.build(),
               timezoneMap: timezoneMap.build(),
               dateFormatMap: dateFormatMap.build(),
@@ -463,6 +492,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         currencyMap.build();
         _$failedField = 'sizeMap';
         sizeMap.build();
+        _$failedField = 'gatewayMap';
+        gatewayMap.build();
         _$failedField = 'industryMap';
         industryMap.build();
         _$failedField = 'timezoneMap';

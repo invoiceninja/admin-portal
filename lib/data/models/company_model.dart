@@ -288,6 +288,33 @@ abstract class TaxRateEntity extends Object
   int get archivedAt;
 }
 
+abstract class GatewayEntity extends Object
+    with SelectableEntity
+    implements Built<GatewayEntity, GatewayEntityBuilder> {
+  factory GatewayEntity() {
+    return _$GatewayEntity._(
+      id: BaseEntity.nextId,
+      name: '',
+      sortOrder: 0,
+      fields: '',
+    );
+  }
+
+  GatewayEntity._();
+
+  static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
+
+  String get name;
+
+  @BuiltValueField(wireName: 'sort_order')
+  int get sortOrder;
+
+  //bool get recommended;
+  //bool get visible;
+
+  String get fields;
+}
+
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
   factory UserEntity() {
     return _$UserEntity._(

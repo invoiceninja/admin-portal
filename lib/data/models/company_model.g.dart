@@ -12,6 +12,8 @@ Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
     new _$PaymentTermEntitySerializer();
 Serializer<TaxRateEntity> _$taxRateEntitySerializer =
     new _$TaxRateEntitySerializer();
+Serializer<GatewayEntity> _$gatewayEntitySerializer =
+    new _$GatewayEntitySerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
@@ -465,6 +467,69 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
+  @override
+  final Iterable<Type> types = const [GatewayEntity, _$GatewayEntity];
+  @override
+  final String wireName = 'GatewayEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GatewayEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'sort_order',
+      serializers.serialize(object.sortOrder,
+          specifiedType: const FullType(int)),
+      'fields',
+      serializers.serialize(object.fields,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GatewayEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GatewayEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'sort_order':
+          result.sortOrder = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'fields':
+          result.fields = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -2102,6 +2167,123 @@ class TaxRateEntityBuilder
             isInclusive: isInclusive,
             archivedAt: archivedAt,
             id: id);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GatewayEntity extends GatewayEntity {
+  @override
+  final String name;
+  @override
+  final int sortOrder;
+  @override
+  final String fields;
+  @override
+  final String id;
+
+  factory _$GatewayEntity([void Function(GatewayEntityBuilder) updates]) =>
+      (new GatewayEntityBuilder()..update(updates)).build();
+
+  _$GatewayEntity._({this.name, this.sortOrder, this.fields, this.id})
+      : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'name');
+    }
+    if (sortOrder == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
+    }
+    if (fields == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'fields');
+    }
+  }
+
+  @override
+  GatewayEntity rebuild(void Function(GatewayEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GatewayEntityBuilder toBuilder() => new GatewayEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GatewayEntity &&
+        name == other.name &&
+        sortOrder == other.sortOrder &&
+        fields == other.fields &&
+        id == other.id;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc($jc($jc(0, name.hashCode), sortOrder.hashCode), fields.hashCode),
+        id.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GatewayEntity')
+          ..add('name', name)
+          ..add('sortOrder', sortOrder)
+          ..add('fields', fields)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class GatewayEntityBuilder
+    implements Builder<GatewayEntity, GatewayEntityBuilder> {
+  _$GatewayEntity _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  int _sortOrder;
+  int get sortOrder => _$this._sortOrder;
+  set sortOrder(int sortOrder) => _$this._sortOrder = sortOrder;
+
+  String _fields;
+  String get fields => _$this._fields;
+  set fields(String fields) => _$this._fields = fields;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  GatewayEntityBuilder();
+
+  GatewayEntityBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _sortOrder = _$v.sortOrder;
+      _fields = _$v.fields;
+      _id = _$v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GatewayEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GatewayEntity;
+  }
+
+  @override
+  void update(void Function(GatewayEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GatewayEntity build() {
+    final _$result = _$v ??
+        new _$GatewayEntity._(
+            name: name, sortOrder: sortOrder, fields: fields, id: id);
     replace(_$result);
     return _$result;
   }

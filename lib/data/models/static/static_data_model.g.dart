@@ -136,6 +136,10 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.timezones,
           specifiedType: const FullType(
               BuiltList, const [const FullType(TimezoneEntity)])),
+      'gateways',
+      serializers.serialize(object.gateways,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(GatewayEntity)])),
       'date_formats',
       serializers.serialize(object.dateFormats,
           specifiedType: const FullType(
@@ -207,6 +211,12 @@ class _$StaticDataEntitySerializer
           result.timezones.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TimezoneEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'gateways':
+          result.gateways.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GatewayEntity)]))
               as BuiltList<dynamic>);
           break;
         case 'date_formats':
@@ -464,6 +474,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<TimezoneEntity> timezones;
   @override
+  final BuiltList<GatewayEntity> gateways;
+  @override
   final BuiltList<DateFormatEntity> dateFormats;
   @override
   final BuiltList<DatetimeFormatEntity> datetimeFormats;
@@ -489,6 +501,7 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.sizes,
       this.industries,
       this.timezones,
+      this.gateways,
       this.dateFormats,
       this.datetimeFormats,
       this.languages,
@@ -509,6 +522,9 @@ class _$StaticDataEntity extends StaticDataEntity {
     }
     if (timezones == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'timezones');
+    }
+    if (gateways == null) {
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'gateways');
     }
     if (dateFormats == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'dateFormats');
@@ -552,6 +568,7 @@ class _$StaticDataEntity extends StaticDataEntity {
         sizes == other.sizes &&
         industries == other.industries &&
         timezones == other.timezones &&
+        gateways == other.gateways &&
         dateFormats == other.dateFormats &&
         datetimeFormats == other.datetimeFormats &&
         languages == other.languages &&
@@ -574,10 +591,12 @@ class _$StaticDataEntity extends StaticDataEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, currencies.hashCode),
-                                                sizes.hashCode),
-                                            industries.hashCode),
-                                        timezones.hashCode),
+                                            $jc(
+                                                $jc($jc(0, currencies.hashCode),
+                                                    sizes.hashCode),
+                                                industries.hashCode),
+                                            timezones.hashCode),
+                                        gateways.hashCode),
                                     dateFormats.hashCode),
                                 datetimeFormats.hashCode),
                             languages.hashCode),
@@ -595,6 +614,7 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('sizes', sizes)
           ..add('industries', industries)
           ..add('timezones', timezones)
+          ..add('gateways', gateways)
           ..add('dateFormats', dateFormats)
           ..add('datetimeFormats', datetimeFormats)
           ..add('languages', languages)
@@ -633,6 +653,12 @@ class StaticDataEntityBuilder
       _$this._timezones ??= new ListBuilder<TimezoneEntity>();
   set timezones(ListBuilder<TimezoneEntity> timezones) =>
       _$this._timezones = timezones;
+
+  ListBuilder<GatewayEntity> _gateways;
+  ListBuilder<GatewayEntity> get gateways =>
+      _$this._gateways ??= new ListBuilder<GatewayEntity>();
+  set gateways(ListBuilder<GatewayEntity> gateways) =>
+      _$this._gateways = gateways;
 
   ListBuilder<DateFormatEntity> _dateFormats;
   ListBuilder<DateFormatEntity> get dateFormats =>
@@ -690,6 +716,7 @@ class StaticDataEntityBuilder
       _sizes = _$v.sizes?.toBuilder();
       _industries = _$v.industries?.toBuilder();
       _timezones = _$v.timezones?.toBuilder();
+      _gateways = _$v.gateways?.toBuilder();
       _dateFormats = _$v.dateFormats?.toBuilder();
       _datetimeFormats = _$v.datetimeFormats?.toBuilder();
       _languages = _$v.languages?.toBuilder();
@@ -726,6 +753,7 @@ class StaticDataEntityBuilder
               sizes: sizes.build(),
               industries: industries.build(),
               timezones: timezones.build(),
+              gateways: gateways.build(),
               dateFormats: dateFormats.build(),
               datetimeFormats: datetimeFormats.build(),
               languages: languages.build(),
@@ -745,6 +773,8 @@ class StaticDataEntityBuilder
         industries.build();
         _$failedField = 'timezones';
         timezones.build();
+        _$failedField = 'gateways';
+        gateways.build();
         _$failedField = 'dateFormats';
         dateFormats.build();
         _$failedField = 'datetimeFormats';

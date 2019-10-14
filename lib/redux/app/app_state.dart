@@ -314,8 +314,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'showCurrencyCode: ${uiState.settingsUIState.settings.showCurrencyCode}';
-    //return 'Section: ${uiState.settingsUIState.section}';
+    //return 'showCurrencyCode: ${uiState.settingsUIState.settings.showCurrencyCode}';
+    return 'gateways : ${staticState.gatewayMap}';
     //return 'URL: ${userCompany.token.token}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';

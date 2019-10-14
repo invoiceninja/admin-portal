@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
@@ -69,6 +70,7 @@ abstract class StaticDataEntity
       currencies: BuiltList<CurrencyEntity>(),
       sizes: BuiltList<SizeEntity>(),
       industries: BuiltList<IndustryEntity>(),
+      gateways: BuiltList<GatewayEntity>(),
       timezones: BuiltList<TimezoneEntity>(),
       dateFormats: BuiltList<DateFormatEntity>(),
       datetimeFormats: BuiltList<DatetimeFormatEntity>(),
@@ -89,6 +91,8 @@ abstract class StaticDataEntity
   BuiltList<IndustryEntity> get industries;
 
   BuiltList<TimezoneEntity> get timezones;
+
+  BuiltList<GatewayEntity> get gateways;
 
   @BuiltValueField(wireName: 'date_formats')
   BuiltList<DateFormatEntity> get dateFormats;

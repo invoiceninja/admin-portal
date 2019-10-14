@@ -11,6 +11,7 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
     return _$StaticState._(
       currencyMap: BuiltMap<String, CurrencyEntity>(),
       sizeMap: BuiltMap<String, SizeEntity>(),
+      gatewayMap: BuiltMap<String, GatewayEntity>(),
       industryMap: BuiltMap<String, IndustryEntity>(),
       timezoneMap: BuiltMap<String, TimezoneEntity>(),
       dateFormatMap: BuiltMap<String, DateFormatEntity>(),
@@ -42,6 +43,8 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   BuiltMap<String, CurrencyEntity> get currencyMap;
 
   BuiltMap<String, SizeEntity> get sizeMap;
+
+  BuiltMap<String, GatewayEntity> get gatewayMap;
 
   BuiltMap<String, IndustryEntity> get industryMap;
 

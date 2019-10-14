@@ -60,6 +60,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(FrequencyEntity.serializer)
       ..add(FrequencyItemResponse.serializer)
       ..add(FrequencyListResponse.serializer)
+      ..add(GatewayEntity.serializer)
       ..add(GroupEntity.serializer)
       ..add(GroupItemResponse.serializer)
       ..add(GroupListResponse.serializer)
@@ -170,6 +171,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(TimezoneEntity)]),
           () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(GatewayEntity)]),
+          () => new ListBuilder<GatewayEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
           () => new ListBuilder<DateFormatEntity>())
       ..addBuilderFactory(
@@ -249,10 +253,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ]),
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ExpenseCategoryEntity)]),
           () => new MapBuilder<String, ExpenseCategoryEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserEntity)]),
@@ -320,6 +322,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CurrencyEntity)]), () => new MapBuilder<String, CurrencyEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(SizeEntity)]), () => new MapBuilder<String, SizeEntity>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(GatewayEntity)]), () => new MapBuilder<String, GatewayEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(IndustryEntity)]), () => new MapBuilder<String, IndustryEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TimezoneEntity)]), () => new MapBuilder<String, TimezoneEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(DateFormatEntity)]), () => new MapBuilder<String, DateFormatEntity>())
