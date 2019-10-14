@@ -16,9 +16,9 @@ class AppScaffold extends StatelessWidget {
       this.appBarActions,
       this.bottomNavigationBar,
       this.floatingActionButton,
-      this.showCheckbox,
       this.isChecked,
       this.onCheckboxChanged,
+      this.showCheckbox = false,
       this.hideHamburgerButton = false});
 
   final Widget body;
