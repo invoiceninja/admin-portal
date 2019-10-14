@@ -128,9 +128,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(String)),
       'invoice_status_id',
       serializers.serialize(object.invoiceStatusId,
           specifiedType: const FullType(String)),
@@ -221,6 +218,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -1099,9 +1102,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
-    }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
     }
     if (invoiceStatusId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceStatusId');
