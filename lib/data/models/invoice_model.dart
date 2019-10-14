@@ -129,6 +129,7 @@ abstract class InvoiceEntity extends Object
 
   double get balance;
 
+  @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 

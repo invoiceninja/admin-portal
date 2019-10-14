@@ -104,7 +104,7 @@ class InvoiceScreen extends StatelessWidget {
                 store.dispatch(EditInvoice(
                     invoice: InvoiceEntity(company: company).rebuild((b) => b
                       ..clientId =
-                          store.state.invoiceListState.filterEntityId ?? 0),
+                          store.state.invoiceListState.filterEntityId),
                     context: context));
               },
               child: Icon(Icons.add, color: Colors.white),

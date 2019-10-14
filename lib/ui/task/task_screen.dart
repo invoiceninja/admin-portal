@@ -86,7 +86,7 @@ class TaskScreen extends StatelessWidget {
                             isRunning: store.state.uiState.autoStartTasks)
                         .rebuild((b) => b
                           ..clientId =
-                              store.state.taskListState.filterEntityId ?? 0),
+                              store.state.taskListState.filterEntityId),
                     context: context));
               },
               child: Icon(

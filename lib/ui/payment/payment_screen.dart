@@ -59,7 +59,7 @@ class PaymentScreen extends StatelessWidget {
                 store.dispatch(EditPayment(
                     payment: PaymentEntity(company: company).rebuild((b) => b
                       ..clientId =
-                          store.state.paymentListState.filterEntityId ?? 0),
+                          store.state.paymentListState.filterEntityId),
                     context: context));
               },
               child: Icon(
