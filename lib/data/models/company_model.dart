@@ -318,6 +318,46 @@ abstract class GatewayEntity extends Object
   //bool get visible;
 
   String get fields;
+
+  int compareTo(GatewayEntity gateway, String sortField, bool sortAscending) {
+    int response = 0;
+    final GatewayEntity gatewayA = sortAscending ? this : gateway;
+    final GatewayEntity gatewayB = sortAscending ? gateway : this;
+
+    switch (sortField) {
+      case CreditFields.amount:
+        response = gatewayA.name.compareTo(gatewayB.name);
+    }
+
+    return response;
+  }
+
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    return name.toLowerCase().contains(filter);
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName => name;
+
+  @override
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => null;
 }
 
 abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
