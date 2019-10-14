@@ -30,8 +30,22 @@ class ClientScreen extends StatelessWidget {
     final company = state.selectedCompany;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.clientUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.clientList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final clients = viewModel.clientList
+            .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
+            .where((client) => value != listUIState.isSelected(client))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, clients, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(state.clientListState.filterClearedAt),
         entityType: EntityType.client,
@@ -51,27 +65,30 @@ class ClientScreen extends StatelessWidget {
           FlatButton(
             key: key,
             child: Text(
-              localization.done,
+              localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () async {
-              await showEntityActionsDialog(
-                  entities: state.clientListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearMultiselect(context: context));
-            },
+            onPressed: () => store.dispatch(ClearClientMultiselect(context: context)),
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
             key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
             child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
+              localization.done,
             ),
-            onPressed: () => store.dispatch(ClearMultiselect(context: context)),
+            onPressed: state.clientListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.clientListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearClientMultiselect(context: context));
+                  },
           ),
       ],
       body: ClientListBuilder(),

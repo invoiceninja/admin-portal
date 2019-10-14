@@ -26,11 +26,25 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final listUIState = state.uiState.productUIState.listUIState;
     final company = state.selectedCompany;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.productList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final products = viewModel.productList
+            .map<ProductEntity>((productId) => viewModel.productMap[productId])
+            .where((product) => value != listUIState.isSelected(product))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, products, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(store.state.productListState.filterClearedAt),
         entityType: EntityType.product,
@@ -50,29 +64,32 @@ class ProductScreen extends StatelessWidget {
           FlatButton(
             key: key,
             child: Text(
-              localization.done,
+              localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () async {
-              await showEntityActionsDialog(
-                  entities: state.productListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearMultiselect(context: context));
+            onPressed: () {
+              store.dispatch(ClearProductMultiselect(context: context));
             },
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
             key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
             child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
+              localization.done,
             ),
-            onPressed: () {
-              store.dispatch(ClearMultiselect(context: context));
-            },
+            onPressed: state.productListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.productListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearProductMultiselect(context: context));
+                  },
           ),
       ],
       body: ProductListBuilder(),

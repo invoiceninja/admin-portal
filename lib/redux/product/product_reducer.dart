@@ -58,10 +58,10 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, FilterProductsByCustom1>(_filterProductsByCustom1),
   TypedReducer<ListUIState, FilterProductsByCustom2>(_filterProductsByCustom2),
-  TypedReducer<ListUIState, StartMultiselect>(_startListMultiselect),
-  TypedReducer<ListUIState, AddToMultiselect>(_addToListMultiselect),
-  TypedReducer<ListUIState, RemoveFromMultiselect>(_removeFromListMultiselect),
-  TypedReducer<ListUIState, ClearMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, StartProductMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToProductMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromProductMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearProductMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterProductsByState(
@@ -110,24 +110,24 @@ ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
 }
 
 ListUIState _startListMultiselect(
-    ListUIState productListState, StartMultiselect action) {
+    ListUIState productListState, StartProductMultiselect action) {
   return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState productListState, AddToMultiselect action) {
+    ListUIState productListState, AddToProductMultiselect action) {
   return productListState
       .rebuild((b) => b..selectedEntities.add(action.entity));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState productListState, RemoveFromMultiselect action) {
+    ListUIState productListState, RemoveFromProductMultiselect action) {
   return productListState
       .rebuild((b) => b..selectedEntities.remove(action.entity));
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState productListState, ClearMultiselect action) {
+    ListUIState productListState, ClearProductMultiselect action) {
   return productListState.rebuild((b) => b..selectedEntities = null);
 }
 

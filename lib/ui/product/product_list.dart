@@ -40,39 +40,9 @@ class ProductList extends StatelessWidget {
       child: ListView.separated(
           separatorBuilder: (context, index) => ListDivider(),
           itemCount: isInMultiselect
-              ? viewModel.productList.length + 1
+              ? viewModel.productList.length //+ 1
               : viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
-            // Add header
-            if (index == 0 && isInMultiselect) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Checkbox(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        onChanged: (value) {
-                          final products = viewModel.productList
-                              .map<ProductEntity>((productId) =>
-                                  viewModel.productMap[productId])
-                              .toList();
-
-                          viewModel.onEntityAction(context, products,
-                              EntityAction.toggleMultiselect);
-                        },
-                        activeColor: Theme.of(context).accentColor,
-                        value: listUIState.selectedEntities.length ==
-                            viewModel.productList.length),
-                  ),
-                ],
-              );
-            }
-
-            if (isInMultiselect) {
-              index--;
-            }
-
             final productId = viewModel.productList[index];
             final product = viewModel.productMap[productId];
 
@@ -97,7 +67,7 @@ class ProductList extends StatelessWidget {
               onLongPress: () async {
                 final longPressIsSelection =
                     store.state.uiState.longPressSelectionIsDefault ?? true;
-                if (longPressIsSelection) {
+                if (longPressIsSelection && !isInMultiselect) {
                   viewModel.onEntityAction(
                       context, [product], EntityAction.toggleMultiselect);
                 } else {

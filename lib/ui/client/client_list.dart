@@ -57,41 +57,6 @@ class ClientList extends StatelessWidget {
 
                             final isInMultiselect =
                                 state.clientListState.isInMultiselect();
-
-                            // Add header
-                            if (index == 0 && isInMultiselect) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 20.0),
-                                    child: Checkbox(
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        onChanged: (value) {
-                                          final clients = viewModel.clientList
-                                              .map<ClientEntity>((clientId) =>
-                                                  viewModel.clientMap[clientId])
-                                              .toList();
-
-                                          viewModel.onEntityAction(
-                                              context,
-                                              clients,
-                                              EntityAction.toggleMultiselect);
-                                        },
-                                        activeColor:
-                                            Theme.of(context).accentColor,
-                                        value: state.clientListState
-                                                .selectedEntities.length ==
-                                            viewModel.clientList.length),
-                                  ),
-                                ],
-                              );
-                            }
-
-                            if (isInMultiselect) {
-                              index--;
-                            }
                             final userCompany = viewModel.state.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
@@ -118,13 +83,15 @@ class ClientList extends StatelessWidget {
                                 final longPressIsSelection = store.state.uiState
                                         .longPressSelectionIsDefault ??
                                     true;
-                                if (longPressIsSelection) {
+                                if (longPressIsSelection && !isInMultiselect) {
                                   viewModel.onEntityAction(context, [client],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();
                                 }
                               },
+                              isChecked: isInMultiselect &&
+                                  listState.isSelected(client),
                             );
                           }),
                 ),

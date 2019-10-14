@@ -198,8 +198,12 @@ class FilterProductDropdown {
 void handleProductAction(
     BuildContext context, List<BaseEntity> products, EntityAction action) {
   assert(
-      [EntityAction.restore, EntityAction.archive, EntityAction.delete]
-              .contains(action) ||
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
           products.length == 1,
       'Cannot perform this action on more than one product');
   final store = StoreProvider.of<AppState>(context);
@@ -239,48 +243,48 @@ void handleProductAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
-        store.dispatch(StartMultiselect(context: context));
+        store.dispatch(StartProductMultiselect(context: context));
       }
 
       if (products.isEmpty) {
         break;
       }
 
-      final select = !store.state.productListState.isSelected(product);
       for (final product in products) {
-        if (select) {
-          store.dispatch(AddToMultiselect(context: context, entity: product));
+        if (!store.state.productListState.isSelected(product)) {
+          store.dispatch(
+              AddToProductMultiselect(context: context, entity: product));
         } else {
           store.dispatch(
-              RemoveFromMultiselect(context: context, entity: product));
+              RemoveFromProductMultiselect(context: context, entity: product));
         }
       }
       break;
   }
 }
 
-class StartMultiselect {
-  StartMultiselect({@required this.context});
+class StartProductMultiselect {
+  StartProductMultiselect({@required this.context});
 
   final BuildContext context;
 }
 
-class AddToMultiselect {
-  AddToMultiselect({@required this.context, @required this.entity});
-
-  final BuildContext context;
-  final BaseEntity entity;
-}
-
-class RemoveFromMultiselect {
-  RemoveFromMultiselect({@required this.context, @required this.entity});
+class AddToProductMultiselect {
+  AddToProductMultiselect({@required this.context, @required this.entity});
 
   final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearMultiselect {
-  ClearMultiselect({@required this.context});
+class RemoveFromProductMultiselect {
+  RemoveFromProductMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearProductMultiselect {
+  ClearProductMultiselect({@required this.context});
 
   final BuildContext context;
 }

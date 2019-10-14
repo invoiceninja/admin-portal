@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:redux/redux.dart';
 
 import 'product_screen.dart';
@@ -29,18 +31,25 @@ class ProductScreenBuilder extends StatelessWidget {
 class ProductScreenVM {
   ProductScreenVM({
     @required this.isInMultiselect,
+    @required this.productList,
     @required this.userCompany,
     @required this.onEntityAction,
+    @required this.productMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
+  final List<String> productList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
+  final BuiltMap<String, ProductEntity> productMap;
 
   static ProductScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
 
     return ProductScreenVM(
+      productMap: state.productState.map,
+      productList: memoizedFilteredProductList(state.productState.map,
+          state.productState.list, state.productListState),
       userCompany: state.userCompany,
       isInMultiselect: state.productListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> products,
