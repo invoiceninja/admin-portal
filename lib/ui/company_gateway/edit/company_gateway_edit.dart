@@ -84,12 +84,12 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
               EntityDropdown(
                 key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                 entityType: EntityType.gateway,
-                entityMap: state.staticState.sizeMap,
+                entityMap: state.staticState.gatewayMap,
                 entityList: memoizedGatewayList(state.staticState.gatewayMap),
-                labelText: localization.size,
-                initialValue: state.staticState.gatewayMap[companyGateway.gatewayId]?.name,
-                onSelected: (SelectableEntity gateway) =>
-                    viewModel.onChanged(
+                labelText: localization.provider,
+                initialValue: state
+                    .staticState.gatewayMap[companyGateway.gatewayId]?.name,
+                onSelected: (SelectableEntity gateway) => viewModel.onChanged(
                   companyGateway.rebuild((b) => b..gatewayId = gateway.id),
                 ),
                 //onFieldSubmitted: (String value) => _node.nextFocus(),
