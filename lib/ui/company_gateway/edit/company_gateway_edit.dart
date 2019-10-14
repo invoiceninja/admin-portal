@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({
@@ -66,55 +66,22 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.companyGateway.isNew
-              ? localization.newCompanyGateway
-              : localization.editCompanyGateway),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !companyGateway.isDeleted,
-              isDirty: companyGateway.isNew ||
-                  companyGateway != viewModel.origCompanyGateway,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            ),
-          ],
-        ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })),
+    return SettingsScaffold(
+      title: viewModel.companyGateway.isNew
+          ? localization.newCompanyGateway
+          : localization.editCompanyGateway,
+      onSavePressed: viewModel.onSavePressed,
+      onCancelPressed: viewModel.onCancelPressed,
+      body: AppForm(
+
+        formKey: _formKey,
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+
+            ],
+          )
+        ],
       ),
     );
   }
