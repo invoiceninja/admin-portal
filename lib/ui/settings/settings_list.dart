@@ -193,6 +193,9 @@ class SettingsListTile extends StatelessWidget {
               (company.companyGateways == null ||
                   company.companyGateways.isEmpty)) {
             viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
+          } else if (section == kSettingsTaxRates &&
+              (company.taxRates == null || company.taxRates.isEmpty)) {
+            viewModel.loadSection(context, kSettingsTaxRatesEdit);
           } else if (section == kSettingsGroupSettings &&
               (company.groups == null || company.groups.isEmpty)) {
             viewModel.loadSection(context, kSettingsGroupSettingsEdit);
