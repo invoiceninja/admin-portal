@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/products.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -27,6 +34,8 @@ class ProductSettingsScreen extends StatelessWidget {
 class ProductSettingsVM {
   ProductSettingsVM({
     @required this.state,
+    @required this.settings,
+    @required this.onSettingsChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
@@ -35,13 +44,25 @@ class ProductSettingsVM {
     final state = store.state;
 
     return ProductSettingsVM(
-      state: state,
-      onSavePressed: null,
-      onCancelPressed: null,
-    );
+        state: state,
+        settings: state.uiState.settingsUIState.settings,
+        onSettingsChanged: (settings) {
+          store.dispatch(UpdateSettings(settings: settings));
+        },
+        onCancelPressed: (context) => store.dispatch(ResetSettings()),
+        onSavePressed: (context) {
+          final settingsUIState = state.uiState.settingsUIState;
+          final completer = snackBarCompleter(
+              context, AppLocalization.of(context).savedSettings);
+          store.dispatch(SaveCompanyRequest(
+              completer: completer,
+              company: settingsUIState.userCompany.company));
+        });
   }
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
+  final SettingsEntity settings;
+  final Function(SettingsEntity) onSettingsChanged;
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -17,7 +19,7 @@ class ProductSettings extends StatefulWidget {
 }
 
 class _ProductSettingsState extends State<ProductSettings> {
-  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool autoValidate = false;
 
@@ -65,12 +67,29 @@ class _ProductSettingsState extends State<ProductSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.productSettings,
       onSavePressed: null,
-      body: SizedBox(),
+      body: AppForm(
+        formKey: _formKey,
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.fillProducts),
+                value: settings.fillProducts,
+                subtitle: Text(localization.fillProductsHelp),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..fillProducts = value)),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
