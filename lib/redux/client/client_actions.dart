@@ -331,7 +331,8 @@ void handleClientAction(
 
       for (final client in clients) {
         if (!state.clientListState.isSelected(client)) {
-          store.dispatch(AddToClientMultiselect(context: context, entity: client));
+          store.dispatch(
+              AddToClientMultiselect(context: context, entity: client));
         } else {
           store.dispatch(
               RemoveFromClientMultiselect(context: context, entity: client));

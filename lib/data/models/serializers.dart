@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -30,7 +31,10 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
+
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 
@@ -102,8 +106,13 @@ part 'serializers.g.dart';
   DocumentEntity,
   DocumentListResponse,
   DocumentItemResponse,
+  TaxRateEntity,
+  TaxRateItemResponse,
+  TaxRateListResponse,
   // STARTER: serializers - do not remove comment
   CompanyGatewayEntity,
+  CompanyGatewayListResponse,
+  CompanyGatewayItemResponse,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

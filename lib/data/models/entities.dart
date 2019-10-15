@@ -13,6 +13,7 @@ class EntityType extends EnumClass {
   static Serializer<EntityType> get serializer => _$entityTypeSerializer;
 
   static const EntityType company = _$company;
+  static const EntityType taxRate = _$taxRate;
   static const EntityType companyGateway = _$companyGateway;
   static const EntityType gateway = _$gateway;
   static const EntityType invoice = _$invoice;

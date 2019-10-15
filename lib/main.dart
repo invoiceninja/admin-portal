@@ -61,6 +61,11 @@ import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
@@ -107,6 +112,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreTaxRatesMiddleware())
         ..addAll(createStoreCompanyGatewaysMiddleware())
         ..addAll(createStoreGroupsMiddleware())
         ..addAll(isTesting
@@ -323,6 +329,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
+            TaxRateScreen.route: (context) => TaxRateScreen(),
+            TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
+            TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
+
             GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),

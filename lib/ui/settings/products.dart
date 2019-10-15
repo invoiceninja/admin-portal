@@ -101,8 +101,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 title: Text(localization.convertProducts),
                 value: settings.convertProductExchangeRate ?? false,
                 subtitle: Text(localization.convertProductsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..convertProductExchangeRate = value)),
+                onChanged: (value) => viewModel.onSettingsChanged(settings
+                    .rebuild((b) => b..convertProductExchangeRate = value)),
               ),
             ],
           )

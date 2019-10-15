@@ -14,12 +14,23 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'tax_rate': 'Tax Rate',
+      'new_tax_rate': 'New tax rate',
+      'edit_tax_rate': 'Edit tax rate',
+      'created_tax_rate': 'Successfully created tax rate',
+      'updated_tax_rate': 'Successfully updated tax rate',
+      'archived_tax_rate': 'Successfully archived tax rate',
+      'deleted_tax_rate': 'Successfully deleted tax rate',
+      'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Fill Products',
-      'fill_products_help': 'Selecting a product will automatically fill in the description and cost',
+      'fill_products_help':
+          'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Update Products',
-      'update_products_help': 'Updating an invoice will automatically update the product library',
+      'update_products_help':
+          'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
-      'convert_products_help': 'Automatically convert product prices to the client\'s currency',
+      'convert_products_help':
+          'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -14896,17 +14907,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get fillProducts => _localizedValues[localeCode]['fill_products'];
 
-  String get fillProductsHelp => _localizedValues[localeCode]['fill_products_help'];
+  String get fillProductsHelp =>
+      _localizedValues[localeCode]['fill_products_help'];
 
   String get updateProducts => _localizedValues[localeCode]['update_products'];
 
-  String get updateProductsHelp => _localizedValues[localeCode]['update_products_help'];
+  String get updateProductsHelp =>
+      _localizedValues[localeCode]['update_products_help'];
 
-  String get convertProducts => _localizedValues[localeCode]['convert_products'];
+  String get convertProducts =>
+      _localizedValues[localeCode]['convert_products'];
 
-  String get convertProductsHelp => _localizedValues[localeCode]['convert_products_help'];
+  String get convertProductsHelp =>
+      _localizedValues[localeCode]['convert_products_help'];
 
+  String get newTaxRate => _localizedValues[localeCode]['new_tax_rate'];
 
+  String get createdTaxRate => _localizedValues[localeCode]['created_tax_rate'];
+
+  String get updatedTaxRate => _localizedValues[localeCode]['updated_tax_rate'];
+
+  String get archivedTaxRate =>
+      _localizedValues[localeCode]['archived_tax_rate'];
+
+  String get deletedTaxRate => _localizedValues[localeCode]['deleted_tax_rate'];
+
+  String get restoredTaxRate =>
+      _localizedValues[localeCode]['restored_tax_rate'];
+
+  String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'];
+
+  String get taxRate => _localizedValues[localeCode]['tax_rate'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

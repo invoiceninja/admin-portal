@@ -7,6 +7,7 @@ part of 'entities.dart';
 // **************************************************************************
 
 const EntityType _$company = const EntityType._('company');
+const EntityType _$taxRate = const EntityType._('taxRate');
 const EntityType _$companyGateway = const EntityType._('companyGateway');
 const EntityType _$gateway = const EntityType._('gateway');
 const EntityType _$invoice = const EntityType._('invoice');
@@ -41,6 +42,8 @@ EntityType _$typeValueOf(String name) {
   switch (name) {
     case 'company':
       return _$company;
+    case 'taxRate':
+      return _$taxRate;
     case 'companyGateway':
       return _$companyGateway;
     case 'gateway':
@@ -107,6 +110,7 @@ EntityType _$typeValueOf(String name) {
 final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
   _$company,
+  _$taxRate,
   _$companyGateway,
   _$gateway,
   _$invoice,

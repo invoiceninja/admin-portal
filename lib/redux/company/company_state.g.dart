@@ -55,6 +55,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'taxRateState',
+      serializers.serialize(object.taxRateState,
+          specifiedType: const FullType(TaxRateState)),
       'companyGatewayState',
       serializers.serialize(object.companyGatewayState,
           specifiedType: const FullType(CompanyGatewayState)),
@@ -131,6 +134,10 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'taxRateState':
+          result.taxRateState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxRateState)) as TaxRateState);
           break;
         case 'companyGatewayState':
           result.companyGatewayState.replace(serializers.deserialize(value,
@@ -281,6 +288,8 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
   @override
+  final TaxRateState taxRateState;
+  @override
   final CompanyGatewayState companyGatewayState;
   @override
   final GroupState groupState;
@@ -302,6 +311,7 @@ class _$UserCompanyState extends UserCompanyState {
       this.projectState,
       this.paymentState,
       this.quoteState,
+      this.taxRateState,
       this.companyGatewayState,
       this.groupState})
       : super._() {
@@ -338,6 +348,9 @@ class _$UserCompanyState extends UserCompanyState {
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
     }
+    if (taxRateState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'taxRateState');
+    }
     if (companyGatewayState == null) {
       throw new BuiltValueNullFieldError(
           'UserCompanyState', 'companyGatewayState');
@@ -371,6 +384,7 @@ class _$UserCompanyState extends UserCompanyState {
         projectState == other.projectState &&
         paymentState == other.paymentState &&
         quoteState == other.quoteState &&
+        taxRateState == other.taxRateState &&
         companyGatewayState == other.companyGatewayState &&
         groupState == other.groupState;
   }
@@ -391,20 +405,24 @@ class _$UserCompanyState extends UserCompanyState {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            0,
-                                                            userCompany
+                                                            $jc(
+                                                                0,
+                                                                userCompany
+                                                                    .hashCode),
+                                                            documentState
                                                                 .hashCode),
-                                                        documentState.hashCode),
-                                                    dashboardState.hashCode),
-                                                productState.hashCode),
-                                            clientState.hashCode),
-                                        invoiceState.hashCode),
-                                    expenseState.hashCode),
-                                vendorState.hashCode),
-                            taskState.hashCode),
-                        projectState.hashCode),
-                    paymentState.hashCode),
-                quoteState.hashCode),
+                                                        dashboardState
+                                                            .hashCode),
+                                                    productState.hashCode),
+                                                clientState.hashCode),
+                                            invoiceState.hashCode),
+                                        expenseState.hashCode),
+                                    vendorState.hashCode),
+                                taskState.hashCode),
+                            projectState.hashCode),
+                        paymentState.hashCode),
+                    quoteState.hashCode),
+                taxRateState.hashCode),
             companyGatewayState.hashCode),
         groupState.hashCode));
   }
@@ -424,6 +442,7 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
           ..add('quoteState', quoteState)
+          ..add('taxRateState', taxRateState)
           ..add('companyGatewayState', companyGatewayState)
           ..add('groupState', groupState))
         .toString();
@@ -505,6 +524,12 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  TaxRateStateBuilder _taxRateState;
+  TaxRateStateBuilder get taxRateState =>
+      _$this._taxRateState ??= new TaxRateStateBuilder();
+  set taxRateState(TaxRateStateBuilder taxRateState) =>
+      _$this._taxRateState = taxRateState;
+
   CompanyGatewayStateBuilder _companyGatewayState;
   CompanyGatewayStateBuilder get companyGatewayState =>
       _$this._companyGatewayState ??= new CompanyGatewayStateBuilder();
@@ -533,6 +558,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _taxRateState = _$v.taxRateState?.toBuilder();
       _companyGatewayState = _$v.companyGatewayState?.toBuilder();
       _groupState = _$v.groupState?.toBuilder();
       _$v = null;
@@ -571,6 +597,7 @@ class UserCompanyStateBuilder
               projectState: projectState.build(),
               paymentState: paymentState.build(),
               quoteState: quoteState.build(),
+              taxRateState: taxRateState.build(),
               companyGatewayState: companyGatewayState.build(),
               groupState: groupState.build());
     } catch (_) {
@@ -600,6 +627,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'taxRateState';
+        taxRateState.build();
         _$failedField = 'companyGatewayState';
         companyGatewayState.build();
         _$failedField = 'groupState';

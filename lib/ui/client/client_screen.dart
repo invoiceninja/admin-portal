@@ -68,7 +68,8 @@ class ClientScreen extends StatelessWidget {
               localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () => store.dispatch(ClearClientMultiselect(context: context)),
+            onPressed: () =>
+                store.dispatch(ClearClientMultiselect(context: context)),
           ),
         if (viewModel.isInMultiselect)
           FlatButton(

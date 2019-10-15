@@ -60,7 +60,8 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProductsByCustom2>(_filterProductsByCustom2),
   TypedReducer<ListUIState, StartProductMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProductMultiselect>(_addToListMultiselect),
-  TypedReducer<ListUIState, RemoveFromProductMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, RemoveFromProductMultiselect>(
+      _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProductMultiselect>(_clearListMultiselect),
 ]);
 

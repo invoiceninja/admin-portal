@@ -109,9 +109,8 @@ List<String> sizeList(BuiltMap<String, SizeEntity> sizeMap) {
   return list;
 }
 
-
-var memoizedGatewayList =
-memo1((BuiltMap<String, GatewayEntity> gatewayMap) => gatewayList(gatewayMap));
+var memoizedGatewayList = memo1(
+    (BuiltMap<String, GatewayEntity> gatewayMap) => gatewayList(gatewayMap));
 
 List<String> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
   final list = gatewayMap.keys.toList();
@@ -120,7 +119,6 @@ List<String> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
 
   return list;
 }
-
 
 var memoizedPaymentTypeList = memo1(
     (BuiltMap<String, PaymentTypeEntity> paymentTypeMap) =>

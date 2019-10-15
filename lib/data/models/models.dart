@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 export 'package:invoiceninja_flutter/data/models/client_model.dart';
 export 'package:invoiceninja_flutter/data/models/company_model.dart';
 export 'package:invoiceninja_flutter/data/models/credit_model.dart';
+export 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 export 'package:invoiceninja_flutter/data/models/document_model.dart';
 export 'package:invoiceninja_flutter/data/models/entities.dart';
 export 'package:invoiceninja_flutter/data/models/expense_model.dart';

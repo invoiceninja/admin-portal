@@ -260,34 +260,6 @@ abstract class PaymentTermEntity extends Object
   int get archivedAt;
 }
 
-abstract class TaxRateEntity extends Object
-    with SelectableEntity
-    implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  factory TaxRateEntity() {
-    return _$TaxRateEntity._(
-      id: BaseEntity.nextId,
-      name: '',
-      rate: 0.0,
-      isInclusive: false,
-    );
-  }
-
-  TaxRateEntity._();
-
-  static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
-
-  String get name;
-
-  double get rate;
-
-  @BuiltValueField(wireName: 'is_inclusive')
-  bool get isInclusive;
-
-  @nullable
-  @BuiltValueField(wireName: 'archived_at')
-  int get archivedAt;
-}
-
 abstract class GatewayEntity extends Object
     with SelectableEntity
     implements Built<GatewayEntity, GatewayEntityBuilder> {

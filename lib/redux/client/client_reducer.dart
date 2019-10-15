@@ -107,7 +107,8 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
   TypedReducer<ListUIState, StartClientMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToClientMultiselect>(_addToListMultiselect),
-  TypedReducer<ListUIState, RemoveFromClientMultiselect>(_removeFromListMultiselect),
+  TypedReducer<ListUIState, RemoveFromClientMultiselect>(
+      _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
 ]);
 
