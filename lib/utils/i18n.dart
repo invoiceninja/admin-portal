@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'fees': 'Fees',
+      'limits': 'Limits',
       'provider': 'Provider',
       'company_gateway': 'Payment Gateway',
       'company_gateways': 'Payment Gateways',
@@ -14881,6 +14883,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get companyGateway => _localizedValues[localeCode]['company_gateway'];
 
   String get provider => _localizedValues[localeCode]['provider'];
+
+  String get fees => _localizedValues[localeCode]['fees'];
+
+  String get limits => _localizedValues[localeCode]['limits'];
 
 
   String lookup(String key) {

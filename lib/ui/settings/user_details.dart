@@ -84,7 +84,6 @@ class _UserDetailsState extends State<UserDetails> {
     return SettingsScaffold(
       title: localization.userDetails,
       onSavePressed: viewModel.onSavePressed,
-      onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[

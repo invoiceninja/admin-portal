@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,12 +20,32 @@ class CompanyGatewayEdit extends StatefulWidget {
   _CompanyGatewayEditState createState() => _CompanyGatewayEditState();
 }
 
-class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
+class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final FocusScopeNode _node = FocusScopeNode();
+  TabController _controller;
+  bool autoValidate = false;
 
   // STARTER: controllers - do not remove comment
 
   List<TextEditingController> _controllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _controllers.forEach((dynamic controller) {
+      controller.dispose();
+    });
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -42,16 +61,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
-    super.dispose();
   }
 
   void _onChanged() {
@@ -75,28 +84,63 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit> {
           ? localization.newCompanyGateway
           : localization.editCompanyGateway,
       onSavePressed: viewModel.onSavePressed,
-      onCancelPressed: viewModel.onCancelPressed,
-      body: AppForm(
-        formKey: _formKey,
-        children: <Widget>[
-          FormCard(
+      appBarBottom: TabBar(
+        key: ValueKey(state.settingsUIState.updatedAt),
+        controller: _controller,
+        tabs: [
+          Tab(
+            text: localization.settings,
+          ),
+          Tab(
+            text: localization.limits,
+          ),
+          Tab(
+            text: localization.fees,
+          ),
+        ],
+      ),
+      body: FocusScope(
+        node: _node,
+        child: Form(
+          key: _formKey,
+          child: TabBarView(
+            key: ValueKey(state.settingsUIState.updatedAt),
+            controller: _controller,
             children: <Widget>[
-              EntityDropdown(
-                key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
-                entityType: EntityType.gateway,
-                entityMap: state.staticState.gatewayMap,
-                entityList: memoizedGatewayList(state.staticState.gatewayMap),
-                labelText: localization.provider,
-                initialValue: state
-                    .staticState.gatewayMap[companyGateway.gatewayId]?.name,
-                onSelected: (SelectableEntity gateway) => viewModel.onChanged(
-                  companyGateway.rebuild((b) => b..gatewayId = gateway.id),
-                ),
-                //onFieldSubmitted: (String value) => _node.nextFocus(),
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      EntityDropdown(
+                        key:
+                            ValueKey('__gateway_${companyGateway.gatewayId}__'),
+                        entityType: EntityType.gateway,
+                        entityMap: state.staticState.gatewayMap,
+                        entityList:
+                            memoizedGatewayList(state.staticState.gatewayMap),
+                        labelText: localization.provider,
+                        initialValue: state.staticState
+                            .gatewayMap[companyGateway.gatewayId]?.name,
+                        onSelected: (SelectableEntity gateway) =>
+                            viewModel.onChanged(
+                          companyGateway
+                              .rebuild((b) => b..gatewayId = gateway.id),
+                        ),
+                        //onFieldSubmitted: (String value) => _node.nextFocus(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              ListView(
+                children: <Widget>[],
+              ),
+              ListView(
+                children: <Widget>[],
               ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

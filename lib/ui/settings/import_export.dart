@@ -70,7 +70,6 @@ class _ImportExportState extends State<ImportExport> {
     return SettingsScaffold(
       title: localization.importExport,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

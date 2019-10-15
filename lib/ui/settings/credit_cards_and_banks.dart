@@ -79,7 +79,6 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
 
     return SettingsScaffold(
       body: SizedBox(),
-      onCancelPressed: null,
       onSavePressed: null,
       title: localization.creditCardsAndBanks,
     );

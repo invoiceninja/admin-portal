@@ -70,7 +70,6 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     return SettingsScaffold(
       title: localization.notifications,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

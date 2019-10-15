@@ -81,7 +81,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
     return SettingsScaffold(
       title: localization.localization,
       onSavePressed: viewModel.onSavePressed,
-      onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[

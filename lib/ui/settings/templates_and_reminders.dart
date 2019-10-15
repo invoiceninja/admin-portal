@@ -80,7 +80,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     return SettingsScaffold(
       title: localization.templatesAndReminders,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

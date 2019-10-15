@@ -80,7 +80,6 @@ class _TaxRatesState extends State<TaxRates>
     return SettingsScaffold(
       title: localization.taxRates,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

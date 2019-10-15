@@ -11,14 +11,12 @@ class SettingsScaffold extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.body,
     this.appBarBottom,
   }) : super(key: key);
 
   final String title;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final Widget appBarBottom;
   final Widget body;
 
@@ -53,7 +51,6 @@ class SettingsScaffold extends StatelessWidget {
                       section: '',
                       force: true,
                     ));
-                    onCancelPressed(context);
                   },
                 );
               }),

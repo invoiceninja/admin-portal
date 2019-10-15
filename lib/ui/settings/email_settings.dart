@@ -70,7 +70,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     return SettingsScaffold(
       title: localization.emailSettings,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

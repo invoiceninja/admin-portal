@@ -80,7 +80,6 @@ class _InvoiceSettingsState extends State<InvoiceSettings>
     return SettingsScaffold(
       title: localization.invoiceSettings,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

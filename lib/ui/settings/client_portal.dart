@@ -80,7 +80,6 @@ class _ClientPortalState extends State<ClientPortal>
     return SettingsScaffold(
       title: localization.clientPortal,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

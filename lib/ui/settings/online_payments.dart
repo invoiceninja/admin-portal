@@ -79,7 +79,6 @@ class _OnlinePaymentsState extends State<OnlinePayments>
 
     return SettingsScaffold(
       title: localization.onlinePayments,
-      onCancelPressed: viewModel.onCancelPressed,
       onSavePressed: viewModel.onSavePressed,
       body: SizedBox(),
     );

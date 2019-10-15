@@ -29,9 +29,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TabController _controller;
   final FocusScopeNode _node = FocusScopeNode();
-
+  TabController _controller;
   bool autoValidate = false;
 
   final _nameController = TextEditingController();
@@ -143,7 +142,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
 
     return SettingsScaffold(
       title: localization.companyDetails,
-      onCancelPressed: viewModel.onCancelPressed,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),

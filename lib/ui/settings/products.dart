@@ -70,7 +70,6 @@ class _ProductSettingsState extends State<ProductSettings> {
     return SettingsScaffold(
       title: localization.productSettings,
       onSavePressed: null,
-      onCancelPressed: null,
       body: SizedBox(),
     );
   }

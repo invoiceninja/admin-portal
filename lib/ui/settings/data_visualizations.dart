@@ -69,7 +69,6 @@ class _DataVisualizationsState extends State<DataVisualizations> {
 
     return SettingsScaffold(
       body: SizedBox(),
-      onCancelPressed: null,
       onSavePressed: null,
       title: localization.dataVisualizations,
     );

@@ -71,11 +71,14 @@ class CompanyGatewayEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
+        /*
         store.dispatch(EditCompanyGateway(
             companyGateway: CompanyGatewayEntity(),
             context: context,
             force: true));
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+
+         */
       },
       onSavePressed: (BuildContext context) {
         final Completer<CompanyGatewayEntity> completer =
