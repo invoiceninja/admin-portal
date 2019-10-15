@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -21,20 +25,26 @@ class TaxRateEdit extends StatefulWidget {
 class _TaxRateEditState extends State<TaxRateEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
+  bool autoValidate = false;
+
+  final _nameController = TextEditingController();
+  final _rateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
+      _nameController,
+      _rateController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final taxRate = widget.viewModel.taxRate;
-    // STARTER: read value - do not remove comment
+    _nameController.text = taxRate.name;
+    _rateController.text = formatNumber(taxRate.rate, context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -52,9 +62,10 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onChanged() {
-    final taxRate = widget.viewModel.taxRate.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        );
+    final taxRate = widget.viewModel.taxRate.rebuild((b) =>
+    b
+      ..name = _nameController.text.trim()
+      ..rate = parseDouble(_rateController.text));
     if (taxRate != widget.viewModel.taxRate) {
       widget.viewModel.onChanged(taxRate);
     }
@@ -66,54 +77,36 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final localization = AppLocalization.of(context);
     final taxRate = viewModel.taxRate;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.taxRate.isNew
-              ? localization.newTaxRate
-              : localization.editTaxRate),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
+    return SettingsScaffold(
+      title: viewModel.taxRate.isNew
+          ? localization.newTaxRate
+          : localization.editTaxRate,
+      onSavePressed: viewModel.onSavePressed,
+      body: AppForm(
+        formKey: _formKey,
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                label: localization.name,
+                controller: _nameController,
+                validator: (val) =>
+                val.isEmpty || val
+                    .trim()
+                    .isEmpty
+                    ? localization.pleaseEnterAName
+                    : null,
+                autovalidate: autoValidate,
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !taxRate.isDeleted,
-              isDirty: taxRate.isNew || taxRate != viewModel.origTaxRate,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            ),
-          ],
-        ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })),
+              DecoratedFormField(
+                label: localization.rate,
+                controller: _rateController,
+                keyboardType:
+                TextInputType.numberWithOptions(decimal: true),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

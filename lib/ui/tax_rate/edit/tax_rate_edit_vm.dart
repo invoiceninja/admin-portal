@@ -44,7 +44,6 @@ class TaxRateEditVM {
     @required this.isSaving,
     @required this.origTaxRate,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -68,11 +67,6 @@ class TaxRateEditVM {
           store.dispatch(UpdateCurrentRoute(
               taxRate.isNew ? TaxRateSettingsScreen.route : TaxRateViewScreen.route));
         }
-      },
-      onCancelPressed: (BuildContext context) {
-        store.dispatch(EditTaxRate(
-            taxRate: TaxRateEntity(), context: context, force: true));
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<TaxRateEntity> completer =
@@ -104,7 +98,6 @@ class TaxRateEditVM {
   final CompanyEntity company;
   final Function(TaxRateEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
