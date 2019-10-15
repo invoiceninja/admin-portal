@@ -72,7 +72,7 @@ class _ProductSettingsState extends State<ProductSettings> {
 
     return SettingsScaffold(
       title: localization.productSettings,
-      onSavePressed: null,
+      onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[
@@ -81,10 +81,28 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.fillProducts),
-                value: settings.fillProducts,
+                value: settings.fillProducts ?? false,
                 subtitle: Text(localization.fillProductsHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..fillProducts = value)),
+              ),
+              /*
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.updateProducts),
+                value: settings.fillProducts,
+                subtitle: Text(localization.updateProductsHelp),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..fillProducts = value)),
+              ),
+               */
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.convertProducts),
+                value: settings.convertProductExchangeRate ?? false,
+                subtitle: Text(localization.convertProductsHelp),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..convertProductExchangeRate = value)),
               ),
             ],
           )
