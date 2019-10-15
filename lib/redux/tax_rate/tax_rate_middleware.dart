@@ -98,11 +98,11 @@ Middleware<AppState> _viewTaxRateList() {
       store.dispatch(LoadTaxRates());
     }
 
-    store.dispatch(UpdateCurrentRoute(TaxRateScreen.route));
+    store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
-          TaxRateScreen.route, (Route<dynamic> route) => false);
+          TaxRateSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };
 }

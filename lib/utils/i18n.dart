@@ -15,8 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'tax_rate': 'Tax Rate',
-      'new_tax_rate': 'New tax rate',
-      'edit_tax_rate': 'Edit tax rate',
+      'new_tax_rate': 'New Tax Rate',
+      'edit_tax_rate': 'Edit Tax Rate',
       'created_tax_rate': 'Successfully created tax rate',
       'updated_tax_rate': 'Successfully updated tax rate',
       'archived_tax_rate': 'Successfully archived tax rate',

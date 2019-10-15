@@ -32,6 +32,9 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -173,7 +176,13 @@ class SettingsScreens extends StatelessWidget {
         screen = CompanyGatewayEditScreen();
         break;
       case kSettingsTaxRates:
-        screen = TaxRatesScreen();
+        screen = TaxRateSettingsScreen();
+        break;
+      case kSettingsTaxRatesView:
+        screen = TaxRateViewScreen();
+        break;
+      case kSettingsTaxRatesEdit:
+        screen = TaxRateEditScreen();
         break;
       case kSettingsProducts:
         screen = ProductSettingsScreen();

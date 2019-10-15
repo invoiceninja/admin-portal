@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.0';
+const String kAppVersion = '2.0.1';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://admin.invoiceninja.com';
 const String kAppPlansURL =
@@ -101,6 +101,8 @@ const String kSettingsOnlinePayments = 'online_payments';
 const String kSettingsOnlinePaymentsView = 'online_payments_view';
 const String kSettingsOnlinePaymentsEdit = 'online_payments_edit';
 const String kSettingsTaxRates = 'tax_rates';
+const String kSettingsTaxRatesView = 'tax_rates_view';
+const String kSettingsTaxRatesEdit = 'tax_rates_edit';
 const String kSettingsNotifications = 'notifications';
 const String kSettingsProducts = 'products';
 const String kSettingsImportExport = 'import_export';

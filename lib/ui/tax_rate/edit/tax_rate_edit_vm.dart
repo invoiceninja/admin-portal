@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -16,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaxRateEditScreen extends StatelessWidget {
   const TaxRateEditScreen({Key key}) : super(key: key);
-  static const String route = '/tax_rate/edit';
+  static const String route = '/$kSettings/$kSettingsTaxRatesEdit';
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +64,9 @@ class TaxRateEditVM {
         store.dispatch(UpdateTaxRate(taxRate));
       },
       onBackPressed: () {
-        if (state.uiState.currentRoute.contains(TaxRateScreen.route)) {
+        if (state.uiState.currentRoute.contains(TaxRateSettingsScreen.route)) {
           store.dispatch(UpdateCurrentRoute(
-              taxRate.isNew ? TaxRateScreen.route : TaxRateViewScreen.route));
+              taxRate.isNew ? TaxRateSettingsScreen.route : TaxRateViewScreen.route));
         }
       },
       onCancelPressed: (BuildContext context) {

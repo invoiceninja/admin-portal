@@ -329,10 +329,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-            TaxRateScreen.route: (context) => TaxRateScreen(),
-            TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
-            TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
-
             GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
@@ -347,6 +343,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
             TaxRatesScreen.route: (context) => TaxRatesScreen(),
+            TaxRateSettingsScreen.route: (context) => TaxRateSettingsScreen(),
+            TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
+            TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
             ProductSettingsScreen.route: (context) => ProductSettingsScreen(),
             NotificationsSettingsScreen.route: (context) =>
                 NotificationsSettingsScreen(),

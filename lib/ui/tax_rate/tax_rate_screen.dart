@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -10,8 +11,8 @@ import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
-class TaxRateScreen extends StatelessWidget {
-  static const String route = '/tax_rate';
+class TaxRateSettingsScreen extends StatelessWidget {
+  static const String route = '/$kSettings/$kSettingsTaxRates';
 
   @override
   Widget build(BuildContext context) {

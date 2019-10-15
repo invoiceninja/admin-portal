@@ -47,9 +47,11 @@ abstract class TaxRateEntity extends Object
   factory TaxRateEntity({String id}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
+      isChanged: false,
       name: '',
       rate: 0.0,
       isInclusive: false,
+      isDeleted: false,
     );
   }
 
