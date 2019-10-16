@@ -18,7 +18,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.selectedCompany;
     final localization = AppLocalization.of(context);
 
     return AppScaffold(

@@ -239,8 +239,6 @@ class FilterTaxRatesByEntity implements PersistUI {
 void handleTaxRateAction(
     BuildContext context, TaxRateEntity taxRate, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
 
   switch (action) {

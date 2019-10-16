@@ -29,7 +29,6 @@ import 'package:invoiceninja_flutter/ui/settings/invoice_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
