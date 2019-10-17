@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -43,12 +44,12 @@ class AuthRepository {
       String secret,
       String platform,
       String oneTimePassword}) async {
-    final credentials = {
+    final Map<String, dynamic> credentials = <String, dynamic>{
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'email': email,
       'password': password,
-      'one_time_password': oneTimePassword,
+      'one_time_password': oneTimePassword
     };
 
     url = formatApiUrl(url) + '/login';
@@ -58,7 +59,7 @@ class AuthRepository {
 
   Future<LoginResponseData> oauthLogin(
       {String token, String url, String secret, String platform}) async {
-    final credentials = {
+    final credentials = <String, dynamic>{
       'token_name': 'invoice-ninja-$platform-app',
       'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'token': token,
