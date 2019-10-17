@@ -35,7 +35,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -89,6 +89,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
         controller: _controller,
         tabs: [
           Tab(
+            text: localization.credentials,
+          ),
+          Tab(
             text: localization.settings,
           ),
           Tab(
@@ -130,6 +133,48 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       ),
                     ],
                   ),
+                ],
+              ),
+              ListView(
+                children: <Widget>[
+                  FormCard(
+                    children: <Widget>[
+                      SwitchListTile(
+                        activeColor: Theme.of(context).accentColor,
+                        title: Text(localization.billingAddress),
+                        subtitle: Text(localization.requireBillingAddressHelp),
+                        value: companyGateway.showBillingAddress,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..showBillingAddress = value)),
+                      ),
+                      SwitchListTile(
+                        activeColor: Theme.of(context).accentColor,
+                        title: Text(localization.shippingAddress),
+                        subtitle: Text(localization.requireShippingAddressHelp),
+                        value: companyGateway.showShippingAddress,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..showShippingAddress = value)),
+                      ),
+                      SwitchListTile(
+                        activeColor: Theme.of(context).accentColor,
+                        title: Text(localization.updateAddress),
+                        subtitle: Text(localization.updateAddressHelp),
+                        value: companyGateway.updateDetails,
+                        onChanged: (value) => viewModel.onChanged(companyGateway
+                            .rebuild((b) => b..updateDetails = value)),
+                      ),
+                    ],
+                  ),
+                  FormCard(
+                    children: <Widget>[
+                      SwitchListTile(
+                       activeColor: Theme.of(context).accentColor,
+                       //title: Text(),
+                       value: false,
+                       //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..)),
+                      )
+                    ],
+                  )
                 ],
               ),
               ListView(

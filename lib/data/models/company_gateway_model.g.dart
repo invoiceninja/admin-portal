@@ -136,17 +136,26 @@ class _$CompanyGatewayEntitySerializer
       'update_details',
       serializers.serialize(object.updateDetails,
           specifiedType: const FullType(bool)),
-      'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
-      'custom_value2',
-      serializers.serialize(object.customValue2,
+      'config',
+      serializers.serialize(object.config,
           specifiedType: const FullType(String)),
     ];
     if (object.gatewayId != null) {
       result
         ..add('gateway_key')
         ..add(serializers.serialize(object.gatewayId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -232,6 +241,10 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'config':
+          result.config = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -477,6 +490,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String customValue2;
   @override
+  final String config;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -503,6 +518,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.updateDetails,
       this.customValue1,
       this.customValue2,
+      this.config,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -526,13 +542,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'updateDetails');
     }
-    if (customValue1 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue1');
-    }
-    if (customValue2 == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyGatewayEntity', 'customValue2');
+    if (config == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
     }
   }
 
@@ -556,6 +567,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         updateDetails == other.updateDetails &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        config == other.config &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -580,15 +592,20 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0,
-                                                            gateway.hashCode),
-                                                        gatewayId.hashCode),
-                                                    showBillingAddress
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                gateway
+                                                                    .hashCode),
+                                                            gatewayId.hashCode),
+                                                        showBillingAddress
+                                                            .hashCode),
+                                                    showShippingAddress
                                                         .hashCode),
-                                                showShippingAddress.hashCode),
-                                            updateDetails.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
+                                                updateDetails.hashCode),
+                                            customValue1.hashCode),
+                                        customValue2.hashCode),
+                                    config.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
@@ -608,6 +625,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('updateDetails', updateDetails)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('config', config)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -655,6 +673,10 @@ class CompanyGatewayEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _config;
+  String get config => _$this._config;
+  set config(String config) => _$this._config = config;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -694,6 +716,7 @@ class CompanyGatewayEntityBuilder
       _updateDetails = _$v.updateDetails;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _config = _$v.config;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -732,6 +755,7 @@ class CompanyGatewayEntityBuilder
               updateDetails: updateDetails,
               customValue1: customValue1,
               customValue2: customValue2,
+              config: config,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -130,6 +131,8 @@ final companyGatewaysReducer = combineReducers<CompanyGatewayState>([
       _setLoadedCompanyGateways),
   TypedReducer<CompanyGatewayState, LoadCompanyGatewaySuccess>(
       _setLoadedCompanyGateway),
+  TypedReducer<CompanyGatewayState, LoadCompanySuccess>(
+      _setLoadedCompany),
   TypedReducer<CompanyGatewayState, ArchiveCompanyGatewayRequest>(
       _archiveCompanyGatewayRequest),
   TypedReducer<CompanyGatewayState, ArchiveCompanyGatewaySuccess>(
@@ -242,6 +245,18 @@ CompanyGatewayState _setLoadedCompanyGateway(
     CompanyGatewayState companyGatewayState, LoadCompanyGatewaySuccess action) {
   return companyGatewayState
       .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+}
+
+CompanyGatewayState _setLoadedCompany(CompanyGatewayState companyGatewayState, LoadCompanySuccess action) {
+  final state = companyGatewayState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.userCompany.company.companyGateways,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
 }
 
 CompanyGatewayState _setLoadedCompanyGateways(

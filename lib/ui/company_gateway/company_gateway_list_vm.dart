@@ -34,6 +34,7 @@ class CompanyGatewayListBuilder extends StatelessWidget {
 
 class CompanyGatewayListVM {
   CompanyGatewayListVM({
+    @required this.state,
     @required this.userCompany,
     @required this.companyGatewayList,
     @required this.companyGatewayMap,
@@ -89,6 +90,7 @@ class CompanyGatewayListVM {
     );
   }
 
+  final AppState state;
   final UserCompanyEntity userCompany;
   final List<String> companyGatewayList;
   final BuiltMap<String, CompanyGatewayEntity> companyGatewayMap;

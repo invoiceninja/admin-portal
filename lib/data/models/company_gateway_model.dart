@@ -57,6 +57,7 @@ abstract class CompanyGatewayEntity extends Object
       updateDetails: true,
       customValue1: '',
       customValue2: '',
+      config: '',
     );
   }
 
@@ -82,11 +83,15 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'update_details')
   bool get updateDetails;
 
+  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
+  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  String get config;
 
   @override
   String get listDisplayName {

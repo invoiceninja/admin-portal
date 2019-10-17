@@ -32,6 +32,7 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 
@@ -199,13 +200,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   TaxRateState get taxRateState => selectedCompanyState.taxRateState;
+
   ListUIState get taxRateListState => uiState.taxRateUIState.listUIState;
+
   TaxRateUIState get taxRateUIState => uiState.taxRateUIState;
 
   CompanyGatewayState get companyGatewayState =>
       selectedCompanyState.companyGatewayState;
+
   ListUIState get companyGatewayListState =>
       uiState.companyGatewayUIState.listUIState;
+
   CompanyGatewayUIState get companyGatewayUIState =>
       uiState.companyGatewayUIState;
 
@@ -324,9 +329,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'showCurrencyCode: ${uiState.settingsUIState.settings.showCurrencyCode}';
-    //return 'gateways : ${staticState.gatewayMap}';
+    return 'gateways : ${selectedCompany.companyGateways}';
     //return 'URL: ${userCompany.token.token}';
-    return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
+    //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
 }
