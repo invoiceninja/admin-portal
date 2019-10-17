@@ -31,7 +31,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
         actions: [
           userCompany.canEditEntity(companyGateway)
               ? EditIconButton(
-                  isVisible: !companyGateway.isDeleted,
+                  isVisible: !(companyGateway.isDeleted ?? false),
                   onPressed: () => viewModel.onEditPressed(context),
                 )
               : Container(),

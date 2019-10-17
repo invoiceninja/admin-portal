@@ -50,6 +50,7 @@ abstract class CompanyGatewayEntity extends Object
     return _$CompanyGatewayEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      isDeleted: false,
       gateway: GatewayEntity(),
       gatewayId: null,
       showBillingAddress: true,
