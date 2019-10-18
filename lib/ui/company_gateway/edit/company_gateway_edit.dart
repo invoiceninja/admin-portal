@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -265,7 +264,7 @@ class GatewayConfigSettings extends StatelessWidget {
       children: gateway.parsedFields.keys
           .map((field) => GatewayConfigField(
                 field: field,
-                defaultValue: '',
+                value: '',
               ))
           .toList(),
     );
@@ -273,18 +272,62 @@ class GatewayConfigSettings extends StatelessWidget {
 }
 
 class GatewayConfigField extends StatefulWidget {
-  const GatewayConfigField({this.field, this.defaultValue});
+  const GatewayConfigField({this.field, this.value});
 
   final String field;
-  final String defaultValue;
+  final String value;
 
   @override
   _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
 }
 
 class _GatewayConfigFieldState extends State<GatewayConfigField> {
+  bool autoValidate = false;
+  TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _textController.removeListener(_onChanged);
+
+    _textController.text = widget.value;
+
+    _textController.addListener(_onChanged);
+
+    super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    print('changed: ${_textController.text}');
+  }
+
+  bool _obscureText(String field) => [
+        'password',
+        'secret',
+        'apiKey',
+        'secretWord',
+      ].contains(field);
+
   @override
   Widget build(BuildContext context) {
-    return Text('${widget.field} => ${widget.defaultValue}');
+    return TextFormField(
+      controller: _textController,
+      decoration: InputDecoration(
+        labelText: widget.field,
+      ),
+      onChanged: (value) => _onChanged(),
+      obscureText: _obscureText(widget.field),
+    );
   }
 }
