@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({
@@ -260,6 +261,10 @@ class GatewayConfigSettings extends StatelessWidget {
     final state = viewModel.state;
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
+    if (gateway == null) {
+      return SizedBox();
+    }
+
     return Column(
       children: gateway.parsedFields.keys
           .map((field) => GatewayConfigField(
@@ -324,7 +329,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
     return TextFormField(
       controller: _textController,
       decoration: InputDecoration(
-        labelText: widget.field,
+        labelText: toTitleCase(widget.field),
       ),
       onChanged: (value) => _onChanged(),
       obscureText: _obscureText(widget.field),
