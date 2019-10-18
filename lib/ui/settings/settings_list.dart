@@ -44,7 +44,7 @@ class SettingsList extends StatelessWidget {
             ),
           ),
         Container(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).bottomAppBarColor,
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.basicSettings,
@@ -103,7 +103,7 @@ class SettingsList extends StatelessWidget {
                 : FontAwesomeIcons.desktop,
           ),
         Container(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).bottomAppBarColor,
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.advancedSettings,
