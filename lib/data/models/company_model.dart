@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -290,6 +292,9 @@ abstract class GatewayEntity extends Object
   //bool get visible;
 
   String get fields;
+
+  Map<String, dynamic> get parsedFields =>
+      fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
 
   int compareTo(GatewayEntity gateway, String sortField, bool sortAscending) {
     int response = 0;

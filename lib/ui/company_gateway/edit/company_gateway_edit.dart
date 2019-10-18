@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -132,6 +134,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ),
                         //onFieldSubmitted: (String value) => _node.nextFocus(),
                       ),
+                      GatewayConfigSettings(
+                        companyGateway: companyGateway,
+                        viewModel: viewModel,
+                      ),
                     ],
                   ),
                 ],
@@ -241,5 +247,44 @@ class CardListTile extends StatelessWidget {
           ? companyGateway.addCard(cardType)
           : companyGateway.removeCard(cardType)),
     );
+  }
+}
+
+class GatewayConfigSettings extends StatelessWidget {
+  const GatewayConfigSettings({this.companyGateway, this.viewModel});
+
+  final CompanyGatewayEntity companyGateway;
+  final CompanyGatewayEditVM viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = viewModel.state;
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
+
+    return Column(
+      children: gateway.parsedFields.keys
+          .map((field) => GatewayConfigField(
+                field: field,
+                defaultValue: '',
+              ))
+          .toList(),
+    );
+  }
+}
+
+class GatewayConfigField extends StatefulWidget {
+  const GatewayConfigField({this.field, this.defaultValue});
+
+  final String field;
+  final String defaultValue;
+
+  @override
+  _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
+}
+
+class _GatewayConfigFieldState extends State<GatewayConfigField> {
+  @override
+  Widget build(BuildContext context) {
+    return Text('${widget.field} => ${widget.defaultValue}');
   }
 }
