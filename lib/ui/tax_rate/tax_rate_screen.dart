@@ -21,6 +21,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
+      hideHamburgerButton: true,
       appBarTitle: ListFilter(
         key: ValueKey(state.taxRateListState.filterClearedAt),
         entityType: EntityType.taxRate,

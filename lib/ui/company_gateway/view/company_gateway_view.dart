@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
@@ -27,6 +28,12 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: !isMobile(context)
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: viewModel.onBackPressed,
+              )
+            : null,
         title: EntityStateTitle(entity: companyGateway),
         actions: [
           userCompany.canEditEntity(companyGateway)

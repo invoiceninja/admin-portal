@@ -45,10 +45,7 @@ class CompanyGatewayListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: companyGateway,
-      isSelected: companyGateway.id ==
-          (uiState.isEditing
-              ? companyGatewayUIState.editing.id
-              : companyGatewayUIState.selectedId),
+      isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: onTap,

@@ -23,6 +23,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return AppScaffold(
+      hideHamburgerButton: true,
       appBarTitle: ListFilter(
         key: ValueKey(state.companyGatewayListState.filterClearedAt),
         entityType: EntityType.companyGateway,
