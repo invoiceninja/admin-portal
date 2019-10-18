@@ -265,11 +265,15 @@ class GatewayConfigSettings extends StatelessWidget {
       return SizedBox();
     }
 
+    final fields = companyGateway.config.isNotEmpty
+        ? <String, dynamic>{}
+        : gateway.parsedFields;
+
     return Column(
-      children: gateway.parsedFields.keys
+      children: fields.keys
           .map((field) => GatewayConfigField(
                 field: field,
-                value: '',
+                value: gateway.parsedFields[field],
               ))
           .toList(),
     );
@@ -280,7 +284,7 @@ class GatewayConfigField extends StatefulWidget {
   const GatewayConfigField({this.field, this.value});
 
   final String field;
-  final String value;
+  final dynamic value;
 
   @override
   _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
@@ -306,7 +310,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
   void didChangeDependencies() {
     _textController.removeListener(_onChanged);
 
-    _textController.text = widget.value;
+    _textController.text = widget.value.toString();
 
     _textController.addListener(_onChanged);
 
@@ -317,22 +321,33 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
     print('changed: ${_textController.text}');
   }
 
-  bool _obscureText(String field) => [
-        'password',
-        'secret',
-        'apiKey',
-        'secretWord',
-      ].contains(field);
+  bool _obscureText(String field) {
+    bool obscure = false;
+    ['password', 'secret', 'key'].forEach((word) {
+      if (field.toLowerCase().contains(word)) {
+        obscure = true;
+      }
+    });
+    return obscure;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _textController,
-      decoration: InputDecoration(
-        labelText: toTitleCase(widget.field),
-      ),
-      onChanged: (value) => _onChanged(),
-      obscureText: _obscureText(widget.field),
-    );
+    if (widget.value.runtimeType == bool) {
+      return CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Text(toTitleCase(widget.field)),
+        value: widget.value,
+      );
+    } else {
+      return TextFormField(
+        controller: _textController,
+        decoration: InputDecoration(
+          labelText: toTitleCase(widget.field),
+        ),
+        onChanged: (value) => _onChanged(),
+        obscureText: _obscureText(widget.field),
+      );
+    }
   }
 }

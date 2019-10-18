@@ -19,7 +19,7 @@ String toTitleCase(String text) {
     if (word == 'url') {
       return 'URL';
     }
-    
+
     final first = word.substring(0, 1).toUpperCase();
     final rest = word.substring(1);
     return '$first$rest';
