@@ -53,6 +53,7 @@ abstract class CompanyGatewayEntity extends Object
       isDeleted: false,
       gateway: GatewayEntity(),
       gatewayId: null,
+      acceptedCreditCards: 0,
       showBillingAddress: true,
       showShippingAddress: false,
       updateDetails: true,
@@ -74,6 +75,9 @@ abstract class CompanyGatewayEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'gateway_key')
   String get gatewayId;
+
+  @BuiltValueField(wireName: 'accepted_credit_cards')
+  int get acceptedCreditCards;
 
   @BuiltValueField(wireName: 'show_billing_address')
   bool get showBillingAddress;
@@ -98,6 +102,14 @@ abstract class CompanyGatewayEntity extends Object
   String get listDisplayName {
     return gateway.name;
   }
+
+  bool supportsCard(int cardType) => acceptedCreditCards & cardType > 0;
+
+  CompanyGatewayEntity addCard(int cardType) =>
+      rebuild((b) => b..acceptedCreditCards = acceptedCreditCards | cardType);
+
+  CompanyGatewayEntity removeCard(int cardType) =>
+      rebuild((b) => b..acceptedCreditCards = acceptedCreditCards ^ cardType);
 
   int compareTo(CompanyGatewayEntity companyGateway, String sortField,
       bool sortAscending) {

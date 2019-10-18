@@ -167,14 +167,41 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     ],
                   ),
                   FormCard(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SwitchListTile(
-                        activeColor: Theme.of(context).accentColor,
-                        title: Text(state
-                            .staticState.paymentTypeMap[kPaymentTypeVisa]?.name ?? ''),
-                        value: false,
-                        //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..)),
-                      )
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, top: 16, bottom: 16),
+                        child: Text(
+                          localization.acceptedCardLogos,
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                      ),
+                      CardListTile(
+                        viewModel: viewModel,
+                        cardType: kCardTypeVisa,
+                        paymentType: kPaymentTypeVisa,
+                      ),
+                      CardListTile(
+                        viewModel: viewModel,
+                        cardType: kCardTypeMasterCard,
+                        paymentType: kPaymentTypeMasterCard,
+                      ),
+                      CardListTile(
+                        viewModel: viewModel,
+                        cardType: kCardTypeAmEx,
+                        paymentType: kPaymentTypeAmEx,
+                      ),
+                      CardListTile(
+                        viewModel: viewModel,
+                        cardType: kCardTypeDiscover,
+                        paymentType: kPaymentTypeDiscover,
+                      ),
+                      CardListTile(
+                        viewModel: viewModel,
+                        cardType: kCardTypeDiners,
+                        paymentType: kPaymentTypeDiners,
+                      ),
                     ],
                   )
                 ],
@@ -189,6 +216,30 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
         ),
       ),
+    );
+  }
+}
+
+class CardListTile extends StatelessWidget {
+  const CardListTile({this.viewModel, this.paymentType, this.cardType});
+
+  final CompanyGatewayEditVM viewModel;
+  final String paymentType;
+  final int cardType;
+
+  @override
+  Widget build(BuildContext context) {
+    final staticState = viewModel.state.staticState;
+    final companyGateway = viewModel.companyGateway;
+
+    return CheckboxListTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      activeColor: Theme.of(context).accentColor,
+      title: Text(staticState.paymentTypeMap[paymentType]?.name ?? ''),
+      value: companyGateway.supportsCard(cardType),
+      onChanged: (value) => viewModel.onChanged(value
+          ? companyGateway.addCard(cardType)
+          : companyGateway.removeCard(cardType)),
     );
   }
 }

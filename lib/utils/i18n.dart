@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
           'Require client to provide their billing address',
@@ -14962,6 +14963,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get credentials =>
       _localizedValues[localeCode]['credentials'];
+
+  String get acceptedCardLogos =>
+      _localizedValues[localeCode]['accepted_card_logos'];
 
 
   String lookup(String key) {

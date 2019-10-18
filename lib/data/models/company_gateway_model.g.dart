@@ -127,6 +127,9 @@ class _$CompanyGatewayEntitySerializer
       'gateway',
       serializers.serialize(object.gateway,
           specifiedType: const FullType(GatewayEntity)),
+      'accepted_credit_cards',
+      serializers.serialize(object.acceptedCreditCards,
+          specifiedType: const FullType(int)),
       'show_billing_address',
       serializers.serialize(object.showBillingAddress,
           specifiedType: const FullType(bool)),
@@ -222,6 +225,10 @@ class _$CompanyGatewayEntitySerializer
         case 'gateway_key':
           result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'accepted_credit_cards':
+          result.acceptedCreditCards = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'show_billing_address':
           result.showBillingAddress = serializers.deserialize(value,
@@ -480,6 +487,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String gatewayId;
   @override
+  final int acceptedCreditCards;
+  @override
   final bool showBillingAddress;
   @override
   final bool showShippingAddress;
@@ -513,6 +522,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   _$CompanyGatewayEntity._(
       {this.gateway,
       this.gatewayId,
+      this.acceptedCreditCards,
       this.showBillingAddress,
       this.showShippingAddress,
       this.updateDetails,
@@ -529,6 +539,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       : super._() {
     if (gateway == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gateway');
+    }
+    if (acceptedCreditCards == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'acceptedCreditCards');
     }
     if (showBillingAddress == null) {
       throw new BuiltValueNullFieldError(
@@ -562,6 +576,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return other is CompanyGatewayEntity &&
         gateway == other.gateway &&
         gatewayId == other.gatewayId &&
+        acceptedCreditCards == other.acceptedCreditCards &&
         showBillingAddress == other.showBillingAddress &&
         showShippingAddress == other.showShippingAddress &&
         updateDetails == other.updateDetails &&
@@ -594,10 +609,14 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                gateway
+                                                                $jc(
+                                                                    0,
+                                                                    gateway
+                                                                        .hashCode),
+                                                                gatewayId
                                                                     .hashCode),
-                                                            gatewayId.hashCode),
+                                                            acceptedCreditCards
+                                                                .hashCode),
                                                         showBillingAddress
                                                             .hashCode),
                                                     showShippingAddress
@@ -620,6 +639,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
           ..add('gateway', gateway)
           ..add('gatewayId', gatewayId)
+          ..add('acceptedCreditCards', acceptedCreditCards)
           ..add('showBillingAddress', showBillingAddress)
           ..add('showShippingAddress', showShippingAddress)
           ..add('updateDetails', updateDetails)
@@ -649,6 +669,11 @@ class CompanyGatewayEntityBuilder
   String _gatewayId;
   String get gatewayId => _$this._gatewayId;
   set gatewayId(String gatewayId) => _$this._gatewayId = gatewayId;
+
+  int _acceptedCreditCards;
+  int get acceptedCreditCards => _$this._acceptedCreditCards;
+  set acceptedCreditCards(int acceptedCreditCards) =>
+      _$this._acceptedCreditCards = acceptedCreditCards;
 
   bool _showBillingAddress;
   bool get showBillingAddress => _$this._showBillingAddress;
@@ -711,6 +736,7 @@ class CompanyGatewayEntityBuilder
     if (_$v != null) {
       _gateway = _$v.gateway?.toBuilder();
       _gatewayId = _$v.gatewayId;
+      _acceptedCreditCards = _$v.acceptedCreditCards;
       _showBillingAddress = _$v.showBillingAddress;
       _showShippingAddress = _$v.showShippingAddress;
       _updateDetails = _$v.updateDetails;
@@ -750,6 +776,7 @@ class CompanyGatewayEntityBuilder
           new _$CompanyGatewayEntity._(
               gateway: gateway.build(),
               gatewayId: gatewayId,
+              acceptedCreditCards: acceptedCreditCards,
               showBillingAddress: showBillingAddress,
               showShippingAddress: showShippingAddress,
               updateDetails: updateDetails,
