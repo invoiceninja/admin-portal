@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -168,10 +169,11 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   FormCard(
                     children: <Widget>[
                       SwitchListTile(
-                       activeColor: Theme.of(context).accentColor,
-                       //title: Text(),
-                       value: false,
-                       //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..)),
+                        activeColor: Theme.of(context).accentColor,
+                        title: Text(state
+                            .staticState.paymentTypeMap[kPaymentTypeVisa]?.name ?? ''),
+                        value: false,
+                        //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..)),
                       )
                     ],
                   )

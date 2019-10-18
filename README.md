@@ -80,3 +80,5 @@ The architecture is based off these two projects:
 
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
 
+Create pull requests for v1 against the 'legacy' branch and for v2 against the 'develop' branch.
+

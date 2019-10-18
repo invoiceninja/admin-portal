@@ -46,6 +46,18 @@ const double kMobileDialogPadding = 12;
 const double kTabletLayoutWidth = 1000;
 const double kTabletDialogPadding = 250;
 
+const int kCardTypeVisa = 1;
+const int kCardTypeMasterCard = 2;
+const int kCardTypeAmEx = 4;
+const int kCardTypeDiners = 8;
+const int kCardTypeDiscover = 16;
+
+const String kPaymentTypeVisa = '6';
+const String kPaymentTypeMasterCard = '7';
+const String kPaymentTypeAmEx = '8';
+const String kPaymentTypeDiners = '9';
+const String kPaymentTypeDiscover = '10';
+
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
