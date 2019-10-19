@@ -40,13 +40,13 @@ class _ProductListItemState extends State<ProductListItem>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
-    final productUIState = uiState.productUIState;
     final filterMatch = widget.filter != null && widget.filter.isNotEmpty
         ? widget.product.matchesFilterValue(widget.filter)
         : null;
     final subtitle = filterMatch ?? widget.product.notes;
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final productUIState = uiState.productUIState;
     final listUIState = productUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;

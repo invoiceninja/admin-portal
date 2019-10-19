@@ -42,6 +42,7 @@ import 'package:invoiceninja_flutter/ui/document/document_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
@@ -329,7 +330,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
@@ -352,7 +353,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 NotificationsSettingsScreen(),
             ImportExportScreen.route: (context) => ImportExportScreen(),
             DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
-            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),
