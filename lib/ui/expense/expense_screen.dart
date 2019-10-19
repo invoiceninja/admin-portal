@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+import 'expense_screen_vm.dart';
 
 class ExpenseScreen extends StatelessWidget {
+  const ExpenseScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/expense';
+
+  final ExpenseScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +31,22 @@ class ExpenseScreen extends StatelessWidget {
     final company = state.selectedCompany;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.expenseUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.expenseList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final expenses = viewModel.expenseList
+            .map<ExpenseEntity>((expenseId) => viewModel.expenseMap[expenseId])
+            .where((expense) => value != listUIState.isSelected(expense))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, expenses, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(store.state.expenseListState.filterClearedAt),
         entityType: EntityType.expense,
@@ -31,12 +55,44 @@ class ExpenseScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.expense,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterExpenses(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.expense,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterExpenses(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              store.dispatch(ClearExpenseMultiselect(context: context));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.expenseListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.expenseListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearExpenseMultiselect(context: context));
+                  },
+          ),
       ],
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(

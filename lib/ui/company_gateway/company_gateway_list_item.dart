@@ -53,6 +53,12 @@ class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
+
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: widget.companyGateway,

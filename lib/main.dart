@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
@@ -24,6 +25,7 @@ import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -31,7 +33,13 @@ import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/document_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
@@ -53,23 +61,15 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
-
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 void main({bool isTesting = false}) async {
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
@@ -306,10 +306,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-            DocumentScreen.route: (context) => DocumentScreen(),
+            DocumentScreen.route: (context) => DocumentScreenBuilder(),
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
-            ExpenseScreen.route: (context) => ExpenseScreen(),
+            ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
             VendorScreen.route: (context) => VendorScreen(),
@@ -336,7 +336,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
             UserDetailsScreen.route: (context) => UserDetailsScreen(),
             LocalizationScreen.route: (context) => LocalizationScreen(),
-            CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
+            CompanyGatewayScreen.route: (context) =>
+                CompanyGatewayScreenBuilder(),
             CompanyGatewayViewScreen.route: (context) =>
                 CompanyGatewayViewScreen(),
             CompanyGatewayEditScreen.route: (context) =>

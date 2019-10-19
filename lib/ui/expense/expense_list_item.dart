@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ExpenseListItem extends StatelessWidget {
+class ExpenseListItem extends StatefulWidget {
   const ExpenseListItem({
     @required this.userCompany,
     @required this.onTap,
@@ -39,62 +39,89 @@ class ExpenseListItem extends StatelessWidget {
   static final expenseItemKey = (int id) => Key('__expense_item_${id}__');
 
   @override
+  _ExpenseListItemState createState() => _ExpenseListItemState();
+}
+
+class _ExpenseListItemState extends State<ExpenseListItem>
+    with TickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final expenseUIState = uiState.expenseUIState;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? expense.matchesFilterValue(filter)
+    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
+        ? widget.expense.matchesFilterValue(widget.filter)
         : null;
 
     final company = state.selectedCompany;
-    final category = company.expenseCategoryMap[expense.categoryId];
+    final category = company.expenseCategoryMap[widget.expense.categoryId];
 
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (client != null || vendor != null || category != null) {
+    } else if (widget.client != null ||
+        widget.vendor != null ||
+        category != null) {
       if (category != null) {
         subtitle += category.name;
-        if (vendor != null || client != null) {
+        if (widget.vendor != null || widget.client != null) {
           subtitle += ' • ';
         }
       }
-      if (vendor != null) {
-        subtitle += vendor.name;
-        if (client != null) {
+      if (widget.vendor != null) {
+        subtitle += widget.vendor.name;
+        if (widget.client != null) {
           subtitle += ' • ';
         }
       }
-      if (client != null) {
-        subtitle += client.displayName;
+      if (widget.client != null) {
+        subtitle += widget.client.displayName;
       }
     }
-    if (hasDocuments) {
+    if (widget.hasDocuments) {
       if (subtitle.isNotEmpty) {
         subtitle += '  ';
       }
       subtitle += '📎';
     }
+    final listUIState = expenseUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
+
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
 
     return DismissibleEntity(
-      isSelected: expense.id ==
+      isSelected: widget.expense.id ==
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),
-      userCompany: userCompany,
-      entity: expense,
-      onEntityAction: onEntityAction,
+      userCompany: widget.userCompany,
+      entity: widget.expense,
+      onEntityAction: widget.onEntityAction,
       child: ListTile(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        leading: onCheckboxChanged != null
-            ? Checkbox(
-                value: isChecked,
-                onChanged: (value) => onCheckboxChanged(value),
-                activeColor: Theme.of(context).accentColor,
+        onTap: isInMultiselect
+            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
+            : widget.onTap,
+        onLongPress: widget.onLongPress,
+        leading: showCheckbox
+            ? FadeTransition(
+                opacity: _multiselectCheckboxAnim,
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    //key: NinjaKeys.expenseItemCheckbox(task.id),
+                    value: widget.isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => widget.onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
               )
             : null,
         title: Container(
@@ -103,16 +130,16 @@ class ExpenseListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  expense.publicNotes.isNotEmpty
-                      ? expense.publicNotes
-                      : formatDate(expense.expenseDate, context),
+                  widget.expense.publicNotes.isNotEmpty
+                      ? widget.expense.publicNotes
+                      : formatDate(widget.expense.expenseDate, context),
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(
-                  formatNumber(expense.amountWithTax, context,
-                      currencyId: expense.expenseCurrencyId),
+                  formatNumber(widget.expense.amountWithTax, context,
+                      currencyId: widget.expense.expenseCurrencyId),
                   style: Theme.of(context).textTheme.title)
             ],
           ),
@@ -131,16 +158,37 @@ class ExpenseListItem extends StatelessWidget {
                         )
                       : Container(),
                 ),
-                Text(localization.lookup('expense_status_${expense.statusId}'),
+                Text(
+                    localization
+                        .lookup('expense_status_${widget.expense.statusId}'),
                     style: TextStyle(
-                      color: ExpenseStatusColors.colors[expense.statusId],
+                      color:
+                          ExpenseStatusColors.colors[widget.expense.statusId],
                     )),
               ],
             ),
-            EntityStateLabel(expense),
+            EntityStateLabel(widget.expense),
           ],
         ),
       ),
     );
+  }
+
+  Animation _multiselectCheckboxAnim;
+  AnimationController _multiselectCheckboxAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _multiselectCheckboxAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(_multiselectCheckboxAnimController);
+  }
+
+  @override
+  void dispose() {
+    _multiselectCheckboxAnimController.dispose();
+    super.dispose();
   }
 }

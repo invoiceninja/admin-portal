@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -44,6 +46,9 @@ class ExpenseList extends StatelessWidget {
         onClearPressed: viewModel.onClearEntityFilterPressed,
       ));
     }
+    final store = StoreProvider.of<AppState>(context);
+    final listUIState = store.state.uiState.expenseUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     widgets.add(Expanded(
       child: !viewModel.isLoaded
@@ -87,7 +92,19 @@ class ExpenseList extends StatelessWidget {
                                   context, [expense], action);
                             }
                           },
-                          onLongPress: () => showDialog(),
+                          onLongPress: () async {
+                            final longPressIsSelection = store.state.uiState
+                                    .longPressSelectionIsDefault ??
+                                true;
+                            if (longPressIsSelection && !isInMultiselect) {
+                              viewModel.onEntityAction(context, [expense],
+                                  EntityAction.toggleMultiselect);
+                            } else {
+                              showDialog();
+                            }
+                          },
+                          isChecked: isInMultiselect &&
+                              listUIState.isSelected(expense),
                         );
                       },
                     ),

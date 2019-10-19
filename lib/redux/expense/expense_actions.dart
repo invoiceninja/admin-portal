@@ -1,15 +1,16 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewExpenseList implements PersistUI {
   ViewExpenseList({@required this.context, this.force = false});
@@ -245,11 +246,22 @@ class FilterExpensesByEntity implements PersistUI {
 }
 
 void handleExpenseAction(
-    BuildContext context, ExpenseEntity expense, EntityAction action) {
+    BuildContext context, List<ExpenseEntity> expenses, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          expenses.length == 1,
+      'Cannot perform this action on more than one expense');
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final expense = expenses.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -286,5 +298,50 @@ void handleExpenseAction(
       store.dispatch(DeleteExpenseRequest(
           snackBarCompleter(context, localization.deletedExpense), expense.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.expenseListState.isInMultiselect()) {
+        store.dispatch(StartExpenseMultiselect(context: context));
+      }
+
+      if (expenses.isEmpty) {
+        break;
+      }
+
+      for (final expense in expenses) {
+        if (!store.state.expenseListState.isSelected(expense)) {
+          store.dispatch(
+              AddToExpenseMultiselect(context: context, entity: expense));
+        } else {
+          store.dispatch(
+              RemoveFromExpenseMultiselect(context: context, entity: expense));
+        }
+      }
+      break;
   }
+}
+
+class StartExpenseMultiselect {
+  StartExpenseMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToExpenseMultiselect {
+  AddToExpenseMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromExpenseMultiselect {
+  RemoveFromExpenseMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearExpenseMultiselect {
+  ClearExpenseMultiselect({@required this.context});
+
+  final BuildContext context;
 }
