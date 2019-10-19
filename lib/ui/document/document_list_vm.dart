@@ -81,7 +81,7 @@ class DocumentListVM {
       },
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
               EntityAction action) =>
-          handleDocumentAction(context, documents[0], action),
+          handleDocumentAction(context, documents, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }

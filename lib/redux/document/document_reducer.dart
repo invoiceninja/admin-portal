@@ -1,10 +1,10 @@
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:redux/redux.dart';
 
 EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -49,6 +49,11 @@ final documentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterDocumentsByCustom2>(
       _filterDocumentsByCustom2),
   TypedReducer<ListUIState, FilterDocumentsByEntity>(_filterDocumentsByClient),
+  TypedReducer<ListUIState, StartDocumentMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToDocumentMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterDocumentsByClient(
@@ -104,6 +109,28 @@ ListUIState _sortDocuments(
   return documentListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState documentListState, StartDocumentMultiselect action) {
+  return documentListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState documentListState, AddToDocumentMultiselect action) {
+  return documentListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState documentListState, RemoveFromDocumentMultiselect action) {
+  return documentListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState documentListState, ClearDocumentMultiselect action) {
+  return documentListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final documentsReducer = combineReducers<DocumentState>([
