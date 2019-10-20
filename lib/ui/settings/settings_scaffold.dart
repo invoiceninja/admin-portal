@@ -48,7 +48,7 @@ class SettingsScaffold extends StatelessWidget {
                     store.dispatch(ViewSettings(
                       context: context,
                       userCompany: state.userCompany,
-                      section: '',
+                      section: state.uiState.previousSubRoute,
                       force: true,
                     ));
                   },

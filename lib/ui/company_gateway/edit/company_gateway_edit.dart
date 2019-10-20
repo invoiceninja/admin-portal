@@ -86,7 +86,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     return SettingsScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : localization.editCompanyGateway,
+          : companyGateway.gateway.name,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
@@ -118,23 +118,24 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   FormCard(
                     children: <Widget>[
-                      EntityDropdown(
-                        key:
-                            ValueKey('__gateway_${companyGateway.gatewayId}__'),
-                        entityType: EntityType.gateway,
-                        entityMap: state.staticState.gatewayMap,
-                        entityList:
-                            memoizedGatewayList(state.staticState.gatewayMap),
-                        labelText: localization.provider,
-                        initialValue: state.staticState
-                            .gatewayMap[companyGateway.gatewayId]?.name,
-                        onSelected: (SelectableEntity gateway) =>
-                            viewModel.onChanged(
-                          companyGateway
-                              .rebuild((b) => b..gatewayId = gateway.id),
+                      if (companyGateway.isNew)
+                        EntityDropdown(
+                          key: ValueKey(
+                              '__gateway_${companyGateway.gatewayId}__'),
+                          entityType: EntityType.gateway,
+                          entityMap: state.staticState.gatewayMap,
+                          entityList:
+                              memoizedGatewayList(state.staticState.gatewayMap),
+                          labelText: localization.provider,
+                          initialValue: state.staticState
+                              .gatewayMap[companyGateway.gatewayId]?.name,
+                          onSelected: (SelectableEntity gateway) =>
+                              viewModel.onChanged(
+                            companyGateway
+                                .rebuild((b) => b..gatewayId = gateway.id),
+                          ),
+                          //onFieldSubmitted: (String value) => _node.nextFocus(),
                         ),
-                        //onFieldSubmitted: (String value) => _node.nextFocus(),
-                      ),
                       GatewayConfigSettings(
                         companyGateway: companyGateway,
                         viewModel: viewModel,
@@ -368,9 +369,9 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
             onChanged: (value) => widget.onChanged(value),
             items: options
                 .map((value) => DropdownMenuItem<String>(
-              child: Text(value.trim()),
-              value: value.trim(),
-            ))
+                      child: Text(value.trim()),
+                      value: value.trim(),
+                    ))
                 .toList(),
           ),
         ),
@@ -381,12 +382,12 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         labelText: toTitleCase(widget.field),
         onSelected: (value) => widget.onChanged(value),
       );
-    } else if (widget.value.runtimeType == bool) {
+    } else if (widget.defaultValue.runtimeType == bool) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         activeColor: Theme.of(context).accentColor,
         title: Text(toTitleCase(widget.field)),
-        value: widget.value,
+        value: widget.value ?? false,
         onChanged: (value) => widget.onChanged(value),
       );
     } else {

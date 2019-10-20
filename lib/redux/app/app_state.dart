@@ -293,7 +293,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return settingsUIState.isChanged;
     }
 
-    if (uiState.currentRoute.endsWith('/edit')) {
+    if (uiState.currentRoute.endsWith('edit')) {
       throw 'AppState.hasChanges is not defined for ${uiState.currentRoute}';
     }
 
@@ -329,8 +329,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'showCurrencyCode: ${uiState.settingsUIState.settings.showCurrencyCode}';
-    return 'gateway config: ${companyGatewayUIState.editing.config}';
-    //return 'URL: ${userCompany.token.token}';
+    //return 'gateway config: ${companyGatewayUIState.editing.config}';
+    return 'Routes: Current: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';
   }
