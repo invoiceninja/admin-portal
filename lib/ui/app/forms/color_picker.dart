@@ -42,7 +42,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
     final localization = AppLocalization.of(context);
 
     Color color = Colors.black;
-    if (widget.initialValue.isNotEmpty) {
+    if (widget.initialValue != null && widget.initialValue.isNotEmpty) {
       color = Color(int.parse(widget.initialValue.substring(1, 7), radix: 16) +
           0xFF000000);
     }

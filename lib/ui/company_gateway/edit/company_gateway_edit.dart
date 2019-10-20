@@ -355,17 +355,24 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
       final dynamic value =
           widget.value == widget.defaultValue ? '' : widget.value;
 
-      return DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          //isExpanded: true,
-          value: value,
-          onChanged: (value) => null,
-          items: options
-              .map((value) => DropdownMenuItem<String>(
-                    child: Text(value.trim()),
-                    value: value.trim(),
-                  ))
-              .toList(),
+      return InputDecorator(
+        decoration: InputDecoration(
+          labelText: toTitleCase(widget.field),
+        ),
+        isEmpty: value == null && value != '',
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            isExpanded: true,
+            isDense: true,
+            value: value,
+            onChanged: (value) => null,
+            items: options
+                .map((value) => DropdownMenuItem<String>(
+              child: Text(value.trim()),
+              value: value.trim(),
+            ))
+                .toList(),
+          ),
         ),
       );
     } else if (widget.field.toLowerCase().contains('color')) {
