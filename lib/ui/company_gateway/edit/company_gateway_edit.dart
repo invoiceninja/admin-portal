@@ -270,8 +270,8 @@ class GatewayConfigSettings extends StatelessWidget {
       children: gateway.parsedFields.keys
           .map((field) => GatewayConfigField(
                 field: field,
-                value: companyGateway.parsedConfig[field] ??
-                    gateway.parsedFields[field],
+                value: companyGateway.parsedConfig[field],
+                defaultValue: gateway.parsedFields[field],
                 onChanged: (dynamic value) {
                   viewModel
                       .onChanged(companyGateway.updateConfig(field, value));
@@ -287,11 +287,13 @@ class GatewayConfigField extends StatefulWidget {
     Key key,
     @required this.field,
     @required this.value,
+    @required this.defaultValue,
     @required this.onChanged,
   }) : super(key: key);
 
   final String field;
   final dynamic value;
+  final dynamic defaultValue;
   final Function(dynamic) onChanged;
 
   @override
@@ -318,7 +320,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
   void didChangeDependencies() {
     _textController.removeListener(_onChanged);
 
-    _textController.text = widget.value.toString();
+    _textController.text = (widget.value ?? widget.defaultValue).toString();
 
     _textController.addListener(_onChanged);
 
@@ -326,7 +328,6 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
   }
 
   void _onChanged() {
-    print('changed: ${_textController.text}');
     widget.onChanged(_textController.text.trim());
   }
 
@@ -342,12 +343,37 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.field.toLowerCase().contains('color')) {
-       return FormColorPicker(
-         initialValue: widget.value,
-         labelText: toTitleCase(widget.field),
-         onSelected: (value) => widget.onChanged(value),
-       );
+    if ('${widget.defaultValue}'.startsWith('[') &&
+        '${widget.defaultValue}'.endsWith(']')) {
+      final options = [
+        '',
+        ...'${widget.defaultValue}'
+            .replaceFirst('[', '')
+            .replaceFirst(']', '')
+            .split(',')
+      ];
+      final dynamic value =
+          widget.value == widget.defaultValue ? '' : widget.value;
+
+      return DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          //isExpanded: true,
+          value: value,
+          onChanged: (value) => null,
+          items: options
+              .map((value) => DropdownMenuItem<String>(
+                    child: Text(value.trim()),
+                    value: value.trim(),
+                  ))
+              .toList(),
+        ),
+      );
+    } else if (widget.field.toLowerCase().contains('color')) {
+      return FormColorPicker(
+        initialValue: widget.value,
+        labelText: toTitleCase(widget.field),
+        onSelected: (value) => widget.onChanged(value),
+      );
     } else if (widget.value.runtimeType == bool) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
