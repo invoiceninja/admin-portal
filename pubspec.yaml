@@ -35,6 +35,7 @@ dependencies:
   sentry: ^2.2.0
   image_picker: ^0.6.1+4
   native_pdf_renderer: any
+  flutter_colorpicker: any
   #quick_actions: ^0.2.1
 
 dev_dependencies:

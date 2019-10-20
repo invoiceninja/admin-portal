@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -341,7 +342,13 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value.runtimeType == bool) {
+    if (widget.field.toLowerCase().contains('color')) {
+       return FormColorPicker(
+         initialValue: widget.value,
+         labelText: toTitleCase(widget.field),
+         onSelected: (value) => widget.onChanged(value),
+       );
+    } else if (widget.value.runtimeType == bool) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         activeColor: Theme.of(context).accentColor,
