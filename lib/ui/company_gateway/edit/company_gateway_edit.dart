@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -422,31 +423,80 @@ class _LimitEditorState extends State<LimitEditor> {
   bool _enableMin = false;
   bool _enableMax = false;
 
+  TextEditingController _minController;
+  TextEditingController _maxController;
+
+  @override
+  void initState() {
+    super.initState();
+    _minController = TextEditingController();
+    _maxController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _minController.dispose();
+    _maxController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _minController.removeListener(_onChanged);
+    _maxController.removeListener(_onChanged);
+
+    _minController.text = formatNumber(
+        (widget.companyGateway.minLimit ?? 0).toDouble(), context,
+        formatNumberType: FormatNumberType.input);
+    _maxController.text = formatNumber(
+        (widget.companyGateway.maxLimit ?? 0).toDouble(), context,
+        formatNumberType: FormatNumberType.input);
+
+    _minController.addListener(_onChanged);
+    _maxController.addListener(_onChanged);
+
+    super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    //widget.onChanged(_textController.text.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
     return FormCard(
       children: <Widget>[
+        /*
         RangeSlider(
           values: RangeValues((widget.companyGateway.minLimit ?? 0).toDouble(),
               (widget.companyGateway.maxLimit ?? 100000).toDouble()),
           min: 0,
           max: 100000,
           onChanged: (values) {
+            _minController.text = formatNumber(values.start, context,
+                formatNumberType: FormatNumberType.input);
+            _maxController.text = formatNumber(values.end, context,
+                formatNumberType: FormatNumberType.input);
             widget.viewModel.onChanged(widget.companyGateway.rebuild((b) => b
               ..minLimit = values.start.toInt()
               ..maxLimit = values.end.toInt()));
           },
         ),
+         */
         Row(
           children: <Widget>[
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(localization.min),
+                  Text(localization.minLimit),
+                  SizedBox(height: 10),
                   TextFormField(
                     enabled: _enableMin,
+                    controller: _minController,
+                    keyboardType: TextInputType.numberWithOptions(),
                   ),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
@@ -456,19 +506,26 @@ class _LimitEditorState extends State<LimitEditor> {
                     onChanged: (value) {
                       setState(() {
                         _enableMin = value;
+                        if (!value) {
+                          _minController.text = '';
+                        }
                       });
                     },
                   )
                 ],
               ),
             ),
-            SizedBox(width: 20),
+            SizedBox(width: 40),
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(localization.min),
+                  Text(localization.maxLimit),
+                  SizedBox(height: 10),
                   TextFormField(
                     enabled: _enableMax,
+                    controller: _maxController,
+                    keyboardType: TextInputType.numberWithOptions(),
                   ),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
@@ -478,6 +535,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     onChanged: (value) {
                       setState(() {
                         _enableMax = value;
+                        if (!value) {
+                          _maxController.text = '';
+                        }
                       });
                     },
                   )

@@ -16,6 +16,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       'enable_min': 'Enable Min',
       'enable_max': 'Enable Max',
+      'min_limit': 'Min Limit',
+      'max_limit': 'Max Limit',
       'min': 'Min',
       'max': 'Max',
       'accepted_card_logos': 'Accepted Card Logos',
@@ -14973,6 +14975,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get min => _localizedValues[localeCode]['min'];
 
   String get max => _localizedValues[localeCode]['max'];
+
+  String get minLimit => _localizedValues[localeCode]['min_limit'];
+
+  String get maxLimit => _localizedValues[localeCode]['max_limit'];
 
   String get enableMin => _localizedValues[localeCode]['enable_min'];
 
