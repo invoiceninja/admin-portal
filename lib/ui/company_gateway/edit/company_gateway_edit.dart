@@ -365,7 +365,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
             isExpanded: true,
             isDense: true,
             value: value,
-            onChanged: (value) => null,
+            onChanged: (value) => widget.onChanged(value),
             items: options
                 .map((value) => DropdownMenuItem<String>(
               child: Text(value.trim()),
