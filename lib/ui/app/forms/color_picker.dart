@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_colorpicker/hsv_picker.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FormColorPicker extends StatefulWidget {
@@ -37,6 +39,8 @@ class _FormColorPickerState extends State<FormColorPicker> {
   }
 
   void _showPicker() {
+    final localization = AppLocalization.of(context);
+
     Color color = Colors.black;
     if (widget.initialValue.isNotEmpty) {
       color = Color(int.parse(widget.initialValue.substring(1, 7), radix: 16) +
@@ -47,20 +51,21 @@ class _FormColorPickerState extends State<FormColorPicker> {
       context: context,
       child: AlertDialog(
         content: SingleChildScrollView(
-          child: ColorPicker(
+          child: BlockPicker(
             pickerColor: color,
             onColorChanged: (color) {
               final hex = color.value.toRadixString(16);
               _color = '#' + hex.substring(2, hex.length);
             },
-            enableLabel: true,
-            enableAlpha: false,
-            pickerAreaHeightPercent: 0.8,
           ),
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text(AppLocalization.of(context).done),
+            child: Text(localization.cancel.toUpperCase()),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          FlatButton(
+            child: Text(localization.done.toUpperCase()),
             onPressed: () {
               widget.onSelected(_color);
               _textController.text = _color;
