@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -98,6 +100,9 @@ abstract class CompanyGatewayEntity extends Object
 
   String get config;
 
+  Map<String, dynamic> get parsedConfig =>
+      config.isEmpty ? <String, dynamic>{} : jsonDecode(config);
+
   @override
   String get listDisplayName {
     return gateway.name;
@@ -110,6 +115,17 @@ abstract class CompanyGatewayEntity extends Object
 
   CompanyGatewayEntity removeCard(int cardType) =>
       rebuild((b) => b..acceptedCreditCards = acceptedCreditCards ^ cardType);
+
+  CompanyGatewayEntity updateConfig(String field, dynamic value) {
+    final updatedConfig = parsedConfig;
+    if (value.runtimeType == String && value == '') {
+      updatedConfig.remove(field);
+    } else {
+      updatedConfig[field] = value;
+    }
+
+    return rebuild((b) => b..config = jsonEncode(updatedConfig));
+  }
 
   int compareTo(CompanyGatewayEntity companyGateway, String sortField,
       bool sortAscending) {

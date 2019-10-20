@@ -265,15 +265,13 @@ class GatewayConfigSettings extends StatelessWidget {
       return SizedBox();
     }
 
-    final fields = companyGateway.config.isNotEmpty
-        ? <String, dynamic>{}
-        : gateway.parsedFields;
-
     return Column(
-      children: fields.keys
+      children: gateway.parsedFields.keys
           .map((field) => GatewayConfigField(
                 field: field,
                 value: gateway.parsedFields[field],
+                onChanged: (value) => viewModel
+                    .onChanged(companyGateway.updateConfig(field, value)),
               ))
           .toList(),
     );
@@ -281,10 +279,15 @@ class GatewayConfigSettings extends StatelessWidget {
 }
 
 class GatewayConfigField extends StatefulWidget {
-  const GatewayConfigField({this.field, this.value});
+  const GatewayConfigField({
+    @required this.field,
+    @required this.value,
+    @required this.onChanged,
+  });
 
   final String field;
   final dynamic value;
+  final Function(String) onChanged;
 
   @override
   _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
@@ -319,6 +322,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
   void _onChanged() {
     print('changed: ${_textController.text}');
+    widget.onChanged(_textController.text.trim());
   }
 
   bool _obscureText(String field) {
