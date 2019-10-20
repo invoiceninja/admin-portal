@@ -269,9 +269,12 @@ class GatewayConfigSettings extends StatelessWidget {
       children: gateway.parsedFields.keys
           .map((field) => GatewayConfigField(
                 field: field,
-                value: gateway.parsedFields[field],
-                onChanged: (value) => viewModel
-                    .onChanged(companyGateway.updateConfig(field, value)),
+                value: companyGateway.parsedConfig[field] ??
+                    gateway.parsedFields[field],
+                onChanged: (dynamic value) {
+                  viewModel
+                      .onChanged(companyGateway.updateConfig(field, value));
+                },
               ))
           .toList(),
     );
@@ -280,14 +283,15 @@ class GatewayConfigSettings extends StatelessWidget {
 
 class GatewayConfigField extends StatefulWidget {
   const GatewayConfigField({
+    Key key,
     @required this.field,
     @required this.value,
     @required this.onChanged,
-  });
+  }) : super(key: key);
 
   final String field;
   final dynamic value;
-  final Function(String) onChanged;
+  final Function(dynamic) onChanged;
 
   @override
   _GatewayConfigFieldState createState() => _GatewayConfigFieldState();
@@ -340,8 +344,10 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
     if (widget.value.runtimeType == bool) {
       return CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
+        activeColor: Theme.of(context).accentColor,
         title: Text(toTitleCase(widget.field)),
         value: widget.value,
+        onChanged: (value) => widget.onChanged(value),
       );
     } else {
       return TextFormField(
