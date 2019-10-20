@@ -21,11 +21,6 @@ class _FormColorPickerState extends State<FormColorPicker> {
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        _showPicker();
-      }
-    });
   }
 
   @override
@@ -82,27 +77,26 @@ class _FormColorPickerState extends State<FormColorPicker> {
     return Stack(
       alignment: Alignment.centerRight,
       children: <Widget>[
-        InkWell(
-          key: ValueKey(widget.labelText),
-          onTap: () => _showPicker(),
-          child: IgnorePointer(
-            child: TextFormField(
-              //focusNode: _focusNode,
-              readOnly: true,
-              controller: _textController,
-              decoration: InputDecoration(
-                labelText: widget.labelText,
-              ),
-            ),
+        TextFormField(
+          focusNode: _focusNode,
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: widget.labelText,
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            _textController.text = '';
-            widget.onSelected(null);
-          },
-        ),
+        if (_textController.text.isEmpty)
+          IconButton(
+            icon: Icon(Icons.color_lens),
+            onPressed: _showPicker,
+          ),
+        if (_textController.text.isNotEmpty)
+          IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _textController.text = '';
+              widget.onSelected(null);
+            },
+          ),
       ],
     );
   }
