@@ -161,6 +161,72 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
+    if (object.minLimit != null) {
+      result
+        ..add('min_limit')
+        ..add(serializers.serialize(object.minLimit,
+            specifiedType: const FullType(int)));
+    }
+    if (object.maxLimit != null) {
+      result
+        ..add('max_limit')
+        ..add(serializers.serialize(object.maxLimit,
+            specifiedType: const FullType(int)));
+    }
+    if (object.feeAmount != null) {
+      result
+        ..add('fee_amount')
+        ..add(serializers.serialize(object.feeAmount,
+            specifiedType: const FullType(double)));
+    }
+    if (object.feePercent != null) {
+      result
+        ..add('fee_percent_HIDDEN')
+        ..add(serializers.serialize(object.feePercent,
+            specifiedType: const FullType(double)));
+    }
+    if (object.feeCap != null) {
+      result
+        ..add('fee_cap')
+        ..add(serializers.serialize(object.feeCap,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxRate1 != null) {
+      result
+        ..add('fee_tax_rate1')
+        ..add(serializers.serialize(object.taxRate1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName1 != null) {
+      result
+        ..add('fee_tax_name1')
+        ..add(serializers.serialize(object.taxName1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate2 != null) {
+      result
+        ..add('fee_tax_rate2')
+        ..add(serializers.serialize(object.taxRate2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName2 != null) {
+      result
+        ..add('fee_tax_name2')
+        ..add(serializers.serialize(object.taxName2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate3 != null) {
+      result
+        ..add('fee_tax_rate3')
+        ..add(serializers.serialize(object.taxRate3,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName3 != null) {
+      result
+        ..add('fee_tax_name3')
+        ..add(serializers.serialize(object.taxName3,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -248,6 +314,50 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'min_limit':
+          result.minLimit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'max_limit':
+          result.maxLimit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'fee_amount':
+          result.feeAmount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_percent_HIDDEN':
+          result.feePercent = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_cap':
+          result.feeCap = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_tax_rate1':
+          result.taxRate1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_tax_name1':
+          result.taxName1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'fee_tax_rate2':
+          result.taxRate2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_tax_name2':
+          result.taxName2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'fee_tax_rate3':
+          result.taxRate3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'fee_tax_name3':
+          result.taxName3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'config':
@@ -499,6 +609,28 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String customValue2;
   @override
+  final int minLimit;
+  @override
+  final int maxLimit;
+  @override
+  final double feeAmount;
+  @override
+  final double feePercent;
+  @override
+  final double feeCap;
+  @override
+  final double taxRate1;
+  @override
+  final String taxName1;
+  @override
+  final double taxRate2;
+  @override
+  final String taxName2;
+  @override
+  final double taxRate3;
+  @override
+  final String taxName3;
+  @override
   final String config;
   @override
   final bool isChanged;
@@ -528,6 +660,17 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.updateDetails,
       this.customValue1,
       this.customValue2,
+      this.minLimit,
+      this.maxLimit,
+      this.feeAmount,
+      this.feePercent,
+      this.feeCap,
+      this.taxRate1,
+      this.taxName1,
+      this.taxRate2,
+      this.taxName2,
+      this.taxRate3,
+      this.taxName3,
       this.config,
       this.isChanged,
       this.createdAt,
@@ -582,6 +725,17 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         updateDetails == other.updateDetails &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        minLimit == other.minLimit &&
+        maxLimit == other.maxLimit &&
+        feeAmount == other.feeAmount &&
+        feePercent == other.feePercent &&
+        feeCap == other.feeCap &&
+        taxRate1 == other.taxRate1 &&
+        taxName1 == other.taxName1 &&
+        taxRate2 == other.taxRate2 &&
+        taxName2 == other.taxName2 &&
+        taxRate3 == other.taxRate3 &&
+        taxName3 == other.taxName3 &&
         config == other.config &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -610,20 +764,20 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    gateway
-                                                                        .hashCode),
-                                                                gatewayId
-                                                                    .hashCode),
-                                                            acceptedCreditCards
-                                                                .hashCode),
-                                                        showBillingAddress
-                                                            .hashCode),
-                                                    showShippingAddress
-                                                        .hashCode),
-                                                updateDetails.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), customValue1.hashCode), customValue2.hashCode),
+                                                                                minLimit.hashCode),
+                                                                            maxLimit.hashCode),
+                                                                        feeAmount.hashCode),
+                                                                    feePercent.hashCode),
+                                                                feeCap.hashCode),
+                                                            taxRate1.hashCode),
+                                                        taxName1.hashCode),
+                                                    taxRate2.hashCode),
+                                                taxName2.hashCode),
+                                            taxRate3.hashCode),
+                                        taxName3.hashCode),
                                     config.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
@@ -645,6 +799,17 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('updateDetails', updateDetails)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('minLimit', minLimit)
+          ..add('maxLimit', maxLimit)
+          ..add('feeAmount', feeAmount)
+          ..add('feePercent', feePercent)
+          ..add('feeCap', feeCap)
+          ..add('taxRate1', taxRate1)
+          ..add('taxName1', taxName1)
+          ..add('taxRate2', taxRate2)
+          ..add('taxName2', taxName2)
+          ..add('taxRate3', taxRate3)
+          ..add('taxName3', taxName3)
           ..add('config', config)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -698,6 +863,50 @@ class CompanyGatewayEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  int _minLimit;
+  int get minLimit => _$this._minLimit;
+  set minLimit(int minLimit) => _$this._minLimit = minLimit;
+
+  int _maxLimit;
+  int get maxLimit => _$this._maxLimit;
+  set maxLimit(int maxLimit) => _$this._maxLimit = maxLimit;
+
+  double _feeAmount;
+  double get feeAmount => _$this._feeAmount;
+  set feeAmount(double feeAmount) => _$this._feeAmount = feeAmount;
+
+  double _feePercent;
+  double get feePercent => _$this._feePercent;
+  set feePercent(double feePercent) => _$this._feePercent = feePercent;
+
+  double _feeCap;
+  double get feeCap => _$this._feeCap;
+  set feeCap(double feeCap) => _$this._feeCap = feeCap;
+
+  double _taxRate1;
+  double get taxRate1 => _$this._taxRate1;
+  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+
+  String _taxName1;
+  String get taxName1 => _$this._taxName1;
+  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+
+  double _taxRate2;
+  double get taxRate2 => _$this._taxRate2;
+  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+
+  String _taxName2;
+  String get taxName2 => _$this._taxName2;
+  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+
   String _config;
   String get config => _$this._config;
   set config(String config) => _$this._config = config;
@@ -742,6 +951,17 @@ class CompanyGatewayEntityBuilder
       _updateDetails = _$v.updateDetails;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _minLimit = _$v.minLimit;
+      _maxLimit = _$v.maxLimit;
+      _feeAmount = _$v.feeAmount;
+      _feePercent = _$v.feePercent;
+      _feeCap = _$v.feeCap;
+      _taxRate1 = _$v.taxRate1;
+      _taxName1 = _$v.taxName1;
+      _taxRate2 = _$v.taxRate2;
+      _taxName2 = _$v.taxName2;
+      _taxRate3 = _$v.taxRate3;
+      _taxName3 = _$v.taxName3;
       _config = _$v.config;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -782,6 +1002,17 @@ class CompanyGatewayEntityBuilder
               updateDetails: updateDetails,
               customValue1: customValue1,
               customValue2: customValue2,
+              minLimit: minLimit,
+              maxLimit: maxLimit,
+              feeAmount: feeAmount,
+              feePercent: feePercent,
+              feeCap: feeCap,
+              taxRate1: taxRate1,
+              taxName1: taxName1,
+              taxRate2: taxRate2,
+              taxName2: taxName2,
+              taxRate3: taxRate3,
+              taxName3: taxName3,
               config: config,
               isChanged: isChanged,
               createdAt: createdAt,

@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'enable_min': 'Enable Min',
+      'enable_max': 'Enable Max',
+      'min': 'Min',
+      'max': 'Max',
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
@@ -14961,12 +14965,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get updateAddressHelp =>
       _localizedValues[localeCode]['update_address_help'];
 
-  String get credentials =>
-      _localizedValues[localeCode]['credentials'];
+  String get credentials => _localizedValues[localeCode]['credentials'];
 
   String get acceptedCardLogos =>
       _localizedValues[localeCode]['accepted_card_logos'];
 
+  String get min => _localizedValues[localeCode]['min'];
+
+  String get max => _localizedValues[localeCode]['max'];
+
+  String get enableMin => _localizedValues[localeCode]['enable_min'];
+
+  String get enableMax => _localizedValues[localeCode]['enable_max'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

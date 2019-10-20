@@ -215,7 +215,12 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 ],
               ),
               ListView(
-                children: <Widget>[],
+                children: <Widget>[
+                  LimitEditor(
+                    viewModel: viewModel,
+                    companyGateway: companyGateway,
+                  ),
+                ],
               ),
               ListView(
                 children: <Widget>[],
@@ -400,5 +405,88 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         obscureText: _obscureText(widget.field),
       );
     }
+  }
+}
+
+class LimitEditor extends StatefulWidget {
+  const LimitEditor({this.companyGateway, this.viewModel});
+
+  final CompanyGatewayEntity companyGateway;
+  final CompanyGatewayEditVM viewModel;
+
+  @override
+  _LimitEditorState createState() => _LimitEditorState();
+}
+
+class _LimitEditorState extends State<LimitEditor> {
+  bool _enableMin = false;
+  bool _enableMax = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return FormCard(
+      children: <Widget>[
+        RangeSlider(
+          values: RangeValues((widget.companyGateway.minLimit ?? 0).toDouble(),
+              (widget.companyGateway.maxLimit ?? 100000).toDouble()),
+          min: 0,
+          max: 100000,
+          onChanged: (values) {
+            widget.viewModel.onChanged(widget.companyGateway.rebuild((b) => b
+              ..minLimit = values.start.toInt()
+              ..maxLimit = values.end.toInt()));
+          },
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Text(localization.min),
+                  TextFormField(
+                    enabled: _enableMin,
+                  ),
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.enableMin),
+                    value: _enableMin,
+                    onChanged: (value) {
+                      setState(() {
+                        _enableMin = value;
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+            SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                children: <Widget>[
+                  Text(localization.min),
+                  TextFormField(
+                    enabled: _enableMax,
+                  ),
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.enableMax),
+                    value: _enableMax,
+                    onChanged: (value) {
+                      setState(() {
+                        _enableMax = value;
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }

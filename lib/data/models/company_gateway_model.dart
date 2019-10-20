@@ -98,6 +98,50 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  @BuiltValueField(wireName: 'min_limit')
+  int get minLimit;
+
+  @nullable
+  @BuiltValueField(wireName: 'max_limit')
+  int get maxLimit;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_amount')
+  double get feeAmount;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_percent_HIDDEN')
+  double get feePercent;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_cap')
+  double get feeCap;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate1')
+  double get taxRate1;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name1')
+  String get taxName1;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate2')
+  double get taxRate2;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name2')
+  String get taxName2;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate3')
+  double get taxRate3;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name3')
+  String get taxName3;
+
   String get config;
 
   Map<String, dynamic> get parsedConfig =>
