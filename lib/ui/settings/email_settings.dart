@@ -1,9 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
@@ -72,6 +73,9 @@ class _EmailSettingsState extends State<EmailSettings>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
+    final signature = widget.viewModel.settings.emailFooter;
+    _zefyrController.compose(Delta()..insert(signature));
+
     final settings = widget.viewModel.settings;
     //_replyToEmailController.text = ;
 
@@ -91,6 +95,15 @@ class _EmailSettingsState extends State<EmailSettings>
     */
   }
 
+  void _onSavePressed(BuildContext context) {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    viewModel.onSettingsChanged(settings.rebuild((b) => b
+        ..emailFooter = jsonEncode(_zefyrController.document)
+    ));
+    viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -100,7 +113,7 @@ class _EmailSettingsState extends State<EmailSettings>
 
     return SettingsScaffold(
       title: localization.emailSettings,
-      onSavePressed: null,
+      onSavePressed: _onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _tabController,
