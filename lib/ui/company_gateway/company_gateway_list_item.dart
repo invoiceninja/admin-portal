@@ -35,7 +35,6 @@ class CompanyGatewayListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
-    final companyGatewayUIState = uiState.companyGatewayUIState;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? companyGateway.matchesFilterValue(filter)

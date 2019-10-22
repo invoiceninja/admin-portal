@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_colorpicker/hsv_picker.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FormColorPicker extends StatefulWidget {
@@ -49,31 +47,33 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
     showDialog<AlertDialog>(
       context: context,
-      child: AlertDialog(
-        content: SingleChildScrollView(
-          child: BlockPicker(
-            pickerColor: color,
-            onColorChanged: (color) {
-              final hex = color.value.toRadixString(16);
-              _color = '#' + hex.substring(2, hex.length);
-            },
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: BlockPicker(
+              pickerColor: color,
+              onColorChanged: (color) {
+                final hex = color.value.toRadixString(16);
+                _color = '#' + hex.substring(2, hex.length);
+              },
+            ),
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          FlatButton(
-            child: Text(localization.done.toUpperCase()),
-            onPressed: () {
-              widget.onSelected(_color);
-              _textController.text = _color;
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(localization.cancel.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            FlatButton(
+              child: Text(localization.done.toUpperCase()),
+              onPressed: () {
+                widget.onSelected(_color);
+                _textController.text = _color;
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
