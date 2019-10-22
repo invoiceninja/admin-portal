@@ -244,6 +244,8 @@ class GatewayConfigSettings extends StatelessWidget {
           kGatewayTypeCreditCard: localization.creditCard,
           kGatewayTypeBankTransfer: localization.bankTransfer,
         };
+      default:
+        return null;
     }
   }
 

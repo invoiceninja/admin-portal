@@ -73,10 +73,11 @@ class _EmailSettingsState extends State<EmailSettings>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final signature = widget.viewModel.settings.emailFooter;
+    final settings = widget.viewModel.settings;
+    final signature = settings.emailFooter;
+    // return NotusDocument.fromJson(jsonDecode(contents));
     _zefyrController.compose(Delta()..insert(signature));
 
-    final settings = widget.viewModel.settings;
     //_replyToEmailController.text = ;
 
     _controllers

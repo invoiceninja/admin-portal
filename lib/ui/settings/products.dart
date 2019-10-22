@@ -89,12 +89,10 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.updateProducts),
-                value: false,
+                value: settings.updateProducts ?? true,
                 subtitle: Text(localization.updateProductsHelp),
-                /*
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..fillProducts = value)),
-                 */
+                    settings.rebuild((b) => b..updateProducts = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,

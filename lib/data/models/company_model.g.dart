@@ -913,6 +913,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.convertProductExchangeRate,
             specifiedType: const FullType(bool)));
     }
+    if (object.updateProducts != null) {
+      result
+        ..add('auto_update_products')
+        ..add(serializers.serialize(object.updateProducts,
+            specifiedType: const FullType(bool)));
+    }
     if (object.enableCustomInvoiceTaxes1 != null) {
       result
         ..add('custom_invoice_taxes1')
@@ -1219,6 +1225,10 @@ class _$SettingsEntitySerializer
           break;
         case 'convert_products':
           result.convertProductExchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'auto_update_products':
+          result.updateProducts = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_invoice_taxes1':
@@ -2574,6 +2584,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool convertProductExchangeRate;
   @override
+  final bool updateProducts;
+  @override
   final bool enableCustomInvoiceTaxes1;
   @override
   final bool enableCustomInvoiceTaxes2;
@@ -2662,6 +2674,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultTaskRate,
       this.enableInclusiveTaxes,
       this.convertProductExchangeRate,
+      this.updateProducts,
       this.enableCustomInvoiceTaxes1,
       this.enableCustomInvoiceTaxes2,
       this.customPaymentTerms,
@@ -2738,6 +2751,7 @@ class _$SettingsEntity extends SettingsEntity {
         defaultTaskRate == other.defaultTaskRate &&
         enableInclusiveTaxes == other.enableInclusiveTaxes &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
+        updateProducts == other.updateProducts &&
         enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
         enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         customPaymentTerms == other.customPaymentTerms &&
@@ -2782,7 +2796,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), updateProducts.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2847,6 +2861,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultTaskRate', defaultTaskRate)
           ..add('enableInclusiveTaxes', enableInclusiveTaxes)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
+          ..add('updateProducts', updateProducts)
           ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
           ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('customPaymentTerms', customPaymentTerms)
@@ -3060,6 +3075,11 @@ class SettingsEntityBuilder
   set convertProductExchangeRate(bool convertProductExchangeRate) =>
       _$this._convertProductExchangeRate = convertProductExchangeRate;
 
+  bool _updateProducts;
+  bool get updateProducts => _$this._updateProducts;
+  set updateProducts(bool updateProducts) =>
+      _$this._updateProducts = updateProducts;
+
   bool _enableCustomInvoiceTaxes1;
   bool get enableCustomInvoiceTaxes1 => _$this._enableCustomInvoiceTaxes1;
   set enableCustomInvoiceTaxes1(bool enableCustomInvoiceTaxes1) =>
@@ -3213,6 +3233,7 @@ class SettingsEntityBuilder
       _defaultTaskRate = _$v.defaultTaskRate;
       _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
+      _updateProducts = _$v.updateProducts;
       _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
@@ -3299,6 +3320,7 @@ class SettingsEntityBuilder
               defaultTaskRate: defaultTaskRate,
               enableInclusiveTaxes: enableInclusiveTaxes,
               convertProductExchangeRate: convertProductExchangeRate,
+              updateProducts: updateProducts,
               enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               customPaymentTerms: _customPaymentTerms?.build(),

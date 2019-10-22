@@ -670,6 +670,10 @@ abstract class SettingsEntity
   bool get convertProductExchangeRate;
 
   @nullable
+  @BuiltValueField(wireName: 'auto_update_products')
+  bool get updateProducts;
+
+  @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes1')
   bool get enableCustomInvoiceTaxes1;
 
