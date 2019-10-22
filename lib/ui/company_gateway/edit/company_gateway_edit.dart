@@ -33,51 +33,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   final FocusScopeNode _node = FocusScopeNode();
   TabController _controller;
-  bool autoValidate = false;
-
-  // STARTER: controllers - do not remove comment
-
-  List<TextEditingController> _controllers = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TabController(vsync: this, length: 3);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _controllers.forEach((dynamic controller) {
-      controller.dispose();
-    });
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _controllers = [
-      // STARTER: array - do not remove comment
-    ];
-
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
-
-    //final companyGateway = widget.viewModel.companyGateway;
-    // STARTER: read value - do not remove comment
-
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
-  void _onChanged() {
-    final companyGateway = widget.viewModel.companyGateway.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        );
-    if (companyGateway != widget.viewModel.companyGateway) {
-      widget.viewModel.onChanged(companyGateway);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -274,17 +229,23 @@ class GatewayConfigSettings extends StatelessWidget {
     }
 
     return Column(
-      children: gateway.parsedFields.keys
-          .map((field) => GatewayConfigField(
-                field: field,
-                value: companyGateway.parsedConfig[field],
-                defaultValue: gateway.parsedFields[field],
-                onChanged: (dynamic value) {
-                  viewModel
-                      .onChanged(companyGateway.updateConfig(field, value));
-                },
-              ))
-          .toList(),
+      children: [
+        EntityDropdown(
+          entityType: EntityType.gatewayType,
+          //entityMap: ,
+        ),
+        ...gateway.parsedFields.keys
+            .map((field) => GatewayConfigField(
+                  field: field,
+                  value: companyGateway.parsedConfig[field],
+                  defaultValue: gateway.parsedFields[field],
+                  onChanged: (dynamic value) {
+                    viewModel
+                        .onChanged(companyGateway.updateConfig(field, value));
+                  },
+                ))
+            .toList()
+      ],
     );
   }
 }

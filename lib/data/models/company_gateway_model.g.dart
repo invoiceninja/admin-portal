@@ -12,6 +12,8 @@ Serializer<CompanyGatewayItemResponse> _$companyGatewayItemResponseSerializer =
     new _$CompanyGatewayItemResponseSerializer();
 Serializer<CompanyGatewayEntity> _$companyGatewayEntitySerializer =
     new _$CompanyGatewayEntitySerializer();
+Serializer<GatewayTypeEntity> _$gatewayTypeEntitySerializer =
+    new _$GatewayTypeEntitySerializer();
 
 class _$CompanyGatewayListResponseSerializer
     implements StructuredSerializer<CompanyGatewayListResponse> {
@@ -221,10 +223,10 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.taxName2,
             specifiedType: const FullType(String)));
     }
-    if (object.taxRate3 != null) {
+    if (object.gatewayType3 != null) {
       result
         ..add('fee_tax_rate3')
-        ..add(serializers.serialize(object.taxRate3,
+        ..add(serializers.serialize(object.gatewayType3,
             specifiedType: const FullType(double)));
     }
     if (object.taxName3 != null) {
@@ -363,7 +365,7 @@ class _$CompanyGatewayEntitySerializer
               specifiedType: const FullType(String)) as String;
           break;
         case 'fee_tax_rate3':
-          result.taxRate3 = serializers.deserialize(value,
+          result.gatewayType3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'fee_tax_name3':
@@ -397,6 +399,56 @@ class _$CompanyGatewayEntitySerializer
         case 'is_owner':
           result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GatewayTypeEntitySerializer
+    implements StructuredSerializer<GatewayTypeEntity> {
+  @override
+  final Iterable<Type> types = const [GatewayTypeEntity, _$GatewayTypeEntity];
+  @override
+  final String wireName = 'GatewayTypeEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GatewayTypeEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+    ];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GatewayTypeEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GatewayTypeEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -639,7 +691,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String taxName2;
   @override
-  final double taxRate3;
+  final double gatewayType3;
   @override
   final String taxName3;
   @override
@@ -682,7 +734,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.taxName1,
       this.taxRate2,
       this.taxName2,
-      this.taxRate3,
+      this.gatewayType3,
       this.taxName3,
       this.config,
       this.isChanged,
@@ -748,7 +800,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         taxName1 == other.taxName1 &&
         taxRate2 == other.taxRate2 &&
         taxName2 == other.taxName2 &&
-        taxRate3 == other.taxRate3 &&
+        gatewayType3 == other.gatewayType3 &&
         taxName3 == other.taxName3 &&
         config == other.config &&
         isChanged == other.isChanged &&
@@ -790,7 +842,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                         taxName1.hashCode),
                                                     taxRate2.hashCode),
                                                 taxName2.hashCode),
-                                            taxRate3.hashCode),
+                                            gatewayType3.hashCode),
                                         taxName3.hashCode),
                                     config.hashCode),
                                 isChanged.hashCode),
@@ -823,7 +875,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('taxName1', taxName1)
           ..add('taxRate2', taxRate2)
           ..add('taxName2', taxName2)
-          ..add('taxRate3', taxRate3)
+          ..add('gatewayType3', gatewayType3)
           ..add('taxName3', taxName3)
           ..add('config', config)
           ..add('isChanged', isChanged)
@@ -918,9 +970,9 @@ class CompanyGatewayEntityBuilder
   String get taxName2 => _$this._taxName2;
   set taxName2(String taxName2) => _$this._taxName2 = taxName2;
 
-  double _taxRate3;
-  double get taxRate3 => _$this._taxRate3;
-  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+  double _gatewayType3;
+  double get gatewayType3 => _$this._gatewayType3;
+  set gatewayType3(double gatewayType3) => _$this._gatewayType3 = gatewayType3;
 
   String _taxName3;
   String get taxName3 => _$this._taxName3;
@@ -980,7 +1032,7 @@ class CompanyGatewayEntityBuilder
       _taxName1 = _$v.taxName1;
       _taxRate2 = _$v.taxRate2;
       _taxName2 = _$v.taxName2;
-      _taxRate3 = _$v.taxRate3;
+      _gatewayType3 = _$v.gatewayType3;
       _taxName3 = _$v.taxName3;
       _config = _$v.config;
       _isChanged = _$v.isChanged;
@@ -1032,7 +1084,7 @@ class CompanyGatewayEntityBuilder
               taxName1: taxName1,
               taxRate2: taxRate2,
               taxName2: taxName2,
-              taxRate3: taxRate3,
+              gatewayType3: gatewayType3,
               taxName3: taxName3,
               config: config,
               isChanged: isChanged,
@@ -1053,6 +1105,94 @@ class CompanyGatewayEntityBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GatewayTypeEntity extends GatewayTypeEntity {
+  @override
+  final String name;
+  @override
+  final String id;
+
+  factory _$GatewayTypeEntity(
+          [void Function(GatewayTypeEntityBuilder) updates]) =>
+      (new GatewayTypeEntityBuilder()..update(updates)).build();
+
+  _$GatewayTypeEntity._({this.name, this.id}) : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('GatewayTypeEntity', 'name');
+    }
+  }
+
+  @override
+  GatewayTypeEntity rebuild(void Function(GatewayTypeEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GatewayTypeEntityBuilder toBuilder() =>
+      new GatewayTypeEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GatewayTypeEntity && name == other.name && id == other.id;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, name.hashCode), id.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GatewayTypeEntity')
+          ..add('name', name)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class GatewayTypeEntityBuilder
+    implements Builder<GatewayTypeEntity, GatewayTypeEntityBuilder> {
+  _$GatewayTypeEntity _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  GatewayTypeEntityBuilder();
+
+  GatewayTypeEntityBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _id = _$v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GatewayTypeEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GatewayTypeEntity;
+  }
+
+  @override
+  void update(void Function(GatewayTypeEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GatewayTypeEntity build() {
+    final _$result = _$v ?? new _$GatewayTypeEntity._(name: name, id: id);
     replace(_$result);
     return _$result;
   }
