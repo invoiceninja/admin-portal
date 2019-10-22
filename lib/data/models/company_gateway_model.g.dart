@@ -165,13 +165,13 @@ class _$CompanyGatewayEntitySerializer
       result
         ..add('min_limit')
         ..add(serializers.serialize(object.minLimit,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(double)));
     }
     if (object.maxLimit != null) {
       result
         ..add('max_limit')
         ..add(serializers.serialize(object.maxLimit,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(double)));
     }
     if (object.feeAmount != null) {
       result
@@ -318,11 +318,11 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'min_limit':
           result.minLimit = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'max_limit':
           result.maxLimit = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(double)) as double;
           break;
         case 'fee_amount':
           result.feeAmount = serializers.deserialize(value,
@@ -609,9 +609,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String customValue2;
   @override
-  final int minLimit;
+  final double minLimit;
   @override
-  final int maxLimit;
+  final double maxLimit;
   @override
   final double feeAmount;
   @override
@@ -863,13 +863,13 @@ class CompanyGatewayEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  int _minLimit;
-  int get minLimit => _$this._minLimit;
-  set minLimit(int minLimit) => _$this._minLimit = minLimit;
+  double _minLimit;
+  double get minLimit => _$this._minLimit;
+  set minLimit(double minLimit) => _$this._minLimit = minLimit;
 
-  int _maxLimit;
-  int get maxLimit => _$this._maxLimit;
-  set maxLimit(int maxLimit) => _$this._maxLimit = maxLimit;
+  double _maxLimit;
+  double get maxLimit => _$this._maxLimit;
+  set maxLimit(double maxLimit) => _$this._maxLimit = maxLimit;
 
   double _feeAmount;
   double get feeAmount => _$this._feeAmount;

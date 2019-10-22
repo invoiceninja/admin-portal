@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'limits_and_fees': 'Limits/Fees',
       'enable_min': 'Enable Min',
       'enable_max': 'Enable Max',
       'min_limit': 'Min Limit',
@@ -14983,6 +14984,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enableMin => _localizedValues[localeCode]['enable_min'];
 
   String get enableMax => _localizedValues[localeCode]['enable_max'];
+
+  String get limitsAndFees => _localizedValues[localeCode]['limits_and_fees'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

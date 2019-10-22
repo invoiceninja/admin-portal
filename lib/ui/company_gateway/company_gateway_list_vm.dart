@@ -63,6 +63,7 @@ class CompanyGatewayListVM {
     final state = store.state;
 
     return CompanyGatewayListVM(
+      state: state,
       userCompany: state.userCompany,
       listState: state.companyGatewayListState,
       companyGatewayList: memoizedFilteredCompanyGatewayList(

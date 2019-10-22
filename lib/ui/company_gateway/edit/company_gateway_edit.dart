@@ -40,7 +40,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -100,10 +100,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
             text: localization.settings,
           ),
           Tab(
-            text: localization.limits,
-          ),
-          Tab(
-            text: localization.fees,
+            text: localization.limitsAndFees,
           ),
         ],
       ),
@@ -222,9 +219,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     companyGateway: companyGateway,
                   ),
                 ],
-              ),
-              ListView(
-                children: <Widget>[],
               ),
             ],
           ),
@@ -459,7 +453,16 @@ class _LimitEditorState extends State<LimitEditor> {
   }
 
   void _onChanged() {
-    //widget.onChanged(_textController.text.trim());
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+
+    final updatedGateway = companyGateway.rebuild((b) => b
+      ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
+      ..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : null);
+
+    if (companyGateway != updatedGateway) {
+      viewModel.onChanged(updatedGateway);
+    }
   }
 
   @override
@@ -506,6 +509,7 @@ class _LimitEditorState extends State<LimitEditor> {
                     onChanged: (value) {
                       setState(() {
                         _enableMin = value;
+                        _onChanged();
                         if (!value) {
                           _minController.text = '';
                         }
@@ -535,6 +539,7 @@ class _LimitEditorState extends State<LimitEditor> {
                     onChanged: (value) {
                       setState(() {
                         _enableMax = value;
+                        _onChanged();
                         if (!value) {
                           _maxController.text = '';
                         }

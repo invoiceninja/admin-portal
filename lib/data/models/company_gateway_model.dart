@@ -100,11 +100,11 @@ abstract class CompanyGatewayEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'min_limit')
-  int get minLimit;
+  double get minLimit;
 
   @nullable
   @BuiltValueField(wireName: 'max_limit')
-  int get maxLimit;
+  double get maxLimit;
 
   @nullable
   @BuiltValueField(wireName: 'fee_amount')
