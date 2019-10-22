@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -572,7 +573,6 @@ class FeesEditor extends StatefulWidget {
 }
 
 class _FeesEditorState extends State<FeesEditor> {
-
   final _amountController = TextEditingController();
   final _percentController = TextEditingController();
   final _capController = TextEditingController();
@@ -591,16 +591,14 @@ class _FeesEditorState extends State<FeesEditor> {
 
   @override
   void didChangeDependencies() {
-
     final List<TextEditingController> _controllers = [
       _amountController,
       _percentController,
       _capController,
-      ];
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
 
     // TODO
 
@@ -614,10 +612,15 @@ class _FeesEditorState extends State<FeesEditor> {
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
 
+    final amount = parseDouble(_amountController.text.trim());
+    final percent = parseDouble(_percentController.text.trim());
+    final cap = parseDouble(_capController.text.trim());
+    final feesEnabled = amount != 0 || percent != 0;
+
     final updatedGateway = companyGateway.rebuild((b) => b
-      //..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
-      //..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : null
-    );
+      ..feeAmount = feesEnabled ? amount : null
+      ..feePercent = feesEnabled ? percent : null
+      ..feeCap = feesEnabled ? cap : null);
 
     if (companyGateway != updatedGateway) {
       viewModel.onChanged(updatedGateway);
@@ -627,6 +630,9 @@ class _FeesEditorState extends State<FeesEditor> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+    final company = viewModel.state.selectedCompany;
 
     return FormCard(
       children: <Widget>[
@@ -642,6 +648,29 @@ class _FeesEditorState extends State<FeesEditor> {
           label: localization.feeCap,
           controller: _capController,
         ),
+        if (company.settings.enableInvoiceItemTaxes)
+          TaxRateDropdown(
+            taxRates: company.taxRates,
+            onSelected: (taxRate) =>
+                viewModel.onChanged(companyGateway.rebuild((b) => b
+                  ..taxRate1 = taxRate.rate
+                  ..taxName1 = taxRate.name)),
+            labelText: localization.tax,
+            initialTaxName: companyGateway.taxName1,
+            initialTaxRate: companyGateway.taxRate1,
+          ),
+        if (company.settings.enableInvoiceItemTaxes &&
+            company.settings.enableSecondTaxRate)
+          TaxRateDropdown(
+            taxRates: company.taxRates,
+            onSelected: (taxRate) =>
+                viewModel.onChanged(companyGateway.rebuild((b) => b
+                  ..taxRate2 = taxRate.rate
+                  ..taxName2 = taxRate.name)),
+            labelText: localization.tax,
+            initialTaxName: companyGateway.taxName2,
+            initialTaxRate: companyGateway.taxRate2,
+          ),
       ],
     );
   }
