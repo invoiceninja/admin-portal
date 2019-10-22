@@ -9,11 +9,13 @@ class BoolDropdownButton extends StatelessWidget {
     @required this.showBlank,
     this.enabledLabel,
     this.disabledLabel,
+    this.icon,
   });
 
   final String label;
   final bool value;
   final Function(bool) onChanged;
+  final IconData icon;
   final bool showBlank;
   final String enabledLabel;
   final String disabledLabel;
@@ -23,6 +25,19 @@ class BoolDropdownButton extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final trueLabel = enabledLabel ?? localization.enabled;
     final falseLabel = disabledLabel ?? localization.disabled;
+
+    if (!showBlank && enabledLabel == null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: SwitchListTile(
+          title: Text(label),
+          value: value,
+          secondary: icon != null ? Icon(icon) : null,
+          onChanged: (value) => onChanged(value),
+          activeColor: Theme.of(context).accentColor,
+        ),
+      );
+    }
 
     return InputDecorator(
         decoration: InputDecoration(

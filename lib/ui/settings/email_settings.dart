@@ -123,7 +123,7 @@ class _EmailSettingsState extends State<EmailSettings> {
           ),
           FormCard(
             children: <Widget>[
-              
+
             ],
           ),
         ],

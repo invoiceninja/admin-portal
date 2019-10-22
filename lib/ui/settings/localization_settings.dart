@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -155,6 +156,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                         .rebuild((b) => b..dateFormatId = dateFormat?.id)),
               ),
               BoolDropdownButton(
+                icon: FontAwesomeIcons.clock,
                 label: localization.militaryTime,
                 showBlank: state.settingsUIState.isFiltered,
                 value: settings.enableMilitaryTime,
