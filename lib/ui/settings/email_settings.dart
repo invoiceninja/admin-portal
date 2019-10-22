@@ -74,7 +74,7 @@ class _EmailSettingsState extends State<EmailSettings>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    final signature = settings.emailFooter;
+    final signature = settings.emailFooter ?? '';
     // return NotusDocument.fromJson(jsonDecode(contents));
     _zefyrController.compose(Delta()..insert(signature));
 
@@ -137,39 +137,6 @@ class _EmailSettingsState extends State<EmailSettings>
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.replyToEmail,
-                      controller: _replyToEmailController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    DecoratedFormField(
-                      label: localization.bccEmail,
-                      controller: _bccEmailController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    SizedBox(height: 10),
-                    BoolDropdownButton(
-                      label: localization.attachPdf,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileInvoice,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                    BoolDropdownButton(
-                      label: localization.attachDocuments,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileImage,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                    BoolDropdownButton(
-                      label: localization.attachUbl,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileArchive,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                  ],
-                ),
-                FormCard(
-                  children: <Widget>[
                     InputDecorator(
                       decoration: InputDecoration(
                         labelText: localization.emailDesign,
@@ -208,6 +175,42 @@ class _EmailSettingsState extends State<EmailSettings>
                       helpLabel: localization.enableMarkupHelp,
                       value: false,
                       iconData: FontAwesomeIcons.link,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                  ],
+                ),
+                FormCard(
+                  children: <Widget>[
+                    DecoratedFormField(
+                      label: localization.replyToEmail,
+                      controller: _replyToEmailController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    DecoratedFormField(
+                      label: localization.bccEmail,
+                      controller: _bccEmailController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                  ],
+                ),
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.attachPdf,
+                      value: false,
+                      iconData: FontAwesomeIcons.fileInvoice,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.attachDocuments,
+                      value: false,
+                      iconData: FontAwesomeIcons.fileImage,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.attachUbl,
+                      value: false,
+                      iconData: FontAwesomeIcons.fileArchive,
                       showBlank: state.settingsUIState.isFiltered,
                     ),
                   ],
