@@ -9,13 +9,13 @@ class BoolDropdownButton extends StatelessWidget {
     @required this.showBlank,
     this.enabledLabel,
     this.disabledLabel,
-    this.icon,
+    this.iconData,
   });
 
   final String label;
   final bool value;
   final Function(bool) onChanged;
-  final IconData icon;
+  final IconData iconData;
   final bool showBlank;
   final String enabledLabel;
   final String disabledLabel;
@@ -32,7 +32,7 @@ class BoolDropdownButton extends StatelessWidget {
         child: SwitchListTile(
           title: Text(label),
           value: value,
-          secondary: icon != null ? Icon(icon) : null,
+          secondary: iconData != null ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
           activeColor: Theme.of(context).accentColor,
         ),

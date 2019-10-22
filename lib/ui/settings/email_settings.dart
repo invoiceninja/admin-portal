@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -74,6 +75,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final settings = viewModel.settings;
 
     return SettingsScaffold(
@@ -95,29 +97,23 @@ class _EmailSettingsState extends State<EmailSettings> {
                 keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 20),
-              SwitchListTile(
-                title: Text(AppLocalization.of(context).attachPdf),
-                value: false, // viewModel.settings.attatchPdf,
-                //onChanged: (value) =>
-                //viewModel.onSettingsChanged(settings.rebuild((b) => b..attatchPdf = value)),
-                secondary: Icon(getEntityIcon(EntityType.invoice)),
-                activeColor: Theme.of(context).accentColor,
+              BoolDropdownButton(
+                label: localization.attachPdf,
+                value: false,
+                iconData: FontAwesomeIcons.fileInvoice,
+                showBlank: state.settingsUIState.isFiltered,
               ),
-              SwitchListTile(
-                title: Text(AppLocalization.of(context).attachDocuments),
-                value: false, // viewModel.settings.attatchPdf,
-                //onChanged: (value) =>
-                //viewModel.onSettingsChanged(settings.rebuild((b) => b..attatchPdf = value)),
-                secondary: Icon(FontAwesomeIcons.fileImage),
-                activeColor: Theme.of(context).accentColor,
+              BoolDropdownButton(
+                label: localization.attachDocuments,
+                value: false,
+                iconData: FontAwesomeIcons.fileImage,
+                showBlank: state.settingsUIState.isFiltered,
               ),
-              SwitchListTile(
-                title: Text(AppLocalization.of(context).attachUbl),
-                value: false, // viewModel.settings.attatchPdf,
-                //onChanged: (value) =>
-                //viewModel.onSettingsChanged(settings.rebuild((b) => b..attatchPdf = value)),
-                secondary: Icon(FontAwesomeIcons.fileAlt),
-                activeColor: Theme.of(context).accentColor,
+              BoolDropdownButton(
+                label: localization.attachUbl,
+                value: false,
+                iconData: FontAwesomeIcons.fileArchive,
+                showBlank: state.settingsUIState.isFiltered,
               ),
             ],
           ),

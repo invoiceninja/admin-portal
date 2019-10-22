@@ -156,7 +156,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                         .rebuild((b) => b..dateFormatId = dateFormat?.id)),
               ),
               BoolDropdownButton(
-                icon: FontAwesomeIcons.clock,
+                iconData: FontAwesomeIcons.clock,
                 label: localization.militaryTime,
                 showBlank: state.settingsUIState.isFiltered,
                 value: settings.enableMilitaryTime,
