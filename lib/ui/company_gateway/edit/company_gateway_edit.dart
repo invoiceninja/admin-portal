@@ -455,7 +455,6 @@ class _LimitEditorState extends State<LimitEditor> {
       _enableMax = true;
     }
 
-
     _minController.text = formatNumber(
         (companyGateway.minLimit ?? 0).toDouble(), context,
         formatNumberType: FormatNumberType.input);
@@ -608,10 +607,17 @@ class _FeesEditorState extends State<FeesEditor> {
       _capController,
     ];
 
+    final companyGateway = widget.companyGateway;
+
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    // TODO
+    _amountController.text = formatNumber(companyGateway.feeAmount, context,
+        formatNumberType: FormatNumberType.input);
+    _percentController.text = formatNumber(companyGateway.feePercent, context,
+        formatNumberType: FormatNumberType.input);
+    _capController.text = formatNumber(companyGateway.feeCap, context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
