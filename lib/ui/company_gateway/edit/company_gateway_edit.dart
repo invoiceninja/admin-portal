@@ -99,12 +99,16 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                               .gatewayMap[companyGateway.gatewayId]?.name,
                           onSelected: (SelectableEntity gateway) =>
                               viewModel.onChanged(
-                            companyGateway
-                                .rebuild((b) => b..gatewayId = gateway.id),
+                            companyGateway.rebuild((b) => b
+                              ..gatewayId = gateway.id
+                              ..gatewayTypeId = null
+                              ..config =
+                                  ''), // TODO set to gateway.defaultGatewayTypeId
                           ),
                           //onFieldSubmitted: (String value) => _node.nextFocus(),
                         ),
                       GatewayConfigSettings(
+                        key: ValueKey('__${companyGateway.gatewayId}__'),
                         companyGateway: companyGateway,
                         viewModel: viewModel,
                       ),
@@ -227,7 +231,8 @@ class CardListTile extends StatelessWidget {
 }
 
 class GatewayConfigSettings extends StatelessWidget {
-  const GatewayConfigSettings({this.companyGateway, this.viewModel});
+  const GatewayConfigSettings({Key key, this.companyGateway, this.viewModel})
+      : super(key: key);
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
@@ -263,7 +268,8 @@ class GatewayConfigSettings extends StatelessWidget {
           EntityDropdown(
             key: ValueKey('__gateway_type_${companyGateway.gatewayTypeId}__'),
             initialValue:
-                gatewayTypes[companyGateway.gatewayTypeId].listDisplayName,
+                gatewayTypes[companyGateway.gatewayTypeId]?.listDisplayName ??
+                    '',
             entityType: EntityType.gatewayType,
             entityMap: gatewayTypes,
             labelText: localization.paymentType,
