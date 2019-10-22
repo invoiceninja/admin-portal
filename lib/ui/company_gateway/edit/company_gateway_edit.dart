@@ -277,12 +277,12 @@ class GatewayConfigSettings extends StatelessWidget {
                       companyGateway.rebuild((b) => b..gatewayTypeId = value)),
                   items: gatewayTypes
                       .map((id, type) =>
-                      MapEntry<String, DropdownMenuItem<String>>(
-                          id,
-                          DropdownMenuItem<String>(
-                            child: Text(localization.lookup(type)),
-                            value: id,
-                          )))
+                          MapEntry<String, DropdownMenuItem<String>>(
+                              id,
+                              DropdownMenuItem<String>(
+                                child: Text(localization.lookup(type)),
+                                value: id,
+                              )))
                       .values
                       .toList()),
             ),
