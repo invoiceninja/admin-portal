@@ -12,8 +12,6 @@ Serializer<CompanyGatewayItemResponse> _$companyGatewayItemResponseSerializer =
     new _$CompanyGatewayItemResponseSerializer();
 Serializer<CompanyGatewayEntity> _$companyGatewayEntitySerializer =
     new _$CompanyGatewayEntitySerializer();
-Serializer<GatewayTypeEntity> _$gatewayTypeEntitySerializer =
-    new _$GatewayTypeEntitySerializer();
 
 class _$CompanyGatewayListResponseSerializer
     implements StructuredSerializer<CompanyGatewayListResponse> {
@@ -409,56 +407,6 @@ class _$CompanyGatewayEntitySerializer
         case 'is_owner':
           result.isOwner = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$GatewayTypeEntitySerializer
-    implements StructuredSerializer<GatewayTypeEntity> {
-  @override
-  final Iterable<Type> types = const [GatewayTypeEntity, _$GatewayTypeEntity];
-  @override
-  final String wireName = 'GatewayTypeEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, GatewayTypeEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-    ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
-    return result;
-  }
-
-  @override
-  GatewayTypeEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new GatewayTypeEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1127,94 +1075,6 @@ class CompanyGatewayEntityBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$GatewayTypeEntity extends GatewayTypeEntity {
-  @override
-  final String name;
-  @override
-  final String id;
-
-  factory _$GatewayTypeEntity(
-          [void Function(GatewayTypeEntityBuilder) updates]) =>
-      (new GatewayTypeEntityBuilder()..update(updates)).build();
-
-  _$GatewayTypeEntity._({this.name, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('GatewayTypeEntity', 'name');
-    }
-  }
-
-  @override
-  GatewayTypeEntity rebuild(void Function(GatewayTypeEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  GatewayTypeEntityBuilder toBuilder() =>
-      new GatewayTypeEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is GatewayTypeEntity && name == other.name && id == other.id;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), id.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('GatewayTypeEntity')
-          ..add('name', name)
-          ..add('id', id))
-        .toString();
-  }
-}
-
-class GatewayTypeEntityBuilder
-    implements Builder<GatewayTypeEntity, GatewayTypeEntityBuilder> {
-  _$GatewayTypeEntity _$v;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  GatewayTypeEntityBuilder();
-
-  GatewayTypeEntityBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _id = _$v.id;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(GatewayTypeEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$GatewayTypeEntity;
-  }
-
-  @override
-  void update(void Function(GatewayTypeEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$GatewayTypeEntity build() {
-    final _$result = _$v ?? new _$GatewayTypeEntity._(name: name, id: id);
     replace(_$result);
     return _$result;
   }

@@ -237,16 +237,14 @@ class GatewayConfigSettings extends StatelessWidget {
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
 
-  BuiltMap<String, SelectableEntity> getGatewayTypes(BuildContext context) {
+  Map<String, String> getGatewayTypes(BuildContext context) {
     final localization = AppLocalization.of(context);
     switch (companyGateway.gatewayId) {
       case kGatewayStripe:
-        return BuiltMap<String, SelectableEntity>({
-          kGatewayTypeCreditCard: GatewayTypeEntity(
-              id: kGatewayTypeCreditCard, name: localization.creditCard),
-          kGatewayTypeBankTransfer: GatewayTypeEntity(
-              id: kGatewayTypeBankTransfer, name: localization.bankTransfer),
-        });
+        return {
+          kGatewayTypeCreditCard: localization.creditCard,
+          kGatewayTypeBankTransfer: localization.bankTransfer,
+        };
     }
   }
 
@@ -265,16 +263,29 @@ class GatewayConfigSettings extends StatelessWidget {
     return Column(
       children: [
         if (gatewayTypes != null)
-          EntityDropdown(
-            key: ValueKey('__gateway_type_${companyGateway.gatewayTypeId}__'),
-            initialValue:
-                gatewayTypes[companyGateway.gatewayTypeId]?.listDisplayName ??
-                    '',
-            entityType: EntityType.gatewayType,
-            entityMap: gatewayTypes,
-            labelText: localization.paymentType,
-            onSelected: (gatewayType) => viewModel.onChanged(companyGateway
-                .rebuild((b) => b..gatewayTypeId = gatewayType.id)),
+          InputDecorator(
+            decoration: InputDecoration(
+              labelText: localization.paymentType,
+            ),
+            isEmpty: companyGateway.gatewayTypeId == null,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                  value: companyGateway.gatewayTypeId,
+                  isExpanded: true,
+                  isDense: true,
+                  onChanged: (value) => viewModel.onChanged(
+                      companyGateway.rebuild((b) => b..gatewayTypeId = value)),
+                  items: gatewayTypes
+                      .map((id, type) =>
+                      MapEntry<String, DropdownMenuItem<String>>(
+                          id,
+                          DropdownMenuItem<String>(
+                            child: Text(localization.lookup(type)),
+                            value: id,
+                          )))
+                      .values
+                      .toList()),
+            ),
           ),
         ...gateway.parsedFields.keys
             .map((field) => GatewayConfigField(
