@@ -94,6 +94,21 @@ const String kQuoteStatusSent = '2';
 const String kQuoteStatusViewed = '3';
 const String kQuoteStatusApproved = '4';
 
+const String kGatewayTypeCreditCard = '1';
+const String kGatewayTypeBankTransfer = '2';
+const String kGatewayTypePayPal = '3';
+const String kGatewayTypeBitcoin = '4';
+//const String kGatewayTypeDwolla = '5';
+const String kGatewayTypeCustom1 = '6';
+const String kGatewayTypeAlipay = '7';
+const String kGatewayTypeSofort = '8';
+const String kGatewayTypeGoCardless = '9';
+const String kGatewayTypeApplePay = '10';
+const String kGatewayTypeCustom2 = '11';
+const String kGatewayTypeCustom3 = '12';
+
+const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
+
 const String kEntityStateActive = 'active';
 const String kEntityStateArchived = 'archived';
 const String kEntityStateDeleted = 'deleted';

@@ -12,8 +12,8 @@ class EntityDropdown extends StatefulWidget {
     @required this.entityType,
     @required this.labelText,
     @required this.entityMap,
-    @required this.entityList,
     @required this.onSelected,
+    this.entityList,
     this.allowClearing = false,
     this.autoValidate = false,
     this.validator,
@@ -71,7 +71,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         builder: (BuildContext context) {
           return EntityDropdownDialog(
             entityMap: widget.entityMap,
-            entityList: widget.entityList,
+            entityList: widget.entityList ?? widget.entityMap.keys.toList(),
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
               widget.onSelected(entity);

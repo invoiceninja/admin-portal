@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -33,6 +34,18 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   final FocusScopeNode _node = FocusScopeNode();
   TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,21 +232,44 @@ class GatewayConfigSettings extends StatelessWidget {
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
 
+  BuiltMap<String, SelectableEntity> getGatewayTypes(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    switch (companyGateway.gatewayId) {
+      case kGatewayStripe:
+        return BuiltMap<String, SelectableEntity>({
+          kGatewayTypeCreditCard: GatewayTypeEntity(
+              id: kGatewayTypeCreditCard, name: localization.creditCard),
+          kGatewayTypeBankTransfer: GatewayTypeEntity(
+              id: kGatewayTypeBankTransfer, name: localization.bankTransfer),
+        });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
+    final localization = AppLocalization.of(context);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     if (gateway == null) {
       return SizedBox();
     }
 
+    final gatewayTypes = getGatewayTypes(context);
+
     return Column(
       children: [
-        EntityDropdown(
-          entityType: EntityType.gatewayType,
-          //entityMap: ,
-        ),
+        if (gatewayTypes != null)
+          EntityDropdown(
+            key: ValueKey('__gateway_type_${companyGateway.gatewayTypeId}__'),
+            initialValue:
+                gatewayTypes[companyGateway.gatewayTypeId].listDisplayName,
+            entityType: EntityType.gatewayType,
+            entityMap: gatewayTypes,
+            labelText: localization.paymentType,
+            onSelected: (gatewayType) => viewModel.onChanged(companyGateway
+                .rebuild((b) => b..gatewayTypeId = gatewayType.id)),
+          ),
         ...gateway.parsedFields.keys
             .map((field) => GatewayConfigField(
                   field: field,

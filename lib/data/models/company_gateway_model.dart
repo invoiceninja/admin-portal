@@ -80,6 +80,10 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'gateway_key')
   String get gatewayId;
 
+  @nullable
+  @BuiltValueField(wireName: 'gateway_type_id')
+  String get gatewayTypeId;
+
   @BuiltValueField(wireName: 'accepted_credit_cards')
   int get acceptedCreditCards;
 
@@ -142,7 +146,7 @@ abstract class CompanyGatewayEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'fee_tax_rate3')
-  double get gatewayType3;
+  double get taxRate3;
 
   @nullable
   @BuiltValueField(wireName: 'fee_tax_name3')

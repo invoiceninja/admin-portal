@@ -151,6 +151,12 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.gatewayId,
             specifiedType: const FullType(String)));
     }
+    if (object.gatewayTypeId != null) {
+      result
+        ..add('gateway_type_id')
+        ..add(serializers.serialize(object.gatewayTypeId,
+            specifiedType: const FullType(String)));
+    }
     if (object.priority != null) {
       result
         ..add('priority_id')
@@ -223,10 +229,10 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.taxName2,
             specifiedType: const FullType(String)));
     }
-    if (object.gatewayType3 != null) {
+    if (object.taxRate3 != null) {
       result
         ..add('fee_tax_rate3')
-        ..add(serializers.serialize(object.gatewayType3,
+        ..add(serializers.serialize(object.taxRate3,
             specifiedType: const FullType(double)));
     }
     if (object.taxName3 != null) {
@@ -300,6 +306,10 @@ class _$CompanyGatewayEntitySerializer
           result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'gateway_type_id':
+          result.gatewayTypeId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'accepted_credit_cards':
           result.acceptedCreditCards = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -365,7 +375,7 @@ class _$CompanyGatewayEntitySerializer
               specifiedType: const FullType(String)) as String;
           break;
         case 'fee_tax_rate3':
-          result.gatewayType3 = serializers.deserialize(value,
+          result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'fee_tax_name3':
@@ -659,6 +669,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String gatewayId;
   @override
+  final String gatewayTypeId;
+  @override
   final int acceptedCreditCards;
   @override
   final bool showBillingAddress;
@@ -691,7 +703,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String taxName2;
   @override
-  final double gatewayType3;
+  final double taxRate3;
   @override
   final String taxName3;
   @override
@@ -718,6 +730,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   _$CompanyGatewayEntity._(
       {this.gateway,
       this.gatewayId,
+      this.gatewayTypeId,
       this.acceptedCreditCards,
       this.showBillingAddress,
       this.showShippingAddress,
@@ -734,7 +747,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.taxName1,
       this.taxRate2,
       this.taxName2,
-      this.gatewayType3,
+      this.taxRate3,
       this.taxName3,
       this.config,
       this.isChanged,
@@ -784,6 +797,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return other is CompanyGatewayEntity &&
         gateway == other.gateway &&
         gatewayId == other.gatewayId &&
+        gatewayTypeId == other.gatewayTypeId &&
         acceptedCreditCards == other.acceptedCreditCards &&
         showBillingAddress == other.showBillingAddress &&
         showShippingAddress == other.showShippingAddress &&
@@ -800,7 +814,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         taxName1 == other.taxName1 &&
         taxRate2 == other.taxRate2 &&
         taxName2 == other.taxName2 &&
-        gatewayType3 == other.gatewayType3 &&
+        taxRate3 == other.taxRate3 &&
         taxName3 == other.taxName3 &&
         config == other.config &&
         isChanged == other.isChanged &&
@@ -832,7 +846,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), priority.hashCode), customValue1.hashCode), customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), gatewayTypeId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), priority.hashCode), customValue1.hashCode), customValue2.hashCode),
                                                                                 minLimit.hashCode),
                                                                             maxLimit.hashCode),
                                                                         feeAmount.hashCode),
@@ -842,7 +856,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                         taxName1.hashCode),
                                                     taxRate2.hashCode),
                                                 taxName2.hashCode),
-                                            gatewayType3.hashCode),
+                                            taxRate3.hashCode),
                                         taxName3.hashCode),
                                     config.hashCode),
                                 isChanged.hashCode),
@@ -859,6 +873,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
           ..add('gateway', gateway)
           ..add('gatewayId', gatewayId)
+          ..add('gatewayTypeId', gatewayTypeId)
           ..add('acceptedCreditCards', acceptedCreditCards)
           ..add('showBillingAddress', showBillingAddress)
           ..add('showShippingAddress', showShippingAddress)
@@ -875,7 +890,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('taxName1', taxName1)
           ..add('taxRate2', taxRate2)
           ..add('taxName2', taxName2)
-          ..add('gatewayType3', gatewayType3)
+          ..add('taxRate3', taxRate3)
           ..add('taxName3', taxName3)
           ..add('config', config)
           ..add('isChanged', isChanged)
@@ -901,6 +916,11 @@ class CompanyGatewayEntityBuilder
   String _gatewayId;
   String get gatewayId => _$this._gatewayId;
   set gatewayId(String gatewayId) => _$this._gatewayId = gatewayId;
+
+  String _gatewayTypeId;
+  String get gatewayTypeId => _$this._gatewayTypeId;
+  set gatewayTypeId(String gatewayTypeId) =>
+      _$this._gatewayTypeId = gatewayTypeId;
 
   int _acceptedCreditCards;
   int get acceptedCreditCards => _$this._acceptedCreditCards;
@@ -970,9 +990,9 @@ class CompanyGatewayEntityBuilder
   String get taxName2 => _$this._taxName2;
   set taxName2(String taxName2) => _$this._taxName2 = taxName2;
 
-  double _gatewayType3;
-  double get gatewayType3 => _$this._gatewayType3;
-  set gatewayType3(double gatewayType3) => _$this._gatewayType3 = gatewayType3;
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
   String _taxName3;
   String get taxName3 => _$this._taxName3;
@@ -1016,6 +1036,7 @@ class CompanyGatewayEntityBuilder
     if (_$v != null) {
       _gateway = _$v.gateway?.toBuilder();
       _gatewayId = _$v.gatewayId;
+      _gatewayTypeId = _$v.gatewayTypeId;
       _acceptedCreditCards = _$v.acceptedCreditCards;
       _showBillingAddress = _$v.showBillingAddress;
       _showShippingAddress = _$v.showShippingAddress;
@@ -1032,7 +1053,7 @@ class CompanyGatewayEntityBuilder
       _taxName1 = _$v.taxName1;
       _taxRate2 = _$v.taxRate2;
       _taxName2 = _$v.taxName2;
-      _gatewayType3 = _$v.gatewayType3;
+      _taxRate3 = _$v.taxRate3;
       _taxName3 = _$v.taxName3;
       _config = _$v.config;
       _isChanged = _$v.isChanged;
@@ -1068,6 +1089,7 @@ class CompanyGatewayEntityBuilder
           new _$CompanyGatewayEntity._(
               gateway: gateway.build(),
               gatewayId: gatewayId,
+              gatewayTypeId: gatewayTypeId,
               acceptedCreditCards: acceptedCreditCards,
               showBillingAddress: showBillingAddress,
               showShippingAddress: showShippingAddress,
@@ -1084,7 +1106,7 @@ class CompanyGatewayEntityBuilder
               taxName1: taxName1,
               taxRate2: taxRate2,
               taxName2: taxName2,
-              gatewayType3: gatewayType3,
+              taxRate3: taxRate3,
               taxName3: taxName3,
               config: config,
               isChanged: isChanged,
