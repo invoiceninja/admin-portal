@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'email_signature': 'Email Signature',
       'enable_email_markup_help':
           'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
@@ -15047,6 +15048,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get light => _localizedValues[localeCode]['light'];
 
   String get dark => _localizedValues[localeCode]['dark'];
+
+  String get emailSignature => _localizedValues[localeCode]['email_signature'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
