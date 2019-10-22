@@ -14,6 +14,11 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'attach_pdf': 'Attach PDF',
+      'attach_documents': 'Attach Documents',
+      'attach_ubl': 'Attach UBL',
+      'email_style': 'Email Style',
+      'enable_markup': 'Enable Markup',
       'reply_to_email': 'Reply-To Email',
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
@@ -15013,6 +15018,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get replyToEmail => _localizedValues[localeCode]['reply_to_email'];
 
   String get bccEmail => _localizedValues[localeCode]['bcc_email'];
+
+  String get attachPdf => _localizedValues[localeCode]['attach_pdf'];
+
+  String get attachDocuments =>
+      _localizedValues[localeCode]['attach_documents'];
+
+  String get attachUbl => _localizedValues[localeCode]['attach_ubl'];
+
+  String get emailStyle => _localizedValues[localeCode]['email_style'];
+
+  String get enableMarkup => _localizedValues[localeCode]['enable_markup'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
