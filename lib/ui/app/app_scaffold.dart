@@ -45,6 +45,7 @@ class AppScaffold extends StatelessWidget {
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             leading: showCheckbox
                 ? Checkbox(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

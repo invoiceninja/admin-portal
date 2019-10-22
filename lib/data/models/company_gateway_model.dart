@@ -42,6 +42,7 @@ abstract class CompanyGatewayItemResponse
 
 class CompanyGatewayFields {
   static const String name = 'name';
+  static const String priority = 'priority';
   static const String updatedAt = 'updatedAt';
 }
 
@@ -62,6 +63,7 @@ abstract class CompanyGatewayEntity extends Object
       customValue1: '',
       customValue2: '',
       config: '',
+      priority: 0,
     );
   }
 
@@ -89,6 +91,10 @@ abstract class CompanyGatewayEntity extends Object
 
   @BuiltValueField(wireName: 'update_details')
   bool get updateDetails;
+
+  @nullable
+  @BuiltValueField(wireName: 'priority_id')
+  int get priority;
 
   @nullable
   @BuiltValueField(wireName: 'custom_value1')
@@ -173,16 +179,16 @@ abstract class CompanyGatewayEntity extends Object
 
   int compareTo(CompanyGatewayEntity companyGateway, String sortField,
       bool sortAscending) {
-    const int response = 0;
+    int response = 0;
     final CompanyGatewayEntity companyGatewayA =
         sortAscending ? this : companyGateway;
     final CompanyGatewayEntity companyGatewayB =
         sortAscending ? companyGateway : this;
 
     switch (sortField) {
-      case CompanyGatewayFields.name:
-      //response = companyGatewayA.balance.compareTo(companyGatewayB.balance);
-      //break;
+      case CompanyGatewayFields.priority:
+        response = companyGatewayA.priority.compareTo(companyGatewayB.priority);
+        break;
     }
 
     if (response == 0) {
