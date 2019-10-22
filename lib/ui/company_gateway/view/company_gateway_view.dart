@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -60,12 +61,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       ),
       body: ListView(
         children: <Widget>[
-          // TODO show OneValueHeader for non-token gateways 
-          TwoValueHeader(
-            label1: localization.clients,
-            value1: '', // TODO calculate value
-            label2: localization.processed,
-            value2: '', // TODO calculate value
+          OneValueHeader(
+            label: localization.processed,
+            value: '', // TODO calculate value
           ),
           EntityListTile(
             icon: getEntityIcon(EntityType.client),
