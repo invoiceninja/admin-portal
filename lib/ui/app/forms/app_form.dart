@@ -14,6 +14,7 @@ class AppForm extends StatelessWidget {
     return Form(
       key: formKey,
       child: ListView(
+        shrinkWrap: true,
         children: children,
       ),
     );

@@ -2,15 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:zefyr/zefyr.dart';
+import 'package:quill_delta/quill_delta.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
@@ -27,6 +27,8 @@ class EmailSettings extends StatefulWidget {
 class _EmailSettingsState extends State<EmailSettings> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  ZefyrController _controller;
+  FocusNode _focusNode;
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
@@ -35,7 +37,20 @@ class _EmailSettingsState extends State<EmailSettings> {
   List<TextEditingController> _controllers = [];
 
   @override
+  void initState() {
+    super.initState();
+
+    final Delta delta = Delta()..insert('Zefyr Quick Start\n');
+    final doc = NotusDocument.fromDelta(delta);
+
+    _controller = ZefyrController(doc);
+    _focusNode = FocusNode();
+  }
+
+  @override
   void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -161,8 +176,21 @@ class _EmailSettingsState extends State<EmailSettings> {
                 showBlank: state.settingsUIState.isFiltered,
               ),
             ],
-
           ),
+          FormCard(
+            children: <Widget>[
+              SizedBox(
+                height: 300,
+                child: ZefyrScaffold(
+                  child: ZefyrEditor(
+                    padding: EdgeInsets.all(16),
+                    controller: _controller,
+                    focusNode: _focusNode,
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
