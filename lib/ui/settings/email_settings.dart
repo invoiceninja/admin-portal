@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -96,7 +97,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 controller: _bccEmailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: false,
@@ -119,8 +120,48 @@ class _EmailSettingsState extends State<EmailSettings> {
           ),
           FormCard(
             children: <Widget>[
-
+              InputDecorator(
+                decoration: InputDecoration(
+                  labelText: localization.emailDesign,
+                ),
+                isEmpty: false,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: kEmailDesignPlain,
+                    onChanged: (value) => null,
+                    isExpanded: true,
+                    isDense: true,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.plain),
+                        value: kEmailDesignPlain,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.light),
+                        value: kEmailDesignLight,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.dark),
+                        value: kEmailDesignDark,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.custom),
+                        value: kEmailDesignCustom,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              BoolDropdownButton(
+                label: localization.enableMarkup,
+                helpLabel: localization.enableMarkupHelp,
+                value: false,
+                iconData: FontAwesomeIcons.link,
+                showBlank: state.settingsUIState.isFiltered,
+              ),
             ],
+
           ),
         ],
       ),

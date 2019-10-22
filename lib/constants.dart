@@ -109,6 +109,11 @@ const String kGatewayTypeCustom3 = '12';
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 
+const String kEmailDesignPlain = 'plain';
+const String kEmailDesignLight = 'light';
+const String kEmailDesignDark = 'dark';
+const String kEmailDesignCustom = 'custom';
+
 const String kEntityStateActive = 'active';
 const String kEntityStateArchived = 'archived';
 const String kEntityStateDeleted = 'deleted';

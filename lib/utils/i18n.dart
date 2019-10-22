@@ -14,11 +14,17 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'enable_email_markup_help':
+          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'plain': 'Plain',
+      'light': 'Light',
+      'dark': 'Dark',
+      'email_design': 'Email Design',
       'attach_pdf': 'Attach PDF',
       'attach_documents': 'Attach Documents',
       'attach_ubl': 'Attach UBL',
       'email_style': 'Email Style',
-      'enable_markup': 'Enable Markup',
+      'enable_email_markup': 'Enable Markup',
       'reply_to_email': 'Reply-To Email',
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
@@ -15028,7 +15034,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailStyle => _localizedValues[localeCode]['email_style'];
 
-  String get enableMarkup => _localizedValues[localeCode]['enable_markup'];
+  String get enableMarkup =>
+      _localizedValues[localeCode]['enable_email_markup'];
+
+  String get enableMarkupHelp =>
+      _localizedValues[localeCode]['enable_email_markup_help'];
+
+  String get emailDesign => _localizedValues[localeCode]['email_design'];
+
+  String get plain => _localizedValues[localeCode]['plain'];
+
+  String get light => _localizedValues[localeCode]['light'];
+
+  String get dark => _localizedValues[localeCode]['dark'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
