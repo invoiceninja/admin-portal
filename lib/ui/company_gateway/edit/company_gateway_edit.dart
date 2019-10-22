@@ -445,11 +445,22 @@ class _LimitEditorState extends State<LimitEditor> {
     _minController.removeListener(_onChanged);
     _maxController.removeListener(_onChanged);
 
+    final companyGateway = widget.companyGateway;
+
+    if (companyGateway.minLimit != null) {
+      _enableMin = true;
+    }
+
+    if (companyGateway.maxLimit != null) {
+      _enableMax = true;
+    }
+
+
     _minController.text = formatNumber(
-        (widget.companyGateway.minLimit ?? 0).toDouble(), context,
+        (companyGateway.minLimit ?? 0).toDouble(), context,
         formatNumberType: FormatNumberType.input);
     _maxController.text = formatNumber(
-        (widget.companyGateway.maxLimit ?? 0).toDouble(), context,
+        (companyGateway.maxLimit ?? 0).toDouble(), context,
         formatNumberType: FormatNumberType.input);
 
     _minController.addListener(_onChanged);
