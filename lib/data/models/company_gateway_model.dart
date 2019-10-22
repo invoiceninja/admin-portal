@@ -121,7 +121,7 @@ abstract class CompanyGatewayEntity extends Object
   double get feeAmount;
 
   @nullable
-  @BuiltValueField(wireName: 'fee_percent_HIDDEN')
+  @BuiltValueField(wireName: 'fee_percent')
   double get feePercent;
 
   @nullable

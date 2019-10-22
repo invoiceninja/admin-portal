@@ -60,6 +60,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       ),
       body: ListView(
         children: <Widget>[
+          // TODO show OneValueHeader for non-token gateways 
           TwoValueHeader(
             label1: localization.clients,
             value1: '', // TODO calculate value
@@ -90,7 +91,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
                 ? null
                 : formatNumber(companyGateway.feePercent, context,
                     formatNumberType: FormatNumberType.percent),
-            localization.feeAmount: companyGateway.feeCap == null
+            localization.feeCap: companyGateway.feeCap == null
                 ? null
                 : formatNumber(companyGateway.feeCap, context),
             localization.minLimit: companyGateway.minLimit == null

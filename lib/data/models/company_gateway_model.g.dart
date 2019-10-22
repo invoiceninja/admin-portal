@@ -193,7 +193,7 @@ class _$CompanyGatewayEntitySerializer
     }
     if (object.feePercent != null) {
       result
-        ..add('fee_percent_HIDDEN')
+        ..add('fee_percent')
         ..add(serializers.serialize(object.feePercent,
             specifiedType: const FullType(double)));
     }
@@ -348,7 +348,7 @@ class _$CompanyGatewayEntitySerializer
           result.feeAmount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'fee_percent_HIDDEN':
+        case 'fee_percent':
           result.feePercent = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
