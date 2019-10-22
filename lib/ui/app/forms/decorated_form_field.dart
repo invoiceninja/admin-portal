@@ -10,6 +10,7 @@ class DecoratedFormField extends StatelessWidget {
     this.maxLines,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.enabled,
   });
 
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class DecoratedFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool autovalidate;
+  final bool enabled;
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
 
@@ -36,6 +38,7 @@ class DecoratedFormField extends StatelessWidget {
       autovalidate: autovalidate,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
+      enabled: enabled,
     );
   }
 }

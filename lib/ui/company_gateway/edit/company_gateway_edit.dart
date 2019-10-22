@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -215,6 +216,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ListView(
                 children: <Widget>[
                   LimitEditor(
+                    viewModel: viewModel,
+                    companyGateway: companyGateway,
+                  ),
+                  FeesEditor(
                     viewModel: viewModel,
                     companyGateway: companyGateway,
                   ),
@@ -494,13 +499,13 @@ class _LimitEditorState extends State<LimitEditor> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(localization.minLimit),
-                  SizedBox(height: 10),
-                  TextFormField(
+                  DecoratedFormField(
+                    label: localization.minLimit,
                     enabled: _enableMin,
                     controller: _minController,
                     keyboardType: TextInputType.numberWithOptions(),
                   ),
+                  SizedBox(height: 10),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     activeColor: Theme.of(context).accentColor,
@@ -524,13 +529,13 @@ class _LimitEditorState extends State<LimitEditor> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(localization.maxLimit),
-                  SizedBox(height: 10),
-                  TextFormField(
+                  DecoratedFormField(
+                    label: localization.maxLimit,
                     enabled: _enableMax,
                     controller: _maxController,
                     keyboardType: TextInputType.numberWithOptions(),
                   ),
+                  SizedBox(height: 10),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     activeColor: Theme.of(context).accentColor,
@@ -550,6 +555,92 @@ class _LimitEditorState extends State<LimitEditor> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class FeesEditor extends StatefulWidget {
+  const FeesEditor({this.companyGateway, this.viewModel});
+
+  final CompanyGatewayEntity companyGateway;
+  final CompanyGatewayEditVM viewModel;
+
+  @override
+  _FeesEditorState createState() => _FeesEditorState();
+}
+
+class _FeesEditorState extends State<FeesEditor> {
+
+  final _amountController = TextEditingController();
+  final _percentController = TextEditingController();
+  final _capController = TextEditingController();
+
+  final List<TextEditingController> _controllers = [];
+
+  @override
+  void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+
+    final List<TextEditingController> _controllers = [
+      _amountController,
+      _percentController,
+      _capController,
+      ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+
+    // TODO
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+
+    final updatedGateway = companyGateway.rebuild((b) => b
+      //..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
+      //..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : null
+    );
+
+    if (companyGateway != updatedGateway) {
+      viewModel.onChanged(updatedGateway);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return FormCard(
+      children: <Widget>[
+        DecoratedFormField(
+          label: localization.feeAmount,
+          controller: _amountController,
+        ),
+        DecoratedFormField(
+          label: localization.feePercent,
+          controller: _percentController,
+        ),
+        DecoratedFormField(
+          label: localization.feeCap,
+          controller: _capController,
         ),
       ],
     );
