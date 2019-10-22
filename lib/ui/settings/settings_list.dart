@@ -67,21 +67,25 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.globe,
         ),
-        SettingsListTile(
-          section: kSettingsOnlinePayments,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.creditCard,
-        ),
-        SettingsListTile(
-          section: kSettingsTaxRates,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.percent,
-        ),
-        SettingsListTile(
-          section: kSettingsProducts,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.cube,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsOnlinePayments,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.creditCard,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsTaxRates,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.percent,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsProducts,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.cube,
+          ),
+        /*
         if (showAll)
           SettingsListTile(
             section: kSettingsNotifications,
@@ -94,6 +98,7 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
             icon: FontAwesomeIcons.fileExport,
           ),
+         */
         if (showAll)
           SettingsListTile(
             section: kSettingsDeviceSettings,
@@ -115,6 +120,7 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.layerGroup,
         ),
+        /*
         SettingsListTile(
           section: kSettingsInvoiceSettings,
           viewModel: viewModel,
@@ -137,17 +143,18 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
             icon: FontAwesomeIcons.link,
           ),
+         */
         SettingsListTile(
           section: kSettingsEmailSettings,
           viewModel: viewModel,
           icon: FontAwesomeIcons.solidEnvelope,
         ),
+        /*
         SettingsListTile(
           section: kSettingsTemplatesAndReminders,
           viewModel: viewModel,
           icon: FontAwesomeIcons.solidClock,
         ),
-        /*
         SettingsListTile(
           section: kSettingsCreditCardsAndBanks,
           viewModel: viewModel,
