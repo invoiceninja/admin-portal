@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,17 +46,14 @@ class _EmailSettingsState extends State<EmailSettings>
   void initState() {
     super.initState();
 
-    final Delta delta = Delta()..insert('\n');
-    final doc = NotusDocument.fromDelta(delta);
-
     _tabController = TabController(vsync: this, length: 2);
-    _zefyrController = ZefyrController(doc);
     _focusNode = FocusScopeNode();
     _zefyrNode = FocusNode();
   }
 
   @override
   void dispose() {
+    _zefyrController.removeListener(_onZefyrChanged);
     _zefyrController.dispose();
     _tabController.dispose();
     _focusNode.dispose();
@@ -79,8 +77,11 @@ class _EmailSettingsState extends State<EmailSettings>
 
     final settings = widget.viewModel.settings;
     final signature = settings.emailFooter ?? '';
+
     // return NotusDocument.fromJson(jsonDecode(contents));
-    _zefyrController.compose(Delta()..insert(signature));
+    final doc = NotusDocument.fromJson(jsonDecode(signature));
+    _zefyrController = ZefyrController(doc)..addListener(_onZefyrChanged);
+    //_zefyrController.compose(Delta()..insert(signature));
 
     //_replyToEmailController.text = ;
 
@@ -88,6 +89,13 @@ class _EmailSettingsState extends State<EmailSettings>
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
+  }
+
+  void _onZefyrChanged() {
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    viewModel.onSettingsChanged(settings.rebuild(
+        (b) => b..emailFooter = jsonEncode(_zefyrController.document)));
   }
 
   void _onChanged() {
@@ -100,15 +108,6 @@ class _EmailSettingsState extends State<EmailSettings>
     */
   }
 
-  void _onSavePressed(BuildContext context) {
-    final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
-    viewModel.onSettingsChanged(settings.rebuild((b) => b
-        ..emailFooter = jsonEncode(_zefyrController.document)
-    ));
-    viewModel.onSavePressed(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -117,7 +116,7 @@ class _EmailSettingsState extends State<EmailSettings>
 
     return SettingsScaffold(
       title: localization.emailSettings,
-      onSavePressed: _onSavePressed,
+      onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _tabController,
@@ -176,7 +175,7 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.enableMarkup,
                     helpLabel: localization.enableMarkupHelp,
                     value: false,
-                    iconData: FontAwesomeIcons.link,
+                    iconData: FontAwesomeIcons.envelope,
                     showBlank: state.settingsUIState.isFiltered,
                   ),
                 ],
@@ -221,13 +220,15 @@ class _EmailSettingsState extends State<EmailSettings>
           ),
           Container(
             color: Colors.white,
-            child: ZefyrScaffold(
-              child: ZefyrEditor(
-                padding: EdgeInsets.all(16),
-                controller: _zefyrController,
-                focusNode: _zefyrNode,
-              ),
-            ),
+            child: _zefyrController == null
+                ? LoadingIndicator()
+                : ZefyrScaffold(
+                    child: ZefyrEditor(
+                      padding: EdgeInsets.all(16),
+                      controller: _zefyrController,
+                      focusNode: _zefyrNode,
+                    ),
+                  ),
           ),
         ],
       ),
