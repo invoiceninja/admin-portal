@@ -75,10 +75,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
         ],
       ),
       body: AppTabForm(
-        focusNode: _focusNode,
         formKey: _formKey,
-        controller: _controller,
-        tabBarKey: ValueKey(state.settingsUIState.updatedAt),
+        focusNode: _focusNode,
+        tabController: _controller,
         children: <Widget>[
           ListView(
             children: <Widget>[

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -19,7 +20,7 @@ class ClientPortal extends StatefulWidget {
 class _ClientPortalState extends State<ClientPortal>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final FocusScopeNode _node = FocusScopeNode();
+  final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
 
   bool autoValidate = false;
@@ -96,14 +97,15 @@ class _ClientPortalState extends State<ClientPortal>
           ),
         ],
       ),
-      body: FocusScope(
-        node: _node,
-        child: Form(
-          key: _formKey,
-          child: TabBarView(
-
-          ),
-        ),
+      body: AppTabForm(
+        tabController: _controller,
+        formKey: _formKey,
+        focusNode: _focusNode,
+        children: <Widget>[
+          ListView(),
+          ListView(),
+          ListView(),
+        ],
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppForm extends StatelessWidget {
   const AppForm({
@@ -26,26 +28,28 @@ class AppTabForm extends StatelessWidget {
     @required this.children,
     @required this.formKey,
     @required this.focusNode,
-    @required this.controller,
-    @required this.tabBarKey,
+    @required this.tabController,
+    this.tabBarKey,
   });
 
   final FocusNode focusNode;
   final GlobalKey<FormState> formKey;
   final List<Widget> children;
-  final TabController controller;
+  final TabController tabController;
   final Key tabBarKey;
 
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+
     return FocusScope(
       node: focusNode,
       child: Form(
         key: formKey,
         child: TabBarView(
-          key: tabBarKey,
+          key: tabBarKey ?? ValueKey(state.settingsUIState.updatedAt),
           children: children,
-          controller: controller,
+          controller: tabController,
         ),
       ),
     );

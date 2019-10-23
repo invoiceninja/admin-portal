@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
@@ -126,108 +127,106 @@ class _EmailSettingsState extends State<EmailSettings>
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: TabBarView(
-          key: ValueKey(state.settingsUIState.updatedAt),
-          controller: _tabController,
-          children: <Widget>[
-            ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    InputDecorator(
-                      decoration: InputDecoration(
-                        labelText: localization.emailDesign,
-                      ),
-                      isEmpty: false,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: kEmailDesignPlain,
-                          onChanged: (value) => null,
-                          isExpanded: true,
-                          isDense: true,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text(localization.plain),
-                              value: kEmailDesignPlain,
-                            ),
-                            DropdownMenuItem(
-                              child: Text(localization.light),
-                              value: kEmailDesignLight,
-                            ),
-                            DropdownMenuItem(
-                              child: Text(localization.dark),
-                              value: kEmailDesignDark,
-                            ),
-                            DropdownMenuItem(
-                              child: Text(localization.custom),
-                              value: kEmailDesignCustom,
-                            ),
-                          ],
-                        ),
+      body: AppTabForm(
+        tabController: _tabController,
+        formKey: _formKey,
+        focusNode: _focusNode,
+        children: <Widget>[
+          ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: localization.emailDesign,
+                    ),
+                    isEmpty: false,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: kEmailDesignPlain,
+                        onChanged: (value) => null,
+                        isExpanded: true,
+                        isDense: true,
+                        items: [
+                          DropdownMenuItem(
+                            child: Text(localization.plain),
+                            value: kEmailDesignPlain,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.light),
+                            value: kEmailDesignLight,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.dark),
+                            value: kEmailDesignDark,
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.custom),
+                            value: kEmailDesignCustom,
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(height: 10),
-                    BoolDropdownButton(
-                      label: localization.enableMarkup,
-                      helpLabel: localization.enableMarkupHelp,
-                      value: false,
-                      iconData: FontAwesomeIcons.link,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                  ],
-                ),
-                FormCard(
-                  children: <Widget>[
-                    DecoratedFormField(
-                      label: localization.replyToEmail,
-                      controller: _replyToEmailController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    DecoratedFormField(
-                      label: localization.bccEmail,
-                      controller: _bccEmailController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                  ],
-                ),
-                FormCard(
-                  children: <Widget>[
-                    BoolDropdownButton(
-                      label: localization.attachPdf,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileInvoice,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                    BoolDropdownButton(
-                      label: localization.attachDocuments,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileImage,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                    BoolDropdownButton(
-                      label: localization.attachUbl,
-                      value: false,
-                      iconData: FontAwesomeIcons.fileArchive,
-                      showBlank: state.settingsUIState.isFiltered,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Container(
-              color: Colors.white,
-              child: ZefyrScaffold(
-                child: ZefyrEditor(
-                  padding: EdgeInsets.all(16),
-                  controller: _zefyrController,
-                  focusNode: _focusNode,
-                ),
+                  ),
+                  SizedBox(height: 10),
+                  BoolDropdownButton(
+                    label: localization.enableMarkup,
+                    helpLabel: localization.enableMarkupHelp,
+                    value: false,
+                    iconData: FontAwesomeIcons.link,
+                    showBlank: state.settingsUIState.isFiltered,
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    label: localization.replyToEmail,
+                    controller: _replyToEmailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  DecoratedFormField(
+                    label: localization.bccEmail,
+                    controller: _bccEmailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.attachPdf,
+                    value: false,
+                    iconData: FontAwesomeIcons.fileInvoice,
+                    showBlank: state.settingsUIState.isFiltered,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.attachDocuments,
+                    value: false,
+                    iconData: FontAwesomeIcons.fileImage,
+                    showBlank: state.settingsUIState.isFiltered,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.attachUbl,
+                    value: false,
+                    iconData: FontAwesomeIcons.fileArchive,
+                    showBlank: state.settingsUIState.isFiltered,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            color: Colors.white,
+            child: ZefyrScaffold(
+              child: ZefyrEditor(
+                padding: EdgeInsets.all(16),
+                controller: _zefyrController,
+                focusNode: _focusNode,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
