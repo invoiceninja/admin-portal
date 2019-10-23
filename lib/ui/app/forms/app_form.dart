@@ -32,7 +32,7 @@ class AppTabForm extends StatelessWidget {
     this.tabBarKey,
   });
 
-  final FocusNode focusNode;
+  final FocusScopeNode focusNode;
   final GlobalKey<FormState> formKey;
   final List<Widget> children;
   final TabController tabController;

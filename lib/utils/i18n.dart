@@ -14,6 +14,11 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'subdomain': 'Subdomain',
+      'domain': 'Domain',
+      'link_type': 'Link Type',
+      'custom_subdomain': 'Custom Subdomain',
+      'custom_domain': 'Custom Domain',
       'email_signature': 'Email Signature',
       'enable_email_markup_help':
           'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
@@ -15050,6 +15055,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get dark => _localizedValues[localeCode]['dark'];
 
   String get emailSignature => _localizedValues[localeCode]['email_signature'];
+
+  String get linkType => _localizedValues[localeCode]['link_type'];
+
+  String get customSubdomain => _localizedValues[localeCode]['custom_subdomain'];
+
+  String get customDomain => _localizedValues[localeCode]['custom_domain'];
+
+  String get domain => _localizedValues[localeCode]['domain'];
+
+  String get subdomain => _localizedValues[localeCode]['subdomain'];
 
 
   String lookup(String key) {

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -25,7 +27,9 @@ class _ClientPortalState extends State<ClientPortal>
 
   bool autoValidate = false;
 
-  final _nameController = TextEditingController();
+  final _subdomainController = TextEditingController();
+  final _domainController = TextEditingController();
+  final _iFrameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -47,7 +51,11 @@ class _ClientPortalState extends State<ClientPortal>
 
   @override
   void didChangeDependencies() {
-    _controllers = [_nameController];
+    _controllers = [
+      _subdomainController,
+      _domainController,
+      _iFrameController,
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -87,7 +95,7 @@ class _ClientPortalState extends State<ClientPortal>
         controller: _controller,
         tabs: [
           Tab(
-            text: localization.credentials,
+            text: localization.settings,
           ),
           Tab(
             text: localization.settings,
@@ -102,7 +110,42 @@ class _ClientPortalState extends State<ClientPortal>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(),
+          ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: localization.linkType,
+                    ),
+                    //isEmpty: false,
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                          //value: companyGateway.gatewayTypeId,
+                          isExpanded: true,
+                          isDense: true,
+                          //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..gatewayTypeId = value)),
+                          items: []),
+                    ),
+                  ),
+                  DecoratedFormField(
+                    label: localization.subdomain,
+                    controller: _subdomainController,
+                  ),
+                  DecoratedFormField(
+                    label: localization.domain,
+                    controller: _domainController,
+                    keyboardType: TextInputType.url,
+                  ),
+                  DecoratedFormField(
+                    label: 'iFrame',
+                    controller: _iFrameController,
+                    keyboardType: TextInputType.url,
+                  ),
+                ],
+              )
+            ],
+          ),
           ListView(),
           ListView(),
         ],

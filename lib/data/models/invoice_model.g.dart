@@ -152,6 +152,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'terms',
+      serializers.serialize(object.terms,
+          specifiedType: const FullType(String)),
+      'footer',
+      serializers.serialize(object.footer,
+          specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -206,9 +212,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'filename',
       serializers.serialize(object.filename,
           specifiedType: const FullType(String)),
-      'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
       'invoice_items',
       serializers.serialize(object.invoiceItems,
           specifiedType: const FullType(
@@ -222,6 +225,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('client_id')
         ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.designId != null) {
+      result
+        ..add('design_id')
+        ..add(serializers.serialize(object.designId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -325,6 +334,18 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.privateNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'terms':
+          result.terms = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'footer':
+          result.footer = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'design_id':
+          result.designId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -396,10 +417,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'filename':
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'invoice_items':
           result.invoiceItems.replace(serializers.deserialize(value,
@@ -997,6 +1014,12 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String privateNotes;
   @override
+  final String terms;
+  @override
+  final String footer;
+  @override
+  final String designId;
+  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -1033,8 +1056,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String filename;
   @override
-  final SettingsEntity settings;
-  @override
   final BuiltList<InvoiceItemEntity> invoiceItems;
   @override
   final BuiltList<InvitationEntity> invitations;
@@ -1068,6 +1089,9 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.dueDate,
       this.publicNotes,
       this.privateNotes,
+      this.terms,
+      this.footer,
+      this.designId,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -1086,7 +1110,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.customTextValue1,
       this.customTextValue2,
       this.filename,
-      this.settings,
       this.invoiceItems,
       this.invitations,
       this.isChanged,
@@ -1126,6 +1149,12 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'privateNotes');
+    }
+    if (terms == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'terms');
+    }
+    if (footer == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'footer');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxName1');
@@ -1181,9 +1210,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (filename == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'filename');
     }
-    if (settings == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'settings');
-    }
     if (invoiceItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceItems');
     }
@@ -1214,6 +1240,9 @@ class _$InvoiceEntity extends InvoiceEntity {
         dueDate == other.dueDate &&
         publicNotes == other.publicNotes &&
         privateNotes == other.privateNotes &&
+        terms == other.terms &&
+        footer == other.footer &&
+        designId == other.designId &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -1232,7 +1261,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         customTextValue1 == other.customTextValue1 &&
         customTextValue2 == other.customTextValue2 &&
         filename == other.filename &&
-        settings == other.settings &&
         invoiceItems == other.invoiceItems &&
         invitations == other.invitations &&
         isChanged == other.isChanged &&
@@ -1264,17 +1292,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
-                                                                                customValue1.hashCode),
-                                                                            customValue2.hashCode),
-                                                                        customTaxes1.hashCode),
-                                                                    customTaxes2.hashCode),
-                                                                hasExpenses.hashCode),
-                                                            quoteInvoiceId.hashCode),
-                                                        customTextValue1.hashCode),
-                                                    customTextValue2.hashCode),
-                                                filename.hashCode),
-                                            settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode),
+                                                                                autoBill.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customTaxes1.hashCode),
+                                                                customTaxes2.hashCode),
+                                                            hasExpenses.hashCode),
+                                                        quoteInvoiceId.hashCode),
+                                                    customTextValue1.hashCode),
+                                                customTextValue2.hashCode),
+                                            filename.hashCode),
                                         invoiceItems.hashCode),
                                     invitations.hashCode),
                                 isChanged.hashCode),
@@ -1300,6 +1328,9 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('dueDate', dueDate)
           ..add('publicNotes', publicNotes)
           ..add('privateNotes', privateNotes)
+          ..add('terms', terms)
+          ..add('footer', footer)
+          ..add('designId', designId)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -1318,7 +1349,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('customTextValue1', customTextValue1)
           ..add('customTextValue2', customTextValue2)
           ..add('filename', filename)
-          ..add('settings', settings)
           ..add('invoiceItems', invoiceItems)
           ..add('invitations', invitations)
           ..add('isChanged', isChanged)
@@ -1381,6 +1411,18 @@ class InvoiceEntityBuilder
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+
+  String _terms;
+  String get terms => _$this._terms;
+  set terms(String terms) => _$this._terms = terms;
+
+  String _footer;
+  String get footer => _$this._footer;
+  set footer(String footer) => _$this._footer = footer;
+
+  String _designId;
+  String get designId => _$this._designId;
+  set designId(String designId) => _$this._designId = designId;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1459,11 +1501,6 @@ class InvoiceEntityBuilder
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
 
-  SettingsEntityBuilder _settings;
-  SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
-  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
-
   ListBuilder<InvoiceItemEntity> _invoiceItems;
   ListBuilder<InvoiceItemEntity> get invoiceItems =>
       _$this._invoiceItems ??= new ListBuilder<InvoiceItemEntity>();
@@ -1519,6 +1556,9 @@ class InvoiceEntityBuilder
       _dueDate = _$v.dueDate;
       _publicNotes = _$v.publicNotes;
       _privateNotes = _$v.privateNotes;
+      _terms = _$v.terms;
+      _footer = _$v.footer;
+      _designId = _$v.designId;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -1537,7 +1577,6 @@ class InvoiceEntityBuilder
       _customTextValue1 = _$v.customTextValue1;
       _customTextValue2 = _$v.customTextValue2;
       _filename = _$v.filename;
-      _settings = _$v.settings?.toBuilder();
       _invoiceItems = _$v.invoiceItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _isChanged = _$v.isChanged;
@@ -1582,6 +1621,9 @@ class InvoiceEntityBuilder
               dueDate: dueDate,
               publicNotes: publicNotes,
               privateNotes: privateNotes,
+              terms: terms,
+              footer: footer,
+              designId: designId,
               taxName1: taxName1,
               taxRate1: taxRate1,
               taxName2: taxName2,
@@ -1600,7 +1642,6 @@ class InvoiceEntityBuilder
               customTextValue1: customTextValue1,
               customTextValue2: customTextValue2,
               filename: filename,
-              settings: settings.build(),
               invoiceItems: invoiceItems.build(),
               invitations: invitations.build(),
               isChanged: isChanged,
@@ -1613,8 +1654,6 @@ class InvoiceEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'settings';
-        settings.build();
         _$failedField = 'invoiceItems';
         invoiceItems.build();
         _$failedField = 'invitations';

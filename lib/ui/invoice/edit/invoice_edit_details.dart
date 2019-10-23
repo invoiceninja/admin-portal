@@ -70,8 +70,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customValue2, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text = invoice.settings.defaultInvoiceDesignId != null
-        ? kInvoiceDesigns[invoice.settings.defaultInvoiceDesignId]
+    _designController.text = invoice.designId != null
+        ? kInvoiceDesigns[invoice.designId]
         : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -296,15 +296,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
-            invoice.settings.defaultInvoiceDesignId ==
-                    null // TODO Remove check in v2
-                ? SizedBox()
-                : PopupMenuButton<String>(
+            PopupMenuButton<String>(
                     padding: EdgeInsets.zero,
                     onSelected: (String design) {
                       _designController.text = design;
                       viewModel.onChanged(invoice.rebuild(
-                          (b) => b..settings.defaultInvoiceDesignId = design));
+                          (b) => b..designId = design));
                     },
                     child: InkWell(
                       child: IgnorePointer(

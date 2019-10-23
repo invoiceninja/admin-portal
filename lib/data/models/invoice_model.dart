@@ -48,6 +48,7 @@ class InvoiceFields {
   static const String invoiceDate = 'invoiceDate';
   static const String dueDate = 'dueDate';
   static const String terms = 'terms';
+  static const String footer = 'footer';
   static const String partial = 'partial';
   static const String partialDueDate = 'partialDueDate';
   static const String publicNotes = 'publicNotes';
@@ -71,7 +72,6 @@ abstract class InvoiceEntity extends Object
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      settings: SettingsEntity(),
       amount: 0.0,
       balance: 0.0,
       clientId: '',
@@ -83,6 +83,9 @@ abstract class InvoiceEntity extends Object
       dueDate: '',
       publicNotes: '',
       privateNotes: '',
+      terms: '',
+      footer: '',
+      designId: '1',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
@@ -156,6 +159,14 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
+
+  String get terms;
+
+  String get footer;
+
+  @nullable
+  @BuiltValueField(wireName: 'design_id')
+  String get designId;
 
   /*
   @BuiltValueField(wireName: 'frequency_id')
@@ -234,8 +245,6 @@ abstract class InvoiceEntity extends Object
   String get customTextValue2;
 
   String get filename;
-
-  SettingsEntity get settings;
 
   @override
   @BuiltValueField(wireName: 'invoice_items')

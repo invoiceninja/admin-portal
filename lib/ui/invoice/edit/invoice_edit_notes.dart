@@ -38,8 +38,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     final invoice = widget.viewModel.invoice;
     _publicNotesController.text = invoice.publicNotes;
     _privateNotesController.text = invoice.privateNotes;
-    _termsController.text = invoice.settings.defaultInvoiceTerms;
-    _footerController.text = invoice.settings.defaultInvoiceFooter;
+    _termsController.text = invoice.terms;
+    _footerController.text = invoice.footer;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -61,8 +61,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     final invoice = widget.viewModel.invoice.rebuild((b) => b
       ..publicNotes = _publicNotesController.text.trim()
       ..privateNotes = _privateNotesController.text.trim()
-      ..settings.defaultInvoiceTerms = _termsController.text.trim()
-      ..settings.defaultInvoiceFooter = _footerController.text.trim());
+      ..terms = _termsController.text.trim()
+      ..footer = _footerController.text.trim());
     if (invoice != widget.viewModel.invoice) {
       widget.viewModel.onChanged(invoice);
     }
