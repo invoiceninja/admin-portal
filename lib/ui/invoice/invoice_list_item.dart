@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class InvoiceListItem extends StatelessWidget {
+class InvoiceListItem extends StatefulWidget {
   const InvoiceListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -19,6 +19,8 @@ class InvoiceListItem extends StatelessWidget {
     @required this.client,
     @required this.filter,
     @required this.hasDocuments,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -29,49 +31,84 @@ class InvoiceListItem extends StatelessWidget {
   final ClientEntity client;
   final String filter;
   final bool hasDocuments;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
+  @override
+  _InvoiceListItemState createState() => _InvoiceListItemState();
+}
+
+class _InvoiceListItemState extends State<InvoiceListItem>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
+    final listUIState = invoiceUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (invoice.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
+        ? (widget.invoice.matchesFilterValue(widget.filter) ??
+            widget.client.matchesFilterValue(widget.filter))
         : null;
 
-    final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
+    final invoiceStatusId = (widget.invoice.quoteInvoiceId ?? '').isNotEmpty
         ? kInvoiceStatusApproved
-        : invoice.invoiceStatusId;
+        : widget.invoice.invoiceStatusId;
+
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
 
     return DismissibleEntity(
-      isSelected: invoice.id ==
+      isSelected: widget.invoice.id ==
           (uiState.isEditing
               ? invoiceUIState.editing.id
               : invoiceUIState.selectedId),
       userCompany: state.userCompany,
-      entity: invoice,
-      onEntityAction: onEntityAction,
+      entity: widget.invoice,
+      onEntityAction: widget.onEntityAction,
       child: ListTile(
-        onTap: onTap,
-        onLongPress: onLongPress,
+        onTap: isInMultiselect
+            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
+            : widget.onTap,
+        onLongPress: widget.onLongPress,
+        leading: showCheckbox
+            ? FadeTransition(
+                opacity: _multiselectCheckboxAnim,
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    value: widget.isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => widget.onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Text(
-                  client.displayName,
+                  widget.client.displayName,
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(
                   formatNumber(
-                      invoice.balance > 0 ? invoice.balance : invoice.amount,
+                      widget.invoice.balance > 0
+                          ? widget.invoice.balance
+                          : widget.invoice.amount,
                       context,
-                      clientId: invoice.clientId),
+                      clientId: widget.invoice.clientId),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -83,14 +120,14 @@ class InvoiceListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text((invoice.invoiceNumber +
+                      ? Text((widget.invoice.invoiceNumber +
                               ' • ' +
                               formatDate(
-                                  invoice.dueDate.isNotEmpty
-                                      ? invoice.dueDate
-                                      : invoice.invoiceDate,
+                                  widget.invoice.dueDate.isNotEmpty
+                                      ? widget.invoice.dueDate
+                                      : widget.invoice.invoiceDate,
                                   context) +
-                              (hasDocuments ? '  📎' : ''))
+                              (widget.hasDocuments ? '  📎' : ''))
                           .trim())
                       : Text(
                           filterMatch,
@@ -99,21 +136,39 @@ class InvoiceListItem extends StatelessWidget {
                         ),
                 ),
                 Text(
-                    invoice.isPastDue
+                    widget.invoice.isPastDue
                         ? localization.pastDue
                         : localization
                             .lookup('invoice_status_$invoiceStatusId'),
                     style: TextStyle(
-                      color: invoice.isPastDue
+                      color: widget.invoice.isPastDue
                           ? Colors.red
                           : InvoiceStatusColors.colors[invoiceStatusId],
                     )),
               ],
             ),
-            EntityStateLabel(invoice),
+            EntityStateLabel(widget.invoice),
           ],
         ),
       ),
     );
+  }
+
+  Animation _multiselectCheckboxAnim;
+  AnimationController _multiselectCheckboxAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _multiselectCheckboxAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(_multiselectCheckboxAnimController);
+  }
+
+  @override
+  void dispose() {
+    _multiselectCheckboxAnimController.dispose();
+    super.dispose();
   }
 }

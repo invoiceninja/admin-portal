@@ -49,7 +49,7 @@ class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
         ? widget.companyGateway.matchesFilterValue(widget.filter)
         : null;
     final subtitle = filterMatch;
-    final listUIState = uiState.companyGatewayUIState.listUIState;
+    final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 

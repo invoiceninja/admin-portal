@@ -321,11 +321,20 @@ class FilterInvoicesByCustom2 implements PersistUI {
 
 void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
     EntityAction action) async {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          invoices.length == 1,
+      'Cannot perform this action on more than one invoice');
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final invoice = invoices[0];
+  final invoice = invoices.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -376,5 +385,50 @@ void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
       store.dispatch(DeleteInvoiceRequest(
           snackBarCompleter(context, localization.deletedInvoice), invoice.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.invoiceListState.isInMultiselect()) {
+        store.dispatch(StartInvoiceMultiselect(context: context));
+      }
+
+      if (invoices.isEmpty) {
+        break;
+      }
+
+      for (final invoice in invoices) {
+        if (!store.state.invoiceListState.isSelected(invoice)) {
+          store.dispatch(
+              AddToInvoiceMultiselect(context: context, entity: invoice));
+        } else {
+          store.dispatch(
+              RemoveFromInvoiceMultiselect(context: context, entity: invoice));
+        }
+      }
+      break;
   }
+}
+
+class StartInvoiceMultiselect {
+  StartInvoiceMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToInvoiceMultiselect {
+  AddToInvoiceMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromInvoiceMultiselect {
+  RemoveFromInvoiceMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearInvoiceMultiselect {
+  ClearInvoiceMultiselect({@required this.context});
+
+  final BuildContext context;
 }
