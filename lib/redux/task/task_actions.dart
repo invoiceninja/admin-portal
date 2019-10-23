@@ -277,7 +277,7 @@ class FilterTasksByEntity implements PersistUI {
 }
 
 void handleTaskAction(
-    BuildContext context, List<TaskEntity> tasks, EntityAction action) {
+    BuildContext context, List<BaseEntity> tasks, EntityAction action) {
   assert(
       [
             EntityAction.restore,
@@ -292,7 +292,7 @@ void handleTaskAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final task = tasks.first;
+  final task = tasks.first as TaskEntity;
 
   switch (action) {
     case EntityAction.edit:

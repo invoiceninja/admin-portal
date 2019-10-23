@@ -339,8 +339,8 @@ class ConvertQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
-    EntityAction action) async {
+Future handleQuoteAction(
+    BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
   assert(
       [
             EntityAction.restore,
@@ -350,9 +350,10 @@ Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
           ].contains(action) ||
           quotes.length == 1,
       'Cannot perform this action on more than one quote');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final quote = quotes.first;
+  final quote = quotes.first as InvoiceEntity;
 
   switch (action) {
     case EntityAction.edit:

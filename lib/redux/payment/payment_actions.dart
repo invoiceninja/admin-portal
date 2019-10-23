@@ -252,7 +252,7 @@ class FilterPaymentsByEntity implements PersistUI {
 }
 
 void handlePaymentAction(
-    BuildContext context, List<PaymentEntity> payments, EntityAction action) {
+    BuildContext context, List<BaseEntity> payments, EntityAction action) {
   assert(
       [
             EntityAction.restore,
@@ -262,6 +262,7 @@ void handlePaymentAction(
           ].contains(action) ||
           payments.length == 1,
       'Cannot perform this action on more than one payment');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final payment = payments.first;

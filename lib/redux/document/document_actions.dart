@@ -230,7 +230,7 @@ class FilterDocumentsByEntity implements PersistUI {
 }
 
 void handleDocumentAction(
-    BuildContext context, List<DocumentEntity> documents, EntityAction action) {
+    BuildContext context, List<BaseEntity> documents, EntityAction action) {
   assert(
   [
     EntityAction.restore,

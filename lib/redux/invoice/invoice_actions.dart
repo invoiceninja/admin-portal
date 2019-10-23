@@ -319,7 +319,7 @@ class FilterInvoicesByCustom2 implements PersistUI {
   final String value;
 }
 
-void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
+void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   assert(
       [
@@ -330,11 +330,12 @@ void handleInvoiceAction(BuildContext context, List<InvoiceEntity> invoices,
           ].contains(action) ||
           invoices.length == 1,
       'Cannot perform this action on more than one invoice');
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final invoice = invoices.first;
+  final invoice = invoices.first as InvoiceEntity;
 
   switch (action) {
     case EntityAction.edit:

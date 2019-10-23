@@ -267,7 +267,7 @@ class FilterVendorsByEntity implements PersistUI {
 }
 
 void handleVendorAction(
-    BuildContext context, List<VendorEntity> vendors, EntityAction action) {
+    BuildContext context, List<BaseEntity> vendors, EntityAction action) {
   assert(
       [
             EntityAction.restore,
@@ -282,7 +282,7 @@ void handleVendorAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final vendor = vendors.first;
+  final vendor = vendors.first as VendorEntity;
 
   switch (action) {
     case EntityAction.edit:

@@ -243,7 +243,7 @@ class FilterProjectsByEntity implements PersistUI {
 }
 
 void handleProjectAction(
-    BuildContext context, List<ProjectEntity> projects, EntityAction action) {
+    BuildContext context, List<BaseEntity> projects, EntityAction action) {
   assert(
       [
             EntityAction.restore,
@@ -257,7 +257,7 @@ void handleProjectAction(
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
-  final project = projects.first;
+  final project = projects.first as ProjectEntity;
 
   switch (action) {
     case EntityAction.edit:

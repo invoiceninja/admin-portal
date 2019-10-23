@@ -237,7 +237,7 @@ class FilterTaxRatesByEntity implements PersistUI {
 }
 
 void handleTaxRateAction(
-    BuildContext context, List<TaxRateEntity> taxRates, EntityAction action) {
+    BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
   assert(
       [
             EntityAction.restore,

@@ -246,7 +246,7 @@ class FilterExpensesByEntity implements PersistUI {
 }
 
 void handleExpenseAction(
-    BuildContext context, List<ExpenseEntity> expenses, EntityAction action) {
+    BuildContext context, List<BaseEntity> expenses, EntityAction action) {
   assert(
       [
             EntityAction.restore,
@@ -261,14 +261,15 @@ void handleExpenseAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final expense = expenses.first;
+  final expense = expenses.first as ExpenseEntity;
 
   switch (action) {
     case EntityAction.edit:
       store.dispatch(EditExpense(context: context, expense: expense));
       break;
     case EntityAction.clone:
-      store.dispatch(EditExpense(context: context, expense: expense.clone));
+      store.dispatch(EditExpense(
+          context: context, expense: expense.clone));
       break;
     case EntityAction.newInvoice:
       final item = convertExpenseToInvoiceItem(
@@ -281,8 +282,8 @@ void handleExpenseAction(
           context: context));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(
-          ViewInvoice(invoiceId: expense.invoiceId, context: context));
+      store.dispatch(ViewInvoice(
+          invoiceId: expense.invoiceId, context: context));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreExpenseRequest(
