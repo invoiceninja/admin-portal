@@ -80,8 +80,8 @@ class StubListVM {
           store.dispatch(ViewStub(stubId: stub.id, context: context));
         },
       onEntityAction:
-          (BuildContext context, BaseEntity stub, EntityAction action) =>
-          handleStubAction(context, stub, action),
+          (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
+          handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -95,7 +95,7 @@ class StubListVM {
   final bool isLoaded;
   final Function(BuildContext, StubEntity) onStubTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 

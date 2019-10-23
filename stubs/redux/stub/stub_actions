@@ -242,11 +242,12 @@ class FilterStubsByEntity implements PersistUI {
 
 
 void handleStubAction(
-    BuildContext context, StubEntity stub, EntityAction action) {
+    BuildContext context, List<BaseEntity> stubs, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final stub = stubs.first as StubEntity;
 
   switch (action) {
     case EntityAction.edit:
@@ -264,5 +265,50 @@ void handleStubAction(
       store.dispatch(DeleteStubRequest(
           snackBarCompleter(context, localization.deletedStub), stub.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.stubListState.isInMultiselect()) {
+        store.dispatch(StartStubMultiselect(context: context));
+      }
+
+      if (stubs.isEmpty) {
+        break;
+      }
+
+      for (final stub in stubs) {
+        if (!store.state.stubListState.isSelected(stub)) {
+          store.dispatch(
+              AddToStubMultiselect(context: context, entity: stub));
+        } else {
+          store.dispatch(
+              RemoveFromStubMultiselect(context: context, entity: stub));
+        }
+      }
+      break;
   }
+}
+
+class StartStubMultiselect {
+  StartStubMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToStubMultiselect {
+  AddToStubMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromStubMultiselect {
+  RemoveFromStubMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearStubMultiselect {
+  ClearStubMultiselect({@required this.context});
+
+  final BuildContext context;
 }
