@@ -146,6 +146,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             ),
           ],
         ),
+        // TODO renable this code
+        /*
         FormCard(children: <Widget>[
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
@@ -164,6 +166,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                 client.rebuild((b) => b..settings.sendReminders = value)),
           ),
         ]),
+         */
       ],
     );
   }
