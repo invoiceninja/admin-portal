@@ -64,6 +64,11 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTasksByCustom1>(_filterTasksByCustom1),
   TypedReducer<ListUIState, FilterTasksByCustom2>(_filterTasksByCustom2),
   TypedReducer<ListUIState, FilterTasksByEntity>(_filterTasksByClient),
+  TypedReducer<ListUIState, StartTaskMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToTaskMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearTaskMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterTasksByClient(
@@ -133,6 +138,28 @@ TaskEntity _removeTaskTime(TaskEntity task, DeleteTaskTime action) {
 
 TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
   return task.updateTaskTime(action.taskTime, action.index);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState taskListState, StartTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState taskListState, AddToTaskMultiselect action) {
+  return taskListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState taskListState, RemoveFromTaskMultiselect action) {
+  return taskListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState taskListState, ClearTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final tasksReducer = combineReducers<TaskState>([
