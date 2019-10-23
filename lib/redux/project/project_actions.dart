@@ -244,10 +244,20 @@ class FilterProjectsByEntity implements PersistUI {
 
 void handleProjectAction(
     BuildContext context, List<ProjectEntity> projects, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          projects.length == 1,
+      'Cannot perform this action on more than one project');
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
-  final project = projects[0];
+  final project = projects.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -292,5 +302,50 @@ void handleProjectAction(
               context, AppLocalization.of(context).deletedProject),
           project.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.projectListState.isInMultiselect()) {
+        store.dispatch(StartProjectMultiselect(context: context));
+      }
+
+      if (projects.isEmpty) {
+        break;
+      }
+
+      for (final project in projects) {
+        if (!store.state.projectListState.isSelected(project)) {
+          store.dispatch(
+              AddToProjectMultiselect(context: context, entity: project));
+        } else {
+          store.dispatch(
+              RemoveFromProjectMultiselect(context: context, entity: project));
+        }
+      }
+      break;
   }
+}
+
+class StartProjectMultiselect {
+  StartProjectMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToProjectMultiselect {
+  AddToProjectMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromProjectMultiselect {
+  RemoveFromProjectMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearProjectMultiselect {
+  ClearProjectMultiselect({@required this.context});
+
+  final BuildContext context;
 }

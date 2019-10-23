@@ -41,6 +41,7 @@ import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -324,7 +325,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             TaskScreen.route: (context) => TaskScreen(),
             TaskViewScreen.route: (context) => TaskViewScreen(),
             TaskEditScreen.route: (context) => TaskEditScreen(),
-            ProjectScreen.route: (context) => ProjectScreen(),
+            ProjectScreen.route: (context) => ProjectScreenBuilder(),
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
             PaymentScreen.route: (context) => PaymentScreenBuilder(),
