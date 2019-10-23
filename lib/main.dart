@@ -62,6 +62,7 @@ import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -322,7 +323,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-            VendorScreen.route: (context) => VendorScreen(),
+            VendorScreen.route: (context) => VendorScreenBuilder(),
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
             TaskScreen.route: (context) => TaskScreenBuilder(),

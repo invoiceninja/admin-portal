@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class VendorListItem extends StatelessWidget {
+class VendorListItem extends StatefulWidget {
   const VendorListItem({
     @required this.userCompany,
     @required this.onEntityAction,
@@ -16,67 +16,92 @@ class VendorListItem extends StatelessWidget {
     //@required this.onCheckboxChanged,
     @required this.vendor,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
-  //final ValueChanged<bool> onCheckboxChanged;
   final VendorEntity vendor;
   final String filter;
 
   static final vendorItemKey = (int id) => Key('__vendor_item_${id}__');
 
   @override
+  _VendorListItemState createState() => _VendorListItemState();
+}
+
+class _VendorListItemState extends State<VendorListItem>
+    with TickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final vendorUIState = uiState.vendorUIState;
+    final listUIState = vendorUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? vendor.matchesFilterValue(filter)
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
+
+    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
+        ? widget.vendor.matchesFilterValue(widget.filter)
         : null;
 
     return DismissibleEntity(
-      isSelected: vendor.id ==
+      isSelected: widget.vendor.id ==
           (uiState.isEditing
               ? vendorUIState.editing.id
               : vendorUIState.selectedId),
-      userCompany: userCompany,
-      entity: vendor,
-      onEntityAction: onEntityAction,
+      userCompany: widget.userCompany,
+      entity: widget.vendor,
+      onEntityAction: widget.onEntityAction,
       child: ListTile(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.vendorItemCheckbox(vendor.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        onTap: isInMultiselect
+            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
+            : widget.onTap,
+        onLongPress: widget.onLongPress,
+        leading: showCheckbox
+            ? FadeTransition(
+                opacity: _multiselectCheckboxAnim,
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    //key: NinjaKeys.vendorItemCheckbox(task.id),
+                    value: widget.isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => widget.onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Text(
-                  vendor.name,
+                  widget.vendor.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(vendor.listDisplayAmount, context),
+              Text(formatNumber(widget.vendor.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
-        subtitle: (filterMatch == null && vendor.isActive)
+        subtitle: (filterMatch == null && widget.vendor.isActive)
             ? null
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,10 +112,28 @@ class VendorListItem extends StatelessWidget {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  EntityStateLabel(vendor),
+                  EntityStateLabel(widget.vendor),
                 ],
               ),
       ),
     );
+  }
+
+  Animation _multiselectCheckboxAnim;
+  AnimationController _multiselectCheckboxAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _multiselectCheckboxAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(_multiselectCheckboxAnimController);
+  }
+
+  @override
+  void dispose() {
+    _multiselectCheckboxAnimController.dispose();
+    super.dispose();
   }
 }

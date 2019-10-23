@@ -268,11 +268,21 @@ class FilterVendorsByEntity implements PersistUI {
 
 void handleVendorAction(
     BuildContext context, List<VendorEntity> vendors, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          vendors.length == 1,
+      'Cannot perform this action on more than one vendor');
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final vendor = vendors[0];
+  final vendor = vendors.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -295,5 +305,50 @@ void handleVendorAction(
       store.dispatch(DeleteVendorRequest(
           snackBarCompleter(context, localization.deletedVendor), vendor.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.vendorListState.isInMultiselect()) {
+        store.dispatch(StartVendorMultiselect(context: context));
+      }
+
+      if (vendors.isEmpty) {
+        break;
+      }
+
+      for (final vendor in vendors) {
+        if (!store.state.vendorListState.isSelected(vendor)) {
+          store.dispatch(
+              AddToVendorMultiselect(context: context, entity: vendor));
+        } else {
+          store.dispatch(
+              RemoveFromVendorMultiselect(context: context, entity: vendor));
+        }
+      }
+      break;
   }
+}
+
+class StartVendorMultiselect {
+  StartVendorMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToVendorMultiselect {
+  AddToVendorMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromVendorMultiselect {
+  RemoveFromVendorMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearVendorMultiselect {
+  ClearVendorMultiselect({@required this.context});
+
+  final BuildContext context;
 }
