@@ -32,7 +32,8 @@ class _EmailSettingsState extends State<EmailSettings>
 
   TabController _tabController;
   ZefyrController _zefyrController;
-  FocusNode _focusNode;
+  FocusScopeNode _focusNode;
+  FocusNode _zefyrNode;
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
@@ -49,7 +50,8 @@ class _EmailSettingsState extends State<EmailSettings>
 
     _tabController = TabController(vsync: this, length: 2);
     _zefyrController = ZefyrController(doc);
-    _focusNode = FocusNode();
+    _focusNode = FocusScopeNode();
+    _zefyrNode = FocusNode();
   }
 
   @override
@@ -57,6 +59,7 @@ class _EmailSettingsState extends State<EmailSettings>
     _zefyrController.dispose();
     _tabController.dispose();
     _focusNode.dispose();
+    _zefyrNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -222,7 +225,7 @@ class _EmailSettingsState extends State<EmailSettings>
               child: ZefyrEditor(
                 padding: EdgeInsets.all(16),
                 controller: _zefyrController,
-                focusNode: _focusNode,
+                focusNode: _zefyrNode,
               ),
             ),
           ),
