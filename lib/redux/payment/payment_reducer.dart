@@ -51,6 +51,11 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterPaymentsByCustom1>(_filterPaymentsByCustom1),
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
   TypedReducer<ListUIState, FilterPaymentsByEntity>(_filterPaymentsByEntity),
+  TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearPaymentMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterPaymentsByEntity(
@@ -103,6 +108,28 @@ ListUIState _sortPayments(ListUIState paymentListState, SortPayments action) {
   return paymentListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState paymentListState, StartPaymentMultiselect action) {
+  return paymentListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState paymentListState, AddToPaymentMultiselect action) {
+  return paymentListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState paymentListState, RemoveFromPaymentMultiselect action) {
+  return paymentListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState paymentListState, ClearPaymentMultiselect action) {
+  return paymentListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final paymentsReducer = combineReducers<PaymentState>([

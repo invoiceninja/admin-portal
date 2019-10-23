@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class PaymentListItem extends StatelessWidget {
+class PaymentListItem extends StatefulWidget {
   const PaymentListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -18,6 +18,8 @@ class PaymentListItem extends StatelessWidget {
     @required this.onLongPress,
     @required this.payment,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -26,21 +28,38 @@ class PaymentListItem extends StatelessWidget {
   final GestureTapCallback onLongPress;
   final PaymentEntity payment;
   final String filter;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   static final paymentItemKey = (int id) => Key('__payment_${id}__');
 
+  @override
+  _PaymentListItemState createState() => _PaymentListItemState();
+}
+
+class _PaymentListItemState extends State<PaymentListItem>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final paymentUIState = uiState.paymentUIState;
+    final listUIState = paymentUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 
-    final invoice = paymentInvoiceSelector(payment.id, state);
-    final client = paymentClientSelector(payment.id, state);
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
+
+    final invoice = paymentInvoiceSelector(widget.payment.id, state);
+    final client = paymentClientSelector(widget.payment.id, state);
 
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? payment.matchesFilterValue(filter)
+    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
+        ? widget.payment.matchesFilterValue(widget.filter)
         : null;
     final subtitle = filterMatch ??
         invoice.invoiceNumber +
@@ -48,16 +67,33 @@ class PaymentListItem extends StatelessWidget {
             formatDate(invoice.invoiceDate, context);
 
     return DismissibleEntity(
-      isSelected: payment.id ==
+      isSelected: widget.payment.id ==
           (uiState.isEditing
               ? paymentUIState.editing.id
               : paymentUIState.selectedId),
       userCompany: state.userCompany,
-      entity: payment,
-      onEntityAction: onEntityAction,
+      entity: widget.payment,
+      onEntityAction: widget.onEntityAction,
       child: ListTile(
-        onTap: onTap,
-        onLongPress: onLongPress,
+        onTap: isInMultiselect
+            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
+            : widget.onTap,
+        onLongPress: widget.onLongPress,
+        leading: showCheckbox
+            ? FadeTransition(
+                opacity: _multiselectCheckboxAnim,
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    //key: NinjaKeys.productItemCheckbox(task.id),
+                    value: widget.isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => widget.onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -68,7 +104,7 @@ class PaymentListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(payment.amount, context),
+              Text(formatNumber(widget.payment.amount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -88,18 +124,36 @@ class PaymentListItem extends StatelessWidget {
                       : Container(),
                 ),
                 Text(
-                    localization
-                        .lookup('payment_status_${payment.paymentStatusId}'),
+                    localization.lookup(
+                        'payment_status_${widget.payment.paymentStatusId}'),
                     style: TextStyle(
-                      color:
-                          PaymentStatusColors.colors[payment.paymentStatusId],
+                      color: PaymentStatusColors
+                          .colors[widget.payment.paymentStatusId],
                     )),
               ],
             ),
-            EntityStateLabel(payment),
+            EntityStateLabel(widget.payment),
           ],
         ),
       ),
     );
+  }
+
+  Animation _multiselectCheckboxAnim;
+  AnimationController _multiselectCheckboxAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _multiselectCheckboxAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(_multiselectCheckboxAnimController);
+  }
+
+  @override
+  void dispose() {
+    _multiselectCheckboxAnimController.dispose();
+    super.dispose();
   }
 }

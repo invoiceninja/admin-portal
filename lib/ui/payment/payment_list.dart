@@ -26,6 +26,8 @@ class PaymentList extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final listState = viewModel.listState;
     final filteredEntityId = listState.filterEntityId;
+    final listUIState = state.uiState.paymentUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     BaseEntity filteredEntity;
     String label;
@@ -115,7 +117,19 @@ class PaymentList extends StatelessWidget {
                                       context, [payment], action);
                                 }
                               },
-                              onLongPress: () => showDialog(),
+                              onLongPress: () async {
+                                final longPressIsSelection =
+                                    state.uiState.longPressSelectionIsDefault ??
+                                        true;
+                                if (longPressIsSelection && !isInMultiselect) {
+                                  viewModel.onEntityAction(context, [payment],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
+                              isChecked: isInMultiselect &&
+                                  listUIState.isSelected(payment),
                             );
                           },
                         ),
