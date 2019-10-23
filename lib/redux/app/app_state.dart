@@ -338,7 +338,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'showCurrencyCode: ${staticState.gatewayMap}';
-    return 'gateway config: ${companyGatewayUIState.editing}';
+    return 'defaultInvoiceDesignId: ${selectedCompany.settings.defaultInvoiceDesignId}';
     //return 'Routes: Current: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';
     //return 'Route: ${uiState.currentRoute}, Previous: ${uiState.previousRoute}, Layout: ${uiState.layout}, Menu: ${uiState.isMenuVisible}, History: ${uiState.isHistoryVisible}';

@@ -110,7 +110,6 @@ class _EmailSettingsState extends State<EmailSettings>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.emailSettings,

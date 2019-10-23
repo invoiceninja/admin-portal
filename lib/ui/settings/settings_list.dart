@@ -131,12 +131,13 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.paintBrush,
         ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsClientPortal,
-            viewModel: viewModel,
-            icon: FontAwesomeIcons.cloud,
-          ),
+        */
+        SettingsListTile(
+          section: kSettingsClientPortal,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.cloud,
+        ),
+        /*
         if (showAll)
           SettingsListTile(
             section: kSettingsBuyNowButtons,
@@ -185,7 +186,7 @@ class SettingsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final company = viewModel.state.selectedCompany;
+    final state = viewModel.state;
 
     return SelectedIndicator(
       isSelected: viewModel.state.uiState.containsRoute('/$section'),
@@ -197,14 +198,13 @@ class SettingsListTile extends StatelessWidget {
         title: Text(localization.lookup(section)),
         onTap: () {
           if (section == kSettingsOnlinePayments &&
-              (company.companyGateways == null ||
-                  company.companyGateways.isEmpty)) {
+              state.companyGatewayState.list.isEmpty) {
             viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
           } else if (section == kSettingsTaxRates &&
-              (company.taxRates == null || company.taxRates.isEmpty)) {
+              state.taxRateState.list.isEmpty) {
             viewModel.loadSection(context, kSettingsTaxRatesEdit);
           } else if (section == kSettingsGroupSettings &&
-              (company.groups == null || company.groups.isEmpty)) {
+              state.groupState.list.isEmpty) {
             viewModel.loadSection(context, kSettingsGroupSettingsEdit);
           } else {
             viewModel.loadSection(context, section);
