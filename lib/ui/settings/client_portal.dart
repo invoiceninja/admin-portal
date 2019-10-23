@@ -18,8 +18,8 @@ class ClientPortal extends StatefulWidget {
 
 class _ClientPortalState extends State<ClientPortal>
     with SingleTickerProviderStateMixin {
-  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusScopeNode _node = FocusScopeNode();
   TabController _controller;
 
   bool autoValidate = false;
@@ -75,12 +75,36 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
 
     return SettingsScaffold(
       title: localization.clientPortal,
       onSavePressed: null,
-      body: SizedBox(),
+      appBarBottom: TabBar(
+        key: ValueKey(state.settingsUIState.updatedAt),
+        controller: _controller,
+        tabs: [
+          Tab(
+            text: localization.credentials,
+          ),
+          Tab(
+            text: localization.settings,
+          ),
+          Tab(
+            text: localization.limitsAndFees,
+          ),
+        ],
+      ),
+      body: FocusScope(
+        node: _node,
+        child: Form(
+          key: _formKey,
+          child: TabBarView(
+
+          ),
+        ),
+      ),
     );
   }
 }

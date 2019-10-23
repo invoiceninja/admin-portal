@@ -20,3 +20,34 @@ class AppForm extends StatelessWidget {
     );
   }
 }
+
+class AppTabForm extends StatelessWidget {
+  const AppTabForm({
+    @required this.children,
+    @required this.formKey,
+    @required this.focusNode,
+    @required this.controller,
+    @required this.tabBarKey,
+  });
+
+  final FocusNode focusNode;
+  final GlobalKey<FormState> formKey;
+  final List<Widget> children;
+  final TabController controller;
+  final Key tabBarKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return FocusScope(
+      node: focusNode,
+      child: Form(
+        key: formKey,
+        child: TabBarView(
+          key: tabBarKey,
+          children: children,
+          controller: controller,
+        ),
+      ),
+    );
+  }
+}

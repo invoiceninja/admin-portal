@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -31,7 +32,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final FocusScopeNode _node = FocusScopeNode();
+  final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
 
   @override
@@ -73,133 +74,129 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
         ],
       ),
-      body: FocusScope(
-        node: _node,
-        child: Form(
-          key: _formKey,
-          child: TabBarView(
-            key: ValueKey(state.settingsUIState.updatedAt),
-            controller: _controller,
+      body: AppTabForm(
+        focusNode: _focusNode,
+        formKey: _formKey,
+        controller: _controller,
+        tabBarKey: ValueKey(state.settingsUIState.updatedAt),
+        children: <Widget>[
+          ListView(
             children: <Widget>[
-              ListView(
+              FormCard(
                 children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      if (companyGateway.isNew)
-                        EntityDropdown(
-                          key: ValueKey(
-                              '__gateway_${companyGateway.gatewayId}__'),
-                          entityType: EntityType.gateway,
-                          entityMap: state.staticState.gatewayMap,
-                          entityList:
-                              memoizedGatewayList(state.staticState.gatewayMap),
-                          labelText: localization.provider,
-                          initialValue: state.staticState
-                              .gatewayMap[companyGateway.gatewayId]?.name,
-                          onSelected: (SelectableEntity gateway) =>
-                              viewModel.onChanged(
+                  if (companyGateway.isNew)
+                    EntityDropdown(
+                      key: ValueKey(
+                          '__gateway_${companyGateway.gatewayId}__'),
+                      entityType: EntityType.gateway,
+                      entityMap: state.staticState.gatewayMap,
+                      entityList:
+                      memoizedGatewayList(state.staticState.gatewayMap),
+                      labelText: localization.provider,
+                      initialValue: state.staticState
+                          .gatewayMap[companyGateway.gatewayId]?.name,
+                      onSelected: (SelectableEntity gateway) =>
+                          viewModel.onChanged(
                             companyGateway.rebuild((b) => b
                               ..gatewayId = gateway.id
                               ..gatewayTypeId = null
                               ..config =
                                   ''), // TODO set to gateway.defaultGatewayTypeId
                           ),
-                          //onFieldSubmitted: (String value) => _node.nextFocus(),
-                        ),
-                      GatewayConfigSettings(
-                        key: ValueKey('__${companyGateway.gatewayId}__'),
-                        companyGateway: companyGateway,
-                        viewModel: viewModel,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      SwitchListTile(
-                        activeColor: Theme.of(context).accentColor,
-                        title: Text(localization.billingAddress),
-                        subtitle: Text(localization.requireBillingAddressHelp),
-                        value: companyGateway.showBillingAddress,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..showBillingAddress = value)),
-                      ),
-                      SwitchListTile(
-                        activeColor: Theme.of(context).accentColor,
-                        title: Text(localization.shippingAddress),
-                        subtitle: Text(localization.requireShippingAddressHelp),
-                        value: companyGateway.showShippingAddress,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..showShippingAddress = value)),
-                      ),
-                      SwitchListTile(
-                        activeColor: Theme.of(context).accentColor,
-                        title: Text(localization.updateAddress),
-                        subtitle: Text(localization.updateAddressHelp),
-                        value: companyGateway.updateDetails,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..updateDetails = value)),
-                      ),
-                    ],
-                  ),
-                  FormCard(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 16, top: 16, bottom: 16),
-                        child: Text(
-                          localization.acceptedCardLogos,
-                          style: Theme.of(context).textTheme.subhead,
-                        ),
-                      ),
-                      CardListTile(
-                        viewModel: viewModel,
-                        cardType: kCardTypeVisa,
-                        paymentType: kPaymentTypeVisa,
-                      ),
-                      CardListTile(
-                        viewModel: viewModel,
-                        cardType: kCardTypeMasterCard,
-                        paymentType: kPaymentTypeMasterCard,
-                      ),
-                      CardListTile(
-                        viewModel: viewModel,
-                        cardType: kCardTypeAmEx,
-                        paymentType: kPaymentTypeAmEx,
-                      ),
-                      CardListTile(
-                        viewModel: viewModel,
-                        cardType: kCardTypeDiscover,
-                        paymentType: kPaymentTypeDiscover,
-                      ),
-                      CardListTile(
-                        viewModel: viewModel,
-                        cardType: kCardTypeDiners,
-                        paymentType: kPaymentTypeDiners,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              ListView(
-                children: <Widget>[
-                  LimitEditor(
-                    viewModel: viewModel,
+                      //onFieldSubmitted: (String value) => _node.nextFocus(),
+                    ),
+                  GatewayConfigSettings(
+                    key: ValueKey('__${companyGateway.gatewayId}__'),
                     companyGateway: companyGateway,
-                  ),
-                  FeesEditor(
                     viewModel: viewModel,
-                    companyGateway: companyGateway,
                   ),
                 ],
               ),
             ],
           ),
-        ),
+          ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.billingAddress),
+                    subtitle: Text(localization.requireBillingAddressHelp),
+                    value: companyGateway.showBillingAddress,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..showBillingAddress = value)),
+                  ),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.shippingAddress),
+                    subtitle: Text(localization.requireShippingAddressHelp),
+                    value: companyGateway.showShippingAddress,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..showShippingAddress = value)),
+                  ),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.updateAddress),
+                    subtitle: Text(localization.updateAddressHelp),
+                    value: companyGateway.updateDetails,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..updateDetails = value)),
+                  ),
+                ],
+              ),
+              FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16, top: 16, bottom: 16),
+                    child: Text(
+                      localization.acceptedCardLogos,
+                      style: Theme.of(context).textTheme.subhead,
+                    ),
+                  ),
+                  CardListTile(
+                    viewModel: viewModel,
+                    cardType: kCardTypeVisa,
+                    paymentType: kPaymentTypeVisa,
+                  ),
+                  CardListTile(
+                    viewModel: viewModel,
+                    cardType: kCardTypeMasterCard,
+                    paymentType: kPaymentTypeMasterCard,
+                  ),
+                  CardListTile(
+                    viewModel: viewModel,
+                    cardType: kCardTypeAmEx,
+                    paymentType: kPaymentTypeAmEx,
+                  ),
+                  CardListTile(
+                    viewModel: viewModel,
+                    cardType: kCardTypeDiscover,
+                    paymentType: kPaymentTypeDiscover,
+                  ),
+                  CardListTile(
+                    viewModel: viewModel,
+                    cardType: kCardTypeDiners,
+                    paymentType: kPaymentTypeDiners,
+                  ),
+                ],
+              )
+            ],
+          ),
+          ListView(
+            children: <Widget>[
+              LimitEditor(
+                viewModel: viewModel,
+                companyGateway: companyGateway,
+              ),
+              FeesEditor(
+                viewModel: viewModel,
+                companyGateway: companyGateway,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
