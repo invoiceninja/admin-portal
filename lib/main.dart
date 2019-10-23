@@ -61,6 +61,7 @@ import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -353,7 +354,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
             TaxRatesScreen.route: (context) => TaxRatesScreen(),
-            TaxRateSettingsScreen.route: (context) => TaxRateSettingsScreen(),
+            TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
             TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
             TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
             ProductSettingsScreen.route: (context) => ProductSettingsScreen(),

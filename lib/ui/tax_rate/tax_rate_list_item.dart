@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class TaxRateListItem extends StatelessWidget {
+class TaxRateListItem extends StatefulWidget {
   const TaxRateListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -17,6 +17,8 @@ class TaxRateListItem extends StatelessWidget {
     //@required this.onCheckboxChanged,
     @required this.taxRate,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -26,54 +28,78 @@ class TaxRateListItem extends StatelessWidget {
   //final ValueChanged<bool> onCheckboxChanged;
   final TaxRateEntity taxRate;
   final String filter;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   static final taxRateItemKey = (int id) => Key('__tax_rate_item_${id}__');
 
+  @override
+  _TaxRateListItemState createState() => _TaxRateListItemState();
+}
+
+class _TaxRateListItemState extends State<TaxRateListItem>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
     final taxRateUIState = uiState.taxRateUIState;
+    final listUIState = taxRateUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? taxRate.matchesFilterValue(filter)
+    if (isInMultiselect) {
+      _multiselectCheckboxAnimController.forward();
+    } else {
+      _multiselectCheckboxAnimController.animateBack(0.0);
+    }
+
+    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
+        ? widget.taxRate.matchesFilterValue(widget.filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
-      entity: taxRate,
-      isSelected: taxRate.id ==
+      entity: widget.taxRate,
+      isSelected: widget.taxRate.id ==
           (uiState.isEditing
               ? taxRateUIState.editing.id
               : taxRateUIState.selectedId),
-      onEntityAction: onEntityAction,
+      onEntityAction: widget.onEntityAction,
       child: ListTile(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.taxRateItemCheckbox(taxRate.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        onTap: isInMultiselect
+            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
+            : widget.onTap,
+        onLongPress: widget.onLongPress,
+        leading: showCheckbox
+            ? FadeTransition(
+                opacity: _multiselectCheckboxAnim,
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    //key: NinjaKeys.taxRateItemCheckbox(task.id),
+                    value: widget.isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => widget.onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Text(
-                  taxRate.name,
+                  widget.taxRate.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(taxRate.listDisplayAmount, context),
+              Text(formatNumber(widget.taxRate.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -88,10 +114,28 @@ class TaxRateListItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(taxRate),
+            EntityStateLabel(widget.taxRate),
           ],
         ),
       ),
     );
+  }
+
+  Animation _multiselectCheckboxAnim;
+  AnimationController _multiselectCheckboxAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    _multiselectCheckboxAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(_multiselectCheckboxAnimController);
+  }
+
+  @override
+  void dispose() {
+    _multiselectCheckboxAnimController.dispose();
+    super.dispose();
   }
 }
