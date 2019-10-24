@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class TaskListItem extends StatefulWidget {
+class TaskListItem extends StatelessWidget {
   const TaskListItem({
     @required this.userCompany,
     @required this.client,
@@ -37,68 +37,53 @@ class TaskListItem extends StatefulWidget {
   static final taskItemKey = (int id) => Key('__task_item_${id}__');
 
   @override
-  _TaskListItemState createState() => _TaskListItemState();
-}
-
-class _TaskListItemState extends State<TaskListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
 
     final CompanyEntity company = state.selectedCompany;
-    final taskStatus = company.taskStatusMap[widget.task.taskStatusId];
+    final taskStatus = company.taskStatusMap[task.taskStatusId];
 
     final localization = AppLocalization.of(context);
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.task.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? task.matchesFilterValue(filter)
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     //final subtitle = filterMatch ?? client?.displayName ?? task.description;
     String subtitle;
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (widget.client != null) {
-      subtitle = widget.client.displayName;
-      if (widget.project != null) {
-        subtitle += ' • ' + widget.project.name;
+    } else if (client != null) {
+      subtitle = client.displayName;
+      if (project != null) {
+        subtitle += ' • ' + project.name;
       }
     }
 
     return DismissibleEntity(
-      isSelected: widget.task.id ==
+      isSelected: task.id ==
           (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
-      userCompany: widget.userCompany,
-      entity: widget.task,
-      onEntityAction: widget.onEntityAction,
+      userCompany: userCompany,
+      entity: task,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.taskItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.taskItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -108,17 +93,16 @@ class _TaskListItemState extends State<TaskListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.task.description.isNotEmpty
-                      ? widget.task.description
-                      : formatDate(
-                          convertTimestampToDateString(widget.task.updatedAt),
+                  task.description.isNotEmpty
+                      ? task.description
+                      : formatDate(convertTimestampToDateString(task.updatedAt),
                           context),
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
               LiveText(() {
-                return formatNumber(widget.task.listDisplayAmount, context,
+                return formatNumber(task.listDisplayAmount, context,
                     formatNumberType: FormatNumberType.duration);
               }, style: Theme.of(context).textTheme.title),
             ],
@@ -139,42 +123,24 @@ class _TaskListItemState extends State<TaskListItem>
                       : Container(),
                 ),
                 Text(
-                    widget.task.isInvoiced
+                    task.isInvoiced
                         ? localization.invoiced
-                        : widget.task.isRunning
+                        : task.isRunning
                             ? localization.running
                             : taskStatus != null
                                 ? taskStatus.name
                                 : localization.logged,
                     style: TextStyle(
-                      color: widget.task.isInvoiced
+                      color: task.isInvoiced
                           ? Colors.green
-                          : widget.task.isRunning ? Colors.blue : Colors.grey,
+                          : task.isRunning ? Colors.blue : Colors.grey,
                     )),
               ],
             ),
-            EntityStateLabel(widget.task),
+            EntityStateLabel(task),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

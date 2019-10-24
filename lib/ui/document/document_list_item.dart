@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-class DocumentListItem extends StatefulWidget {
+class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
     @required this.userCompany,
     @required this.onEntityAction,
@@ -34,43 +34,31 @@ class DocumentListItem extends StatefulWidget {
   static final documentItemKey = (int id) => Key('__document_item_${id}__');
 
   @override
-  _DocumentListItemState createState() => _DocumentListItemState();
-}
-
-class _DocumentListItemState extends State<DocumentListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final documentUIState = uiState.documentUIState;
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.document.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? document.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final listUIState = documentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: widget.document.id ==
+      isSelected: document.id ==
           (uiState.isEditing
               ? documentUIState.editing.id
               : documentUIState.selectedId),
-      userCompany: widget.userCompany,
-      entity: widget.document,
-      onEntityAction: widget.onEntityAction,
+      userCompany: userCompany,
+      entity: document,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         /*
         leading: Checkbox(
           //key: NinjaKeys.documentItemCheckbox(document.id),
@@ -82,17 +70,14 @@ class _DocumentListItemState extends State<DocumentListItem>
         ),
         */
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.documentItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.documentItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -102,12 +87,12 @@ class _DocumentListItemState extends State<DocumentListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.document.name,
+                  document.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(widget.document.listDisplayAmount, context),
+              Text(formatNumber(document.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -122,28 +107,10 @@ class _DocumentListItemState extends State<DocumentListItem>
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(widget.document),
+            EntityStateLabel(document),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

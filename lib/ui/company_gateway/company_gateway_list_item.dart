@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-class CompanyGatewayListItem extends StatefulWidget {
+class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -35,40 +35,28 @@ class CompanyGatewayListItem extends StatefulWidget {
       (int id) => Key('__company_gateway_item_${id}__');
 
   @override
-  _CompanyGatewayListItemState createState() => _CompanyGatewayListItemState();
-}
-
-class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.companyGateway.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? companyGateway.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
-      entity: widget.companyGateway,
+      entity: companyGateway,
       isSelected: false,
-      onEntityAction: widget.onEntityAction,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         /*
         leading: Checkbox(
           //key: NinjaKeys.companyGatewayItemCheckbox(companyGateway.id),
@@ -80,17 +68,14 @@ class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
         ),
         */
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.productItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -100,14 +85,12 @@ class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.companyGateway.gateway.name,
+                  companyGateway.gateway.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(
-                  formatNumber(
-                      widget.companyGateway.listDisplayAmount, context),
+              Text(formatNumber(companyGateway.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -122,28 +105,10 @@ class _CompanyGatewayListItemState extends State<CompanyGatewayListItem>
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(widget.companyGateway),
+            EntityStateLabel(companyGateway),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

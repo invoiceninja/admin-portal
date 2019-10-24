@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class ProjectListItem extends StatefulWidget {
+class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
     @required this.userCompany,
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.project,
     @required this.filter,
     @required this.client,
@@ -28,7 +27,6 @@ class ProjectListItem extends StatefulWidget {
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
-  //final ValueChanged<bool> onCheckboxChanged;
   final ProjectEntity project;
   final ClientEntity client;
   final String filter;
@@ -36,56 +34,41 @@ class ProjectListItem extends StatefulWidget {
   static final projectItemKey = (int id) => Key('__project_item_${id}__');
 
   @override
-  _ProjectListItemState createState() => _ProjectListItemState();
-}
-
-class _ProjectListItemState extends State<ProjectListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final projectUIState = uiState.projectUIState;
     final listUIState = projectUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
-
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.project.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? project.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? widget.client.displayName;
+    final subtitle = filterMatch ?? client.displayName;
 
     return DismissibleEntity(
-      isSelected: widget.project.id ==
+      isSelected: project.id ==
           (uiState.isEditing
               ? projectUIState.editing.id
               : projectUIState.selectedId),
-      userCompany: widget.userCompany,
-      entity: widget.project,
-      onEntityAction: widget.onEntityAction,
+      userCompany: userCompany,
+      entity: project,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.productItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -95,12 +78,12 @@ class _ProjectListItemState extends State<ProjectListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.project.name,
+                  project.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(widget.project.listDisplayAmount, context),
+              Text(formatNumber(project.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -115,28 +98,10 @@ class _ProjectListItemState extends State<ProjectListItem>
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(widget.project),
+            EntityStateLabel(project),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

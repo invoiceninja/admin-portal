@@ -8,13 +8,12 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-class GroupListItem extends StatefulWidget {
+class GroupListItem extends StatelessWidget {
   const GroupListItem({
     @required this.user,
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.group,
     @required this.filter,
     this.onCheckboxChanged,
@@ -25,7 +24,6 @@ class GroupListItem extends StatefulWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
   final GroupEntity group;
   final String filter;
   final Function(bool) onCheckboxChanged;
@@ -34,41 +32,29 @@ class GroupListItem extends StatefulWidget {
   static final groupItemKey = (int id) => Key('__group_item_${id}__');
 
   @override
-  _GroupListItemState createState() => _GroupListItemState();
-}
-
-class _GroupListItemState extends State<GroupListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.group.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? group.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final uiState = store.state.uiState;
     final groupUIState = uiState.groupUIState;
     final listUIState = groupUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
-      entity: widget.group,
+      entity: group,
       isSelected: false,
-      onEntityAction: widget.onEntityAction,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         /*
         leading: Checkbox(
           //key: NinjaKeys.groupItemCheckbox(group.id),
@@ -80,17 +66,14 @@ class _GroupListItemState extends State<GroupListItem>
         ),
         */
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.productItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -100,12 +83,12 @@ class _GroupListItemState extends State<GroupListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.group.name,
+                  group.name,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(widget.group.listDisplayAmount, context),
+              Text(formatNumber(group.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -120,28 +103,10 @@ class _GroupListItemState extends State<GroupListItem>
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(widget.group),
+            EntityStateLabel(group),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

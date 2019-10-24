@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-class ProductListItem extends StatefulWidget {
+class ProductListItem extends StatelessWidget {
   const ProductListItem({
     @required this.userCompany,
     @required this.onTap,
@@ -18,9 +18,6 @@ class ProductListItem extends StatefulWidget {
     this.onCheckboxChanged,
     this.isChecked = false,
   });
-
-  @override
-  _ProductListItemState createState() => _ProductListItemState();
 
   final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
@@ -34,54 +31,42 @@ class ProductListItem extends StatefulWidget {
   final String filter;
 
   static final productItemKey = (int id) => Key('__product_item_${id}__');
-}
 
-class _ProductListItemState extends State<ProductListItem>
-    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.product.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? product.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? widget.product.notes;
+    final subtitle = filterMatch ?? product.notes;
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final productUIState = uiState.productUIState;
     final listUIState = productUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: widget.product.id ==
+      isSelected: product.id ==
           (uiState.isEditing
               ? productUIState.editing.id
               : productUIState.selectedId),
-      userCompany: widget.userCompany,
-      entity: widget.product,
-      onEntityAction: widget.onEntityAction,
+      userCompany: userCompany,
+      entity: product,
+      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    //key: NinjaKeys.productItemCheckbox(task.id),
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -91,12 +76,12 @@ class _ProductListItemState extends State<ProductListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.product.productKey,
+                  product.productKey,
                   //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(formatNumber(widget.product.cost, context),
+              Text(formatNumber(product.cost, context),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
@@ -111,28 +96,10 @@ class _ProductListItemState extends State<ProductListItem>
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(widget.product),
+            EntityStateLabel(product),
           ],
         ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }
