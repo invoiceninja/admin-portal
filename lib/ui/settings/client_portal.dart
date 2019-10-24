@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -35,6 +36,8 @@ class _ClientPortalState extends State<ClientPortal>
   final _subdomainController = TextEditingController();
   final _domainController = TextEditingController();
   final _iFrameController = TextEditingController();
+  final _customCssController = TextEditingController();
+  final _customJavaScriptController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -60,6 +63,8 @@ class _ClientPortalState extends State<ClientPortal>
       _subdomainController,
       _domainController,
       _iFrameController,
+      _customCssController,
+      _customJavaScriptController,
     ];
 
     _controllers
@@ -108,7 +113,7 @@ class _ClientPortalState extends State<ClientPortal>
             text: localization.authorization,
           ),
           Tab(
-            text: localization.limitsAndFees,
+            text: localization.customize,
           ),
         ],
       ),
@@ -219,7 +224,7 @@ class _ClientPortalState extends State<ClientPortal>
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.envelope,
                     //onChanged: (value) => viewModel.onSettingsChanged(settings
-                      //  .rebuild((b) => b..enablePortalPassword = value)),
+                    //  .rebuild((b) => b..enablePortalPassword = value)),
                   ),
                 ],
               ),
@@ -276,7 +281,25 @@ class _ClientPortalState extends State<ClientPortal>
               ),
             ],
           ),
-          ListView(),
+          ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    label: localization.customCss,
+                    controller: _customCssController,
+                    maxLines: 8,
+                  ),
+                  if (isSelfHosted(context))
+                    DecoratedFormField(
+                      label: localization.customJavascript,
+                      controller: _customJavaScriptController,
+                      maxLines: 8,
+                    ),
+                ],
+              )
+            ],
+          ),
         ],
       ),
     );
