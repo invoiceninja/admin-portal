@@ -105,7 +105,7 @@ class _ClientPortalState extends State<ClientPortal>
             text: localization.settings,
           ),
           Tab(
-            text: localization.settings,
+            text: localization.authorization,
           ),
           Tab(
             text: localization.limitsAndFees,
@@ -199,7 +199,83 @@ class _ClientPortalState extends State<ClientPortal>
               ),
             ],
           ),
-          ListView(),
+          ListView(
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.enablePortalPassword,
+                    helpLabel: localization.enablePortalPasswordHelp,
+                    value: settings.enablePortalPassword,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.shieldAlt,
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..enablePortalPassword = value)),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.sendPortalPassword,
+                    helpLabel: localization.sendPortalPasswordHelp,
+                    //value: settings.,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.envelope,
+                    //onChanged: (value) => viewModel.onSettingsChanged(settings
+                      //  .rebuild((b) => b..enablePortalPassword = value)),
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.showAcceptInvoiceTerms,
+                    helpLabel: localization.showAcceptInvoiceTermsHelp,
+                    //value: settings.ter,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.checkSquare,
+                    //onChanged: (value) => viewModel.onSettingsChanged(
+                    //settings.rebuild((b) => b..showTasksInPortal = value)),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.showAcceptQuoteTerms,
+                    helpLabel: localization.showAcceptQuoteTermsHelp,
+                    //value: settings.,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.checkSquare,
+                    //onChanged: (value) => viewModel.onSettingsChanged(
+                    //  settings.rebuild((b) => b..showTasksInPortal = value)),
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.requireInvoiceSignature,
+                    helpLabel: localization.requireInvoiceSignatureHelp,
+                    //value: settings.ter,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.fileSignature,
+                    //onChanged: (value) => viewModel.onSettingsChanged(
+                    //settings.rebuild((b) => b..showTasksInPortal = value)),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.requireQuoteSignature,
+                    helpLabel: localization.requireInvoiceSignatureHelp,
+                    //value: settings.,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.fileSignature,
+                    //onChanged: (value) => viewModel.onSettingsChanged(
+                    //  settings.rebuild((b) => b..showTasksInPortal = value)),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.signatureOnPdf,
+                    helpLabel: localization.signatureOnPdfHelp,
+                    //value: settings.,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.fileContract,
+                  ),
+                ],
+              ),
+            ],
+          ),
           ListView(),
         ],
       ),

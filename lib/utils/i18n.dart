@@ -14,6 +14,26 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'signature_on_pdf': 'Show on PDF',
+      'signature_on_pdf_help':
+          'Show the client signature on the invoice/quote PDF.',
+      'show_accept_invoice_terms': 'Invoice Terms Checkbox',
+      'show_accept_invoice_terms_help':
+          'Require client to confirm that they accept the invoice terms.',
+      'show_accept_quote_terms': 'Quote Terms Checkbox',
+      'show_accept_quote_terms_help':
+          'Require client to confirm that they accept the quote terms.',
+      'require_invoice_signature': 'Invoice Signature',
+      'require_invoice_signature_help':
+          'Require client to provide their signature.',
+      'require_quote_signature': 'Quote Signature',
+      'enable_portal_password': 'Password Protect Invoices',
+      'enable_portal_password_help':
+          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'send_portal_password': 'Generate Automatically',
+      'send_portal_password_help':
+          'If no password is set, one will be generated and sent with the first invoice.',
+      'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
@@ -15059,6 +15079,48 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get domain => _localizedValues[localeCode]['domain'];
 
   String get subdomain => _localizedValues[localeCode]['subdomain'];
+
+  String get authorization => _localizedValues[localeCode]['authorization'];
+
+  String get enablePortalPassword =>
+      _localizedValues[localeCode]['enable_portal_password'];
+
+  String get enablePortalPasswordHelp =>
+      _localizedValues[localeCode]['enable_portal_password_help'];
+
+  String get sendPortalPassword =>
+      _localizedValues[localeCode]['send_portal_password'];
+
+  String get sendPortalPasswordHelp =>
+      _localizedValues[localeCode]['send_portal_password_help'];
+
+  String get showAcceptInvoiceTerms =>
+      _localizedValues[localeCode]['show_accept_invoice_terms'];
+
+  String get showAcceptInvoiceTermsHelp =>
+      _localizedValues[localeCode]['show_accept_invoice_terms_help'];
+
+  String get showAcceptQuoteTerms =>
+      _localizedValues[localeCode]['show_accept_quote_terms'];
+
+  String get showAcceptQuoteTermsHelp =>
+      _localizedValues[localeCode]['show_accept_quote_terms_help'];
+
+  String get requireInvoiceSignature =>
+      _localizedValues[localeCode]['require_invoice_signature'];
+
+  String get requireInvoiceSignatureHelp =>
+      _localizedValues[localeCode]['require_invoice_signature_help'];
+
+  String get requireQuoteSignature =>
+      _localizedValues[localeCode]['require_quote_signature'];
+
+  String get signatureOnPdf =>
+      _localizedValues[localeCode]['signature_on_pdf'];
+
+  String get signatureOnPdfHelp =>
+      _localizedValues[localeCode]['signature_on_pdf_help'];
+
 
 
   String lookup(String key) {
