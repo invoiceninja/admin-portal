@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -49,6 +50,10 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'industry_id')
   String get industryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'portal_mode')
+  String get portalMode;
 
   // TODO remove this
   @nullable
@@ -174,8 +179,13 @@ abstract class CompanyEntity extends Object
     }
   }
 
-  bool get isSelfHost =>
-      appUrl != null && appUrl.isNotEmpty && appUrl != kAppUrl;
+  bool get isSelfHost {
+    if (!kReleaseMode) {
+      return true;
+    }
+
+    return appUrl != null && appUrl.isNotEmpty && appUrl != kAppUrl;
+  }
 
   bool get isHosted => !isSelfHost;
 

@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:zefyr/zefyr.dart';
-import 'package:quill_delta/quill_delta.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
@@ -76,10 +75,10 @@ class _EmailSettingsState extends State<EmailSettings>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    final signature = settings.emailFooter ?? '';
+    final signature = settings.emailFooter;
 
     // return NotusDocument.fromJson(jsonDecode(contents));
-    final doc = NotusDocument.fromJson(jsonDecode(signature));
+    final doc = signature != null ? NotusDocument.fromJson(jsonDecode(signature)) : NotusDocument();
     _zefyrController = ZefyrController(doc)..addListener(_onZefyrChanged);
     //_zefyrController.compose(Delta()..insert(signature));
 
@@ -219,7 +218,7 @@ class _EmailSettingsState extends State<EmailSettings>
             ],
           ),
           Container(
-            color: Colors.white,
+            color: Colors.grey.shade100,
             child: _zefyrController == null
                 ? LoadingIndicator()
                 : ZefyrScaffold(
@@ -227,6 +226,7 @@ class _EmailSettingsState extends State<EmailSettings>
                       padding: EdgeInsets.all(16),
                       controller: _zefyrController,
                       focusNode: _zefyrNode,
+                      autofocus: false,
                     ),
                   ),
           ),

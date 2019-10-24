@@ -62,6 +62,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.industryId,
             specifiedType: const FullType(String)));
     }
+    if (object.portalMode != null) {
+      result
+        ..add('portal_mode')
+        ..add(serializers.serialize(object.portalMode,
+            specifiedType: const FullType(String)));
+    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -213,6 +219,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'industry_id':
           result.industryId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'portal_mode':
+          result.portalMode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'plan':
@@ -1422,6 +1432,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String industryId;
   @override
+  final String portalMode;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -1476,6 +1488,7 @@ class _$CompanyEntity extends CompanyEntity {
   _$CompanyEntity._(
       {this.sizeId,
       this.industryId,
+      this.portalMode,
       this.plan,
       this.companyKey,
       this.appUrl,
@@ -1528,6 +1541,7 @@ class _$CompanyEntity extends CompanyEntity {
     return other is CompanyEntity &&
         sizeId == other.sizeId &&
         industryId == other.industryId &&
+        portalMode == other.portalMode &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         appUrl == other.appUrl &&
@@ -1574,7 +1588,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), portalMode.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
                                                                                 groups.hashCode),
                                                                             taxRates.hashCode),
                                                                         taskStatuses.hashCode),
@@ -1601,6 +1615,7 @@ class _$CompanyEntity extends CompanyEntity {
     return (newBuiltValueToStringHelper('CompanyEntity')
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
+          ..add('portalMode', portalMode)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('appUrl', appUrl)
@@ -1640,6 +1655,10 @@ class CompanyEntityBuilder
   String _industryId;
   String get industryId => _$this._industryId;
   set industryId(String industryId) => _$this._industryId = industryId;
+
+  String _portalMode;
+  String get portalMode => _$this._portalMode;
+  set portalMode(String portalMode) => _$this._portalMode = portalMode;
 
   String _plan;
   String get plan => _$this._plan;
@@ -1766,6 +1785,7 @@ class CompanyEntityBuilder
     if (_$v != null) {
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
+      _portalMode = _$v.portalMode;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _appUrl = _$v.appUrl;
@@ -1816,6 +1836,7 @@ class CompanyEntityBuilder
           new _$CompanyEntity._(
               sizeId: sizeId,
               industryId: industryId,
+              portalMode: portalMode,
               plan: plan,
               companyKey: companyKey,
               appUrl: appUrl,

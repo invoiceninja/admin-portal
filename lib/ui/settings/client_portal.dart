@@ -1,10 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientPortal extends StatefulWidget {
@@ -86,6 +91,8 @@ class _ClientPortalState extends State<ClientPortal>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final company = viewModel.company;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.clientPortal,
@@ -112,38 +119,84 @@ class _ClientPortalState extends State<ClientPortal>
         children: <Widget>[
           ListView(
             children: <Widget>[
+              if (!state.settingsUIState.isFiltered)
+                FormCard(
+                  children: <Widget>[
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: localization.portalMode,
+                      ),
+                      //isEmpty: false,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                            value: viewModel.company.portalMode,
+                            isExpanded: true,
+                            isDense: true,
+                            onChanged: (value) => viewModel.onCompanyChanged(
+                                viewModel.company
+                                    .rebuild((b) => b..portalMode = value)),
+                            items: [
+                              DropdownMenuItem(
+                                child: Text(localization.subdomain),
+                                value: kClientPortalModeSubdomain,
+                              ),
+                              if (company.isEnterprisePlan)
+                                DropdownMenuItem(
+                                  child: Text(localization.domain),
+                                  value: kClientPortalModeDomain,
+                                ),
+                              DropdownMenuItem(
+                                child: Text('iFrame'),
+                                value: kClientPortalModeIFrame,
+                              ),
+                            ]),
+                      ),
+                    ),
+                    DecoratedFormField(
+                      label: localization.subdomain,
+                      controller: _subdomainController,
+                    ),
+                    if (company.portalMode == kClientPortalModeDomain &&
+                        company.isEnterprisePlan)
+                      DecoratedFormField(
+                        label: localization.domain,
+                        controller: _domainController,
+                        keyboardType: TextInputType.url,
+                      ),
+                    if (company.portalMode == kClientPortalModeIFrame)
+                      DecoratedFormField(
+                        label: 'iFrame',
+                        controller: _iFrameController,
+                        keyboardType: TextInputType.url,
+                      ),
+                  ],
+                ),
               FormCard(
                 children: <Widget>[
-                  InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: localization.linkType,
-                    ),
-                    //isEmpty: false,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                          //value: companyGateway.gatewayTypeId,
-                          isExpanded: true,
-                          isDense: true,
-                          //onChanged: (value) => viewModel.onChanged(companyGateway.rebuild((b) => b..gatewayTypeId = value)),
-                          items: []),
-                    ),
+                  BoolDropdownButton(
+                    label: localization.clientPortal,
+                    value: false,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.cloud,
+                    onChanged: (value) => null,
                   ),
-                  DecoratedFormField(
-                    label: localization.subdomain,
-                    controller: _subdomainController,
+                  BoolDropdownButton(
+                    label: localization.dashboard,
+                    value: false,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: FontAwesomeIcons.tachometerAlt,
+                    onChanged: (value) => null,
                   ),
-                  DecoratedFormField(
-                    label: localization.domain,
-                    controller: _domainController,
-                    keyboardType: TextInputType.url,
-                  ),
-                  DecoratedFormField(
-                    label: 'iFrame',
-                    controller: _iFrameController,
-                    keyboardType: TextInputType.url,
+                  BoolDropdownButton(
+                    label: localization.tasks,
+                    value: settings.showTasksInPortal,
+                    showBlank: state.settingsUIState.isFiltered,
+                    iconData: getEntityIcon(EntityType.task),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..showTasksInPortal = value)),
                   ),
                 ],
-              )
+              ),
             ],
           ),
           ListView(),

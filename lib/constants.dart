@@ -109,6 +109,10 @@ const String kGatewayTypeCustom3 = '12';
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 
+const String kClientPortalModeSubdomain = 'subdomain';
+const String kClientPortalModeDomain = 'domain';
+const String kClientPortalModeIFrame = 'iframe';
+
 const String kEmailDesignPlain = 'plain';
 const String kEmailDesignLight = 'light';
 const String kEmailDesignDark = 'dark';
