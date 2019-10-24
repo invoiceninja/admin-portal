@@ -101,7 +101,7 @@ class _ClientPortalState extends State<ClientPortal>
 
     return SettingsScaffold(
       title: localization.clientPortal,
-      onSavePressed: null,
+      onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,

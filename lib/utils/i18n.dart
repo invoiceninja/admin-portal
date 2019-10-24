@@ -14,6 +14,23 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'recurring_prefix': 'Recurring Prefix',
+      'padding': 'Padding',
+      'general': 'General',
+      'invoice_field': 'Invoice Field',
+      'client_field': 'Client Field',
+      'product_field': 'Product Field',
+      'quote_field': 'Quote Field',
+      'payment_field': 'Payment Field',
+      'contact_field': 'Contact Field',
+      'vendor_field': 'Vendor Field',
+      'expense_field': 'Expense Field',
+      'project_field': 'Project Field',
+      'task_field': 'Task Field',
+      'group_field': 'Group Field',
+      'counter': 'Counter',
+      'prefix': 'Prefix',
+      'pattern': 'Pattern',
       'messages': 'Messages',
       'custom_css': 'Custom CSS',
       'custom_javascript': 'Custom JavaScript',
@@ -170,7 +187,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_rates': 'Tax Rates',
       'notifications': 'Notifications',
       'import_export': 'Import | Export',
-      'invoice_settings': 'Invoice Settings',
+      'system_settings': 'System Settings',
       'invoice_design': 'Invoice Design',
       'buy_now_buttons': 'Buy Now Buttons',
       'email_settings': 'Email Settings',
@@ -14794,8 +14811,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get importExport => _localizedValues[localeCode]['import_export'];
 
-  String get invoiceSettings =>
-      _localizedValues[localeCode]['invoice_settings'];
+  String get systemSettings => _localizedValues[localeCode]['system_settings'];
 
   String get invoiceDesign => _localizedValues[localeCode]['invoice_design'];
 
@@ -15118,21 +15134,51 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get requireQuoteSignature =>
       _localizedValues[localeCode]['require_quote_signature'];
 
-  String get signatureOnPdf =>
-      _localizedValues[localeCode]['signature_on_pdf'];
+  String get signatureOnPdf => _localizedValues[localeCode]['signature_on_pdf'];
 
   String get signatureOnPdfHelp =>
       _localizedValues[localeCode]['signature_on_pdf_help'];
 
-  String get customCss =>
-      _localizedValues[localeCode]['custom_css'];
+  String get customCss => _localizedValues[localeCode]['custom_css'];
 
   String get customJavascript =>
       _localizedValues[localeCode]['custom_javascript'];
 
-  String get messages =>
-      _localizedValues[localeCode]['messages'];
+  String get messages => _localizedValues[localeCode]['messages'];
 
+  String get prefix => _localizedValues[localeCode]['prefix'];
+
+  String get pattern => _localizedValues[localeCode]['pattern'];
+
+  String get counter => _localizedValues[localeCode]['counter'];
+
+  String get invoiceField => _localizedValues[localeCode]['invoice_field'];
+
+  String get clientField => _localizedValues[localeCode]['client_field'];
+
+  String get productField => _localizedValues[localeCode]['product_field'];
+
+  String get quotField => _localizedValues[localeCode]['quote_field'];
+
+  String get paymentField => _localizedValues[localeCode]['payment_field'];
+
+  String get contactField => _localizedValues[localeCode]['contact_field'];
+
+  String get vendorField => _localizedValues[localeCode]['vendor_field'];
+
+  String get expenseField => _localizedValues[localeCode]['expense_field'];
+
+  String get projectField => _localizedValues[localeCode]['project_field'];
+
+  String get taskField => _localizedValues[localeCode]['task_field'];
+
+  String get groupField => _localizedValues[localeCode]['group_field'];
+
+  String get general => _localizedValues[localeCode]['general'];
+
+  String get padding => _localizedValues[localeCode]['padding'];
+
+  String get recurringPrefix => _localizedValues[localeCode]['recurring_prefix'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
