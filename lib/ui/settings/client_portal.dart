@@ -44,7 +44,7 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -111,6 +111,9 @@ class _ClientPortalState extends State<ClientPortal>
           ),
           Tab(
             text: localization.authorization,
+          ),
+          Tab(
+            text: localization.messages,
           ),
           Tab(
             text: localization.customize,
@@ -279,6 +282,11 @@ class _ClientPortalState extends State<ClientPortal>
                   ),
                 ],
               ),
+            ],
+          ),
+          ListView(
+            children: <Widget>[
+              // TODO implement fields
             ],
           ),
           ListView(

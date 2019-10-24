@@ -72,9 +72,6 @@ UserCompanyEntity loadCompanySuccessReducer(
     ..userMap.replace(BuiltMap<String, UserEntity>())
     ..customFields.replace(BuiltMap<String, String>()));
 
-  print(
-      '${userCompany.company.companyKey} map: ${userCompany.company.expenseCategoryMap}');
-
   return userCompany;
 
   if (userCompany.company.taskStatuses != null) {
