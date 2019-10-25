@@ -200,10 +200,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
     }
-    if (object.workPhone != null) {
+    if (object.phone != null) {
       result
-        ..add('work_phone')
-        ..add(serializers.serialize(object.workPhone,
+        ..add('phone')
+        ..add(serializers.serialize(object.phone,
             specifiedType: const FullType(String)));
     }
     if (object.publicNotes != null) {
@@ -340,8 +340,8 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'work_phone':
-          result.workPhone = serializers.deserialize(value,
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -854,7 +854,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String countryId;
   @override
-  final String workPhone;
+  final String phone;
   @override
   final String privateNotes;
   @override
@@ -926,7 +926,7 @@ class _$ClientEntity extends ClientEntity {
       this.state,
       this.postalCode,
       this.countryId,
-      this.workPhone,
+      this.phone,
       this.privateNotes,
       this.publicNotes,
       this.website,
@@ -1055,7 +1055,7 @@ class _$ClientEntity extends ClientEntity {
         state == other.state &&
         postalCode == other.postalCode &&
         countryId == other.countryId &&
-        workPhone == other.workPhone &&
+        phone == other.phone &&
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         website == other.website &&
@@ -1105,7 +1105,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
                                                                                 currencyId.hashCode),
                                                                             shippingAddress1.hashCode),
                                                                         shippingAddress2.hashCode),
@@ -1142,7 +1142,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('state', state)
           ..add('postalCode', postalCode)
           ..add('countryId', countryId)
-          ..add('workPhone', workPhone)
+          ..add('phone', phone)
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
           ..add('website', website)
@@ -1227,9 +1227,9 @@ class ClientEntityBuilder
   String get countryId => _$this._countryId;
   set countryId(String countryId) => _$this._countryId = countryId;
 
-  String _workPhone;
-  String get workPhone => _$this._workPhone;
-  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -1365,7 +1365,7 @@ class ClientEntityBuilder
       _state = _$v.state;
       _postalCode = _$v.postalCode;
       _countryId = _$v.countryId;
-      _workPhone = _$v.workPhone;
+      _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
       _publicNotes = _$v.publicNotes;
       _website = _$v.website;
@@ -1429,7 +1429,7 @@ class ClientEntityBuilder
               state: state,
               postalCode: postalCode,
               countryId: countryId,
-              workPhone: workPhone,
+              phone: phone,
               privateNotes: privateNotes,
               publicNotes: publicNotes,
               website: website,

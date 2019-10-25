@@ -52,7 +52,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _idNumberController.text = client.idNumber;
     _vatNumberController.text = client.vatNumber;
     _websiteController.text = client.website;
-    _phoneController.text = client.workPhone;
+    _phoneController.text = client.phone;
     _custom1Controller.text = client.customValue1;
     _custom2Controller.text = client.customValue2;
 
@@ -79,7 +79,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       ..idNumber = _idNumberController.text.trim()
       ..vatNumber = _vatNumberController.text.trim()
       ..website = _websiteController.text.trim()
-      ..workPhone = _phoneController.text.trim()
+      ..phone = _phoneController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
     if (client != viewModel.client) {

@@ -46,7 +46,7 @@ class ClientFields {
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
   static const String contact = 'contact';
-  static const String workPhone = 'workPhone';
+  static const String phone = 'phone';
   static const String language = 'language';
   static const String currency = 'currency';
 }
@@ -69,7 +69,7 @@ abstract class ClientEntity extends Object
       state: '',
       postalCode: '',
       countryId: '',
-      workPhone: '',
+      phone: '',
       privateNotes: '',
       publicNotes: '',
       website: '',
@@ -155,8 +155,8 @@ abstract class ClientEntity extends Object
   String get countryId;
 
   @nullable
-  @BuiltValueField(wireName: 'work_phone')
-  String get workPhone;
+  @BuiltValueField(wireName: 'phone')
+  String get phone;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -306,7 +306,7 @@ abstract class ClientEntity extends Object
       return true;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return true;
-    } else if (workPhone.toLowerCase().contains(filter)) {
+    } else if (phone.toLowerCase().contains(filter)) {
       return true;
     } else if (address1.toLowerCase().contains(filter)) {
       return true;
@@ -336,8 +336,8 @@ abstract class ClientEntity extends Object
       return vatNumber;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
-    } else if (workPhone.toLowerCase().contains(filter)) {
-      return workPhone;
+    } else if (phone.toLowerCase().contains(filter)) {
+      return phone;
     } else if (address1.toLowerCase().contains(filter)) {
       return address1;
     } else if (city.toLowerCase().contains(filter)) {

@@ -223,9 +223,9 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.sendPortalPassword,
                     helpLabel: localization.sendPortalPasswordHelp,
-                    //value: settings.,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.envelope,
+                    //value: settings.,
                     //onChanged: (value) => viewModel.onSettingsChanged(settings
                     //  .rebuild((b) => b..enablePortalPassword = value)),
                   ),

@@ -86,14 +86,14 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if ((client.workPhone ?? '').isNotEmpty) {
+      if ((client.phone ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
-          title: client.workPhone,
+          title: client.phone,
           subtitle: localization.phone,
           onTap: () => setState(() {
             _launched = _launchURL(
-                context, 'sms:' + cleanPhoneNumber(client.workPhone));
+                context, 'sms:' + cleanPhoneNumber(client.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
           }),
         ));
