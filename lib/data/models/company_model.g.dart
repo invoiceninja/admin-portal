@@ -683,6 +683,150 @@ class _$SettingsEntitySerializer
   Iterable<Object> serialize(Serializers serializers, SettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
+    if (object.timezoneId != null) {
+      result
+        ..add('timezone_id')
+        ..add(serializers.serialize(object.timezoneId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.dateFormatId != null) {
+      result
+        ..add('date_format_id')
+        ..add(serializers.serialize(object.dateFormatId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.enableMilitaryTime != null) {
+      result
+        ..add('military_time')
+        ..add(serializers.serialize(object.enableMilitaryTime,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.languageId != null) {
+      result
+        ..add('language_id')
+        ..add(serializers.serialize(object.languageId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.showCurrencyCode != null) {
+      result
+        ..add('show_currency_code')
+        ..add(serializers.serialize(object.showCurrencyCode,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultPaymentTerms != null) {
+      result
+        ..add('payment_terms_HIDDEN')
+        ..add(serializers.serialize(object.defaultPaymentTerms,
+            specifiedType: const FullType(int)));
+    }
+    if (object.companyGatewayIds != null) {
+      result
+        ..add('company_gateway_ids')
+        ..add(serializers.serialize(object.companyGatewayIds,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultTaskRate != null) {
+      result
+        ..add('default_task_rate')
+        ..add(serializers.serialize(object.defaultTaskRate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.sendReminders != null) {
+      result
+        ..add('send_reminders')
+        ..add(serializers.serialize(object.sendReminders,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.showTasksInPortal != null) {
+      result
+        ..add('show_tasks_in_portal')
+        ..add(serializers.serialize(object.showTasksInPortal,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.emailStyle != null) {
+      result
+        ..add('email_style')
+        ..add(serializers.serialize(object.emailStyle,
+            specifiedType: const FullType(String)));
+    }
+    if (object.replyToEmail != null) {
+      result
+        ..add('reply_to_email')
+        ..add(serializers.serialize(object.replyToEmail,
+            specifiedType: const FullType(String)));
+    }
+    if (object.bccEmail != null) {
+      result
+        ..add('bcc_email')
+        ..add(serializers.serialize(object.bccEmail,
+            specifiedType: const FullType(String)));
+    }
+    if (object.pdfEmailAttachment != null) {
+      result
+        ..add('pdf_email_attachment')
+        ..add(serializers.serialize(object.pdfEmailAttachment,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.ublEmailAttachment != null) {
+      result
+        ..add('ubl_email_attachment')
+        ..add(serializers.serialize(object.ublEmailAttachment,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.documentEmailAttachment != null) {
+      result
+        ..add('document_email_attachment')
+        ..add(serializers.serialize(object.documentEmailAttachment,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.emailStyleCustom != null) {
+      result
+        ..add('email_style_custom')
+        ..add(serializers.serialize(object.emailStyleCustom,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customMessageDashboard != null) {
+      result
+        ..add('custom_message_dashboard')
+        ..add(serializers.serialize(object.customMessageDashboard,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customMessageUnpaidInvoice != null) {
+      result
+        ..add('custom_message_unpaid_invoice')
+        ..add(serializers.serialize(object.customMessageUnpaidInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customMessagePaidInvoice != null) {
+      result
+        ..add('custom_message_paid_invoice')
+        ..add(serializers.serialize(object.customMessagePaidInvoice,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customMessageUnapprovedQuote != null) {
+      result
+        ..add('custom_message_unapproved_quote')
+        ..add(serializers.serialize(object.customMessageUnapprovedQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customMessageApprovedQuote != null) {
+      result
+        ..add('custom_message_approved_quote')
+        ..add(serializers.serialize(object.customMessageApprovedQuote,
+            specifiedType: const FullType(String)));
+    }
+    if (object.lockSentInvoices != null) {
+      result
+        ..add('lock_sent_invoices')
+        ..add(serializers.serialize(object.lockSentInvoices,
+            specifiedType: const FullType(bool)));
+    }
     if (object.name != null) {
       result
         ..add('name')
@@ -761,54 +905,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.website,
             specifiedType: const FullType(String)));
     }
-    if (object.timezoneId != null) {
-      result
-        ..add('timezone_id')
-        ..add(serializers.serialize(object.timezoneId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.dateFormatId != null) {
-      result
-        ..add('date_format_id')
-        ..add(serializers.serialize(object.dateFormatId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.datetimeFormatId != null) {
-      result
-        ..add('datetime_format_id')
-        ..add(serializers.serialize(object.datetimeFormatId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.enableMilitaryTime != null) {
-      result
-        ..add('military_time')
-        ..add(serializers.serialize(object.enableMilitaryTime,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.languageId != null) {
-      result
-        ..add('language_id')
-        ..add(serializers.serialize(object.languageId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.currencyId != null) {
-      result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.sendReminders != null) {
-      result
-        ..add('send_reminders')
-        ..add(serializers.serialize(object.sendReminders,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.showTasksInPortal != null) {
-      result
-        ..add('show_tasks_in_portal')
-        ..add(serializers.serialize(object.showTasksInPortal,
-            specifiedType: const FullType(bool)));
-    }
     if (object.defaultInvoiceTerms != null) {
       result
         ..add('invoice_terms')
@@ -881,35 +977,17 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultQuoteTerms,
             specifiedType: const FullType(String)));
     }
-    if (object.showCurrencyCode != null) {
-      result
-        ..add('show_currency_code')
-        ..add(serializers.serialize(object.showCurrencyCode,
-            specifiedType: const FullType(bool)));
-    }
     if (object.enableSecondTaxRate != null) {
       result
         ..add('enable_second_tax_rate')
         ..add(serializers.serialize(object.enableSecondTaxRate,
             specifiedType: const FullType(bool)));
     }
-    if (object.defaultPaymentTerms != null) {
-      result
-        ..add('payment_terms_HIDDEN')
-        ..add(serializers.serialize(object.defaultPaymentTerms,
-            specifiedType: const FullType(int)));
-    }
     if (object.defaultPaymentTypeId != null) {
       result
         ..add('payment_type_id')
         ..add(serializers.serialize(object.defaultPaymentTypeId,
             specifiedType: const FullType(String)));
-    }
-    if (object.defaultTaskRate != null) {
-      result
-        ..add('default_task_rate')
-        ..add(serializers.serialize(object.defaultTaskRate,
-            specifiedType: const FullType(double)));
     }
     if (object.enableInclusiveTaxes != null) {
       result
@@ -1077,6 +1155,102 @@ class _$SettingsEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'timezone_id':
+          result.timezoneId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'date_format_id':
+          result.dateFormatId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'military_time':
+          result.enableMilitaryTime = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'language_id':
+          result.languageId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'show_currency_code':
+          result.showCurrencyCode = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'payment_terms_HIDDEN':
+          result.defaultPaymentTerms = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'company_gateway_ids':
+          result.companyGatewayIds = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'default_task_rate':
+          result.defaultTaskRate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'send_reminders':
+          result.sendReminders = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_tasks_in_portal':
+          result.showTasksInPortal = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'email_style':
+          result.emailStyle = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reply_to_email':
+          result.replyToEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'bcc_email':
+          result.bccEmail = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'pdf_email_attachment':
+          result.pdfEmailAttachment = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'ubl_email_attachment':
+          result.ublEmailAttachment = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'document_email_attachment':
+          result.documentEmailAttachment = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'email_style_custom':
+          result.emailStyleCustom = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_message_dashboard':
+          result.customMessageDashboard = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_message_unpaid_invoice':
+          result.customMessageUnpaidInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_message_paid_invoice':
+          result.customMessagePaidInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_message_unapproved_quote':
+          result.customMessageUnapprovedQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_message_approved_quote':
+          result.customMessageApprovedQuote = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'lock_sent_invoices':
+          result.lockSentInvoices = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1129,38 +1303,6 @@ class _$SettingsEntitySerializer
           result.website = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'timezone_id':
-          result.timezoneId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'date_format_id':
-          result.dateFormatId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'datetime_format_id':
-          result.datetimeFormatId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'military_time':
-          result.enableMilitaryTime = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'send_reminders':
-          result.sendReminders = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'show_tasks_in_portal':
-          result.showTasksInPortal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'invoice_terms':
           result.defaultInvoiceTerms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1209,25 +1351,13 @@ class _$SettingsEntitySerializer
           result.defaultQuoteTerms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'show_currency_code':
-          result.showCurrencyCode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'enable_second_tax_rate':
           result.enableSecondTaxRate = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'payment_terms_HIDDEN':
-          result.defaultPaymentTerms = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'payment_type_id':
           result.defaultPaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'default_task_rate':
-          result.defaultTaskRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
           break;
         case 'inclusive_taxes':
           result.enableInclusiveTaxes = serializers.deserialize(value,
@@ -2525,6 +2655,54 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
 
 class _$SettingsEntity extends SettingsEntity {
   @override
+  final String timezoneId;
+  @override
+  final String dateFormatId;
+  @override
+  final bool enableMilitaryTime;
+  @override
+  final String languageId;
+  @override
+  final bool showCurrencyCode;
+  @override
+  final String currencyId;
+  @override
+  final int defaultPaymentTerms;
+  @override
+  final String companyGatewayIds;
+  @override
+  final double defaultTaskRate;
+  @override
+  final bool sendReminders;
+  @override
+  final bool showTasksInPortal;
+  @override
+  final String emailStyle;
+  @override
+  final String replyToEmail;
+  @override
+  final String bccEmail;
+  @override
+  final bool pdfEmailAttachment;
+  @override
+  final bool ublEmailAttachment;
+  @override
+  final bool documentEmailAttachment;
+  @override
+  final String emailStyleCustom;
+  @override
+  final String customMessageDashboard;
+  @override
+  final String customMessageUnpaidInvoice;
+  @override
+  final String customMessagePaidInvoice;
+  @override
+  final String customMessageUnapprovedQuote;
+  @override
+  final String customMessageApprovedQuote;
+  @override
+  final bool lockSentInvoices;
+  @override
   final String name;
   @override
   final String address1;
@@ -2551,22 +2729,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String website;
   @override
-  final String timezoneId;
-  @override
-  final String dateFormatId;
-  @override
-  final String datetimeFormatId;
-  @override
-  final bool enableMilitaryTime;
-  @override
-  final String languageId;
-  @override
-  final String currencyId;
-  @override
-  final bool sendReminders;
-  @override
-  final bool showTasksInPortal;
-  @override
   final String defaultInvoiceTerms;
   @override
   final bool enableInvoiceTaxes;
@@ -2591,15 +2753,9 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String defaultQuoteTerms;
   @override
-  final bool showCurrencyCode;
-  @override
   final bool enableSecondTaxRate;
   @override
-  final int defaultPaymentTerms;
-  @override
   final String defaultPaymentTypeId;
-  @override
-  final double defaultTaskRate;
   @override
   final bool enableInclusiveTaxes;
   @override
@@ -2655,7 +2811,31 @@ class _$SettingsEntity extends SettingsEntity {
       (new SettingsEntityBuilder()..update(updates)).build();
 
   _$SettingsEntity._(
-      {this.name,
+      {this.timezoneId,
+      this.dateFormatId,
+      this.enableMilitaryTime,
+      this.languageId,
+      this.showCurrencyCode,
+      this.currencyId,
+      this.defaultPaymentTerms,
+      this.companyGatewayIds,
+      this.defaultTaskRate,
+      this.sendReminders,
+      this.showTasksInPortal,
+      this.emailStyle,
+      this.replyToEmail,
+      this.bccEmail,
+      this.pdfEmailAttachment,
+      this.ublEmailAttachment,
+      this.documentEmailAttachment,
+      this.emailStyleCustom,
+      this.customMessageDashboard,
+      this.customMessageUnpaidInvoice,
+      this.customMessagePaidInvoice,
+      this.customMessageUnapprovedQuote,
+      this.customMessageApprovedQuote,
+      this.lockSentInvoices,
+      this.name,
       this.address1,
       this.address2,
       this.city,
@@ -2668,14 +2848,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.idNumber,
       this.vatNumber,
       this.website,
-      this.timezoneId,
-      this.dateFormatId,
-      this.datetimeFormatId,
-      this.enableMilitaryTime,
-      this.languageId,
-      this.currencyId,
-      this.sendReminders,
-      this.showTasksInPortal,
       this.defaultInvoiceTerms,
       this.enableInvoiceTaxes,
       this.enableInvoiceItemTaxes,
@@ -2688,11 +2860,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultTaxName2,
       this.defaultTaxRate2,
       this.defaultQuoteTerms,
-      this.showCurrencyCode,
       this.enableSecondTaxRate,
-      this.defaultPaymentTerms,
       this.defaultPaymentTypeId,
-      this.defaultTaskRate,
       this.enableInclusiveTaxes,
       this.convertProductExchangeRate,
       this.updateProducts,
@@ -2732,6 +2901,30 @@ class _$SettingsEntity extends SettingsEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SettingsEntity &&
+        timezoneId == other.timezoneId &&
+        dateFormatId == other.dateFormatId &&
+        enableMilitaryTime == other.enableMilitaryTime &&
+        languageId == other.languageId &&
+        showCurrencyCode == other.showCurrencyCode &&
+        currencyId == other.currencyId &&
+        defaultPaymentTerms == other.defaultPaymentTerms &&
+        companyGatewayIds == other.companyGatewayIds &&
+        defaultTaskRate == other.defaultTaskRate &&
+        sendReminders == other.sendReminders &&
+        showTasksInPortal == other.showTasksInPortal &&
+        emailStyle == other.emailStyle &&
+        replyToEmail == other.replyToEmail &&
+        bccEmail == other.bccEmail &&
+        pdfEmailAttachment == other.pdfEmailAttachment &&
+        ublEmailAttachment == other.ublEmailAttachment &&
+        documentEmailAttachment == other.documentEmailAttachment &&
+        emailStyleCustom == other.emailStyleCustom &&
+        customMessageDashboard == other.customMessageDashboard &&
+        customMessageUnpaidInvoice == other.customMessageUnpaidInvoice &&
+        customMessagePaidInvoice == other.customMessagePaidInvoice &&
+        customMessageUnapprovedQuote == other.customMessageUnapprovedQuote &&
+        customMessageApprovedQuote == other.customMessageApprovedQuote &&
+        lockSentInvoices == other.lockSentInvoices &&
         name == other.name &&
         address1 == other.address1 &&
         address2 == other.address2 &&
@@ -2745,14 +2938,6 @@ class _$SettingsEntity extends SettingsEntity {
         idNumber == other.idNumber &&
         vatNumber == other.vatNumber &&
         website == other.website &&
-        timezoneId == other.timezoneId &&
-        dateFormatId == other.dateFormatId &&
-        datetimeFormatId == other.datetimeFormatId &&
-        enableMilitaryTime == other.enableMilitaryTime &&
-        languageId == other.languageId &&
-        currencyId == other.currencyId &&
-        sendReminders == other.sendReminders &&
-        showTasksInPortal == other.showTasksInPortal &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
         enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
@@ -2765,11 +2950,8 @@ class _$SettingsEntity extends SettingsEntity {
         defaultTaxName2 == other.defaultTaxName2 &&
         defaultTaxRate2 == other.defaultTaxRate2 &&
         defaultQuoteTerms == other.defaultQuoteTerms &&
-        showCurrencyCode == other.showCurrencyCode &&
         enableSecondTaxRate == other.enableSecondTaxRate &&
-        defaultPaymentTerms == other.defaultPaymentTerms &&
         defaultPaymentTypeId == other.defaultPaymentTypeId &&
-        defaultTaskRate == other.defaultTaskRate &&
         enableInclusiveTaxes == other.enableInclusiveTaxes &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
         updateProducts == other.updateProducts &&
@@ -2817,7 +2999,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), timezoneId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), currencyId.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), updateProducts.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), customMessageApprovedQuote.hashCode), lockSentInvoices.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTypeId.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), updateProducts.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -2842,6 +3024,30 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SettingsEntity')
+          ..add('timezoneId', timezoneId)
+          ..add('dateFormatId', dateFormatId)
+          ..add('enableMilitaryTime', enableMilitaryTime)
+          ..add('languageId', languageId)
+          ..add('showCurrencyCode', showCurrencyCode)
+          ..add('currencyId', currencyId)
+          ..add('defaultPaymentTerms', defaultPaymentTerms)
+          ..add('companyGatewayIds', companyGatewayIds)
+          ..add('defaultTaskRate', defaultTaskRate)
+          ..add('sendReminders', sendReminders)
+          ..add('showTasksInPortal', showTasksInPortal)
+          ..add('emailStyle', emailStyle)
+          ..add('replyToEmail', replyToEmail)
+          ..add('bccEmail', bccEmail)
+          ..add('pdfEmailAttachment', pdfEmailAttachment)
+          ..add('ublEmailAttachment', ublEmailAttachment)
+          ..add('documentEmailAttachment', documentEmailAttachment)
+          ..add('emailStyleCustom', emailStyleCustom)
+          ..add('customMessageDashboard', customMessageDashboard)
+          ..add('customMessageUnpaidInvoice', customMessageUnpaidInvoice)
+          ..add('customMessagePaidInvoice', customMessagePaidInvoice)
+          ..add('customMessageUnapprovedQuote', customMessageUnapprovedQuote)
+          ..add('customMessageApprovedQuote', customMessageApprovedQuote)
+          ..add('lockSentInvoices', lockSentInvoices)
           ..add('name', name)
           ..add('address1', address1)
           ..add('address2', address2)
@@ -2855,14 +3061,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('idNumber', idNumber)
           ..add('vatNumber', vatNumber)
           ..add('website', website)
-          ..add('timezoneId', timezoneId)
-          ..add('dateFormatId', dateFormatId)
-          ..add('datetimeFormatId', datetimeFormatId)
-          ..add('enableMilitaryTime', enableMilitaryTime)
-          ..add('languageId', languageId)
-          ..add('currencyId', currencyId)
-          ..add('sendReminders', sendReminders)
-          ..add('showTasksInPortal', showTasksInPortal)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
           ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
@@ -2875,11 +3073,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultTaxName2', defaultTaxName2)
           ..add('defaultTaxRate2', defaultTaxRate2)
           ..add('defaultQuoteTerms', defaultQuoteTerms)
-          ..add('showCurrencyCode', showCurrencyCode)
           ..add('enableSecondTaxRate', enableSecondTaxRate)
-          ..add('defaultPaymentTerms', defaultPaymentTerms)
           ..add('defaultPaymentTypeId', defaultPaymentTypeId)
-          ..add('defaultTaskRate', defaultTaskRate)
           ..add('enableInclusiveTaxes', enableInclusiveTaxes)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
           ..add('updateProducts', updateProducts)
@@ -2912,6 +3107,120 @@ class _$SettingsEntity extends SettingsEntity {
 class SettingsEntityBuilder
     implements Builder<SettingsEntity, SettingsEntityBuilder> {
   _$SettingsEntity _$v;
+
+  String _timezoneId;
+  String get timezoneId => _$this._timezoneId;
+  set timezoneId(String timezoneId) => _$this._timezoneId = timezoneId;
+
+  String _dateFormatId;
+  String get dateFormatId => _$this._dateFormatId;
+  set dateFormatId(String dateFormatId) => _$this._dateFormatId = dateFormatId;
+
+  bool _enableMilitaryTime;
+  bool get enableMilitaryTime => _$this._enableMilitaryTime;
+  set enableMilitaryTime(bool enableMilitaryTime) =>
+      _$this._enableMilitaryTime = enableMilitaryTime;
+
+  String _languageId;
+  String get languageId => _$this._languageId;
+  set languageId(String languageId) => _$this._languageId = languageId;
+
+  bool _showCurrencyCode;
+  bool get showCurrencyCode => _$this._showCurrencyCode;
+  set showCurrencyCode(bool showCurrencyCode) =>
+      _$this._showCurrencyCode = showCurrencyCode;
+
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
+
+  int _defaultPaymentTerms;
+  int get defaultPaymentTerms => _$this._defaultPaymentTerms;
+  set defaultPaymentTerms(int defaultPaymentTerms) =>
+      _$this._defaultPaymentTerms = defaultPaymentTerms;
+
+  String _companyGatewayIds;
+  String get companyGatewayIds => _$this._companyGatewayIds;
+  set companyGatewayIds(String companyGatewayIds) =>
+      _$this._companyGatewayIds = companyGatewayIds;
+
+  double _defaultTaskRate;
+  double get defaultTaskRate => _$this._defaultTaskRate;
+  set defaultTaskRate(double defaultTaskRate) =>
+      _$this._defaultTaskRate = defaultTaskRate;
+
+  bool _sendReminders;
+  bool get sendReminders => _$this._sendReminders;
+  set sendReminders(bool sendReminders) =>
+      _$this._sendReminders = sendReminders;
+
+  bool _showTasksInPortal;
+  bool get showTasksInPortal => _$this._showTasksInPortal;
+  set showTasksInPortal(bool showTasksInPortal) =>
+      _$this._showTasksInPortal = showTasksInPortal;
+
+  String _emailStyle;
+  String get emailStyle => _$this._emailStyle;
+  set emailStyle(String emailStyle) => _$this._emailStyle = emailStyle;
+
+  String _replyToEmail;
+  String get replyToEmail => _$this._replyToEmail;
+  set replyToEmail(String replyToEmail) => _$this._replyToEmail = replyToEmail;
+
+  String _bccEmail;
+  String get bccEmail => _$this._bccEmail;
+  set bccEmail(String bccEmail) => _$this._bccEmail = bccEmail;
+
+  bool _pdfEmailAttachment;
+  bool get pdfEmailAttachment => _$this._pdfEmailAttachment;
+  set pdfEmailAttachment(bool pdfEmailAttachment) =>
+      _$this._pdfEmailAttachment = pdfEmailAttachment;
+
+  bool _ublEmailAttachment;
+  bool get ublEmailAttachment => _$this._ublEmailAttachment;
+  set ublEmailAttachment(bool ublEmailAttachment) =>
+      _$this._ublEmailAttachment = ublEmailAttachment;
+
+  bool _documentEmailAttachment;
+  bool get documentEmailAttachment => _$this._documentEmailAttachment;
+  set documentEmailAttachment(bool documentEmailAttachment) =>
+      _$this._documentEmailAttachment = documentEmailAttachment;
+
+  String _emailStyleCustom;
+  String get emailStyleCustom => _$this._emailStyleCustom;
+  set emailStyleCustom(String emailStyleCustom) =>
+      _$this._emailStyleCustom = emailStyleCustom;
+
+  String _customMessageDashboard;
+  String get customMessageDashboard => _$this._customMessageDashboard;
+  set customMessageDashboard(String customMessageDashboard) =>
+      _$this._customMessageDashboard = customMessageDashboard;
+
+  String _customMessageUnpaidInvoice;
+  String get customMessageUnpaidInvoice => _$this._customMessageUnpaidInvoice;
+  set customMessageUnpaidInvoice(String customMessageUnpaidInvoice) =>
+      _$this._customMessageUnpaidInvoice = customMessageUnpaidInvoice;
+
+  String _customMessagePaidInvoice;
+  String get customMessagePaidInvoice => _$this._customMessagePaidInvoice;
+  set customMessagePaidInvoice(String customMessagePaidInvoice) =>
+      _$this._customMessagePaidInvoice = customMessagePaidInvoice;
+
+  String _customMessageUnapprovedQuote;
+  String get customMessageUnapprovedQuote =>
+      _$this._customMessageUnapprovedQuote;
+  set customMessageUnapprovedQuote(String customMessageUnapprovedQuote) =>
+      _$this._customMessageUnapprovedQuote = customMessageUnapprovedQuote;
+
+  String _customMessageApprovedQuote;
+  String get customMessageApprovedQuote => _$this._customMessageApprovedQuote;
+  set customMessageApprovedQuote(String customMessageApprovedQuote) =>
+      _$this._customMessageApprovedQuote = customMessageApprovedQuote;
+
+  bool _lockSentInvoices;
+  bool get lockSentInvoices => _$this._lockSentInvoices;
+  set lockSentInvoices(bool lockSentInvoices) =>
+      _$this._lockSentInvoices = lockSentInvoices;
 
   String _name;
   String get name => _$this._name;
@@ -2964,42 +3273,6 @@ class SettingsEntityBuilder
   String _website;
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
-
-  String _timezoneId;
-  String get timezoneId => _$this._timezoneId;
-  set timezoneId(String timezoneId) => _$this._timezoneId = timezoneId;
-
-  String _dateFormatId;
-  String get dateFormatId => _$this._dateFormatId;
-  set dateFormatId(String dateFormatId) => _$this._dateFormatId = dateFormatId;
-
-  String _datetimeFormatId;
-  String get datetimeFormatId => _$this._datetimeFormatId;
-  set datetimeFormatId(String datetimeFormatId) =>
-      _$this._datetimeFormatId = datetimeFormatId;
-
-  bool _enableMilitaryTime;
-  bool get enableMilitaryTime => _$this._enableMilitaryTime;
-  set enableMilitaryTime(bool enableMilitaryTime) =>
-      _$this._enableMilitaryTime = enableMilitaryTime;
-
-  String _languageId;
-  String get languageId => _$this._languageId;
-  set languageId(String languageId) => _$this._languageId = languageId;
-
-  String _currencyId;
-  String get currencyId => _$this._currencyId;
-  set currencyId(String currencyId) => _$this._currencyId = currencyId;
-
-  bool _sendReminders;
-  bool get sendReminders => _$this._sendReminders;
-  set sendReminders(bool sendReminders) =>
-      _$this._sendReminders = sendReminders;
-
-  bool _showTasksInPortal;
-  bool get showTasksInPortal => _$this._showTasksInPortal;
-  set showTasksInPortal(bool showTasksInPortal) =>
-      _$this._showTasksInPortal = showTasksInPortal;
 
   String _defaultInvoiceTerms;
   String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
@@ -3061,30 +3334,15 @@ class SettingsEntityBuilder
   set defaultQuoteTerms(String defaultQuoteTerms) =>
       _$this._defaultQuoteTerms = defaultQuoteTerms;
 
-  bool _showCurrencyCode;
-  bool get showCurrencyCode => _$this._showCurrencyCode;
-  set showCurrencyCode(bool showCurrencyCode) =>
-      _$this._showCurrencyCode = showCurrencyCode;
-
   bool _enableSecondTaxRate;
   bool get enableSecondTaxRate => _$this._enableSecondTaxRate;
   set enableSecondTaxRate(bool enableSecondTaxRate) =>
       _$this._enableSecondTaxRate = enableSecondTaxRate;
 
-  int _defaultPaymentTerms;
-  int get defaultPaymentTerms => _$this._defaultPaymentTerms;
-  set defaultPaymentTerms(int defaultPaymentTerms) =>
-      _$this._defaultPaymentTerms = defaultPaymentTerms;
-
   String _defaultPaymentTypeId;
   String get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
   set defaultPaymentTypeId(String defaultPaymentTypeId) =>
       _$this._defaultPaymentTypeId = defaultPaymentTypeId;
-
-  double _defaultTaskRate;
-  double get defaultTaskRate => _$this._defaultTaskRate;
-  set defaultTaskRate(double defaultTaskRate) =>
-      _$this._defaultTaskRate = defaultTaskRate;
 
   bool _enableInclusiveTaxes;
   bool get enableInclusiveTaxes => _$this._enableInclusiveTaxes;
@@ -3214,6 +3472,30 @@ class SettingsEntityBuilder
 
   SettingsEntityBuilder get _$this {
     if (_$v != null) {
+      _timezoneId = _$v.timezoneId;
+      _dateFormatId = _$v.dateFormatId;
+      _enableMilitaryTime = _$v.enableMilitaryTime;
+      _languageId = _$v.languageId;
+      _showCurrencyCode = _$v.showCurrencyCode;
+      _currencyId = _$v.currencyId;
+      _defaultPaymentTerms = _$v.defaultPaymentTerms;
+      _companyGatewayIds = _$v.companyGatewayIds;
+      _defaultTaskRate = _$v.defaultTaskRate;
+      _sendReminders = _$v.sendReminders;
+      _showTasksInPortal = _$v.showTasksInPortal;
+      _emailStyle = _$v.emailStyle;
+      _replyToEmail = _$v.replyToEmail;
+      _bccEmail = _$v.bccEmail;
+      _pdfEmailAttachment = _$v.pdfEmailAttachment;
+      _ublEmailAttachment = _$v.ublEmailAttachment;
+      _documentEmailAttachment = _$v.documentEmailAttachment;
+      _emailStyleCustom = _$v.emailStyleCustom;
+      _customMessageDashboard = _$v.customMessageDashboard;
+      _customMessageUnpaidInvoice = _$v.customMessageUnpaidInvoice;
+      _customMessagePaidInvoice = _$v.customMessagePaidInvoice;
+      _customMessageUnapprovedQuote = _$v.customMessageUnapprovedQuote;
+      _customMessageApprovedQuote = _$v.customMessageApprovedQuote;
+      _lockSentInvoices = _$v.lockSentInvoices;
       _name = _$v.name;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
@@ -3227,14 +3509,6 @@ class SettingsEntityBuilder
       _idNumber = _$v.idNumber;
       _vatNumber = _$v.vatNumber;
       _website = _$v.website;
-      _timezoneId = _$v.timezoneId;
-      _dateFormatId = _$v.dateFormatId;
-      _datetimeFormatId = _$v.datetimeFormatId;
-      _enableMilitaryTime = _$v.enableMilitaryTime;
-      _languageId = _$v.languageId;
-      _currencyId = _$v.currencyId;
-      _sendReminders = _$v.sendReminders;
-      _showTasksInPortal = _$v.showTasksInPortal;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
       _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
@@ -3247,11 +3521,8 @@ class SettingsEntityBuilder
       _defaultTaxName2 = _$v.defaultTaxName2;
       _defaultTaxRate2 = _$v.defaultTaxRate2;
       _defaultQuoteTerms = _$v.defaultQuoteTerms;
-      _showCurrencyCode = _$v.showCurrencyCode;
       _enableSecondTaxRate = _$v.enableSecondTaxRate;
-      _defaultPaymentTerms = _$v.defaultPaymentTerms;
       _defaultPaymentTypeId = _$v.defaultPaymentTypeId;
-      _defaultTaskRate = _$v.defaultTaskRate;
       _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
       _updateProducts = _$v.updateProducts;
@@ -3301,6 +3572,30 @@ class SettingsEntityBuilder
     try {
       _$result = _$v ??
           new _$SettingsEntity._(
+              timezoneId: timezoneId,
+              dateFormatId: dateFormatId,
+              enableMilitaryTime: enableMilitaryTime,
+              languageId: languageId,
+              showCurrencyCode: showCurrencyCode,
+              currencyId: currencyId,
+              defaultPaymentTerms: defaultPaymentTerms,
+              companyGatewayIds: companyGatewayIds,
+              defaultTaskRate: defaultTaskRate,
+              sendReminders: sendReminders,
+              showTasksInPortal: showTasksInPortal,
+              emailStyle: emailStyle,
+              replyToEmail: replyToEmail,
+              bccEmail: bccEmail,
+              pdfEmailAttachment: pdfEmailAttachment,
+              ublEmailAttachment: ublEmailAttachment,
+              documentEmailAttachment: documentEmailAttachment,
+              emailStyleCustom: emailStyleCustom,
+              customMessageDashboard: customMessageDashboard,
+              customMessageUnpaidInvoice: customMessageUnpaidInvoice,
+              customMessagePaidInvoice: customMessagePaidInvoice,
+              customMessageUnapprovedQuote: customMessageUnapprovedQuote,
+              customMessageApprovedQuote: customMessageApprovedQuote,
+              lockSentInvoices: lockSentInvoices,
               name: name,
               address1: address1,
               address2: address2,
@@ -3314,14 +3609,6 @@ class SettingsEntityBuilder
               idNumber: idNumber,
               vatNumber: vatNumber,
               website: website,
-              timezoneId: timezoneId,
-              dateFormatId: dateFormatId,
-              datetimeFormatId: datetimeFormatId,
-              enableMilitaryTime: enableMilitaryTime,
-              languageId: languageId,
-              currencyId: currencyId,
-              sendReminders: sendReminders,
-              showTasksInPortal: showTasksInPortal,
               defaultInvoiceTerms: defaultInvoiceTerms,
               enableInvoiceTaxes: enableInvoiceTaxes,
               enableInvoiceItemTaxes: enableInvoiceItemTaxes,
@@ -3334,11 +3621,8 @@ class SettingsEntityBuilder
               defaultTaxName2: defaultTaxName2,
               defaultTaxRate2: defaultTaxRate2,
               defaultQuoteTerms: defaultQuoteTerms,
-              showCurrencyCode: showCurrencyCode,
               enableSecondTaxRate: enableSecondTaxRate,
-              defaultPaymentTerms: defaultPaymentTerms,
               defaultPaymentTypeId: defaultPaymentTypeId,
-              defaultTaskRate: defaultTaskRate,
               enableInclusiveTaxes: enableInclusiveTaxes,
               convertProductExchangeRate: convertProductExchangeRate,
               updateProducts: updateProducts,

@@ -120,9 +120,6 @@ class SettingsViewer extends StatelessWidget {
       localization.dateFormat: settings.hasDateFormat
           ? staticState.dateFormatMap[settings.dateFormatId]?.format
           : null,
-      localization.datetimeFormat: settings.hasDatetimeFormat
-          ? staticState.datetimeFormatMap[settings.datetimeFormatId]?.format
-          : null,
       localization.militaryTime: settings.enableMilitaryTime == true
           ? localization.enabled
           : settings.enableMilitaryTime == false ? localization.disabled : null,

@@ -476,7 +476,6 @@ abstract class SettingsEntity
       timezoneId: '',
       convertProductExchangeRate: null,
       dateFormatId: null,
-      datetimeFormatId: null,
       defaultInvoiceDesignId: null,
       defaultInvoiceFooter: '',
       defaultInvoiceTerms: '',
@@ -527,6 +526,103 @@ abstract class SettingsEntity
   SettingsEntity._();
 
   @nullable
+  @BuiltValueField(wireName: 'timezone_id')
+  String get timezoneId;
+
+  @nullable
+  @BuiltValueField(wireName: 'date_format_id')
+  String get dateFormatId;
+
+  @nullable
+  @BuiltValueField(wireName: 'military_time')
+  bool get enableMilitaryTime;
+
+  @nullable
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_currency_code')
+  bool get showCurrencyCode;
+
+  @nullable
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_terms_HIDDEN')
+  int get defaultPaymentTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'company_gateway_ids')
+  String get companyGatewayIds;
+
+  @nullable
+  @BuiltValueField(wireName: 'default_task_rate')
+  double get defaultTaskRate;
+
+  @nullable
+  @BuiltValueField(wireName: 'send_reminders')
+  bool get sendReminders;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_tasks_in_portal')
+  bool get showTasksInPortal;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_style')
+  String get emailStyle;
+
+  @nullable
+  @BuiltValueField(wireName: 'reply_to_email')
+  String get replyToEmail;
+
+  @nullable
+  @BuiltValueField(wireName: 'bcc_email')
+  String get bccEmail;
+
+  @nullable
+  @BuiltValueField(wireName: 'pdf_email_attachment')
+  bool get pdfEmailAttachment;
+
+  @nullable
+  @BuiltValueField(wireName: 'ubl_email_attachment')
+  bool get ublEmailAttachment;
+
+  @nullable
+  @BuiltValueField(wireName: 'document_email_attachment')
+  bool get documentEmailAttachment;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_style_custom')
+  String get emailStyleCustom;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_message_dashboard')
+  String get customMessageDashboard;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_message_unpaid_invoice')
+  String get customMessageUnpaidInvoice;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_message_paid_invoice')
+  String get customMessagePaidInvoice;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_message_unapproved_quote')
+  String get customMessageUnapprovedQuote;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_message_approved_quote')
+  String get customMessageApprovedQuote;
+
+  @nullable
+  @BuiltValueField(wireName: 'lock_sent_invoices')
+  bool get lockSentInvoices;
+
+
+  @nullable
   String get name;
 
   @nullable
@@ -570,38 +666,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'website')
   String get website;
-
-  @nullable
-  @BuiltValueField(wireName: 'timezone_id')
-  String get timezoneId;
-
-  @nullable
-  @BuiltValueField(wireName: 'date_format_id')
-  String get dateFormatId;
-
-  @nullable
-  @BuiltValueField(wireName: 'datetime_format_id')
-  String get datetimeFormatId;
-
-  @nullable
-  @BuiltValueField(wireName: 'military_time')
-  bool get enableMilitaryTime;
-
-  @nullable
-  @BuiltValueField(wireName: 'language_id')
-  String get languageId;
-
-  @nullable
-  @BuiltValueField(wireName: 'currency_id')
-  String get currencyId;
-
-  @nullable
-  @BuiltValueField(wireName: 'send_reminders')
-  bool get sendReminders;
-
-  @nullable
-  @BuiltValueField(wireName: 'show_tasks_in_portal')
-  bool get showTasksInPortal;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_terms')
@@ -652,24 +716,12 @@ abstract class SettingsEntity
   String get defaultQuoteTerms;
 
   @nullable
-  @BuiltValueField(wireName: 'show_currency_code')
-  bool get showCurrencyCode;
-
-  @nullable
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
 
   @nullable
-  @BuiltValueField(wireName: 'payment_terms_HIDDEN')
-  int get defaultPaymentTerms;
-
-  @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
-
-  @nullable
-  @BuiltValueField(wireName: 'default_task_rate')
-  double get defaultTaskRate;
 
   @nullable
   @BuiltValueField(wireName: 'inclusive_taxes')
@@ -779,9 +831,6 @@ abstract class SettingsEntity
   bool get hasTimezone => timezoneId != null && timezoneId.isNotEmpty;
 
   bool get hasDateFormat => dateFormatId != null && dateFormatId.isNotEmpty;
-
-  bool get hasDatetimeFormat =>
-      datetimeFormatId != null && datetimeFormatId.isNotEmpty;
 
   bool get hasLanguage => languageId != null && languageId.isNotEmpty;
 

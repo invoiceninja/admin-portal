@@ -252,10 +252,10 @@ String formatDate(String value, BuildContext context,
           ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
           : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
-      final dateFormats = state.staticState.datetimeFormatMap;
-      final dateFormatId = (company.settings.datetimeFormatId ?? '').isNotEmpty
-          ? company.settings.datetimeFormatId
-          : kDefaultDateTimeFormat;
+      final dateFormats = state.staticState.dateFormatMap;
+      final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
+          ? company.settings.dateFormatId
+          : kDefaultDateFormat;
       format = dateFormats[dateFormatId].format;
       if (company.settings.enableMilitaryTime) {
         format = showSeconds
