@@ -59,7 +59,6 @@ class _SystemSettingsState extends State<SystemSettings>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-
     //_recurringPrefixController.text = widget.viewModel.settings.
     /*
     final product = widget.viewModel.product;
@@ -149,23 +148,13 @@ class _SystemSettingsState extends State<SystemSettings>
             ],
           ),
           ListView(children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                EntityNumberSettings(),
-                CustomFieldsSettings(),
-              ],
-            ),
+            EntityNumberSettings(),
+            CustomFieldsSettings(),
           ]),
-          ListView(
-            children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  EntityNumberSettings(),
-                  CustomFieldsSettings(),
-                ],
-              ),
-            ],
-          ),
+          ListView(children: <Widget>[
+            EntityNumberSettings(),
+            CustomFieldsSettings(),
+          ]),
         ],
       ),
     );
@@ -227,7 +216,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
+    return FormCard(
       children: <Widget>[
         DecoratedFormField(
           label: localization.pattern,

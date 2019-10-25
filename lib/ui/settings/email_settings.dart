@@ -31,9 +31,7 @@ class _EmailSettingsState extends State<EmailSettings>
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TabController _tabController;
-  ZefyrController _zefyrController;
   FocusScopeNode _focusNode;
-  FocusNode _zefyrNode;
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
@@ -47,16 +45,12 @@ class _EmailSettingsState extends State<EmailSettings>
 
     _tabController = TabController(vsync: this, length: 2);
     _focusNode = FocusScopeNode();
-    _zefyrNode = FocusNode();
   }
 
   @override
   void dispose() {
-    _zefyrController.removeListener(_onZefyrChanged);
-    _zefyrController.dispose();
     _tabController.dispose();
     _focusNode.dispose();
-    _zefyrNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -78,8 +72,6 @@ class _EmailSettingsState extends State<EmailSettings>
     final signature = settings.emailFooter;
 
     // return NotusDocument.fromJson(jsonDecode(contents));
-    final doc = signature != null ? NotusDocument.fromJson(jsonDecode(signature)) : NotusDocument();
-    _zefyrController = ZefyrController(doc)..addListener(_onZefyrChanged);
     //_zefyrController.compose(Delta()..insert(signature));
 
     //_replyToEmailController.text = ;
@@ -88,13 +80,6 @@ class _EmailSettingsState extends State<EmailSettings>
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
-  }
-
-  void _onZefyrChanged() {
-    final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
-    viewModel.onSettingsChanged(settings.rebuild(
-        (b) => b..emailFooter = jsonEncode(_zefyrController.document)));
   }
 
   void _onChanged() {
@@ -219,16 +204,7 @@ class _EmailSettingsState extends State<EmailSettings>
           ),
           Container(
             color: Colors.grey.shade100,
-            child: _zefyrController == null
-                ? LoadingIndicator()
-                : ZefyrScaffold(
-                    child: ZefyrEditor(
-                      padding: EdgeInsets.all(16),
-                      controller: _zefyrController,
-                      focusNode: _zefyrNode,
-                      autofocus: false,
-                    ),
-                  ),
+            child: SizedBox(),
           ),
         ],
       ),

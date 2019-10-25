@@ -33,7 +33,7 @@ class BoolDropdownButton extends StatelessWidget {
         padding: const EdgeInsets.only(top: 12),
         child: SwitchListTile(
           title: Text(label),
-          value: value,
+          value: value ?? false,
           secondary: iconData != null ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
           activeColor: Theme.of(context).accentColor,
