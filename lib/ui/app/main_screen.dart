@@ -9,13 +9,20 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -31,9 +38,12 @@ import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -96,43 +106,43 @@ class MainScreen extends StatelessWidget {
                     ),
                     EntityScreens(
                       entityType: EntityType.invoice,
-                      listWidget: InvoiceScreen(),
+                      listWidget: InvoiceScreenBuilder(),
                       viewWidget: InvoiceViewScreen(),
                       editWidget: InvoiceEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.payment,
-                      listWidget: PaymentScreen(),
+                      listWidget: PaymentScreenBuilder(),
                       viewWidget: PaymentViewScreen(),
                       editWidget: PaymentEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.quote,
-                      listWidget: QuoteScreen(),
+                      listWidget: QuoteScreenBuilder(),
                       viewWidget: QuoteViewScreen(),
                       editWidget: QuoteEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.project,
-                      listWidget: ProjectScreen(),
+                      listWidget: ProjectScreenBuilder(),
                       viewWidget: ProjectViewScreen(),
                       editWidget: ProjectEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.task,
-                      listWidget: TaskScreen(),
+                      listWidget: TaskScreenBuilder(),
                       viewWidget: TaskViewScreen(),
                       editWidget: TaskEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.vendor,
-                      listWidget: VendorScreen(),
+                      listWidget: VendorScreenBuilder(),
                       viewWidget: VendorViewScreen(),
                       editWidget: VendorEditScreen(),
                     ),
                     EntityScreens(
                       entityType: EntityType.expense,
-                      listWidget: ExpenseScreen(),
+                      listWidget: ExpenseScreenBuilder(),
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
                     ),
@@ -166,7 +176,7 @@ class SettingsScreens extends StatelessWidget {
         screen = LocalizationScreen();
         break;
       case kSettingsOnlinePayments:
-        screen = CompanyGatewayScreen();
+        screen = CompanyGatewayScreenBuilder();
         break;
       case kSettingsOnlinePaymentsView:
         screen = CompanyGatewayViewScreen();
@@ -175,7 +185,7 @@ class SettingsScreens extends StatelessWidget {
         screen = CompanyGatewayEditScreen();
         break;
       case kSettingsTaxRates:
-        screen = TaxRateSettingsScreen();
+        screen = TaxRateScreenBuilder();
         break;
       case kSettingsTaxRatesView:
         screen = TaxRateViewScreen();
@@ -196,7 +206,7 @@ class SettingsScreens extends StatelessWidget {
         screen = DeviceSettingsScreen();
         break;
       case kSettingsGroupSettings:
-        screen = GroupSettingsScreen();
+        screen = GroupScreenBuilder();
         break;
       case kSettingsGroupSettingsView:
         screen = GroupViewScreen();
