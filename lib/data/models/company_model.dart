@@ -126,7 +126,6 @@ abstract class CompanyEntity extends Object
   int get enabledModules;
 
   //@BuiltValueField(wireName: 'custom_messages')
-  //@BuiltValueField(wireName: 'invoice_labels')
 
   String get displayName => settings.name ?? '';
 
@@ -621,6 +620,156 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'lock_sent_invoices')
   bool get lockSentInvoices;
 
+  @nullable
+  @BuiltValueField(wireName: 'auto_archive_invoice')
+  bool get autoArchiveInvoice;
+
+  @nullable
+  @BuiltValueField(wireName: 'inclusive_taxes')
+  bool get enableInclusiveTaxes;
+
+  @nullable
+  BuiltMap<String, String> get translations;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_number_pattern')
+  String get taskNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'task_number_counter')
+  int get taskNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_number_pattern')
+  String get expenseNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'expense_number_counter')
+  int get expenseNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_number_pattern')
+  String get vendorNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_number_counter')
+  int get vendorNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'ticket_number_pattern')
+  String get ticketNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'ticket_number_counter')
+  int get ticketNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_number_pattern')
+  String get paymentNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_number_counter')
+  int get paymentNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_number_pattern')
+  String get invoiceNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_number_counter')
+  int get invoiceNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'quote_number_pattern')
+  String get quoteNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'quote_number_counter')
+  int get quoteNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_number_pattern')
+  String get clientNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_number_counter')
+  int get clientNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_number_pattern')
+  String get creditNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_number_counter')
+  int get creditNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_number_prefix')
+  String get recurringInvoiceNumberPrefix;
+
+  @nullable
+  @BuiltValueField(wireName: 'reset_counter_frequency_id')
+  String get resetCounterFrequencyId;
+
+  @nullable
+  @BuiltValueField(wireName: 'reset_counter_date')
+  String get resetCounterDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'counter_padding')
+  int get counterPadding;
+
+  @nullable
+  @BuiltValueField(wireName: 'shared_invoice_quote_counter')
+  bool get sharedInvoiceQuoteCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'update_products')
+  bool get updateProducts;
+
+  @nullable
+  @BuiltValueField(wireName: 'convert_products')
+  bool get convertProductExchangeRate;
+
+  @nullable
+  @BuiltValueField(wireName: 'fill_products')
+  bool get fillProducts;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_terms')
+  String get defaultInvoiceTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'quote_terms')
+  String get defaultQuoteTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_taxes')
+  bool get enableInvoiceTaxes;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_item_taxes')
+  bool get enableInvoiceItemTaxes;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_design_id')
+  String get defaultInvoiceDesignId;
+
+  @nullable
+  @BuiltValueField(wireName: 'quote_design_id')
+  String get defaultQuoteDesignId;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_footer')
+  String get defaultInvoiceFooter;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_labels')
+  String get invoiceLabels;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_item_taxes')
+  bool get showInvoiceItemTaxes;
 
   @nullable
   String get name;
@@ -668,34 +817,6 @@ abstract class SettingsEntity
   String get website;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_terms')
-  String get defaultInvoiceTerms;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_taxes')
-  bool get enableInvoiceTaxes;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_item_taxes')
-  bool get enableInvoiceItemTaxes;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_design_id')
-  String get defaultInvoiceDesignId;
-
-  @nullable
-  @BuiltValueField(wireName: 'quote_design_id')
-  String get defaultQuoteDesignId;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_footer')
-  String get defaultInvoiceFooter;
-
-  @nullable
-  @BuiltValueField(wireName: 'show_item_taxes')
-  bool get showInvoiceItemTaxes;
-
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get defaultTaxName1;
 
@@ -712,28 +833,12 @@ abstract class SettingsEntity
   double get defaultTaxRate2;
 
   @nullable
-  @BuiltValueField(wireName: 'quote_terms')
-  String get defaultQuoteTerms;
-
-  @nullable
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
 
   @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
-
-  @nullable
-  @BuiltValueField(wireName: 'inclusive_taxes')
-  bool get enableInclusiveTaxes;
-
-  @nullable
-  @BuiltValueField(wireName: 'convert_products')
-  bool get convertProductExchangeRate;
-
-  @nullable
-  @BuiltValueField(wireName: 'auto_update_products')
-  bool get updateProducts;
 
   @nullable
   @BuiltValueField(wireName: 'custom_invoice_taxes1')
@@ -771,7 +876,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'email_template_quote')
   String get emailBodyQuote;
@@ -803,10 +907,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_reminder3')
   String get emailBodyReminder3;
-
-  @nullable
-  @BuiltValueField(wireName: 'fill_products')
-  bool get fillProducts;
 
   @nullable
   @BuiltValueField(wireName: 'enable_portal_password')

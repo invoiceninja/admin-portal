@@ -302,9 +302,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(PaymentEntity)]),
           () => new ListBuilder<PaymentEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(PaymentTermEntity)]),
-          () => new ListBuilder<PaymentTermEntity>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(PaymentTypeEntity)]),
           () => new ListBuilder<PaymentTypeEntity>())
       ..addBuilderFactory(
@@ -316,7 +313,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SizeEntity)]),
           () => new ListBuilder<SizeEntity>())
-      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaskEntity)]), () => new ListBuilder<TaskEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(TaskEntity)]),
+          () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaxRateEntity)]), () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TimezoneEntity)]), () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserCompanyEntity)]), () => new ListBuilder<UserCompanyEntity>())
@@ -354,6 +353,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(ProjectEntity)]), () => new MapBuilder<String, ProjectEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(String)]), () => new MapBuilder<String, String>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentTermEntity)]), () => new ListBuilder<PaymentTermEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaskEntity)]), () => new MapBuilder<String, TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(TaxRateEntity)]), () => new MapBuilder<String, TaxRateEntity>())

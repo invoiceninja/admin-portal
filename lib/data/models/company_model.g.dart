@@ -827,6 +827,235 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.lockSentInvoices,
             specifiedType: const FullType(bool)));
     }
+    if (object.autoArchiveInvoice != null) {
+      result
+        ..add('auto_archive_invoice')
+        ..add(serializers.serialize(object.autoArchiveInvoice,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableInclusiveTaxes != null) {
+      result
+        ..add('inclusive_taxes')
+        ..add(serializers.serialize(object.enableInclusiveTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.translations != null) {
+      result
+        ..add('translations')
+        ..add(serializers.serialize(object.translations,
+            specifiedType: const FullType(BuiltMap,
+                const [const FullType(String), const FullType(String)])));
+    }
+    if (object.taskNumberPattern != null) {
+      result
+        ..add('task_number_pattern')
+        ..add(serializers.serialize(object.taskNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taskNumberCounter != null) {
+      result
+        ..add('task_number_counter')
+        ..add(serializers.serialize(object.taskNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.expenseNumberPattern != null) {
+      result
+        ..add('expense_number_pattern')
+        ..add(serializers.serialize(object.expenseNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.expenseNumberCounter != null) {
+      result
+        ..add('expense_number_counter')
+        ..add(serializers.serialize(object.expenseNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.vendorNumberPattern != null) {
+      result
+        ..add('vendor_number_pattern')
+        ..add(serializers.serialize(object.vendorNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorNumberCounter != null) {
+      result
+        ..add('vendor_number_counter')
+        ..add(serializers.serialize(object.vendorNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.ticketNumberPattern != null) {
+      result
+        ..add('ticket_number_pattern')
+        ..add(serializers.serialize(object.ticketNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.ticketNumberCounter != null) {
+      result
+        ..add('ticket_number_counter')
+        ..add(serializers.serialize(object.ticketNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.paymentNumberPattern != null) {
+      result
+        ..add('payment_number_pattern')
+        ..add(serializers.serialize(object.paymentNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.paymentNumberCounter != null) {
+      result
+        ..add('payment_number_counter')
+        ..add(serializers.serialize(object.paymentNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.invoiceNumberPattern != null) {
+      result
+        ..add('invoice_number_pattern')
+        ..add(serializers.serialize(object.invoiceNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceNumberCounter != null) {
+      result
+        ..add('invoice_number_counter')
+        ..add(serializers.serialize(object.invoiceNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.quoteNumberPattern != null) {
+      result
+        ..add('quote_number_pattern')
+        ..add(serializers.serialize(object.quoteNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.quoteNumberCounter != null) {
+      result
+        ..add('quote_number_counter')
+        ..add(serializers.serialize(object.quoteNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.clientNumberPattern != null) {
+      result
+        ..add('client_number_pattern')
+        ..add(serializers.serialize(object.clientNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.clientNumberCounter != null) {
+      result
+        ..add('client_number_counter')
+        ..add(serializers.serialize(object.clientNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.creditNumberPattern != null) {
+      result
+        ..add('credit_number_pattern')
+        ..add(serializers.serialize(object.creditNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.creditNumberCounter != null) {
+      result
+        ..add('credit_number_counter')
+        ..add(serializers.serialize(object.creditNumberCounter,
+            specifiedType: const FullType(int)));
+    }
+    if (object.recurringInvoiceNumberPrefix != null) {
+      result
+        ..add('recurring_invoice_number_prefix')
+        ..add(serializers.serialize(object.recurringInvoiceNumberPrefix,
+            specifiedType: const FullType(String)));
+    }
+    if (object.resetCounterFrequencyId != null) {
+      result
+        ..add('reset_counter_frequency_id')
+        ..add(serializers.serialize(object.resetCounterFrequencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.resetCounterDate != null) {
+      result
+        ..add('reset_counter_date')
+        ..add(serializers.serialize(object.resetCounterDate,
+            specifiedType: const FullType(String)));
+    }
+    if (object.counterPadding != null) {
+      result
+        ..add('counter_padding')
+        ..add(serializers.serialize(object.counterPadding,
+            specifiedType: const FullType(int)));
+    }
+    if (object.sharedInvoiceQuoteCounter != null) {
+      result
+        ..add('shared_invoice_quote_counter')
+        ..add(serializers.serialize(object.sharedInvoiceQuoteCounter,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.updateProducts != null) {
+      result
+        ..add('update_products')
+        ..add(serializers.serialize(object.updateProducts,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.convertProductExchangeRate != null) {
+      result
+        ..add('convert_products')
+        ..add(serializers.serialize(object.convertProductExchangeRate,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.fillProducts != null) {
+      result
+        ..add('fill_products')
+        ..add(serializers.serialize(object.fillProducts,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.defaultInvoiceTerms != null) {
+      result
+        ..add('invoice_terms')
+        ..add(serializers.serialize(object.defaultInvoiceTerms,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultQuoteTerms != null) {
+      result
+        ..add('quote_terms')
+        ..add(serializers.serialize(object.defaultQuoteTerms,
+            specifiedType: const FullType(String)));
+    }
+    if (object.enableInvoiceTaxes != null) {
+      result
+        ..add('invoice_taxes')
+        ..add(serializers.serialize(object.enableInvoiceTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableInvoiceItemTaxes != null) {
+      result
+        ..add('invoice_item_taxes')
+        ..add(serializers.serialize(object.enableInvoiceItemTaxes,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.defaultInvoiceDesignId != null) {
+      result
+        ..add('invoice_design_id')
+        ..add(serializers.serialize(object.defaultInvoiceDesignId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultQuoteDesignId != null) {
+      result
+        ..add('quote_design_id')
+        ..add(serializers.serialize(object.defaultQuoteDesignId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.defaultInvoiceFooter != null) {
+      result
+        ..add('invoice_footer')
+        ..add(serializers.serialize(object.defaultInvoiceFooter,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceLabels != null) {
+      result
+        ..add('invoice_labels')
+        ..add(serializers.serialize(object.invoiceLabels,
+            specifiedType: const FullType(String)));
+    }
+    if (object.showInvoiceItemTaxes != null) {
+      result
+        ..add('show_item_taxes')
+        ..add(serializers.serialize(object.showInvoiceItemTaxes,
+            specifiedType: const FullType(bool)));
+    }
     if (object.name != null) {
       result
         ..add('name')
@@ -905,48 +1134,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.website,
             specifiedType: const FullType(String)));
     }
-    if (object.defaultInvoiceTerms != null) {
-      result
-        ..add('invoice_terms')
-        ..add(serializers.serialize(object.defaultInvoiceTerms,
-            specifiedType: const FullType(String)));
-    }
-    if (object.enableInvoiceTaxes != null) {
-      result
-        ..add('invoice_taxes')
-        ..add(serializers.serialize(object.enableInvoiceTaxes,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableInvoiceItemTaxes != null) {
-      result
-        ..add('invoice_item_taxes')
-        ..add(serializers.serialize(object.enableInvoiceItemTaxes,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.defaultInvoiceDesignId != null) {
-      result
-        ..add('invoice_design_id')
-        ..add(serializers.serialize(object.defaultInvoiceDesignId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.defaultQuoteDesignId != null) {
-      result
-        ..add('quote_design_id')
-        ..add(serializers.serialize(object.defaultQuoteDesignId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.defaultInvoiceFooter != null) {
-      result
-        ..add('invoice_footer')
-        ..add(serializers.serialize(object.defaultInvoiceFooter,
-            specifiedType: const FullType(String)));
-    }
-    if (object.showInvoiceItemTaxes != null) {
-      result
-        ..add('show_item_taxes')
-        ..add(serializers.serialize(object.showInvoiceItemTaxes,
-            specifiedType: const FullType(bool)));
-    }
     if (object.defaultTaxName1 != null) {
       result
         ..add('tax_name1')
@@ -971,12 +1158,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultTaxRate2,
             specifiedType: const FullType(double)));
     }
-    if (object.defaultQuoteTerms != null) {
-      result
-        ..add('quote_terms')
-        ..add(serializers.serialize(object.defaultQuoteTerms,
-            specifiedType: const FullType(String)));
-    }
     if (object.enableSecondTaxRate != null) {
       result
         ..add('enable_second_tax_rate')
@@ -988,24 +1169,6 @@ class _$SettingsEntitySerializer
         ..add('payment_type_id')
         ..add(serializers.serialize(object.defaultPaymentTypeId,
             specifiedType: const FullType(String)));
-    }
-    if (object.enableInclusiveTaxes != null) {
-      result
-        ..add('inclusive_taxes')
-        ..add(serializers.serialize(object.enableInclusiveTaxes,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.convertProductExchangeRate != null) {
-      result
-        ..add('convert_products')
-        ..add(serializers.serialize(object.convertProductExchangeRate,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.updateProducts != null) {
-      result
-        ..add('auto_update_products')
-        ..add(serializers.serialize(object.updateProducts,
-            specifiedType: const FullType(bool)));
     }
     if (object.enableCustomInvoiceTaxes1 != null) {
       result
@@ -1109,12 +1272,6 @@ class _$SettingsEntitySerializer
         ..add('email_template_reminder3')
         ..add(serializers.serialize(object.emailBodyReminder3,
             specifiedType: const FullType(String)));
-    }
-    if (object.fillProducts != null) {
-      result
-        ..add('fill_products')
-        ..add(serializers.serialize(object.fillProducts,
-            specifiedType: const FullType(bool)));
     }
     if (object.enablePortalPassword != null) {
       result
@@ -1251,6 +1408,161 @@ class _$SettingsEntitySerializer
           result.lockSentInvoices = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'auto_archive_invoice':
+          result.autoArchiveInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'inclusive_taxes':
+          result.enableInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'translations':
+          result.translations.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'task_number_pattern':
+          result.taskNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'task_number_counter':
+          result.taskNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'expense_number_pattern':
+          result.expenseNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'expense_number_counter':
+          result.expenseNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'vendor_number_pattern':
+          result.vendorNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_number_counter':
+          result.vendorNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'ticket_number_pattern':
+          result.ticketNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'ticket_number_counter':
+          result.ticketNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'payment_number_pattern':
+          result.paymentNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'payment_number_counter':
+          result.paymentNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'invoice_number_pattern':
+          result.invoiceNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invoice_number_counter':
+          result.invoiceNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'quote_number_pattern':
+          result.quoteNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'quote_number_counter':
+          result.quoteNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'client_number_pattern':
+          result.clientNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'client_number_counter':
+          result.clientNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'credit_number_pattern':
+          result.creditNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'credit_number_counter':
+          result.creditNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'recurring_invoice_number_prefix':
+          result.recurringInvoiceNumberPrefix = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reset_counter_frequency_id':
+          result.resetCounterFrequencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reset_counter_date':
+          result.resetCounterDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'counter_padding':
+          result.counterPadding = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'shared_invoice_quote_counter':
+          result.sharedInvoiceQuoteCounter = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'update_products':
+          result.updateProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'convert_products':
+          result.convertProductExchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'fill_products':
+          result.fillProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_terms':
+          result.defaultInvoiceTerms = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'quote_terms':
+          result.defaultQuoteTerms = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invoice_taxes':
+          result.enableInvoiceTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_item_taxes':
+          result.enableInvoiceItemTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_design_id':
+          result.defaultInvoiceDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'quote_design_id':
+          result.defaultQuoteDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invoice_footer':
+          result.defaultInvoiceFooter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invoice_labels':
+          result.invoiceLabels = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'show_item_taxes':
+          result.showInvoiceItemTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1303,34 +1615,6 @@ class _$SettingsEntitySerializer
           result.website = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_terms':
-          result.defaultInvoiceTerms = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_taxes':
-          result.enableInvoiceTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'invoice_item_taxes':
-          result.enableInvoiceItemTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'invoice_design_id':
-          result.defaultInvoiceDesignId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'quote_design_id':
-          result.defaultQuoteDesignId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_footer':
-          result.defaultInvoiceFooter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'show_item_taxes':
-          result.showInvoiceItemTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'tax_name1':
           result.defaultTaxName1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1347,10 +1631,6 @@ class _$SettingsEntitySerializer
           result.defaultTaxRate2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'quote_terms':
-          result.defaultQuoteTerms = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'enable_second_tax_rate':
           result.enableSecondTaxRate = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -1358,18 +1638,6 @@ class _$SettingsEntitySerializer
         case 'payment_type_id':
           result.defaultPaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'inclusive_taxes':
-          result.enableInclusiveTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'convert_products':
-          result.convertProductExchangeRate = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'auto_update_products':
-          result.updateProducts = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_invoice_taxes1':
           result.enableCustomInvoiceTaxes1 = serializers.deserialize(value,
@@ -1440,10 +1708,6 @@ class _$SettingsEntitySerializer
         case 'email_template_reminder3':
           result.emailBodyReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'fill_products':
-          result.fillProducts = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'enable_portal_password':
           result.enablePortalPassword = serializers.deserialize(value,
@@ -2703,6 +2967,82 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool lockSentInvoices;
   @override
+  final bool autoArchiveInvoice;
+  @override
+  final bool enableInclusiveTaxes;
+  @override
+  final BuiltMap<String, String> translations;
+  @override
+  final String taskNumberPattern;
+  @override
+  final int taskNumberCounter;
+  @override
+  final String expenseNumberPattern;
+  @override
+  final int expenseNumberCounter;
+  @override
+  final String vendorNumberPattern;
+  @override
+  final int vendorNumberCounter;
+  @override
+  final String ticketNumberPattern;
+  @override
+  final int ticketNumberCounter;
+  @override
+  final String paymentNumberPattern;
+  @override
+  final int paymentNumberCounter;
+  @override
+  final String invoiceNumberPattern;
+  @override
+  final int invoiceNumberCounter;
+  @override
+  final String quoteNumberPattern;
+  @override
+  final int quoteNumberCounter;
+  @override
+  final String clientNumberPattern;
+  @override
+  final int clientNumberCounter;
+  @override
+  final String creditNumberPattern;
+  @override
+  final int creditNumberCounter;
+  @override
+  final String recurringInvoiceNumberPrefix;
+  @override
+  final String resetCounterFrequencyId;
+  @override
+  final String resetCounterDate;
+  @override
+  final int counterPadding;
+  @override
+  final bool sharedInvoiceQuoteCounter;
+  @override
+  final bool updateProducts;
+  @override
+  final bool convertProductExchangeRate;
+  @override
+  final bool fillProducts;
+  @override
+  final String defaultInvoiceTerms;
+  @override
+  final String defaultQuoteTerms;
+  @override
+  final bool enableInvoiceTaxes;
+  @override
+  final bool enableInvoiceItemTaxes;
+  @override
+  final String defaultInvoiceDesignId;
+  @override
+  final String defaultQuoteDesignId;
+  @override
+  final String defaultInvoiceFooter;
+  @override
+  final String invoiceLabels;
+  @override
+  final bool showInvoiceItemTaxes;
+  @override
   final String name;
   @override
   final String address1;
@@ -2729,20 +3069,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String website;
   @override
-  final String defaultInvoiceTerms;
-  @override
-  final bool enableInvoiceTaxes;
-  @override
-  final bool enableInvoiceItemTaxes;
-  @override
-  final String defaultInvoiceDesignId;
-  @override
-  final String defaultQuoteDesignId;
-  @override
-  final String defaultInvoiceFooter;
-  @override
-  final bool showInvoiceItemTaxes;
-  @override
   final String defaultTaxName1;
   @override
   final double defaultTaxRate1;
@@ -2751,17 +3077,9 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final double defaultTaxRate2;
   @override
-  final String defaultQuoteTerms;
-  @override
   final bool enableSecondTaxRate;
   @override
   final String defaultPaymentTypeId;
-  @override
-  final bool enableInclusiveTaxes;
-  @override
-  final bool convertProductExchangeRate;
-  @override
-  final bool updateProducts;
   @override
   final bool enableCustomInvoiceTaxes1;
   @override
@@ -2796,8 +3114,6 @@ class _$SettingsEntity extends SettingsEntity {
   final String emailBodyReminder2;
   @override
   final String emailBodyReminder3;
-  @override
-  final bool fillProducts;
   @override
   final bool enablePortalPassword;
   @override
@@ -2835,6 +3151,44 @@ class _$SettingsEntity extends SettingsEntity {
       this.customMessageUnapprovedQuote,
       this.customMessageApprovedQuote,
       this.lockSentInvoices,
+      this.autoArchiveInvoice,
+      this.enableInclusiveTaxes,
+      this.translations,
+      this.taskNumberPattern,
+      this.taskNumberCounter,
+      this.expenseNumberPattern,
+      this.expenseNumberCounter,
+      this.vendorNumberPattern,
+      this.vendorNumberCounter,
+      this.ticketNumberPattern,
+      this.ticketNumberCounter,
+      this.paymentNumberPattern,
+      this.paymentNumberCounter,
+      this.invoiceNumberPattern,
+      this.invoiceNumberCounter,
+      this.quoteNumberPattern,
+      this.quoteNumberCounter,
+      this.clientNumberPattern,
+      this.clientNumberCounter,
+      this.creditNumberPattern,
+      this.creditNumberCounter,
+      this.recurringInvoiceNumberPrefix,
+      this.resetCounterFrequencyId,
+      this.resetCounterDate,
+      this.counterPadding,
+      this.sharedInvoiceQuoteCounter,
+      this.updateProducts,
+      this.convertProductExchangeRate,
+      this.fillProducts,
+      this.defaultInvoiceTerms,
+      this.defaultQuoteTerms,
+      this.enableInvoiceTaxes,
+      this.enableInvoiceItemTaxes,
+      this.defaultInvoiceDesignId,
+      this.defaultQuoteDesignId,
+      this.defaultInvoiceFooter,
+      this.invoiceLabels,
+      this.showInvoiceItemTaxes,
       this.name,
       this.address1,
       this.address2,
@@ -2848,23 +3202,12 @@ class _$SettingsEntity extends SettingsEntity {
       this.idNumber,
       this.vatNumber,
       this.website,
-      this.defaultInvoiceTerms,
-      this.enableInvoiceTaxes,
-      this.enableInvoiceItemTaxes,
-      this.defaultInvoiceDesignId,
-      this.defaultQuoteDesignId,
-      this.defaultInvoiceFooter,
-      this.showInvoiceItemTaxes,
       this.defaultTaxName1,
       this.defaultTaxRate1,
       this.defaultTaxName2,
       this.defaultTaxRate2,
-      this.defaultQuoteTerms,
       this.enableSecondTaxRate,
       this.defaultPaymentTypeId,
-      this.enableInclusiveTaxes,
-      this.convertProductExchangeRate,
-      this.updateProducts,
       this.enableCustomInvoiceTaxes1,
       this.enableCustomInvoiceTaxes2,
       this.customPaymentTerms,
@@ -2882,7 +3225,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailBodyReminder1,
       this.emailBodyReminder2,
       this.emailBodyReminder3,
-      this.fillProducts,
       this.enablePortalPassword,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -2925,6 +3267,44 @@ class _$SettingsEntity extends SettingsEntity {
         customMessageUnapprovedQuote == other.customMessageUnapprovedQuote &&
         customMessageApprovedQuote == other.customMessageApprovedQuote &&
         lockSentInvoices == other.lockSentInvoices &&
+        autoArchiveInvoice == other.autoArchiveInvoice &&
+        enableInclusiveTaxes == other.enableInclusiveTaxes &&
+        translations == other.translations &&
+        taskNumberPattern == other.taskNumberPattern &&
+        taskNumberCounter == other.taskNumberCounter &&
+        expenseNumberPattern == other.expenseNumberPattern &&
+        expenseNumberCounter == other.expenseNumberCounter &&
+        vendorNumberPattern == other.vendorNumberPattern &&
+        vendorNumberCounter == other.vendorNumberCounter &&
+        ticketNumberPattern == other.ticketNumberPattern &&
+        ticketNumberCounter == other.ticketNumberCounter &&
+        paymentNumberPattern == other.paymentNumberPattern &&
+        paymentNumberCounter == other.paymentNumberCounter &&
+        invoiceNumberPattern == other.invoiceNumberPattern &&
+        invoiceNumberCounter == other.invoiceNumberCounter &&
+        quoteNumberPattern == other.quoteNumberPattern &&
+        quoteNumberCounter == other.quoteNumberCounter &&
+        clientNumberPattern == other.clientNumberPattern &&
+        clientNumberCounter == other.clientNumberCounter &&
+        creditNumberPattern == other.creditNumberPattern &&
+        creditNumberCounter == other.creditNumberCounter &&
+        recurringInvoiceNumberPrefix == other.recurringInvoiceNumberPrefix &&
+        resetCounterFrequencyId == other.resetCounterFrequencyId &&
+        resetCounterDate == other.resetCounterDate &&
+        counterPadding == other.counterPadding &&
+        sharedInvoiceQuoteCounter == other.sharedInvoiceQuoteCounter &&
+        updateProducts == other.updateProducts &&
+        convertProductExchangeRate == other.convertProductExchangeRate &&
+        fillProducts == other.fillProducts &&
+        defaultInvoiceTerms == other.defaultInvoiceTerms &&
+        defaultQuoteTerms == other.defaultQuoteTerms &&
+        enableInvoiceTaxes == other.enableInvoiceTaxes &&
+        enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
+        defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
+        defaultQuoteDesignId == other.defaultQuoteDesignId &&
+        defaultInvoiceFooter == other.defaultInvoiceFooter &&
+        invoiceLabels == other.invoiceLabels &&
+        showInvoiceItemTaxes == other.showInvoiceItemTaxes &&
         name == other.name &&
         address1 == other.address1 &&
         address2 == other.address2 &&
@@ -2938,23 +3318,12 @@ class _$SettingsEntity extends SettingsEntity {
         idNumber == other.idNumber &&
         vatNumber == other.vatNumber &&
         website == other.website &&
-        defaultInvoiceTerms == other.defaultInvoiceTerms &&
-        enableInvoiceTaxes == other.enableInvoiceTaxes &&
-        enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
-        defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
-        defaultQuoteDesignId == other.defaultQuoteDesignId &&
-        defaultInvoiceFooter == other.defaultInvoiceFooter &&
-        showInvoiceItemTaxes == other.showInvoiceItemTaxes &&
         defaultTaxName1 == other.defaultTaxName1 &&
         defaultTaxRate1 == other.defaultTaxRate1 &&
         defaultTaxName2 == other.defaultTaxName2 &&
         defaultTaxRate2 == other.defaultTaxRate2 &&
-        defaultQuoteTerms == other.defaultQuoteTerms &&
         enableSecondTaxRate == other.enableSecondTaxRate &&
         defaultPaymentTypeId == other.defaultPaymentTypeId &&
-        enableInclusiveTaxes == other.enableInclusiveTaxes &&
-        convertProductExchangeRate == other.convertProductExchangeRate &&
-        updateProducts == other.updateProducts &&
         enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
         enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         customPaymentTerms == other.customPaymentTerms &&
@@ -2972,7 +3341,6 @@ class _$SettingsEntity extends SettingsEntity {
         emailBodyReminder1 == other.emailBodyReminder1 &&
         emailBodyReminder2 == other.emailBodyReminder2 &&
         emailBodyReminder3 == other.emailBodyReminder3 &&
-        fillProducts == other.fillProducts &&
         enablePortalPassword == other.enablePortalPassword &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -2999,22 +3367,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), customMessageApprovedQuote.hashCode), lockSentInvoices.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTypeId.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), updateProducts.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), customPaymentTerms.hashCode),
-                                                                                invoiceFields.hashCode),
-                                                                            emailFooter.hashCode),
-                                                                        emailSubjectInvoice.hashCode),
-                                                                    emailSubjectQuote.hashCode),
-                                                                emailSubjectPayment.hashCode),
-                                                            emailBodyInvoice.hashCode),
-                                                        emailBodyQuote.hashCode),
-                                                    emailBodyPayment.hashCode),
-                                                emailSubjectReminder1.hashCode),
-                                            emailSubjectReminder2.hashCode),
-                                        emailSubjectReminder3.hashCode),
-                                    emailBodyReminder1.hashCode),
-                                emailBodyReminder2.hashCode),
-                            emailBodyReminder3.hashCode),
-                        fillProducts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), customMessageApprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), companyLogo.hashCode), idNumber.hashCode), vatNumber.hashCode), website.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), enableSecondTaxRate.hashCode), defaultPaymentTypeId.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode),
+                                                                                customPaymentTerms.hashCode),
+                                                                            invoiceFields.hashCode),
+                                                                        emailFooter.hashCode),
+                                                                    emailSubjectInvoice.hashCode),
+                                                                emailSubjectQuote.hashCode),
+                                                            emailSubjectPayment.hashCode),
+                                                        emailBodyInvoice.hashCode),
+                                                    emailBodyQuote.hashCode),
+                                                emailBodyPayment.hashCode),
+                                            emailSubjectReminder1.hashCode),
+                                        emailSubjectReminder2.hashCode),
+                                    emailSubjectReminder3.hashCode),
+                                emailBodyReminder1.hashCode),
+                            emailBodyReminder2.hashCode),
+                        emailBodyReminder3.hashCode),
                     enablePortalPassword.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3048,6 +3416,44 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('customMessageUnapprovedQuote', customMessageUnapprovedQuote)
           ..add('customMessageApprovedQuote', customMessageApprovedQuote)
           ..add('lockSentInvoices', lockSentInvoices)
+          ..add('autoArchiveInvoice', autoArchiveInvoice)
+          ..add('enableInclusiveTaxes', enableInclusiveTaxes)
+          ..add('translations', translations)
+          ..add('taskNumberPattern', taskNumberPattern)
+          ..add('taskNumberCounter', taskNumberCounter)
+          ..add('expenseNumberPattern', expenseNumberPattern)
+          ..add('expenseNumberCounter', expenseNumberCounter)
+          ..add('vendorNumberPattern', vendorNumberPattern)
+          ..add('vendorNumberCounter', vendorNumberCounter)
+          ..add('ticketNumberPattern', ticketNumberPattern)
+          ..add('ticketNumberCounter', ticketNumberCounter)
+          ..add('paymentNumberPattern', paymentNumberPattern)
+          ..add('paymentNumberCounter', paymentNumberCounter)
+          ..add('invoiceNumberPattern', invoiceNumberPattern)
+          ..add('invoiceNumberCounter', invoiceNumberCounter)
+          ..add('quoteNumberPattern', quoteNumberPattern)
+          ..add('quoteNumberCounter', quoteNumberCounter)
+          ..add('clientNumberPattern', clientNumberPattern)
+          ..add('clientNumberCounter', clientNumberCounter)
+          ..add('creditNumberPattern', creditNumberPattern)
+          ..add('creditNumberCounter', creditNumberCounter)
+          ..add('recurringInvoiceNumberPrefix', recurringInvoiceNumberPrefix)
+          ..add('resetCounterFrequencyId', resetCounterFrequencyId)
+          ..add('resetCounterDate', resetCounterDate)
+          ..add('counterPadding', counterPadding)
+          ..add('sharedInvoiceQuoteCounter', sharedInvoiceQuoteCounter)
+          ..add('updateProducts', updateProducts)
+          ..add('convertProductExchangeRate', convertProductExchangeRate)
+          ..add('fillProducts', fillProducts)
+          ..add('defaultInvoiceTerms', defaultInvoiceTerms)
+          ..add('defaultQuoteTerms', defaultQuoteTerms)
+          ..add('enableInvoiceTaxes', enableInvoiceTaxes)
+          ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
+          ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
+          ..add('defaultQuoteDesignId', defaultQuoteDesignId)
+          ..add('defaultInvoiceFooter', defaultInvoiceFooter)
+          ..add('invoiceLabels', invoiceLabels)
+          ..add('showInvoiceItemTaxes', showInvoiceItemTaxes)
           ..add('name', name)
           ..add('address1', address1)
           ..add('address2', address2)
@@ -3061,23 +3467,12 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('idNumber', idNumber)
           ..add('vatNumber', vatNumber)
           ..add('website', website)
-          ..add('defaultInvoiceTerms', defaultInvoiceTerms)
-          ..add('enableInvoiceTaxes', enableInvoiceTaxes)
-          ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
-          ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
-          ..add('defaultQuoteDesignId', defaultQuoteDesignId)
-          ..add('defaultInvoiceFooter', defaultInvoiceFooter)
-          ..add('showInvoiceItemTaxes', showInvoiceItemTaxes)
           ..add('defaultTaxName1', defaultTaxName1)
           ..add('defaultTaxRate1', defaultTaxRate1)
           ..add('defaultTaxName2', defaultTaxName2)
           ..add('defaultTaxRate2', defaultTaxRate2)
-          ..add('defaultQuoteTerms', defaultQuoteTerms)
           ..add('enableSecondTaxRate', enableSecondTaxRate)
           ..add('defaultPaymentTypeId', defaultPaymentTypeId)
-          ..add('enableInclusiveTaxes', enableInclusiveTaxes)
-          ..add('convertProductExchangeRate', convertProductExchangeRate)
-          ..add('updateProducts', updateProducts)
           ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
           ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('customPaymentTerms', customPaymentTerms)
@@ -3095,7 +3490,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailBodyReminder1', emailBodyReminder1)
           ..add('emailBodyReminder2', emailBodyReminder2)
           ..add('emailBodyReminder3', emailBodyReminder3)
-          ..add('fillProducts', fillProducts)
           ..add('enablePortalPassword', enablePortalPassword)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -3222,6 +3616,197 @@ class SettingsEntityBuilder
   set lockSentInvoices(bool lockSentInvoices) =>
       _$this._lockSentInvoices = lockSentInvoices;
 
+  bool _autoArchiveInvoice;
+  bool get autoArchiveInvoice => _$this._autoArchiveInvoice;
+  set autoArchiveInvoice(bool autoArchiveInvoice) =>
+      _$this._autoArchiveInvoice = autoArchiveInvoice;
+
+  bool _enableInclusiveTaxes;
+  bool get enableInclusiveTaxes => _$this._enableInclusiveTaxes;
+  set enableInclusiveTaxes(bool enableInclusiveTaxes) =>
+      _$this._enableInclusiveTaxes = enableInclusiveTaxes;
+
+  MapBuilder<String, String> _translations;
+  MapBuilder<String, String> get translations =>
+      _$this._translations ??= new MapBuilder<String, String>();
+  set translations(MapBuilder<String, String> translations) =>
+      _$this._translations = translations;
+
+  String _taskNumberPattern;
+  String get taskNumberPattern => _$this._taskNumberPattern;
+  set taskNumberPattern(String taskNumberPattern) =>
+      _$this._taskNumberPattern = taskNumberPattern;
+
+  int _taskNumberCounter;
+  int get taskNumberCounter => _$this._taskNumberCounter;
+  set taskNumberCounter(int taskNumberCounter) =>
+      _$this._taskNumberCounter = taskNumberCounter;
+
+  String _expenseNumberPattern;
+  String get expenseNumberPattern => _$this._expenseNumberPattern;
+  set expenseNumberPattern(String expenseNumberPattern) =>
+      _$this._expenseNumberPattern = expenseNumberPattern;
+
+  int _expenseNumberCounter;
+  int get expenseNumberCounter => _$this._expenseNumberCounter;
+  set expenseNumberCounter(int expenseNumberCounter) =>
+      _$this._expenseNumberCounter = expenseNumberCounter;
+
+  String _vendorNumberPattern;
+  String get vendorNumberPattern => _$this._vendorNumberPattern;
+  set vendorNumberPattern(String vendorNumberPattern) =>
+      _$this._vendorNumberPattern = vendorNumberPattern;
+
+  int _vendorNumberCounter;
+  int get vendorNumberCounter => _$this._vendorNumberCounter;
+  set vendorNumberCounter(int vendorNumberCounter) =>
+      _$this._vendorNumberCounter = vendorNumberCounter;
+
+  String _ticketNumberPattern;
+  String get ticketNumberPattern => _$this._ticketNumberPattern;
+  set ticketNumberPattern(String ticketNumberPattern) =>
+      _$this._ticketNumberPattern = ticketNumberPattern;
+
+  int _ticketNumberCounter;
+  int get ticketNumberCounter => _$this._ticketNumberCounter;
+  set ticketNumberCounter(int ticketNumberCounter) =>
+      _$this._ticketNumberCounter = ticketNumberCounter;
+
+  String _paymentNumberPattern;
+  String get paymentNumberPattern => _$this._paymentNumberPattern;
+  set paymentNumberPattern(String paymentNumberPattern) =>
+      _$this._paymentNumberPattern = paymentNumberPattern;
+
+  int _paymentNumberCounter;
+  int get paymentNumberCounter => _$this._paymentNumberCounter;
+  set paymentNumberCounter(int paymentNumberCounter) =>
+      _$this._paymentNumberCounter = paymentNumberCounter;
+
+  String _invoiceNumberPattern;
+  String get invoiceNumberPattern => _$this._invoiceNumberPattern;
+  set invoiceNumberPattern(String invoiceNumberPattern) =>
+      _$this._invoiceNumberPattern = invoiceNumberPattern;
+
+  int _invoiceNumberCounter;
+  int get invoiceNumberCounter => _$this._invoiceNumberCounter;
+  set invoiceNumberCounter(int invoiceNumberCounter) =>
+      _$this._invoiceNumberCounter = invoiceNumberCounter;
+
+  String _quoteNumberPattern;
+  String get quoteNumberPattern => _$this._quoteNumberPattern;
+  set quoteNumberPattern(String quoteNumberPattern) =>
+      _$this._quoteNumberPattern = quoteNumberPattern;
+
+  int _quoteNumberCounter;
+  int get quoteNumberCounter => _$this._quoteNumberCounter;
+  set quoteNumberCounter(int quoteNumberCounter) =>
+      _$this._quoteNumberCounter = quoteNumberCounter;
+
+  String _clientNumberPattern;
+  String get clientNumberPattern => _$this._clientNumberPattern;
+  set clientNumberPattern(String clientNumberPattern) =>
+      _$this._clientNumberPattern = clientNumberPattern;
+
+  int _clientNumberCounter;
+  int get clientNumberCounter => _$this._clientNumberCounter;
+  set clientNumberCounter(int clientNumberCounter) =>
+      _$this._clientNumberCounter = clientNumberCounter;
+
+  String _creditNumberPattern;
+  String get creditNumberPattern => _$this._creditNumberPattern;
+  set creditNumberPattern(String creditNumberPattern) =>
+      _$this._creditNumberPattern = creditNumberPattern;
+
+  int _creditNumberCounter;
+  int get creditNumberCounter => _$this._creditNumberCounter;
+  set creditNumberCounter(int creditNumberCounter) =>
+      _$this._creditNumberCounter = creditNumberCounter;
+
+  String _recurringInvoiceNumberPrefix;
+  String get recurringInvoiceNumberPrefix =>
+      _$this._recurringInvoiceNumberPrefix;
+  set recurringInvoiceNumberPrefix(String recurringInvoiceNumberPrefix) =>
+      _$this._recurringInvoiceNumberPrefix = recurringInvoiceNumberPrefix;
+
+  String _resetCounterFrequencyId;
+  String get resetCounterFrequencyId => _$this._resetCounterFrequencyId;
+  set resetCounterFrequencyId(String resetCounterFrequencyId) =>
+      _$this._resetCounterFrequencyId = resetCounterFrequencyId;
+
+  String _resetCounterDate;
+  String get resetCounterDate => _$this._resetCounterDate;
+  set resetCounterDate(String resetCounterDate) =>
+      _$this._resetCounterDate = resetCounterDate;
+
+  int _counterPadding;
+  int get counterPadding => _$this._counterPadding;
+  set counterPadding(int counterPadding) =>
+      _$this._counterPadding = counterPadding;
+
+  bool _sharedInvoiceQuoteCounter;
+  bool get sharedInvoiceQuoteCounter => _$this._sharedInvoiceQuoteCounter;
+  set sharedInvoiceQuoteCounter(bool sharedInvoiceQuoteCounter) =>
+      _$this._sharedInvoiceQuoteCounter = sharedInvoiceQuoteCounter;
+
+  bool _updateProducts;
+  bool get updateProducts => _$this._updateProducts;
+  set updateProducts(bool updateProducts) =>
+      _$this._updateProducts = updateProducts;
+
+  bool _convertProductExchangeRate;
+  bool get convertProductExchangeRate => _$this._convertProductExchangeRate;
+  set convertProductExchangeRate(bool convertProductExchangeRate) =>
+      _$this._convertProductExchangeRate = convertProductExchangeRate;
+
+  bool _fillProducts;
+  bool get fillProducts => _$this._fillProducts;
+  set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
+
+  String _defaultInvoiceTerms;
+  String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
+  set defaultInvoiceTerms(String defaultInvoiceTerms) =>
+      _$this._defaultInvoiceTerms = defaultInvoiceTerms;
+
+  String _defaultQuoteTerms;
+  String get defaultQuoteTerms => _$this._defaultQuoteTerms;
+  set defaultQuoteTerms(String defaultQuoteTerms) =>
+      _$this._defaultQuoteTerms = defaultQuoteTerms;
+
+  bool _enableInvoiceTaxes;
+  bool get enableInvoiceTaxes => _$this._enableInvoiceTaxes;
+  set enableInvoiceTaxes(bool enableInvoiceTaxes) =>
+      _$this._enableInvoiceTaxes = enableInvoiceTaxes;
+
+  bool _enableInvoiceItemTaxes;
+  bool get enableInvoiceItemTaxes => _$this._enableInvoiceItemTaxes;
+  set enableInvoiceItemTaxes(bool enableInvoiceItemTaxes) =>
+      _$this._enableInvoiceItemTaxes = enableInvoiceItemTaxes;
+
+  String _defaultInvoiceDesignId;
+  String get defaultInvoiceDesignId => _$this._defaultInvoiceDesignId;
+  set defaultInvoiceDesignId(String defaultInvoiceDesignId) =>
+      _$this._defaultInvoiceDesignId = defaultInvoiceDesignId;
+
+  String _defaultQuoteDesignId;
+  String get defaultQuoteDesignId => _$this._defaultQuoteDesignId;
+  set defaultQuoteDesignId(String defaultQuoteDesignId) =>
+      _$this._defaultQuoteDesignId = defaultQuoteDesignId;
+
+  String _defaultInvoiceFooter;
+  String get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
+  set defaultInvoiceFooter(String defaultInvoiceFooter) =>
+      _$this._defaultInvoiceFooter = defaultInvoiceFooter;
+
+  String _invoiceLabels;
+  String get invoiceLabels => _$this._invoiceLabels;
+  set invoiceLabels(String invoiceLabels) =>
+      _$this._invoiceLabels = invoiceLabels;
+
+  bool _showInvoiceItemTaxes;
+  bool get showInvoiceItemTaxes => _$this._showInvoiceItemTaxes;
+  set showInvoiceItemTaxes(bool showInvoiceItemTaxes) =>
+      _$this._showInvoiceItemTaxes = showInvoiceItemTaxes;
+
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
@@ -3274,41 +3859,6 @@ class SettingsEntityBuilder
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
 
-  String _defaultInvoiceTerms;
-  String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
-  set defaultInvoiceTerms(String defaultInvoiceTerms) =>
-      _$this._defaultInvoiceTerms = defaultInvoiceTerms;
-
-  bool _enableInvoiceTaxes;
-  bool get enableInvoiceTaxes => _$this._enableInvoiceTaxes;
-  set enableInvoiceTaxes(bool enableInvoiceTaxes) =>
-      _$this._enableInvoiceTaxes = enableInvoiceTaxes;
-
-  bool _enableInvoiceItemTaxes;
-  bool get enableInvoiceItemTaxes => _$this._enableInvoiceItemTaxes;
-  set enableInvoiceItemTaxes(bool enableInvoiceItemTaxes) =>
-      _$this._enableInvoiceItemTaxes = enableInvoiceItemTaxes;
-
-  String _defaultInvoiceDesignId;
-  String get defaultInvoiceDesignId => _$this._defaultInvoiceDesignId;
-  set defaultInvoiceDesignId(String defaultInvoiceDesignId) =>
-      _$this._defaultInvoiceDesignId = defaultInvoiceDesignId;
-
-  String _defaultQuoteDesignId;
-  String get defaultQuoteDesignId => _$this._defaultQuoteDesignId;
-  set defaultQuoteDesignId(String defaultQuoteDesignId) =>
-      _$this._defaultQuoteDesignId = defaultQuoteDesignId;
-
-  String _defaultInvoiceFooter;
-  String get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
-  set defaultInvoiceFooter(String defaultInvoiceFooter) =>
-      _$this._defaultInvoiceFooter = defaultInvoiceFooter;
-
-  bool _showInvoiceItemTaxes;
-  bool get showInvoiceItemTaxes => _$this._showInvoiceItemTaxes;
-  set showInvoiceItemTaxes(bool showInvoiceItemTaxes) =>
-      _$this._showInvoiceItemTaxes = showInvoiceItemTaxes;
-
   String _defaultTaxName1;
   String get defaultTaxName1 => _$this._defaultTaxName1;
   set defaultTaxName1(String defaultTaxName1) =>
@@ -3329,11 +3879,6 @@ class SettingsEntityBuilder
   set defaultTaxRate2(double defaultTaxRate2) =>
       _$this._defaultTaxRate2 = defaultTaxRate2;
 
-  String _defaultQuoteTerms;
-  String get defaultQuoteTerms => _$this._defaultQuoteTerms;
-  set defaultQuoteTerms(String defaultQuoteTerms) =>
-      _$this._defaultQuoteTerms = defaultQuoteTerms;
-
   bool _enableSecondTaxRate;
   bool get enableSecondTaxRate => _$this._enableSecondTaxRate;
   set enableSecondTaxRate(bool enableSecondTaxRate) =>
@@ -3343,21 +3888,6 @@ class SettingsEntityBuilder
   String get defaultPaymentTypeId => _$this._defaultPaymentTypeId;
   set defaultPaymentTypeId(String defaultPaymentTypeId) =>
       _$this._defaultPaymentTypeId = defaultPaymentTypeId;
-
-  bool _enableInclusiveTaxes;
-  bool get enableInclusiveTaxes => _$this._enableInclusiveTaxes;
-  set enableInclusiveTaxes(bool enableInclusiveTaxes) =>
-      _$this._enableInclusiveTaxes = enableInclusiveTaxes;
-
-  bool _convertProductExchangeRate;
-  bool get convertProductExchangeRate => _$this._convertProductExchangeRate;
-  set convertProductExchangeRate(bool convertProductExchangeRate) =>
-      _$this._convertProductExchangeRate = convertProductExchangeRate;
-
-  bool _updateProducts;
-  bool get updateProducts => _$this._updateProducts;
-  set updateProducts(bool updateProducts) =>
-      _$this._updateProducts = updateProducts;
 
   bool _enableCustomInvoiceTaxes1;
   bool get enableCustomInvoiceTaxes1 => _$this._enableCustomInvoiceTaxes1;
@@ -3444,10 +3974,6 @@ class SettingsEntityBuilder
   set emailBodyReminder3(String emailBodyReminder3) =>
       _$this._emailBodyReminder3 = emailBodyReminder3;
 
-  bool _fillProducts;
-  bool get fillProducts => _$this._fillProducts;
-  set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
-
   bool _enablePortalPassword;
   bool get enablePortalPassword => _$this._enablePortalPassword;
   set enablePortalPassword(bool enablePortalPassword) =>
@@ -3496,6 +4022,44 @@ class SettingsEntityBuilder
       _customMessageUnapprovedQuote = _$v.customMessageUnapprovedQuote;
       _customMessageApprovedQuote = _$v.customMessageApprovedQuote;
       _lockSentInvoices = _$v.lockSentInvoices;
+      _autoArchiveInvoice = _$v.autoArchiveInvoice;
+      _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
+      _translations = _$v.translations?.toBuilder();
+      _taskNumberPattern = _$v.taskNumberPattern;
+      _taskNumberCounter = _$v.taskNumberCounter;
+      _expenseNumberPattern = _$v.expenseNumberPattern;
+      _expenseNumberCounter = _$v.expenseNumberCounter;
+      _vendorNumberPattern = _$v.vendorNumberPattern;
+      _vendorNumberCounter = _$v.vendorNumberCounter;
+      _ticketNumberPattern = _$v.ticketNumberPattern;
+      _ticketNumberCounter = _$v.ticketNumberCounter;
+      _paymentNumberPattern = _$v.paymentNumberPattern;
+      _paymentNumberCounter = _$v.paymentNumberCounter;
+      _invoiceNumberPattern = _$v.invoiceNumberPattern;
+      _invoiceNumberCounter = _$v.invoiceNumberCounter;
+      _quoteNumberPattern = _$v.quoteNumberPattern;
+      _quoteNumberCounter = _$v.quoteNumberCounter;
+      _clientNumberPattern = _$v.clientNumberPattern;
+      _clientNumberCounter = _$v.clientNumberCounter;
+      _creditNumberPattern = _$v.creditNumberPattern;
+      _creditNumberCounter = _$v.creditNumberCounter;
+      _recurringInvoiceNumberPrefix = _$v.recurringInvoiceNumberPrefix;
+      _resetCounterFrequencyId = _$v.resetCounterFrequencyId;
+      _resetCounterDate = _$v.resetCounterDate;
+      _counterPadding = _$v.counterPadding;
+      _sharedInvoiceQuoteCounter = _$v.sharedInvoiceQuoteCounter;
+      _updateProducts = _$v.updateProducts;
+      _convertProductExchangeRate = _$v.convertProductExchangeRate;
+      _fillProducts = _$v.fillProducts;
+      _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
+      _defaultQuoteTerms = _$v.defaultQuoteTerms;
+      _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
+      _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
+      _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
+      _defaultQuoteDesignId = _$v.defaultQuoteDesignId;
+      _defaultInvoiceFooter = _$v.defaultInvoiceFooter;
+      _invoiceLabels = _$v.invoiceLabels;
+      _showInvoiceItemTaxes = _$v.showInvoiceItemTaxes;
       _name = _$v.name;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
@@ -3509,23 +4073,12 @@ class SettingsEntityBuilder
       _idNumber = _$v.idNumber;
       _vatNumber = _$v.vatNumber;
       _website = _$v.website;
-      _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
-      _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
-      _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
-      _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
-      _defaultQuoteDesignId = _$v.defaultQuoteDesignId;
-      _defaultInvoiceFooter = _$v.defaultInvoiceFooter;
-      _showInvoiceItemTaxes = _$v.showInvoiceItemTaxes;
       _defaultTaxName1 = _$v.defaultTaxName1;
       _defaultTaxRate1 = _$v.defaultTaxRate1;
       _defaultTaxName2 = _$v.defaultTaxName2;
       _defaultTaxRate2 = _$v.defaultTaxRate2;
-      _defaultQuoteTerms = _$v.defaultQuoteTerms;
       _enableSecondTaxRate = _$v.enableSecondTaxRate;
       _defaultPaymentTypeId = _$v.defaultPaymentTypeId;
-      _enableInclusiveTaxes = _$v.enableInclusiveTaxes;
-      _convertProductExchangeRate = _$v.convertProductExchangeRate;
-      _updateProducts = _$v.updateProducts;
       _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
       _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
@@ -3543,7 +4096,6 @@ class SettingsEntityBuilder
       _emailBodyReminder1 = _$v.emailBodyReminder1;
       _emailBodyReminder2 = _$v.emailBodyReminder2;
       _emailBodyReminder3 = _$v.emailBodyReminder3;
-      _fillProducts = _$v.fillProducts;
       _enablePortalPassword = _$v.enablePortalPassword;
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -3596,6 +4148,44 @@ class SettingsEntityBuilder
               customMessageUnapprovedQuote: customMessageUnapprovedQuote,
               customMessageApprovedQuote: customMessageApprovedQuote,
               lockSentInvoices: lockSentInvoices,
+              autoArchiveInvoice: autoArchiveInvoice,
+              enableInclusiveTaxes: enableInclusiveTaxes,
+              translations: _translations?.build(),
+              taskNumberPattern: taskNumberPattern,
+              taskNumberCounter: taskNumberCounter,
+              expenseNumberPattern: expenseNumberPattern,
+              expenseNumberCounter: expenseNumberCounter,
+              vendorNumberPattern: vendorNumberPattern,
+              vendorNumberCounter: vendorNumberCounter,
+              ticketNumberPattern: ticketNumberPattern,
+              ticketNumberCounter: ticketNumberCounter,
+              paymentNumberPattern: paymentNumberPattern,
+              paymentNumberCounter: paymentNumberCounter,
+              invoiceNumberPattern: invoiceNumberPattern,
+              invoiceNumberCounter: invoiceNumberCounter,
+              quoteNumberPattern: quoteNumberPattern,
+              quoteNumberCounter: quoteNumberCounter,
+              clientNumberPattern: clientNumberPattern,
+              clientNumberCounter: clientNumberCounter,
+              creditNumberPattern: creditNumberPattern,
+              creditNumberCounter: creditNumberCounter,
+              recurringInvoiceNumberPrefix: recurringInvoiceNumberPrefix,
+              resetCounterFrequencyId: resetCounterFrequencyId,
+              resetCounterDate: resetCounterDate,
+              counterPadding: counterPadding,
+              sharedInvoiceQuoteCounter: sharedInvoiceQuoteCounter,
+              updateProducts: updateProducts,
+              convertProductExchangeRate: convertProductExchangeRate,
+              fillProducts: fillProducts,
+              defaultInvoiceTerms: defaultInvoiceTerms,
+              defaultQuoteTerms: defaultQuoteTerms,
+              enableInvoiceTaxes: enableInvoiceTaxes,
+              enableInvoiceItemTaxes: enableInvoiceItemTaxes,
+              defaultInvoiceDesignId: defaultInvoiceDesignId,
+              defaultQuoteDesignId: defaultQuoteDesignId,
+              defaultInvoiceFooter: defaultInvoiceFooter,
+              invoiceLabels: invoiceLabels,
+              showInvoiceItemTaxes: showInvoiceItemTaxes,
               name: name,
               address1: address1,
               address2: address2,
@@ -3609,23 +4199,12 @@ class SettingsEntityBuilder
               idNumber: idNumber,
               vatNumber: vatNumber,
               website: website,
-              defaultInvoiceTerms: defaultInvoiceTerms,
-              enableInvoiceTaxes: enableInvoiceTaxes,
-              enableInvoiceItemTaxes: enableInvoiceItemTaxes,
-              defaultInvoiceDesignId: defaultInvoiceDesignId,
-              defaultQuoteDesignId: defaultQuoteDesignId,
-              defaultInvoiceFooter: defaultInvoiceFooter,
-              showInvoiceItemTaxes: showInvoiceItemTaxes,
               defaultTaxName1: defaultTaxName1,
               defaultTaxRate1: defaultTaxRate1,
               defaultTaxName2: defaultTaxName2,
               defaultTaxRate2: defaultTaxRate2,
-              defaultQuoteTerms: defaultQuoteTerms,
               enableSecondTaxRate: enableSecondTaxRate,
               defaultPaymentTypeId: defaultPaymentTypeId,
-              enableInclusiveTaxes: enableInclusiveTaxes,
-              convertProductExchangeRate: convertProductExchangeRate,
-              updateProducts: updateProducts,
               enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
               enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               customPaymentTerms: _customPaymentTerms?.build(),
@@ -3643,7 +4222,6 @@ class SettingsEntityBuilder
               emailBodyReminder1: emailBodyReminder1,
               emailBodyReminder2: emailBodyReminder2,
               emailBodyReminder3: emailBodyReminder3,
-              fillProducts: fillProducts,
               enablePortalPassword: enablePortalPassword,
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,
@@ -3651,6 +4229,9 @@ class SettingsEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'translations';
+        _translations?.build();
+
         _$failedField = 'customPaymentTerms';
         _customPaymentTerms?.build();
       } catch (e) {
