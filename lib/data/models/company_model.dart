@@ -114,7 +114,6 @@ abstract class CompanyEntity extends Object
   BuiltMap<String, UserEntity> get userMap;
 
   // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
@@ -549,7 +548,23 @@ abstract class SettingsEntity
   String get currencyId;
 
   @nullable
-  @BuiltValueField(wireName: 'payment_terms_HIDDEN')
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_terms')
   int get defaultPaymentTerms;
 
   @nullable
@@ -611,10 +626,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'custom_message_unapproved_quote')
   String get customMessageUnapprovedQuote;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_message_approved_quote')
-  String get customMessageApprovedQuote;
 
   @nullable
   @BuiltValueField(wireName: 'lock_sent_invoices')
@@ -772,56 +783,11 @@ abstract class SettingsEntity
   bool get showInvoiceItemTaxes;
 
   @nullable
-  String get name;
-
-  @nullable
-  String get address1;
-
-  @nullable
-  String get address2;
-
-  @nullable
-  String get city;
-
-  @nullable
-  String get state;
-
-  @nullable
-  @BuiltValueField(wireName: 'postal_code')
-  String get postalCode;
-
-  @nullable
-  String get phone;
-
-  @nullable
-  String get email;
-
-  @nullable
-  @BuiltValueField(wireName: 'country_id')
-  String get countryId;
-
-  @nullable
-  @BuiltValueField(wireName: 'company_logo')
-  String get companyLogo;
-
-  @nullable
-  @BuiltValueField(wireName: 'id_number')
-  String get idNumber;
-
-  @nullable
-  @BuiltValueField(wireName: 'vat_number')
-  String get vatNumber;
-
-  @nullable
-  @BuiltValueField(wireName: 'website')
-  String get website;
-
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get defaultTaxName1;
 
   @nullable
-  @BuiltValueField(wireName: 'tax_rate1_HIDDEN')
+  @BuiltValueField(wireName: 'tax_rate1')
   double get defaultTaxRate1;
 
   @nullable
@@ -829,28 +795,25 @@ abstract class SettingsEntity
   String get defaultTaxName2;
 
   @nullable
-  @BuiltValueField(wireName: 'tax_rate2_HIDDEN')
+  @BuiltValueField(wireName: 'tax_rate2')
   double get defaultTaxRate2;
 
   @nullable
-  @BuiltValueField(wireName: 'enable_second_tax_rate')
-  bool get enableSecondTaxRate;
+  @BuiltValueField(wireName: 'tax_name3')
+  String get defaultTaxName3;
+
+  @nullable
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get defaultTaxRate3;
 
   @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
 
   @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
-  bool get enableCustomInvoiceTaxes1;
+  @BuiltValueField(wireName: 'enable_second_tax_rate')
+  bool get enableSecondTaxRate;
 
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes2')
-  bool get enableCustomInvoiceTaxes2;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_payment_terms')
-  BuiltList<PaymentTermEntity> get customPaymentTerms;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_fields')
@@ -913,13 +876,92 @@ abstract class SettingsEntity
   bool get enablePortalPassword;
 
   @nullable
+  @BuiltValueField(wireName: 'show_accept_invoice_terms')
+  bool get showAcceptInvoiceTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'show_accept_quote_terms')
+  bool get showAcceptQuoteTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'require_invoice_signature')
+  bool get requireInvoiceSignature;
+
+  @nullable
+  @BuiltValueField(wireName: 'require_quote_signature')
+  bool get requireQuoteSignature;
+
+  @nullable
+  String get name;
+
+  @nullable
+  @BuiltValueField(wireName: 'company_logo')
+  String get companyLogo;
+
+  @nullable
+  @BuiltValueField(wireName: 'website')
+  String get website;
+
+  @nullable
+  String get address1;
+
+  @nullable
+  String get address2;
+
+  @nullable
+  String get city;
+
+  @nullable
+  String get state;
+
+  @nullable
+  @BuiltValueField(wireName: 'postal_code')
+  String get postalCode;
+
+  @nullable
+  String get phone;
+
+  @nullable
+  String get email;
+
+  @nullable
+  @BuiltValueField(wireName: 'country_id')
+  String get countryId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vat_number')
+  String get vatNumber;
+
+  @nullable
+  @BuiltValueField(wireName: 'id_number')
+  String get idNumber;
+
+  // TODO remove this field
+  @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  bool get enableCustomInvoiceTaxes1;
+
+  // TODO remove this field
+  @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes2')
+  bool get enableCustomInvoiceTaxes2;
+
+  // TODO remove this field
+  @nullable
+  @BuiltValueField(wireName: 'custom_payment_terms')
+  BuiltList<PaymentTermEntity> get customPaymentTerms;
+
+  // TODO remove this field
+  @nullable
   @BuiltValueField(wireName: 'has_custom_design1_HIDDEN')
   bool get hasCustomDesign1;
 
+  // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'has_custom_design2_HIDDEN')
   bool get hasCustomDesign2;
 
+  // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
   bool get hasCustomDesign3;

@@ -236,20 +236,20 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.showAcceptInvoiceTerms,
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
-                    //value: settings.ter,
+                    value: settings.showAcceptInvoiceTerms,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.checkSquare,
-                    //onChanged: (value) => viewModel.onSettingsChanged(
-                    //settings.rebuild((b) => b..showTasksInPortal = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..showAcceptInvoiceTerms = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
-                    //value: settings.,
+                    value: settings.showAcceptQuoteTerms,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.checkSquare,
-                    //onChanged: (value) => viewModel.onSettingsChanged(
-                    //  settings.rebuild((b) => b..showTasksInPortal = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..showAcceptQuoteTerms = value)),
                   ),
                 ],
               ),
