@@ -54,7 +54,7 @@ class TaxRateList extends StatelessWidget {
                                   userCompany: userCompany,
                                   entities: [taxRate],
                                   context: context,
-                                  //onEntityAction: viewModel.onEntityAction
+                                  onEntityAction: viewModel.onEntityAction
                                 );
 
                             return TaxRateListItem(

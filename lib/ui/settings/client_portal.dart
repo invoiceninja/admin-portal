@@ -224,10 +224,10 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.sendPortalPassword,
                     helpLabel: localization.sendPortalPasswordHelp,
                     showBlank: state.settingsUIState.isFiltered,
-                    iconData: FontAwesomeIcons.envelope,
-                    //value: settings.,
-                    //onChanged: (value) => viewModel.onSettingsChanged(settings
-                    //  .rebuild((b) => b..enablePortalPassword = value)),
+                    iconData: FontAwesomeIcons.solidEnvelope,
+                    value: settings.sendPortalPassword,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..sendPortalPassword = value)),
                   ),
                 ],
               ),
@@ -258,27 +258,29 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.requireInvoiceSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
-                    //value: settings.ter,
+                    value: settings.requireInvoiceSignature,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileSignature,
-                    //onChanged: (value) => viewModel.onSettingsChanged(
-                    //settings.rebuild((b) => b..showTasksInPortal = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..requireInvoiceSignature = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.requireQuoteSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
-                    //value: settings.,
+                    value: settings.requireQuoteSignature,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileSignature,
-                    //onChanged: (value) => viewModel.onSettingsChanged(
-                    //  settings.rebuild((b) => b..showTasksInPortal = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..requireQuoteSignature = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,
-                    //value: settings.,
+                    value: settings.signatureOnPdf,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileContract,
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..signatureOnPdf = value)),
                   ),
                 ],
               ),

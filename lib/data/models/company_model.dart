@@ -876,6 +876,18 @@ abstract class SettingsEntity
   bool get enablePortalPassword;
 
   @nullable
+  @BuiltValueField(wireName: 'send_portal_password')
+  bool get sendPortalPassword;
+
+  @nullable
+  @BuiltValueField(wireName: 'signature_on_pdf')
+  bool get signatureOnPdf;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_email_markup')
+  bool get enableEmailMarkup;
+
+  @nullable
   @BuiltValueField(wireName: 'show_accept_invoice_terms')
   bool get showAcceptInvoiceTerms;
 

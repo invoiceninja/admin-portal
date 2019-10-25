@@ -1209,6 +1209,24 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.enablePortalPassword,
             specifiedType: const FullType(bool)));
     }
+    if (object.sendPortalPassword != null) {
+      result
+        ..add('send_portal_password')
+        ..add(serializers.serialize(object.sendPortalPassword,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.signatureOnPdf != null) {
+      result
+        ..add('signature_on_pdf')
+        ..add(serializers.serialize(object.signatureOnPdf,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableEmailMarkup != null) {
+      result
+        ..add('enable_email_markup')
+        ..add(serializers.serialize(object.enableEmailMarkup,
+            specifiedType: const FullType(bool)));
+    }
     if (object.showAcceptInvoiceTerms != null) {
       result
         ..add('show_accept_invoice_terms')
@@ -1716,6 +1734,18 @@ class _$SettingsEntitySerializer
           break;
         case 'enable_portal_password':
           result.enablePortalPassword = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'send_portal_password':
+          result.sendPortalPassword = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'signature_on_pdf':
+          result.signatureOnPdf = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_email_markup':
+          result.enableEmailMarkup = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'show_accept_invoice_terms':
@@ -3185,6 +3215,12 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool enablePortalPassword;
   @override
+  final bool sendPortalPassword;
+  @override
+  final bool signatureOnPdf;
+  @override
+  final bool enableEmailMarkup;
+  @override
   final bool showAcceptInvoiceTerms;
   @override
   final bool showAcceptQuoteTerms;
@@ -3323,6 +3359,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailBodyReminder2,
       this.emailBodyReminder3,
       this.enablePortalPassword,
+      this.sendPortalPassword,
+      this.signatureOnPdf,
+      this.enableEmailMarkup,
       this.showAcceptInvoiceTerms,
       this.showAcceptQuoteTerms,
       this.requireInvoiceSignature,
@@ -3448,6 +3487,9 @@ class _$SettingsEntity extends SettingsEntity {
         emailBodyReminder2 == other.emailBodyReminder2 &&
         emailBodyReminder3 == other.emailBodyReminder3 &&
         enablePortalPassword == other.enablePortalPassword &&
+        sendPortalPassword == other.sendPortalPassword &&
+        signatureOnPdf == other.signatureOnPdf &&
+        enableEmailMarkup == other.enableEmailMarkup &&
         showAcceptInvoiceTerms == other.showAcceptInvoiceTerms &&
         showAcceptQuoteTerms == other.showAcceptQuoteTerms &&
         requireInvoiceSignature == other.requireInvoiceSignature &&
@@ -3493,7 +3535,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode),
                                                                                 name.hashCode),
                                                                             companyLogo.hashCode),
                                                                         website.hashCode),
@@ -3606,6 +3648,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailBodyReminder2', emailBodyReminder2)
           ..add('emailBodyReminder3', emailBodyReminder3)
           ..add('enablePortalPassword', enablePortalPassword)
+          ..add('sendPortalPassword', sendPortalPassword)
+          ..add('signatureOnPdf', signatureOnPdf)
+          ..add('enableEmailMarkup', enableEmailMarkup)
           ..add('showAcceptInvoiceTerms', showAcceptInvoiceTerms)
           ..add('showAcceptQuoteTerms', showAcceptQuoteTerms)
           ..add('requireInvoiceSignature', requireInvoiceSignature)
@@ -4067,6 +4112,21 @@ class SettingsEntityBuilder
   set enablePortalPassword(bool enablePortalPassword) =>
       _$this._enablePortalPassword = enablePortalPassword;
 
+  bool _sendPortalPassword;
+  bool get sendPortalPassword => _$this._sendPortalPassword;
+  set sendPortalPassword(bool sendPortalPassword) =>
+      _$this._sendPortalPassword = sendPortalPassword;
+
+  bool _signatureOnPdf;
+  bool get signatureOnPdf => _$this._signatureOnPdf;
+  set signatureOnPdf(bool signatureOnPdf) =>
+      _$this._signatureOnPdf = signatureOnPdf;
+
+  bool _enableEmailMarkup;
+  bool get enableEmailMarkup => _$this._enableEmailMarkup;
+  set enableEmailMarkup(bool enableEmailMarkup) =>
+      _$this._enableEmailMarkup = enableEmailMarkup;
+
   bool _showAcceptInvoiceTerms;
   bool get showAcceptInvoiceTerms => _$this._showAcceptInvoiceTerms;
   set showAcceptInvoiceTerms(bool showAcceptInvoiceTerms) =>
@@ -4262,6 +4322,9 @@ class SettingsEntityBuilder
       _emailBodyReminder2 = _$v.emailBodyReminder2;
       _emailBodyReminder3 = _$v.emailBodyReminder3;
       _enablePortalPassword = _$v.enablePortalPassword;
+      _sendPortalPassword = _$v.sendPortalPassword;
+      _signatureOnPdf = _$v.signatureOnPdf;
+      _enableEmailMarkup = _$v.enableEmailMarkup;
       _showAcceptInvoiceTerms = _$v.showAcceptInvoiceTerms;
       _showAcceptQuoteTerms = _$v.showAcceptQuoteTerms;
       _requireInvoiceSignature = _$v.requireInvoiceSignature;
@@ -4397,6 +4460,9 @@ class SettingsEntityBuilder
               emailBodyReminder2: emailBodyReminder2,
               emailBodyReminder3: emailBodyReminder3,
               enablePortalPassword: enablePortalPassword,
+              sendPortalPassword: sendPortalPassword,
+              signatureOnPdf: signatureOnPdf,
+              enableEmailMarkup: enableEmailMarkup,
               showAcceptInvoiceTerms: showAcceptInvoiceTerms,
               showAcceptQuoteTerms: showAcceptQuoteTerms,
               requireInvoiceSignature: requireInvoiceSignature,

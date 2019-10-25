@@ -85,7 +85,7 @@ class _SystemSettingsState extends State<SystemSettings>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
+    //final settings = viewModel.settings;
     final state = viewModel.state;
 
     return SettingsScaffold(
@@ -292,7 +292,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    //final localization = AppLocalization.of(context);
 
     return FormCard(
       children: <Widget>[

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,11 +6,9 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:zefyr/zefyr.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
@@ -68,8 +64,8 @@ class _EmailSettingsState extends State<EmailSettings>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final settings = widget.viewModel.settings;
-    final signature = settings.emailFooter;
+    //final settings = widget.viewModel.settings;
+    //final signature = settings.emailFooter;
 
     // return NotusDocument.fromJson(jsonDecode(contents));
     //_zefyrController.compose(Delta()..insert(signature));
@@ -97,6 +93,7 @@ class _EmailSettingsState extends State<EmailSettings>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.emailSettings,
@@ -158,9 +155,11 @@ class _EmailSettingsState extends State<EmailSettings>
                   BoolDropdownButton(
                     label: localization.enableMarkup,
                     helpLabel: localization.enableMarkupHelp,
-                    value: false,
+                    value: settings.enableEmailMarkup,
                     iconData: FontAwesomeIcons.envelope,
                     showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enableEmailMarkup = value)),
                   ),
                 ],
               ),
@@ -182,21 +181,27 @@ class _EmailSettingsState extends State<EmailSettings>
                 children: <Widget>[
                   BoolDropdownButton(
                     label: localization.attachPdf,
-                    value: false,
+                    value: settings.pdfEmailAttachment,
                     iconData: FontAwesomeIcons.fileInvoice,
                     showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..pdfEmailAttachment = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.attachDocuments,
-                    value: false,
+                    value: settings.documentEmailAttachment,
                     iconData: FontAwesomeIcons.fileImage,
                     showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..documentEmailAttachment = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.attachUbl,
-                    value: false,
+                    value: settings.ublEmailAttachment,
                     iconData: FontAwesomeIcons.fileArchive,
                     showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..ublEmailAttachment = value)),
                   ),
                 ],
               ),
