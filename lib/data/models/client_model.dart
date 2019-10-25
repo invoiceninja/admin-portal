@@ -312,6 +312,8 @@ abstract class ClientEntity extends Object
       return true;
     } else if (city.toLowerCase().contains(filter)) {
       return true;
+    } else if (postalCode.toLowerCase().contains(filter)) {
+      return true;
     } else if (contacts
         .where((contact) => contact.matchesFilter(filter))
         .isNotEmpty) {
@@ -342,6 +344,8 @@ abstract class ClientEntity extends Object
       return address1;
     } else if (city.toLowerCase().contains(filter)) {
       return city;
+    } else if (postalCode.toLowerCase().contains(filter)) {
+      return postalCode;
     } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == displayName ? null : match;

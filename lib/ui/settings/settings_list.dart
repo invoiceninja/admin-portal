@@ -120,12 +120,12 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.layerGroup,
         ),
-        /*
         SettingsListTile(
-          section: kSettingsInvoiceSettings,
+          section: kSettingSystemSettings,
           viewModel: viewModel,
           icon: FontAwesomeIcons.fileInvoice,
         ),
+        /*
         SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,
