@@ -95,6 +95,11 @@ final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterVendorsByCustom1>(_filterVendorsByCustom1),
   TypedReducer<ListUIState, FilterVendorsByCustom2>(_filterVendorsByCustom2),
   TypedReducer<ListUIState, FilterVendorsByEntity>(_filterVendorsByClient),
+  TypedReducer<ListUIState, StartVendorMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToVendorMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromVendorMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearVendorMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterVendorsByClient(
@@ -145,6 +150,27 @@ ListUIState _sortVendors(ListUIState vendorListState, SortVendors action) {
   return vendorListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState vendorListState, StartVendorMultiselect action) {
+  return vendorListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState vendorListState, AddToVendorMultiselect action) {
+  return vendorListState.rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState vendorListState, RemoveFromVendorMultiselect action) {
+  return vendorListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState vendorListState, ClearVendorMultiselect action) {
+  return vendorListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final vendorsReducer = combineReducers<VendorState>([

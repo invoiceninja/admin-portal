@@ -39,9 +39,7 @@ class ProductList extends StatelessWidget {
       onRefresh: () => viewModel.onRefreshed(context),
       child: ListView.separated(
           separatorBuilder: (context, index) => ListDivider(),
-          itemCount: isInMultiselect
-              ? viewModel.productList.length //+ 1
-              : viewModel.productList.length,
+          itemCount: viewModel.productList.length,
           itemBuilder: (BuildContext context, index) {
             final productId = viewModel.productList[index];
             final product = viewModel.productMap[productId];

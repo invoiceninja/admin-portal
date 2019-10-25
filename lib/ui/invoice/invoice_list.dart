@@ -26,6 +26,7 @@ class InvoiceList extends StatelessWidget {
     final filteredClientId = listState.filterEntityId;
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+    final isInMultiselect = listState.isInMultiselect();
 
     final documentMap = memoizedEntityDocumentMap(
         EntityType.invoice, state.documentState.map, state.expenseState.map);
@@ -104,7 +105,19 @@ class InvoiceList extends StatelessWidget {
                                       context, [invoice], action);
                                 }
                               },
-                              onLongPress: () => showDialog(),
+                              onLongPress: () async {
+                                final longPressIsSelection =
+                                    state.uiState.longPressSelectionIsDefault ??
+                                        true;
+                                if (longPressIsSelection && !isInMultiselect) {
+                                  viewModel.onEntityAction(context, [invoice],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
+                              isChecked: isInMultiselect &&
+                                  listState.isSelected(invoice),
                             );
                           },
                         ),

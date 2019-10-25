@@ -277,12 +277,22 @@ class FilterTasksByEntity implements PersistUI {
 }
 
 void handleTaskAction(
-    BuildContext context, List<TaskEntity> tasks, EntityAction action) {
+    BuildContext context, List<BaseEntity> tasks, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          tasks.length == 1,
+      'Cannot perform this action on more than one task');
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
-  final task = tasks[0];
+  final task = tasks.first as TaskEntity;
 
   switch (action) {
     case EntityAction.edit:
@@ -340,5 +350,49 @@ void handleTaskAction(
       store.dispatch(DeleteTaskRequest(
           snackBarCompleter(context, localization.deletedTask), task.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.taskListState.isInMultiselect()) {
+        store.dispatch(StartTaskMultiselect(context: context));
+      }
+
+      if (tasks.isEmpty) {
+        break;
+      }
+
+      for (final task in tasks) {
+        if (!store.state.taskListState.isSelected(task)) {
+          store.dispatch(AddToTaskMultiselect(context: context, entity: task));
+        } else {
+          store.dispatch(
+              RemoveFromTaskMultiselect(context: context, entity: task));
+        }
+      }
+      break;
   }
+}
+
+class StartTaskMultiselect {
+  StartTaskMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToTaskMultiselect {
+  AddToTaskMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromTaskMultiselect {
+  RemoveFromTaskMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearTaskMultiselect {
+  ClearTaskMultiselect({@required this.context});
+
+  final BuildContext context;
 }

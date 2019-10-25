@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewCompanyGatewayList implements PersistUI {
   ViewCompanyGatewayList({@required this.context, this.force = false});
@@ -238,7 +239,17 @@ class FilterCompanyGatewaysByEntity implements PersistUI {
 }
 
 void handleCompanyGatewayAction(BuildContext context,
-    List<CompanyGatewayEntity> companyGateways, EntityAction action) {
+    List<BaseEntity> companyGateways, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          companyGateways.length == 1,
+      'Cannot perform this action on more than one company gateway');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
@@ -263,5 +274,52 @@ void handleCompanyGatewayAction(BuildContext context,
           snackBarCompleter(context, localization.deletedCompanyGateway),
           companyGateway.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.companyGatewayListState.isInMultiselect()) {
+        store.dispatch(StartCompanyGatewayMultiselect(context: context));
+      }
+
+      if (companyGateways.isEmpty) {
+        break;
+      }
+
+      for (final companyGateway in companyGateways) {
+        if (!store.state.companyGatewayListState.isSelected(companyGateway)) {
+          store.dispatch(AddToCompanyGatewayMultiselect(
+              context: context, entity: companyGateway));
+        } else {
+          store.dispatch(RemoveFromCompanyGatewayMultiselect(
+              context: context, entity: companyGateway));
+        }
+      }
+      break;
   }
+}
+
+class StartCompanyGatewayMultiselect {
+  StartCompanyGatewayMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToCompanyGatewayMultiselect {
+  AddToCompanyGatewayMultiselect(
+      {@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromCompanyGatewayMultiselect {
+  RemoveFromCompanyGatewayMultiselect(
+      {@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearCompanyGatewayMultiselect {
+  ClearCompanyGatewayMultiselect({@required this.context});
+
+  final BuildContext context;
 }

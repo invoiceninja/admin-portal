@@ -209,7 +209,7 @@ void handleProductAction(
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final product = products[0];
+  final product = products.first;
 
   switch (action) {
     case EntityAction.newInvoice:

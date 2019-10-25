@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -26,6 +28,9 @@ class TaxRateList extends StatelessWidget {
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     */
+    final store = StoreProvider.of<AppState>(context);
+    final listUIState = store.state.uiState.taxRateUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return Column(
       children: <Widget>[
@@ -63,10 +68,22 @@ class TaxRateList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, taxRate, action);
+                                      context, [taxRate], action);
                                 }
                               },
-                              onLongPress: () => showDialog(),
+                              onLongPress: () async {
+                                final longPressIsSelection = store.state.uiState
+                                        .longPressSelectionIsDefault ??
+                                    true;
+                                if (longPressIsSelection && !isInMultiselect) {
+                                  viewModel.onEntityAction(context, [taxRate],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
+                              isChecked: isInMultiselect &&
+                                  listUIState.isSelected(taxRate),
                             );
                           },
                         ),

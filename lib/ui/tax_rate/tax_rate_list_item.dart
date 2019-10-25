@@ -14,18 +14,20 @@ class TaxRateListItem extends StatelessWidget {
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.taxRate,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
   final TaxRateEntity taxRate;
   final String filter;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   static final taxRateItemKey = (int id) => Key('__tax_rate_item_${id}__');
 
@@ -35,6 +37,9 @@ class TaxRateListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final taxRateUIState = uiState.taxRateUIState;
+    final listUIState = taxRateUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? taxRate.matchesFilterValue(filter)
@@ -50,18 +55,22 @@ class TaxRateListItem extends StatelessWidget {
               : taxRateUIState.selectedId),
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.taxRateItemCheckbox(taxRate.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.taxRateItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

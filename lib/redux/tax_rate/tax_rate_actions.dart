@@ -237,9 +237,20 @@ class FilterTaxRatesByEntity implements PersistUI {
 }
 
 void handleTaxRateAction(
-    BuildContext context, TaxRateEntity taxRate, EntityAction action) {
+    BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          taxRates.length == 1,
+      'Cannot perform this action on more than one tax rate');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final taxRate = taxRates.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -259,5 +270,50 @@ void handleTaxRateAction(
       store.dispatch(DeleteTaxRateRequest(
           snackBarCompleter(context, localization.deletedTaxRate), taxRate.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.taxRateListState.isInMultiselect()) {
+        store.dispatch(StartTaxRateMultiselect(context: context));
+      }
+
+      if (taxRates.isEmpty) {
+        break;
+      }
+
+      for (final taxRate in taxRates) {
+        if (!store.state.taxRateListState.isSelected(taxRate)) {
+          store.dispatch(
+              AddToTaxRateMultiselect(context: context, entity: taxRate));
+        } else {
+          store.dispatch(
+              RemoveFromTaxRateMultiselect(context: context, entity: taxRate));
+        }
+      }
+      break;
   }
+}
+
+class StartTaxRateMultiselect {
+  StartTaxRateMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToTaxRateMultiselect {
+  AddToTaxRateMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromTaxRateMultiselect {
+  RemoveFromTaxRateMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearTaxRateMultiselect {
+  ClearTaxRateMultiselect({@required this.context});
+
+  final BuildContext context;
 }

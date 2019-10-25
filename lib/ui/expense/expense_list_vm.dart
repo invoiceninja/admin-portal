@@ -98,7 +98,7 @@ class ExpenseListVM {
       },
       onEntityAction: (BuildContext context, List<BaseEntity> expenses,
               EntityAction action) =>
-          handleExpenseAction(context, expenses[0], action),
+          handleExpenseAction(context, expenses, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }

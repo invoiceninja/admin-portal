@@ -18,6 +18,8 @@ class PaymentListItem extends StatelessWidget {
     @required this.onLongPress,
     @required this.payment,
     @required this.filter,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -26,6 +28,8 @@ class PaymentListItem extends StatelessWidget {
   final GestureTapCallback onLongPress;
   final PaymentEntity payment;
   final String filter;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   static final paymentItemKey = (int id) => Key('__payment_${id}__');
 
@@ -34,6 +38,9 @@ class PaymentListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final paymentUIState = uiState.paymentUIState;
+    final listUIState = paymentUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final invoice = paymentInvoiceSelector(payment.id, state);
     final client = paymentClientSelector(payment.id, state);
@@ -56,8 +63,22 @@ class PaymentListItem extends StatelessWidget {
       entity: payment,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

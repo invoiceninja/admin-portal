@@ -1,11 +1,12 @@
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
-import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:redux/redux.dart';
 
 EntityUIState companyGatewayUIReducer(
     CompanyGatewayUIState state, dynamic action) {
@@ -63,6 +64,14 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _filterCompanyGatewaysByCustom2),
   TypedReducer<ListUIState, FilterCompanyGatewaysByEntity>(
       _filterCompanyGatewaysByClient),
+  TypedReducer<ListUIState, StartCompanyGatewayMultiselect>(
+      _startListMultiselect),
+  TypedReducer<ListUIState, AddToCompanyGatewayMultiselect>(
+      _addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromCompanyGatewayMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearCompanyGatewayMultiselect>(
+      _clearListMultiselect),
 ]);
 
 ListUIState _filterCompanyGatewaysByClient(
@@ -121,6 +130,28 @@ ListUIState _sortCompanyGateways(
     ..sortField = action.field);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState productListState, StartCompanyGatewayMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState productListState, AddToCompanyGatewayMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState productListState, RemoveFromCompanyGatewayMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState productListState, ClearCompanyGatewayMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = null);
+}
+
 final companyGatewaysReducer = combineReducers<CompanyGatewayState>([
   TypedReducer<CompanyGatewayState, SaveCompanyGatewaySuccess>(
       _updateCompanyGateway),
@@ -130,8 +161,7 @@ final companyGatewaysReducer = combineReducers<CompanyGatewayState>([
       _setLoadedCompanyGateways),
   TypedReducer<CompanyGatewayState, LoadCompanyGatewaySuccess>(
       _setLoadedCompanyGateway),
-  TypedReducer<CompanyGatewayState, LoadCompanySuccess>(
-      _setLoadedCompany),
+  TypedReducer<CompanyGatewayState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<CompanyGatewayState, ArchiveCompanyGatewayRequest>(
       _archiveCompanyGatewayRequest),
   TypedReducer<CompanyGatewayState, ArchiveCompanyGatewaySuccess>(
@@ -246,7 +276,8 @@ CompanyGatewayState _setLoadedCompanyGateway(
       .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
 }
 
-CompanyGatewayState _setLoadedCompany(CompanyGatewayState companyGatewayState, LoadCompanySuccess action) {
+CompanyGatewayState _setLoadedCompany(
+    CompanyGatewayState companyGatewayState, LoadCompanySuccess action) {
   final state = companyGatewayState.rebuild((b) => b
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(

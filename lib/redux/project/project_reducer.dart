@@ -67,6 +67,11 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProjectsByCustom1>(_filterProjectsByCustom1),
   TypedReducer<ListUIState, FilterProjectsByCustom2>(_filterProjectsByCustom2),
   TypedReducer<ListUIState, FilterProjectsByEntity>(_filterProjectsByClient),
+  TypedReducer<ListUIState, StartProjectMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToProjectMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterProjectsByClient(
@@ -119,6 +124,28 @@ ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {
   return projectListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState projectListState, StartProjectMultiselect action) {
+  return projectListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState projectListState, AddToProjectMultiselect action) {
+  return projectListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState projectListState, RemoveFromProjectMultiselect action) {
+  return projectListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState projectListState, ClearProjectMultiselect action) {
+  return projectListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final projectsReducer = combineReducers<ProjectState>([

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+import 'document_screen_vm.dart';
 
 class DocumentScreen extends StatelessWidget {
+  const DocumentScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+  
   static const String route = '/document';
+
+  final DocumentScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +29,22 @@ class DocumentScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.documentUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.documentList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final documents = viewModel.documentList
+            .map<DocumentEntity>((documentId) => viewModel.documentMap[documentId])
+            .where((document) => value != listUIState.isSelected(document))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, documents, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(state.documentListState.filterClearedAt),
         entityType: EntityType.document,
@@ -29,12 +53,44 @@ class DocumentScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.document,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterDocuments(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.document,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterDocuments(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              store.dispatch(ClearDocumentMultiselect(context: context));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.documentListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+              await showEntityActionsDialog(
+                  entities: state.documentListState.selectedEntities,
+                  userCompany: userCompany,
+                  context: context,
+                  onEntityAction: viewModel.onEntityAction,
+                  multiselect: true);
+              store.dispatch(ClearDocumentMultiselect(context: context));
+            },
+          ),
       ],
       body: DocumentListBuilder(),
       bottomNavigationBar: AppBottomBar(

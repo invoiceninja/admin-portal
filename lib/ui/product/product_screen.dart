@@ -26,10 +26,10 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final listUIState = state.uiState.productUIState.listUIState;
     final company = state.selectedCompany;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.productUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(

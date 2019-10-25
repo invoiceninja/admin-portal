@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -112,6 +113,11 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
+  TypedReducer<ListUIState, StartInvoiceMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToInvoiceMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterInvoicesByCustom1(
@@ -174,6 +180,28 @@ ListUIState _sortInvoices(ListUIState invoiceListState, SortInvoices action) {
   return invoiceListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState invoiceListState, StartInvoiceMultiselect action) {
+  return invoiceListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState invoiceListState, AddToInvoiceMultiselect action) {
+  return invoiceListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState invoiceListState, RemoveFromInvoiceMultiselect action) {
+  return invoiceListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState invoiceListState, ClearInvoiceMultiselect action) {
+  return invoiceListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final invoicesReducer = combineReducers<InvoiceState>([
