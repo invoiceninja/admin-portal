@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -12,16 +14,38 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class TaskScreen extends StatelessWidget {
+  const TaskScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/task';
+
+  final TaskScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final company = store.state.selectedCompany;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.taskUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.taskList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final tasks = viewModel.taskList
+            .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
+            .where((task) => value != listUIState.isSelected(task))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, tasks, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(store.state.taskListState.filterClearedAt),
         entityType: EntityType.task,
@@ -30,12 +54,44 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.task,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterTasks(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.task,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterTasks(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              store.dispatch(ClearTaskMultiselect(context: context));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.taskListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.taskListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearTaskMultiselect(context: context));
+                  },
+          ),
       ],
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(

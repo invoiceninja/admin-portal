@@ -339,11 +339,21 @@ class ConvertQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
-    EntityAction action) async {
+Future handleQuoteAction(
+    BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          quotes.length == 1,
+      'Cannot perform this action on more than one quote');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final quote = quotes[0];
+  final quote = quotes.first as InvoiceEntity;
 
   switch (action) {
     case EntityAction.edit:
@@ -399,5 +409,50 @@ Future handleQuoteAction(BuildContext context, List<InvoiceEntity> quotes,
       store.dispatch(DeleteQuoteRequest(
           snackBarCompleter(context, localization.deletedQuote), quote.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.quoteListState.isInMultiselect()) {
+        store.dispatch(StartQuoteMultiselect(context: context));
+      }
+
+      if (quotes.isEmpty) {
+        break;
+      }
+
+      for (final quote in quotes) {
+        if (!store.state.quoteListState.isSelected(quote)) {
+          store
+              .dispatch(AddToQuoteMultiselect(context: context, entity: quote));
+        } else {
+          store.dispatch(
+              RemoveFromQuoteMultiselect(context: context, entity: quote));
+        }
+      }
+      break;
   }
+}
+
+class StartQuoteMultiselect {
+  StartQuoteMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToQuoteMultiselect {
+  AddToQuoteMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromQuoteMultiselect {
+  RemoveFromQuoteMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearQuoteMultiselect {
+  ClearQuoteMultiselect({@required this.context});
+
+  final BuildContext context;
 }

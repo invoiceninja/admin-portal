@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -11,16 +13,38 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 
 class VendorScreen extends StatelessWidget {
+  const VendorScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/vendor';
+
+  final VendorScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final state = store.state;
+    final company = state.selectedCompany;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.vendorUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length == viewModel.vendorList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final vendors = viewModel.vendorList
+            .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])
+            .where((vendor) => value != listUIState.isSelected(vendor))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, vendors, EntityAction.toggleMultiselect);
+      },
       appBarTitle: ListFilter(
         key: ValueKey(store.state.vendorListState.filterClearedAt),
         entityType: EntityType.vendor,
@@ -29,12 +53,44 @@ class VendorScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.vendor,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterVendors(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.vendor,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterVendors(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              store.dispatch(ClearVendorMultiselect(context: context));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.vendorListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.vendorListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearVendorMultiselect(context: context));
+                  },
+          ),
       ],
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(

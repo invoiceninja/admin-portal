@@ -49,6 +49,9 @@ class TaskListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? task.matchesFilterValue(filter)
         : null;
+    final listUIState = taskUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     //final subtitle = filterMatch ?? client?.displayName ?? task.description;
     String subtitle;
@@ -68,14 +71,20 @@ class TaskListItem extends StatelessWidget {
       entity: task,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
-        leading: onCheckboxChanged != null
-            ? Checkbox(
-                //key: NinjaKeys.taskItemCheckbox(task.id),
-                value: isChecked,
-                onChanged: (value) => onCheckboxChanged(value),
-                activeColor: Theme.of(context).accentColor,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.taskItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
               )
             : null,
         title: Container(

@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-class ClientListItem extends StatefulWidget {
+class ClientListItem extends StatelessWidget {
   const ClientListItem({
     @required this.user,
     @required this.onEntityAction,
@@ -34,55 +34,40 @@ class ClientListItem extends StatefulWidget {
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
   @override
-  _ClientListItemState createState() => _ClientListItemState();
-}
-
-class _ClientListItemState extends State<ClientListItem>
-    with TickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
     //var localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final clientUIState = uiState.clientUIState;
-    final filterMatch = widget.filter != null && widget.filter.isNotEmpty
-        ? widget.client.matchesFilterValue(widget.filter)
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? client.matchesFilterValue(filter)
         : null;
     final listUIState = clientUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = widget.onCheckboxChanged != null || isInMultiselect;
-
-    if (isInMultiselect) {
-      _multiselectCheckboxAnimController.forward();
-    } else {
-      _multiselectCheckboxAnimController.animateBack(0.0);
-    }
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: widget.client.id ==
+      isSelected: client.id ==
           (uiState.isEditing
               ? clientUIState.editing.id
               : clientUIState.selectedId),
       userCompany: store.state.userCompany,
-      onEntityAction: widget.onEntityAction,
-      entity: widget.client,
+      onEntityAction: onEntityAction,
+      entity: client,
       //entityKey: clientItemKey,
       child: ListTile(
         onTap: isInMultiselect
-            ? () => widget.onEntityAction(EntityAction.toggleMultiselect)
-            : widget.onTap,
-        onLongPress: widget.onLongPress,
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
         leading: showCheckbox
-            ? FadeTransition(
-                opacity: _multiselectCheckboxAnim,
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    value: widget.isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => widget.onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
                 ),
               )
             : null,
@@ -92,18 +77,16 @@ class _ClientListItemState extends State<ClientListItem>
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.client.displayName,
+                  client.displayName,
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
-              Text(
-                  formatNumber(widget.client.balance, context,
-                      clientId: widget.client.id),
+              Text(formatNumber(client.balance, context, clientId: client.id),
                   style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
-        subtitle: (filterMatch == null && widget.client.isActive)
+        subtitle: (filterMatch == null && client.isActive)
             ? null
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,28 +98,10 @@ class _ClientListItemState extends State<ClientListItem>
                           overflow: TextOverflow.ellipsis,
                         )
                       : SizedBox(),
-                  EntityStateLabel(widget.client),
+                  EntityStateLabel(client),
                 ],
               ),
       ),
     );
-  }
-
-  Animation _multiselectCheckboxAnim;
-  AnimationController _multiselectCheckboxAnimController;
-
-  @override
-  void initState() {
-    super.initState();
-    _multiselectCheckboxAnimController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _multiselectCheckboxAnim = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(_multiselectCheckboxAnimController);
-  }
-
-  @override
-  void dispose() {
-    _multiselectCheckboxAnimController.dispose();
-    super.dispose();
   }
 }

@@ -20,6 +20,8 @@ class QuoteListItem extends StatelessWidget {
     @required this.client,
     @required this.filter,
     @required this.hasDocuments,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -30,12 +32,17 @@ class QuoteListItem extends StatelessWidget {
   final ClientEntity client;
   final String filter;
   final bool hasDocuments;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final quoteUIState = uiState.quoteUIState;
+    final listUIState = quoteUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
@@ -56,8 +63,22 @@ class QuoteListItem extends StatelessWidget {
       entity: invoice,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.quoteItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

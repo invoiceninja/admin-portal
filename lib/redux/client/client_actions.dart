@@ -269,7 +269,7 @@ class FilterClientsByCustom2 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, List<ClientEntity> clients, EntityAction action) {
+    BuildContext context, List<BaseEntity> clients, EntityAction action) {
   assert(
       [
             EntityAction.restore,

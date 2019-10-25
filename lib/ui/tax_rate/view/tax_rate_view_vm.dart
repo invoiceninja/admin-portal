@@ -85,7 +85,7 @@ class TaxRateViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleTaxRateAction(context, taxRate, action),
+          handleTaxRateAction(context, [taxRate], action),
     );
   }
 

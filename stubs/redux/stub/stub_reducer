@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_state.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 EntityUIState stubUIReducer(StubUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -52,6 +53,11 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterStubsByCustom1>(_filterStubsByCustom1),
   TypedReducer<ListUIState, FilterStubsByCustom2>(_filterStubsByCustom2),
   TypedReducer<ListUIState, FilterStubsByEntity>(_filterStubsByClient),
+  TypedReducer<ListUIState, StartStubMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToStubMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromStubMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearStubMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterStubsByClient(
@@ -101,6 +107,28 @@ ListUIState _sortStubs(ListUIState stubListState, SortStubs action) {
   return stubListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState productListState, StartProductMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState productListState, AddToProductMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState productListState, RemoveFromProductMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState productListState, ClearProductMultiselect action) {
+  return productListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final stubsReducer = combineReducers<StubState>([

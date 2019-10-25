@@ -52,6 +52,11 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterExpensesByCustom1>(_filterExpensesByCustom1),
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
   TypedReducer<ListUIState, FilterExpensesByEntity>(_filterExpensesByClient),
+  TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearExpenseMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterExpensesByClient(
@@ -114,6 +119,28 @@ ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
   return expenseListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState expenseListState, StartExpenseMultiselect action) {
+  return expenseListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState expenseListState, AddToExpenseMultiselect action) {
+  return expenseListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState expenseListState, RemoveFromExpenseMultiselect action) {
+  return expenseListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState expenseListState, ClearExpenseMultiselect action) {
+  return expenseListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final expensesReducer = combineReducers<ExpenseState>([

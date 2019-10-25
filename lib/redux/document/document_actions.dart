@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewDocumentList implements PersistUI {
   ViewDocumentList(this.context);
@@ -229,9 +230,20 @@ class FilterDocumentsByEntity implements PersistUI {
 }
 
 void handleDocumentAction(
-    BuildContext context, DocumentEntity document, EntityAction action) {
+    BuildContext context, List<BaseEntity> documents, EntityAction action) {
+  assert(
+  [
+    EntityAction.restore,
+    EntityAction.archive,
+    EntityAction.delete,
+    EntityAction.toggleMultiselect
+  ].contains(action) ||
+      documents.length == 1,
+  'Cannot perform this action on more than one document');
+  
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final document = documents.first;
 
   switch (action) {
     case EntityAction.edit:
@@ -252,5 +264,51 @@ void handleDocumentAction(
           snackBarCompleter(context, localization.deletedDocument),
           document.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.documentListState.isInMultiselect()) {
+        store.dispatch(StartDocumentMultiselect(context: context));
+      }
+
+      if (documents.isEmpty) {
+        break;
+      }
+
+      for (final document in documents) {
+        if (!store.state.documentListState.isSelected(document)) {
+          store.dispatch(
+              AddToDocumentMultiselect(context: context, entity: document));
+        } else {
+          store.dispatch(
+              RemoveFromDocumentMultiselect(context: context, entity: document));
+        }
+      }
+      break;
   }
+}
+
+
+class StartDocumentMultiselect {
+  StartDocumentMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToDocumentMultiselect {
+  AddToDocumentMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromDocumentMultiselect {
+  RemoveFromDocumentMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearDocumentMultiselect {
+  ClearDocumentMultiselect({@required this.context});
+
+  final BuildContext context;
 }

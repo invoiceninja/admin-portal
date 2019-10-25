@@ -22,6 +22,8 @@ class TaskList extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final listState = viewModel.listState;
+    final listUIState = state.uiState.taskUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     BaseEntity filteredEntity;
     String label;
@@ -113,7 +115,19 @@ class TaskList extends StatelessWidget {
                                       context, [task], action);
                                 }
                               },
-                              onLongPress: () => showDialog(),
+                              onLongPress: () async {
+                                final longPressIsSelection =
+                                    state.uiState.longPressSelectionIsDefault ??
+                                        true;
+                                if (longPressIsSelection && !isInMultiselect) {
+                                  viewModel.onEntityAction(context, [task],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
+                              isChecked: isInMultiselect &&
+                                  listUIState.isSelected(task),
                             );
                           },
                         ),

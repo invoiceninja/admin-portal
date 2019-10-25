@@ -271,5 +271,50 @@ void handleGroupAction(
       store.dispatch(DeleteGroupRequest(
           snackBarCompleter(context, localization.deletedGroup), group.id));
       break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.groupListState.isInMultiselect()) {
+        store.dispatch(StartGroupMultiselect(context: context));
+      }
+
+      if (groups.isEmpty) {
+        break;
+      }
+
+      for (final group in groups) {
+        if (!store.state.groupListState.isSelected(group)) {
+          store
+              .dispatch(AddToGroupMultiselect(context: context, entity: group));
+        } else {
+          store.dispatch(
+              RemoveFromGroupMultiselect(context: context, entity: group));
+        }
+      }
+      break;
   }
+}
+
+class StartGroupMultiselect {
+  StartGroupMultiselect({@required this.context});
+
+  final BuildContext context;
+}
+
+class AddToGroupMultiselect {
+  AddToGroupMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class RemoveFromGroupMultiselect {
+  RemoveFromGroupMultiselect({@required this.context, @required this.entity});
+
+  final BuildContext context;
+  final BaseEntity entity;
+}
+
+class ClearGroupMultiselect {
+  ClearGroupMultiselect({@required this.context});
+
+  final BuildContext context;
 }

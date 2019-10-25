@@ -1,11 +1,12 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:redux/redux.dart';
 
 EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -52,6 +53,11 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterGroupsByCustom1>(_filterGroupsByCustom1),
   TypedReducer<ListUIState, FilterGroupsByCustom2>(_filterGroupsByCustom2),
   TypedReducer<ListUIState, FilterGroupsByEntity>(_filterGroupsByClient),
+  TypedReducer<ListUIState, StartGroupMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToGroupMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearGroupMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterGroupsByClient(
@@ -102,6 +108,27 @@ ListUIState _sortGroups(ListUIState groupListState, SortGroups action) {
   return groupListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState groupListState, StartGroupMultiselect action) {
+  return groupListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState groupListState, AddToGroupMultiselect action) {
+  return groupListState.rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState groupListState, RemoveFromGroupMultiselect action) {
+  return groupListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState groupListState, ClearGroupMultiselect action) {
+  return groupListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final groupsReducer = combineReducers<GroupState>([

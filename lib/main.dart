@@ -32,10 +32,17 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/document/document_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
+import 'package:invoiceninja_flutter/ui/group/group_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -53,6 +60,9 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -67,6 +77,7 @@ import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
 
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
@@ -302,48 +313,49 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             ClientScreen.route: (context) => ClientScreenBuilder(),
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),
-            InvoiceScreen.route: (context) => InvoiceScreen(),
+            InvoiceScreen.route: (context) => InvoiceScreenBuilder(),
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-            DocumentScreen.route: (context) => DocumentScreen(),
+            DocumentScreen.route: (context) => DocumentScreenBuilder(),
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
-            ExpenseScreen.route: (context) => ExpenseScreen(),
+            ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-            VendorScreen.route: (context) => VendorScreen(),
+            VendorScreen.route: (context) => VendorScreenBuilder(),
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
-            TaskScreen.route: (context) => TaskScreen(),
+            TaskScreen.route: (context) => TaskScreenBuilder(),
             TaskViewScreen.route: (context) => TaskViewScreen(),
             TaskEditScreen.route: (context) => TaskEditScreen(),
-            ProjectScreen.route: (context) => ProjectScreen(),
+            ProjectScreen.route: (context) => ProjectScreenBuilder(),
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
-            PaymentScreen.route: (context) => PaymentScreen(),
+            PaymentScreen.route: (context) => PaymentScreenBuilder(),
             PaymentViewScreen.route: (context) => PaymentViewScreen(),
             PaymentEditScreen.route: (context) => PaymentEditScreen(),
-            QuoteScreen.route: (context) => QuoteScreen(),
+            QuoteScreen.route: (context) => QuoteScreenBuilder(),
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
-            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             SettingsScreen.route: (context) => SettingsScreen(),
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
             UserDetailsScreen.route: (context) => UserDetailsScreen(),
             LocalizationScreen.route: (context) => LocalizationScreen(),
-            CompanyGatewayScreen.route: (context) => CompanyGatewayScreen(),
+            CompanyGatewayScreen.route: (context) =>
+                CompanyGatewayScreenBuilder(),
             CompanyGatewayViewScreen.route: (context) =>
                 CompanyGatewayViewScreen(),
             CompanyGatewayEditScreen.route: (context) =>
                 CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
             TaxRatesScreen.route: (context) => TaxRatesScreen(),
-            TaxRateSettingsScreen.route: (context) => TaxRateSettingsScreen(),
+            TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
             TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
             TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
             ProductSettingsScreen.route: (context) => ProductSettingsScreen(),
@@ -351,7 +363,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 NotificationsSettingsScreen(),
             ImportExportScreen.route: (context) => ImportExportScreen(),
             DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
-            GroupSettingsScreen.route: (context) => GroupSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             InvoiceSettingsScreen.route: (context) => InvoiceSettingsScreen(),

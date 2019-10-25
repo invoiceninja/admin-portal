@@ -52,6 +52,11 @@ final taxRateListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTaxRatesByCustom1>(_filterTaxRatesByCustom1),
   TypedReducer<ListUIState, FilterTaxRatesByCustom2>(_filterTaxRatesByCustom2),
   TypedReducer<ListUIState, FilterTaxRatesByEntity>(_filterTaxRatesByClient),
+  TypedReducer<ListUIState, StartTaxRateMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToTaxRateMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromTaxRateMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearTaxRateMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterTaxRatesByClient(
@@ -104,6 +109,28 @@ ListUIState _sortTaxRates(ListUIState taxRateListState, SortTaxRates action) {
   return taxRateListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState taxRateListState, StartTaxRateMultiselect action) {
+  return taxRateListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState taxRateListState, AddToTaxRateMultiselect action) {
+  return taxRateListState
+      .rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState taxRateListState, RemoveFromTaxRateMultiselect action) {
+  return taxRateListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState taxRateListState, ClearTaxRateMultiselect action) {
+  return taxRateListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final taxRatesReducer = combineReducers<TaxRateState>([

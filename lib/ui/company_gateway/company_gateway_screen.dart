@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+import 'company_gateway_screen_vm.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
+  const CompanyGatewayScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/$kSettings/$kSettingsOnlinePayments';
+
+  final CompanyGatewayScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +31,25 @@ class CompanyGatewayScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.companyGatewayUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+      isChecked: isInMultiselect &&
+          listUIState.selectedEntities.length ==
+              viewModel.companyGatewayList.length,
+      showCheckbox: isInMultiselect,
+      onCheckboxChanged: (value) {
+        final companyGateways = viewModel.companyGatewayList
+            .map<CompanyGatewayEntity>((companyGatewayId) =>
+                viewModel.companyGatewayMap[companyGatewayId])
+            .where((companyGateway) =>
+                value != listUIState.isSelected(companyGateway))
+            .toList();
+
+        viewModel.onEntityAction(
+            context, companyGateways, EntityAction.toggleMultiselect);
+      },
       hideHamburgerButton: true,
       appBarTitle: ListFilter(
         key: ValueKey(state.companyGatewayListState.filterClearedAt),
@@ -32,12 +59,45 @@ class CompanyGatewayScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        ListFilterButton(
-          entityType: EntityType.companyGateway,
-          onFilterPressed: (String value) {
-            store.dispatch(FilterCompanyGateways(value));
-          },
-        ),
+        if (!viewModel.isInMultiselect)
+          ListFilterButton(
+            entityType: EntityType.product,
+            onFilterPressed: (String value) {
+              store.dispatch(FilterCompanyGateways(value));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            child: Text(
+              localization.cancel,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              store.dispatch(ClearCompanyGatewayMultiselect(context: context));
+            },
+          ),
+        if (viewModel.isInMultiselect)
+          FlatButton(
+            key: key,
+            textColor: Colors.white,
+            disabledTextColor: Colors.white54,
+            child: Text(
+              localization.done,
+            ),
+            onPressed: state.productListState.selectedEntities.isEmpty
+                ? null
+                : () async {
+                    await showEntityActionsDialog(
+                        entities: state.productListState.selectedEntities,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(
+                        ClearCompanyGatewayMultiselect(context: context));
+                  },
+          ),
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(

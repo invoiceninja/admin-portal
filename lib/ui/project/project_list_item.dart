@@ -13,18 +13,20 @@ class ProjectListItem extends StatelessWidget {
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.project,
     @required this.filter,
     @required this.client,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
-  //final ValueChanged<bool> onCheckboxChanged;
   final ProjectEntity project;
   final ClientEntity client;
   final String filter;
@@ -36,6 +38,9 @@ class ProjectListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final projectUIState = uiState.projectUIState;
+    final listUIState = projectUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? project.matchesFilterValue(filter)
@@ -51,18 +56,22 @@ class ProjectListItem extends StatelessWidget {
       entity: project,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.projectItemCheckbox(project.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  //key: NinjaKeys.productItemCheckbox(task.id),
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(

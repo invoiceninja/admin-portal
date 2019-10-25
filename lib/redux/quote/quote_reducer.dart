@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -100,6 +101,11 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
+  TypedReducer<ListUIState, StartQuoteMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToQuoteMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterQuotesByCustom1(
@@ -160,6 +166,27 @@ ListUIState _sortQuotes(ListUIState quoteListState, SortQuotes action) {
   return quoteListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState quoteListState, StartQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState quoteListState, AddToQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedEntities.add(action.entity));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
+  return quoteListState
+      .rebuild((b) => b..selectedEntities.remove(action.entity));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState quoteListState, ClearQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedEntities = null);
 }
 
 final quotesReducer = combineReducers<QuoteState>([

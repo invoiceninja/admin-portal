@@ -28,6 +28,9 @@ class StubList extends StatelessWidget {
     final filteredClient =
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     */
+    final store = StoreProvider.of<AppState>(context);
+    final listUIState = store.state.uiState.stubUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return Column(
       children: <Widget>[
@@ -153,8 +156,17 @@ class StubList extends StatelessWidget {
                                          context, stub, action);
                                    }
                                  },
-                                 onLongPress: () =>
-                                    showDialog(),
+                                  onLongPress: () async {
+                                    final longPressIsSelection =
+                                        store.state.uiState.longPressSelectionIsDefault ?? true;
+                                    if (longPressIsSelection && !isInMultiselect) {
+                                      viewModel.onEntityAction(
+                                          context, [stub], EntityAction.toggleMultiselect);
+                                    } else {
+                                      showDialog();
+                                    }
+                                  },
+                                  isChecked: isInMultiselect && listUIState.isSelected(stub),
                                );
                           },
                         ),
