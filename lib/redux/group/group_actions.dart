@@ -281,7 +281,7 @@ void handleGroupAction(
       }
 
       for (final group in groups) {
-        if (!store.state.groupListState.isSelected(group)) {
+        if (!store.state.groupListState.isSelected(group.id)) {
           store
               .dispatch(AddToGroupMultiselect(context: context, entity: group));
         } else {

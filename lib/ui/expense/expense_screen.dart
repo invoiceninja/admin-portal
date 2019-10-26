@@ -36,12 +36,12 @@ class ExpenseScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.expenseList.length,
+          listUIState.selectedIds.length == viewModel.expenseList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final expenses = viewModel.expenseList
             .map<ExpenseEntity>((expenseId) => viewModel.expenseMap[expenseId])
-            .where((expense) => value != listUIState.isSelected(expense))
+            .where((expense) => value != listUIState.isSelected(expense.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -81,11 +81,16 @@ class ExpenseScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.expenseListState.selectedEntities.isEmpty
+            onPressed: state.expenseListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final expenses = viewModel.expenseList
+                        .map<ExpenseEntity>(
+                            (expenseId) => viewModel.expenseMap[expenseId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.expenseListState.selectedEntities,
+                        entities: expenses,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

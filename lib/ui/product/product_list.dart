@@ -72,7 +72,7 @@ class ProductList extends StatelessWidget {
                   showDialog();
                 }
               },
-              isChecked: isInMultiselect && listUIState.isSelected(product),
+              isChecked: isInMultiselect && listUIState.isSelected(product.id),
             );
           }),
     );

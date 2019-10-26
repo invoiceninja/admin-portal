@@ -284,7 +284,8 @@ void handleCompanyGatewayAction(BuildContext context,
       }
 
       for (final companyGateway in companyGateways) {
-        if (!store.state.companyGatewayListState.isSelected(companyGateway)) {
+        if (!store.state.companyGatewayListState
+            .isSelected(companyGateway.id)) {
           store.dispatch(AddToCompanyGatewayMultiselect(
               context: context, entity: companyGateway));
         } else {

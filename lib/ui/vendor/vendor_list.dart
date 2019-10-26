@@ -75,7 +75,7 @@ class VendorList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(vendor),
+                                  listUIState.isSelected(vendor.id),
                             );
                           },
                         ),

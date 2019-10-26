@@ -112,24 +112,24 @@ ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
 
 ListUIState _startListMultiselect(
     ListUIState productListState, StartProductMultiselect action) {
-  return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return productListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToProductMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromProductMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearProductMultiselect action) {
-  return productListState.rebuild((b) => b..selectedEntities = null);
+  return productListState.rebuild((b) => b..selectedIds = null);
 }
 
 final productsReducer = combineReducers<ProductState>([

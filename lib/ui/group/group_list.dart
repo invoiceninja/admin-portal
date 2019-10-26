@@ -81,7 +81,7 @@ class GroupList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(group),
+                                  listUIState.isSelected(group.id),
                             );
                           },
                         ),

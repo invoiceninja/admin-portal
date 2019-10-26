@@ -154,23 +154,23 @@ ListUIState _sortVendors(ListUIState vendorListState, SortVendors action) {
 
 ListUIState _startListMultiselect(
     ListUIState vendorListState, StartVendorMultiselect action) {
-  return vendorListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return vendorListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState vendorListState, AddToVendorMultiselect action) {
-  return vendorListState.rebuild((b) => b..selectedEntities.add(action.entity));
+  return vendorListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState vendorListState, RemoveFromVendorMultiselect action) {
   return vendorListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState vendorListState, ClearVendorMultiselect action) {
-  return vendorListState.rebuild((b) => b..selectedEntities = null);
+  return vendorListState.rebuild((b) => b..selectedIds = null);
 }
 
 final vendorsReducer = combineReducers<VendorState>([

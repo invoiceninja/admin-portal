@@ -83,7 +83,7 @@ class TaxRateList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(taxRate),
+                                  listUIState.isSelected(taxRate.id),
                             );
                           },
                         ),

@@ -113,24 +113,24 @@ ListUIState _sortTaxRates(ListUIState taxRateListState, SortTaxRates action) {
 
 ListUIState _startListMultiselect(
     ListUIState taxRateListState, StartTaxRateMultiselect action) {
-  return taxRateListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return taxRateListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState taxRateListState, AddToTaxRateMultiselect action) {
   return taxRateListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState taxRateListState, RemoveFromTaxRateMultiselect action) {
   return taxRateListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState taxRateListState, ClearTaxRateMultiselect action) {
-  return taxRateListState.rebuild((b) => b..selectedEntities = null);
+  return taxRateListState.rebuild((b) => b..selectedIds = null);
 }
 
 final taxRatesReducer = combineReducers<TaxRateState>([

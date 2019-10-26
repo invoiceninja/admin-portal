@@ -315,7 +315,7 @@ void handleVendorAction(
       }
 
       for (final vendor in vendors) {
-        if (!store.state.vendorListState.isSelected(vendor)) {
+        if (!store.state.vendorListState.isSelected(vendor.id)) {
           store.dispatch(
               AddToVendorMultiselect(context: context, entity: vendor));
         } else {

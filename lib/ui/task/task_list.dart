@@ -127,7 +127,7 @@ class TaskList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(task),
+                                  listUIState.isSelected(task.id),
                             );
                           },
                         ),

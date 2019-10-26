@@ -117,7 +117,7 @@ class InvoiceList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listState.isSelected(invoice),
+                                  listState.isSelected(invoice.id),
                             );
                           },
                         ),

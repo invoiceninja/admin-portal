@@ -34,12 +34,12 @@ class ProductScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.productList.length,
+          listUIState.selectedIds.length == viewModel.productList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final products = viewModel.productList
             .map<ProductEntity>((productId) => viewModel.productMap[productId])
-            .where((product) => value != listUIState.isSelected(product))
+            .where((product) => value != listUIState.isSelected(product.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -79,11 +79,16 @@ class ProductScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.productListState.selectedEntities.isEmpty
+            onPressed: state.productListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final products = viewModel.productList
+                        .map<ProductEntity>(
+                            (productId) => viewModel.productMap[productId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.productListState.selectedEntities,
+                        entities: products,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

@@ -83,7 +83,7 @@ class DocumentList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(document),
+                                  listUIState.isSelected(document.id),
                             );
                           },
                         ),

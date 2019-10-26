@@ -113,24 +113,24 @@ ListUIState _sortDocuments(
 
 ListUIState _startListMultiselect(
     ListUIState documentListState, StartDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return documentListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState documentListState, AddToDocumentMultiselect action) {
   return documentListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState documentListState, RemoveFromDocumentMultiselect action) {
   return documentListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState documentListState, ClearDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedEntities = null);
+  return documentListState.rebuild((b) => b..selectedIds = null);
 }
 
 final documentsReducer = combineReducers<DocumentState>([

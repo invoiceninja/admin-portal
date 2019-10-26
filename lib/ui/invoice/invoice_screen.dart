@@ -36,12 +36,12 @@ class InvoiceScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.invoiceList.length,
+          listUIState.selectedIds.length == viewModel.invoiceList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final invoices = viewModel.invoiceList
             .map<InvoiceEntity>((invoiceId) => viewModel.invoiceMap[invoiceId])
-            .where((invoice) => value != listUIState.isSelected(invoice))
+            .where((invoice) => value != listUIState.isSelected(invoice.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -81,11 +81,16 @@ class InvoiceScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.invoiceListState.selectedEntities.isEmpty
+            onPressed: state.invoiceListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final invoices = viewModel.invoiceList
+                        .map<InvoiceEntity>(
+                            (invoiceId) => viewModel.invoiceMap[invoiceId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.invoiceListState.selectedEntities,
+                        entities: invoices,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

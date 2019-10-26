@@ -396,7 +396,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       }
 
       for (final invoice in invoices) {
-        if (!store.state.invoiceListState.isSelected(invoice)) {
+        if (!store.state.invoiceListState.isSelected(invoice.id)) {
           store.dispatch(
               AddToInvoiceMultiselect(context: context, entity: invoice));
         } else {

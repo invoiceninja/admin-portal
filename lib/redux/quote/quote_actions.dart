@@ -419,7 +419,7 @@ Future handleQuoteAction(
       }
 
       for (final quote in quotes) {
-        if (!store.state.quoteListState.isSelected(quote)) {
+        if (!store.state.quoteListState.isSelected(quote.id)) {
           store
               .dispatch(AddToQuoteMultiselect(context: context, entity: quote));
         } else {

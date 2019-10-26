@@ -132,24 +132,24 @@ ListUIState _sortCompanyGateways(
 
 ListUIState _startListMultiselect(
     ListUIState productListState, StartCompanyGatewayMultiselect action) {
-  return productListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return productListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToCompanyGatewayMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromCompanyGatewayMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearCompanyGatewayMultiselect action) {
-  return productListState.rebuild((b) => b..selectedEntities = null);
+  return productListState.rebuild((b) => b..selectedIds = null);
 }
 
 final companyGatewaysReducer = combineReducers<CompanyGatewayState>([

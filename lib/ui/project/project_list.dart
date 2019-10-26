@@ -114,7 +114,7 @@ class ProjectList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listState.isSelected(project),
+                                  listState.isSelected(project.id),
                             );
                           },
                         ),

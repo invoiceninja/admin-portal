@@ -170,23 +170,23 @@ ListUIState _sortQuotes(ListUIState quoteListState, SortQuotes action) {
 
 ListUIState _startListMultiselect(
     ListUIState quoteListState, StartQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return quoteListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState quoteListState, AddToQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedEntities.add(action.entity));
+  return quoteListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
   return quoteListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState quoteListState, ClearQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedEntities = null);
+  return quoteListState.rebuild((b) => b..selectedIds = null);
 }
 
 final quotesReducer = combineReducers<QuoteState>([

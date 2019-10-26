@@ -123,24 +123,24 @@ ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
 
 ListUIState _startListMultiselect(
     ListUIState expenseListState, StartExpenseMultiselect action) {
-  return expenseListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return expenseListState.rebuild((b) => b..selectedIds = <String>[]);
 }
 
 ListUIState _addToListMultiselect(
     ListUIState expenseListState, AddToExpenseMultiselect action) {
   return expenseListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState expenseListState, RemoveFromExpenseMultiselect action) {
   return expenseListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState expenseListState, ClearExpenseMultiselect action) {
-  return expenseListState.rebuild((b) => b..selectedEntities = null);
+  return expenseListState.rebuild((b) => b..selectedIds = null);
 }
 
 final expensesReducer = combineReducers<ExpenseState>([

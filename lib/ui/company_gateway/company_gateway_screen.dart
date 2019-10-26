@@ -36,15 +36,14 @@ class CompanyGatewayScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length ==
-              viewModel.companyGatewayList.length,
+          listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final companyGateways = viewModel.companyGatewayList
             .map<CompanyGatewayEntity>((companyGatewayId) =>
                 viewModel.companyGatewayMap[companyGatewayId])
             .where((companyGateway) =>
-                value != listUIState.isSelected(companyGateway))
+                value != listUIState.isSelected(companyGateway.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -85,11 +84,16 @@ class CompanyGatewayScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.productListState.selectedEntities.isEmpty
+            onPressed: state.productListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final companyGateways = viewModel.companyGatewayList
+                        .map<CompanyGatewayEntity>((companyGatewayId) =>
+                            viewModel.companyGatewayMap[companyGatewayId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.productListState.selectedEntities,
+                        entities: companyGateways,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,
