@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -164,7 +165,7 @@ ListUIState _sortClients(ListUIState clientListState, SortClients action) {
 
 ListUIState _startListMultiselect(
     ListUIState clientListState, StartClientMultiselect action) {
-  return clientListState.rebuild((b) => b..selectedIds = <String>[]);
+  return clientListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

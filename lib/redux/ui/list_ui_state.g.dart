@@ -67,7 +67,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         ..add('selectedIds')
         ..add(serializers.serialize(object.selectedIds,
             specifiedType:
-                const FullType(List, const [const FullType(String)])));
+                const FullType(BuiltList, const [const FullType(String)])));
     }
     return result;
   }
@@ -132,10 +132,10 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
               as BuiltList<dynamic>);
           break;
         case 'selectedIds':
-          result.selectedIds = serializers.deserialize(value,
+          result.selectedIds.replace(serializers.deserialize(value,
                   specifiedType:
-                      const FullType(List, const [const FullType(String)]))
-              as List<String>;
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -166,7 +166,7 @@ class _$ListUIState extends ListUIState {
   @override
   final BuiltList<String> custom2Filters;
   @override
-  final List<String> selectedIds;
+  final BuiltList<String> selectedIds;
 
   factory _$ListUIState([void Function(ListUIStateBuilder) updates]) =>
       (new ListUIStateBuilder()..update(updates)).build();
@@ -328,9 +328,10 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   set custom2Filters(ListBuilder<String> custom2Filters) =>
       _$this._custom2Filters = custom2Filters;
 
-  List<String> _selectedIds;
-  List<String> get selectedIds => _$this._selectedIds;
-  set selectedIds(List<String> selectedIds) =>
+  ListBuilder<String> _selectedIds;
+  ListBuilder<String> get selectedIds =>
+      _$this._selectedIds ??= new ListBuilder<String>();
+  set selectedIds(ListBuilder<String> selectedIds) =>
       _$this._selectedIds = selectedIds;
 
   ListUIStateBuilder();
@@ -347,7 +348,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
       _statusFilters = _$v.statusFilters?.toBuilder();
       _custom1Filters = _$v.custom1Filters?.toBuilder();
       _custom2Filters = _$v.custom2Filters?.toBuilder();
-      _selectedIds = _$v.selectedIds;
+      _selectedIds = _$v.selectedIds?.toBuilder();
       _$v = null;
     }
     return this;
@@ -382,7 +383,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
               statusFilters: statusFilters.build(),
               custom1Filters: custom1Filters.build(),
               custom2Filters: custom2Filters.build(),
-              selectedIds: selectedIds);
+              selectedIds: _selectedIds?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -394,6 +395,8 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
         custom1Filters.build();
         _$failedField = 'custom2Filters';
         custom2Filters.build();
+        _$failedField = 'selectedIds';
+        _selectedIds?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ListUIState', _$failedField, e.toString());

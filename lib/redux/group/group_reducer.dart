@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -112,7 +113,7 @@ ListUIState _sortGroups(ListUIState groupListState, SortGroups action) {
 
 ListUIState _startListMultiselect(
     ListUIState groupListState, StartGroupMultiselect action) {
-  return groupListState.rebuild((b) => b..selectedIds = <String>[]);
+  return groupListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

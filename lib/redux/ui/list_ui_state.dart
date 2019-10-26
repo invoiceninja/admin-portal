@@ -59,7 +59,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;
 
   @nullable
-  List<String> get selectedIds;
+  BuiltList<String> get selectedIds;
 
   bool isInMultiselect() {
     return selectedIds != null;

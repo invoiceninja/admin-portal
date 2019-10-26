@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -123,7 +124,7 @@ ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
 
 ListUIState _startListMultiselect(
     ListUIState expenseListState, StartExpenseMultiselect action) {
-  return expenseListState.rebuild((b) => b..selectedIds = <String>[]);
+  return expenseListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

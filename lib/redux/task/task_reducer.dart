@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -142,7 +143,7 @@ TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
 
 ListUIState _startListMultiselect(
     ListUIState taskListState, StartTaskMultiselect action) {
-  return taskListState.rebuild((b) => b..selectedIds = <String>[]);
+  return taskListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -113,7 +114,7 @@ ListUIState _sortDocuments(
 
 ListUIState _startListMultiselect(
     ListUIState documentListState, StartDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedIds = <String>[]);
+  return documentListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

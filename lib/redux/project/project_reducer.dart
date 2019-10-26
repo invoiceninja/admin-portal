@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -128,7 +129,7 @@ ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {
 
 ListUIState _startListMultiselect(
     ListUIState projectListState, StartProjectMultiselect action) {
-  return projectListState.rebuild((b) => b..selectedIds = <String>[]);
+  return projectListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(

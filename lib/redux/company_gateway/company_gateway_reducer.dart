@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -132,7 +133,7 @@ ListUIState _sortCompanyGateways(
 
 ListUIState _startListMultiselect(
     ListUIState productListState, StartCompanyGatewayMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = <String>[]);
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
