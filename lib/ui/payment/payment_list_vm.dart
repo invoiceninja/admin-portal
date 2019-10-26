@@ -46,7 +46,7 @@ class PaymentListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
-    @required this.onViewClientFilterPressed,
+    @required this.onViewEntityFilterPressed,
     @required this.listState,
   });
 
@@ -85,7 +85,7 @@ class PaymentListVM {
           handlePaymentAction(context, payments, action),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
-      onViewClientFilterPressed: (BuildContext context) {
+      onViewEntityFilterPressed: (BuildContext context) {
         switch (state.paymentListState.filterEntityType) {
           case EntityType.client:
             store.dispatch(ViewClient(
@@ -114,7 +114,7 @@ class PaymentListVM {
   final Function(BuildContext, PaymentEntity) onPaymentTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewClientFilterPressed;
+  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(BuildContext, List<PaymentEntity>, EntityAction)
       onEntityAction;
 }
