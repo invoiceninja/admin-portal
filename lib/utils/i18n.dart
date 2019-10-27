@@ -24,6 +24,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recurring_prefix': 'Recurring Prefix',
       'number_padding': 'Number Padding',
       'general': 'General',
+      'surcharge_field': 'Surcharge Field',
       'company_field': 'Company Field',
       'company_value': 'Company Value',
       'credit_field': 'Credit Field',
@@ -15209,6 +15210,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get generatedNumbers => _localizedValues[localeCode]['generated_numbers'];
 
   String get company => _localizedValues[localeCode]['company'];
+
+  String get surchargeField => _localizedValues[localeCode]['surcharge_field'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
