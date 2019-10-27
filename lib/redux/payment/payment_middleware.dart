@@ -111,18 +111,20 @@ Middleware<AppState> _viewPaymentList() {
 Middleware<AppState> _archivePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchivePaymentRequest;
-    final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(store.state.credentials, origPayment,
-            action: EntityAction.archive)
-        .then((PaymentEntity payment) {
-      store.dispatch(ArchivePaymentSuccess(payment));
+        .bulkAction(
+            store.state.credentials, action.paymentIds, EntityAction.archive)
+        .then((List<PaymentEntity> payments) {
+      store.dispatch(ArchivePaymentSuccess(payments));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchivePaymentFailure(origPayment));
+      final payments = action.paymentIds
+          .map((id) => store.state.paymentState.map[id])
+          .toList();
+      store.dispatch(ArchivePaymentFailure(payments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -135,19 +137,21 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
 Middleware<AppState> _deletePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeletePaymentRequest;
-    final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(store.state.credentials, origPayment,
-            action: EntityAction.delete)
-        .then((PaymentEntity payment) {
-      store.dispatch(DeletePaymentSuccess(payment));
-      store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
+        .bulkAction(
+            store.state.credentials, action.paymentIds, EntityAction.delete)
+        .then((List<PaymentEntity> payments) {
+      store.dispatch(DeletePaymentSuccess(payments));
+      store.dispatch(LoadInvoice(invoiceId: payments.first.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeletePaymentFailure(origPayment));
+      final payments = action.paymentIds
+          .map((id) => store.state.paymentState.map[id])
+          .toList();
+      store.dispatch(DeletePaymentFailure(payments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -160,19 +164,21 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
 Middleware<AppState> _restorePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestorePaymentRequest;
-    final origPayment = store.state.paymentState.map[action.paymentId];
     repository
-        .saveData(store.state.credentials, origPayment,
-            action: EntityAction.restore)
-        .then((PaymentEntity payment) {
-      store.dispatch(RestorePaymentSuccess(payment));
-      store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
+        .bulkAction(
+            store.state.credentials, action.paymentIds, EntityAction.restore)
+        .then((List<PaymentEntity> payments) {
+      store.dispatch(RestorePaymentSuccess(payments));
+      store.dispatch(LoadInvoice(invoiceId: payments.first.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestorePaymentFailure(origPayment));
+      final payments = action.paymentIds
+          .map((id) => store.state.paymentState.map[id])
+          .toList();
+      store.dispatch(RestorePaymentFailure(payments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
