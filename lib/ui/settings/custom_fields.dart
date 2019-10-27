@@ -32,7 +32,7 @@ class _CustomFieldsState extends State<CustomFields>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -65,9 +65,6 @@ class _CustomFieldsState extends State<CustomFields>
           ),
           Tab(
             text: localization.invoices,
-          ),
-          Tab(
-            text: localization.credits,
           ),
           Tab(
             text: localization.payments,
@@ -191,10 +188,12 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    final fieldType = widget.fieldType;
+    final customFields = widget.viewModel.company.customFields;
+    _customField1Controller.text = customFields['${fieldType}1'];
+    _customField2Controller.text = customFields['${fieldType}2'];
+    _customField3Controller.text = customFields['${fieldType}3'];
+    _customField4Controller.text = customFields['${fieldType}4'];
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -203,13 +202,22 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
   }
 
   void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+    final viewModel = widget.viewModel;
+    final fieldType = widget.fieldType;
+    final company = widget.viewModel.company;
+    final origFields = company.customFields;
+
+    final updatedFields = origFields.rebuild((b) => b
+      ..addAll({'${fieldType}1': _customField1Controller.text.trim()})
+      ..addAll({'${fieldType}2': _customField2Controller.text.trim()})
+      ..addAll({'${fieldType}3': _customField3Controller.text.trim()})
+      ..addAll({'${fieldType}4': _customField4Controller.text.trim()}));
+
+    if (viewModel.company.customFields != updatedFields) {
+      viewModel.onCompanyChanged(company.rebuild((b) => b
+        ..customFields.replace(updatedFields)
+      ));
     }
-    */
   }
 
   @override
