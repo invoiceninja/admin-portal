@@ -129,7 +129,6 @@ abstract class CompanyEntity extends Object
   @nullable
   BuiltMap<String, UserEntity> get userMap;
 
-  // TODO remove this
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 

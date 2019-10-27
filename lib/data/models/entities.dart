@@ -255,51 +255,74 @@ abstract class DashboardResponse
 }
 
 class CustomFieldType {
+
+  static const String company = 'company';
+  static const String company1 = 'company1';
+  static const String company2 = 'company2';
+  static const String company3 = 'company3';
+  static const String company4 = 'company4';
+
+  static const String product = 'product';
   static const String product1 = 'product1';
   static const String product2 = 'product2';
   static const String product3 = 'product3';
   static const String product4 = 'product4';
 
+  static const String client = 'client';
   static const String client1 = 'client1';
   static const String client2 = 'client2';
   static const String client3 = 'client3';
   static const String client4 = 'client4';
 
+  static const String contact = 'contact';
   static const String contact1 = 'contact1';
   static const String contact2 = 'contact2';
   static const String contact3 = 'contact3';
   static const String contact4 = 'contact4';
 
+  static const String task = 'task';
   static const String task1 = 'task1';
   static const String task2 = 'task2';
   static const String task3 = 'task3';
   static const String task4 = 'task4';
 
+  static const String project = 'project';
   static const String project1 = 'project1';
   static const String project2 = 'project2';
   static const String project3 = 'project3';
   static const String project4 = 'project4';
 
+  static const String expense = 'expense';
   static const String expense1 = 'expense1';
   static const String expense2 = 'expense2';
   static const String expense3 = 'expense3';
   static const String expense4 = 'expense4';
 
+  static const String vendor = 'vendor';
   static const String vendor1 = 'vendor1';
   static const String vendor2 = 'vendor2';
   static const String vendor3 = 'vendor3';
   static const String vendor4 = 'vendor4';
 
+  static const String invoice = 'invoice';
   static const String invoice1 = 'invoice1';
   static const String invoice2 = 'invoice2';
   static const String invoice3 = 'invoice3';
   static const String invoice4 = 'invoice4';
 
+  static const String payment = 'payment';
+  static const String payment1 = 'payment1';
+  static const String payment2 = 'payment2';
+  static const String payment3 = 'payment3';
+  static const String payment4 = 'payment4';
+
+  static const String surcharge = 'surcharge';
   static const String surcharge1 = 'surcharge1';
   static const String surcharge2 = 'surcharge2';
   static const String surcharge3 = 'surcharge3';
   static const String surcharge4 = 'surcharge4';
 
+  static const String group = 'group';
   static const String group1 = 'group1';
   static const String group2 = 'group2';
   static const String group3 = 'group3';

@@ -15198,13 +15198,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get credits => _localizedValues[localeCode]['credits'];
 
-  String get customInvoiceSurcharge => _localizedValues[localeCode]['invoice_surcharge'];
+  String get customSurcharge => _localizedValues[localeCode]['invoice_surcharge'];
 
   String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
 
-  String get customCompanyField => _localizedValues[localeCode]['company_field'];
+  String get companyField => _localizedValues[localeCode]['company_field'];
 
-  String get customCompanyValue => _localizedValues[localeCode]['company_value'];
+  String get companyValue => _localizedValues[localeCode]['company_value'];
 
   String get generatedNumbers => _localizedValues[localeCode]['generated_numbers'];
 

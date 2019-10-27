@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -27,12 +28,6 @@ class _CustomFieldsState extends State<CustomFields>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  bool autoValidate = false;
-
-  final _recurringPrefixController = TextEditingController();
-
-  List<TextEditingController> _controllers = [];
-
   @override
   void initState() {
     super.initState();
@@ -44,38 +39,7 @@ class _CustomFieldsState extends State<CustomFields>
   void dispose() {
     _focusNode.dispose();
     _controller.dispose();
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _controllers = [
-      _recurringPrefixController,
-    ];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    final settings = widget.viewModel.settings;
-    _recurringPrefixController.text = settings.recurringInvoiceNumberPrefix;
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
-  void _onChanged() {
-    final settings = widget.viewModel.settings.rebuild((b) => b
-      ..recurringInvoiceNumberPrefix = _recurringPrefixController.text.trim());
-
-    if (settings != widget.viewModel.settings) {
-      widget.viewModel.onSettingsChanged(settings);
-    }
   }
 
   @override
@@ -119,8 +83,8 @@ class _CustomFieldsState extends State<CustomFields>
             children: <Widget>[
               CustomFieldsSettings(
                 viewModel: viewModel,
-                fieldLabel: localization.customCompanyField,
-                valueLabel: localization.customCompanyValue,
+                fieldType: CustomFieldType.company,
+                valueLabel: localization.companyValue,
                 showValues: true,
                 field1Value: settings.customValue1,
                 field2Value: settings.customValue2,
@@ -132,34 +96,28 @@ class _CustomFieldsState extends State<CustomFields>
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.clientField,
+              fieldType: CustomFieldType.client,
             ),
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.contactField,
+              fieldType: CustomFieldType.contact,
             ),
           ]),
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.invoiceField,
+              fieldType: CustomFieldType.invoice,
             ),
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customInvoiceSurcharge,
+              fieldType: CustomFieldType.surcharge,
               showChargeTaxes: true,
             ),
           ]),
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.creditField,
-            ),
-          ]),
-          ListView(children: <Widget>[
-            CustomFieldsSettings(
-              viewModel: viewModel,
-              fieldLabel: localization.paymentField,
+              fieldType: CustomFieldType.payment,
             ),
           ]),
         ],
@@ -170,7 +128,7 @@ class _CustomFieldsState extends State<CustomFields>
 
 class CustomFieldsSettings extends StatefulWidget {
   const CustomFieldsSettings({
-    @required this.fieldLabel,
+    @required this.fieldType,
     @required this.viewModel,
     this.showChargeTaxes = false,
     this.showValues = false,
@@ -182,11 +140,10 @@ class CustomFieldsSettings extends StatefulWidget {
   });
 
   final CustomFieldsVM viewModel;
-  final String fieldLabel;
   final String valueLabel;
   final bool showChargeTaxes;
   final bool showValues;
-
+  final String fieldType;
   final String field1Value;
   final String field2Value;
   final String field3Value;
@@ -257,6 +214,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
@@ -266,7 +224,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
           children: <Widget>[
             Expanded(
               child: CustomFormField(
-                label: widget.fieldLabel,
+                label: localization.lookup('${widget.fieldType}_field'),
                 controller: _customField1Controller,
                 showTaxes: widget.showChargeTaxes,
                 taxesEnabled: company.enableCustomSurchargeTaxes1,
@@ -289,7 +247,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
           children: <Widget>[
             Expanded(
               child: CustomFormField(
-                label: widget.fieldLabel,
+                label: localization.lookup('${widget.fieldType}_field'),
                 controller: _customField2Controller,
                 showTaxes: widget.showChargeTaxes,
                 taxesEnabled: company.enableCustomSurchargeTaxes2,
@@ -312,7 +270,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
           children: <Widget>[
             Expanded(
               child: CustomFormField(
-                label: widget.fieldLabel,
+                label: localization.lookup('${widget.fieldType}_field'),
                 controller: _customField3Controller,
                 showTaxes: widget.showChargeTaxes,
                 taxesEnabled: company.enableCustomSurchargeTaxes3,
@@ -335,7 +293,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
           children: <Widget>[
             Expanded(
               child: CustomFormField(
-                label: widget.fieldLabel,
+                label: localization.lookup('${widget.fieldType}_field'),
                 controller: _customField4Controller,
                 showTaxes: widget.showChargeTaxes,
                 taxesEnabled: company.enableCustomSurchargeTaxes4,
