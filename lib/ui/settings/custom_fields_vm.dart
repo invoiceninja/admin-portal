@@ -7,22 +7,22 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/ui/settings/system_settings.dart';
+import 'package:invoiceninja_flutter/ui/settings/custom_fields.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class SystemSettingsScreen extends StatelessWidget {
-  const SystemSettingsScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingSystemSettings';
+class CustomFieldsScreen extends StatelessWidget {
+  const CustomFieldsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingCustomFields';
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, SystemSettingsVM>(
-      converter: SystemSettingsVM.fromStore,
+    return StoreConnector<AppState, CustomFieldsVM>(
+      converter: CustomFieldsVM.fromStore,
       builder: (context, viewModel) {
-        return SystemSettings(
+        return CustomFields(
           viewModel: viewModel,
           key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         );
@@ -31,8 +31,8 @@ class SystemSettingsScreen extends StatelessWidget {
   }
 }
 
-class SystemSettingsVM {
-  SystemSettingsVM({
+class CustomFieldsVM {
+  CustomFieldsVM({
     @required this.state,
     @required this.onSavePressed,
     @required this.onCancelPressed,
@@ -42,10 +42,10 @@ class SystemSettingsVM {
     @required this.onCompanyChanged,
   });
 
-  static SystemSettingsVM fromStore(Store<AppState> store) {
+  static CustomFieldsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return SystemSettingsVM(
+    return CustomFieldsVM(
         state: state,
         company: state.uiState.settingsUIState.userCompany.company,
         settings: state.uiState.settingsUIState.settings,

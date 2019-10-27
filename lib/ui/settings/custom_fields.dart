@@ -6,23 +6,23 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/settings/system_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class SystemSettings extends StatefulWidget {
-  const SystemSettings({
+class CustomFields extends StatefulWidget {
+  const CustomFields({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
-  final SystemSettingsVM viewModel;
+  final CustomFieldsVM viewModel;
 
   @override
-  _SystemSettingsState createState() => _SystemSettingsState();
+  _CustomFieldsState createState() => _CustomFieldsState();
 }
 
-class _SystemSettingsState extends State<SystemSettings>
+class _CustomFieldsState extends State<CustomFields>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -88,7 +88,7 @@ class _SystemSettingsState extends State<SystemSettings>
     final state = viewModel.state;
 
     return SettingsScaffold(
-      title: localization.systemSettings,
+      title: localization.customFields,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
@@ -306,7 +306,7 @@ class CustomFieldsSettings extends StatefulWidget {
       this.showValues = false,
       this.valueLabel});
 
-  final SystemSettingsVM viewModel;
+  final CustomFieldsVM viewModel;
   final String fieldLabel;
   final String valueLabel;
   final bool showChargeTaxes;

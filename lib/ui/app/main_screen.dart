@@ -30,7 +30,7 @@ import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/system_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
@@ -211,8 +211,8 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsGroupSettingsEdit:
         screen = GroupEditScreen();
         break;
-      case kSettingSystemSettings:
-        screen = SystemSettingsScreen();
+      case kSettingCustomFields:
+        screen = CustomFieldsScreen();
         break;
       case kSettingsInvoiceDesign:
         screen = InvoiceDesignScreen();

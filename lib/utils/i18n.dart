@@ -195,7 +195,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_rates': 'Tax Rates',
       'notifications': 'Notifications',
       'import_export': 'Import | Export',
-      'system_settings': 'System Settings',
+      'custom_fields': 'Custom Fields',
       'invoice_design': 'Invoice Design',
       'buy_now_buttons': 'Buy Now Buttons',
       'email_settings': 'Email Settings',
@@ -14819,7 +14819,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get importExport => _localizedValues[localeCode]['import_export'];
 
-  String get systemSettings => _localizedValues[localeCode]['system_settings'];
+  String get customFields => _localizedValues[localeCode]['custom_fields'];
 
   String get invoiceDesign => _localizedValues[localeCode]['invoice_design'];
 

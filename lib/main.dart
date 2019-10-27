@@ -52,7 +52,7 @@ import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/system_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
@@ -366,7 +366,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
-            SystemSettingsScreen.route: (context) => SystemSettingsScreen(),
+            CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
             InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
             ClientPortalScreen.route: (context) => ClientPortalScreen(),
             BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
