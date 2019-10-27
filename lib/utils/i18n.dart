@@ -15,7 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'recurring_prefix': 'Recurring Prefix',
-      'padding': 'Padding',
+      'number_padding': 'Number Padding',
       'general': 'General',
       'invoice_field': 'Invoice Field',
       'client_field': 'Client Field',
@@ -15176,7 +15176,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get general => _localizedValues[localeCode]['general'];
 
-  String get padding => _localizedValues[localeCode]['padding'];
+  String get numberPadding => _localizedValues[localeCode]['number_padding'];
 
   String get recurringPrefix => _localizedValues[localeCode]['recurring_prefix'];
 

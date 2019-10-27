@@ -59,11 +59,8 @@ class _SystemSettingsState extends State<SystemSettings>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    //_recurringPrefixController.text = widget.viewModel.settings.
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    final settings = widget.viewModel.settings;
+    _recurringPrefixController.text = settings.recurringInvoiceNumberPrefix;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -72,20 +69,21 @@ class _SystemSettingsState extends State<SystemSettings>
   }
 
   void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+
+    final settings = widget.viewModel.settings.rebuild((b) => b
+      ..recurringInvoiceNumberPrefix = _recurringPrefixController.text.trim()
+    );
+
+    if (settings != widget.viewModel.settings) {
+      widget.viewModel.onSettingsChanged(settings);
     }
-    */
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    //final settings = viewModel.settings;
+    final settings = viewModel.settings;
     final state = viewModel.state;
 
     return SettingsScaffold(
@@ -117,22 +115,18 @@ class _SystemSettingsState extends State<SystemSettings>
                 children: <Widget>[
                   InputDecorator(
                     decoration: InputDecoration(
-                      labelText: localization.padding,
+                      labelText: localization.numberPadding,
                     ),
-                    //isEmpty: false,
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<int>(
-                        //value:
+                        value: settings.counterPadding,
                         isExpanded: true,
                         isDense: true,
-                        /*
-                          onChanged: (value) => viewModel.onSettingsChanged(
-                              settings
-                                  .rebuild((b) => b..portalMode = value)),
-                           */
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..counterPadding = value)),
                         items: List<int>.generate(10, (i) => i + 1)
                             .map((value) => DropdownMenuItem(
-                                  child: Text('${'0' * value}1'),
+                                  child: Text('${'0' * (value-1)}1'),
                                   value: value,
                                 ))
                             .toList(),
