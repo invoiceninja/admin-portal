@@ -358,43 +358,83 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
     final company = viewModel.company;
 
     return FormCard(
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: DecoratedFormField(
-                label: widget.fieldLabel,
-                controller: _customField1Controller,
-              ),
-            ),
-            if (widget.showChargeTaxes) ...[
-              Checkbox(
-                value: company.enableCustomSurchargeTaxes1,
-                onChanged: (value) => viewModel.onCompanyChanged(company
-                    .rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
-              ),
-              Text(localization.chargeTaxes),
-            ]
-          ],
+        CustomFormField(
+          label: widget.fieldLabel,
+          controller: _customField1Controller,
+          showTaxes: widget.showChargeTaxes,
+          taxesEnabled: company.enableCustomSurchargeTaxes1,
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
         ),
-        DecoratedFormField(
+        CustomFormField(
           label: widget.fieldLabel,
           controller: _customField2Controller,
+          showTaxes: widget.showChargeTaxes,
+          taxesEnabled: company.enableCustomSurchargeTaxes2,
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
         ),
-        DecoratedFormField(
+        CustomFormField(
           label: widget.fieldLabel,
-          controller: _customField2Controller,
+          controller: _customField3Controller,
+          showTaxes: widget.showChargeTaxes,
+          taxesEnabled: company.enableCustomSurchargeTaxes3,
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
         ),
-        DecoratedFormField(
+        CustomFormField(
           label: widget.fieldLabel,
-          controller: _customField2Controller,
+          controller: _customField4Controller,
+          showTaxes: widget.showChargeTaxes,
+          taxesEnabled: company.enableCustomSurchargeTaxes4,
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes4 = value)),
         ),
+      ],
+    );
+  }
+}
+
+class CustomFormField extends StatelessWidget {
+  const CustomFormField({
+    @required this.label,
+    @required this.controller,
+    this.showTaxes = false,
+    this.taxesEnabled,
+    this.onTaxesChanged,
+  });
+
+  final String label;
+  final TextEditingController controller;
+  final bool showTaxes;
+  final bool taxesEnabled;
+  final Function(bool) onTaxesChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: DecoratedFormField(
+            label: label,
+            controller: controller,
+          ),
+        ),
+        if (showTaxes) ...[
+          Checkbox(
+            activeColor: Theme.of(context).accentColor,
+            value: taxesEnabled,
+            onChanged: onTaxesChanged,
+          ),
+          Text(localization.chargeTaxes),
+        ]
       ],
     );
   }
