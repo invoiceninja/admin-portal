@@ -24,20 +24,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recurring_prefix': 'Recurring Prefix',
       'number_padding': 'Number Padding',
       'general': 'General',
-      'custom_company_field': 'Custom Company Field',
-      'custom_company_value': 'Custom Company Value',
-      'custom_credit_field': 'Custom Credit Field',
-      'custom_invoice_field': 'Custom Invoice Field',
-      'custom_invoice_surcharge': 'Custom Invoice Surcharge',
-      'custom_client_field': 'Custom Client Field',
-      'custom_product_field': 'Custom Product Field',
-      'custom_payment_field': 'Custom Payment Field',
-      'custom_contact_field': 'Custom Contact Field',
-      'custom_vendor_field': 'Custom Vendor Field',
-      'custom_expense_field': 'Custom Expense Field',
-      'custom_project_field': 'Custom Project Field',
-      'custom_task_field': 'Custom Task Field',
-      'custom_group_field': 'Custom Group Field',
+      'company_field': 'Company Field',
+      'company_value': 'Company Value',
+      'credit_field': 'Credit Field',
+      'invoice_field': 'Invoice Field',
+      'invoice_surcharge': 'Invoice Surcharge',
+      'client_field': 'Client Field',
+      'product_field': 'Product Field',
+      'payment_field': 'Payment Field',
+      'contact_field': 'Contact Field',
+      'vendor_field': 'Vendor Field',
+      'expense_field': 'Expense Field',
+      'project_field': 'Project Field',
+      'task_field': 'Task Field',
+      'group_field': 'Group Field',
       'number_counter': 'Number Counter',
       'prefix': 'Prefix',
       'number_pattern': 'Number Pattern',
@@ -15162,27 +15162,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get numberCounter => _localizedValues[localeCode]['number_counter'];
 
-  String get customCreditField => _localizedValues[localeCode]['custom_credit_field'];
+  String get creditField => _localizedValues[localeCode]['credit_field'];
 
-  String get customInvoiceField => _localizedValues[localeCode]['custom_invoice_field'];
+  String get invoiceField => _localizedValues[localeCode]['invoice_field'];
 
-  String get customClientField => _localizedValues[localeCode]['custom_client_field'];
+  String get clientField => _localizedValues[localeCode]['client_field'];
 
-  String get customProductField => _localizedValues[localeCode]['custom_product_field'];
+  String get productField => _localizedValues[localeCode]['product_field'];
 
-  String get customPaymentField => _localizedValues[localeCode]['custom_payment_field'];
+  String get paymentField => _localizedValues[localeCode]['payment_field'];
 
-  String get customContactField => _localizedValues[localeCode]['custom_contact_field'];
+  String get contactField => _localizedValues[localeCode]['contact_field'];
 
-  String get customVendorField => _localizedValues[localeCode]['custom_vendor_field'];
+  String get vendorField => _localizedValues[localeCode]['vendor_field'];
 
-  String get customExpenseField => _localizedValues[localeCode]['custom_expense_field'];
+  String get expenseField => _localizedValues[localeCode]['expense_field'];
 
-  String get customProjectField => _localizedValues[localeCode]['custom_project_field'];
+  String get projectField => _localizedValues[localeCode]['project_field'];
 
-  String get customTaskField => _localizedValues[localeCode]['custom_task_field'];
+  String get taskField => _localizedValues[localeCode]['task_field'];
 
-  String get customGroupField => _localizedValues[localeCode]['custom_group_field'];
+  String get groupField => _localizedValues[localeCode]['group_field'];
 
   String get general => _localizedValues[localeCode]['general'];
 
@@ -15198,13 +15198,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get credits => _localizedValues[localeCode]['credits'];
 
-  String get customInvoiceSurcharge => _localizedValues[localeCode]['custom_invoice_surcharge'];
+  String get customInvoiceSurcharge => _localizedValues[localeCode]['invoice_surcharge'];
 
   String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
 
-  String get customCompanyField => _localizedValues[localeCode]['custom_company_field'];
+  String get customCompanyField => _localizedValues[localeCode]['company_field'];
 
-  String get customCompanyValue => _localizedValues[localeCode]['custom_company_value'];
+  String get customCompanyValue => _localizedValues[localeCode]['company_value'];
 
   String get generatedNumbers => _localizedValues[localeCode]['generated_numbers'];
 

@@ -127,17 +127,17 @@ class _CustomFieldsState extends State<CustomFields>
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customClientField,
+              fieldLabel: localization.clientField,
             ),
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customContactField,
+              fieldLabel: localization.contactField,
             ),
           ]),
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customInvoiceField,
+              fieldLabel: localization.invoiceField,
             ),
             CustomFieldsSettings(
               viewModel: viewModel,
@@ -148,13 +148,13 @@ class _CustomFieldsState extends State<CustomFields>
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customCreditField,
+              fieldLabel: localization.creditField,
             ),
           ]),
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
-              fieldLabel: localization.customPaymentField,
+              fieldLabel: localization.paymentField,
             ),
           ]),
         ],

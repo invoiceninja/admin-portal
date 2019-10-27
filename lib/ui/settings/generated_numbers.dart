@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GeneratedNumbers extends StatefulWidget {
@@ -179,16 +180,44 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             ],
           ),
           ListView(children: <Widget>[
-            EntityNumberSettings(),
+            EntityNumberSettings(
+              counterValue: settings.clientNumberCounter,
+              patternValue: settings.clientNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..clientNumberCounter = counter
+                    ..clientNumberPattern = pattern)),
+            ),
           ]),
           ListView(children: <Widget>[
-            EntityNumberSettings(),
+            EntityNumberSettings(
+              counterValue: settings.invoiceNumberCounter,
+              patternValue: settings.invoiceNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..invoiceNumberCounter = counter
+                    ..invoiceNumberPattern = pattern)),
+            ),
           ]),
           ListView(children: <Widget>[
-            EntityNumberSettings(),
+            EntityNumberSettings(
+              counterValue: settings.quoteNumberCounter,
+              patternValue: settings.quoteNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..quoteNumberCounter = counter
+                    ..quoteNumberPattern = pattern)),
+            ),
           ]),
           ListView(children: <Widget>[
-            EntityNumberSettings(),
+            EntityNumberSettings(
+              counterValue: settings.paymentNumberCounter,
+              patternValue: settings.paymentNumberPattern,
+              onChanged: (counter, pattern) =>
+                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    ..paymentNumberCounter = counter
+                    ..paymentNumberPattern = pattern)),
+            ),
           ]),
         ],
       ),
@@ -197,6 +226,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 }
 
 class EntityNumberSettings extends StatefulWidget {
+  const EntityNumberSettings({
+    @required this.counterValue,
+    @required this.patternValue,
+    @required this.onChanged,
+  });
+
+  final int counterValue;
+  final String patternValue;
+  final Function(int, String) onChanged;
+
   @override
   _EntityNumberSettingsState createState() => _EntityNumberSettingsState();
 }
@@ -226,10 +265,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    _counterController.text = '${widget.counterValue}';
+    _patternController.text = widget.patternValue;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -238,13 +275,13 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   }
 
   void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+
+    final int counter = parseDouble(_counterController.text.trim()).toInt();
+    final String pattern = _patternController.text.trim();
+
+    if (counter != widget.counterValue || pattern != widget.patternValue) {
+      widget.onChanged(counter, pattern);
     }
-    */
   }
 
   @override
@@ -265,4 +302,3 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
     );
   }
 }
-
