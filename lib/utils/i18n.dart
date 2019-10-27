@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge Taxes',
       'credit': 'Credit',
@@ -15206,6 +15207,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get customCompanyValue => _localizedValues[localeCode]['custom_company_value'];
 
   String get generatedNumbers => _localizedValues[localeCode]['generated_numbers'];
+
+  String get company => _localizedValues[localeCode]['company'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
