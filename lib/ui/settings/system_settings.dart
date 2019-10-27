@@ -430,10 +430,13 @@ class CustomFormField extends StatelessWidget {
         if (showTaxes) ...[
           Checkbox(
             activeColor: Theme.of(context).accentColor,
-            value: taxesEnabled,
+            value: taxesEnabled ?? false,
             onChanged: onTaxesChanged,
           ),
-          Text(localization.chargeTaxes),
+          GestureDetector(
+            child: Text(localization.chargeTaxes),
+            onTap: () => onTaxesChanged(!taxesEnabled),
+          ),
         ]
       ],
     );
