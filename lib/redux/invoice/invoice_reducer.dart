@@ -28,10 +28,10 @@ InvoiceItemEntity editInvoiceItem(
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([
-  TypedReducer<String, FilterInvoiceDropdown>(filterClientDropdownReducer),
+  TypedReducer<String, FilterInvoiceDropdown>(filterInvoiceDropdownReducer),
 ]);
 
-String filterClientDropdownReducer(
+String filterInvoiceDropdownReducer(
     String dropdownFilter, FilterInvoiceDropdown action) {
   return action.filter;
 }
@@ -64,7 +64,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity invoice, dynamic action) {
   return InvoiceEntity();
 }
 
@@ -189,8 +189,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState invoiceListState, AddToInvoiceMultiselect action) {
-  return invoiceListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return invoiceListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
@@ -230,75 +229,104 @@ InvoiceState _markSentInvoiceSuccess(
 
 InvoiceState _archiveInvoiceRequest(
     InvoiceState invoiceState, ArchiveInvoiceRequest action) {
-  final invoice = invoiceState.map[action.invoiceId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
 
-  return invoiceState.rebuild((b) => b..map[action.invoiceId] = invoice);
+  for (int i = 0; i < invoices.length; i++) {
+    invoices[i] = invoices[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+
+  return invoiceState.rebuild((b) {
+    for (final invoice in invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _archiveInvoiceSuccess(
     InvoiceState invoiceState, ArchiveInvoiceSuccess action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _archiveInvoiceFailure(
     InvoiceState invoiceState, ArchiveInvoiceFailure action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _deleteInvoiceRequest(
     InvoiceState invoiceState, DeleteInvoiceRequest action) {
-  if (!invoiceState.map.containsKey(action.invoiceId)) {
-    return invoiceState;
+  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
+
+  for (int i = 0; i < invoices.length; i++) {
+    invoices[i] = invoices[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
   }
-
-  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
-
-  return invoiceState.rebuild((b) => b..map[action.invoiceId] = invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _deleteInvoiceSuccess(
     InvoiceState invoiceState, DeleteInvoiceSuccess action) {
-  if (!invoiceState.map.containsKey(action.invoice.id)) {
-    return invoiceState;
-  }
-
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _deleteInvoiceFailure(
     InvoiceState invoiceState, DeleteInvoiceFailure action) {
-  if (!invoiceState.map.containsKey(action.invoice.id)) {
-    return invoiceState;
-  }
-
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _restoreInvoiceRequest(
     InvoiceState invoiceState, RestoreInvoiceRequest action) {
-  final invoice = invoiceState.map[action.invoiceId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return invoiceState.rebuild((b) => b..map[action.invoiceId] = invoice);
+  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
+
+  for (int i = 0; i < invoices.length; i++) {
+    invoices[i] = invoices[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return invoiceState.rebuild((b) {
+    for (final invoice in invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _restoreInvoiceSuccess(
     InvoiceState invoiceState, RestoreInvoiceSuccess action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _restoreInvoiceFailure(
     InvoiceState invoiceState, RestoreInvoiceFailure action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  return invoiceState.rebuild((b) {
+    for (final invoice in action.invoices) {
+      b.map[invoice.id] = invoice;
+    }
+  });
 }
 
 InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
