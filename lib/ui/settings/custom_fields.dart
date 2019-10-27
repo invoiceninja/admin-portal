@@ -83,6 +83,7 @@ class _CustomFieldsState extends State<CustomFields>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.customFields,
@@ -121,6 +122,10 @@ class _CustomFieldsState extends State<CustomFields>
                 fieldLabel: localization.customCompanyField,
                 valueLabel: localization.customCompanyValue,
                 showValues: true,
+                field1Value: settings.customValue1,
+                field2Value: settings.customValue2,
+                field3Value: settings.customValue3,
+                field4Value: settings.customValue4,
               ),
             ],
           ),
@@ -164,18 +169,28 @@ class _CustomFieldsState extends State<CustomFields>
 }
 
 class CustomFieldsSettings extends StatefulWidget {
-  const CustomFieldsSettings(
-      {@required this.fieldLabel,
-      @required this.viewModel,
-      this.showChargeTaxes = false,
-      this.showValues = false,
-      this.valueLabel});
+  const CustomFieldsSettings({
+    @required this.fieldLabel,
+    @required this.viewModel,
+    this.showChargeTaxes = false,
+    this.showValues = false,
+    this.valueLabel,
+    this.field1Value,
+    this.field2Value,
+    this.field3Value,
+    this.field4Value,
+  });
 
   final CustomFieldsVM viewModel;
   final String fieldLabel;
   final String valueLabel;
   final bool showChargeTaxes;
   final bool showValues;
+
+  final String field1Value;
+  final String field2Value;
+  final String field3Value;
+  final String field4Value;
 
   @override
   _CustomFieldsSettingsState createState() => _CustomFieldsSettingsState();
