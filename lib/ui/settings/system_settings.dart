@@ -88,7 +88,7 @@ class _SystemSettingsState extends State<SystemSettings>
 
     return SettingsScaffold(
       title: localization.systemSettings,
-      onSavePressed: null,
+      onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
@@ -184,29 +184,39 @@ class _SystemSettingsState extends State<SystemSettings>
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
-              fieldLabel: localization.clientField,
+              fieldLabel: localization.customClientField,
             ),
             CustomFieldsSettings(
-              fieldLabel: localization.contactField,
+              fieldLabel: localization.customContactField,
             ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
-              fieldLabel: localization.invoiceField,
+              fieldLabel: localization.customInvoiceField,
+            ),
+            CustomFieldsSettings(
+              fieldLabel: localization.customInvoiceSurcharge,
+              showChargeTaxes: true,
             ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
-            CustomFieldsSettings(),
+            CustomFieldsSettings(
+              fieldLabel: localization.customQuoteField,
+            ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
-            CustomFieldsSettings(),
+            CustomFieldsSettings(
+              fieldLabel: localization.customCreditField,
+            ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
-            CustomFieldsSettings(),
+            CustomFieldsSettings(
+              fieldLabel: localization.customPaymentField,
+            ),
           ]),
         ],
       ),
@@ -272,11 +282,11 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
     return FormCard(
       children: <Widget>[
         DecoratedFormField(
-          label: localization.pattern,
+          label: localization.numberPattern,
           controller: _patternController,
         ),
         DecoratedFormField(
-          label: localization.counter,
+          label: localization.numberCounter,
           controller: _counterController,
         ),
       ],
@@ -285,9 +295,10 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 }
 
 class CustomFieldsSettings extends StatefulWidget {
-  const CustomFieldsSettings({this.fieldLabel});
+  const CustomFieldsSettings({this.fieldLabel, this.showChargeTaxes = false});
 
   final String fieldLabel;
+  final bool showChargeTaxes;
 
   @override
   _CustomFieldsSettingsState createState() => _CustomFieldsSettingsState();
@@ -345,13 +356,26 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
 
   @override
   Widget build(BuildContext context) {
-    //final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context);
 
     return FormCard(
       children: <Widget>[
-        DecoratedFormField(
-          label: widget.fieldLabel,
-          controller: _customField1Controller,
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: DecoratedFormField(
+                label: widget.fieldLabel,
+                controller: _customField1Controller,
+              ),
+            ),
+            if (widget.showChargeTaxes)
+              ...[
+                Checkbox(
+                  value: false,
+                ),
+                Text(localization.chargeTaxes),
+              ]
+          ],
         ),
         DecoratedFormField(
           label: widget.fieldLabel,

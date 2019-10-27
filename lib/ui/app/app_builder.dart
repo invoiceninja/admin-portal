@@ -138,8 +138,9 @@ class AppBuilderState extends State<AppBuilder> {
         if (kReleaseMode) {
           return;
         }
-        _command += event.logicalKey.keyLabel;
+        _command = '';
         /*
+        _command += event.logicalKey.keyLabel;
         print(
             'onKey: ${event.logicalKey.keyLabel}, hasFoucs: ${_focusNode.hasFocus}, hasPrimaryFocus: ${_focusNode.hasPrimaryFocus}');
         runCommand(context);

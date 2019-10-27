@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'charge_taxes': 'Charge Taxes',
       'credit': 'Credit',
       'credits': 'Credits',
       'next_reset': 'Next Reset',
@@ -21,20 +22,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recurring_prefix': 'Recurring Prefix',
       'number_padding': 'Number Padding',
       'general': 'General',
-      'invoice_field': 'Invoice Field',
-      'client_field': 'Client Field',
-      'product_field': 'Product Field',
-      'quote_field': 'Quote Field',
-      'payment_field': 'Payment Field',
-      'contact_field': 'Contact Field',
-      'vendor_field': 'Vendor Field',
-      'expense_field': 'Expense Field',
-      'project_field': 'Project Field',
-      'task_field': 'Task Field',
-      'group_field': 'Group Field',
-      'counter': 'Counter',
+      'custom_credit_field': 'Custom Credit Field',
+      'custom_invoice_field': 'Custom Invoice Field',
+      'custom_invoice_surcharge': 'Custom Invoice Surcharge',
+      'custom_client_field': 'Custom Client Field',
+      'custom_product_field': 'Custom Product Field',
+      'custom_quote_field': 'Custom Quote Field',
+      'custom_payment_field': 'Custom Payment Field',
+      'custom_contact_field': 'Custom Contact Field',
+      'custom_vendor_field': 'Custom Vendor Field',
+      'custom_expense_field': 'Custom Expense Field',
+      'custom_project_field': 'Custom Project Field',
+      'custom_task_field': 'Custom Task Field',
+      'custom_group_field': 'Custom Group Field',
+      'number_counter': 'Number Counter',
       'prefix': 'Prefix',
-      'pattern': 'Pattern',
+      'number_pattern': 'Number Pattern',
       'messages': 'Messages',
       'custom_css': 'Custom CSS',
       'custom_javascript': 'Custom JavaScript',
@@ -15152,31 +15155,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get prefix => _localizedValues[localeCode]['prefix'];
 
-  String get pattern => _localizedValues[localeCode]['pattern'];
+  String get numberPattern => _localizedValues[localeCode]['number_pattern'];
 
-  String get counter => _localizedValues[localeCode]['counter'];
+  String get numberCounter => _localizedValues[localeCode]['number_counter'];
 
-  String get invoiceField => _localizedValues[localeCode]['invoice_field'];
+  String get customCreditField => _localizedValues[localeCode]['custom_credit_field'];
 
-  String get clientField => _localizedValues[localeCode]['client_field'];
+  String get customInvoiceField => _localizedValues[localeCode]['custom_invoice_field'];
 
-  String get productField => _localizedValues[localeCode]['product_field'];
+  String get customClientField => _localizedValues[localeCode]['custom_client_field'];
 
-  String get quotField => _localizedValues[localeCode]['quote_field'];
+  String get customProductField => _localizedValues[localeCode]['custom_product_field'];
 
-  String get paymentField => _localizedValues[localeCode]['payment_field'];
+  String get customQuoteField => _localizedValues[localeCode]['custom_quote_field'];
 
-  String get contactField => _localizedValues[localeCode]['contact_field'];
+  String get customPaymentField => _localizedValues[localeCode]['custom_payment_field'];
 
-  String get vendorField => _localizedValues[localeCode]['vendor_field'];
+  String get customContactField => _localizedValues[localeCode]['custom_contact_field'];
 
-  String get expenseField => _localizedValues[localeCode]['expense_field'];
+  String get customVendorField => _localizedValues[localeCode]['custom_vendor_field'];
 
-  String get projectField => _localizedValues[localeCode]['project_field'];
+  String get customExpenseField => _localizedValues[localeCode]['custom_expense_field'];
 
-  String get taskField => _localizedValues[localeCode]['task_field'];
+  String get customProjectField => _localizedValues[localeCode]['custom_project_field'];
 
-  String get groupField => _localizedValues[localeCode]['group_field'];
+  String get customTaskField => _localizedValues[localeCode]['custom_task_field'];
+
+  String get customGroupField => _localizedValues[localeCode]['custom_group_field'];
 
   String get general => _localizedValues[localeCode]['general'];
 
@@ -15192,6 +15197,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get credits => _localizedValues[localeCode]['credits'];
 
+  String get customInvoiceSurcharge => _localizedValues[localeCode]['custom_invoice_surcharge'];
+
+  String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
