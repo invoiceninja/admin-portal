@@ -74,6 +74,7 @@ UserCompanyEntity loadCompanySuccessReducer(
 
   return userCompany;
 
+  /*
   if (userCompany.company.taskStatuses != null) {
     userCompany = userCompany
       ..company.rebuild((b) => b
@@ -101,6 +102,7 @@ UserCompanyEntity loadCompanySuccessReducer(
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
       )));
+   */
 }
 
 UserCompanyEntity saveCompanySuccessReducer(

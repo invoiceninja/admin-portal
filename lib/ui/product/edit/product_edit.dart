@@ -59,7 +59,7 @@ class _ProductEditState extends State<ProductEdit> {
     _notesController.text = product.notes;
     _priceController.text = formatNumber(product.price, context,
         formatNumberType: FormatNumberType.input);
-    _quantityController.text = formatNumber(product.cost, context,
+    _quantityController.text = formatNumber(product.quantity, context,
         formatNumberType: FormatNumberType.input);
     _costController.text = formatNumber(product.cost, context,
         formatNumberType: FormatNumberType.input);

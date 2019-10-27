@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,14 +135,16 @@ class AppBuilderState extends State<AppBuilder> {
       child: widget.builder(context),
       focusNode: _focusNode,
       onKey: (event) {
-        if (true || kReleaseMode) {
+        if (kReleaseMode) {
           return;
         }
+        _command += event.logicalKey.keyLabel;
+        /*
         print(
             'onKey: ${event.logicalKey.keyLabel}, hasFoucs: ${_focusNode.hasFocus}, hasPrimaryFocus: ${_focusNode.hasPrimaryFocus}');
-        _command += event.logicalKey.keyLabel;
         runCommand(context);
         Timer(Duration(seconds: 1), () => _command = '');
+         */
       },
     );
   }
