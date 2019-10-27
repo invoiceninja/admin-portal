@@ -337,7 +337,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'Value: ${uiState.settingsUIState.settings.counterPadding}';
+    return 'Value: ${staticState.frequencyMap}';
     //return 'showCurrencyCode: ${staticState.gatewayMap}';
     //return 'defaultInvoiceDesignId: ${selectedCompany.settings.defaultInvoiceDesignId}';
     //return 'Routes: Current: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';

@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
       'number_padding': 'Number Padding',
       'general': 'General',
@@ -15179,6 +15180,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get numberPadding => _localizedValues[localeCode]['number_padding'];
 
   String get recurringPrefix => _localizedValues[localeCode]['recurring_prefix'];
+
+  String get resetCounter => _localizedValues[localeCode]['reset_counter'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

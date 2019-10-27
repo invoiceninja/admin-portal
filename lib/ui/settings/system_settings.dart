@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -69,10 +70,8 @@ class _SystemSettingsState extends State<SystemSettings>
   }
 
   void _onChanged() {
-
     final settings = widget.viewModel.settings.rebuild((b) => b
-      ..recurringInvoiceNumberPrefix = _recurringPrefixController.text.trim()
-    );
+      ..recurringInvoiceNumberPrefix = _recurringPrefixController.text.trim());
 
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
@@ -126,7 +125,7 @@ class _SystemSettingsState extends State<SystemSettings>
                             settings.rebuild((b) => b..counterPadding = value)),
                         items: List<int>.generate(10, (i) => i + 1)
                             .map((value) => DropdownMenuItem(
-                                  child: Text('${'0' * (value-1)}1'),
+                                  child: Text('${'0' * (value - 1)}1'),
                                   value: value,
                                 ))
                             .toList(),
@@ -136,6 +135,29 @@ class _SystemSettingsState extends State<SystemSettings>
                   DecoratedFormField(
                     label: localization.recurringPrefix,
                     controller: _recurringPrefixController,
+                  ),
+                  InputDecorator(
+                    decoration: InputDecoration(
+                      labelText: localization.resetCounter,
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: settings.resetCounterFrequencyId,
+                        isExpanded: true,
+                        isDense: true,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..resetCounterFrequencyId = value)),
+                        items: memoizedFrequencyList(
+                                state.staticState.frequencyMap)
+                            .map((frequencyId) => DropdownMenuItem(
+                                  child: Text(state.staticState
+                                      .frequencyMap[frequencyId].name),
+                                  value: frequencyId,
+                                ))
+                            .toList(),
+                      ),
+                    ),
                   ),
                 ],
               ),

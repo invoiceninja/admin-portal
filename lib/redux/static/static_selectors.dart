@@ -84,6 +84,20 @@ List<String> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
   return list;
 }
 
+var memoizedFrequencyList = memo1(
+        (BuiltMap<String, FrequencyEntity> freequencyMap) =>
+        frequencyList(freequencyMap));
+
+List<String> frequencyList(BuiltMap<String, FrequencyEntity> frequencyMap) {
+  final list = frequencyMap.keys.toList();
+
+  list.sort((idA, idB) => frequencyMap[idA]
+      .id
+      .compareTo(frequencyMap[idB].id));
+
+  return list;
+}
+
 var memoizedIndustryList = memo1(
     (BuiltMap<String, IndustryEntity> industryMap) =>
         industryList(industryMap));
