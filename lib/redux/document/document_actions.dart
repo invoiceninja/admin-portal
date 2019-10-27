@@ -274,7 +274,7 @@ void handleDocumentAction(
       }
 
       for (final document in documents) {
-        if (!store.state.documentListState.isSelected(document)) {
+        if (!store.state.documentListState.isSelected(document.id)) {
           store.dispatch(
               AddToDocumentMultiselect(context: context, entity: document));
         } else {

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -184,24 +185,24 @@ ListUIState _sortInvoices(ListUIState invoiceListState, SortInvoices action) {
 
 ListUIState _startListMultiselect(
     ListUIState invoiceListState, StartInvoiceMultiselect action) {
-  return invoiceListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return invoiceListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
     ListUIState invoiceListState, AddToInvoiceMultiselect action) {
   return invoiceListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState invoiceListState, RemoveFromInvoiceMultiselect action) {
   return invoiceListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState invoiceListState, ClearInvoiceMultiselect action) {
-  return invoiceListState.rebuild((b) => b..selectedEntities = null);
+  return invoiceListState.rebuild((b) => b..selectedIds = null);
 }
 
 final invoicesReducer = combineReducers<InvoiceState>([

@@ -86,7 +86,7 @@ class CompanyGatewayList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(companyGateway),
+                                  listUIState.isSelected(companyGateway.id),
                             );
                           },
                         ),

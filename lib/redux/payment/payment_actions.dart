@@ -299,7 +299,7 @@ void handlePaymentAction(
       }
 
       for (final payment in payments) {
-        if (!store.state.paymentListState.isSelected(payment)) {
+        if (!store.state.paymentListState.isSelected(payment.id)) {
           store.dispatch(
               AddToPaymentMultiselect(context: context, entity: payment));
         } else {

@@ -309,7 +309,7 @@ void handleExpenseAction(
       }
 
       for (final expense in expenses) {
-        if (!store.state.expenseListState.isSelected(expense)) {
+        if (!store.state.expenseListState.isSelected(expense.id)) {
           store.dispatch(
               AddToExpenseMultiselect(context: context, entity: expense));
         } else {

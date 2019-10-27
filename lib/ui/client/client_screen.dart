@@ -35,12 +35,12 @@ class ClientScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.clientList.length,
+          listUIState.selectedIds.length == viewModel.clientList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final clients = viewModel.clientList
             .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
-            .where((client) => value != listUIState.isSelected(client))
+            .where((client) => value != listUIState.isSelected(client.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -79,11 +79,16 @@ class ClientScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.clientListState.selectedEntities.isEmpty
+            onPressed: state.clientListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final clients = viewModel.clientList
+                        .map<ClientEntity>(
+                            (clientId) => viewModel.clientMap[clientId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.clientListState.selectedEntities,
+                        entities: clients,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

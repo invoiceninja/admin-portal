@@ -19,7 +19,7 @@ class PaymentScreen extends StatelessWidget {
   }) : super(key: key);
 
   final PaymentScreenVM viewModel;
-  
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -32,12 +32,12 @@ class PaymentScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.paymentList.length,
+          listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final payments = viewModel.paymentList
             .map<PaymentEntity>((paymentId) => viewModel.paymentMap[paymentId])
-            .where((payment) => value != listUIState.isSelected(payment))
+            .where((payment) => value != listUIState.isSelected(payment.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -77,17 +77,22 @@ class PaymentScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.paymentListState.selectedEntities.isEmpty
+            onPressed: state.paymentListState.selectedIds.isEmpty
                 ? null
                 : () async {
-              await showEntityActionsDialog(
-                  entities: state.paymentListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearPaymentMultiselect(context: context));
-            },
+                    final payments = viewModel.paymentList
+                        .map<PaymentEntity>(
+                            (paymentId) => viewModel.paymentMap[paymentId])
+                        .toList();
+
+                    await showEntityActionsDialog(
+                        entities: payments,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearPaymentMultiselect(context: context));
+                  },
           ),
       ],
       body: PaymentListBuilder(),

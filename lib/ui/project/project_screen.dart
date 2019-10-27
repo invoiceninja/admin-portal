@@ -34,12 +34,12 @@ class ProjectScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.projectList.length,
+          listUIState.selectedIds.length == viewModel.projectList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final projects = viewModel.projectList
             .map<ProjectEntity>((projectId) => viewModel.projectMap[projectId])
-            .where((project) => value != listUIState.isSelected(project))
+            .where((project) => value != listUIState.isSelected(project.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -79,11 +79,16 @@ class ProjectScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.projectListState.selectedEntities.isEmpty
+            onPressed: state.projectListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final projects = viewModel.projectList
+                        .map<ProjectEntity>(
+                            (projectId) => viewModel.projectMap[projectId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.projectListState.selectedEntities,
+                        entities: projects,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

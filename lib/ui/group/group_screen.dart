@@ -37,12 +37,12 @@ class GroupSettingsScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.groupList.length,
+          listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final groups = viewModel.groupList
             .map<GroupEntity>((groupId) => viewModel.groupMap[groupId])
-            .where((group) => value != listUIState.isSelected(group))
+            .where((group) => value != listUIState.isSelected(group.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -83,11 +83,16 @@ class GroupSettingsScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.groupListState.selectedEntities.isEmpty
+            onPressed: state.groupListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final groups = viewModel.groupList
+                        .map<GroupEntity>(
+                            (groupId) => viewModel.groupMap[groupId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.groupListState.selectedEntities,
+                        entities: groups,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

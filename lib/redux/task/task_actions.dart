@@ -360,7 +360,7 @@ void handleTaskAction(
       }
 
       for (final task in tasks) {
-        if (!store.state.taskListState.isSelected(task)) {
+        if (!store.state.taskListState.isSelected(task.id)) {
           store.dispatch(AddToTaskMultiselect(context: context, entity: task));
         } else {
           store.dispatch(

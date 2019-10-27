@@ -36,12 +36,12 @@ class QuoteScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.quoteList.length,
+          listUIState.selectedIds.length == viewModel.quoteList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final quotes = viewModel.quoteList
             .map<InvoiceEntity>((quoteId) => viewModel.quoteMap[quoteId])
-            .where((quote) => value != listUIState.isSelected(quote))
+            .where((quote) => value != listUIState.isSelected(quote.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -81,17 +81,22 @@ class QuoteScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.quoteListState.selectedEntities.isEmpty
+            onPressed: state.quoteListState.selectedIds.isEmpty
                 ? null
                 : () async {
-              await showEntityActionsDialog(
-                  entities: state.quoteListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearQuoteMultiselect(context: context));
-            },
+                    final quotes = viewModel.quoteList
+                        .map<InvoiceEntity>(
+                            (quoteId) => viewModel.quoteMap[quoteId])
+                        .toList();
+
+                    await showEntityActionsDialog(
+                        entities: quotes,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearQuoteMultiselect(context: context));
+                  },
           ),
       ],
       body: QuoteListBuilder(),

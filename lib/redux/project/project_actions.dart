@@ -312,7 +312,7 @@ void handleProjectAction(
       }
 
       for (final project in projects) {
-        if (!store.state.projectListState.isSelected(project)) {
+        if (!store.state.projectListState.isSelected(project.id)) {
           store.dispatch(
               AddToProjectMultiselect(context: context, entity: project));
         } else {

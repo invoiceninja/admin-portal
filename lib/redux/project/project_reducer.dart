@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -128,24 +129,24 @@ ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {
 
 ListUIState _startListMultiselect(
     ListUIState projectListState, StartProjectMultiselect action) {
-  return projectListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return projectListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
     ListUIState projectListState, AddToProjectMultiselect action) {
   return projectListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState projectListState, RemoveFromProjectMultiselect action) {
   return projectListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState projectListState, ClearProjectMultiselect action) {
-  return projectListState.rebuild((b) => b..selectedEntities = null);
+  return projectListState.rebuild((b) => b..selectedIds = null);
 }
 
 final projectsReducer = combineReducers<ProjectState>([

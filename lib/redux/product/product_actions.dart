@@ -251,7 +251,7 @@ void handleProductAction(
       }
 
       for (final product in products) {
-        if (!store.state.productListState.isSelected(product)) {
+        if (!store.state.productListState.isSelected(product.id)) {
           store.dispatch(
               AddToProductMultiselect(context: context, entity: product));
         } else {

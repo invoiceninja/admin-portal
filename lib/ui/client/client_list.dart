@@ -91,7 +91,7 @@ class ClientList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listState.isSelected(client),
+                                  listState.isSelected(client.id),
                             );
                           }),
                 ),

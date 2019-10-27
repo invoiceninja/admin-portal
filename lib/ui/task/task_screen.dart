@@ -35,12 +35,12 @@ class TaskScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.taskList.length,
+          listUIState.selectedIds.length == viewModel.taskList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final tasks = viewModel.taskList
             .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
-            .where((task) => value != listUIState.isSelected(task))
+            .where((task) => value != listUIState.isSelected(task.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -80,11 +80,15 @@ class TaskScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.taskListState.selectedEntities.isEmpty
+            onPressed: state.taskListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final tasks = viewModel.taskList
+                        .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.taskListState.selectedEntities,
+                        entities: tasks,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

@@ -104,7 +104,7 @@ class ExpenseList extends StatelessWidget {
                             }
                           },
                           isChecked: isInMultiselect &&
-                              listUIState.isSelected(expense),
+                              listUIState.isSelected(expense.id),
                         );
                       },
                     ),

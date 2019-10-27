@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -142,24 +143,24 @@ TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
 
 ListUIState _startListMultiselect(
     ListUIState taskListState, StartTaskMultiselect action) {
-  return taskListState.rebuild((b) => b..selectedEntities = <BaseEntity>[]);
+  return taskListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
     ListUIState taskListState, AddToTaskMultiselect action) {
   return taskListState
-      .rebuild((b) => b..selectedEntities.add(action.entity));
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState taskListState, RemoveFromTaskMultiselect action) {
   return taskListState
-      .rebuild((b) => b..selectedEntities.remove(action.entity));
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
     ListUIState taskListState, ClearTaskMultiselect action) {
-  return taskListState.rebuild((b) => b..selectedEntities = null);
+  return taskListState.rebuild((b) => b..selectedIds = null);
 }
 
 final tasksReducer = combineReducers<TaskState>([

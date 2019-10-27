@@ -34,12 +34,12 @@ class TaxRateSettingsScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.taxRateList.length,
+          listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final taxRates = viewModel.taxRateList
             .map<TaxRateEntity>((taxRateId) => viewModel.taxRateMap[taxRateId])
-            .where((taxRate) => value != listUIState.isSelected(taxRate))
+            .where((taxRate) => value != listUIState.isSelected(taxRate.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -80,11 +80,16 @@ class TaxRateSettingsScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.taxRateListState.selectedEntities.isEmpty
+            onPressed: state.taxRateListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final taxRates = viewModel.taxRateList
+                        .map<TaxRateEntity>(
+                            (taxRateId) => viewModel.taxRateMap[taxRateId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.taxRateListState.selectedEntities,
+                        entities: taxRates,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,

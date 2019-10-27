@@ -129,7 +129,7 @@ class PaymentList extends StatelessWidget {
                                 }
                               },
                               isChecked: isInMultiselect &&
-                                  listUIState.isSelected(payment),
+                                  listUIState.isSelected(payment.id),
                             );
                           },
                         ),

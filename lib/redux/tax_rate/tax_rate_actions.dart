@@ -280,7 +280,7 @@ void handleTaxRateAction(
       }
 
       for (final taxRate in taxRates) {
-        if (!store.state.taxRateListState.isSelected(taxRate)) {
+        if (!store.state.taxRateListState.isSelected(taxRate.id)) {
           store.dispatch(
               AddToTaxRateMultiselect(context: context, entity: taxRate));
         } else {

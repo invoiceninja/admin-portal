@@ -18,7 +18,7 @@ class DocumentScreen extends StatelessWidget {
     Key key,
     @required this.viewModel,
   }) : super(key: key);
-  
+
   static const String route = '/document';
 
   final DocumentScreenVM viewModel;
@@ -34,12 +34,13 @@ class DocumentScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.documentList.length,
+          listUIState.selectedIds.length == viewModel.documentList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final documents = viewModel.documentList
-            .map<DocumentEntity>((documentId) => viewModel.documentMap[documentId])
-            .where((document) => value != listUIState.isSelected(document))
+            .map<DocumentEntity>(
+                (documentId) => viewModel.documentMap[documentId])
+            .where((document) => value != listUIState.isSelected(document.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -79,17 +80,22 @@ class DocumentScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.documentListState.selectedEntities.isEmpty
+            onPressed: state.documentListState.selectedIds.isEmpty
                 ? null
                 : () async {
-              await showEntityActionsDialog(
-                  entities: state.documentListState.selectedEntities,
-                  userCompany: userCompany,
-                  context: context,
-                  onEntityAction: viewModel.onEntityAction,
-                  multiselect: true);
-              store.dispatch(ClearDocumentMultiselect(context: context));
-            },
+                    final documents = viewModel.documentList
+                        .map<DocumentEntity>(
+                            (documentId) => viewModel.documentMap[documentId])
+                        .toList();
+
+                    await showEntityActionsDialog(
+                        entities: documents,
+                        userCompany: userCompany,
+                        context: context,
+                        onEntityAction: viewModel.onEntityAction,
+                        multiselect: true);
+                    store.dispatch(ClearDocumentMultiselect(context: context));
+                  },
           ),
       ],
       body: DocumentListBuilder(),

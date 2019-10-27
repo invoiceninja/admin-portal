@@ -34,12 +34,12 @@ class VendorScreen extends StatelessWidget {
 
     return AppScaffold(
       isChecked: isInMultiselect &&
-          listUIState.selectedEntities.length == viewModel.vendorList.length,
+          listUIState.selectedIds.length == viewModel.vendorList.length,
       showCheckbox: isInMultiselect,
       onCheckboxChanged: (value) {
         final vendors = viewModel.vendorList
             .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])
-            .where((vendor) => value != listUIState.isSelected(vendor))
+            .where((vendor) => value != listUIState.isSelected(vendor.id))
             .toList();
 
         viewModel.onEntityAction(
@@ -79,11 +79,16 @@ class VendorScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.vendorListState.selectedEntities.isEmpty
+            onPressed: state.vendorListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final vendors = viewModel.vendorList
+                        .map<VendorEntity>(
+                            (vendorId) => viewModel.vendorMap[vendorId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        entities: state.vendorListState.selectedEntities,
+                        entities: vendors,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,
