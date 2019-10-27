@@ -44,6 +44,22 @@ abstract class CompanyEntity extends Object
   CompanyEntity._();
 
   @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  bool get enableCustomSurchargeTaxes1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes2')
+  bool get enableCustomSurchargeTaxes2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes3')
+  bool get enableCustomSurchargeTaxes3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_invoice_taxes4')
+  bool get enableCustomSurchargeTaxes4;
+
+  @nullable
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
@@ -488,8 +504,6 @@ abstract class SettingsEntity
       defaultTaxRate2: 0,
       sendReminders: null,
       showTasksInPortal: null,
-      enableCustomInvoiceTaxes1: null,
-      enableCustomInvoiceTaxes2: null,
       enableInclusiveTaxes: null,
       enableInvoiceItemTaxes: null,
       enableInvoiceTaxes: null,
@@ -947,16 +961,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
-  bool get enableCustomInvoiceTaxes1;
-
-  // TODO remove this field
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes2')
-  bool get enableCustomInvoiceTaxes2;
 
   // TODO remove this field
   @nullable

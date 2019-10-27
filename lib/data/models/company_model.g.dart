@@ -54,6 +54,30 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
+    if (object.enableCustomSurchargeTaxes1 != null) {
+      result
+        ..add('custom_invoice_taxes1')
+        ..add(serializers.serialize(object.enableCustomSurchargeTaxes1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomSurchargeTaxes2 != null) {
+      result
+        ..add('custom_invoice_taxes2')
+        ..add(serializers.serialize(object.enableCustomSurchargeTaxes2,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomSurchargeTaxes3 != null) {
+      result
+        ..add('custom_invoice_taxes3')
+        ..add(serializers.serialize(object.enableCustomSurchargeTaxes3,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableCustomSurchargeTaxes4 != null) {
+      result
+        ..add('custom_invoice_taxes4')
+        ..add(serializers.serialize(object.enableCustomSurchargeTaxes4,
+            specifiedType: const FullType(bool)));
+    }
     if (object.sizeId != null) {
       result
         ..add('size_id')
@@ -210,6 +234,22 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'custom_invoice_taxes1':
+          result.enableCustomSurchargeTaxes1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_invoice_taxes2':
+          result.enableCustomSurchargeTaxes2 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_invoice_taxes3':
+          result.enableCustomSurchargeTaxes3 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_invoice_taxes4':
+          result.enableCustomSurchargeTaxes4 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'size_id':
           result.sizeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1329,18 +1369,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.idNumber,
             specifiedType: const FullType(String)));
     }
-    if (object.enableCustomInvoiceTaxes1 != null) {
-      result
-        ..add('custom_invoice_taxes1')
-        ..add(serializers.serialize(object.enableCustomInvoiceTaxes1,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableCustomInvoiceTaxes2 != null) {
-      result
-        ..add('custom_invoice_taxes2')
-        ..add(serializers.serialize(object.enableCustomInvoiceTaxes2,
-            specifiedType: const FullType(bool)));
-    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -1816,14 +1844,6 @@ class _$SettingsEntitySerializer
           result.idNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'custom_invoice_taxes1':
-          result.enableCustomInvoiceTaxes1 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'custom_invoice_taxes2':
-          result.enableCustomInvoiceTaxes2 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -1939,6 +1959,14 @@ class _$CompanyItemResponseSerializer
 
 class _$CompanyEntity extends CompanyEntity {
   @override
+  final bool enableCustomSurchargeTaxes1;
+  @override
+  final bool enableCustomSurchargeTaxes2;
+  @override
+  final bool enableCustomSurchargeTaxes3;
+  @override
+  final bool enableCustomSurchargeTaxes4;
+  @override
   final String sizeId;
   @override
   final String industryId;
@@ -1997,7 +2025,11 @@ class _$CompanyEntity extends CompanyEntity {
       (new CompanyEntityBuilder()..update(updates)).build();
 
   _$CompanyEntity._(
-      {this.sizeId,
+      {this.enableCustomSurchargeTaxes1,
+      this.enableCustomSurchargeTaxes2,
+      this.enableCustomSurchargeTaxes3,
+      this.enableCustomSurchargeTaxes4,
+      this.sizeId,
       this.industryId,
       this.portalMode,
       this.plan,
@@ -2053,6 +2085,10 @@ class _$CompanyEntity extends CompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyEntity &&
+        enableCustomSurchargeTaxes1 == other.enableCustomSurchargeTaxes1 &&
+        enableCustomSurchargeTaxes2 == other.enableCustomSurchargeTaxes2 &&
+        enableCustomSurchargeTaxes3 == other.enableCustomSurchargeTaxes3 &&
+        enableCustomSurchargeTaxes4 == other.enableCustomSurchargeTaxes4 &&
         sizeId == other.sizeId &&
         industryId == other.industryId &&
         portalMode == other.portalMode &&
@@ -2102,7 +2138,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, sizeId.hashCode), industryId.hashCode), portalMode.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
                                                                                 groups.hashCode),
                                                                             taxRates.hashCode),
                                                                         taskStatuses.hashCode),
@@ -2127,6 +2163,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyEntity')
+          ..add('enableCustomSurchargeTaxes1', enableCustomSurchargeTaxes1)
+          ..add('enableCustomSurchargeTaxes2', enableCustomSurchargeTaxes2)
+          ..add('enableCustomSurchargeTaxes3', enableCustomSurchargeTaxes3)
+          ..add('enableCustomSurchargeTaxes4', enableCustomSurchargeTaxes4)
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
           ..add('portalMode', portalMode)
@@ -2161,6 +2201,26 @@ class _$CompanyEntity extends CompanyEntity {
 class CompanyEntityBuilder
     implements Builder<CompanyEntity, CompanyEntityBuilder> {
   _$CompanyEntity _$v;
+
+  bool _enableCustomSurchargeTaxes1;
+  bool get enableCustomSurchargeTaxes1 => _$this._enableCustomSurchargeTaxes1;
+  set enableCustomSurchargeTaxes1(bool enableCustomSurchargeTaxes1) =>
+      _$this._enableCustomSurchargeTaxes1 = enableCustomSurchargeTaxes1;
+
+  bool _enableCustomSurchargeTaxes2;
+  bool get enableCustomSurchargeTaxes2 => _$this._enableCustomSurchargeTaxes2;
+  set enableCustomSurchargeTaxes2(bool enableCustomSurchargeTaxes2) =>
+      _$this._enableCustomSurchargeTaxes2 = enableCustomSurchargeTaxes2;
+
+  bool _enableCustomSurchargeTaxes3;
+  bool get enableCustomSurchargeTaxes3 => _$this._enableCustomSurchargeTaxes3;
+  set enableCustomSurchargeTaxes3(bool enableCustomSurchargeTaxes3) =>
+      _$this._enableCustomSurchargeTaxes3 = enableCustomSurchargeTaxes3;
+
+  bool _enableCustomSurchargeTaxes4;
+  bool get enableCustomSurchargeTaxes4 => _$this._enableCustomSurchargeTaxes4;
+  set enableCustomSurchargeTaxes4(bool enableCustomSurchargeTaxes4) =>
+      _$this._enableCustomSurchargeTaxes4 = enableCustomSurchargeTaxes4;
 
   String _sizeId;
   String get sizeId => _$this._sizeId;
@@ -2297,6 +2357,10 @@ class CompanyEntityBuilder
 
   CompanyEntityBuilder get _$this {
     if (_$v != null) {
+      _enableCustomSurchargeTaxes1 = _$v.enableCustomSurchargeTaxes1;
+      _enableCustomSurchargeTaxes2 = _$v.enableCustomSurchargeTaxes2;
+      _enableCustomSurchargeTaxes3 = _$v.enableCustomSurchargeTaxes3;
+      _enableCustomSurchargeTaxes4 = _$v.enableCustomSurchargeTaxes4;
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
       _portalMode = _$v.portalMode;
@@ -2348,6 +2412,10 @@ class CompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyEntity._(
+              enableCustomSurchargeTaxes1: enableCustomSurchargeTaxes1,
+              enableCustomSurchargeTaxes2: enableCustomSurchargeTaxes2,
+              enableCustomSurchargeTaxes3: enableCustomSurchargeTaxes3,
+              enableCustomSurchargeTaxes4: enableCustomSurchargeTaxes4,
               sizeId: sizeId,
               industryId: industryId,
               portalMode: portalMode,
@@ -3255,10 +3323,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String idNumber;
   @override
-  final bool enableCustomInvoiceTaxes1;
-  @override
-  final bool enableCustomInvoiceTaxes2;
-  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3379,8 +3443,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.countryId,
       this.vatNumber,
       this.idNumber,
-      this.enableCustomInvoiceTaxes1,
-      this.enableCustomInvoiceTaxes2,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3507,8 +3569,6 @@ class _$SettingsEntity extends SettingsEntity {
         countryId == other.countryId &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
-        enableCustomInvoiceTaxes1 == other.enableCustomInvoiceTaxes1 &&
-        enableCustomInvoiceTaxes2 == other.enableCustomInvoiceTaxes2 &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3535,22 +3595,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode),
-                                                                                name.hashCode),
-                                                                            companyLogo.hashCode),
-                                                                        website.hashCode),
-                                                                    address1.hashCode),
-                                                                address2.hashCode),
-                                                            city.hashCode),
-                                                        state.hashCode),
-                                                    postalCode.hashCode),
-                                                phone.hashCode),
-                                            email.hashCode),
-                                        countryId.hashCode),
-                                    vatNumber.hashCode),
-                                idNumber.hashCode),
-                            enableCustomInvoiceTaxes1.hashCode),
-                        enableCustomInvoiceTaxes2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode),
+                                                                                requireInvoiceSignature.hashCode),
+                                                                            requireQuoteSignature.hashCode),
+                                                                        name.hashCode),
+                                                                    companyLogo.hashCode),
+                                                                website.hashCode),
+                                                            address1.hashCode),
+                                                        address2.hashCode),
+                                                    city.hashCode),
+                                                state.hashCode),
+                                            postalCode.hashCode),
+                                        phone.hashCode),
+                                    email.hashCode),
+                                countryId.hashCode),
+                            vatNumber.hashCode),
+                        idNumber.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3668,8 +3728,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('countryId', countryId)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
-          ..add('enableCustomInvoiceTaxes1', enableCustomInvoiceTaxes1)
-          ..add('enableCustomInvoiceTaxes2', enableCustomInvoiceTaxes2)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4199,16 +4257,6 @@ class SettingsEntityBuilder
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
 
-  bool _enableCustomInvoiceTaxes1;
-  bool get enableCustomInvoiceTaxes1 => _$this._enableCustomInvoiceTaxes1;
-  set enableCustomInvoiceTaxes1(bool enableCustomInvoiceTaxes1) =>
-      _$this._enableCustomInvoiceTaxes1 = enableCustomInvoiceTaxes1;
-
-  bool _enableCustomInvoiceTaxes2;
-  bool get enableCustomInvoiceTaxes2 => _$this._enableCustomInvoiceTaxes2;
-  set enableCustomInvoiceTaxes2(bool enableCustomInvoiceTaxes2) =>
-      _$this._enableCustomInvoiceTaxes2 = enableCustomInvoiceTaxes2;
-
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4342,8 +4390,6 @@ class SettingsEntityBuilder
       _countryId = _$v.countryId;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
-      _enableCustomInvoiceTaxes1 = _$v.enableCustomInvoiceTaxes1;
-      _enableCustomInvoiceTaxes2 = _$v.enableCustomInvoiceTaxes2;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4480,8 +4526,6 @@ class SettingsEntityBuilder
               countryId: countryId,
               vatNumber: vatNumber,
               idNumber: idNumber,
-              enableCustomInvoiceTaxes1: enableCustomInvoiceTaxes1,
-              enableCustomInvoiceTaxes2: enableCustomInvoiceTaxes2,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

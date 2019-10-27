@@ -91,8 +91,12 @@ abstract class QuoteEntity extends Object
       autoBill: false,
       customValue1: 0.0,
       customValue2: 0.0,
+      customValue3: 0.0,
+      customValue4: 0.0,
       customTaxes1: false,
       customTaxes2: false,
+      customTaxes3: false,
+      customTaxes4: false,
       hasExpenses: false,
       customTextValue1: '',
       customTextValue2: '',
@@ -209,12 +213,28 @@ abstract class QuoteEntity extends Object
   double get customValue2;
 
   @override
+  @BuiltValueField(wireName: 'custom_value3')
+  double get customValue3;
+
+  @override
+  @BuiltValueField(wireName: 'custom_value4')
+  double get customValue4;
+
+  @override
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
   @override
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
+
+  @override
+  @BuiltValueField(wireName: 'custom_taxes3')
+  bool get customTaxes3;
+
+  @override
+  @BuiltValueField(wireName: 'custom_taxes4')
+  bool get customTaxes4;
 
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;

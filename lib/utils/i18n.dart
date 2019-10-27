@@ -27,7 +27,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_invoice_surcharge': 'Custom Invoice Surcharge',
       'custom_client_field': 'Custom Client Field',
       'custom_product_field': 'Custom Product Field',
-      'custom_quote_field': 'Custom Quote Field',
       'custom_payment_field': 'Custom Payment Field',
       'custom_contact_field': 'Custom Contact Field',
       'custom_vendor_field': 'Custom Vendor Field',
@@ -15166,8 +15165,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get customClientField => _localizedValues[localeCode]['custom_client_field'];
 
   String get customProductField => _localizedValues[localeCode]['custom_product_field'];
-
-  String get customQuoteField => _localizedValues[localeCode]['custom_quote_field'];
 
   String get customPaymentField => _localizedValues[localeCode]['custom_payment_field'];
 

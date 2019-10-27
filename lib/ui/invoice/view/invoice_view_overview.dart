@@ -200,14 +200,14 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     if (invoice.customValue1 != 0 &&
-        company.settings.enableCustomInvoiceTaxes1) {
+        company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customValue1));
     }
 
     if (invoice.customValue2 != 0 &&
-        company.settings.enableCustomInvoiceTaxes2) {
+        company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customValue2));
@@ -220,17 +220,31 @@ class InvoiceOverview extends StatelessWidget {
     });
 
     if (invoice.customValue1 != 0 &&
-        !company.settings.enableCustomInvoiceTaxes1) {
+        !company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customValue1));
     }
 
     if (invoice.customValue2 != 0 &&
-        !company.settings.enableCustomInvoiceTaxes2) {
+        !company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customValue2));
+    }
+
+    if (invoice.customValue3 != 0 &&
+        !company.enableCustomSurchargeTaxes3) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge3),
+          invoice.customValue3));
+    }
+
+    if (invoice.customValue4 != 0 &&
+        !company.enableCustomSurchargeTaxes4) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge4),
+          invoice.customValue4));
     }
 
     return ListView(

@@ -11,8 +11,12 @@ abstract class CalculateInvoiceTotal {
   double get discount;
   double get customValue1;
   double get customValue2;
+  double get customValue3;
+  double get customValue4;
   bool get customTaxes1;
   bool get customTaxes2;
+  bool get customTaxes3;
+  bool get customTaxes4;
   BuiltList<InvoiceItemEntity> get invoiceItems;
 
   double _calculateTaxAmount(

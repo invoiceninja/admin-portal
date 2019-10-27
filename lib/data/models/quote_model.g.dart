@@ -177,11 +177,23 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(double)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(double)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(double)),
       'custom_taxes1',
       serializers.serialize(object.customTaxes1,
           specifiedType: const FullType(bool)),
       'custom_taxes2',
       serializers.serialize(object.customTaxes2,
+          specifiedType: const FullType(bool)),
+      'custom_taxes3',
+      serializers.serialize(object.customTaxes3,
+          specifiedType: const FullType(bool)),
+      'custom_taxes4',
+      serializers.serialize(object.customTaxes4,
           specifiedType: const FullType(bool)),
       'has_expenses',
       serializers.serialize(object.hasExpenses,
@@ -354,12 +366,28 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'custom_taxes1':
           result.customTaxes1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_taxes2':
           result.customTaxes2 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_taxes3':
+          result.customTaxes3 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_taxes4':
+          result.customTaxes4 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'has_expenses':
@@ -794,9 +822,17 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final double customValue2;
   @override
+  final double customValue3;
+  @override
+  final double customValue4;
+  @override
   final bool customTaxes1;
   @override
   final bool customTaxes2;
+  @override
+  final bool customTaxes3;
+  @override
+  final bool customTaxes4;
   @override
   final bool hasExpenses;
   @override
@@ -854,8 +890,12 @@ class _$QuoteEntity extends QuoteEntity {
       this.autoBill,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.customTaxes1,
       this.customTaxes2,
+      this.customTaxes3,
+      this.customTaxes4,
       this.hasExpenses,
       this.quoteInvoiceId,
       this.customTextValue1,
@@ -938,11 +978,23 @@ class _$QuoteEntity extends QuoteEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customValue4');
+    }
     if (customTaxes1 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'customTaxes1');
     }
     if (customTaxes2 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'customTaxes2');
+    }
+    if (customTaxes3 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customTaxes3');
+    }
+    if (customTaxes4 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customTaxes4');
     }
     if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'hasExpenses');
@@ -1003,8 +1055,12 @@ class _$QuoteEntity extends QuoteEntity {
         autoBill == other.autoBill &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         customTaxes1 == other.customTaxes1 &&
         customTaxes2 == other.customTaxes2 &&
+        customTaxes3 == other.customTaxes3 &&
+        customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
         quoteInvoiceId == other.quoteInvoiceId &&
         customTextValue1 == other.customTextValue1 &&
@@ -1042,11 +1098,11 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode),
-                                                                                customValue1.hashCode),
-                                                                            customValue2.hashCode),
-                                                                        customTaxes1.hashCode),
-                                                                    customTaxes2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode),
+                                                                                customTaxes1.hashCode),
+                                                                            customTaxes2.hashCode),
+                                                                        customTaxes3.hashCode),
+                                                                    customTaxes4.hashCode),
                                                                 hasExpenses.hashCode),
                                                             quoteInvoiceId.hashCode),
                                                         customTextValue1.hashCode),
@@ -1089,8 +1145,12 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('autoBill', autoBill)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('customTaxes1', customTaxes1)
           ..add('customTaxes2', customTaxes2)
+          ..add('customTaxes3', customTaxes3)
+          ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
           ..add('quoteInvoiceId', quoteInvoiceId)
           ..add('customTextValue1', customTextValue1)
@@ -1205,6 +1265,14 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   double get customValue2 => _$this._customValue2;
   set customValue2(double customValue2) => _$this._customValue2 = customValue2;
 
+  double _customValue3;
+  double get customValue3 => _$this._customValue3;
+  set customValue3(double customValue3) => _$this._customValue3 = customValue3;
+
+  double _customValue4;
+  double get customValue4 => _$this._customValue4;
+  set customValue4(double customValue4) => _$this._customValue4 = customValue4;
+
   bool _customTaxes1;
   bool get customTaxes1 => _$this._customTaxes1;
   set customTaxes1(bool customTaxes1) => _$this._customTaxes1 = customTaxes1;
@@ -1212,6 +1280,14 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   bool _customTaxes2;
   bool get customTaxes2 => _$this._customTaxes2;
   set customTaxes2(bool customTaxes2) => _$this._customTaxes2 = customTaxes2;
+
+  bool _customTaxes3;
+  bool get customTaxes3 => _$this._customTaxes3;
+  set customTaxes3(bool customTaxes3) => _$this._customTaxes3 = customTaxes3;
+
+  bool _customTaxes4;
+  bool get customTaxes4 => _$this._customTaxes4;
+  set customTaxes4(bool customTaxes4) => _$this._customTaxes4 = customTaxes4;
 
   bool _hasExpenses;
   bool get hasExpenses => _$this._hasExpenses;
@@ -1307,8 +1383,12 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _autoBill = _$v.autoBill;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _customTaxes1 = _$v.customTaxes1;
       _customTaxes2 = _$v.customTaxes2;
+      _customTaxes3 = _$v.customTaxes3;
+      _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
       _quoteInvoiceId = _$v.quoteInvoiceId;
       _customTextValue1 = _$v.customTextValue1;
@@ -1370,8 +1450,12 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               autoBill: autoBill,
               customValue1: customValue1,
               customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               customTaxes1: customTaxes1,
               customTaxes2: customTaxes2,
+              customTaxes3: customTaxes3,
+              customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
               quoteInvoiceId: quoteInvoiceId,
               customTextValue1: customTextValue1,

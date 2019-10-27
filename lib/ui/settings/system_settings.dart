@@ -38,7 +38,7 @@ class _SystemSettingsState extends State<SystemSettings>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 6);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -102,9 +102,6 @@ class _SystemSettingsState extends State<SystemSettings>
           ),
           Tab(
             text: localization.invoices,
-          ),
-          Tab(
-            text: localization.quotes,
           ),
           Tab(
             text: localization.credits,
@@ -184,18 +181,22 @@ class _SystemSettingsState extends State<SystemSettings>
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customClientField,
             ),
             CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customContactField,
             ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customInvoiceField,
             ),
             CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customInvoiceSurcharge,
               showChargeTaxes: true,
             ),
@@ -203,18 +204,14 @@ class _SystemSettingsState extends State<SystemSettings>
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
-              fieldLabel: localization.customQuoteField,
-            ),
-          ]),
-          ListView(children: <Widget>[
-            EntityNumberSettings(),
-            CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customCreditField,
             ),
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(
+              viewModel: viewModel,
               fieldLabel: localization.customPaymentField,
             ),
           ]),
@@ -295,8 +292,13 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 }
 
 class CustomFieldsSettings extends StatefulWidget {
-  const CustomFieldsSettings({this.fieldLabel, this.showChargeTaxes = false});
+  const CustomFieldsSettings({
+    @required this.fieldLabel,
+    @required this.viewModel,
+    this.showChargeTaxes = false,
+  });
 
+  final SystemSettingsVM viewModel;
   final String fieldLabel;
   final bool showChargeTaxes;
 
@@ -357,6 +359,9 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    final company = viewModel.company;
 
     return FormCard(
       children: <Widget>[
@@ -368,13 +373,14 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
                 controller: _customField1Controller,
               ),
             ),
-            if (widget.showChargeTaxes)
-              ...[
-                Checkbox(
-                  value: false,
-                ),
-                Text(localization.chargeTaxes),
-              ]
+            if (widget.showChargeTaxes) ...[
+              Checkbox(
+                value: company.enableCustomSurchargeTaxes1,
+                onChanged: (value) => viewModel.onCompanyChanged(company
+                    .rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
+              ),
+              Text(localization.chargeTaxes),
+            ]
           ],
         ),
         DecoratedFormField(
