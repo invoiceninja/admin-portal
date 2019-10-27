@@ -103,60 +103,60 @@ class SaveProductFailure implements StopSaving {
 }
 
 class ArchiveProductRequest implements StartSaving {
-  ArchiveProductRequest(this.completer, this.productId);
+  ArchiveProductRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final String productId;
+  final List<String> productIds;
 }
 
 class ArchiveProductSuccess implements StopSaving, PersistData {
-  ArchiveProductSuccess(this.product);
+  ArchiveProductSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class ArchiveProductFailure implements StopSaving {
-  ArchiveProductFailure(this.product);
+  ArchiveProductFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class DeleteProductRequest implements StartSaving {
-  DeleteProductRequest(this.completer, this.productId);
+  DeleteProductRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final String productId;
+  final List<String> productIds;
 }
 
 class DeleteProductSuccess implements StopSaving, PersistData {
-  DeleteProductSuccess(this.product);
+  DeleteProductSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class DeleteProductFailure implements StopSaving {
-  DeleteProductFailure(this.product);
+  DeleteProductFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class RestoreProductRequest implements StartSaving {
-  RestoreProductRequest(this.completer, this.productId);
+  RestoreProductRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final String productId;
+  final List<String> productIds;
 }
 
 class RestoreProductSuccess implements StopSaving, PersistData {
-  RestoreProductSuccess(this.product);
+  RestoreProductSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class RestoreProductFailure implements StopSaving {
-  RestoreProductFailure(this.product);
+  RestoreProductFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
 class FilterProducts {
@@ -209,6 +209,7 @@ void handleProductAction(
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
+  final productIds = products.map((product) => product.id).toList();
   final product = products.first;
 
   switch (action) {
@@ -230,16 +231,16 @@ void handleProductAction(
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(
           snackBarCompleter(context, localization.restoredProduct),
-          product.id));
+          productIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProductRequest(
           snackBarCompleter(context, localization.archivedProduct),
-          product.id));
+          productIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProductRequest(
-          snackBarCompleter(context, localization.deletedProduct), product.id));
+          snackBarCompleter(context, localization.deletedProduct), productIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
