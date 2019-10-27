@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/system_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -37,7 +38,7 @@ class _SystemSettingsState extends State<SystemSettings>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -91,6 +92,7 @@ class _SystemSettingsState extends State<SystemSettings>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.general,
@@ -99,7 +101,16 @@ class _SystemSettingsState extends State<SystemSettings>
             text: localization.clients,
           ),
           Tab(
-            text: localization.products,
+            text: localization.invoices,
+          ),
+          Tab(
+            text: localization.quotes,
+          ),
+          Tab(
+            text: localization.credits,
+          ),
+          Tab(
+            text: localization.payments,
           ),
         ],
       ),
@@ -159,10 +170,36 @@ class _SystemSettingsState extends State<SystemSettings>
                       ),
                     ),
                   ),
+                  if ((settings.resetCounterFrequencyId ?? '').isNotEmpty)
+                    DatePicker(
+                      labelText: localization.nextReset,
+                      selectedDate: settings.resetCounterDate,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..resetCounterDate = value)),
+                    ),
                 ],
               ),
             ],
           ),
+          ListView(children: <Widget>[
+            EntityNumberSettings(),
+            CustomFieldsSettings(
+              fieldLabel: localization.clientField,
+            ),
+            CustomFieldsSettings(
+              fieldLabel: localization.contactField,
+            ),
+          ]),
+          ListView(children: <Widget>[
+            EntityNumberSettings(),
+            CustomFieldsSettings(
+              fieldLabel: localization.invoiceField,
+            ),
+          ]),
+          ListView(children: <Widget>[
+            EntityNumberSettings(),
+            CustomFieldsSettings(),
+          ]),
           ListView(children: <Widget>[
             EntityNumberSettings(),
             CustomFieldsSettings(),
