@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -176,6 +177,12 @@ class _SystemSettingsState extends State<SystemSettings>
                     ),
                 ],
               ),
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldLabel: localization.customCompanyField,
+                valueLabel: localization.customCompanyValue,
+                showValues: true,
+              ),
             ],
           ),
           ListView(children: <Widget>[
@@ -292,15 +299,18 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 }
 
 class CustomFieldsSettings extends StatefulWidget {
-  const CustomFieldsSettings({
-    @required this.fieldLabel,
-    @required this.viewModel,
-    this.showChargeTaxes = false,
-  });
+  const CustomFieldsSettings(
+      {@required this.fieldLabel,
+      @required this.viewModel,
+      this.showChargeTaxes = false,
+      this.showValues = false,
+      this.valueLabel});
 
   final SystemSettingsVM viewModel;
   final String fieldLabel;
+  final String valueLabel;
   final bool showChargeTaxes;
+  final bool showValues;
 
   @override
   _CustomFieldsSettingsState createState() => _CustomFieldsSettingsState();
@@ -311,6 +321,11 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
   final _customField2Controller = TextEditingController();
   final _customField3Controller = TextEditingController();
   final _customField4Controller = TextEditingController();
+
+  final _customValue1Controller = TextEditingController();
+  final _customValue2Controller = TextEditingController();
+  final _customValue3Controller = TextEditingController();
+  final _customValue4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -330,6 +345,10 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
       _customField2Controller,
       _customField3Controller,
       _customField4Controller,
+      _customValue1Controller,
+      _customValue2Controller,
+      _customValue3Controller,
+      _customValue4Controller,
     ];
 
     _controllers
@@ -363,37 +382,97 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
 
     return FormCard(
       children: <Widget>[
-        CustomFormField(
-          label: widget.fieldLabel,
-          controller: _customField1Controller,
-          showTaxes: widget.showChargeTaxes,
-          taxesEnabled: company.enableCustomSurchargeTaxes1,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: CustomFormField(
+                label: widget.fieldLabel,
+                controller: _customField1Controller,
+                showTaxes: widget.showChargeTaxes,
+                taxesEnabled: company.enableCustomSurchargeTaxes1,
+                onTaxesChanged: (value) => viewModel.onCompanyChanged(company
+                    .rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
+              ),
+            ),
+            if (widget.showValues) ...[
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: CustomFormField(
+                  label: widget.valueLabel,
+                  controller: _customValue1Controller,
+                ),
+              ),
+            ]
+          ],
         ),
-        CustomFormField(
-          label: widget.fieldLabel,
-          controller: _customField2Controller,
-          showTaxes: widget.showChargeTaxes,
-          taxesEnabled: company.enableCustomSurchargeTaxes2,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: CustomFormField(
+                label: widget.fieldLabel,
+                controller: _customField2Controller,
+                showTaxes: widget.showChargeTaxes,
+                taxesEnabled: company.enableCustomSurchargeTaxes2,
+                onTaxesChanged: (value) => viewModel.onCompanyChanged(company
+                    .rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
+              ),
+            ),
+            if (widget.showValues) ...[
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: CustomFormField(
+                  label: widget.valueLabel,
+                  controller: _customValue2Controller,
+                ),
+              ),
+            ]
+          ],
         ),
-        CustomFormField(
-          label: widget.fieldLabel,
-          controller: _customField3Controller,
-          showTaxes: widget.showChargeTaxes,
-          taxesEnabled: company.enableCustomSurchargeTaxes3,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: CustomFormField(
+                label: widget.fieldLabel,
+                controller: _customField3Controller,
+                showTaxes: widget.showChargeTaxes,
+                taxesEnabled: company.enableCustomSurchargeTaxes3,
+                onTaxesChanged: (value) => viewModel.onCompanyChanged(company
+                    .rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
+              ),
+            ),
+            if (widget.showValues) ...[
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: CustomFormField(
+                  label: widget.valueLabel,
+                  controller: _customValue3Controller,
+                ),
+              ),
+            ]
+          ],
         ),
-        CustomFormField(
-          label: widget.fieldLabel,
-          controller: _customField4Controller,
-          showTaxes: widget.showChargeTaxes,
-          taxesEnabled: company.enableCustomSurchargeTaxes4,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..enableCustomSurchargeTaxes4 = value)),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: CustomFormField(
+                label: widget.fieldLabel,
+                controller: _customField4Controller,
+                showTaxes: widget.showChargeTaxes,
+                taxesEnabled: company.enableCustomSurchargeTaxes4,
+                onTaxesChanged: (value) => viewModel.onCompanyChanged(company
+                    .rebuild((b) => b..enableCustomSurchargeTaxes4 = value)),
+              ),
+            ),
+            if (widget.showValues) ...[
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: CustomFormField(
+                  label: widget.valueLabel,
+                  controller: _customValue4Controller,
+                ),
+              ),
+            ]
+          ],
         ),
       ],
     );

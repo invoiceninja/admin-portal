@@ -62,6 +62,8 @@ const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
 
+const double kGutterWidth = 20;
+
 const int kMinMajorAppVersion = 0;
 const int kMinMinorAppVersion = 0;
 const int kMinPatchAppVersion = 0;
