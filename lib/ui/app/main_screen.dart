@@ -28,6 +28,7 @@ import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart'
 import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
@@ -210,6 +211,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsGroupSettingsEdit:
         screen = GroupEditScreen();
+        break;
+      case kSettingGeneratedNumbers:
+        screen = GeneratedNumbersScreen();
         break;
       case kSettingCustomFields:
         screen = CustomFieldsScreen();
