@@ -148,8 +148,9 @@ const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsGroupSettingsView = 'group_settings_view';
 const String kSettingsGroupSettingsEdit = 'group_settings_edit';
-const String kSettingCustomFields = 'custom_fields';
-const String kSettingGeneratedNumbers = 'generated_numbers';
+const String kSettingsCustomFields = 'custom_fields';
+const String kSettingsGeneratedNumbers = 'generated_numbers';
+const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
 const String kSettingsClientPortal = 'client_portal';
 const String kSettingsBuyNowButtons = 'buy_now_buttons';
@@ -173,7 +174,9 @@ const List<String> kSettingsSections = [
   kSettingsGroupSettings,
   kSettingsGroupSettingsView,
   kSettingsGroupSettingsEdit,
-  kSettingCustomFields,
+  kSettingsCustomFields,
+  kSettingsGeneratedNumbers,
+  kSettingsWorkflowSettings,
   kSettingsInvoiceDesign,
   kSettingsClientPortal,
   kSettingsBuyNowButtons,

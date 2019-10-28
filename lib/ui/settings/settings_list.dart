@@ -121,12 +121,12 @@ class SettingsList extends StatelessWidget {
           icon: FontAwesomeIcons.layerGroup,
         ),
         SettingsListTile(
-          section: kSettingGeneratedNumbers,
+          section: kSettingsGeneratedNumbers,
           viewModel: viewModel,
           icon: FontAwesomeIcons.idBadge,
         ),
         SettingsListTile(
-          section: kSettingCustomFields,
+          section: kSettingsCustomFields,
           viewModel: viewModel,
           icon: FontAwesomeIcons.heading,
         ),

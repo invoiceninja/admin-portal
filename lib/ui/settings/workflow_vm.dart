@@ -7,22 +7,22 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/ui/settings/generated_numbers.dart';
+import 'package:invoiceninja_flutter/ui/settings/workflow.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class GeneratedNumbersScreen extends StatelessWidget {
-  const GeneratedNumbersScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsGeneratedNumbers';
+class WorkflowSettingsScreen extends StatelessWidget {
+  const WorkflowSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsWorkflowSettings';
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, GeneratedNumbersVM>(
-      converter: GeneratedNumbersVM.fromStore,
+    return StoreConnector<AppState, WorkflowSettingsVM>(
+      converter: WorkflowSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return GeneratedNumbers(
+        return WorkflowSettings(
           viewModel: viewModel,
           key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         );
@@ -31,26 +31,21 @@ class GeneratedNumbersScreen extends StatelessWidget {
   }
 }
 
-class GeneratedNumbersVM {
-  GeneratedNumbersVM({
+class WorkflowSettingsVM {
+  WorkflowSettingsVM({
     @required this.state,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.settings,
     @required this.onSettingsChanged,
-    @required this.company,
-    @required this.onCompanyChanged,
+    @required this.onSavePressed,
+    @required this.onCancelPressed,
   });
 
-  static GeneratedNumbersVM fromStore(Store<AppState> store) {
+  static WorkflowSettingsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return GeneratedNumbersVM(
+    return WorkflowSettingsVM(
         state: state,
-        company: state.uiState.settingsUIState.userCompany.company,
         settings: state.uiState.settingsUIState.settings,
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
@@ -82,6 +77,4 @@ class GeneratedNumbersVM {
   final Function(BuildContext) onCancelPressed;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
-  final CompanyEntity company;
-  final Function(CompanyEntity) onCompanyChanged;
 }

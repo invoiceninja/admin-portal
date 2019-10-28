@@ -212,10 +212,10 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsGroupSettingsEdit:
         screen = GroupEditScreen();
         break;
-      case kSettingGeneratedNumbers:
+      case kSettingsGeneratedNumbers:
         screen = GeneratedNumbersScreen();
         break;
-      case kSettingCustomFields:
+      case kSettingsCustomFields:
         screen = CustomFieldsScreen();
         break;
       case kSettingsInvoiceDesign:

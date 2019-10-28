@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CustomFieldsScreen extends StatelessWidget {
   const CustomFieldsScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingCustomFields';
+  static const String route = '/$kSettings/$kSettingsCustomFields';
 
   @override
   Widget build(BuildContext context) {

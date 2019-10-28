@@ -50,6 +50,7 @@ import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart'
 import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
@@ -60,6 +61,7 @@ import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
@@ -367,6 +369,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GroupEditScreen.route: (context) => GroupEditScreen(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
+            GeneratedNumbersScreen.route: (context) => GeneratedNumbersScreen(),
+            WorkflowSettingsScreen.route: (context) => WorkflowSettingsScreen(),
             InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
             ClientPortalScreen.route: (context) => ClientPortalScreen(),
             BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
