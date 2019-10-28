@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
@@ -47,6 +48,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _postalCodeController = TextEditingController();
   final _paymentTermsController = TextEditingController();
   final _taskRateController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -82,6 +87,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _postalCodeController,
       _taskRateController,
       _paymentTermsController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers.forEach(
@@ -106,6 +115,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _paymentTermsController.text = formatNumber(
         settings.defaultPaymentTerms?.toDouble(), context,
         formatNumberType: FormatNumberType.input);
+    _custom1Controller.text = settings.customValue1;
+    _custom2Controller.text = settings.customValue2;
+    _custom3Controller.text = settings.customValue3;
+    _custom4Controller.text = settings.customValue4;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -127,7 +140,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..state = _stateController.text.trim()
       ..postalCode = _postalCodeController.text.trim()
       ..defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
-      ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0);
+      ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -213,6 +230,34 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     //textInputAction: TextInputAction.next,
                     //onFieldSubmitted: (String value) => _node.nextFocus(),
                   ),
+                  CustomField(
+                    controller: _custom1Controller,
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.company1),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.company1),
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.company2),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.company2),
+                  ),
+                  CustomField(
+                    controller: _custom3Controller,
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.company3),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.company3),
+                  ),
+                  CustomField(
+                    controller: _custom4Controller,
+                    labelText:
+                        company.getCustomFieldLabel(CustomFieldType.company4),
+                    options:
+                        company.getCustomFieldValues(CustomFieldType.company4),
+                  ),
                 ],
               ),
               if (!state.settingsUIState.isFiltered)
@@ -222,30 +267,29 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       key: ValueKey('__size_${company.sizeId}__'),
                       entityType: EntityType.size,
                       entityMap: state.staticState.sizeMap,
-                      entityList:
-                      memoizedSizeList(state.staticState.sizeMap),
+                      entityList: memoizedSizeList(state.staticState.sizeMap),
                       labelText: localization.size,
                       initialValue:
-                      state.staticState.sizeMap[company.sizeId]?.name,
+                          state.staticState.sizeMap[company.sizeId]?.name,
                       onSelected: (SelectableEntity size) =>
                           viewModel.onCompanyChanged(
-                            company.rebuild((b) => b..sizeId = size.id),
-                          ),
+                        company.rebuild((b) => b..sizeId = size.id),
+                      ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
                     EntityDropdown(
                       key: ValueKey('__industry_${company.industryId}__'),
                       entityType: EntityType.industry,
                       entityMap: state.staticState.industryMap,
-                      entityList: memoizedIndustryList(
-                          state.staticState.industryMap),
+                      entityList:
+                          memoizedIndustryList(state.staticState.industryMap),
                       labelText: localization.industry,
-                      initialValue: state.staticState
-                          .industryMap[company.industryId]?.name,
+                      initialValue: state
+                          .staticState.industryMap[company.industryId]?.name,
                       onSelected: (SelectableEntity industry) =>
                           viewModel.onCompanyChanged(
-                            company.rebuild((b) => b..industryId = industry.id),
-                          ),
+                        company.rebuild((b) => b..industryId = industry.id),
+                      ),
                     ),
                   ],
                 ),
@@ -325,10 +369,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     entityType: EntityType.country,
                     entityMap: state.staticState.countryMap,
                     entityList:
-                    memoizedCountryList(state.staticState.countryMap),
+                        memoizedCountryList(state.staticState.countryMap),
                     labelText: localization.country,
-                    initialValue: state
-                        .staticState.countryMap[settings.countryId]?.name,
+                    initialValue:
+                        state.staticState.countryMap[settings.countryId]?.name,
                     onSelected: (SelectableEntity country) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..countryId = country?.id)),
@@ -349,13 +393,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),
                     labelText: localization.paymentType,
-                    initialValue: state
-                        .staticState
-                        .paymentTypeMap[settings.defaultPaymentTypeId]
-                        ?.name,
-                    onSelected: (paymentType) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) =>
-                        b..defaultPaymentTypeId = paymentType.id)),
+                    initialValue: state.staticState
+                        .paymentTypeMap[settings.defaultPaymentTypeId]?.name,
+                    onSelected: (paymentType) => viewModel.onSettingsChanged(
+                        settings.rebuild(
+                            (b) => b..defaultPaymentTypeId = paymentType.id)),
                   ),
                   DecoratedFormField(
                     label: localization.paymentTerms,
@@ -366,7 +408,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     label: localization.taskRate,
                     controller: _taskRateController,
                     keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                   ),
                 ],
               )
