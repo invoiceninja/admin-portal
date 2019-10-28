@@ -337,8 +337,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    return 'Custom fields [UI]: ${uiState.settingsUIState.userCompany.company.customFields}, [DB] ${selectedCompany.customFields}';
-    //return 'showCurrencyCode: ${staticState.gatewayMap}';
+    //return 'Custom fields [UI]: ${uiState.settingsUIState.userCompany.company.customFields}, [DB] ${selectedCompany.customFields}';
+    return 'resetCounterFrequencyId: ${uiState.settingsUIState.settings.resetCounterFrequencyId}';
     //return 'defaultInvoiceDesignId: ${selectedCompany.settings.defaultInvoiceDesignId}';
     //return 'Routes: Current: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';

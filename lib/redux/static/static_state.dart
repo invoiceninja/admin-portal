@@ -20,7 +20,6 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
       paymentTypeMap: BuiltMap<String, PaymentTypeEntity>(),
       countryMap: BuiltMap<String, CountryEntity>(),
       invoiceStatusMap: BuiltMap<String, InvoiceStatusEntity>(),
-      frequencyMap: BuiltMap<String, FrequencyEntity>(),
     );
   }
 
@@ -61,8 +60,6 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   BuiltMap<String, CountryEntity> get countryMap;
 
   BuiltMap<String, InvoiceStatusEntity> get invoiceStatusMap;
-
-  BuiltMap<String, FrequencyEntity> get frequencyMap;
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;
 }

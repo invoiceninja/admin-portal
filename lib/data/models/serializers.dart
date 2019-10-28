@@ -79,8 +79,6 @@ part 'serializers.g.dart';
   DateFormatListResponse,
   DatetimeFormatItemResponse,
   DatetimeFormatListResponse,
-  FrequencyItemResponse,
-  FrequencyListResponse,
   IndustryItemResponse,
   IndustryListResponse,
   InvoiceDesignItemResponse,

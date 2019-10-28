@@ -14,6 +14,17 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'freq_weekly': 'Weekly',
+      'freq_two_weeks': 'Two Weeks',
+      'freq_four_weeks': 'Four Weeks',
+      'freq_monthly': 'Monthly',
+      'freq_two_months': 'Two Months',
+      'freq_three_months': 'Three Months',
+      'freq_four_months': 'Four Months',
+      'freq_six_months': 'Six Months',
+      'freq_annually': 'Annually',
+      'freq_two_years': 'Two Years',
+      'never': 'Never',
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge Taxes',
@@ -15189,7 +15200,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get numberPadding => _localizedValues[localeCode]['number_padding'];
 
-  String get recurringPrefix => _localizedValues[localeCode]['recurring_prefix'];
+  String get recurringPrefix =>
+      _localizedValues[localeCode]['recurring_prefix'];
 
   String get resetCounter => _localizedValues[localeCode]['reset_counter'];
 
@@ -15199,7 +15211,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get credits => _localizedValues[localeCode]['credits'];
 
-  String get customSurcharge => _localizedValues[localeCode]['invoice_surcharge'];
+  String get customSurcharge =>
+      _localizedValues[localeCode]['invoice_surcharge'];
 
   String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
 
@@ -15207,11 +15220,35 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get companyValue => _localizedValues[localeCode]['company_value'];
 
-  String get generatedNumbers => _localizedValues[localeCode]['generated_numbers'];
+  String get generatedNumbers =>
+      _localizedValues[localeCode]['generated_numbers'];
 
   String get company => _localizedValues[localeCode]['company'];
 
   String get surchargeField => _localizedValues[localeCode]['surcharge_field'];
+
+  String get never => _localizedValues[localeCode]['never'];
+
+  String get freqWeekly => _localizedValues[localeCode]['freq_weekly'];
+
+  String get freqTwoWeeks => _localizedValues[localeCode]['freq_two_weeks'];
+
+  String get freqFourWeeks => _localizedValues[localeCode]['freq_four_weeks'];
+
+  String get freqMonthly => _localizedValues[localeCode]['freq_monthly'];
+
+  String get freqTwoMonths => _localizedValues[localeCode]['freq_two_months'];
+
+  String get freqThreeMonths =>
+      _localizedValues[localeCode]['freq_three_months'];
+
+  String get freqFourMonths => _localizedValues[localeCode]['freq_four_months'];
+
+  String get freqSixMonths => _localizedValues[localeCode]['freq_six_months'];
+
+  String get freqAnnually => _localizedValues[localeCode]['freq_annually'];
+
+  String get freqTwoYears => _localizedValues[localeCode]['freq_two_years'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

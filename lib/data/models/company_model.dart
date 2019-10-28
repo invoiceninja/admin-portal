@@ -649,6 +649,18 @@ abstract class SettingsEntity
   bool get autoArchiveInvoice;
 
   @nullable
+  @BuiltValueField(wireName: 'auto_archive_quote')
+  bool get autoArchiveQuote;
+
+  @nullable
+  @BuiltValueField(wireName: 'auto_email_invoice')
+  bool get autoEmailInvoice;
+
+  @nullable
+  @BuiltValueField(wireName: 'auto_convert_quote')
+  bool get autoConvertInvoice;
+
+  @nullable
   @BuiltValueField(wireName: 'inclusive_taxes')
   bool get enableInclusiveTaxes;
 

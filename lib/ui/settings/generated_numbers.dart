@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -127,7 +127,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<int>(
-                        value: settings.counterPadding,
+                        // TODO remove this check
+                        value: settings.counterPadding > 0
+                            ? settings.counterPadding
+                            : 4,
                         isExpanded: true,
                         isDense: true,
                         onChanged: (value) => viewModel.onSettingsChanged(
@@ -157,14 +160,23 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                         onChanged: (value) => viewModel.onSettingsChanged(
                             settings.rebuild(
                                 (b) => b..resetCounterFrequencyId = value)),
-                        items: memoizedFrequencyList(
-                                state.staticState.frequencyMap)
-                            .map((frequencyId) => DropdownMenuItem(
-                                  child: Text(state.staticState
-                                      .frequencyMap[frequencyId].name),
-                                  value: frequencyId,
-                                ))
-                            .toList(),
+                        items: [
+                          DropdownMenuItem<String>(
+                            child: Text(localization.never),
+                            value: '0',
+                          ),
+                          ...kFrequencies
+                              .map((id, frequency) =>
+                              MapEntry<String, DropdownMenuItem<String>>(
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child:
+                                    Text(localization.lookup(frequency)),
+                                    value: id,
+                                  )))
+                              .values
+                              .toList()
+                        ],
                       ),
                     ),
                   ),

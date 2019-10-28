@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/data/models/static/language_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 
 part 'static_data_model.g.dart';
 
@@ -79,7 +78,6 @@ abstract class StaticDataEntity
       countries: BuiltList<CountryEntity>(),
       invoiceDesigns: BuiltList<InvoiceDesignEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
-      frequencies: BuiltList<FrequencyEntity>(),
     );
   }
   StaticDataEntity._();
@@ -112,8 +110,6 @@ abstract class StaticDataEntity
 
   @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
-
-  BuiltList<FrequencyEntity> get frequencies;
 
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;

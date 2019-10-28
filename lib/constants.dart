@@ -324,3 +324,16 @@ const kMonthsOfTheYear = {
   10: 'november',
   11: 'december',
 };
+
+const kFrequencies = {
+  '1': 'freq_weekly',
+  '2': 'freq_two_weeks',
+  '3': 'freq_four_weeks',
+  '4': 'freq_monthly',
+  '5': 'freq_two_months',
+  '6': 'freq_three_months',
+  '7': 'freq_four_months',
+  '8': 'freq_six_months',
+  '9': 'freq_annually',
+  '10': 'freq_two_years',
+};

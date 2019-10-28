@@ -87,8 +87,8 @@ class _ProductViewState extends State<ProductView>
         body: ListView(
           children: <Widget>[
             OneValueHeader(
-              label: localization.cost,
-              value: formatNumber(product.cost, context),
+              label: localization.price,
+              value: formatNumber(product.price, context),
             ),
             FieldGrid(fields),
             Divider(
