@@ -734,6 +734,10 @@ abstract class SettingsEntity
   String get defaultQuoteTerms;
 
   @nullable
+  @BuiltValueField(wireName: 'quote_footer')
+  String get defaultQuoteFooter;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_taxes')
   bool get enableInvoiceTaxes;
 

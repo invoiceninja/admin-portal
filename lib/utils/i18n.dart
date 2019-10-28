@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'invoice_terms': 'Invoice Terms',
+      'invoice_footer': 'Invoice Footer',
+      'quote_terms': 'Quote Terms',
+      'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
           'Automatically email recurring invoices when they are created.',
@@ -15289,6 +15293,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoConvertQuoteHelp =>
       _localizedValues[localeCode]['auto_convert_quote_help'];
+
+  String get invoiceTerms => _localizedValues[localeCode]['invoice_terms'];
+
+  String get invoiceFooter => _localizedValues[localeCode]['invoice_footer'];
+
+  String get quoteTerms => _localizedValues[localeCode]['quote_terms'];
+
+  String get quoteFooter => _localizedValues[localeCode]['quote_footer'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

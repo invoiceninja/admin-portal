@@ -52,6 +52,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
+  final _invoiceTermsController = TextEditingController();
+  final _invoiceFooterController = TextEditingController();
+  final _quoteTermsController = TextEditingController();
+  final _quoteFooterController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -91,6 +95,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _custom2Controller,
       _custom3Controller,
       _custom4Controller,
+      _invoiceFooterController,
+      _invoiceTermsController,
+      _quoteFooterController,
+      _quoteTermsController,
     ];
 
     _controllers.forEach(
@@ -119,6 +127,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;
     _custom4Controller.text = settings.customValue4;
+    _invoiceTermsController.text = settings.defaultInvoiceTerms;
+    _invoiceFooterController.text = settings.defaultInvoiceFooter;
+    _quoteTermsController.text = settings.defaultQuoteTerms;
+    _quoteFooterController.text = settings.defaultQuoteFooter;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -144,7 +156,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+      ..customValue4 = _custom4Controller.text.trim()
+      ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
+      ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
+      ..defaultQuoteFooter = _quoteFooterController.text.trim()
+      ..defaultQuoteTerms = _quoteTermsController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -409,6 +425,30 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     controller: _taskRateController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    label: localization.invoiceTerms,
+                    controller: _invoiceTermsController,
+                    maxLines: 4,
+                  ),
+                  DecoratedFormField(
+                    label: localization.invoiceFooter,
+                    controller: _invoiceFooterController,
+                    maxLines: 4,
+                  ),
+                  DecoratedFormField(
+                    label: localization.quoteTerms,
+                    controller: _quoteTermsController,
+                    maxLines: 4,
+                  ),
+                  DecoratedFormField(
+                    label: localization.quoteFooter,
+                    controller: _quoteFooterController,
+                    maxLines: 4,
                   ),
                 ],
               )

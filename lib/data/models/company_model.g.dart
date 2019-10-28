@@ -1099,6 +1099,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultQuoteTerms,
             specifiedType: const FullType(String)));
     }
+    if (object.defaultQuoteFooter != null) {
+      result
+        ..add('quote_footer')
+        ..add(serializers.serialize(object.defaultQuoteFooter,
+            specifiedType: const FullType(String)));
+    }
     if (object.enableInvoiceTaxes != null) {
       result
         ..add('invoice_taxes')
@@ -1672,6 +1678,10 @@ class _$SettingsEntitySerializer
           break;
         case 'quote_terms':
           result.defaultQuoteTerms = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'quote_footer':
+          result.defaultQuoteFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_taxes':
@@ -3288,6 +3298,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String defaultQuoteTerms;
   @override
+  final String defaultQuoteFooter;
+  @override
   final bool enableInvoiceTaxes;
   @override
   final bool enableInvoiceItemTaxes;
@@ -3458,6 +3470,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.sharedInvoiceQuoteCounter,
       this.defaultInvoiceTerms,
       this.defaultQuoteTerms,
+      this.defaultQuoteFooter,
       this.enableInvoiceTaxes,
       this.enableInvoiceItemTaxes,
       this.defaultInvoiceDesignId,
@@ -3584,6 +3597,7 @@ class _$SettingsEntity extends SettingsEntity {
         sharedInvoiceQuoteCounter == other.sharedInvoiceQuoteCounter &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         defaultQuoteTerms == other.defaultQuoteTerms &&
+        defaultQuoteFooter == other.defaultQuoteFooter &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
         enableInvoiceItemTaxes == other.enableInvoiceItemTaxes &&
         defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
@@ -3660,7 +3674,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode),
                                                                                 requireInvoiceSignature.hashCode),
                                                                             requireQuoteSignature.hashCode),
                                                                         name.hashCode),
@@ -3743,6 +3757,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('sharedInvoiceQuoteCounter', sharedInvoiceQuoteCounter)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('defaultQuoteTerms', defaultQuoteTerms)
+          ..add('defaultQuoteFooter', defaultQuoteFooter)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
           ..add('enableInvoiceItemTaxes', enableInvoiceItemTaxes)
           ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
@@ -4087,6 +4102,11 @@ class SettingsEntityBuilder
   set defaultQuoteTerms(String defaultQuoteTerms) =>
       _$this._defaultQuoteTerms = defaultQuoteTerms;
 
+  String _defaultQuoteFooter;
+  String get defaultQuoteFooter => _$this._defaultQuoteFooter;
+  set defaultQuoteFooter(String defaultQuoteFooter) =>
+      _$this._defaultQuoteFooter = defaultQuoteFooter;
+
   bool _enableInvoiceTaxes;
   bool get enableInvoiceTaxes => _$this._enableInvoiceTaxes;
   set enableInvoiceTaxes(bool enableInvoiceTaxes) =>
@@ -4406,6 +4426,7 @@ class SettingsEntityBuilder
       _sharedInvoiceQuoteCounter = _$v.sharedInvoiceQuoteCounter;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _defaultQuoteTerms = _$v.defaultQuoteTerms;
+      _defaultQuoteFooter = _$v.defaultQuoteFooter;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
       _enableInvoiceItemTaxes = _$v.enableInvoiceItemTaxes;
       _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
@@ -4542,6 +4563,7 @@ class SettingsEntityBuilder
               sharedInvoiceQuoteCounter: sharedInvoiceQuoteCounter,
               defaultInvoiceTerms: defaultInvoiceTerms,
               defaultQuoteTerms: defaultQuoteTerms,
+              defaultQuoteFooter: defaultQuoteFooter,
               enableInvoiceTaxes: enableInvoiceTaxes,
               enableInvoiceItemTaxes: enableInvoiceItemTaxes,
               defaultInvoiceDesignId: defaultInvoiceDesignId,
