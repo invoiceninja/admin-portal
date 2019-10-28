@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GeneratedNumbers extends StatefulWidget {
   const GeneratedNumbers({
@@ -93,7 +94,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        isScrollable: true,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.settings,
