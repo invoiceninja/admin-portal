@@ -68,7 +68,7 @@ class _ProductSettingsState extends State<ProductSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final settings = viewModel.settings;
+    final company = viewModel.company;
 
     return SettingsScaffold(
       title: localization.productSettings,
@@ -81,25 +81,25 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.fillProducts),
-                value: settings.fillProducts ?? false,
+                value: company.fillProducts ?? false,
                 subtitle: Text(localization.fillProductsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..fillProducts = value)),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..fillProducts = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.updateProducts),
-                value: settings.updateProducts ?? true,
+                value: company.updateProducts ?? true,
                 subtitle: Text(localization.updateProductsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..updateProducts = value)),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..updateProducts = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.convertProducts),
-                value: settings.convertProductExchangeRate ?? false,
+                value: company.convertProductExchangeRate ?? false,
                 subtitle: Text(localization.convertProductsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(settings
+                onChanged: (value) => viewModel.onCompanyChanged(company
                     .rebuild((b) => b..convertProductExchangeRate = value)),
               ),
             ],

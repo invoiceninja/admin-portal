@@ -33,6 +33,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'update_products',
+      serializers.serialize(object.updateProducts,
+          specifiedType: const FullType(bool)),
+      'convert_products',
+      serializers.serialize(object.convertProductExchangeRate,
+          specifiedType: const FullType(bool)),
+      'fill_products',
+      serializers.serialize(object.fillProducts,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -261,6 +270,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'portal_mode':
           result.portalMode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'update_products':
+          result.updateProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'convert_products':
+          result.convertProductExchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'fill_products':
+          result.fillProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
           result.plan = serializers.deserialize(value,
@@ -1057,24 +1078,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.sharedInvoiceQuoteCounter,
             specifiedType: const FullType(bool)));
     }
-    if (object.updateProducts != null) {
-      result
-        ..add('update_products')
-        ..add(serializers.serialize(object.updateProducts,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.convertProductExchangeRate != null) {
-      result
-        ..add('convert_products')
-        ..add(serializers.serialize(object.convertProductExchangeRate,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.fillProducts != null) {
-      result
-        ..add('fill_products')
-        ..add(serializers.serialize(object.fillProducts,
-            specifiedType: const FullType(bool)));
-    }
     if (object.defaultInvoiceTerms != null) {
       result
         ..add('invoice_terms')
@@ -1654,18 +1657,6 @@ class _$SettingsEntitySerializer
           result.sharedInvoiceQuoteCounter = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'update_products':
-          result.updateProducts = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'convert_products':
-          result.convertProductExchangeRate = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'fill_products':
-          result.fillProducts = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'invoice_terms':
           result.defaultInvoiceTerms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2003,6 +1994,12 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String portalMode;
   @override
+  final bool updateProducts;
+  @override
+  final bool convertProductExchangeRate;
+  @override
+  final bool fillProducts;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -2062,6 +2059,9 @@ class _$CompanyEntity extends CompanyEntity {
       this.sizeId,
       this.industryId,
       this.portalMode,
+      this.updateProducts,
+      this.convertProductExchangeRate,
+      this.fillProducts,
       this.plan,
       this.companyKey,
       this.appUrl,
@@ -2087,6 +2087,16 @@ class _$CompanyEntity extends CompanyEntity {
       this.isOwner,
       this.id})
       : super._() {
+    if (updateProducts == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'updateProducts');
+    }
+    if (convertProductExchangeRate == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'convertProductExchangeRate');
+    }
+    if (fillProducts == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'fillProducts');
+    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
@@ -2122,6 +2132,9 @@ class _$CompanyEntity extends CompanyEntity {
         sizeId == other.sizeId &&
         industryId == other.industryId &&
         portalMode == other.portalMode &&
+        updateProducts == other.updateProducts &&
+        convertProductExchangeRate == other.convertProductExchangeRate &&
+        fillProducts == other.fillProducts &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         appUrl == other.appUrl &&
@@ -2168,7 +2181,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
                                                                                 groups.hashCode),
                                                                             taxRates.hashCode),
                                                                         taskStatuses.hashCode),
@@ -2200,6 +2213,9 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
           ..add('portalMode', portalMode)
+          ..add('updateProducts', updateProducts)
+          ..add('convertProductExchangeRate', convertProductExchangeRate)
+          ..add('fillProducts', fillProducts)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('appUrl', appUrl)
@@ -2263,6 +2279,20 @@ class CompanyEntityBuilder
   String _portalMode;
   String get portalMode => _$this._portalMode;
   set portalMode(String portalMode) => _$this._portalMode = portalMode;
+
+  bool _updateProducts;
+  bool get updateProducts => _$this._updateProducts;
+  set updateProducts(bool updateProducts) =>
+      _$this._updateProducts = updateProducts;
+
+  bool _convertProductExchangeRate;
+  bool get convertProductExchangeRate => _$this._convertProductExchangeRate;
+  set convertProductExchangeRate(bool convertProductExchangeRate) =>
+      _$this._convertProductExchangeRate = convertProductExchangeRate;
+
+  bool _fillProducts;
+  bool get fillProducts => _$this._fillProducts;
+  set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
 
   String _plan;
   String get plan => _$this._plan;
@@ -2394,6 +2424,9 @@ class CompanyEntityBuilder
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
       _portalMode = _$v.portalMode;
+      _updateProducts = _$v.updateProducts;
+      _convertProductExchangeRate = _$v.convertProductExchangeRate;
+      _fillProducts = _$v.fillProducts;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _appUrl = _$v.appUrl;
@@ -2449,6 +2482,9 @@ class CompanyEntityBuilder
               sizeId: sizeId,
               industryId: industryId,
               portalMode: portalMode,
+              updateProducts: updateProducts,
+              convertProductExchangeRate: convertProductExchangeRate,
+              fillProducts: fillProducts,
               plan: plan,
               companyKey: companyKey,
               appUrl: appUrl,
@@ -3249,12 +3285,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool sharedInvoiceQuoteCounter;
   @override
-  final bool updateProducts;
-  @override
-  final bool convertProductExchangeRate;
-  @override
-  final bool fillProducts;
-  @override
   final String defaultInvoiceTerms;
   @override
   final String defaultQuoteTerms;
@@ -3427,9 +3457,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.resetCounterDate,
       this.counterPadding,
       this.sharedInvoiceQuoteCounter,
-      this.updateProducts,
-      this.convertProductExchangeRate,
-      this.fillProducts,
       this.defaultInvoiceTerms,
       this.defaultQuoteTerms,
       this.enableInvoiceTaxes,
@@ -3556,9 +3583,6 @@ class _$SettingsEntity extends SettingsEntity {
         resetCounterDate == other.resetCounterDate &&
         counterPadding == other.counterPadding &&
         sharedInvoiceQuoteCounter == other.sharedInvoiceQuoteCounter &&
-        updateProducts == other.updateProducts &&
-        convertProductExchangeRate == other.convertProductExchangeRate &&
-        fillProducts == other.fillProducts &&
         defaultInvoiceTerms == other.defaultInvoiceTerms &&
         defaultQuoteTerms == other.defaultQuoteTerms &&
         enableInvoiceTaxes == other.enableInvoiceTaxes &&
@@ -3637,7 +3661,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertInvoice.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode),
                                                                                 requireInvoiceSignature.hashCode),
                                                                             requireQuoteSignature.hashCode),
                                                                         name.hashCode),
@@ -3718,9 +3742,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('resetCounterDate', resetCounterDate)
           ..add('counterPadding', counterPadding)
           ..add('sharedInvoiceQuoteCounter', sharedInvoiceQuoteCounter)
-          ..add('updateProducts', updateProducts)
-          ..add('convertProductExchangeRate', convertProductExchangeRate)
-          ..add('fillProducts', fillProducts)
           ..add('defaultInvoiceTerms', defaultInvoiceTerms)
           ..add('defaultQuoteTerms', defaultQuoteTerms)
           ..add('enableInvoiceTaxes', enableInvoiceTaxes)
@@ -4057,20 +4078,6 @@ class SettingsEntityBuilder
   set sharedInvoiceQuoteCounter(bool sharedInvoiceQuoteCounter) =>
       _$this._sharedInvoiceQuoteCounter = sharedInvoiceQuoteCounter;
 
-  bool _updateProducts;
-  bool get updateProducts => _$this._updateProducts;
-  set updateProducts(bool updateProducts) =>
-      _$this._updateProducts = updateProducts;
-
-  bool _convertProductExchangeRate;
-  bool get convertProductExchangeRate => _$this._convertProductExchangeRate;
-  set convertProductExchangeRate(bool convertProductExchangeRate) =>
-      _$this._convertProductExchangeRate = convertProductExchangeRate;
-
-  bool _fillProducts;
-  bool get fillProducts => _$this._fillProducts;
-  set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
-
   String _defaultInvoiceTerms;
   String get defaultInvoiceTerms => _$this._defaultInvoiceTerms;
   set defaultInvoiceTerms(String defaultInvoiceTerms) =>
@@ -4398,9 +4405,6 @@ class SettingsEntityBuilder
       _resetCounterDate = _$v.resetCounterDate;
       _counterPadding = _$v.counterPadding;
       _sharedInvoiceQuoteCounter = _$v.sharedInvoiceQuoteCounter;
-      _updateProducts = _$v.updateProducts;
-      _convertProductExchangeRate = _$v.convertProductExchangeRate;
-      _fillProducts = _$v.fillProducts;
       _defaultInvoiceTerms = _$v.defaultInvoiceTerms;
       _defaultQuoteTerms = _$v.defaultQuoteTerms;
       _enableInvoiceTaxes = _$v.enableInvoiceTaxes;
@@ -4537,9 +4541,6 @@ class SettingsEntityBuilder
               resetCounterDate: resetCounterDate,
               counterPadding: counterPadding,
               sharedInvoiceQuoteCounter: sharedInvoiceQuoteCounter,
-              updateProducts: updateProducts,
-              convertProductExchangeRate: convertProductExchangeRate,
-              fillProducts: fillProducts,
               defaultInvoiceTerms: defaultInvoiceTerms,
               defaultQuoteTerms: defaultQuoteTerms,
               enableInvoiceTaxes: enableInvoiceTaxes,

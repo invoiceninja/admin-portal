@@ -28,6 +28,9 @@ abstract class CompanyEntity extends Object
       enabledModules: 0,
       financialYearStart: 1,
       startOfWeek: 1,
+      updateProducts: true,
+      fillProducts: true,
+      convertProductExchangeRate: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -70,6 +73,15 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'portal_mode')
   String get portalMode;
+
+  @BuiltValueField(wireName: 'update_products')
+  bool get updateProducts;
+
+  @BuiltValueField(wireName: 'convert_products')
+  bool get convertProductExchangeRate;
+
+  @BuiltValueField(wireName: 'fill_products')
+  bool get fillProducts;
 
   // TODO remove this
   @nullable
@@ -487,7 +499,6 @@ abstract class SettingsEntity
       phone: '',
       // TODO set to default EST timezone
       timezoneId: '',
-      convertProductExchangeRate: null,
       dateFormatId: null,
       defaultInvoiceDesignId: null,
       defaultInvoiceFooter: '',
@@ -526,11 +537,7 @@ abstract class SettingsEntity
       emailBodyReminder1: '',
       emailBodyReminder2: '',
       emailBodyReminder3: '',
-      fillProducts: null,
       enablePortalPassword: null,
-      hasCustomDesign1: null,
-      hasCustomDesign2: null,
-      hasCustomDesign3: null,
     );
   }
 
@@ -758,18 +765,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'shared_invoice_quote_counter')
   bool get sharedInvoiceQuoteCounter;
-
-  @nullable
-  @BuiltValueField(wireName: 'update_products')
-  bool get updateProducts;
-
-  @nullable
-  @BuiltValueField(wireName: 'convert_products')
-  bool get convertProductExchangeRate;
-
-  @nullable
-  @BuiltValueField(wireName: 'fill_products')
-  bool get fillProducts;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_terms')

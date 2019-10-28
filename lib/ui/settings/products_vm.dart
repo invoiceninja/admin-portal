@@ -31,8 +31,8 @@ class ProductSettingsScreen extends StatelessWidget {
 class ProductSettingsVM {
   ProductSettingsVM({
     @required this.state,
-    @required this.settings,
-    @required this.onSettingsChanged,
+    @required this.company,
+    @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
@@ -42,10 +42,9 @@ class ProductSettingsVM {
 
     return ProductSettingsVM(
         state: state,
-        settings: state.uiState.settingsUIState.settings,
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-        },
+        company: state.uiState.settingsUIState.userCompany.company,
+        onCompanyChanged: (company) =>
+            store.dispatch(UpdateCompany(company: company)),
         onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
@@ -60,6 +59,6 @@ class ProductSettingsVM {
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final SettingsEntity settings;
-  final Function(SettingsEntity) onSettingsChanged;
+  final CompanyEntity company;
+  final Function(CompanyEntity) onCompanyChanged;
 }
