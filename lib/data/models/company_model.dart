@@ -624,7 +624,7 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'auto_convert_quote')
-  bool get autoConvertInvoice;
+  bool get autoConvertQuote;
 
   @nullable
   @BuiltValueField(wireName: 'inclusive_taxes')
