@@ -33,15 +33,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'update_products',
-      serializers.serialize(object.updateProducts,
-          specifiedType: const FullType(bool)),
-      'convert_products',
-      serializers.serialize(object.convertProductExchangeRate,
-          specifiedType: const FullType(bool)),
-      'fill_products',
-      serializers.serialize(object.fillProducts,
-          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -104,6 +95,24 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('portal_mode')
         ..add(serializers.serialize(object.portalMode,
             specifiedType: const FullType(String)));
+    }
+    if (object.updateProducts != null) {
+      result
+        ..add('update_products')
+        ..add(serializers.serialize(object.updateProducts,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.convertProductExchangeRate != null) {
+      result
+        ..add('convert_products')
+        ..add(serializers.serialize(object.convertProductExchangeRate,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.fillProducts != null) {
+      result
+        ..add('fill_products')
+        ..add(serializers.serialize(object.fillProducts,
+            specifiedType: const FullType(bool)));
     }
     if (object.plan != null) {
       result
@@ -2087,16 +2096,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.isOwner,
       this.id})
       : super._() {
-    if (updateProducts == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'updateProducts');
-    }
-    if (convertProductExchangeRate == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'convertProductExchangeRate');
-    }
-    if (fillProducts == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'fillProducts');
-    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }

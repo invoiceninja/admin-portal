@@ -74,12 +74,15 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'portal_mode')
   String get portalMode;
 
+  @nullable
   @BuiltValueField(wireName: 'update_products')
   bool get updateProducts;
 
+  @nullable
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
 
+  @nullable
   @BuiltValueField(wireName: 'fill_products')
   bool get fillProducts;
 
