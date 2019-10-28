@@ -14,6 +14,19 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'auto_email_invoice': 'Auto Email',
+      'auto_email_invoice_help':
+          'Automatically email recurring invoices when they are created.',
+      'auto_archive_invoice': 'Auto Archive',
+      'auto_archive_invoice_help':
+          'Automatically archive invoices when they are paid.',
+      'auto_archive_quote': 'Auto Archive',
+      'auto_archive_quote_help':
+          'Automatically archive quotes when they are converted.',
+      'auto_convert_quote': 'Auto Convert',
+      'auto_convert_quote_help':
+          'Automatically convert a quote to an invoice when approved by a client.',
+      'workflow_settings': 'Workflow Settings',
       'freq_weekly': 'Weekly',
       'freq_two_weeks': 'Two Weeks',
       'freq_four_weeks': 'Four Weeks',
@@ -15249,6 +15262,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get freqAnnually => _localizedValues[localeCode]['freq_annually'];
 
   String get freqTwoYears => _localizedValues[localeCode]['freq_two_years'];
+
+  String get workflowSettings =>
+      _localizedValues[localeCode]['workflow_settings'];
+
+  String get autoEmailInvoice =>
+      _localizedValues[localeCode]['auto_email_invoice'];
+
+  String get autoEmailInvoiceHelp =>
+      _localizedValues[localeCode]['auto_email_invoice_help'];
+
+  String get autoArchiveInvoice =>
+      _localizedValues[localeCode]['auto_archive_invoice'];
+
+  String get autoArchiveInvoiceHelp =>
+      _localizedValues[localeCode]['auto_archive_invoice_help'];
+
+  String get autoArchiveQuote =>
+      _localizedValues[localeCode]['auto_archive_quote'];
+
+  String get autoArchiveQuoteHelp =>
+      _localizedValues[localeCode]['auto_archive_quote_help'];
+
+  String get autoConvertQuote =>
+      _localizedValues[localeCode]['auto_convert_quote'];
+
+  String get autoConvertQuoteHelp =>
+      _localizedValues[localeCode]['auto_convert_quote_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

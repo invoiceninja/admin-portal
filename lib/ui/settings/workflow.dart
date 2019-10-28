@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -30,14 +31,33 @@ class _WorkflowSettingsState extends State<WorkflowSettings> {
     final settings = viewModel.settings;
 
     return SettingsScaffold(
-      title: localization.productSettings,
+      title: localization.workflowSettings,
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[
           FormCard(
             children: <Widget>[
-              
+              SwitchListTile(
+                secondary: Icon(FontAwesomeIcons.solidEnvelope),
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.autoEmailInvoice),
+                subtitle: Text(localization.autoEmailInvoiceHelp),
+                value: settings.autoEmailInvoice ?? false,
+                onChanged: (value) => viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..autoEmailInvoice = value
+                )),
+              ),
+              SwitchListTile(
+                secondary: Icon(FontAwesomeIcons.archive),
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.autoArchiveInvoice),
+                subtitle: Text(localization.autoArchiveInvoiceHelp),
+                value: settings.autoArchiveInvoice ?? false,
+                onChanged: (value) => viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..autoArchiveInvoice = value
+                )),
+              ),
             ],
           )
         ],

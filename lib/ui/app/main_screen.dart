@@ -37,6 +37,7 @@ import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
@@ -217,6 +218,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsCustomFields:
         screen = CustomFieldsScreen();
+        break;
+      case kSettingsWorkflowSettings:
+        screen = WorkflowSettingsScreen();
         break;
       case kSettingsInvoiceDesign:
         screen = InvoiceDesignScreen();
