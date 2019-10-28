@@ -485,62 +485,18 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
 
 abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
-  factory SettingsEntity() {
+  factory SettingsEntity({
+    SettingsEntity companySettings,
+    SettingsEntity groupSettings,
+    SettingsEntity clientSettings,
+  }) {
     return _$SettingsEntity._(
-      name: '',
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      postalCode: '',
-      countryId: null,
-      companyLogo: '',
-      vatNumber: '',
-      idNumber: '',
-      website: '',
-      email: '',
-      phone: '',
-      // TODO set to default EST timezone
-      timezoneId: '',
-      dateFormatId: null,
-      defaultInvoiceDesignId: null,
-      defaultInvoiceFooter: '',
-      defaultInvoiceTerms: '',
-      defaultPaymentTerms: 0,
-      defaultPaymentTypeId: null,
-      defaultQuoteDesignId: null,
-      defaultQuoteTerms: '',
-      defaultTaskRate: 0,
-      defaultTaxName1: '',
-      defaultTaxRate1: 0,
-      defaultTaxName2: '',
-      defaultTaxRate2: 0,
-      sendReminders: null,
-      showTasksInPortal: null,
-      enableInclusiveTaxes: null,
-      enableInvoiceItemTaxes: null,
-      enableInvoiceTaxes: null,
-      enableMilitaryTime: null,
-      enableSecondTaxRate: null,
-      languageId: null,
-      showCurrencyCode: null,
-      showInvoiceItemTaxes: null,
-      customPaymentTerms: BuiltList<PaymentTermEntity>(),
-      invoiceFields: '',
-      emailFooter: '',
-      emailSubjectInvoice: '',
-      emailSubjectQuote: '',
-      emailSubjectPayment: '',
-      emailBodyInvoice: '',
-      emailBodyQuote: '',
-      emailBodyPayment: '',
-      emailSubjectReminder1: '',
-      emailSubjectReminder2: '',
-      emailSubjectReminder3: '',
-      emailBodyReminder1: '',
-      emailBodyReminder2: '',
-      emailBodyReminder3: '',
-      enablePortalPassword: null,
+      timezoneId: clientSettings?.timezoneId ??
+          groupSettings?.timezoneId ??
+          companySettings?.timezoneId,
+      dateFormatId: clientSettings?.dateFormatId ??
+          groupSettings?.dateFormatId ??
+          companySettings?.dateFormatId,
     );
   }
 
@@ -836,7 +792,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'enable_second_tax_rate')
   bool get enableSecondTaxRate;
-
 
   @nullable
   @BuiltValueField(wireName: 'invoice_fields')
