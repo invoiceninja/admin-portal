@@ -1429,6 +1429,18 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.secondaryColor,
             specifiedType: const FullType(String)));
     }
+    if (object.primaryFont != null) {
+      result
+        ..add('primary_font')
+        ..add(serializers.serialize(object.primaryFont,
+            specifiedType: const FullType(String)));
+    }
+    if (object.secondaryFont != null) {
+      result
+        ..add('secondary_font')
+        ..add(serializers.serialize(object.secondaryFont,
+            specifiedType: const FullType(String)));
+    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -1922,6 +1934,14 @@ class _$SettingsEntitySerializer
           break;
         case 'secondary_color':
           result.secondaryColor = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'primary_font':
+          result.primaryFont = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'secondary_font':
+          result.secondaryFont = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_payment_terms':
@@ -3448,6 +3468,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String secondaryColor;
   @override
+  final String primaryFont;
+  @override
+  final String secondaryFont;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3573,6 +3597,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.fontSize,
       this.primaryColor,
       this.secondaryColor,
+      this.primaryFont,
+      this.secondaryFont,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3704,6 +3730,8 @@ class _$SettingsEntity extends SettingsEntity {
         fontSize == other.fontSize &&
         primaryColor == other.primaryColor &&
         secondaryColor == other.secondaryColor &&
+        primaryFont == other.primaryFont &&
+        secondaryFont == other.secondaryFont &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3730,22 +3758,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode),
-                                                                                website.hashCode),
-                                                                            address1.hashCode),
-                                                                        address2.hashCode),
-                                                                    city.hashCode),
-                                                                state.hashCode),
-                                                            postalCode.hashCode),
-                                                        phone.hashCode),
-                                                    email.hashCode),
-                                                countryId.hashCode),
-                                            vatNumber.hashCode),
-                                        idNumber.hashCode),
-                                    pageSize.hashCode),
-                                fontSize.hashCode),
-                            primaryColor.hashCode),
-                        secondaryColor.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode),
+                                                                                address2.hashCode),
+                                                                            city.hashCode),
+                                                                        state.hashCode),
+                                                                    postalCode.hashCode),
+                                                                phone.hashCode),
+                                                            email.hashCode),
+                                                        countryId.hashCode),
+                                                    vatNumber.hashCode),
+                                                idNumber.hashCode),
+                                            pageSize.hashCode),
+                                        fontSize.hashCode),
+                                    primaryColor.hashCode),
+                                secondaryColor.hashCode),
+                            primaryFont.hashCode),
+                        secondaryFont.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3868,6 +3896,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('fontSize', fontSize)
           ..add('primaryColor', primaryColor)
           ..add('secondaryColor', secondaryColor)
+          ..add('primaryFont', primaryFont)
+          ..add('secondaryFont', secondaryFont)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4420,6 +4450,15 @@ class SettingsEntityBuilder
   set secondaryColor(String secondaryColor) =>
       _$this._secondaryColor = secondaryColor;
 
+  String _primaryFont;
+  String get primaryFont => _$this._primaryFont;
+  set primaryFont(String primaryFont) => _$this._primaryFont = primaryFont;
+
+  String _secondaryFont;
+  String get secondaryFont => _$this._secondaryFont;
+  set secondaryFont(String secondaryFont) =>
+      _$this._secondaryFont = secondaryFont;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4558,6 +4597,8 @@ class SettingsEntityBuilder
       _fontSize = _$v.fontSize;
       _primaryColor = _$v.primaryColor;
       _secondaryColor = _$v.secondaryColor;
+      _primaryFont = _$v.primaryFont;
+      _secondaryFont = _$v.secondaryFont;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4699,6 +4740,8 @@ class SettingsEntityBuilder
               fontSize: fontSize,
               primaryColor: primaryColor,
               secondaryColor: secondaryColor,
+              primaryFont: primaryFont,
+              secondaryFont: secondaryFont,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

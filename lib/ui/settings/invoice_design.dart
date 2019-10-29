@@ -1,12 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceDesign extends StatefulWidget {
@@ -136,6 +140,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             child: Text(kInvoiceDesigns[designId]),
                           ))
                       .toList(),
+                ),
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.primaryFont,
+                  initialValue: settings.primaryFont,
+                  entityMap: memoizedFontMap(kGoogleFonts),
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..primaryFont = font.id)),
                 ),
                 AppDropdownButton(
                   labelText: localization.pageSize,

@@ -956,6 +956,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'secondary_color')
   String get secondaryColor;
 
+  @nullable
+  @BuiltValueField(wireName: 'primary_font')
+  String get primaryFont;
+
+  @nullable
+  @BuiltValueField(wireName: 'secondary_font')
+  String get secondaryFont;
+
 
 
   // TODO remove this field

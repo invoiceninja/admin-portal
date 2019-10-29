@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/static/font_model.dart';
 import 'package:memoize/memoize.dart';
 
 var memoizedCountryList = memo1(
@@ -133,4 +134,17 @@ List<String> paymentTypeList(
       (idA, idB) => paymentTypeMap[idA].id.compareTo(paymentTypeMap[idB].id));
 
   return list;
+}
+
+var memoizedFontMap = memo1((List<dynamic> fontList) => fontMap(fontList));
+
+BuiltMap<String, SelectableEntity> fontMap(List<dynamic> fonts) {
+  print(Map<String, SelectableEntity>.fromIterable(fonts,
+      key: (dynamic v) => v['value'],
+      value: (dynamic v) => FontEntity(id: v['value'], name: v['label'])));
+
+  return BuiltMap<String, SelectableEntity>.from(
+      Map<String, SelectableEntity>.fromIterable(fonts,
+          key: (dynamic v) => v['value'],
+          value: (dynamic v) => FontEntity(id: v['value'], name: v['label'])));
 }
