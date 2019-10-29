@@ -7,42 +7,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
-import 'package:invoiceninja_flutter/ui/client/client_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
-import 'package:invoiceninja_flutter/ui/expense/expense_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/group/group_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/buy_now_buttons_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
-import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -242,6 +206,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsDataVisualizations:
         screen = DataVisualizationsScreen();
+        break;
+      case kSettingsUserManagement:
+        screen = UserScreenBuilder();
+        break;
+      case kSettingsUserManagementView:
+        screen = UserViewScreen();
+        break;
+      case kSettingsUserManagementEdit:
+        screen = UserEditScreen();
         break;
     }
 
