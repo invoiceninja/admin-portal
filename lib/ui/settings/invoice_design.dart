@@ -113,6 +113,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.invoiceDesign,
                   value: settings.defaultInvoiceDesignId,
+                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(settings
                       .rebuild((b) => b..defaultInvoiceDesignId = value)),
                   items: designs
@@ -125,6 +126,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.quoteDesign,
                   value: settings.defaultQuoteDesignId,
+                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..defaultQuoteDesignId = value)),
                   items: designs
@@ -137,18 +139,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..pageSize = value)),
-                  items: kPageSizes
-                      .map((pageSize) => DropdownMenuItem<String>(
-                            value: pageSize,
-                            child: Text(pageSize),
-                          ))
-                      .toList(),
-                ),
-                AppDropdownButton(
-                  labelText: localization.pageSize,
-                  value: settings.pageSize,
+                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..pageSize = value)),
                   items: kPageSizes
@@ -161,13 +152,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.fontSize,
                   value:
-                  settings.fontSize == null ? '' : '${settings.fontSize}',
+                      settings.fontSize == null ? '' : '${settings.fontSize}',
+                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..fontSize = int.parse(value))),
+                  // TODO remove 0 from options 
                   items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                       .map((fontSize) => DropdownMenuItem<String>(
                             value: '$fontSize',
-                            child: fontSize == 0 ? SizedBox() : Text('$fontSize'),
+                            child:
+                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
                 ),
