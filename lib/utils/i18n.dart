@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'primary_color': 'Primary Color',
+      'secondary_color': 'Secondary Color',
       'page_size': 'Page Size',
       'font_size': 'Font Size',
       'quote_design': 'Quote Design',
@@ -15317,6 +15319,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get fontSize => _localizedValues[localeCode]['font_size'];
 
+  String get primaryColor => _localizedValues[localeCode]['primary_color'];
+
+  String get secondaryColor => _localizedValues[localeCode]['secondary_color'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

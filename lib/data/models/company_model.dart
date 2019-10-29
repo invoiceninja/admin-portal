@@ -948,6 +948,16 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'font_size')
   int get fontSize;
 
+  @nullable
+  @BuiltValueField(wireName: 'primary_color')
+  String get primaryColor;
+
+  @nullable
+  @BuiltValueField(wireName: 'secondary_color')
+  String get secondaryColor;
+
+
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')

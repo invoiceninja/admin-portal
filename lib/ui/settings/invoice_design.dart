@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -152,18 +153,24 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.fontSize,
                   value:
-                      settings.fontSize == null ? '' : '${settings.fontSize}',
-                  showBlank: state.settingsUIState.isFiltered,
+                  settings.fontSize == null ? '' : '${settings.fontSize}',
+                  //showBlank: state.settingsUIState.isFiltered,
+                  // TODO remove this and 0 from options
+                  showBlank: true,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..fontSize = int.parse(value))),
-                  // TODO remove 0 from options 
                   items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                       .map((fontSize) => DropdownMenuItem<String>(
                             value: '$fontSize',
-                            child:
-                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
+                            child: fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
+                ),
+                FormColorPicker(
+                  labelText: localization.primaryColor,
+                  onSelected: (value) => viewModel.onSettingsChanged(settings.rebuild((b) => b
+
+                  )),
                 ),
               ],
             ),
