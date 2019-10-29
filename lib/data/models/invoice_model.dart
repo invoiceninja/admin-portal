@@ -142,7 +142,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @BuiltValueField(wireName: 'invoice_status_id')
+  @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
   @BuiltValueField(wireName: 'invoice_number')

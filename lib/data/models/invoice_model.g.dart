@@ -128,7 +128,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
-      'invoice_status_id',
+      'status_id',
       serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
       'invoice_number',
@@ -320,7 +320,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_status_id':
+        case 'status_id':
           result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;

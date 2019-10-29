@@ -52,7 +52,7 @@ class QuoteListItem extends StatelessWidget {
 
     final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
         ? kQuoteStatusApproved
-        : invoice.invoiceStatusId;
+        : invoice.statusId;
 
     return DismissibleEntity(
       isSelected: invoice.id ==

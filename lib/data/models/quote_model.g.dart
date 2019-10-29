@@ -120,8 +120,8 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
-      'invoice_status_id',
-      serializers.serialize(object.invoiceStatusId,
+      'status_id',
+      serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
       'invoice_number',
       serializers.serialize(object.invoiceNumber,
@@ -296,8 +296,8 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_status_id':
-          result.invoiceStatusId = serializers.deserialize(value,
+        case 'status_id':
+          result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_number':
@@ -798,7 +798,7 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final String clientId;
   @override
-  final String invoiceStatusId;
+  final String statusId;
   @override
   final String invoiceNumber;
   @override
@@ -889,7 +889,7 @@ class _$QuoteEntity extends QuoteEntity {
       {this.amount,
       this.balance,
       this.clientId,
-      this.invoiceStatusId,
+      this.statusId,
       this.invoiceNumber,
       this.discount,
       this.poNumber,
@@ -941,8 +941,8 @@ class _$QuoteEntity extends QuoteEntity {
     if (clientId == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'clientId');
     }
-    if (invoiceStatusId == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'invoiceStatusId');
+    if (statusId == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'statusId');
     }
     if (invoiceNumber == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'invoiceNumber');
@@ -1062,7 +1062,7 @@ class _$QuoteEntity extends QuoteEntity {
         amount == other.amount &&
         balance == other.balance &&
         clientId == other.clientId &&
-        invoiceStatusId == other.invoiceStatusId &&
+        statusId == other.statusId &&
         invoiceNumber == other.invoiceNumber &&
         discount == other.discount &&
         poNumber == other.poNumber &&
@@ -1126,7 +1126,7 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
                                                                                 customSurcharge3.hashCode),
                                                                             customSurcharge4.hashCode),
                                                                         customTaxes1.hashCode),
@@ -1154,7 +1154,7 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('amount', amount)
           ..add('balance', balance)
           ..add('clientId', clientId)
-          ..add('invoiceStatusId', invoiceStatusId)
+          ..add('statusId', statusId)
           ..add('invoiceNumber', invoiceNumber)
           ..add('discount', discount)
           ..add('poNumber', poNumber)
@@ -1215,10 +1215,9 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
 
-  String _invoiceStatusId;
-  String get invoiceStatusId => _$this._invoiceStatusId;
-  set invoiceStatusId(String invoiceStatusId) =>
-      _$this._invoiceStatusId = invoiceStatusId;
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
 
   String _invoiceNumber;
   String get invoiceNumber => _$this._invoiceNumber;
@@ -1404,7 +1403,7 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _amount = _$v.amount;
       _balance = _$v.balance;
       _clientId = _$v.clientId;
-      _invoiceStatusId = _$v.invoiceStatusId;
+      _statusId = _$v.statusId;
       _invoiceNumber = _$v.invoiceNumber;
       _discount = _$v.discount;
       _poNumber = _$v.poNumber;
@@ -1473,7 +1472,7 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               amount: amount,
               balance: balance,
               clientId: clientId,
-              invoiceStatusId: invoiceStatusId,
+              statusId: statusId,
               invoiceNumber: invoiceNumber,
               discount: discount,
               poNumber: poNumber,

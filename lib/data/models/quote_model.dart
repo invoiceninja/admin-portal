@@ -120,7 +120,7 @@ abstract class QuoteEntity extends Object
     ..invoiceNumber = ''
     ..invoiceDate = convertDateTimeToSqlDate()
     ..dueDate = ''
-    ..invoiceStatusId = kQuoteStatusDraft);
+    ..statusId = kQuoteStatusDraft);
 
   @override
   EntityType get entityType {
@@ -134,8 +134,8 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @BuiltValueField(wireName: 'invoice_status_id')
-  String get invoiceStatusId;
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
 
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
@@ -302,7 +302,7 @@ abstract class QuoteEntity extends Object
     }
 
     for (final status in statuses) {
-      if (status.id == invoiceStatusId) {
+      if (status.id == statusId) {
         return true;
       }
 
@@ -447,7 +447,7 @@ abstract class QuoteEntity extends Object
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
-  bool get isSent => invoiceStatusId != kQuoteStatusDraft;
+  bool get isSent => statusId != kQuoteStatusDraft;
 
   bool get isPastDue {
     if (dueDate.isEmpty) {
