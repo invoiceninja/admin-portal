@@ -103,7 +103,7 @@ class InvoiceListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text((invoice.invoiceNumber +
+                      ? Text(((invoice.invoiceNumber ?? '') +
                               ' • ' +
                               formatDate(
                                   invoice.dueDate.isNotEmpty

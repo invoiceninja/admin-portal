@@ -50,7 +50,7 @@ class PaymentListItem extends StatelessWidget {
         ? payment.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ??
-        invoice.invoiceNumber +
+        (invoice.invoiceNumber ?? '') +
             ' • ' +
             formatDate(invoice.invoiceDate, context);
 
