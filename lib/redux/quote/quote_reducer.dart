@@ -27,10 +27,10 @@ InvoiceItemEntity editQuoteItem(InvoiceItemEntity quoteItem, dynamic action) {
 }
 
 Reducer<String> dropdownFilterReducer = combineReducers([
-  TypedReducer<String, FilterQuoteDropdown>(filterClientDropdownReducer),
+  TypedReducer<String, FilterQuoteDropdown>(filterquoteDropdownReducer),
 ]);
 
-String filterClientDropdownReducer(
+String filterquoteDropdownReducer(
     String dropdownFilter, FilterQuoteDropdown action) {
   return action.filter;
 }
@@ -62,7 +62,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
   return InvoiceEntity();
 }
 
@@ -180,8 +180,7 @@ ListUIState _addToListMultiselect(
 
 ListUIState _removeFromListMultiselect(
     ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
-  return quoteListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return quoteListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -214,65 +213,103 @@ QuoteState _markSentQuoteSuccess(
 
 QuoteState _archiveQuoteRequest(
     QuoteState quoteState, ArchiveQuoteRequest action) {
-  final quote = quoteState.map[action.quoteId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
 
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _archiveQuoteSuccess(
     QuoteState quoteState, ArchiveQuoteSuccess action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _archiveQuoteFailure(
     QuoteState quoteState, ArchiveQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteRequest(
     QuoteState quoteState, DeleteQuoteRequest action) {
-  if (!quoteState.map.containsKey(action.quoteId)) {
-    return quoteState;
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
+
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
   }
-
-  final quote = quoteState.map[action.quoteId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
-
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteSuccess(
     QuoteState quoteState, DeleteQuoteSuccess action) {
-  if (!quoteState.map.containsKey(action.quote.id)) {
-    return quoteState;
-  }
-
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteFailure(
     QuoteState quoteState, DeleteQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteRequest(
     QuoteState quoteState, RestoreQuoteRequest action) {
-  final quote = quoteState.map[action.quoteId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
+
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteSuccess(
     QuoteState quoteState, RestoreQuoteSuccess action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteFailure(
     QuoteState quoteState, RestoreQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _convertQuoteSuccess(
