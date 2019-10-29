@@ -278,7 +278,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _counterController.text = '${widget.counterValue ?? 0}';
+    _counterController.text = '${widget.counterValue ?? ''}';
     _patternController.text = widget.patternValue;
 
     _controllers
