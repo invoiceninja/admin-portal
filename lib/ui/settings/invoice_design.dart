@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -115,125 +114,93 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         focusNode: _focusNode,
         children: <Widget>[
           ListView(children: <Widget>[
-            Row(
+            FormCard(
               children: <Widget>[
-                Expanded(
-                  child: FormCard(
-                    children: <Widget>[
-                      AppDropdownButton(
-                        labelText: localization.invoiceDesign,
-                        value: settings.defaultInvoiceDesignId,
-                        showBlank: state.settingsUIState.isFiltered,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..defaultInvoiceDesignId = value)),
-                        items: designs
-                            .map((designId) => DropdownMenuItem<String>(
-                                  value: designId,
-                                  child: Text(kInvoiceDesigns[designId]),
-                                ))
-                            .toList(),
-                      ),
-                      AppDropdownButton(
-                        labelText: localization.quoteDesign,
-                        value: settings.defaultQuoteDesignId,
-                        showBlank: state.settingsUIState.isFiltered,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..defaultQuoteDesignId = value)),
-                        items: designs
-                            .map((designId) => DropdownMenuItem<String>(
-                                  value: designId,
-                                  child: Text(kInvoiceDesigns[designId]),
-                                ))
-                            .toList(),
-                      ),
-                    ],
-                  ),
+                AppDropdownButton(
+                  labelText: localization.invoiceDesign,
+                  value: settings.defaultInvoiceDesignId,
+                  showBlank: state.settingsUIState.isFiltered,
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..defaultInvoiceDesignId = value)),
+                  items: designs
+                      .map((designId) => DropdownMenuItem<String>(
+                            value: designId,
+                            child: Text(kInvoiceDesigns[designId]),
+                          ))
+                      .toList(),
                 ),
-                Expanded(
-                  child: FormCard(
-                    children: <Widget>[
-                      EntityDropdown(
-                        entityType: EntityType.font,
-                        labelText: localization.primaryFont,
-                        initialValue: settings.primaryFont,
-                        entityMap: fontMap,
-                        onSelected: (font) => viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..primaryFont = font.id)),
-                        allowClearing: state.settingsUIState.isFiltered,
-                      ),
-                      EntityDropdown(
-                        entityType: EntityType.font,
-                        labelText: localization.secondaryFont,
-                        initialValue: settings.secondaryFont,
-                        entityMap: memoizedFontMap(kGoogleFonts),
-                        onSelected: (font) => viewModel.onSettingsChanged(
-                            settings
-                                .rebuild((b) => b..secondaryFont = font.id)),
-                        allowClearing: state.settingsUIState.isFiltered,
-                      ),
-                    ],
-                  ),
+                AppDropdownButton(
+                  labelText: localization.quoteDesign,
+                  value: settings.defaultQuoteDesignId,
+                  showBlank: state.settingsUIState.isFiltered,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..defaultQuoteDesignId = value)),
+                  items: designs
+                      .map((designId) => DropdownMenuItem<String>(
+                            value: designId,
+                            child: Text(kInvoiceDesigns[designId]),
+                          ))
+                      .toList(),
                 ),
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: FormCard(
-                    children: <Widget>[
-                      AppDropdownButton(
-                        labelText: localization.pageSize,
-                        value: settings.pageSize,
-                        showBlank: state.settingsUIState.isFiltered,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..pageSize = value)),
-                        items: kPageSizes
-                            .map((pageSize) => DropdownMenuItem<String>(
-                                  value: pageSize,
-                                  child: Text(pageSize),
-                                ))
-                            .toList(),
-                      ),
-                      AppDropdownButton(
-                        labelText: localization.fontSize,
-                        value: settings.fontSize == null
-                            ? ''
-                            : '${settings.fontSize}',
-                        //showBlank: state.settingsUIState.isFiltered,
-                        // TODO remove this and 0 from options
-                        showBlank: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..fontSize = int.parse(value))),
-                        items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-                            .map((fontSize) => DropdownMenuItem<String>(
-                                  value: '$fontSize',
-                                  child: fontSize == 0
-                                      ? SizedBox()
-                                      : Text('$fontSize'),
-                                ))
-                            .toList(),
-                      ),
-                    ],
-                  ),
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.primaryFont,
+                  initialValue: settings.primaryFont,
+                  entityMap: fontMap,
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..primaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
                 ),
-                Expanded(
-                  child: FormCard(children: <Widget>[
-                    FormColorPicker(
-                      labelText: localization.primaryColor,
-                      onSelected: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..primaryColor = value)),
-                      initialValue: settings.primaryColor,
-                    ),
-                    FormColorPicker(
-                      labelText: localization.secondaryColor,
-                      onSelected: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..secondaryColor = value)),
-                      initialValue: settings.secondaryColor,
-                    ),
-                  ]),
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.secondaryFont,
+                  initialValue: settings.secondaryFont,
+                  entityMap: memoizedFontMap(kGoogleFonts),
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..secondaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
+                ),
+                AppDropdownButton(
+                  labelText: localization.pageSize,
+                  value: settings.pageSize,
+                  showBlank: state.settingsUIState.isFiltered,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..pageSize = value)),
+                  items: kPageSizes
+                      .map((pageSize) => DropdownMenuItem<String>(
+                            value: pageSize,
+                            child: Text(pageSize),
+                          ))
+                      .toList(),
+                ),
+                AppDropdownButton(
+                  labelText: localization.fontSize,
+                  value:
+                      settings.fontSize == null ? '' : '${settings.fontSize}',
+                  //showBlank: state.settingsUIState.isFiltered,
+                  // TODO remove this and 0 from options
+                  showBlank: true,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..fontSize = int.parse(value))),
+                  items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+                      .map((fontSize) => DropdownMenuItem<String>(
+                            value: '$fontSize',
+                            child:
+                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
+                          ))
+                      .toList(),
+                ),
+                FormColorPicker(
+                  labelText: localization.primaryColor,
+                  onSelected: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..primaryColor = value)),
+                  initialValue: settings.primaryColor,
+                ),
+                FormColorPicker(
+                  labelText: localization.secondaryColor,
+                  onSelected: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..secondaryColor = value)),
+                  initialValue: settings.secondaryColor,
                 ),
               ],
             ),
