@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -68,46 +69,55 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
           focusNode: _focusNode,
           children: <Widget>[
             ListView(
-              padding: const EdgeInsets.all(10),
               children: <Widget>[
-                BoolDropdownButton(
-                  label: localization.autoEmailInvoice,
-                  helpLabel: localization.autoEmailInvoiceHelp,
-                  value: settings.autoEmailInvoice ?? false,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..autoEmailInvoice = value)),
-                  iconData: FontAwesomeIcons.solidEnvelope,
-                  showBlank: state.settingsUIState.isFiltered,
-                ),
-                BoolDropdownButton(
-                  label: localization.autoArchiveInvoice,
-                  helpLabel: localization.autoArchiveInvoiceHelp,
-                  value: settings.autoArchiveInvoice ?? false,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..autoArchiveInvoice = value)),
-                  iconData: FontAwesomeIcons.archive,
-                  showBlank: state.settingsUIState.isFiltered,
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.autoEmailInvoice,
+                      helpLabel: localization.autoEmailInvoiceHelp,
+                      value: settings.autoEmailInvoice ?? false,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..autoEmailInvoice = value)),
+                      iconData: FontAwesomeIcons.solidEnvelope,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.autoArchiveInvoice,
+                      helpLabel: localization.autoArchiveInvoiceHelp,
+                      value: settings.autoArchiveInvoice ?? false,
+                      onChanged: (value) => viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..autoArchiveInvoice = value)),
+                      iconData: FontAwesomeIcons.archive,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                  ],
                 ),
               ],
             ),
             ListView(
               padding: const EdgeInsets.all(10),
               children: <Widget>[
-                BoolDropdownButton(
-                  label: localization.autoConvertQuote,
-                  helpLabel: localization.autoConvertQuoteHelp,
-                  value: settings.autoConvertQuote ?? false,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..autoConvertQuote = value)),
-                  showBlank: state.settingsUIState.isFiltered,
-                ),
-                BoolDropdownButton(
-                  label: localization.autoArchiveQuote,
-                  helpLabel: localization.autoArchiveQuoteHelp,
-                  value: settings.autoArchiveQuote ?? false,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..autoArchiveQuote = value)),
-                  showBlank: state.settingsUIState.isFiltered,
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.autoConvertQuote,
+                      helpLabel: localization.autoConvertQuoteHelp,
+                      value: settings.autoConvertQuote ?? false,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..autoConvertQuote = value)),
+                      iconData: FontAwesomeIcons.fileInvoice,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                    BoolDropdownButton(
+                      label: localization.autoArchiveQuote,
+                      helpLabel: localization.autoArchiveQuoteHelp,
+                      value: settings.autoArchiveQuote ?? false,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..autoArchiveQuote = value)),
+                      iconData: FontAwesomeIcons.archive,
+                      showBlank: state.settingsUIState.isFiltered,
+                    ),
+                  ],
                 ),
               ],
             ),
