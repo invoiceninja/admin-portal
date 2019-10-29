@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
@@ -80,7 +81,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    //final settings = viewModel.;
+    final settings = viewModel.settings;
+    final company = viewModel.company;
+    final designs = company.getInvoiceDesigns();
 
     return SettingsScaffold(
       title: localization.invoiceDesign,
@@ -108,33 +111,46 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ListView(children: <Widget>[
             FormCard(
               children: <Widget>[
-                /*
                 InputDecorator(
                   decoration: InputDecoration(
-                    labelText: localization.firstMonthOfTheYear,
+                    labelText: localization.invoiceDesign,
                   ),
-                  //isEmpty: company.financialYearStart == null,
                   child: DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                        value: company.financialYearStart,
+                    child: DropdownButton<String>(
+                        value: settings.defaultInvoiceDesignId,
                         isExpanded: true,
                         isDense: true,
-                        onChanged: (value) => viewModel.onCompanyChanged(company
-                            .rebuild((b) => b..financialYearStart = value)),
-                        items: kMonthsOfTheYear
-                            .map((id, month) =>
-                            MapEntry<int, DropdownMenuItem<int>>(
-                                id,
-                                DropdownMenuItem<int>(
-                                  child: Text(localization.lookup(month)),
-                                  value: id,
-                                )))
-                            .values
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..defaultInvoiceDesignId = value)),
+                        items: designs
+                            .map((designId) => DropdownMenuItem<String>(
+                                  value: designId,
+                                  child: Text(kInvoiceDesigns[designId]),
+                                ))
                             .toList()),
                   ),
-                )
-
-                 */
+                ),
+                InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: localization.quoteDesign,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                        value: settings.defaultQuoteDesignId,
+                        isExpanded: true,
+                        isDense: true,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..defaultQuoteDesignId = value)),
+                        items: designs
+                            .map((designId) => DropdownMenuItem<String>(
+                                  value: designId,
+                                  child: Text(kInvoiceDesigns[designId]),
+                                ))
+                            .toList()),
+                  ),
+                ),
               ],
             ),
           ]),

@@ -77,32 +77,32 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
   return invoice.rebuild((b) => b
     ..hasTasks = b.hasTasks || item.isTask
     ..hasExpenses = b.hasExpenses || item.isExpense
-    ..invoiceItems.add(item));
+    ..lineItems.add(item));
 }
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
-    ..hasTasks = action.invoiceItems.where((item) => item.isTask).isNotEmpty
+    ..hasTasks = action.lineItems.where((item) => item.isTask).isNotEmpty
     ..hasExpenses =
-        action.invoiceItems.where((item) => item.isExpense).isNotEmpty
-    ..invoiceItems.addAll(action.invoiceItems));
+        action.lineItems.where((item) => item.isExpense).isNotEmpty
+    ..lineItems.addAll(action.lineItems));
 }
 
 InvoiceEntity _removeInvoiceItem(
     InvoiceEntity invoice, DeleteInvoiceItem action) {
-  if (invoice.invoiceItems.length <= action.index) {
+  if (invoice.lineItems.length <= action.index) {
     return invoice;
   }
-  return invoice.rebuild((b) => b..invoiceItems.removeAt(action.index));
+  return invoice.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
 InvoiceEntity _updateInvoiceItem(
     InvoiceEntity invoice, UpdateInvoiceItem action) {
-  if (invoice.invoiceItems.length <= action.index) {
+  if (invoice.lineItems.length <= action.index) {
     return invoice;
   }
   return invoice
-      .rebuild((b) => b..invoiceItems[action.index] = action.invoiceItem);
+      .rebuild((b) => b..lineItems[action.index] = action.invoiceItem);
 }
 
 final invoiceListReducer = combineReducers<ListUIState>([

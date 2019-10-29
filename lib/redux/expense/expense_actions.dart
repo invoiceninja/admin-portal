@@ -278,7 +278,7 @@ void handleExpenseAction(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasExpenses = true
             ..clientId = expense.clientId
-            ..invoiceItems.add(item)),
+            ..lineItems.add(item)),
           context: context));
       break;
     case EntityAction.viewInvoice:

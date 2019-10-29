@@ -108,7 +108,7 @@ abstract class InvoiceEntity extends Object
       customTextValue1: '',
       customTextValue2: '',
       filename: '',
-      invoiceItems: BuiltList<InvoiceItemEntity>(),
+      lineItems: BuiltList<InvoiceItemEntity>(),
       invitations: BuiltList<InvitationEntity>(),
       updatedAt: 0,
       archivedAt: 0,
@@ -267,8 +267,8 @@ abstract class InvoiceEntity extends Object
   String get filename;
 
   @override
-  @BuiltValueField(wireName: 'invoice_items')
-  BuiltList<InvoiceItemEntity> get invoiceItems;
+  @BuiltValueField(wireName: 'line_items')
+  BuiltList<InvoiceItemEntity> get lineItems;
 
   BuiltList<InvitationEntity> get invitations;
 
@@ -420,7 +420,7 @@ abstract class InvoiceEntity extends Object
 
     if (taxRate.isInclusive) {
       invoice = invoice.rebuild((b) => b
-        ..invoiceItems.replace(invoiceItems
+        ..lineItems.replace(lineItems
             .map((item) => item.rebuild(
                 (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
             .toList()));

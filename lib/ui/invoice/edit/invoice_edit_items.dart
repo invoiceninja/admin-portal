@@ -38,8 +38,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             viewModel: viewModel,
             key: Key(invoiceItem.entityKey),
             invoiceItem: invoiceItem,
-            index: invoice.invoiceItems.indexOf(
-                invoice.invoiceItems.firstWhere((i) => i.id == invoiceItem.id)),
+            index: invoice.lineItems.indexOf(
+                invoice.lineItems.firstWhere((i) => i.id == invoiceItem.id)),
           );
         });
   }
@@ -49,7 +49,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem)
+    final invoiceItem = invoice.lineItems.contains(viewModel.invoiceItem)
         ? viewModel.invoiceItem
         : null;
 
@@ -60,7 +60,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       });
     }
 
-    if (invoice.invoiceItems.isEmpty) {
+    if (invoice.lineItems.isEmpty) {
       return Center(
         child: Text(
           localization.clickPlusToAddItem,
@@ -72,15 +72,15 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       );
     }
 
-    final invoiceItems =
-        invoice.invoiceItems.map((invoiceItem) => InvoiceItemListTile(
+    final lineItems =
+        invoice.lineItems.map((invoiceItem) => InvoiceItemListTile(
               invoice: invoice,
               invoiceItem: invoiceItem,
               onTap: () => _showInvoiceItemEditor(invoiceItem, context),
             ));
 
     return ListView(
-      children: invoiceItems.toList(),
+      children: lineItems.toList(),
     );
   }
 }

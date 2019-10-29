@@ -151,8 +151,8 @@ class InvoiceOverview extends StatelessWidget {
       ]);
     }
 
-    if (invoice.invoiceItems.isNotEmpty) {
-      invoice.invoiceItems.forEach((invoiceItem) {
+    if (invoice.lineItems.isNotEmpty) {
+      invoice.lineItems.forEach((invoiceItem) {
         widgets.addAll([
           Builder(
             builder: (BuildContext context) {

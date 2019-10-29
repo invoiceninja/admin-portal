@@ -218,7 +218,7 @@ void handleProductAction(
       store.dispatch(EditInvoice(
           context: context,
           invoice: InvoiceEntity(company: state.selectedCompany)
-              .rebuild((b) => b..invoiceItems.add(item))));
+              .rebuild((b) => b..lineItems.add(item))));
       break;
     case EntityAction.edit:
       store.dispatch(EditProduct(context: context, product: product));

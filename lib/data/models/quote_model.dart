@@ -101,7 +101,7 @@ abstract class QuoteEntity extends Object
       customTextValue1: '',
       customTextValue2: '',
       filename: '',
-      invoiceItems: BuiltList<InvoiceItemEntity>(),
+      lineItems: BuiltList<InvoiceItemEntity>(),
       invitations: BuiltList<InvitationEntity>(),
       updatedAt: 0,
       archivedAt: 0,
@@ -253,8 +253,8 @@ abstract class QuoteEntity extends Object
   SettingsEntity get settings;
 
   @override
-  @BuiltValueField(wireName: 'invoice_items')
-  BuiltList<InvoiceItemEntity> get invoiceItems;
+  @BuiltValueField(wireName: 'line_items')
+  BuiltList<InvoiceItemEntity> get lineItems;
 
   BuiltList<InvitationEntity> get invitations;
 
@@ -412,7 +412,7 @@ abstract class QuoteEntity extends Object
 
     if (taxRate.isInclusive) {
       quote = quote.rebuild((b) => b
-        ..invoiceItems.replace(invoiceItems
+        ..lineItems.replace(lineItems
             .map((item) => item.rebuild(
                 (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
             .toList()));

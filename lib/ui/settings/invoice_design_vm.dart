@@ -34,6 +34,7 @@ class InvoiceDesignScreen extends StatelessWidget {
 class InvoiceDesignVM {
   InvoiceDesignVM({
     @required this.state,
+    @required this.company,
     @required this.onSavePressed,
     @required this.onCancelPressed,
     @required this.settings,
@@ -47,6 +48,7 @@ class InvoiceDesignVM {
     return InvoiceDesignVM(
         state: state,
         settings: state.uiState.settingsUIState.settings,
+        company: state.uiState.settingsUIState.userCompany.company,
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
@@ -75,6 +77,7 @@ class InvoiceDesignVM {
 
   final AppState state;
   final SettingsEntity settings;
+  final CompanyEntity company;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

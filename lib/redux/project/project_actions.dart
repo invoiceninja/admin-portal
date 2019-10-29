@@ -278,7 +278,7 @@ void handleProjectAction(
           invoice: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
             ..clientId = project.clientId
-            ..invoiceItems.addAll(items)),
+            ..lineItems.addAll(items)),
           context: context));
       break;
     case EntityAction.clone:

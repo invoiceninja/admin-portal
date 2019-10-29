@@ -132,9 +132,9 @@ class AddInvoiceItem implements PersistUI {
 }
 
 class AddInvoiceItems implements PersistUI {
-  AddInvoiceItems(this.invoiceItems);
+  AddInvoiceItems(this.lineItems);
 
-  final List<InvoiceItemEntity> invoiceItems;
+  final List<InvoiceItemEntity> lineItems;
 }
 
 class UpdateInvoiceItem implements PersistUI {

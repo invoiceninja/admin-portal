@@ -72,25 +72,25 @@ InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
 
 InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
   return quote.rebuild(
-      (b) => b..invoiceItems.add(action.quoteItem ?? InvoiceItemEntity()));
+      (b) => b..lineItems.add(action.quoteItem ?? InvoiceItemEntity()));
 }
 
 InvoiceEntity _addQuoteItems(InvoiceEntity quote, AddQuoteItems action) {
-  return quote.rebuild((b) => b..invoiceItems.addAll(action.quoteItems));
+  return quote.rebuild((b) => b..lineItems.addAll(action.quoteItems));
 }
 
 InvoiceEntity _removeQuoteItem(InvoiceEntity quote, DeleteQuoteItem action) {
-  if (quote.invoiceItems.length <= action.index) {
+  if (quote.lineItems.length <= action.index) {
     return quote;
   }
-  return quote.rebuild((b) => b..invoiceItems.removeAt(action.index));
+  return quote.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
 InvoiceEntity _updateQuoteItem(InvoiceEntity quote, UpdateQuoteItem action) {
-  if (quote.invoiceItems.length <= action.index) {
+  if (quote.lineItems.length <= action.index) {
     return quote;
   }
-  return quote.rebuild((b) => b..invoiceItems[action.index] = action.quoteItem);
+  return quote.rebuild((b) => b..lineItems[action.index] = action.quoteItem);
 }
 
 final quoteListReducer = combineReducers<ListUIState>([

@@ -173,6 +173,16 @@ abstract class CompanyEntity extends Object
   @override
   String get listDisplayName => null;
 
+  List<String> getInvoiceDesigns() {
+    var designs = kInvoiceDesigns.keys.toList();
+
+    if (!isProPlan) {
+      designs = designs.sublist(0, 4);
+    }
+
+    return designs;
+  }
+
   String getCustomFieldLabel(String field) {
     // TODO remove this
     if (customFields == null) {
@@ -964,6 +974,8 @@ abstract class SettingsEntity
 
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
+
+
 
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {

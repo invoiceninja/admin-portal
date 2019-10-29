@@ -39,7 +39,7 @@ class _QuoteEditState extends State<QuoteEdit>
     final invoice = widget.viewModel.invoice;
     final invoiceItem = widget.viewModel.invoiceItem;
 
-    final index = invoice.invoiceItems.contains(invoiceItem)
+    final index = invoice.lineItems.contains(invoiceItem)
         ? kItemScreen
         : kDetailsScreen;
     _controller = TabController(vsync: this, length: 3, initialIndex: index);
@@ -143,7 +143,7 @@ class _QuoteEditState extends State<QuoteEdit>
                 context: context,
                 builder: (BuildContext context) {
                   return InvoiceItemSelector(
-                    excluded: invoice.invoiceItems
+                    excluded: invoice.lineItems
                         .where((item) => item.isTask || item.isExpense)
                         .map((item) => item.isTask
                             ? viewModel.state.taskState.map[item.taskId]

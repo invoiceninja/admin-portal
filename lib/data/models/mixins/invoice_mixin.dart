@@ -17,7 +17,7 @@ abstract class CalculateInvoiceTotal {
   bool get customTaxes2;
   bool get customTaxes3;
   bool get customTaxes4;
-  BuiltList<InvoiceItemEntity> get invoiceItems;
+  BuiltList<InvoiceItemEntity> get lineItems;
 
   double _calculateTaxAmount(
       double amount, double rate, bool useInclusiveTaxes) {
@@ -35,7 +35,7 @@ abstract class CalculateInvoiceTotal {
     double taxAmount;
     final map = <String, double>{};
 
-    invoiceItems.forEach((item) {
+    lineItems.forEach((item) {
       final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double itemDiscount = round(item.discount, 2);
@@ -107,7 +107,7 @@ abstract class CalculateInvoiceTotal {
     double total = baseTotal;
     double itemTax = 0.0;
 
-    invoiceItems.forEach((item) {
+    lineItems.forEach((item) {
       final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double itemDiscount = round(item.discount, 2);
@@ -176,7 +176,7 @@ abstract class CalculateInvoiceTotal {
   double get baseTotal {
     var total = 0.0;
 
-    invoiceItems.forEach((item) {
+    lineItems.forEach((item) {
       final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double discount = round(item.discount, 2);

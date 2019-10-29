@@ -113,6 +113,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
 
+    // TODO replace with company.getInvoiceDesigns
     var designs = kInvoiceDesigns.values.toList();
 
     if (!(company.settings.hasCustomDesign1 ?? true)) {

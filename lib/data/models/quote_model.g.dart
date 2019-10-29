@@ -213,8 +213,8 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
-      'invoice_items',
-      serializers.serialize(object.invoiceItems,
+      'line_items',
+      serializers.serialize(object.lineItems,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceItemEntity)])),
       'invitations',
@@ -414,8 +414,8 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
-        case 'invoice_items':
-          result.invoiceItems.replace(serializers.deserialize(value,
+        case 'line_items':
+          result.lineItems.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceItemEntity)]))
               as BuiltList<dynamic>);
@@ -846,7 +846,7 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final SettingsEntity settings;
   @override
-  final BuiltList<InvoiceItemEntity> invoiceItems;
+  final BuiltList<InvoiceItemEntity> lineItems;
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
@@ -902,7 +902,7 @@ class _$QuoteEntity extends QuoteEntity {
       this.customTextValue2,
       this.filename,
       this.settings,
-      this.invoiceItems,
+      this.lineItems,
       this.invitations,
       this.isChanged,
       this.createdAt,
@@ -1014,8 +1014,8 @@ class _$QuoteEntity extends QuoteEntity {
     if (settings == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'settings');
     }
-    if (invoiceItems == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'invoiceItems');
+    if (lineItems == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'lineItems');
     }
     if (invitations == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'invitations');
@@ -1067,7 +1067,7 @@ class _$QuoteEntity extends QuoteEntity {
         customTextValue2 == other.customTextValue2 &&
         filename == other.filename &&
         settings == other.settings &&
-        invoiceItems == other.invoiceItems &&
+        lineItems == other.lineItems &&
         invitations == other.invitations &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -1109,7 +1109,7 @@ class _$QuoteEntity extends QuoteEntity {
                                                     customTextValue2.hashCode),
                                                 filename.hashCode),
                                             settings.hashCode),
-                                        invoiceItems.hashCode),
+                                        lineItems.hashCode),
                                     invitations.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
@@ -1157,7 +1157,7 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('customTextValue2', customTextValue2)
           ..add('filename', filename)
           ..add('settings', settings)
-          ..add('invoiceItems', invoiceItems)
+          ..add('lineItems', lineItems)
           ..add('invitations', invitations)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -1317,11 +1317,11 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _$this._settings ??= new SettingsEntityBuilder();
   set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
-  ListBuilder<InvoiceItemEntity> _invoiceItems;
-  ListBuilder<InvoiceItemEntity> get invoiceItems =>
-      _$this._invoiceItems ??= new ListBuilder<InvoiceItemEntity>();
-  set invoiceItems(ListBuilder<InvoiceItemEntity> invoiceItems) =>
-      _$this._invoiceItems = invoiceItems;
+  ListBuilder<InvoiceItemEntity> _lineItems;
+  ListBuilder<InvoiceItemEntity> get lineItems =>
+      _$this._lineItems ??= new ListBuilder<InvoiceItemEntity>();
+  set lineItems(ListBuilder<InvoiceItemEntity> lineItems) =>
+      _$this._lineItems = lineItems;
 
   ListBuilder<InvitationEntity> _invitations;
   ListBuilder<InvitationEntity> get invitations =>
@@ -1395,7 +1395,7 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _customTextValue2 = _$v.customTextValue2;
       _filename = _$v.filename;
       _settings = _$v.settings?.toBuilder();
-      _invoiceItems = _$v.invoiceItems?.toBuilder();
+      _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1462,7 +1462,7 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               customTextValue2: customTextValue2,
               filename: filename,
               settings: settings.build(),
-              invoiceItems: invoiceItems.build(),
+              lineItems: lineItems.build(),
               invitations: invitations.build(),
               isChanged: isChanged,
               createdAt: createdAt,
@@ -1476,8 +1476,8 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       try {
         _$failedField = 'settings';
         settings.build();
-        _$failedField = 'invoiceItems';
-        invoiceItems.build();
+        _$failedField = 'lineItems';
+        lineItems.build();
         _$failedField = 'invitations';
         invitations.build();
       } catch (e) {
