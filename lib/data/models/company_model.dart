@@ -964,6 +964,21 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'secondary_font')
   String get secondaryFont;
 
+  @nullable
+  @BuiltValueField(wireName: 'hide_paid_to_date')
+  bool get hidePaidToDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'embed_documents')
+  bool get embedDocuments;
+
+  @nullable
+  @BuiltValueField(wireName: 'all_pages_header')
+  bool get allPagesHeader;
+
+  @nullable
+  @BuiltValueField(wireName: 'all_pages_footer')
+  bool get allPagesFooter;
 
 
   // TODO remove this field

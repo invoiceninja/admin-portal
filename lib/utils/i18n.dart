@@ -14,6 +14,18 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'general_settings': 'General Settings',
+      'invoice_options': 'Invoice Options',
+      'hide_paid_to_date': 'Hide Paid to Date',
+      'hide_paid_to_date_help':
+          'Only display the "Paid to Date" area on your invoices once a payment has been received.',
+      'invoice_embed_documents': 'Embed Documents',
+      'invoice_embed_documents_help': 'Include attached images in the invoice.',
+      'all_pages_header': 'Show Header on',
+      'all_pages_footer': 'Show Footer on',
+      'first_page': 'First page',
+      'all_pages': 'All pages',
+      'last_page': 'Last page',
       'primary_font': 'Primary Font',
       'secondary_font': 'Secondary Font',
       'primary_color': 'Primary Color',
@@ -15328,6 +15340,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get primaryFont => _localizedValues[localeCode]['primary_font'];
 
   String get secondaryFont => _localizedValues[localeCode]['secondary_font'];
+
+  String get hidePaidToDate =>
+      _localizedValues[localeCode]['hide_paid_to_date'];
+
+  String get hidePaidToDateHelp =>
+      _localizedValues[localeCode]['hide_paid_to_date_help'];
+
+  String get invoiceEmbedDocuments =>
+      _localizedValues[localeCode]['invoice_embed_documents'];
+
+  String get invoiceEmbedDocumentsHelp =>
+      _localizedValues[localeCode]['invoice_embed_documents_help'];
+
+  String get allPagesHeader => _localizedValues[localeCode]['all_pages_header'];
+
+  String get allPagesFooter => _localizedValues[localeCode]['all_pages_footer'];
+
+  String get firstPage => _localizedValues[localeCode]['first_page'];
+
+  String get allPages => _localizedValues[localeCode]['all_pages'];
+
+  String get lastPage => _localizedValues[localeCode]['last_page'];
+
+  String get generalSettings => _localizedValues[localeCode]['general_settings'];
+
+  String get invoiceOptions => _localizedValues[localeCode]['invoice_options'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

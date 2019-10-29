@@ -47,7 +47,7 @@ class BoolDropdownButton extends StatelessWidget {
           border: showBlank ? null : InputBorder.none,
           labelText: label,
         ),
-        isEmpty: value == null,
+        isEmpty: false,
         child: showBlank
             ? DropdownButtonHideUnderline(
                 child: DropdownButton<bool>(

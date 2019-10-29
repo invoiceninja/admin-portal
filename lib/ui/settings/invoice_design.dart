@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -40,7 +42,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -98,7 +100,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         controller: _controller,
         tabs: [
           Tab(
-            text: localization.settings,
+            text: localization.generalSettings,
+          ),
+          Tab(
+            text: localization.invoiceOptions,
           ),
           Tab(
             text: localization.invoiceFields,
@@ -205,6 +210,54 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
             ),
           ]),
+          ListView(
+            padding: const EdgeInsets.all(10),
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.allPagesHeader,
+                    value: settings.allPagesHeader,
+                    iconData: FontAwesomeIcons.fileInvoice,
+                    showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..allPagesHeader = value)),
+                    enabledLabel: localization.allPages,
+                    disabledLabel: localization.firstPage,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.allPagesFooter,
+                    value: settings.allPagesFooter,
+                    iconData: FontAwesomeIcons.fileInvoice,
+                    showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..allPagesFooter = value)),
+                    enabledLabel: localization.allPages,
+                    disabledLabel: localization.lastPage,
+                  ),
+
+                ],
+              ),
+              BoolDropdownButton(
+                label: localization.hidePaidToDate,
+                helpLabel: localization.hidePaidToDateHelp,
+                value: settings.hidePaidToDate,
+                iconData: FontAwesomeIcons.fileInvoiceDollar,
+                showBlank: state.settingsUIState.isFiltered,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..hidePaidToDate = value)),
+              ),
+              BoolDropdownButton(
+                label: localization.invoiceEmbedDocuments,
+                helpLabel: localization.invoiceEmbedDocumentsHelp,
+                value: settings.embedDocuments,
+                iconData: FontAwesomeIcons.image,
+                showBlank: state.settingsUIState.isFiltered,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..embedDocuments = value)),
+              ),
+            ],
+          ),
           ListView(),
           ListView(),
         ],
