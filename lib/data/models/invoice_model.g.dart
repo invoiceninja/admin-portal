@@ -179,9 +179,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'has_tasks',
       serializers.serialize(object.hasTasks,
           specifiedType: const FullType(bool)),
-      'auto_bill',
-      serializers.serialize(object.autoBill,
-          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -253,6 +250,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('design_id')
         ..add(serializers.serialize(object.designId,
             specifiedType: const FullType(String)));
+    }
+    if (object.autoBill != null) {
+      result
+        ..add('auto_bill')
+        ..add(serializers.serialize(object.autoBill,
+            specifiedType: const FullType(bool)));
     }
     if (object.isChanged != null) {
       result
@@ -1254,9 +1257,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (hasTasks == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasTasks');
-    }
-    if (autoBill == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBill');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customValue1');
