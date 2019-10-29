@@ -137,6 +137,7 @@ abstract class QuoteEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
 

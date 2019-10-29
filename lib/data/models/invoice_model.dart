@@ -145,6 +145,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
 
@@ -168,6 +169,7 @@ abstract class InvoiceEntity extends Object
 
   String get terms;
 
+  @BuiltValueField(wireName: 'invoice_footer')
   String get footer;
 
   @nullable

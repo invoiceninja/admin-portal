@@ -131,9 +131,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'status_id',
       serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
-      'invoice_number',
-      serializers.serialize(object.invoiceNumber,
-          specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
@@ -155,7 +152,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'terms',
       serializers.serialize(object.terms,
           specifiedType: const FullType(String)),
-      'footer',
+      'invoice_footer',
       serializers.serialize(object.footer,
           specifiedType: const FullType(String)),
       'tax_name1',
@@ -243,6 +240,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('client_id')
         ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceNumber != null) {
+      result
+        ..add('invoice_number')
+        ..add(serializers.serialize(object.invoiceNumber,
             specifiedType: const FullType(String)));
     }
     if (object.designId != null) {
@@ -356,7 +359,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.terms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'footer':
+        case 'invoice_footer':
           result.footer = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -1203,9 +1206,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (statusId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'statusId');
-    }
-    if (invoiceNumber == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceNumber');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'discount');

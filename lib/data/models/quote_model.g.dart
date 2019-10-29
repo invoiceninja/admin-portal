@@ -123,9 +123,6 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'status_id',
       serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
-      'invoice_number',
-      serializers.serialize(object.invoiceNumber,
-          specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
@@ -228,6 +225,12 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
+    if (object.invoiceNumber != null) {
+      result
+        ..add('invoice_number')
+        ..add(serializers.serialize(object.invoiceNumber,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -943,9 +946,6 @@ class _$QuoteEntity extends QuoteEntity {
     }
     if (statusId == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'statusId');
-    }
-    if (invoiceNumber == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'invoiceNumber');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'discount');
