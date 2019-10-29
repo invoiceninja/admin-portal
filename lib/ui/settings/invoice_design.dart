@@ -141,24 +141,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ))
                       .toList(),
                 ),
-                EntityDropdown(
-                  entityType: EntityType.font,
-                  labelText: localization.primaryFont,
-                  initialValue: settings.primaryFont,
-                  entityMap: fontMap,
-                  onSelected: (font) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..primaryFont = font.id)),
-                  allowClearing: state.settingsUIState.isFiltered,
-                ),
-                EntityDropdown(
-                  entityType: EntityType.font,
-                  labelText: localization.secondaryFont,
-                  initialValue: settings.secondaryFont,
-                  entityMap: memoizedFontMap(kGoogleFonts),
-                  onSelected: (font) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..secondaryFont = font.id)),
-                  allowClearing: state.settingsUIState.isFiltered,
-                ),
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
@@ -188,6 +170,28 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
+                ),
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.primaryFont,
+                  initialValue: settings.primaryFont,
+                  entityMap: fontMap,
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..primaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
+                ),
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.secondaryFont,
+                  initialValue: settings.secondaryFont,
+                  entityMap: memoizedFontMap(kGoogleFonts),
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..secondaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
                 ),
                 FormColorPicker(
                   labelText: localization.primaryColor,
