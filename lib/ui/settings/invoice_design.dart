@@ -88,6 +88,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final designs = company.getInvoiceDesigns();
+    final fontMap = memoizedFontMap(kGoogleFonts);
 
     return SettingsScaffold(
       title: localization.invoiceDesign,
@@ -141,14 +142,32 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ))
                       .toList(),
                 ),
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
                 EntityDropdown(
                   entityType: EntityType.font,
                   labelText: localization.primaryFont,
                   initialValue: settings.primaryFont,
-                  entityMap: memoizedFontMap(kGoogleFonts),
+                  entityMap: fontMap,
                   onSelected: (font) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..primaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
                 ),
+                EntityDropdown(
+                  entityType: EntityType.font,
+                  labelText: localization.secondaryFont,
+                  initialValue: settings.secondaryFont,
+                  entityMap: memoizedFontMap(kGoogleFonts),
+                  onSelected: (font) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..secondaryFont = font.id)),
+                  allowClearing: state.settingsUIState.isFiltered,
+                ),
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
@@ -157,42 +176,46 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       settings.rebuild((b) => b..pageSize = value)),
                   items: kPageSizes
                       .map((pageSize) => DropdownMenuItem<String>(
-                            value: pageSize,
-                            child: Text(pageSize),
-                          ))
+                    value: pageSize,
+                    child: Text(pageSize),
+                  ))
                       .toList(),
                 ),
                 AppDropdownButton(
                   labelText: localization.fontSize,
-                  value:
-                      settings.fontSize == null ? '' : '${settings.fontSize}',
+                  value: settings.fontSize == null
+                      ? ''
+                      : '${settings.fontSize}',
                   //showBlank: state.settingsUIState.isFiltered,
                   // TODO remove this and 0 from options
                   showBlank: true,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..fontSize = int.parse(value))),
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..fontSize = int.parse(value))),
                   items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                       .map((fontSize) => DropdownMenuItem<String>(
-                            value: '$fontSize',
-                            child:
-                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
-                          ))
+                    value: '$fontSize',
+                    child: fontSize == 0
+                        ? SizedBox()
+                        : Text('$fontSize'),
+                  ))
                       .toList(),
-                ),
-                FormColorPicker(
-                  labelText: localization.primaryColor,
-                  onSelected: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..primaryColor = value)),
-                  initialValue: settings.primaryColor,
-                ),
-                FormColorPicker(
-                  labelText: localization.secondaryColor,
-                  onSelected: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..secondaryColor = value)),
-                  initialValue: settings.secondaryColor,
                 ),
               ],
             ),
+            FormCard(children: <Widget>[
+              FormColorPicker(
+                labelText: localization.primaryColor,
+                onSelected: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..primaryColor = value)),
+                initialValue: settings.primaryColor,
+              ),
+              FormColorPicker(
+                labelText: localization.secondaryColor,
+                onSelected: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..secondaryColor = value)),
+                initialValue: settings.secondaryColor,
+              ),
+            ]),
           ]),
           ListView(),
           ListView(),
