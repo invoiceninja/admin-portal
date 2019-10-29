@@ -512,8 +512,9 @@ class _$InvoiceItemEntitySerializer
           specifiedType: const FullType(String)),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
-      'qty',
-      serializers.serialize(object.qty, specifiedType: const FullType(double)),
+      'quantity',
+      serializers.serialize(object.quantity,
+          specifiedType: const FullType(double)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -620,8 +621,8 @@ class _$InvoiceItemEntitySerializer
           result.cost = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'qty':
-          result.qty = serializers.deserialize(value,
+        case 'quantity':
+          result.quantity = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'tax_name1':
@@ -1761,7 +1762,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double cost;
   @override
-  final double qty;
+  final double quantity;
   @override
   final String taxName1;
   @override
@@ -1805,7 +1806,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       {this.productKey,
       this.notes,
       this.cost,
-      this.qty,
+      this.quantity,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -1833,8 +1834,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     if (cost == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'cost');
     }
-    if (qty == null) {
-      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'qty');
+    if (quantity == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'quantity');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxName1');
@@ -1878,7 +1879,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
-        qty == other.qty &&
+        quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -1920,7 +1921,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                                         $jc(
                                                                             $jc($jc($jc(0, productKey.hashCode), notes.hashCode),
                                                                                 cost.hashCode),
-                                                                            qty.hashCode),
+                                                                            quantity.hashCode),
                                                                         taxName1.hashCode),
                                                                     taxRate1.hashCode),
                                                                 taxName2.hashCode),
@@ -1946,7 +1947,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
-          ..add('qty', qty)
+          ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -1984,9 +1985,9 @@ class InvoiceItemEntityBuilder
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
 
-  double _qty;
-  double get qty => _$this._qty;
-  set qty(double qty) => _$this._qty = qty;
+  double _quantity;
+  double get quantity => _$this._quantity;
+  set quantity(double quantity) => _$this._quantity = quantity;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -2064,7 +2065,7 @@ class InvoiceItemEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
-      _qty = _$v.qty;
+      _quantity = _$v.quantity;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -2107,7 +2108,7 @@ class InvoiceItemEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
-            qty: qty,
+            quantity: quantity,
             taxName1: taxName1,
             taxRate1: taxRate1,
             taxName2: taxName2,

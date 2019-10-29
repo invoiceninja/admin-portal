@@ -71,7 +71,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         } else {
           items.add(InvoiceItemEntity().rebuild((b) => b
             ..productKey = product.productKey
-            ..qty = 1));
+            ..quantity = 1));
         }
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;

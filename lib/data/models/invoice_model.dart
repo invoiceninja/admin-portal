@@ -497,7 +497,7 @@ abstract class InvoiceItemEntity extends Object
       productKey: '',
       notes: '',
       cost: 0.0,
-      qty: 0.0,
+      quantity: 0.0,
       taxName1: '',
       taxRate1: 0.0,
       taxName2: '',
@@ -526,7 +526,7 @@ abstract class InvoiceItemEntity extends Object
 
   double get cost;
 
-  double get qty;
+  double get quantity;
 
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
@@ -559,7 +559,7 @@ abstract class InvoiceItemEntity extends Object
   @BuiltValueField(wireName: 'expense_public_id')
   String get expenseId;
 
-  double get total => round(qty * cost, 2);
+  double get total => round(quantity * cost, 2);
 
   bool get isTask => taskId != null && taskId.isNotEmpty;
 

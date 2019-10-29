@@ -11,7 +11,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem(
     ..expenseId = expense.id
     ..productKey = categoryMap[expense.categoryId]?.name ?? ''
     ..notes = expense.publicNotes
-    ..qty = 1
+    ..quantity = 1
     ..cost = expense.convertedAmount
     ..taxName1 = expense.taxName1
     ..taxRate1 = expense.taxRate1

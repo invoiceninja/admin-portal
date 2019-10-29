@@ -75,11 +75,11 @@ class _TaxRatesState extends State<TaxRates>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel;
 
     return SettingsScaffold(
       title: localization.taxRates,
-      onSavePressed: null,
+      onSavePressed: viewModel.onSavePressed,
       body: SizedBox(),
     );
   }

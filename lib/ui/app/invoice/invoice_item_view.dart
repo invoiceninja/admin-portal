@@ -18,7 +18,7 @@ class InvoiceItemListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String cost =
         formatNumber(invoiceItem.cost, context, clientId: invoice.clientId);
-    final String qty = formatNumber(invoiceItem.qty, context,
+    final String qty = formatNumber(invoiceItem.quantity, context,
         clientId: invoice.clientId, formatNumberType: FormatNumberType.double);
     final localization = AppLocalization.of(context);
 

@@ -10,7 +10,7 @@ InvoiceItemEntity convertProductToInvoiceItem(
     ..productKey = product.productKey
     ..notes = product.notes
     ..cost = product.price
-    ..qty = product.quantity
+    ..quantity = product.quantity
     ..customValue1 = product.customValue1
     ..customValue2 = product.customValue2
     ..taxName1 = product.taxName1

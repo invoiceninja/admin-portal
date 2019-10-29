@@ -29,7 +29,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..notes = notes
     ..cost = taskRateSelector(
         company: state.selectedCompany, project: project, client: client)
-    ..qty = round(task.duration / 3600, 3));
+    ..quantity = round(task.duration / 3600, 3));
 }
 
 var memoizedTaskList = memo2(

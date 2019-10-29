@@ -126,7 +126,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
         formatNumberType: FormatNumberType.input);
-    _qtyController.text = formatNumber(invoiceItem.qty, context,
+    _qtyController.text = formatNumber(invoiceItem.quantity, context,
         formatNumberType: FormatNumberType.input);
     _discountController.text = formatNumber(invoiceItem.discount, context,
         formatNumberType: FormatNumberType.input);
@@ -164,7 +164,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
-      ..qty = parseDouble(_qtyController.text)
+      ..quantity = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());

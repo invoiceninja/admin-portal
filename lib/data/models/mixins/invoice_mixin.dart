@@ -36,7 +36,7 @@ abstract class CalculateInvoiceTotal {
     final map = <String, double>{};
 
     invoiceItems.forEach((item) {
-      final double qty = round(item.qty, 4);
+      final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double itemDiscount = round(item.discount, 2);
       final double taxRate1 = round(item.taxRate1, 3);
@@ -108,7 +108,7 @@ abstract class CalculateInvoiceTotal {
     double itemTax = 0.0;
 
     invoiceItems.forEach((item) {
-      final double qty = round(item.qty, 4);
+      final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double itemDiscount = round(item.discount, 2);
       final double taxRate1 = round(item.taxRate1, 3);
@@ -177,7 +177,7 @@ abstract class CalculateInvoiceTotal {
     var total = 0.0;
 
     invoiceItems.forEach((item) {
-      final double qty = round(item.qty, 4);
+      final double qty = round(item.quantity, 4);
       final double cost = round(item.cost, 4);
       final double discount = round(item.discount, 2);
 
