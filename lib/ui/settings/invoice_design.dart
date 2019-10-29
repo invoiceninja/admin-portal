@@ -153,7 +153,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.fontSize,
                   value:
-                  settings.fontSize == null ? '' : '${settings.fontSize}',
+                      settings.fontSize == null ? '' : '${settings.fontSize}',
                   //showBlank: state.settingsUIState.isFiltered,
                   // TODO remove this and 0 from options
                   showBlank: true,
@@ -162,15 +162,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                       .map((fontSize) => DropdownMenuItem<String>(
                             value: '$fontSize',
-                            child: fontSize == 0 ? SizedBox() : Text('$fontSize'),
+                            child:
+                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
                 ),
                 FormColorPicker(
                   labelText: localization.primaryColor,
-                  onSelected: (value) => viewModel.onSettingsChanged(settings.rebuild((b) => b
-
-                  )),
+                  onSelected: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..primaryColor = value)),
+                  initialValue: settings.primaryColor,
+                ),
+                FormColorPicker(
+                  labelText: localization.secondaryColor,
+                  onSelected: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..secondaryColor = value)),
+                  initialValue: settings.secondaryColor,
                 ),
               ],
             ),
