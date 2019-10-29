@@ -75,11 +75,11 @@ List<String> filteredInvoicesSelector(
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&
-        !invoiceListState.custom1Filters.contains(invoice.customTextValue1)) {
+        !invoiceListState.custom1Filters.contains(invoice.customValue1)) {
       return false;
     }
     if (invoiceListState.custom2Filters.isNotEmpty &&
-        !invoiceListState.custom2Filters.contains(invoice.customTextValue2)) {
+        !invoiceListState.custom2Filters.contains(invoice.customValue2)) {
       return false;
     }
     return true;

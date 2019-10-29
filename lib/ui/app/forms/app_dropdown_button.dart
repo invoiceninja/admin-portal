@@ -15,6 +15,8 @@ class AppDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Value: $labelText $value');
+
     return InputDecorator(
         decoration: InputDecoration(
           labelText: labelText,
@@ -25,7 +27,13 @@ class AppDropdownButton extends StatelessWidget {
             isExpanded: true,
             isDense: true,
             onChanged: onChanged,
-            items: items,
+            items: [
+              DropdownMenuItem(
+                value: '',
+                child: SizedBox(),
+              ),
+              ...items
+            ],
           ),
         ));
   }

@@ -9,10 +9,10 @@ abstract class CalculateInvoiceTotal {
   double get taxRate1;
   double get taxRate2;
   double get discount;
-  double get customValue1;
-  double get customValue2;
-  double get customValue3;
-  double get customValue4;
+  double get customSurcharge1;
+  double get customSurcharge2;
+  double get customSurcharge3;
+  double get customSurcharge4;
   bool get customTaxes1;
   bool get customTaxes2;
   bool get customTaxes3;
@@ -80,12 +80,12 @@ abstract class CalculateInvoiceTotal {
       }
     }
 
-    if (customValue1 != 0.0 && customTaxes1) {
-      total += round(customValue1, 2);
+    if (customSurcharge1 != 0.0 && customTaxes1) {
+      total += round(customSurcharge1, 2);
     }
 
-    if (customValue2 != 0.0 && customTaxes2) {
-      total += round(customValue2, 2);
+    if (customSurcharge2 != 0.0 && customTaxes2) {
+      total += round(customSurcharge2, 2);
     }
 
     if (taxRate1 != 0) {
@@ -147,12 +147,12 @@ abstract class CalculateInvoiceTotal {
       }
     }
 
-    if (customValue1 != 0.0 && customTaxes1) {
-      total += round(customValue1, 2);
+    if (customSurcharge1 != 0.0 && customTaxes1) {
+      total += round(customSurcharge1, 2);
     }
 
-    if (customValue2 != 0.0 && customTaxes2) {
-      total += round(customValue2, 2);
+    if (customSurcharge2 != 0.0 && customTaxes2) {
+      total += round(customSurcharge2, 2);
     }
 
     if (!useInclusiveTaxes) {
@@ -162,12 +162,12 @@ abstract class CalculateInvoiceTotal {
       total += itemTax + taxAmount1 + taxAmount2;
     }
 
-    if (customValue1 != 0.0 && !customTaxes1) {
-      total += round(customValue1, 2);
+    if (customSurcharge1 != 0.0 && !customTaxes1) {
+      total += round(customSurcharge1, 2);
     }
 
-    if (customValue2 != 0.0 && !customTaxes2) {
-      total += round(customValue2, 2);
+    if (customSurcharge2 != 0.0 && !customTaxes2) {
+      total += round(customSurcharge2, 2);
     }
 
     return total;

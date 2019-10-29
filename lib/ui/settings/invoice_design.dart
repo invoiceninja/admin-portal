@@ -27,7 +27,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   TabController _controller;
   FocusScopeNode _focusNode;
 
-  final _nameController = TextEditingController();
+  //final _fontSizeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -51,15 +51,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
   @override
   void didChangeDependencies() {
-    _controllers = [_nameController];
+    _controllers = [
+      //_fontSizeController,
+    ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    //final settings = widget.viewModel.settings;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -69,12 +68,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
   void _onChanged() {
     /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
+    final settings = widget.viewModel.settings.rebuild((b) => b..
+    if (settings != widget.viewModel.settings) {
+      widget.viewModel.onSettingsChanged(settings);
     }
-    */
+     */
   }
 
   @override
@@ -133,6 +131,43 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       .map((designId) => DropdownMenuItem<String>(
                             value: designId,
                             child: Text(kInvoiceDesigns[designId]),
+                          ))
+                      .toList(),
+                ),
+                AppDropdownButton(
+                  labelText: localization.pageSize,
+                  value: settings.pageSize,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..pageSize = value)),
+                  items: kPageSizes
+                      .map((pageSize) => DropdownMenuItem<String>(
+                            value: pageSize,
+                            child: Text(pageSize),
+                          ))
+                      .toList(),
+                ),
+                AppDropdownButton(
+                  labelText: localization.pageSize,
+                  value: settings.pageSize,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..pageSize = value)),
+                  items: kPageSizes
+                      .map((pageSize) => DropdownMenuItem<String>(
+                            value: pageSize,
+                            child: Text(pageSize),
+                          ))
+                      .toList(),
+                ),
+                AppDropdownButton(
+                  labelText: localization.fontSize,
+                  value:
+                  settings.fontSize == null ? '' : '${settings.fontSize}',
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..fontSize = int.parse(value))),
+                  items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+                      .map((fontSize) => DropdownMenuItem<String>(
+                            value: '$fontSize',
+                            child: fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
                 ),

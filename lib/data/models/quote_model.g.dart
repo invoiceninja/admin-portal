@@ -173,15 +173,27 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
-          specifiedType: const FullType(double)),
+          specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
-          specifiedType: const FullType(double)),
+          specifiedType: const FullType(String)),
       'custom_value3',
       serializers.serialize(object.customValue3,
-          specifiedType: const FullType(double)),
+          specifiedType: const FullType(String)),
       'custom_value4',
       serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
+      'custom_surcharge1',
+      serializers.serialize(object.customSurcharge1,
+          specifiedType: const FullType(double)),
+      'custom_surcharge2',
+      serializers.serialize(object.customSurcharge2,
+          specifiedType: const FullType(double)),
+      'custom_surcharge3',
+      serializers.serialize(object.customSurcharge3,
+          specifiedType: const FullType(double)),
+      'custom_surcharge4',
+      serializers.serialize(object.customSurcharge4,
           specifiedType: const FullType(double)),
       'custom_taxes1',
       serializers.serialize(object.customTaxes1,
@@ -200,12 +212,6 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           specifiedType: const FullType(bool)),
       'quote_invoice_id',
       serializers.serialize(object.quoteInvoiceId,
-          specifiedType: const FullType(String)),
-      'custom_text_value1',
-      serializers.serialize(object.customTextValue1,
-          specifiedType: const FullType(String)),
-      'custom_text_value2',
-      serializers.serialize(object.customTextValue2,
           specifiedType: const FullType(String)),
       'filename',
       serializers.serialize(object.filename,
@@ -360,18 +366,34 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_surcharge1':
+          result.customSurcharge1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'custom_surcharge2':
+          result.customSurcharge2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'custom_surcharge3':
+          result.customSurcharge3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'custom_surcharge4':
+          result.customSurcharge4 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'custom_taxes1':
@@ -396,14 +418,6 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           break;
         case 'quote_invoice_id':
           result.quoteInvoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_text_value1':
-          result.customTextValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_text_value2':
-          result.customTextValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'filename':
@@ -818,13 +832,21 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final bool autoBill;
   @override
-  final double customValue1;
+  final String customValue1;
   @override
-  final double customValue2;
+  final String customValue2;
   @override
-  final double customValue3;
+  final String customValue3;
   @override
-  final double customValue4;
+  final String customValue4;
+  @override
+  final double customSurcharge1;
+  @override
+  final double customSurcharge2;
+  @override
+  final double customSurcharge3;
+  @override
+  final double customSurcharge4;
   @override
   final bool customTaxes1;
   @override
@@ -837,10 +859,6 @@ class _$QuoteEntity extends QuoteEntity {
   final bool hasExpenses;
   @override
   final String quoteInvoiceId;
-  @override
-  final String customTextValue1;
-  @override
-  final String customTextValue2;
   @override
   final String filename;
   @override
@@ -892,14 +910,16 @@ class _$QuoteEntity extends QuoteEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.customSurcharge1,
+      this.customSurcharge2,
+      this.customSurcharge3,
+      this.customSurcharge4,
       this.customTaxes1,
       this.customTaxes2,
       this.customTaxes3,
       this.customTaxes4,
       this.hasExpenses,
       this.quoteInvoiceId,
-      this.customTextValue1,
-      this.customTextValue2,
       this.filename,
       this.settings,
       this.lineItems,
@@ -984,6 +1004,18 @@ class _$QuoteEntity extends QuoteEntity {
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'customValue4');
     }
+    if (customSurcharge1 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customSurcharge1');
+    }
+    if (customSurcharge2 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customSurcharge2');
+    }
+    if (customSurcharge3 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customSurcharge3');
+    }
+    if (customSurcharge4 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'customSurcharge4');
+    }
     if (customTaxes1 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'customTaxes1');
     }
@@ -1001,12 +1033,6 @@ class _$QuoteEntity extends QuoteEntity {
     }
     if (quoteInvoiceId == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'quoteInvoiceId');
-    }
-    if (customTextValue1 == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'customTextValue1');
-    }
-    if (customTextValue2 == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'customTextValue2');
     }
     if (filename == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'filename');
@@ -1057,14 +1083,16 @@ class _$QuoteEntity extends QuoteEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        customSurcharge1 == other.customSurcharge1 &&
+        customSurcharge2 == other.customSurcharge2 &&
+        customSurcharge3 == other.customSurcharge3 &&
+        customSurcharge4 == other.customSurcharge4 &&
         customTaxes1 == other.customTaxes1 &&
         customTaxes2 == other.customTaxes2 &&
         customTaxes3 == other.customTaxes3 &&
         customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
         quoteInvoiceId == other.quoteInvoiceId &&
-        customTextValue1 == other.customTextValue1 &&
-        customTextValue2 == other.customTextValue2 &&
         filename == other.filename &&
         settings == other.settings &&
         lineItems == other.lineItems &&
@@ -1098,15 +1126,15 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode),
-                                                                                customTaxes1.hashCode),
-                                                                            customTaxes2.hashCode),
-                                                                        customTaxes3.hashCode),
-                                                                    customTaxes4.hashCode),
-                                                                hasExpenses.hashCode),
-                                                            quoteInvoiceId.hashCode),
-                                                        customTextValue1.hashCode),
-                                                    customTextValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
+                                                                                customSurcharge3.hashCode),
+                                                                            customSurcharge4.hashCode),
+                                                                        customTaxes1.hashCode),
+                                                                    customTaxes2.hashCode),
+                                                                customTaxes3.hashCode),
+                                                            customTaxes4.hashCode),
+                                                        hasExpenses.hashCode),
+                                                    quoteInvoiceId.hashCode),
                                                 filename.hashCode),
                                             settings.hashCode),
                                         lineItems.hashCode),
@@ -1147,14 +1175,16 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('customSurcharge1', customSurcharge1)
+          ..add('customSurcharge2', customSurcharge2)
+          ..add('customSurcharge3', customSurcharge3)
+          ..add('customSurcharge4', customSurcharge4)
           ..add('customTaxes1', customTaxes1)
           ..add('customTaxes2', customTaxes2)
           ..add('customTaxes3', customTaxes3)
           ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
           ..add('quoteInvoiceId', quoteInvoiceId)
-          ..add('customTextValue1', customTextValue1)
-          ..add('customTextValue2', customTextValue2)
           ..add('filename', filename)
           ..add('settings', settings)
           ..add('lineItems', lineItems)
@@ -1257,21 +1287,41 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   bool get autoBill => _$this._autoBill;
   set autoBill(bool autoBill) => _$this._autoBill = autoBill;
 
-  double _customValue1;
-  double get customValue1 => _$this._customValue1;
-  set customValue1(double customValue1) => _$this._customValue1 = customValue1;
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
 
-  double _customValue2;
-  double get customValue2 => _$this._customValue2;
-  set customValue2(double customValue2) => _$this._customValue2 = customValue2;
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  double _customValue3;
-  double get customValue3 => _$this._customValue3;
-  set customValue3(double customValue3) => _$this._customValue3 = customValue3;
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
 
-  double _customValue4;
-  double get customValue4 => _$this._customValue4;
-  set customValue4(double customValue4) => _$this._customValue4 = customValue4;
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  double _customSurcharge1;
+  double get customSurcharge1 => _$this._customSurcharge1;
+  set customSurcharge1(double customSurcharge1) =>
+      _$this._customSurcharge1 = customSurcharge1;
+
+  double _customSurcharge2;
+  double get customSurcharge2 => _$this._customSurcharge2;
+  set customSurcharge2(double customSurcharge2) =>
+      _$this._customSurcharge2 = customSurcharge2;
+
+  double _customSurcharge3;
+  double get customSurcharge3 => _$this._customSurcharge3;
+  set customSurcharge3(double customSurcharge3) =>
+      _$this._customSurcharge3 = customSurcharge3;
+
+  double _customSurcharge4;
+  double get customSurcharge4 => _$this._customSurcharge4;
+  set customSurcharge4(double customSurcharge4) =>
+      _$this._customSurcharge4 = customSurcharge4;
 
   bool _customTaxes1;
   bool get customTaxes1 => _$this._customTaxes1;
@@ -1297,16 +1347,6 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   String get quoteInvoiceId => _$this._quoteInvoiceId;
   set quoteInvoiceId(String quoteInvoiceId) =>
       _$this._quoteInvoiceId = quoteInvoiceId;
-
-  String _customTextValue1;
-  String get customTextValue1 => _$this._customTextValue1;
-  set customTextValue1(String customTextValue1) =>
-      _$this._customTextValue1 = customTextValue1;
-
-  String _customTextValue2;
-  String get customTextValue2 => _$this._customTextValue2;
-  set customTextValue2(String customTextValue2) =>
-      _$this._customTextValue2 = customTextValue2;
 
   String _filename;
   String get filename => _$this._filename;
@@ -1385,14 +1425,16 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _customSurcharge1 = _$v.customSurcharge1;
+      _customSurcharge2 = _$v.customSurcharge2;
+      _customSurcharge3 = _$v.customSurcharge3;
+      _customSurcharge4 = _$v.customSurcharge4;
       _customTaxes1 = _$v.customTaxes1;
       _customTaxes2 = _$v.customTaxes2;
       _customTaxes3 = _$v.customTaxes3;
       _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
       _quoteInvoiceId = _$v.quoteInvoiceId;
-      _customTextValue1 = _$v.customTextValue1;
-      _customTextValue2 = _$v.customTextValue2;
       _filename = _$v.filename;
       _settings = _$v.settings?.toBuilder();
       _lineItems = _$v.lineItems?.toBuilder();
@@ -1452,14 +1494,16 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               customValue2: customValue2,
               customValue3: customValue3,
               customValue4: customValue4,
+              customSurcharge1: customSurcharge1,
+              customSurcharge2: customSurcharge2,
+              customSurcharge3: customSurcharge3,
+              customSurcharge4: customSurcharge4,
               customTaxes1: customTaxes1,
               customTaxes2: customTaxes2,
               customTaxes3: customTaxes3,
               customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
               quoteInvoiceId: quoteInvoiceId,
-              customTextValue1: customTextValue1,
-              customTextValue2: customTextValue2,
               filename: filename,
               settings: settings.build(),
               lineItems: lineItems.build(),

@@ -43,11 +43,11 @@ List<String> filteredQuotesSelector(
       return false;
     }
     if (quoteListState.custom1Filters.isNotEmpty &&
-        !quoteListState.custom1Filters.contains(quote.customTextValue1)) {
+        !quoteListState.custom1Filters.contains(quote.customValue1)) {
       return false;
     }
     if (quoteListState.custom2Filters.isNotEmpty &&
-        !quoteListState.custom2Filters.contains(quote.customTextValue2)) {
+        !quoteListState.custom2Filters.contains(quote.customValue2)) {
       return false;
     }
     return true;

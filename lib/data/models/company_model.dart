@@ -940,6 +940,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
+  @nullable
+  @BuiltValueField(wireName: 'page_size')
+  String get pageSize;
+
+  @nullable
+  @BuiltValueField(wireName: 'font_size')
+  int get fontSize;
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')

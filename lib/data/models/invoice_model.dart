@@ -95,18 +95,20 @@ abstract class InvoiceEntity extends Object
       partialDueDate: '',
       hasTasks: false,
       autoBill: false,
-      customValue1: 0.0,
-      customValue2: 0.0,
-      customValue3: 0.0,
-      customValue4: 0.0,
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
       customTaxes1: false,
       customTaxes2: false,
       customTaxes3: false,
       customTaxes4: false,
       hasExpenses: false,
       quoteInvoiceId: '',
-      customTextValue1: '',
-      customTextValue2: '',
+      customSurcharge1: 0,
+      customSurcharge2: 0,
+      customSurcharge3: 0,
+      customSurcharge4: 0,
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
       invitations: BuiltList<InvitationEntity>(),
@@ -220,21 +222,33 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'auto_bill')
   bool get autoBill;
 
-  @override
   @BuiltValueField(wireName: 'custom_value1')
-  double get customValue1;
+  String get customValue1;
 
-  @override
   @BuiltValueField(wireName: 'custom_value2')
-  double get customValue2;
+  String get customValue2;
 
-  @override
   @BuiltValueField(wireName: 'custom_value3')
-  double get customValue3;
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
 
   @override
-  @BuiltValueField(wireName: 'custom_value4')
-  double get customValue4;
+  @BuiltValueField(wireName: 'custom_surcharge1')
+  double get customSurcharge1;
+
+  @override
+  @BuiltValueField(wireName: 'custom_surcharge2')
+  double get customSurcharge2;
+
+  @override
+  @BuiltValueField(wireName: 'custom_surcharge3')
+  double get customSurcharge3;
+
+  @override
+  @BuiltValueField(wireName: 'custom_surcharge4')
+  double get customSurcharge4;
 
   @override
   @BuiltValueField(wireName: 'custom_taxes1')
@@ -257,12 +271,6 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'quote_invoice_id')
   String get quoteInvoiceId;
-
-  @BuiltValueField(wireName: 'custom_text_value1')
-  String get customTextValue1;
-
-  @BuiltValueField(wireName: 'custom_text_value2')
-  String get customTextValue2;
 
   String get filename;
 
@@ -331,11 +339,11 @@ abstract class InvoiceEntity extends Object
 
     if (invoiceNumber.toLowerCase().contains(filter)) {
       return true;
-    } else if (customTextValue1.isNotEmpty &&
-        customTextValue1.toLowerCase().contains(filter)) {
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
       return true;
-    } else if (customTextValue2.isNotEmpty &&
-        customTextValue2.toLowerCase().contains(filter)) {
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -349,12 +357,12 @@ abstract class InvoiceEntity extends Object
     }
 
     filter = filter.toLowerCase();
-    if (customTextValue1.isNotEmpty &&
-        customTextValue1.toLowerCase().contains(filter)) {
-      return customTextValue1;
-    } else if (customTextValue2.isNotEmpty &&
-        customTextValue2.toLowerCase().contains(filter)) {
-      return customTextValue2;
+    if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
     }
     return null;
   }
@@ -502,6 +510,8 @@ abstract class InvoiceItemEntity extends Object
       taxRate1: 0.0,
       taxName2: '',
       taxRate2: 0.0,
+      taxName3: '',
+      taxRate3: 0.0,
       invoiceItemTypeId: '',
       customValue1: '',
       customValue2: '',
@@ -539,6 +549,12 @@ abstract class InvoiceItemEntity extends Object
 
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
+
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
 
   @BuiltValueField(wireName: 'invoice_item_type_id')
   String get invoiceItemTypeId;

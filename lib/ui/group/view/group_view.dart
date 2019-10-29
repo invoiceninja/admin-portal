@@ -138,12 +138,6 @@ class SettingsViewer extends StatelessWidget {
       localization.paymentType: settings.hasDefaultPaymentTypeId
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,
-      localization.paymentTerms: settings.defaultPaymentTerms >= 0
-          ? '${localization.net} ${settings.defaultPaymentTerms}'
-          : null,
-      localization.taskRate: settings.defaultTaskRate > 0
-          ? formatNumber(settings.defaultTaskRate, context)
-          : null,
     });
   }
 }
