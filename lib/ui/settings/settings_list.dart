@@ -131,17 +131,15 @@ class SettingsList extends StatelessWidget {
           icon: FontAwesomeIcons.heading,
         ),
         SettingsListTile(
-          section: kSettingsWorkflowSettings,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.codeBranch,
-        ),
-        /*
-        SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,
           icon: FontAwesomeIcons.paintBrush,
         ),
-        */
+        SettingsListTile(
+          section: kSettingsWorkflowSettings,
+          viewModel: viewModel,
+          icon: FontAwesomeIcons.codeBranch,
+        ),
         SettingsListTile(
           section: kSettingsClientPortal,
           viewModel: viewModel,

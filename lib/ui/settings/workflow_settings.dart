@@ -93,13 +93,13 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
               padding: const EdgeInsets.all(10),
               children: <Widget>[
                 SwitchListTile(
-                  secondary: Icon(FontAwesomeIcons.solidEnvelope),
+                  secondary: Icon(FontAwesomeIcons.fileInvoice),
                   activeColor: Theme.of(context).accentColor,
                   title: Text(localization.autoConvertQuote),
                   subtitle: Text(localization.autoConvertQuoteHelp),
                   value: settings.autoConvertQuote ?? false,
                   onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..autoEmailInvoice = value)),
+                      settings.rebuild((b) => b..autoConvertQuote = value)),
                 ),
                 SwitchListTile(
                   secondary: Icon(FontAwesomeIcons.archive),

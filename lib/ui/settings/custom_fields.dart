@@ -53,7 +53,6 @@ class _CustomFieldsState extends State<CustomFields>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        //isScrollable: true,
         tabs: [
           Tab(
             text: localization.company,
