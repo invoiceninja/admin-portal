@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class UserViewScreen extends StatelessWidget {
   const UserViewScreen({Key key}) : super(key: key);
-  static const String route = '/user/view';
+  static const String route = '/$kSettings/$kSettingsUserManagementView';
 
   @override
   Widget build(BuildContext context) {

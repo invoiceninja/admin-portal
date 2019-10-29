@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -19,7 +20,7 @@ class UserScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/user';
+  static const String route = '/$kSettings';
 
   final UserScreenVM viewModel;
 
