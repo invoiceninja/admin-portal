@@ -97,7 +97,7 @@ void main({bool isTesting = false}) async {
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
   final longPressSelectionIsDefault =
-      prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? true;
+      prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
   final requireAuthentication =
       prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
 

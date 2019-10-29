@@ -42,7 +42,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -104,12 +104,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           Tab(
             text: localization.invoiceOptions,
-          ),
-          Tab(
-            text: localization.invoiceFields,
-          ),
-          Tab(
-            text: localization.productFields,
           ),
         ],
       ),
@@ -258,8 +252,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ),
             ],
           ),
-          ListView(),
-          ListView(),
         ],
       ),
     );
