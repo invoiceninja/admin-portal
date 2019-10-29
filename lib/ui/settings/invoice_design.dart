@@ -232,23 +232,27 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
                 ],
               ),
-              BoolDropdownButton(
-                label: localization.hidePaidToDate,
-                helpLabel: localization.hidePaidToDateHelp,
-                value: settings.hidePaidToDate,
-                iconData: FontAwesomeIcons.fileInvoiceDollar,
-                showBlank: state.settingsUIState.isFiltered,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..hidePaidToDate = value)),
-              ),
-              BoolDropdownButton(
-                label: localization.invoiceEmbedDocuments,
-                helpLabel: localization.invoiceEmbedDocumentsHelp,
-                value: settings.embedDocuments,
-                iconData: FontAwesomeIcons.image,
-                showBlank: state.settingsUIState.isFiltered,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..embedDocuments = value)),
+              FormCard(
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.hidePaidToDate,
+                    helpLabel: localization.hidePaidToDateHelp,
+                    value: settings.hidePaidToDate,
+                    iconData: FontAwesomeIcons.fileInvoiceDollar,
+                    showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..hidePaidToDate = value)),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.invoiceEmbedDocuments,
+                    helpLabel: localization.invoiceEmbedDocumentsHelp,
+                    value: settings.embedDocuments,
+                    iconData: FontAwesomeIcons.image,
+                    showBlank: state.settingsUIState.isFiltered,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..embedDocuments = value)),
+                  ),
+                ],
               ),
             ],
           ),

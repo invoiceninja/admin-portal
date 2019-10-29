@@ -129,7 +129,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<int>(
                         // TODO remove this check
-                        value: settings.counterPadding > 0
+                        value: (settings.counterPadding ?? 0) > 0
                             ? settings.counterPadding
                             : 4,
                         isExpanded: true,
