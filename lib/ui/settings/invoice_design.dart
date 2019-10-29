@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -111,45 +112,29 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ListView(children: <Widget>[
             FormCard(
               children: <Widget>[
-                InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: localization.invoiceDesign,
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                        value: settings.defaultInvoiceDesignId,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..defaultInvoiceDesignId = value)),
-                        items: designs
-                            .map((designId) => DropdownMenuItem<String>(
-                                  value: designId,
-                                  child: Text(kInvoiceDesigns[designId]),
-                                ))
-                            .toList()),
-                  ),
+                AppDropdownButton(
+                  labelText: localization.invoiceDesign,
+                  value: settings.defaultInvoiceDesignId,
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..defaultInvoiceDesignId = value)),
+                  items: designs
+                      .map((designId) => DropdownMenuItem<String>(
+                            value: designId,
+                            child: Text(kInvoiceDesigns[designId]),
+                          ))
+                      .toList(),
                 ),
-                InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: localization.quoteDesign,
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                        value: settings.defaultQuoteDesignId,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..defaultQuoteDesignId = value)),
-                        items: designs
-                            .map((designId) => DropdownMenuItem<String>(
-                                  value: designId,
-                                  child: Text(kInvoiceDesigns[designId]),
-                                ))
-                            .toList()),
-                  ),
+                AppDropdownButton(
+                  labelText: localization.quoteDesign,
+                  value: settings.defaultQuoteDesignId,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..defaultQuoteDesignId = value)),
+                  items: designs
+                      .map((designId) => DropdownMenuItem<String>(
+                            value: designId,
+                            child: Text(kInvoiceDesigns[designId]),
+                          ))
+                      .toList(),
                 ),
               ],
             ),
