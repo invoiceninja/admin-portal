@@ -129,7 +129,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
       'invoice_status_id',
-      serializers.serialize(object.invoiceStatusId,
+      serializers.serialize(object.statusId,
           specifiedType: const FullType(String)),
       'invoice_number',
       serializers.serialize(object.invoiceNumber,
@@ -321,7 +321,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_status_id':
-          result.invoiceStatusId = serializers.deserialize(value,
+          result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_number':
@@ -1055,7 +1055,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String clientId;
   @override
-  final String invoiceStatusId;
+  final String statusId;
   @override
   final String invoiceNumber;
   @override
@@ -1150,7 +1150,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       {this.amount,
       this.balance,
       this.clientId,
-      this.invoiceStatusId,
+      this.statusId,
       this.invoiceNumber,
       this.discount,
       this.poNumber,
@@ -1201,8 +1201,8 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
     }
-    if (invoiceStatusId == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceStatusId');
+    if (statusId == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'statusId');
     }
     if (invoiceNumber == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceNumber');
@@ -1325,7 +1325,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         amount == other.amount &&
         balance == other.balance &&
         clientId == other.clientId &&
-        invoiceStatusId == other.invoiceStatusId &&
+        statusId == other.statusId &&
         invoiceNumber == other.invoiceNumber &&
         discount == other.discount &&
         poNumber == other.poNumber &&
@@ -1391,7 +1391,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), invoiceStatusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode),
                                                                                 customSurcharge2.hashCode),
                                                                             customSurcharge3.hashCode),
                                                                         customSurcharge4.hashCode),
@@ -1419,7 +1419,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('amount', amount)
           ..add('balance', balance)
           ..add('clientId', clientId)
-          ..add('invoiceStatusId', invoiceStatusId)
+          ..add('statusId', statusId)
           ..add('invoiceNumber', invoiceNumber)
           ..add('discount', discount)
           ..add('poNumber', poNumber)
@@ -1483,10 +1483,9 @@ class InvoiceEntityBuilder
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
 
-  String _invoiceStatusId;
-  String get invoiceStatusId => _$this._invoiceStatusId;
-  set invoiceStatusId(String invoiceStatusId) =>
-      _$this._invoiceStatusId = invoiceStatusId;
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
 
   String _invoiceNumber;
   String get invoiceNumber => _$this._invoiceNumber;
@@ -1679,7 +1678,7 @@ class InvoiceEntityBuilder
       _amount = _$v.amount;
       _balance = _$v.balance;
       _clientId = _$v.clientId;
-      _invoiceStatusId = _$v.invoiceStatusId;
+      _statusId = _$v.statusId;
       _invoiceNumber = _$v.invoiceNumber;
       _discount = _$v.discount;
       _poNumber = _$v.poNumber;
@@ -1750,7 +1749,7 @@ class InvoiceEntityBuilder
               amount: amount,
               balance: balance,
               clientId: clientId,
-              invoiceStatusId: invoiceStatusId,
+              statusId: statusId,
               invoiceNumber: invoiceNumber,
               discount: discount,
               poNumber: poNumber,

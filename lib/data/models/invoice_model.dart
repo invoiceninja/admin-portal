@@ -75,7 +75,7 @@ abstract class InvoiceEntity extends Object
       amount: 0.0,
       balance: 0.0,
       clientId: '',
-      invoiceStatusId: '',
+      statusId: '',
       invoiceNumber: '',
       discount: 0.0,
       poNumber: '',
@@ -123,7 +123,7 @@ abstract class InvoiceEntity extends Object
   InvoiceEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
     ..isDeleted = false
-    ..invoiceStatusId = kInvoiceStatusDraft
+    ..statusId = kInvoiceStatusDraft
     ..quoteInvoiceId = null
     ..invoiceNumber = ''
     ..invoiceDate = convertDateTimeToSqlDate()
@@ -143,7 +143,7 @@ abstract class InvoiceEntity extends Object
   String get clientId;
 
   @BuiltValueField(wireName: 'invoice_status_id')
-  String get invoiceStatusId;
+  String get statusId;
 
   @BuiltValueField(wireName: 'invoice_number')
   String get invoiceNumber;
@@ -281,7 +281,7 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvitationEntity> get invitations;
 
   bool get isApproved =>
-      invoiceStatusId == kInvoiceStatusApproved ||
+      statusId == kInvoiceStatusApproved ||
       (quoteInvoiceId ?? '').isNotEmpty;
 
   //String get last_login;
@@ -319,7 +319,7 @@ abstract class InvoiceEntity extends Object
     }
 
     for (final status in statuses) {
-      if (status.id == invoiceStatusId) {
+      if (status.id == statusId) {
         return true;
       }
 
@@ -455,11 +455,11 @@ abstract class InvoiceEntity extends Object
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
-  bool get isSent => invoiceStatusId != kInvoiceStatusDraft;
+  bool get isSent => statusId != kInvoiceStatusDraft;
 
-  bool get isUnpaid => invoiceStatusId != kInvoiceStatusPaid;
+  bool get isUnpaid => statusId != kInvoiceStatusPaid;
 
-  bool get isPaid => invoiceStatusId == kInvoiceStatusPaid;
+  bool get isPaid => statusId == kInvoiceStatusPaid;
 
   bool get isPastDue {
     if (dueDate.isEmpty) {

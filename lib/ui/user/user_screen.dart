@@ -48,7 +48,9 @@ class UserScreen extends StatelessWidget {
             context, users, EntityAction.toggleMultiselect);            
          */
       },
+      hideHamburgerButton: true,
       appBarTitle: ListFilter(
+        title: localization.userManagement,
         key: ValueKey(state.userListState.filterClearedAt),
         entityType: EntityType.user,
         onFilterChanged: (value) {

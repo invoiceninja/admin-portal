@@ -279,7 +279,7 @@ QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
   final quote = action.quote.rebuild((b) => b
     ..quoteInvoiceId = action.invoice.id
-    ..invoiceStatusId = kInvoiceStatusApproved);
+    ..statusId = kInvoiceStatusApproved);
   return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }
 

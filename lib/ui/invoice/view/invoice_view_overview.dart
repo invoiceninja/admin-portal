@@ -38,7 +38,7 @@ class InvoiceOverview extends StatelessWidget {
     final userCompany = state.userCompany;
     final color = invoice.isPastDue
         ? Colors.red
-        : InvoiceStatusColors.colors[invoice.invoiceStatusId];
+        : InvoiceStatusColors.colors[invoice.statusId];
     final widgets = <Widget>[
       TwoValueHeader(
         backgroundColor: color,
@@ -54,7 +54,7 @@ class InvoiceOverview extends StatelessWidget {
     final Map<String, String> fields = {
       InvoiceFields.invoiceStatusId: invoice.isPastDue
           ? localization.pastDue
-          : localization.lookup('invoice_status_${invoice.invoiceStatusId}'),
+          : localization.lookup('invoice_status_${invoice.statusId}'),
       InvoiceFields.invoiceDate: formatDate(invoice.invoiceDate, context),
       InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
