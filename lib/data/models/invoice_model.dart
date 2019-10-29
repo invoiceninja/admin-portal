@@ -253,18 +253,22 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'custom_surcharge4')
   double get customSurcharge4;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'custom_taxes3')
   bool get customTaxes3;
 
+  @nullable
   @override
   @BuiltValueField(wireName: 'custom_taxes4')
   bool get customTaxes4;
@@ -272,9 +276,11 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;
 
+  @nullable
   @BuiltValueField(wireName: 'quote_invoice_id')
   String get quoteInvoiceId;
 
+  @nullable
   String get filename;
 
   @override

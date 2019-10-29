@@ -203,27 +203,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'custom_surcharge4',
       serializers.serialize(object.customSurcharge4,
           specifiedType: const FullType(double)),
-      'custom_taxes1',
-      serializers.serialize(object.customTaxes1,
-          specifiedType: const FullType(bool)),
-      'custom_taxes2',
-      serializers.serialize(object.customTaxes2,
-          specifiedType: const FullType(bool)),
-      'custom_taxes3',
-      serializers.serialize(object.customTaxes3,
-          specifiedType: const FullType(bool)),
-      'custom_taxes4',
-      serializers.serialize(object.customTaxes4,
-          specifiedType: const FullType(bool)),
       'has_expenses',
       serializers.serialize(object.hasExpenses,
           specifiedType: const FullType(bool)),
-      'quote_invoice_id',
-      serializers.serialize(object.quoteInvoiceId,
-          specifiedType: const FullType(String)),
-      'filename',
-      serializers.serialize(object.filename,
-          specifiedType: const FullType(String)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -256,6 +238,42 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('auto_bill')
         ..add(serializers.serialize(object.autoBill,
             specifiedType: const FullType(bool)));
+    }
+    if (object.customTaxes1 != null) {
+      result
+        ..add('custom_taxes1')
+        ..add(serializers.serialize(object.customTaxes1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.customTaxes2 != null) {
+      result
+        ..add('custom_taxes2')
+        ..add(serializers.serialize(object.customTaxes2,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.customTaxes3 != null) {
+      result
+        ..add('custom_taxes3')
+        ..add(serializers.serialize(object.customTaxes3,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.customTaxes4 != null) {
+      result
+        ..add('custom_taxes4')
+        ..add(serializers.serialize(object.customTaxes4,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.quoteInvoiceId != null) {
+      result
+        ..add('quote_invoice_id')
+        ..add(serializers.serialize(object.quoteInvoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.filename != null) {
+      result
+        ..add('filename')
+        ..add(serializers.serialize(object.filename,
+            specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
       result
@@ -1282,26 +1300,8 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (customSurcharge4 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customSurcharge4');
     }
-    if (customTaxes1 == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes1');
-    }
-    if (customTaxes2 == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes2');
-    }
-    if (customTaxes3 == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes3');
-    }
-    if (customTaxes4 == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'customTaxes4');
-    }
     if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasExpenses');
-    }
-    if (quoteInvoiceId == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'quoteInvoiceId');
-    }
-    if (filename == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'filename');
     }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lineItems');
