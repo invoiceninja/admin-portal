@@ -35,7 +35,7 @@ class StubScreen extends StatelessWidget {
 
     return AppScaffold(
                       isChecked: isInMultiselect &&
-                          listUIState.selectedEntities.length == viewModel.stubList.length,
+                          listUIState.selectedIds.length == viewModel.stubList.length,
                       showCheckbox: isInMultiselect,
                       onCheckboxChanged: (value) {
                         final stubs = viewModel.stubList
@@ -80,11 +80,11 @@ class StubScreen extends StatelessWidget {
                             child: Text(
                               localization.done,
                             ),
-                            onPressed: state.stubListState.selectedEntities.isEmpty
+                            onPressed: state.stubListState.selectedIds.isEmpty
                                 ? null
                                 : () async {
                                     await showEntityActionsDialog(
-                                        entities: state.stubListState.selectedEntities,
+                                        entities: state.stubListState.selectedIds,
                                         userCompany: userCompany,
                                         context: context,
                                         onEntityAction: viewModel.onEntityAction,

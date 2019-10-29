@@ -385,36 +385,6 @@ abstract class GatewayEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 }
 
-abstract class UserEntity implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity() {
-    return _$UserEntity._(
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      id: '',
-    );
-  }
-
-  UserEntity._();
-
-  String get id;
-
-  @BuiltValueField(wireName: 'first_name')
-  String get firstName;
-
-  @BuiltValueField(wireName: 'last_name')
-  String get lastName;
-
-  String get email;
-
-  String get phone;
-
-  String get fullName => (firstName + ' ' + lastName).trim();
-
-  static Serializer<UserEntity> get serializer => _$userEntitySerializer;
-}
-
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
@@ -1031,19 +1001,6 @@ abstract class SettingsEntity
 
   static Serializer<SettingsEntity> get serializer =>
       _$settingsEntitySerializer;
-}
-
-abstract class UserItemResponse
-    implements Built<UserItemResponse, UserItemResponseBuilder> {
-  factory UserItemResponse([void updates(UserItemResponseBuilder b)]) =
-      _$UserItemResponse;
-
-  UserItemResponse._();
-
-  UserEntity get data;
-
-  static Serializer<UserItemResponse> get serializer =>
-      _$userItemResponseSerializer;
 }
 
 abstract class CompanyItemResponse

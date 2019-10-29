@@ -9,6 +9,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/user/user_state.dart';
+
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -48,6 +50,8 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+userState: UserState(),
+
       taxRateState: TaxRateState(),
 
       companyGatewayState: CompanyGatewayState(),
@@ -84,6 +88,8 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+UserState get userState;
+
   TaxRateState get taxRateState;
 
   CompanyGatewayState get companyGatewayState;

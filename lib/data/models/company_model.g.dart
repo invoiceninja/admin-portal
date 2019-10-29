@@ -12,14 +12,11 @@ Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
     new _$PaymentTermEntitySerializer();
 Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
-Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
 Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
-Serializer<UserItemResponse> _$userItemResponseSerializer =
-    new _$UserItemResponseSerializer();
 Serializer<CompanyItemResponse> _$companyItemResponseSerializer =
     new _$CompanyItemResponseSerializer();
 
@@ -536,73 +533,6 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
           break;
         case 'fields':
           result.fields = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
-  @override
-  final Iterable<Type> types = const [UserEntity, _$UserEntity];
-  @override
-  final String wireName = 'UserEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, UserEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'first_name',
-      serializers.serialize(object.firstName,
-          specifiedType: const FullType(String)),
-      'last_name',
-      serializers.serialize(object.lastName,
-          specifiedType: const FullType(String)),
-      'email',
-      serializers.serialize(object.email,
-          specifiedType: const FullType(String)),
-      'phone',
-      serializers.serialize(object.phone,
-          specifiedType: const FullType(String)),
-    ];
-
-    return result;
-  }
-
-  @override
-  UserEntity deserialize(Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'first_name':
-          result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'last_name':
-          result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'email':
-          result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'phone':
-          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -2009,48 +1939,6 @@ class _$SettingsEntitySerializer
   }
 }
 
-class _$UserItemResponseSerializer
-    implements StructuredSerializer<UserItemResponse> {
-  @override
-  final Iterable<Type> types = const [UserItemResponse, _$UserItemResponse];
-  @override
-  final String wireName = 'UserItemResponse';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, UserItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(UserEntity)),
-    ];
-
-    return result;
-  }
-
-  @override
-  UserItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserItemResponseBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity)) as UserEntity);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
 class _$CompanyItemResponseSerializer
     implements StructuredSerializer<CompanyItemResponse> {
   @override
@@ -2864,145 +2752,6 @@ class GatewayEntityBuilder
     final _$result = _$v ??
         new _$GatewayEntity._(
             id: id, name: name, sortOrder: sortOrder, fields: fields);
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$UserEntity extends UserEntity {
-  @override
-  final String id;
-  @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
-  final String email;
-  @override
-  final String phone;
-
-  factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
-      (new UserEntityBuilder()..update(updates)).build();
-
-  _$UserEntity._(
-      {this.id, this.firstName, this.lastName, this.email, this.phone})
-      : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'id');
-    }
-    if (firstName == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'firstName');
-    }
-    if (lastName == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'lastName');
-    }
-    if (email == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'email');
-    }
-    if (phone == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'phone');
-    }
-  }
-
-  @override
-  UserEntity rebuild(void Function(UserEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  UserEntityBuilder toBuilder() => new UserEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is UserEntity &&
-        id == other.id &&
-        firstName == other.firstName &&
-        lastName == other.lastName &&
-        email == other.email &&
-        phone == other.phone;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc($jc($jc(0, id.hashCode), firstName.hashCode),
-                lastName.hashCode),
-            email.hashCode),
-        phone.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('UserEntity')
-          ..add('id', id)
-          ..add('firstName', firstName)
-          ..add('lastName', lastName)
-          ..add('email', email)
-          ..add('phone', phone))
-        .toString();
-  }
-}
-
-class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
-  _$UserEntity _$v;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
-
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
-
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
-
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
-
-  UserEntityBuilder();
-
-  UserEntityBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _firstName = _$v.firstName;
-      _lastName = _$v.lastName;
-      _email = _$v.email;
-      _phone = _$v.phone;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(UserEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$UserEntity;
-  }
-
-  @override
-  void update(void Function(UserEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$UserEntity build() {
-    final _$result = _$v ??
-        new _$UserEntity._(
-            id: id,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone);
     replace(_$result);
     return _$result;
   }
@@ -4845,98 +4594,6 @@ class SettingsEntityBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$UserItemResponse extends UserItemResponse {
-  @override
-  final UserEntity data;
-
-  factory _$UserItemResponse(
-          [void Function(UserItemResponseBuilder) updates]) =>
-      (new UserItemResponseBuilder()..update(updates)).build();
-
-  _$UserItemResponse._({this.data}) : super._() {
-    if (data == null) {
-      throw new BuiltValueNullFieldError('UserItemResponse', 'data');
-    }
-  }
-
-  @override
-  UserItemResponse rebuild(void Function(UserItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  UserItemResponseBuilder toBuilder() =>
-      new UserItemResponseBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is UserItemResponse && data == other.data;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc(0, data.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('UserItemResponse')..add('data', data))
-        .toString();
-  }
-}
-
-class UserItemResponseBuilder
-    implements Builder<UserItemResponse, UserItemResponseBuilder> {
-  _$UserItemResponse _$v;
-
-  UserEntityBuilder _data;
-  UserEntityBuilder get data => _$this._data ??= new UserEntityBuilder();
-  set data(UserEntityBuilder data) => _$this._data = data;
-
-  UserItemResponseBuilder();
-
-  UserItemResponseBuilder get _$this {
-    if (_$v != null) {
-      _data = _$v.data?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(UserItemResponse other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$UserItemResponse;
-  }
-
-  @override
-  void update(void Function(UserItemResponseBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$UserItemResponse build() {
-    _$UserItemResponse _$result;
-    try {
-      _$result = _$v ?? new _$UserItemResponse._(data: data.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'data';
-        data.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'UserItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }

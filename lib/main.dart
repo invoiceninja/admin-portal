@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -64,6 +63,7 @@ import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/user/user_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
@@ -71,13 +71,15 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
+import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/user/user_middleware.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
@@ -125,6 +127,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreUsersMiddleware())
         ..addAll(createStoreTaxRatesMiddleware())
         ..addAll(createStoreCompanyGatewaysMiddleware())
         ..addAll(createStoreGroupsMiddleware())
@@ -342,6 +345,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
             // STARTER: routes - do not remove comment
+            UserScreen.route: (context) => UserScreenBuilder(),
+            UserViewScreen.route: (context) => UserViewScreen(),
+            UserEditScreen.route: (context) => UserEditScreen(),
+
             GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),

@@ -158,6 +158,10 @@ const String kSettingsEmailSettings = 'email_settings';
 const String kSettingsTemplatesAndReminders = 'templates_and_reminders';
 const String kSettingsCreditCardsAndBanks = 'credit_cards_and_banks';
 const String kSettingsDataVisualizations = 'data_visualizations';
+const String kSettingsApiTokens = 'api_tokens';
+const String kSettingsUserManagement = 'user_management';
+const String kSettingsUserManagementView = 'user_management_view';
+const String kSettingsUserManagementEdit = 'user_management_edit';
 
 const List<String> kSettingsSections = [
   kSettingsCompanyDetails,
@@ -184,6 +188,10 @@ const List<String> kSettingsSections = [
   kSettingsTemplatesAndReminders,
   kSettingsCreditCardsAndBanks,
   kSettingsDataVisualizations,
+  kSettingsApiTokens,
+  kSettingsUserManagement,
+  kSettingsUserManagementView,
+  kSettingsUserManagementEdit,
 ];
 
 const int kPaymentStatusPending = 1;

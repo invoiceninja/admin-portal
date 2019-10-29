@@ -275,7 +275,7 @@ void handleStubAction(
       }
 
       for (final stub in stubs) {
-        if (!store.state.stubListState.isSelected(stub)) {
+        if (!store.state.stubListState.isSelected(stub.id)) {
           store.dispatch(
               AddToStubMultiselect(context: context, entity: stub));
         } else {

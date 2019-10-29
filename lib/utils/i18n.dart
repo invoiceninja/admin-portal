@@ -14,6 +14,14 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'users': 'Users',
+      'new_user': 'New User',
+      'edit_user': 'Edit User',
+      'created_user': 'Successfully created user',
+      'updated_user': 'Successfully updated user',
+      'archived_user': 'Successfully archived user',
+      'deleted_user': 'Successfully deleted user',
+      'restored_user': 'Successfully restored user',
       'general_settings': 'General Settings',
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
@@ -15363,10 +15371,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get lastPage => _localizedValues[localeCode]['last_page'];
 
-  String get generalSettings => _localizedValues[localeCode]['general_settings'];
+  String get generalSettings =>
+      _localizedValues[localeCode]['general_settings'];
 
   String get invoiceOptions => _localizedValues[localeCode]['invoice_options'];
 
+  String get newUser => _localizedValues[localeCode]['new_user'];
+
+  String get createdUser => _localizedValues[localeCode]['created_user'];
+
+  String get updatedUser => _localizedValues[localeCode]['updated_user'];
+
+  String get archivedUser => _localizedValues[localeCode]['archived_user'];
+
+  String get deletedUser => _localizedValues[localeCode]['deleted_user'];
+
+  String get restoredUser => _localizedValues[localeCode]['restored_user'];
+
+  String get editUser => _localizedValues[localeCode]['edit_user'];
+
+  String get users => _localizedValues[localeCode]['users'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -37,6 +37,8 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/user/user_state.dart';
+
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -152,6 +154,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+case EntityType.user:
+return userUIState;
+
       case EntityType.taxRate:
         return taxRateUIState;
 
@@ -203,6 +208,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+UserState get userState => selectedCompanyState.userState;
+ListUIState get userListState => uiState.userUIState.listUIState;
+UserUIState get userUIState => uiState.userUIState;
+
+
   TaxRateState get taxRateState => selectedCompanyState.taxRateState;
 
   ListUIState get taxRateListState => uiState.taxRateUIState.listUIState;

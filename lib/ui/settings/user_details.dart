@@ -65,6 +65,7 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void _onChanged() {
+    /*
     final user = widget.viewModel.user.rebuild((b) => b
           ..firstName = _firstNameController.text.trim()
           ..lastName = _lastNameController.text.trim()
@@ -74,6 +75,7 @@ class _UserDetailsState extends State<UserDetails> {
     if (user != widget.viewModel.user) {
       widget.viewModel.onChanged(user);
     }
+     */
   }
 
   @override
