@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -411,7 +410,7 @@ class _LinkTextSpan extends TextSpan {
 class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
+    //final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
@@ -476,13 +475,14 @@ class SidebarFooter extends StatelessWidget {
             onPressed: () => showAbout(),
           ),
           IconButton(
-            icon: Icon(Icons.settings_applications),
+            icon: Icon(Icons.memory),
             onPressed: () => showDialog<StateInspector>(
                 context: context,
                 builder: (BuildContext context) {
                   return StateInspector();
                 }),
           ),
+          /*
           if (state.lastError.isNotEmpty)
             IconButton(
               icon: Icon(
@@ -501,6 +501,7 @@ class SidebarFooter extends StatelessWidget {
                   }),
                */
             ),
+           */
           if (!Platform.isIOS &&
               isHosted(context) &&
               !isPaidAccount(context)) ...[

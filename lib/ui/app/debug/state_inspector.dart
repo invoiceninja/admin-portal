@@ -20,18 +20,14 @@ class _StateInspectorState extends State<StateInspector> {
       ..forEach((part) {
         String pattern = '';
         part.split('').forEach((ch) => pattern += ch.toLowerCase() + '.*');
+
         final regExp = RegExp(pattern, caseSensitive: false);
+        final dynamic index = (data as Map).keys.firstWhere(
+            (dynamic key) => regExp.hasMatch(key),
+            orElse: () => null);
 
-        try {
-          final dynamic index = (data as Map)
-              .keys
-              .firstWhere((dynamic key) => regExp.hasMatch(key));
-
-          if (index != null) {
-            data = data[index];
-          }
-        } catch (e) {
-          // do nothing
+        if (index != null) {
+          data = data[index];
         }
       });
 
@@ -49,13 +45,14 @@ class _StateInspectorState extends State<StateInspector> {
     final data = serializers.serializeWith(AppState.serializer, state);
 
     return Padding(
-      padding: const EdgeInsets.only(left: 100, top: 20, right: 100),
+      padding: const EdgeInsets.all(15),
       child: Material(
         child: ResponsivePadding(
-          child: Column(
+          child: ListView(
             children: <Widget>[
               TextFormField(
                 autofocus: true,
+                autocorrect: false,
                 decoration: InputDecoration(
                   labelText: AppLocalization.of(context).filter,
                 ),
@@ -66,10 +63,8 @@ class _StateInspectorState extends State<StateInspector> {
                 },
               ),
               SizedBox(height: 25),
-              Container(
-                //color: Colors.white,
-                child: SingleChildScrollView(
-                    child: JsonViewerWidget(filterJson(data, _filter))),
+              JsonViewerWidget(
+                filterJson(data, _filter),
               ),
             ],
           ),
