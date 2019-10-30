@@ -43,7 +43,7 @@ class _UserEditState extends State<UserEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final user = widget.viewModel.state.user;
+    final user = widget.viewModel.user;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;

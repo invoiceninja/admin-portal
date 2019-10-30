@@ -20,7 +20,7 @@ class UserScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  static const String route = '/$kSettings';
+  static const String route = '/$kSettings/$kSettingsUserManagement';
 
   final UserScreenVM viewModel;
 
