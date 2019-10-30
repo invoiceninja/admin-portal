@@ -15,11 +15,9 @@ class _StateInspectorState extends State<StateInspector> {
 
   List<TextEditingController> _controllers = [];
   String _text;
-  List<String> _keys = [];
 
   @override
   void didChangeDependencies() {
-
     _controllers = [_filterController];
 
     _controllers
@@ -41,7 +39,8 @@ class _StateInspectorState extends State<StateInspector> {
     final state = StoreProvider.of<AppState>(context).state;
     dynamic data = serializers.serializeWith(AppState.serializer, state);
 
-    _keys.forEach((key) => data = data[key]);
+
+    //.forEach((key) => data = data[key]);
 
     final map = data as Map;
 
@@ -68,10 +67,16 @@ class _StateInspectorState extends State<StateInspector> {
     print('TEXT: $value');
     if (value.endsWith('\t') || value.endsWith('.')) {
       print('ends with tab');
-      value = getKeys().first;
+      value = getKeys().first + '.';
       //_filterController.text = value;
       _text = value;
-      _keys.add(value);
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        var cursorPos = _filterController.selection;
+        _filterController.text = value;
+        cursorPos = new TextSelection.fromPosition(
+            new TextPosition(offset: value.length));
+        _filterController.selection = cursorPos;
+      });
     }
     setState(() {
       _text = value;
@@ -83,7 +88,7 @@ class _StateInspectorState extends State<StateInspector> {
     final state = StoreProvider.of<AppState>(context).state;
     dynamic data = serializers.serializeWith(AppState.serializer, state);
 
-    _keys.forEach((key) => data = data[key]);
+    //_keys.forEach((key) => data = data[key]);
 
     final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
     final String prettyJson = encoder.convert(data);
@@ -97,7 +102,7 @@ class _StateInspectorState extends State<StateInspector> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: <Widget>[
-              Text('Text: $_text, Keys: $_keys'),
+              Text('Text: $_text'),
               TextFormField(
                 autofocus: true,
                 controller: _filterController,
