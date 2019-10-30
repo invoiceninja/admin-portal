@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:redux/redux.dart';
@@ -144,13 +145,13 @@ class AppDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             // Hide options while refreshing data
             state.credentials.token.isEmpty
-                ? Container(
-                    padding: EdgeInsets.only(top: 40),
-                    child: CircularProgressIndicator(),
+                ? Expanded(
+                    child: LoadingIndicator(
+                      height: 30,
+                    ),
                   )
                 : Container(
                     padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
