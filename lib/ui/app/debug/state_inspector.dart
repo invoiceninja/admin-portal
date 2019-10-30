@@ -14,7 +14,7 @@ class StateInspector extends StatefulWidget {
 class _StateInspectorState extends State<StateInspector> {
   String _filter = '';
 
-  dynamic filterJson(dynamic data, String filter) {
+  dynamic filterJson({dynamic data, String filter}) {
     filter.split('.')
       ..removeLast()
       ..forEach((part) {
@@ -64,7 +64,7 @@ class _StateInspectorState extends State<StateInspector> {
               ),
               SizedBox(height: 25),
               JsonViewerWidget(
-                filterJson(data, _filter),
+                filterJson(data: data, filter: _filter),
               ),
             ],
           ),
