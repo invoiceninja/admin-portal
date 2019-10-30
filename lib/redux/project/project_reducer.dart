@@ -145,7 +145,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState projectListState, ClearProjectMultiselect action) {
-  return projectListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return projectListState.rebuild((b) => b..selectedIds = null);
 }
 
 final projectsReducer = combineReducers<ProjectState>([

@@ -158,7 +158,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState taskListState, ClearTaskMultiselect action) {
-  return taskListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return taskListState.rebuild((b) => b..selectedIds = null);
 }
 
 final tasksReducer = combineReducers<TaskState>([

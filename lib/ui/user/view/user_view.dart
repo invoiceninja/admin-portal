@@ -5,10 +5,12 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -55,12 +57,24 @@ class UserView extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          AppListTile(
-            icon: Icons.email,
-            title: user.email,
-            copyValue: user.email,
-            subtitle: localization.email,
-            onTap: () => launch('mailto:' + user.email),
+          FormCard(
+            children: <Widget>[
+              AppListTile(
+                icon: Icons.email,
+                title: user.email,
+                copyValue: user.email,
+                subtitle: localization.email,
+                onTap: () => launch('mailto:' + user.email),
+              ),
+              if ((user.phone ?? '').isNotEmpty)
+                AppListTile(
+                  icon: Icons.phone,
+                  title: user.phone,
+                  copyValue: user.phone,
+                  subtitle: localization.phone,
+                  onTap: () => launch('sms:' + cleanPhoneNumber(user.phone)),
+                ),
+            ],
           ),
           /*
           TwoValueHeader(

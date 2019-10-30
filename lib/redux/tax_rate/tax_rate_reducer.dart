@@ -130,7 +130,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState taxRateListState, ClearTaxRateMultiselect action) {
-  return taxRateListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return taxRateListState.rebuild((b) => b..selectedIds = null);
 }
 
 final taxRatesReducer = combineReducers<TaxRateState>([

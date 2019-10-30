@@ -140,7 +140,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState expenseListState, ClearExpenseMultiselect action) {
-  return expenseListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return expenseListState.rebuild((b) => b..selectedIds = null);
 }
 
 final expensesReducer = combineReducers<ExpenseState>([

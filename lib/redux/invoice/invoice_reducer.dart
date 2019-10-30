@@ -199,7 +199,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState invoiceListState, ClearInvoiceMultiselect action) {
-  return invoiceListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return invoiceListState.rebuild((b) => b..selectedIds = null);
 }
 
 final invoicesReducer = combineReducers<InvoiceState>([

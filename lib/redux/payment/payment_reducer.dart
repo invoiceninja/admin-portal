@@ -129,7 +129,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState paymentListState, ClearPaymentMultiselect action) {
-  return paymentListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return paymentListState.rebuild((b) => b..selectedIds = null);
 }
 
 final paymentsReducer = combineReducers<PaymentState>([

@@ -41,7 +41,7 @@ class UserListItem extends StatelessWidget {
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? user.matchesFilterValue(filter)
-        : null;
+        : user.email;
     final subtitle = filterMatch;
 
     return DismissibleEntity(

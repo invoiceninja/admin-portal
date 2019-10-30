@@ -130,7 +130,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState documentListState, ClearDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return documentListState.rebuild((b) => b..selectedIds = null);
 }
 
 final documentsReducer = combineReducers<DocumentState>([

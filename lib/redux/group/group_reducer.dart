@@ -127,7 +127,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState groupListState, ClearGroupMultiselect action) {
-  return groupListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return groupListState.rebuild((b) => b..selectedIds = null);
 }
 
 final groupsReducer = combineReducers<GroupState>([

@@ -126,7 +126,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearUserMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
+  return productListState.rebuild((b) => b..selectedIds = null);
 }
 
 final usersReducer = combineReducers<UserState>([
