@@ -55,7 +55,7 @@ class UserList extends StatelessWidget {
                                 onEntityAction: viewModel.onEntityAction);
 
                             return UserListItem(
-                              user: viewModel.userCompany.user,
+                              user: user,
                               filter: viewModel.filter,
                               onTap: () => viewModel.onUserTap(context, user),
                               onEntityAction: (EntityAction action) {
@@ -72,99 +72,6 @@ class UserList extends StatelessWidget {
                         ),
                 ),
         ),
-
-        /*
-        filteredClient != null
-            ? Material(
-                color: Colors.orangeAccent,
-                elevation: 6.0,
-                child: InkWell(
-                  onTap: () => viewModel.onViewEntityFilterPressed(context),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 18.0),
-                      Expanded(
-                        child: Text(
-                          '${localization.filteredBy} ${filteredClient.listDisplayName}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => viewModel.onClearEntityFilterPressed(),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-        Expanded(
-          child: !viewModel.isLoaded
-              ? LoadingIndicator()
-              : RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.userList.isEmpty
-                      ? HelpText(AppLocalization.of(context).noRecordsFound)
-                      : ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => ListDivider(),
-                          itemCount: viewModel.userList.length,
-                          itemBuilder: (BuildContext context, index) {
-                            final user = viewModel.user;
-                            final userId = viewModel.userList[index];
-                            final user = viewModel.userMap[userId];
-                            final client =
-                                viewModel.clientMap[user.clientId] ??
-                                    ClientEntity();
-
-
-                              void showDialog() => showEntityActionsDialog(
-                                  entity: user,
-                                  context: context,
-                                  user: user,
-                                  onEntityAction: viewModel.onEntityAction);
-
-
-
-                            return UserListItem(
-                                 user: viewModel.user,
-                                 filter: viewModel.filter,
-                                 user: user,
-                                 client:
-                                     viewModel.clientMap[user.clientId] ??
-                                         ClientEntity(),
-                                 onTap: () =>
-                                     viewModel.onUserTap(context, user),
-                                 onEntityAction: (EntityAction action) {
-                                   if (action == EntityAction.more) {
-                                     showDialog();
-                                   } else {
-                                     viewModel.onEntityAction(
-                                         context, user, action);
-                                   }
-                                 },
-                                  onLongPress: () async {
-                                    final longPressIsSelection =
-                                        store.state.uiState.longPressSelectionIsDefault ?? true;
-                                    if (longPressIsSelection && !isInMultiselect) {
-                                      viewModel.onEntityAction(
-                                          context, [user], EntityAction.toggleMultiselect);
-                                    } else {
-                                      showDialog();
-                                    }
-                                  },
-                                  isChecked: isInMultiselect && listUIState.isSelected(user),
-                               );
-                          },
-                        ),
-                ),
-        ),*/
       ],
     );
   }
