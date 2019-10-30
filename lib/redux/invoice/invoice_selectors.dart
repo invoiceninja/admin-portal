@@ -131,9 +131,9 @@ String invoiceStatsForClient(
 }
 
 var memoizedInvoiceStatsForUser = memo4((String userId,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        String activeLabel,
+        String archivedLabel) =>
     invoiceStatsForUser(userId, invoiceMap, activeLabel, archivedLabel));
 
 String invoiceStatsForUser(
@@ -144,15 +144,8 @@ String invoiceStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-
-    //if (invoice.userId == userId) {
-    if (false) {
-      if (invoice.isActive) {
-        countActive++;
-      } else if (invoice.isArchived) {
-        countArchived++;
-      }
-    }
+    countActive++;
+    countArchived++;
   });
 
   String str = '';
