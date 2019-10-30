@@ -89,7 +89,7 @@ class AuthRepository {
     */
 
     url +=
-        '?include=company.groups,company.company_gateways.gateway&include_static=true';
+        '?include=account,user,token,company.groups,company.company_gateways.gateway&include_static=true';
 
     final dynamic response =
         await webClient.post(url, token ?? '', data: json.encode(data));

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -473,6 +474,14 @@ class SidebarFooter extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
+          ),
+          IconButton(
+            icon: Icon(Icons.settings_applications),
+            onPressed: () => showDialog<StateInspector>(
+                context: context,
+                builder: (BuildContext context) {
+                  return StateInspector();
+                }),
           ),
           if (state.lastError.isNotEmpty)
             IconButton(
