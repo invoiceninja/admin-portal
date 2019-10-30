@@ -11,19 +11,41 @@ class StateInspector extends StatefulWidget {
 }
 
 class _StateInspectorState extends State<StateInspector> {
+  final _filterController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
   String _text;
+  List<String> _keys = [];
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
+
+    _controllers = [_filterController];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _filterController.dispose();
+    super.dispose();
+  }
+
+  List<String> getKeys() {
     final state = StoreProvider.of<AppState>(context).state;
-    final data = serializers.serializeWith(AppState.serializer, state);
+    dynamic data = serializers.serializeWith(AppState.serializer, state);
+
+    _keys.forEach((key) => data = data[key]);
+
     final map = data as Map;
-    final json = jsonEncode(data);
 
-    final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-    final String prettyJson = encoder.convert(data);
-
-    final keys = map.keys.where((dynamic key) {
+    return map.keys.where((dynamic key) {
       if (map[key].runtimeType.toString() !=
           '_InternalLinkedHashMap<String, Object>') {
         return false;
@@ -33,8 +55,40 @@ class _StateInspectorState extends State<StateInspector> {
         return true;
       }
 
-      return '$key'.toLowerCase().contains(_text.toLowerCase());
+      String pattern = '.*';
+      _text.split('').forEach((ch) => pattern += ch + '.*');
+      final regExp = RegExp(pattern, caseSensitive: true);
+
+      return regExp.hasMatch('$key'.toLowerCase());
+    }).toList();
+  }
+
+  void _onChanged() {
+    String value = _filterController.text.toLowerCase();
+    print('TEXT: $value');
+    if (value.endsWith('\t') || value.endsWith('.')) {
+      print('ends with tab');
+      value = getKeys().first;
+      //_filterController.text = value;
+      _text = value;
+      _keys.add(value);
+    }
+    setState(() {
+      _text = value;
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    dynamic data = serializers.serializeWith(AppState.serializer, state);
+
+    _keys.forEach((key) => data = data[key]);
+
+    final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+    final String prettyJson = encoder.convert(data);
+
+    final keys = getKeys();
 
     return Padding(
       padding: const EdgeInsets.only(left: 100, top: 20, right: 100),
@@ -43,17 +97,10 @@ class _StateInspectorState extends State<StateInspector> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: <Widget>[
+              Text('Text: $_text, Keys: $_keys'),
               TextFormField(
                 autofocus: true,
-                onChanged: (value) {
-                  print('TEXT: $value');
-                  if (value.endsWith('\t')) {
-                    print('ends with tab');
-                  }
-                  setState(() {
-                    _text = value;
-                  });
-                },
+                controller: _filterController,
               ),
               SizedBox(height: 20),
               Row(
