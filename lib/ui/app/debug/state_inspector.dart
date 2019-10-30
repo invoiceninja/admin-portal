@@ -15,31 +15,25 @@ class _StateInspectorState extends State<StateInspector> {
   String _filter = '';
 
   dynamic filterJson(dynamic data, String filter) {
-    if (filter.contains('.')) {
-      final parts = filter.split('.')
-        ..removeLast()
-        ..where((part) => part.isNotEmpty);
+    filter.split('.')
+      ..removeLast()
+      ..forEach((part) {
+        String pattern = '';
+        part.split('').forEach((ch) => pattern += ch.toLowerCase() + '.*');
+        final regExp = RegExp(pattern, caseSensitive: false);
 
-      if (parts.isNotEmpty) {
-        parts.forEach((part) {
-          String pattern = '';
-          part.split('').forEach((ch) => pattern += ch.toLowerCase() + '.*');
-          final regExp = RegExp(pattern, caseSensitive: false);
+        try {
+          final dynamic index = (data as Map)
+              .keys
+              .firstWhere((dynamic key) => regExp.hasMatch(key));
 
-          try {
-            final dynamic index = (data as Map)
-                .keys
-                .firstWhere((dynamic key) => regExp.hasMatch(key));
-
-            if (index != null) {
-              data = data[index];
-            }
-          } catch (e) {
-            // do nothing
+          if (index != null) {
+            data = data[index];
           }
-        });
-      }
-    }
+        } catch (e) {
+          // do nothing
+        }
+      });
 
     if (data.runtimeType.toString() ==
         '_InternalLinkedHashMap<String, Object>') {
@@ -71,7 +65,7 @@ class _StateInspectorState extends State<StateInspector> {
                   });
                 },
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 25),
               Container(
                 //color: Colors.white,
                 child: SingleChildScrollView(
