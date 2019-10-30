@@ -104,7 +104,7 @@ class _UserEditState extends State<UserEdit> {
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
-              isVisible: !user.isDeleted,
+              isVisible: user.isActive,
               isDirty: user.isNew || user != viewModel.origUser,
               isSaving: viewModel.isSaving,
               onPressed: () {

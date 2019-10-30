@@ -31,7 +31,7 @@ class _UserViewState extends State<UserView> {
         actions: [
           userCompany.canEditEntity(user)
               ? EditIconButton(
-                  isVisible: !user.isDeleted,
+                  isVisible: user.isActive,
                   onPressed: () => viewModel.onEditPressed(context),
                 )
               : Container(),

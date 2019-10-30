@@ -134,6 +134,7 @@ final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, AddUserSuccess>(_addUser),
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
+  TypedReducer<UserState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<UserState, ArchiveUserRequest>(_archiveUserRequest),
   TypedReducer<UserState, ArchiveUserSuccess>(_archiveUserSuccess),
   TypedReducer<UserState, ArchiveUserFailure>(_archiveUserFailure),
@@ -210,6 +211,18 @@ UserState _setLoadedUsers(UserState userState, LoadUsersSuccess action) {
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.users,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+UserState _setLoadedCompany(UserState userState, LoadCompanySuccess action) {
+  final state = userState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.userCompany.company.users,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));
