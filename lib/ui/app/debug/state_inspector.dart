@@ -49,6 +49,7 @@ class _StateInspectorState extends State<StateInspector> {
       child: Material(
         child: ResponsivePadding(
           child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
               TextFormField(
                 autofocus: true,
@@ -63,8 +64,12 @@ class _StateInspectorState extends State<StateInspector> {
                 },
               ),
               SizedBox(height: 25),
-              JsonViewerWidget(
-                filterJson(data: data, filter: _filter),
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.all(4),
+                child: JsonViewerWidget(
+                  filterJson(data: data, filter: _filter),
+                ),
               ),
             ],
           ),
