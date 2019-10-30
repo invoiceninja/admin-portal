@@ -1,5 +1,11 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +52,7 @@ class UserViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onEntityPressed,
   });
 
   factory UserViewVM.fromStore(Store<AppState> store) {
@@ -86,6 +93,78 @@ class UserViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleUserAction(context, [user], action),
+      onEntityPressed: (BuildContext context, EntityType entityType,
+          [longPress = false]) {
+        switch (entityType) {
+          case EntityType.invoice:
+            if (longPress && user.isActive) {
+              store.dispatch(EditInvoice(
+                  context: context,
+                  invoice: InvoiceEntity(company: state.selectedCompany)));
+            } else {
+              store.dispatch(FilterInvoicesByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewInvoiceList(context: context));
+            }
+            break;
+          case EntityType.quote:
+            if (longPress && user.isActive) {
+              store.dispatch(EditQuote(
+                  context: context,
+                  quote: InvoiceEntity(
+                      company: state.selectedCompany, isQuote: true)));
+            } else {
+              store.dispatch(FilterQuotesByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewQuoteList(context: context));
+            }
+            break;
+          case EntityType.payment:
+            if (longPress && user.isActive) {
+              store.dispatch(EditPayment(
+                  context: context,
+                  payment: PaymentEntity(company: state.selectedCompany)));
+            } else {
+              store.dispatch(FilterPaymentsByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewPaymentList(context: context));
+            }
+            break;
+          case EntityType.project:
+            if (longPress && user.isActive) {
+              store.dispatch(
+                  EditProject(context: context, project: ProjectEntity()));
+            } else {
+              store.dispatch(FilterProjectsByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewProjectList(context: context));
+            }
+            break;
+          case EntityType.task:
+            if (longPress && user.isActive) {
+              store.dispatch(EditTask(
+                  context: context,
+                  task: TaskEntity(isRunning: state.uiState.autoStartTasks)));
+            } else {
+              store.dispatch(FilterTasksByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewTaskList(context: context));
+            }
+            break;
+          case EntityType.expense:
+            if (longPress && user.isActive) {
+              store.dispatch(EditExpense(
+                  context: context,
+                  expense: ExpenseEntity(
+                      company: state.selectedCompany, uiState: state.uiState)));
+            } else {
+              store.dispatch(FilterExpensesByEntity(
+                  entityId: user.id, entityType: EntityType.user));
+              store.dispatch(ViewExpenseList(context: context));
+            }
+            break;
+        }
+      },
     );
   }
 
@@ -93,6 +172,7 @@ class UserViewVM {
   final UserEntity user;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
+  final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
