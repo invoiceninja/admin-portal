@@ -180,8 +180,7 @@ ListUIState _addToListMultiselect(
 
 ListUIState _removeFromListMultiselect(
     ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
-  return quoteListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return quoteListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(

@@ -118,8 +118,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState paymentListState, AddToPaymentMultiselect action) {
-  return paymentListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return paymentListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(

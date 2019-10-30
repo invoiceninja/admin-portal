@@ -52,9 +52,9 @@ class UserScreenVM {
           state.userState.map, state.userState.list, state.userListState),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> users,
-              EntityAction action) =>
-          handleUserAction(context, users, action),
+      onEntityAction:
+          (BuildContext context, List<BaseEntity> users, EntityAction action) =>
+              handleUserAction(context, users, action),
     );
   }
 }

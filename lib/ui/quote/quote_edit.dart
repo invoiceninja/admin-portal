@@ -39,9 +39,8 @@ class _QuoteEditState extends State<QuoteEdit>
     final invoice = widget.viewModel.invoice;
     final invoiceItem = widget.viewModel.invoiceItem;
 
-    final index = invoice.lineItems.contains(invoiceItem)
-        ? kItemScreen
-        : kDetailsScreen;
+    final index =
+        invoice.lineItems.contains(invoiceItem) ? kItemScreen : kDetailsScreen;
     _controller = TabController(vsync: this, length: 3, initialIndex: index);
   }
 

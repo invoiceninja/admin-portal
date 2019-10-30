@@ -50,7 +50,7 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
-userState: UserState(),
+      userState: UserState(),
 
       taxRateState: TaxRateState(),
 
@@ -88,7 +88,7 @@ userState: UserState(),
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
-UserState get userState;
+  UserState get userState;
 
   TaxRateState get taxRateState;
 

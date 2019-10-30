@@ -57,8 +57,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData && snapshot.data == true) {
                         return SwitchListTile(
-                          title: Text(
-                              AppLocalization.of(context).biometricAuthentication),
+                          title: Text(AppLocalization.of(context)
+                              .biometricAuthentication),
                           value: widget.viewModel.requireAuthentication,
                           onChanged: (value) => widget.viewModel
                               .onRequireAuthenticationChanged(context, value),
@@ -73,19 +73,20 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     },
                   ),
                   widget.viewModel.state.selectedCompany
-                      .isModuleEnabled(EntityType.task)
+                          .isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
-                    title: Text(AppLocalization.of(context).autoStartTasks),
-                    value: widget.viewModel.autoStartTasks,
-                    onChanged: (value) => widget.viewModel
-                        .onAutoStartTasksChanged(context, value),
-                    secondary: Icon(FontAwesomeIcons.clock),
-                    activeColor: Theme.of(context).accentColor,
-                  )
+                          title:
+                              Text(AppLocalization.of(context).autoStartTasks),
+                          value: widget.viewModel.autoStartTasks,
+                          onChanged: (value) => widget.viewModel
+                              .onAutoStartTasksChanged(context, value),
+                          secondary: Icon(FontAwesomeIcons.clock),
+                          activeColor: Theme.of(context).accentColor,
+                        )
                       : SizedBox(),
                   SwitchListTile(
-                    title: Text(
-                        AppLocalization.of(context).longPressSelectionIsDefault),
+                    title: Text(AppLocalization.of(context)
+                        .longPressSelectionIsDefault),
                     value: widget.viewModel.longPressSelectionIsDefault,
                     onChanged: (value) => widget.viewModel
                         .onLongPressSelectionIsDefault(context, value),

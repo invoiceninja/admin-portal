@@ -258,4 +258,3 @@ abstract class CompanyGatewayEntity extends Object
   static Serializer<CompanyGatewayEntity> get serializer =>
       _$companyGatewayEntitySerializer;
 }
-

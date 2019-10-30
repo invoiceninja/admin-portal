@@ -51,11 +51,10 @@ class TaxRateList extends StatelessWidget {
                             final userCompany = viewModel.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
-                                  userCompany: userCompany,
-                                  entities: [taxRate],
-                                  context: context,
-                                  onEntityAction: viewModel.onEntityAction
-                                );
+                                userCompany: userCompany,
+                                entities: [taxRate],
+                                context: context,
+                                onEntityAction: viewModel.onEntityAction);
 
                             return TaxRateListItem(
                               user: viewModel.userCompany.user,

@@ -83,8 +83,7 @@ InvoiceEntity _addInvoiceItem(InvoiceEntity invoice, AddInvoiceItem action) {
 InvoiceEntity _addInvoiceItems(InvoiceEntity invoice, AddInvoiceItems action) {
   return invoice.rebuild((b) => b
     ..hasTasks = action.lineItems.where((item) => item.isTask).isNotEmpty
-    ..hasExpenses =
-        action.lineItems.where((item) => item.isExpense).isNotEmpty
+    ..hasExpenses = action.lineItems.where((item) => item.isExpense).isNotEmpty
     ..lineItems.addAll(action.lineItems));
 }
 
@@ -189,8 +188,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState invoiceListState, AddToInvoiceMultiselect action) {
-  return invoiceListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return invoiceListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(

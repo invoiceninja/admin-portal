@@ -41,8 +41,7 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
-..userState.replace(usersReducer(state.userState, action))
-
+    ..userState.replace(usersReducer(state.userState, action))
     ..taxRateState.replace(taxRatesReducer(state.taxRateState, action))
     ..companyGatewayState
         .replace(companyGatewaysReducer(state.companyGatewayState, action))

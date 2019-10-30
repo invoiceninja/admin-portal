@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'user_state.g.dart';
 
 abstract class UserState implements Built<UserState, UserStateBuilder> {
-
   factory UserState() {
     return _$UserState._(
       lastUpdated: 0,
@@ -28,11 +27,12 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   BuiltList<String> get list;
 
   bool get isStale {
-    if (! isLoaded) {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated > kMillisecondsToRefreshData;
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -40,8 +40,9 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   static Serializer<UserState> get serializer => _$userStateSerializer;
 }
 
-abstract class UserUIState extends Object with EntityUIState implements Built<UserUIState, UserUIStateBuilder> {
-
+abstract class UserUIState extends Object
+    with EntityUIState
+    implements Built<UserUIState, UserUIStateBuilder> {
   factory UserUIState() {
     return _$UserUIState._(
       listUIState: ListUIState(UserFields.firstName),

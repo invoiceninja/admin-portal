@@ -58,8 +58,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     // STARTER: reducer - do not remove comment
-..userUIState.replace(userUIReducer(state.userUIState, action))
-
+    ..userUIState.replace(userUIReducer(state.userUIState, action))
     ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action))
     ..companyGatewayUIState
         .replace(companyGatewayUIReducer(state.companyGatewayUIState, action))

@@ -79,9 +79,9 @@ class TaxRateListVM {
       onTaxRateTap: (context, taxRate) {
         store.dispatch(ViewTaxRate(taxRateId: taxRate.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> taxRates, EntityAction action) =>
-              handleTaxRateAction(context, taxRates, action),
+      onEntityAction: (BuildContext context, List<BaseEntity> taxRates,
+              EntityAction action) =>
+          handleTaxRateAction(context, taxRates, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -95,7 +95,8 @@ class TaxRateListVM {
   final bool isLoaded;
   final Function(BuildContext, TaxRateEntity) onTaxRateTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<TaxRateEntity>, EntityAction) onEntityAction;
+  final Function(BuildContext, List<TaxRateEntity>, EntityAction)
+      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

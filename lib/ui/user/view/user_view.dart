@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class UserView extends StatefulWidget {
-
   const UserView({
     Key key,
     @required this.viewModel,
@@ -29,26 +28,24 @@ class _UserViewState extends State<UserView> {
     return Scaffold(
       appBar: AppBar(
         title: EntityStateTitle(entity: user),
-      actions: [
-        userCompany.canEditEntity(user)
-            ? EditIconButton(
-                isVisible: !user.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              )
-            : Container(),
-        ActionMenuButton(
-          entityActions: user.getActions(userCompany: userCompany),
-          isSaving: viewModel.isSaving,
-          entity: user,
-          onSelected: viewModel.onEntityAction,
-        )
-      ],
+        actions: [
+          userCompany.canEditEntity(user)
+              ? EditIconButton(
+                  isVisible: !user.isDeleted,
+                  onPressed: () => viewModel.onEditPressed(context),
+                )
+              : Container(),
+          ActionMenuButton(
+            entityActions: user.getActions(userCompany: userCompany),
+            isSaving: viewModel.isSaving,
+            entity: user,
+            onSelected: viewModel.onEntityAction,
+          )
+        ],
       ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
-      ),
+      body: FormCard(children: [
+        // STARTER: widgets - do not remove comment
+      ]),
     );
   }
 }

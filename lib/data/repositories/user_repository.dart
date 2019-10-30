@@ -9,15 +9,13 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class UserRepository {
-
   const UserRepository({
     this.webClient = const WebClient(),
   });
 
   final WebClient webClient;
 
-  Future<UserEntity> loadItem(
-      Credentials credentials, String entityId) async {
+  Future<UserEntity> loadItem(Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/users/$entityId', credentials.token);
 
@@ -42,28 +40,27 @@ class UserRepository {
 
     return userResponse.data;
   }
-  
-  Future<UserEntity> saveData(
-      Credentials credentials, UserEntity user,
+
+  Future<UserEntity> saveData(Credentials credentials, UserEntity user,
       [EntityAction action]) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
     if (user.isNew) {
       response = await webClient.post(
-          credentials.url + '/users',
-          credentials.token,
+          credentials.url + '/users', credentials.token,
           data: json.encode(data));
     } else {
       var url = credentials.url + '/users/' + user.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, credentials.token, data: json.encode(data));
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final UserItemResponse userResponse =
-    serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response);
 
     return userResponse.data;
   }

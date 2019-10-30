@@ -134,8 +134,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState projectListState, AddToProjectMultiselect action) {
-  return projectListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return projectListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(

@@ -119,8 +119,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState taxRateListState, AddToTaxRateMultiselect action) {
-  return taxRateListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return taxRateListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(

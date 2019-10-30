@@ -50,8 +50,8 @@ class UserEditVM {
   });
 
   factory UserEditVM.fromStore(Store<AppState> store) {
-    final user = store.state.userUIState.editing;
     final state = store.state;
+    final user = state.userUIState.editing;
 
     return UserEditVM(
       state: state,
@@ -65,25 +65,26 @@ class UserEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(UserScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(user.isNew ? UserScreen.route : UserViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(
+              user.isNew ? UserScreen.route : UserViewScreen.route));
         }
       },
-    onCancelPressed: (BuildContext context) {
-      store.dispatch(EditUser(
-          user: UserEntity(), context: context, force: true));
-      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
-    },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(
+            EditUser(user: UserEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onSavePressed: (BuildContext context) {
         final Completer<UserEntity> completer = new Completer<UserEntity>();
         store.dispatch(SaveUserRequest(completer: completer, user: user));
         return completer.future.then((savedUser) {
           store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
           if (isMobile(context)) {
-              if (user.isNew) {
-                Navigator.of(context).pushReplacementNamed(UserViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedUser);
-              }
+            if (user.isNew) {
+              Navigator.of(context).pushReplacementNamed(UserViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedUser);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

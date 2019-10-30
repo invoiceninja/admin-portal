@@ -279,8 +279,8 @@ class _ClientPortalState extends State<ClientPortal>
                     value: settings.signatureOnPdf,
                     showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileContract,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..signatureOnPdf = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..signatureOnPdf = value)),
                   ),
                 ],
               ),

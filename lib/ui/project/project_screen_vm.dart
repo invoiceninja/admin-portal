@@ -56,7 +56,7 @@ class ProjectScreenVM {
       userCompany: state.userCompany,
       isInMultiselect: state.projectListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> projects,
-          EntityAction action) =>
+              EntityAction action) =>
           handleProjectAction(context, projects, action),
     );
   }

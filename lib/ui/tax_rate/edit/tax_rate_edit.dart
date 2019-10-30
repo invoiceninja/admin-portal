@@ -60,8 +60,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onChanged() {
-    final taxRate = widget.viewModel.taxRate.rebuild((b) =>
-    b
+    final taxRate = widget.viewModel.taxRate.rebuild((b) => b
       ..name = _nameController.text.trim()
       ..rate = parseDouble(_rateController.text));
     if (taxRate != widget.viewModel.taxRate) {
@@ -87,10 +86,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
               DecoratedFormField(
                 label: localization.name,
                 controller: _nameController,
-                validator: (val) =>
-                val.isEmpty || val
-                    .trim()
-                    .isEmpty
+                validator: (val) => val.isEmpty || val.trim().isEmpty
                     ? localization.pleaseEnterAName
                     : null,
                 autovalidate: autoValidate,
@@ -98,8 +94,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
               DecoratedFormField(
                 label: localization.rate,
                 controller: _rateController,
-                keyboardType:
-                TextInputType.numberWithOptions(decimal: true),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ],
           )

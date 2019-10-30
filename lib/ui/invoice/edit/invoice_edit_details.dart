@@ -70,9 +70,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text = invoice.designId != null
-        ? kInvoiceDesigns[invoice.designId]
-        : '';
+    _designController.text =
+        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -298,29 +297,29 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   )
                 : Container(),
             PopupMenuButton<String>(
-                    padding: EdgeInsets.zero,
-                    onSelected: (String design) {
-                      _designController.text = design;
-                      viewModel.onChanged(invoice.rebuild(
-                          (b) => b..designId = design));
-                    },
-                    child: InkWell(
-                      child: IgnorePointer(
-                        child: TextFormField(
-                          controller: _designController,
-                          decoration: InputDecoration(
-                            labelText: localization.design,
-                            suffixIcon: const Icon(Icons.arrow_drop_down),
-                          ),
-                        ),
+                padding: EdgeInsets.zero,
+                onSelected: (String design) {
+                  _designController.text = design;
+                  viewModel
+                      .onChanged(invoice.rebuild((b) => b..designId = design));
+                },
+                child: InkWell(
+                  child: IgnorePointer(
+                    child: TextFormField(
+                      controller: _designController,
+                      decoration: InputDecoration(
+                        labelText: localization.design,
+                        suffixIcon: const Icon(Icons.arrow_drop_down),
                       ),
                     ),
-                    itemBuilder: (BuildContext context) => designs
-                        .map((design) => PopupMenuItem<String>(
-                              value: design,
-                              child: Text(design),
-                            ))
-                        .toList()),
+                  ),
+                ),
+                itemBuilder: (BuildContext context) => designs
+                    .map((design) => PopupMenuItem<String>(
+                          value: design,
+                          child: Text(design),
+                        ))
+                    .toList()),
           ],
         ),
       ],

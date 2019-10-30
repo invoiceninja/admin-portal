@@ -35,7 +35,6 @@ class UserViewScreen extends StatelessWidget {
 }
 
 class UserViewVM {
-
   UserViewVM({
     @required this.state,
     @required this.user,
@@ -62,32 +61,32 @@ class UserViewVM {
     }
 
     return UserViewVM(
-        state: state,
-        company: state.selectedCompany,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: user.isNew,
-        user: user,
-        onEditPressed: (BuildContext context) {
-          final Completer<UserEntity> completer = Completer<UserEntity>();
-          store.dispatch(EditUser(
-              user: user, context: context, completer: completer));
-          completer.future.then((user) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedUser,
-                )));
-          });
-        },
-        onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(UserScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(UserScreen.route));
-          }
-        },
+      state: state,
+      company: state.selectedCompany,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: user.isNew,
+      user: user,
+      onEditPressed: (BuildContext context) {
+        final Completer<UserEntity> completer = Completer<UserEntity>();
+        store.dispatch(
+            EditUser(user: user, context: context, completer: completer));
+        completer.future.then((user) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).updatedUser,
+          )));
+        });
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        if (state.uiState.currentRoute.contains(UserScreen.route)) {
+          store.dispatch(UpdateCurrentRoute(UserScreen.route));
+        }
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleUserAction(context, [user], action),
-        );
+    );
   }
 
   final AppState state;

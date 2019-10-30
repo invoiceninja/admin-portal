@@ -39,12 +39,12 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
 }
 
 Middleware<AppState> _editUser() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
-
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     final action = dynamicAction as EditUser;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -53,33 +53,32 @@ Middleware<AppState> _editUser() {
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
 
     if (isMobile(action.context)) {
-        final user =
-            await Navigator.of(action.context).pushNamed(UserEditScreen.route);
+      final user =
+          await Navigator.of(action.context).pushNamed(UserEditScreen.route);
 
-        if (action.completer != null && user != null) {
-          action.completer.complete(user);
-        }
+      if (action.completer != null && user != null) {
+        action.completer.complete(user);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewUser() {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewUser;
 
-      final action = dynamicAction as ViewUser;
-
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
-
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
 
     if (isMobile(action.context)) {
-        Navigator.of(action.context).pushNamed(UserViewScreen.route);
+      Navigator.of(action.context).pushNamed(UserViewScreen.route);
     }
   };
 }
@@ -88,8 +87,8 @@ Middleware<AppState> _viewUserList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewUserList;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, action: action)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -110,11 +109,10 @@ Middleware<AppState> _viewUserList() {
 
 Middleware<AppState> _archiveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as ArchiveUserRequest;
+    final action = dynamicAction as ArchiveUserRequest;
     final origUser = store.state.userState.map[action.userId];
     repository
-        .saveData(store.state.credentials,
-            origUser, EntityAction.archive)
+        .saveData(store.state.credentials, origUser, EntityAction.archive)
         .then((UserEntity user) {
       store.dispatch(ArchiveUserSuccess(user));
       if (action.completer != null) {
@@ -137,8 +135,7 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
     final action = dynamicAction as DeleteUserRequest;
     final origUser = store.state.userState.map[action.userId];
     repository
-        .saveData(store.state.credentials,
-            origUser, EntityAction.delete)
+        .saveData(store.state.credentials, origUser, EntityAction.delete)
         .then((UserEntity user) {
       store.dispatch(DeleteUserSuccess(user));
       if (action.completer != null) {
@@ -158,11 +155,10 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
 
 Middleware<AppState> _restoreUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as RestoreUserRequest;
+    final action = dynamicAction as RestoreUserRequest;
     final origUser = store.state.userState.map[action.userId];
     repository
-        .saveData(store.state.credentials,
-            origUser, EntityAction.restore)
+        .saveData(store.state.credentials, origUser, EntityAction.restore)
         .then((UserEntity user) {
       store.dispatch(RestoreUserSuccess(user));
       if (action.completer != null) {
@@ -184,18 +180,17 @@ Middleware<AppState> _saveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveUserRequest;
     repository
-        .saveData(
-            store.state.credentials, action.user)
+        .saveData(store.state.credentials, action.user)
         .then((UserEntity user) {
       if (action.user.isNew) {
         store.dispatch(AddUserSuccess(user));
       } else {
         store.dispatch(SaveUserSuccess(user));
       }
-    final userUIState = store.state.userUIState;
-    if (userUIState.saveCompleter != null) {
-      userUIState.saveCompleter.complete(user);
-    }
+      final userUIState = store.state.userUIState;
+      if (userUIState.saveCompleter != null) {
+        userUIState.saveCompleter.complete(user);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserFailure(error));
@@ -208,7 +203,7 @@ Middleware<AppState> _saveUser(UserRepository repository) {
 
 Middleware<AppState> _loadUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as LoadUser;
+    final action = dynamicAction as LoadUser;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -217,9 +212,7 @@ Middleware<AppState> _loadUser(UserRepository repository) {
     }
 
     store.dispatch(LoadUserRequest());
-    repository
-        .loadItem(state.credentials, action.userId)
-        .then((user) {
+    repository.loadItem(state.credentials, action.userId).then((user) {
       store.dispatch(LoadUserSuccess(user));
 
       if (action.completer != null) {
@@ -239,7 +232,7 @@ Middleware<AppState> _loadUser(UserRepository repository) {
 
 Middleware<AppState> _loadUsers(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as LoadUsers;
+    final action = dynamicAction as LoadUsers;
     final AppState state = store.state;
 
     if (!state.userState.isStale && !action.force) {
@@ -255,9 +248,7 @@ Middleware<AppState> _loadUsers(UserRepository repository) {
     final int updatedAt = (state.userState.lastUpdated / 1000).round();
 
     store.dispatch(LoadUsersRequest());
-    repository
-        .loadList(state.credentials, updatedAt)
-        .then((data) {
+    repository.loadList(state.credentials, updatedAt).then((data) {
       store.dispatch(LoadUsersSuccess(data));
 
       if (action.completer != null) {

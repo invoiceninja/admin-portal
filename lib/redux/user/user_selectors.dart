@@ -4,10 +4,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownUserList = memo3(
-    (BuiltMap<String, UserEntity> userMap, BuiltList<String> userList,
-            String clientId) =>
-        dropdownUsersSelector(userMap, userList, clientId));
+var memoizedDropdownUserList = memo3((BuiltMap<String, UserEntity> userMap,
+        BuiltList<String> userList, String clientId) =>
+    dropdownUsersSelector(userMap, userList, clientId));
 
 List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
     BuiltList<String> userList, String clientId) {
@@ -56,6 +55,5 @@ List<String> filteredUsersSelector(BuiltMap<String, UserEntity> userMap,
   return list;
 }
 
-bool hasUserChanges(
-        UserEntity user, BuiltMap<String, UserEntity> userMap) =>
+bool hasUserChanges(UserEntity user, BuiltMap<String, UserEntity> userMap) =>
     user.isNew ? user.isChanged : user != userMap[user.id];

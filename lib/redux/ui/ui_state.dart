@@ -55,7 +55,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
-userUIState: UserUIState(),
+      userUIState: UserUIState(),
 
       taxRateUIState: TaxRateUIState(),
 
@@ -114,7 +114,7 @@ userUIState: UserUIState(),
   InvoiceUIState get invoiceUIState;
 
   // STARTER: properties - do not remove comment
-UserUIState get userUIState;
+  UserUIState get userUIState;
 
   TaxRateUIState get taxRateUIState;
 
@@ -155,13 +155,13 @@ UserUIState get userUIState;
 
   String get subRoute {
     final parts =
-    currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.length > 1 ? parts[1] : '';
   }
 
   String get previousSubRoute {
     final parts =
-    previousRoute.split('/').where((part) => part.isNotEmpty).toList();
+        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.length > 1 ? parts[1] : '';
   }
 

@@ -154,8 +154,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
-case EntityType.user:
-return userUIState;
+      case EntityType.user:
+        return userUIState;
 
       case EntityType.taxRate:
         return taxRateUIState;
@@ -208,10 +208,9 @@ return userUIState;
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-UserState get userState => selectedCompanyState.userState;
-ListUIState get userListState => uiState.userUIState.listUIState;
-UserUIState get userUIState => uiState.userUIState;
-
+  UserState get userState => selectedCompanyState.userState;
+  ListUIState get userListState => uiState.userUIState.listUIState;
+  UserUIState get userUIState => uiState.userUIState;
 
   TaxRateState get taxRateState => selectedCompanyState.taxRateState;
 

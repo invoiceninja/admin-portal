@@ -62,27 +62,25 @@ class UserListVM {
     final state = store.state;
 
     return UserListVM(
-        userCompany: state.userCompany,
-        listState: state.userListState,
-        userList: memoizedFilteredUserList(state.userState.map,
-            state.userState.list, state.userListState),
-        userMap: state.userState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.userState.isLoaded,
-        filter: state.userUIState.listUIState.filter,
-          onClearEntityFilterPressed: () =>
-              store.dispatch(FilterUsersByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.userListState.filterEntityId,
-                  context: context)),
-        onUserTap: (context, user) {
-          store.dispatch(ViewUser(userId: user.id, context: context));
-        },
+      userCompany: state.userCompany,
+      listState: state.userListState,
+      userList: memoizedFilteredUserList(
+          state.userState.map, state.userState.list, state.userListState),
+      userMap: state.userState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.userState.isLoaded,
+      filter: state.userUIState.listUIState.filter,
+      onClearEntityFilterPressed: () => store.dispatch(FilterUsersByEntity()),
+      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
+          ViewClient(
+              clientId: state.userListState.filterEntityId, context: context)),
+      onUserTap: (context, user) {
+        store.dispatch(ViewUser(userId: user.id, context: context));
+      },
       onEntityAction:
           (BuildContext context, List<BaseEntity> users, EntityAction action) =>
-          handleUserAction(context, users, action),
-        onRefreshed: (context) => _handleRefresh(context),
+              handleUserAction(context, users, action),
+      onRefreshed: (context) => _handleRefresh(context),
     );
   }
 
@@ -98,5 +96,4 @@ class UserListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
 }

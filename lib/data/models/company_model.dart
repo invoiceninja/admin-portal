@@ -950,7 +950,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'all_pages_footer')
   bool get allPagesFooter;
 
-
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
@@ -985,8 +984,6 @@ abstract class SettingsEntity
 
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
-
-
 
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {

@@ -184,9 +184,8 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
       ..addAll({'${fieldType}4': _customField4Controller.text.trim()}));
 
     if (viewModel.company.customFields != updatedFields) {
-      viewModel.onCompanyChanged(company.rebuild((b) => b
-        ..customFields.replace(updatedFields)
-      ));
+      viewModel.onCompanyChanged(
+          company.rebuild((b) => b..customFields.replace(updatedFields)));
     }
   }
 
@@ -203,32 +202,32 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
           controller: _customField1Controller,
           showTaxes: widget.showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes1,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(company
-              .rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes1 = value)),
         ),
         CustomFormField(
           label: localization.lookup('${widget.fieldType}_field'),
           controller: _customField2Controller,
           showTaxes: widget.showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes2,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(company
-              .rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes2 = value)),
         ),
         CustomFormField(
           label: localization.lookup('${widget.fieldType}_field'),
           controller: _customField3Controller,
           showTaxes: widget.showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes3,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(company
-              .rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes3 = value)),
         ),
         CustomFormField(
           label: localization.lookup('${widget.fieldType}_field'),
           controller: _customField4Controller,
           showTaxes: widget.showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes4,
-          onTaxesChanged: (value) => viewModel.onCompanyChanged(company
-              .rebuild((b) => b..enableCustomSurchargeTaxes4 = value)),
+          onTaxesChanged: (value) => viewModel.onCompanyChanged(
+              company.rebuild((b) => b..enableCustomSurchargeTaxes4 = value)),
         ),
       ],
     );

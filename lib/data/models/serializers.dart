@@ -111,7 +111,7 @@ part 'serializers.g.dart';
   TaxRateItemResponse,
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
-UserEntity,
+  UserEntity,
 
   CompanyGatewayEntity,
   CompanyGatewayListResponse,

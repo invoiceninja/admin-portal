@@ -168,13 +168,13 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                           ),
                           ...kFrequencies
                               .map((id, frequency) =>
-                              MapEntry<String, DropdownMenuItem<String>>(
-                                  id,
-                                  DropdownMenuItem<String>(
-                                    child:
-                                    Text(localization.lookup(frequency)),
-                                    value: id,
-                                  )))
+                                  MapEntry<String, DropdownMenuItem<String>>(
+                                      id,
+                                      DropdownMenuItem<String>(
+                                        child: Text(
+                                            localization.lookup(frequency)),
+                                        value: id,
+                                      )))
                               .values
                               .toList()
                         ],

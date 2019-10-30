@@ -98,7 +98,9 @@ abstract class UserEntity extends Object
     }
 
     if (response == 0) {
-      return userA.lastName.toLowerCase().compareTo(userB.lastName.toLowerCase());
+      return userA.lastName
+          .toLowerCase()
+          .compareTo(userB.lastName.toLowerCase());
     } else {
       return response;
     }

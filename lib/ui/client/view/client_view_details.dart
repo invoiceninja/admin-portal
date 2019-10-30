@@ -92,8 +92,8 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           title: client.phone,
           subtitle: localization.phone,
           onTap: () => setState(() {
-            _launched = _launchURL(
-                context, 'sms:' + cleanPhoneNumber(client.phone));
+            _launched =
+                _launchURL(context, 'sms:' + cleanPhoneNumber(client.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
           }),
         ));

@@ -268,8 +268,7 @@ void handleExpenseAction(
       store.dispatch(EditExpense(context: context, expense: expense));
       break;
     case EntityAction.clone:
-      store.dispatch(EditExpense(
-          context: context, expense: expense.clone));
+      store.dispatch(EditExpense(context: context, expense: expense.clone));
       break;
     case EntityAction.newInvoice:
       final item = convertExpenseToInvoiceItem(
@@ -282,8 +281,8 @@ void handleExpenseAction(
           context: context));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(ViewInvoice(
-          invoiceId: expense.invoiceId, context: context));
+      store.dispatch(
+          ViewInvoice(invoiceId: expense.invoiceId, context: context));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreExpenseRequest(

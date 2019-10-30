@@ -18,10 +18,10 @@ class ViewUserList implements PersistUI {
 
 class ViewUser implements PersistUI {
   ViewUser({
-              @required this.userId,
-              @required this.context,
-              this.force = false,
-            });
+    @required this.userId,
+    @required this.context,
+    this.force = false,
+  });
 
   final String userId;
   final BuildContext context;
@@ -30,10 +30,10 @@ class ViewUser implements PersistUI {
 
 class EditUser implements PersistUI {
   EditUser(
-                {@required this.user,
-                @required this.context,
-                this.completer,
-                this.force = false});
+      {@required this.user,
+      @required this.context,
+      this.completer,
+      this.force = false});
 
   final UserEntity user;
   final BuildContext context;
@@ -117,7 +117,6 @@ class LoadUsersSuccess implements StopLoading, PersistData {
   }
 }
 
-
 class SaveUserRequest implements StartSaving {
   SaveUserRequest({this.completer, this.user});
 
@@ -138,7 +137,7 @@ class AddUserSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class SaveUserFailure implements StopSaving {
-  SaveUserFailure (this.error);
+  SaveUserFailure(this.error);
 
   final Object error;
 }
@@ -200,9 +199,6 @@ class RestoreUserFailure implements StopSaving {
   final UserEntity user;
 }
 
-
-
-
 class FilterUsers {
   FilterUsers(this.filter);
 
@@ -240,7 +236,6 @@ class FilterUsersByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-
 void handleUserAction(
     BuildContext context, List<BaseEntity> users, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
@@ -275,8 +270,7 @@ void handleUserAction(
 
       for (final user in users) {
         if (!store.state.userListState.isSelected(user.id)) {
-          store.dispatch(
-              AddToUserMultiselect(context: context, entity: user));
+          store.dispatch(AddToUserMultiselect(context: context, entity: user));
         } else {
           store.dispatch(
               RemoveFromUserMultiselect(context: context, entity: user));

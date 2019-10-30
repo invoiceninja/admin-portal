@@ -64,8 +64,9 @@ class TaxRateEditVM {
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(TaxRateSettingsScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              taxRate.isNew ? TaxRateSettingsScreen.route : TaxRateViewScreen.route));
+          store.dispatch(UpdateCurrentRoute(taxRate.isNew
+              ? TaxRateSettingsScreen.route
+              : TaxRateViewScreen.route));
         }
       },
       onSavePressed: (BuildContext context) {

@@ -53,7 +53,7 @@ class DocumentScreenVM {
       userCompany: state.userCompany,
       isInMultiselect: state.documentListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
-          EntityAction action) =>
+              EntityAction action) =>
           handleDocumentAction(context, documents, action),
     );
   }

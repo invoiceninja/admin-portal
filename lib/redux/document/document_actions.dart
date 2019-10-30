@@ -232,15 +232,15 @@ class FilterDocumentsByEntity implements PersistUI {
 void handleDocumentAction(
     BuildContext context, List<BaseEntity> documents, EntityAction action) {
   assert(
-  [
-    EntityAction.restore,
-    EntityAction.archive,
-    EntityAction.delete,
-    EntityAction.toggleMultiselect
-  ].contains(action) ||
-      documents.length == 1,
-  'Cannot perform this action on more than one document');
-  
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          documents.length == 1,
+      'Cannot perform this action on more than one document');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final document = documents.first;
@@ -278,14 +278,13 @@ void handleDocumentAction(
           store.dispatch(
               AddToDocumentMultiselect(context: context, entity: document));
         } else {
-          store.dispatch(
-              RemoveFromDocumentMultiselect(context: context, entity: document));
+          store.dispatch(RemoveFromDocumentMultiselect(
+              context: context, entity: document));
         }
       }
       break;
   }
 }
-
 
 class StartDocumentMultiselect {
   StartDocumentMultiselect({@required this.context});
@@ -301,7 +300,8 @@ class AddToDocumentMultiselect {
 }
 
 class RemoveFromDocumentMultiselect {
-  RemoveFromDocumentMultiselect({@required this.context, @required this.entity});
+  RemoveFromDocumentMultiselect(
+      {@required this.context, @required this.entity});
 
   final BuildContext context;
   final BaseEntity entity;

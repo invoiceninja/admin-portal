@@ -192,8 +192,8 @@ class _EmailSettingsState extends State<EmailSettings>
                     value: settings.documentEmailAttachment,
                     iconData: FontAwesomeIcons.fileImage,
                     showBlank: state.settingsUIState.isFiltered,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..documentEmailAttachment = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..documentEmailAttachment = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.attachUbl,

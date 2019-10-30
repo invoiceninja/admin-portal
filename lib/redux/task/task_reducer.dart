@@ -148,14 +148,12 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState taskListState, AddToTaskMultiselect action) {
-  return taskListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return taskListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState taskListState, RemoveFromTaskMultiselect action) {
-  return taskListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return taskListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(

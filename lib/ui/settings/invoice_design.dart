@@ -233,7 +233,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     enabledLabel: localization.allPages,
                     disabledLabel: localization.lastPage,
                   ),
-
                 ],
               ),
               FormCard(

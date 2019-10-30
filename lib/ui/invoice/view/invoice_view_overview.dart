@@ -199,15 +199,13 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
-    if (invoice.customSurcharge1 != 0 &&
-        company.enableCustomSurchargeTaxes1) {
+    if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customSurcharge1));
     }
 
-    if (invoice.customSurcharge2!= 0 &&
-        company.enableCustomSurchargeTaxes2) {
+    if (invoice.customSurcharge2 != 0 && company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customSurcharge2));
@@ -219,29 +217,25 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(surchargeRow(taxName, taxAmount));
     });
 
-    if (invoice.customSurcharge1 != 0 &&
-        !company.enableCustomSurchargeTaxes1) {
+    if (invoice.customSurcharge1 != 0 && !company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
           invoice.customSurcharge1));
     }
 
-    if (invoice.customSurcharge2 != 0 &&
-        !company.enableCustomSurchargeTaxes2) {
+    if (invoice.customSurcharge2 != 0 && !company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
           invoice.customSurcharge2));
     }
 
-    if (invoice.customSurcharge3!= 0 &&
-        !company.enableCustomSurchargeTaxes3) {
+    if (invoice.customSurcharge3 != 0 && !company.enableCustomSurchargeTaxes3) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge3),
           invoice.customSurcharge3));
     }
 
-    if (invoice.customSurcharge4 != 0 &&
-        !company.enableCustomSurchargeTaxes4) {
+    if (invoice.customSurcharge4 != 0 && !company.enableCustomSurchargeTaxes4) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge4),
           invoice.customSurcharge4));

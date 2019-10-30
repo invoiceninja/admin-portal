@@ -39,7 +39,6 @@ class InvoiceDesignVM {
     @required this.onCancelPressed,
     @required this.settings,
     @required this.onSettingsChanged,
-
   });
 
   static InvoiceDesignVM fromStore(Store<AppState> store) {

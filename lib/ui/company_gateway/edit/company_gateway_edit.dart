@@ -85,23 +85,22 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   if (companyGateway.isNew)
                     EntityDropdown(
-                      key: ValueKey(
-                          '__gateway_${companyGateway.gatewayId}__'),
+                      key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                       entityType: EntityType.gateway,
                       entityMap: state.staticState.gatewayMap,
                       entityList:
-                      memoizedGatewayList(state.staticState.gatewayMap),
+                          memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,
                       initialValue: state.staticState
                           .gatewayMap[companyGateway.gatewayId]?.name,
                       onSelected: (SelectableEntity gateway) =>
                           viewModel.onChanged(
-                            companyGateway.rebuild((b) => b
-                              ..gatewayId = gateway.id
-                              ..gatewayTypeId = null
-                              ..config =
-                                  ''), // TODO set to gateway.defaultGatewayTypeId
-                          ),
+                        companyGateway.rebuild((b) => b
+                          ..gatewayId = gateway.id
+                          ..gatewayTypeId = null
+                          ..config =
+                              ''), // TODO set to gateway.defaultGatewayTypeId
+                      ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
                   GatewayConfigSettings(
@@ -147,8 +146,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16, top: 16, bottom: 16),
+                    padding:
+                        const EdgeInsets.only(left: 16, top: 16, bottom: 16),
                     child: Text(
                       localization.acceptedCardLogos,
                       style: Theme.of(context).textTheme.subhead,

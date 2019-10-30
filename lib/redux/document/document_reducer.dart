@@ -119,8 +119,7 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState documentListState, AddToDocumentMultiselect action) {
-  return documentListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+  return documentListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
