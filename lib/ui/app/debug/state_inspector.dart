@@ -17,10 +17,24 @@ class _StateInspectorState extends State<StateInspector> {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final data = serializers.serializeWith(AppState.serializer, state);
+    final map = data as Map;
     final json = jsonEncode(data);
 
     final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
     final String prettyJson = encoder.convert(data);
+
+    final keys = map.keys.where((dynamic key) {
+      if (map[key].runtimeType.toString() !=
+          '_InternalLinkedHashMap<String, Object>') {
+        return false;
+      }
+
+      if ((_text ?? '').isEmpty) {
+        return true;
+      }
+
+      return '$key'.toLowerCase().contains(_text.toLowerCase());
+    });
 
     return Padding(
       padding: const EdgeInsets.only(left: 100, top: 20, right: 100),
@@ -36,12 +50,19 @@ class _StateInspectorState extends State<StateInspector> {
                   if (value.endsWith('\t')) {
                     print('ends with tab');
                   }
+                  setState(() {
+                    _text = value;
+                  });
                 },
               ),
               SizedBox(height: 20),
               Row(
                 children: <Widget>[
-                  for (var key in (data as Map).keys) Text('$key')
+                  for (var key in keys)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text('$key'),
+                    )
                 ],
               ),
               SizedBox(height: 20),
