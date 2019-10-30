@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help': 'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
@@ -15400,6 +15401,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get administrator => _localizedValues[localeCode]['administrator'];
 
   String get administratorHelp => _localizedValues[localeCode]['administrator_help'];
+
+  String get filteredByUser => _localizedValues[localeCode]['filtered_by_user'];
 
 
   String lookup(String key) {

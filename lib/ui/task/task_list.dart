@@ -27,17 +27,20 @@ class TaskList extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     BaseEntity filteredEntity;
+    String filteredMessage;
     String label;
 
     if (listState.filterEntityType == EntityType.client) {
       label = localization.filteredByClient;
       final filteredClientId = listState.filterEntityId;
+      filteredMessage = localization.filteredByClient;
       filteredEntity = filteredClientId != null
           ? viewModel.clientMap[filteredClientId]
           : null;
     } else if (listState.filterEntityType == EntityType.project) {
       label = localization.filteredByProject;
       final filteredProjectId = listState.filterEntityId;
+      filteredMessage = localization.filteredByProject;
       filteredEntity = filteredProjectId != null
           ? state.projectState.map[filteredProjectId]
           : null;
@@ -48,7 +51,7 @@ class TaskList extends StatelessWidget {
         if (filteredEntity != null)
           ListFilterMessage(
             title:
-                '${localization.filteredByGroup}: ${filteredEntity.listDisplayName}',
+                '$filteredMessage: ${filteredEntity.listDisplayName}',
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

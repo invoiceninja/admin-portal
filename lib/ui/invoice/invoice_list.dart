@@ -24,9 +24,24 @@ class InvoiceList extends StatelessWidget {
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
-    final filteredClientId = listState.filterEntityId;
-    final filteredClient =
-        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
+
+    BaseEntity filteredEntity;
+    String filteredMessage;
+
+    if (listState.filterEntityType == EntityType.client) {
+      final filteredClientId = listState.filterEntityId;
+      filteredMessage = localization.filteredByClient;
+      filteredEntity = filteredClientId != null
+          ? viewModel.clientMap[filteredClientId]
+          : null;
+    } else if (listState.filterEntityType == EntityType.user) {
+      final filteredUserId = listState.filterEntityId;
+      filteredMessage = localization.filteredByUser;
+      filteredEntity = filteredUserId != null
+          ? viewModel.state.userState.map[filteredUserId]
+          : null;
+    }
+
     final isInMultiselect = listState.isInMultiselect();
 
     final documentMap = memoizedEntityDocumentMap(
@@ -34,10 +49,10 @@ class InvoiceList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        if (filteredClient != null)
+        if (filteredEntity != null)
           ListFilterMessage(
             title:
-                '${localization.filteredByGroup}: ${filteredClient.listDisplayName}',
+                '$filteredMessage: ${filteredEntity.listDisplayName}',
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),
