@@ -151,6 +151,18 @@ class _UserEditState extends State<UserEdit> {
                 ),
               ],
             ),
+            FormCard(
+              children: <Widget>[
+                SwitchListTile(
+                  title: Text(localization.administrator),
+                  subtitle: Text(localization.administratorHelp),
+                  value: user.isAdmin ?? false,
+                  onChanged: (value) => viewModel
+                      .onChanged(user.rebuild((b) => b..isAdmin = value)),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              ],
+            )
           ],
         ),
       ),

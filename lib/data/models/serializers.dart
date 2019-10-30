@@ -35,14 +35,10 @@ import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 
 part 'serializers.g.dart';
@@ -112,7 +108,8 @@ part 'serializers.g.dart';
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
   UserEntity,
-
+  UserListResponse,
+  UserItemResponse,
   CompanyGatewayEntity,
   CompanyGatewayListResponse,
   CompanyGatewayItemResponse,

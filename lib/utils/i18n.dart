@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'administrator': 'Administrator',
+      'administrator_help': 'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -15394,6 +15396,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get users => _localizedValues[localeCode]['users'];
 
   String get userManagement => _localizedValues[localeCode]['user_management'];
+
+  String get administrator => _localizedValues[localeCode]['administrator'];
+
+  String get administratorHelp => _localizedValues[localeCode]['administrator_help'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
