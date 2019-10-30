@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,21 +23,31 @@ class UserEdit extends StatefulWidget {
 class _UserEditState extends State<UserEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // STARTER: controllers - do not remove comment
+  bool autoValidate = false;
+
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
   @override
   void didChangeDependencies() {
-
     _controllers = [
-      // STARTER: array - do not remove comment
+      _firstNameController,
+      _lastNameController,
+      _emailController,
+      _phoneController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    //final user = widget.viewModel.user;
-    // STARTER: read value - do not remove comment
+    final user = widget.viewModel.state.user;
+    _firstNameController.text = user.firstName;
+    _lastNameController.text = user.lastName;
+    _emailController.text = user.email;
+    _phoneController.text = user.phone;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -54,8 +66,10 @@ class _UserEditState extends State<UserEdit> {
 
   void _onChanged() {
     final user = widget.viewModel.user.rebuild((b) => b
-      // STARTER: set value - do not remove comment
-    );
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..firstName = _firstNameController.text.trim());
     if (user != widget.viewModel.user) {
       widget.viewModel.onChanged(user);
     }
@@ -79,42 +93,65 @@ class _UserEditState extends State<UserEdit> {
               ? localization.newUser
               : localization.editUser),
           actions: <Widget>[
-                if (!isMobile(context))
-                  FlatButton(
-                    child: Text(
-                      localization.cancel,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => viewModel.onCancelPressed(context),
-                  ),
-                ActionIconButton(
-                  icon: Icons.cloud_upload,
-                  tooltip: localization.save,
-                  isVisible: !user.isDeleted,
-                  isDirty: user.isNew || user != viewModel.origUser,
-                  isSaving: viewModel.isSaving,
-                  onPressed: () {
-                    if (! _formKey.currentState.validate()) {
-                      return;
-                    }
-                    viewModel.onSavePressed(context);
-                  },
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
                 ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
+            ActionIconButton(
+              icon: Icons.cloud_upload,
+              tooltip: localization.save,
+              isVisible: !user.isDeleted,
+              isDirty: user.isNew || user != viewModel.origUser,
+              isSaving: viewModel.isSaving,
+              onPressed: () {
+                if (!_formKey.currentState.validate()) {
+                  return;
+                }
+                viewModel.onSavePressed(context);
+              },
+            ),
           ],
         ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })
+        body: AppForm(
+          formKey: _formKey,
+          children: <Widget>[
+            FormCard(
+              children: <Widget>[
+                DecoratedFormField(
+                  label: localization.firstName,
+                  controller: _firstNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterAFirstName
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.lastName,
+                  controller: _lastNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterALastName
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.email,
+                  controller: _emailController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterYourEmail
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.phone,
+                  controller: _phoneController,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

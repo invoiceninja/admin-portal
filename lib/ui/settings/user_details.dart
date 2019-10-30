@@ -56,7 +56,7 @@ class _UserDetailsState extends State<UserDetails> {
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
-    //_phoneController.text = user.
+    _phoneController.text = user.phone;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -65,17 +65,14 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void _onChanged() {
-    /*
     final user = widget.viewModel.user.rebuild((b) => b
-          ..firstName = _firstNameController.text.trim()
-          ..lastName = _lastNameController.text.trim()
-          ..email = _emailController.text.trim()
-        //..firstName = _firstNameController.text.trim()
-        );
+      ..firstName = _firstNameController.text.trim()
+      ..lastName = _lastNameController.text.trim()
+      ..email = _emailController.text.trim()
+      ..firstName = _firstNameController.text.trim());
     if (user != widget.viewModel.user) {
       widget.viewModel.onChanged(user);
     }
-     */
   }
 
   @override
@@ -107,20 +104,18 @@ class _UserDetailsState extends State<UserDetails> {
                     : null,
                 autovalidate: autoValidate,
               ),
-              /*
-          DecoratedFormField(
-            label: localization.email,
-            controller: _emailController,
-            validator: (val) => val.isEmpty || val.trim().isEmpty
-                ? localization.pleaseEnterYourEmail
-                : null,
-            autovalidate: autoValidate,
-          ),
-          DecoratedFormField(
-            label: localization.phone,
-            controller: _phoneController,
-          ),
-           */
+              DecoratedFormField(
+                label: localization.email,
+                controller: _emailController,
+                validator: (val) => val.isEmpty || val.trim().isEmpty
+                    ? localization.pleaseEnterYourEmail
+                    : null,
+                autovalidate: autoValidate,
+              ),
+              DecoratedFormField(
+                label: localization.phone,
+                controller: _phoneController,
+              ),
             ],
           ),
         ],

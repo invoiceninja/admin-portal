@@ -87,8 +87,12 @@ class UserScreen extends StatelessWidget {
             onPressed: state.userListState.selectedIds.isEmpty
                 ? null
                 : () async {
+                    final users = viewModel.userList
+                        .map<UserEntity>((userId) => viewModel.userMap[userId])
+                        .toList();
+
                     await showEntityActionsDialog(
-                        //entities: users,
+                        entities: users,
                         userCompany: userCompany,
                         context: context,
                         onEntityAction: viewModel.onEntityAction,
@@ -106,7 +110,9 @@ class UserScreen extends StatelessWidget {
         onSelectedCustom2: (value) =>
             store.dispatch(FilterUsersByCustom2(value)),
         sortFields: [
-          UserFields.updatedAt,
+          UserFields.firstName,
+          UserFields.lastName,
+          UserFields.email,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterUsersByState(state));
