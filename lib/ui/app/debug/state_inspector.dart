@@ -11,7 +11,6 @@ class StateInspector extends StatefulWidget {
 }
 
 class _StateInspectorState extends State<StateInspector> {
-
   String _text;
 
   @override
@@ -21,7 +20,7 @@ class _StateInspectorState extends State<StateInspector> {
     final json = jsonEncode(data);
 
     final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-    final String prettyJson = encoder.convert(json);
+    final String prettyJson = encoder.convert(data);
 
     return Padding(
       padding: const EdgeInsets.only(left: 100, top: 20, right: 100),
@@ -42,12 +41,11 @@ class _StateInspectorState extends State<StateInspector> {
               SizedBox(height: 20),
               Row(
                 children: <Widget>[
-                  for (var key in (data as Map).keys)
-                    Text('$key')
+                  for (var key in (data as Map).keys) Text('$key')
                 ],
               ),
               SizedBox(height: 20),
-              Text(prettyJson.substring(0, 1000)),
+              Flexible(child: Text(prettyJson)),
             ],
           ),
         ),
