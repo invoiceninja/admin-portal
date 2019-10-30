@@ -34,8 +34,6 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final showMenuIcon =
-        !showCheckbox && !isMobile(context) && !hideHamburgerButton;
 
     return WillPopScope(
         onWillPop: () async {
@@ -45,20 +43,20 @@ class AppScaffold extends StatelessWidget {
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: isMobile(context),
             leading: showCheckbox
                 ? Checkbox(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     onChanged: onCheckboxChanged,
                     activeColor: Theme.of(context).accentColor,
                     value: isChecked)
-                : showMenuIcon
-                    ? IconButton(
+                : hideHamburgerButton || isMobile(context)
+                    ? null
+                    : IconButton(
                         icon: Icon(Icons.menu),
                         onPressed: () =>
                             store.dispatch(UpdateSidebar(AppSidebar.menu)),
-                      )
-                    : null,
+                      ),
             title: appBarTitle,
             actions: appBarActions,
           ),
