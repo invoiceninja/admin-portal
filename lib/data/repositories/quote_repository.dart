@@ -44,6 +44,32 @@ class QuoteRepository {
     return quoteResponse.data;
   }
 
+  Future<List<InvoiceEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/quotes/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+      // Might have other actions in the future
+        break;
+    }
+
+    final InvoiceListResponse invoiceResponse =
+    serializers.deserializeWith(InvoiceListResponse.serializer, response);
+
+    return invoiceResponse.data.toList();
+  }
+
   Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity quote,
       [EntityAction action]) async {
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);

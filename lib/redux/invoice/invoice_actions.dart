@@ -214,60 +214,60 @@ class MarkSentInvoiceFailure implements StopSaving {
 }
 
 class ArchiveInvoiceRequest implements StartSaving {
-  ArchiveInvoiceRequest(this.completer, this.invoiceId);
+  ArchiveInvoiceRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final String invoiceId;
+  final List<String> invoiceIds;
 }
 
 class ArchiveInvoiceSuccess implements StopSaving, PersistData {
-  ArchiveInvoiceSuccess(this.invoice);
+  ArchiveInvoiceSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class ArchiveInvoiceFailure implements StopSaving {
-  ArchiveInvoiceFailure(this.invoice);
+  ArchiveInvoiceFailure(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class DeleteInvoiceRequest implements StartSaving {
-  DeleteInvoiceRequest(this.completer, this.invoiceId);
+  DeleteInvoiceRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final String invoiceId;
+  final List<String> invoiceIds;
 }
 
 class DeleteInvoiceSuccess implements StopSaving, PersistData {
-  DeleteInvoiceSuccess(this.invoice);
+  DeleteInvoiceSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class DeleteInvoiceFailure implements StopSaving {
-  DeleteInvoiceFailure(this.invoice);
+  DeleteInvoiceFailure(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class RestoreInvoiceRequest implements StartSaving {
-  RestoreInvoiceRequest(this.completer, this.invoiceId);
+  RestoreInvoiceRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final String invoiceId;
+  final List<String> invoiceIds;
 }
 
 class RestoreInvoiceSuccess implements StopSaving, PersistData {
-  RestoreInvoiceSuccess(this.invoice);
+  RestoreInvoiceSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class RestoreInvoiceFailure implements StopSaving {
-  RestoreInvoiceFailure(this.invoice);
+  RestoreInvoiceFailure(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
 class FilterInvoices {
@@ -336,6 +336,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
+  final invoiceIds = invoices.map((invoice) => invoice.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -375,16 +376,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(
           snackBarCompleter(context, localization.restoredInvoice),
-          invoice.id));
+          invoiceIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveInvoiceRequest(
           snackBarCompleter(context, localization.archivedInvoice),
-          invoice.id));
+          invoiceIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter(context, localization.deletedInvoice), invoice.id));
+          snackBarCompleter(context, localization.deletedInvoice), invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {

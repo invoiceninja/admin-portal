@@ -150,63 +150,103 @@ final paymentsReducer = combineReducers<PaymentState>([
 
 PaymentState _archivePaymentRequest(
     PaymentState paymentState, ArchivePaymentRequest action) {
-  final payment = paymentState.map[action.paymentId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
 
-  return paymentState.rebuild((b) => b..map[action.paymentId] = payment);
+  for (int i = 0; i < payments.length; i++) {
+    payments[i] = payments[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return paymentState.rebuild((b) {
+    for (final payment in payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _archivePaymentSuccess(
     PaymentState paymentState, ArchivePaymentSuccess action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _archivePaymentFailure(
     PaymentState paymentState, ArchivePaymentFailure action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _deletePaymentRequest(
     PaymentState paymentState, DeletePaymentRequest action) {
-  final payment = paymentState.map[action.paymentId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
 
-  return paymentState.rebuild((b) => b..map[action.paymentId] = payment);
+  for (int i = 0; i < payments.length; i++) {
+    payments[i] = payments[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return paymentState.rebuild((b) {
+    for (final payment in payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _deletePaymentSuccess(
     PaymentState paymentState, DeletePaymentSuccess action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _deletePaymentFailure(
     PaymentState paymentState, DeletePaymentFailure action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _restorePaymentRequest(
     PaymentState paymentState, RestorePaymentRequest action) {
-  final payment = paymentState.map[action.paymentId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return paymentState.rebuild((b) => b..map[action.paymentId] = payment);
+  final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
+
+  for (int i = 0; i < payments.length; i++) {
+    payments[i] = payments[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return paymentState.rebuild((b) {
+    for (final payment in payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _restorePaymentSuccess(
     PaymentState paymentState, RestorePaymentSuccess action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _restorePaymentFailure(
     PaymentState paymentState, RestorePaymentFailure action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  return paymentState.rebuild((b) {
+    for (final payment in action.payments) {
+      b.map[payment.id] = payment;
+    }
+  });
 }
 
 PaymentState _addPayment(PaymentState paymentState, AddPaymentSuccess action) {

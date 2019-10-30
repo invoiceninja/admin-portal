@@ -31,6 +31,32 @@ class ProductRepository {
     return productResponse.data;
   }
 
+  Future<List<ProductEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/products/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+      // Might have other actions in the future
+        break;
+    }
+
+    final ProductListResponse productResponse =
+    serializers.deserializeWith(ProductListResponse.serializer, response);
+
+    return productResponse.data.toList();
+  }
+
   Future<ProductEntity> saveData(Credentials credentials, ProductEntity product,
       [EntityAction action]) async {
     final data = serializers.serializeWith(ProductEntity.serializer, product);

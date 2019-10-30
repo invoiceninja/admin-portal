@@ -143,60 +143,60 @@ class SavePaymentFailure implements StopSaving {
 }
 
 class ArchivePaymentRequest implements StartSaving {
-  ArchivePaymentRequest(this.completer, this.paymentId);
+  ArchivePaymentRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final String paymentId;
+  final List<String> paymentIds;
 }
 
 class ArchivePaymentSuccess implements StopSaving, PersistData {
-  ArchivePaymentSuccess(this.payment);
+  ArchivePaymentSuccess(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class ArchivePaymentFailure implements StopSaving {
-  ArchivePaymentFailure(this.payment);
+  ArchivePaymentFailure(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class DeletePaymentRequest implements StartSaving {
-  DeletePaymentRequest(this.completer, this.paymentId);
+  DeletePaymentRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final String paymentId;
+  final List<String> paymentIds;
 }
 
 class DeletePaymentSuccess implements StopSaving, PersistData {
-  DeletePaymentSuccess(this.payment);
+  DeletePaymentSuccess(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class DeletePaymentFailure implements StopSaving {
-  DeletePaymentFailure(this.payment);
+  DeletePaymentFailure(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class RestorePaymentRequest implements StartSaving {
-  RestorePaymentRequest(this.completer, this.paymentId);
+  RestorePaymentRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final String paymentId;
+  final List<String> paymentIds;
 }
 
 class RestorePaymentSuccess implements StopSaving, PersistData {
-  RestorePaymentSuccess(this.payment);
+  RestorePaymentSuccess(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class RestorePaymentFailure implements StopSaving {
-  RestorePaymentFailure(this.payment);
+  RestorePaymentFailure(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
 class EmailPaymentRequest implements StartSaving {
@@ -265,6 +265,7 @@ void handlePaymentAction(
 
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final paymentIds = payments.map((payment) => payment.id).toList();
   final payment = payments.first;
 
   switch (action) {
@@ -278,16 +279,16 @@ void handlePaymentAction(
     case EntityAction.restore:
       store.dispatch(RestorePaymentRequest(
           snackBarCompleter(context, localization.restoredPayment),
-          payment.id));
+          paymentIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchivePaymentRequest(
           snackBarCompleter(context, localization.archivedPayment),
-          payment.id));
+          paymentIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeletePaymentRequest(
-          snackBarCompleter(context, localization.deletedPayment), payment.id));
+          snackBarCompleter(context, localization.deletedPayment), paymentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {

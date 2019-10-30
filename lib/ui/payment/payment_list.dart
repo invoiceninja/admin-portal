@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
@@ -49,36 +50,13 @@ class PaymentList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        filteredEntity != null
-            ? Material(
-                color: Colors.orangeAccent,
-                elevation: 6.0,
-                child: InkWell(
-                  onTap: () => viewModel.onViewClientFilterPressed(context),
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 18.0),
-                      Expanded(
-                        child: Text(
-                          '$label: ${filteredEntity.listDisplayName}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => viewModel.onClearEntityFilterPressed(),
-                      )
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
+        if (filteredEntity != null)
+          ListFilterMessage(
+            title:
+                '${localization.filteredByGroup}: ${filteredEntity.listDisplayName}',
+            onPressed: viewModel.onViewEntityFilterPressed,
+            onClearPressed: viewModel.onClearEntityFilterPressed,
+          ),
         Expanded(
           child: !viewModel.isLoaded
               ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
