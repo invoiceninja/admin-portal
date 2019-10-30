@@ -5,13 +5,14 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserView extends StatelessWidget {
   const UserView({
@@ -32,17 +33,17 @@ class UserView extends StatelessWidget {
       appBar: AppBar(
         leading: !isMobile(context)
             ? IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: viewModel.onBackPressed,
-        )
+                icon: Icon(Icons.arrow_back),
+                onPressed: viewModel.onBackPressed,
+              )
             : null,
         title: EntityStateTitle(entity: user),
         actions: [
           userCompany.canEditEntity(user)
               ? EditIconButton(
-            isVisible: !(user.isDeleted ?? false), // TODO remove this
-            onPressed: () => viewModel.onEditPressed(context),
-          )
+                  isVisible: !(user.isDeleted ?? false), // TODO remove this
+                  onPressed: () => viewModel.onEditPressed(context),
+                )
               : Container(),
           ActionMenuButton(
             entityActions: user.getActions(userCompany: userCompany),
@@ -54,12 +55,21 @@ class UserView extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          AppListTile(
+            icon: Icons.email,
+            title: user.email,
+            copyValue: user.email,
+            subtitle: localization.email,
+            onTap: () => launch('mailto:' + user.email),
+          ),
+          /*
           TwoValueHeader(
             label1: localization.paidToDate,
             value1: '',
             label2: localization.balanceDue,
             value2: '',
           ),
+           */
           Divider(
             height: 1.0,
           ),
@@ -165,11 +175,11 @@ class UserView extends StatelessWidget {
 class EntityListTile extends StatelessWidget {
   const EntityListTile(
       {this.icon,
-        this.onTap,
-        this.onLongPress,
-        this.title,
-        this.subtitle,
-        this.bottomPadding = 12});
+      this.onTap,
+      this.onLongPress,
+      this.title,
+      this.subtitle,
+      this.bottomPadding = 12});
 
   final Function onTap;
   final Function onLongPress;
