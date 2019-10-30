@@ -69,7 +69,7 @@ class _UserEditState extends State<UserEdit> {
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
-      ..firstName = _firstNameController.text.trim());
+      ..phone = _phoneController.text.trim());
     if (user != widget.viewModel.user) {
       widget.viewModel.onChanged(user);
     }
