@@ -152,7 +152,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'terms',
       serializers.serialize(object.terms,
           specifiedType: const FullType(String)),
-      'invoice_footer',
+      'footer',
       serializers.serialize(object.footer,
           specifiedType: const FullType(String)),
       'tax_name1',
@@ -380,7 +380,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.terms = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_footer':
+        case 'footer':
           result.footer = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;

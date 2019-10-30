@@ -169,7 +169,7 @@ abstract class InvoiceEntity extends Object
 
   String get terms;
 
-  @BuiltValueField(wireName: 'invoice_footer')
+  @BuiltValueField(wireName: 'footer')
   String get footer;
 
   @nullable
@@ -314,7 +314,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (response == 0) {
-      return invoiceA.invoiceNumber.compareTo(invoiceB.invoiceNumber);
+      return (invoiceA.invoiceNumber ?? '').compareTo(invoiceB.invoiceNumber ?? '');
     } else {
       return response;
     }
@@ -447,7 +447,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   String get listDisplayName {
-    return invoiceNumber;
+    return invoiceNumber ?? id;
   }
 
   @override

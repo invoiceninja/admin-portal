@@ -97,13 +97,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
               ),
               FormCard(
                 children: <Widget>[
-                  ListTile(
-                    leading: Icon(FontAwesomeIcons.syncAlt),
-                    title: Text(AppLocalization.of(context).refreshData),
-                    onTap: () {
-                      widget.viewModel.onRefreshTap(context);
-                    },
-                  ),
+                  Builder(builder: (BuildContext context) {
+                    return ListTile(
+                      leading: Icon(FontAwesomeIcons.syncAlt),
+                      title: Text(AppLocalization.of(context).refreshData),
+                      onTap: () {
+                        widget.viewModel.onRefreshTap(context);
+                      },
+                    );
+                  }),
                   ListTile(
                     leading: Icon(FontAwesomeIcons.powerOff),
                     title: Text(AppLocalization.of(context).logout),

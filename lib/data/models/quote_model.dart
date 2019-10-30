@@ -80,6 +80,9 @@ abstract class QuoteEntity extends Object
       dueDate: '',
       publicNotes: '',
       privateNotes: '',
+      terms: '',
+      footer: '',
+      designId: '1',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
@@ -158,6 +161,15 @@ abstract class QuoteEntity extends Object
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
+
+  String get terms;
+
+  @BuiltValueField(wireName: 'footer')
+  String get footer;
+
+  @nullable
+  @BuiltValueField(wireName: 'design_id')
+  String get designId;
 
   /*
   @BuiltValueField(wireName: 'frequency_id')

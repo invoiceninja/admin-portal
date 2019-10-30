@@ -148,7 +148,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearCompanyGatewayMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = null);
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 final companyGatewaysReducer = combineReducers<CompanyGatewayState>([

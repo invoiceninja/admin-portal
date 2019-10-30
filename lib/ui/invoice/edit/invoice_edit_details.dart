@@ -275,7 +275,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.settings.enableInvoiceTaxes
+            (company.settings.enableInvoiceTaxes ?? false)
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
@@ -285,7 +285,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate1,
                   )
                 : Container(),
-            company.settings.enableInvoiceTaxes &&
+            (company.settings.enableInvoiceTaxes ?? false) &&
                     company.settings.enableSecondTaxRate
                 ? TaxRateDropdown(
                     taxRates: company.taxRates,

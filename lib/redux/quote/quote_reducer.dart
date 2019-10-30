@@ -185,7 +185,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState quoteListState, ClearQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedIds = null);
+  return quoteListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 final quotesReducer = combineReducers<QuoteState>([

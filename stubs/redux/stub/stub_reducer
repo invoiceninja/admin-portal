@@ -129,7 +129,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearStubMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = null);
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 final stubsReducer = combineReducers<StubState>([

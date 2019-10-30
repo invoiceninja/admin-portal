@@ -141,6 +141,12 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'terms',
+      serializers.serialize(object.terms,
+          specifiedType: const FullType(String)),
+      'footer',
+      serializers.serialize(object.footer,
+          specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -229,6 +235,12 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       result
         ..add('invoice_number')
         ..add(serializers.serialize(object.invoiceNumber,
+            specifiedType: const FullType(String)));
+    }
+    if (object.designId != null) {
+      result
+        ..add('design_id')
+        ..add(serializers.serialize(object.designId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -329,6 +341,18 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'terms':
+          result.terms = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'footer':
+          result.footer = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'design_id':
+          result.designId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'tax_name1':
@@ -817,6 +841,12 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final String privateNotes;
   @override
+  final String terms;
+  @override
+  final String footer;
+  @override
+  final String designId;
+  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -900,6 +930,9 @@ class _$QuoteEntity extends QuoteEntity {
       this.dueDate,
       this.publicNotes,
       this.privateNotes,
+      this.terms,
+      this.footer,
+      this.designId,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -964,6 +997,12 @@ class _$QuoteEntity extends QuoteEntity {
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'privateNotes');
+    }
+    if (terms == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'terms');
+    }
+    if (footer == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'footer');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'taxName1');
@@ -1070,6 +1109,9 @@ class _$QuoteEntity extends QuoteEntity {
         dueDate == other.dueDate &&
         publicNotes == other.publicNotes &&
         privateNotes == other.privateNotes &&
+        terms == other.terms &&
+        footer == other.footer &&
+        designId == other.designId &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -1126,7 +1168,7 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
                                                                                 customSurcharge3.hashCode),
                                                                             customSurcharge4.hashCode),
                                                                         customTaxes1.hashCode),
@@ -1162,6 +1204,9 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('dueDate', dueDate)
           ..add('publicNotes', publicNotes)
           ..add('privateNotes', privateNotes)
+          ..add('terms', terms)
+          ..add('footer', footer)
+          ..add('designId', designId)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -1247,6 +1292,18 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+
+  String _terms;
+  String get terms => _$this._terms;
+  set terms(String terms) => _$this._terms = terms;
+
+  String _footer;
+  String get footer => _$this._footer;
+  set footer(String footer) => _$this._footer = footer;
+
+  String _designId;
+  String get designId => _$this._designId;
+  set designId(String designId) => _$this._designId = designId;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1411,6 +1468,9 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _dueDate = _$v.dueDate;
       _publicNotes = _$v.publicNotes;
       _privateNotes = _$v.privateNotes;
+      _terms = _$v.terms;
+      _footer = _$v.footer;
+      _designId = _$v.designId;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -1480,6 +1540,9 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               dueDate: dueDate,
               publicNotes: publicNotes,
               privateNotes: privateNotes,
+              terms: terms,
+              footer: footer,
+              designId: designId,
               taxName1: taxName1,
               taxRate1: taxRate1,
               taxName2: taxName2,
