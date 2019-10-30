@@ -33,7 +33,7 @@ class _StateInspectorState extends State<StateInspector> {
             if (index != null) {
               data = data[index];
             }
-          } catch (e){
+          } catch (e) {
             // do nothing
           }
         });
