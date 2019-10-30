@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter_json_widget/flutter_json_widget.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class StateInspector extends StatefulWidget {
   @override
@@ -61,13 +62,16 @@ class _StateInspectorState extends State<StateInspector> {
             children: <Widget>[
               TextFormField(
                 autofocus: true,
+                decoration: InputDecoration(
+                  labelText: AppLocalization.of(context).filter,
+                ),
                 onChanged: (value) {
                   setState(() {
                     _filter = value;
                   });
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Container(
                 //color: Colors.white,
                 child: SingleChildScrollView(
