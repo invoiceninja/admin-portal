@@ -37,6 +37,7 @@ dependencies:
   zefyr: ^0.8.0
   native_pdf_renderer: any
   flutter_colorpicker: any
+  flutter_json_widget: ^1.0.2
   #quick_actions: ^0.2.1
 
 dev_dependencies:

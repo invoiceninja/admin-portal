@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:flutter_json_widget/flutter_json_widget.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 
 class StateInspector extends StatefulWidget {
   @override
@@ -11,114 +13,64 @@ class StateInspector extends StatefulWidget {
 }
 
 class _StateInspectorState extends State<StateInspector> {
-  final _filterController = TextEditingController();
+  String _filter = '';
 
-  List<TextEditingController> _controllers = [];
-  String _text;
+  dynamic filterJson(dynamic data, String filter) {
+    print('FILTER...');
+    if (filter.contains('.')) {
+      filter.split('.')
+        ..removeLast()
+        ..where((part) => part.isNotEmpty).forEach((part) {
+          print('part: $part');
 
-  @override
-  void didChangeDependencies() {
-    _controllers = [_filterController];
+          String pattern = '.*';
+          part.split('').forEach((ch) => pattern += ch + '.*');
+          final regExp = RegExp(pattern, caseSensitive: true);
+          dynamic index;
+          try {
+            index = (data as Map)
+                .keys
+                .firstWhere((dynamic key) => regExp.hasMatch(key));
+          } catch (e) {
+            // do nothing
+          }
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+          print('index: $index');
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _filterController.dispose();
-    super.dispose();
-  }
-
-  List<String> getKeys() {
-    final state = StoreProvider.of<AppState>(context).state;
-    dynamic data = serializers.serializeWith(AppState.serializer, state);
-
-
-    //.forEach((key) => data = data[key]);
-
-    final map = data as Map;
-
-    return map.keys.where((dynamic key) {
-      if (map[key].runtimeType.toString() !=
-          '_InternalLinkedHashMap<String, Object>') {
-        return false;
-      }
-
-      if ((_text ?? '').isEmpty) {
-        return true;
-      }
-
-      String pattern = '.*';
-      _text.split('').forEach((ch) => pattern += ch + '.*');
-      final regExp = RegExp(pattern, caseSensitive: true);
-
-      return regExp.hasMatch('$key'.toLowerCase());
-    }).toList();
-  }
-
-  void _onChanged() {
-    String value = _filterController.text.toLowerCase();
-    print('TEXT: $value');
-    if (value.endsWith('\t') || value.endsWith('.')) {
-      print('ends with tab');
-      value = getKeys().first + '.';
-      //_filterController.text = value;
-      _text = value;
-      WidgetsBinding.instance.addPostFrameCallback((duration) {
-        var cursorPos = _filterController.selection;
-        _filterController.text = value;
-        cursorPos = new TextSelection.fromPosition(
-            new TextPosition(offset: value.length));
-        _filterController.selection = cursorPos;
-      });
+          if (index != null) {
+            data = data[index];
+          }
+        });
     }
-    setState(() {
-      _text = value;
-    });
+
+    return data;
   }
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    dynamic data = serializers.serializeWith(AppState.serializer, state);
-
-    //_keys.forEach((key) => data = data[key]);
-
-    final JsonEncoder encoder = new JsonEncoder.withIndent('  ');
-    final String prettyJson = encoder.convert(data);
-
-    final keys = getKeys();
+    final data = serializers.serializeWith(AppState.serializer, state);
 
     return Padding(
       padding: const EdgeInsets.only(left: 100, top: 20, right: 100),
       child: Material(
-        child: Container(
-          padding: const EdgeInsets.all(30),
+        child: ResponsivePadding(
           child: Column(
             children: <Widget>[
-              Text('Text: $_text'),
               TextFormField(
                 autofocus: true,
-                controller: _filterController,
+                onChanged: (value) {
+                  print('changed: $value');
+                  setState(() {
+                    _filter = value;
+                  });
+                },
               ),
-              SizedBox(height: 20),
-              Row(
-                children: <Widget>[
-                  for (var key in keys)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Text('$key'),
-                    )
-                ],
+              Container(
+                color: Colors.white,
+                child: SingleChildScrollView(
+                    child: JsonViewerWidget(filterJson(data, _filter))),
               ),
-              SizedBox(height: 20),
-              Flexible(child: Text(prettyJson)),
             ],
           ),
         ),
