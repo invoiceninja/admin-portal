@@ -83,13 +83,15 @@ class AuthRepository {
 
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token}) async {
-    /*
-    url +=
-        '?include=tax_rates,users,custom_payment_terms,task_statuses,expense_categories&include_static=true';
-    */
-
-    url +=
-        '?include=account,user,token,company.groups,company.company_gateways.gateway&include_static=true';
+    final includes = [
+      'account',
+      'user',
+      'token',
+      'company.users',
+      'company.groups',
+      'company.company_gateways',
+    ];
+    url += '?include=${includes.join(',')}&include_static=true';
 
     final dynamic response =
         await webClient.post(url, token ?? '', data: json.encode(data));

@@ -52,6 +52,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     secondary: Icon(FontAwesomeIcons.moon),
                     activeColor: Theme.of(context).accentColor,
                   ),
+                  SwitchListTile(
+                    title: Text(AppLocalization.of(context)
+                        .longPressSelectionIsDefault),
+                    value: widget.viewModel.longPressSelectionIsDefault,
+                    onChanged: (value) => widget.viewModel
+                        .onLongPressSelectionIsDefault(context, value),
+                    secondary: Icon(FontAwesomeIcons.checkSquare),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
                   FutureBuilder(
                     future: widget.viewModel.authenticationSupported,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -84,15 +93,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           activeColor: Theme.of(context).accentColor,
                         )
                       : SizedBox(),
-                  SwitchListTile(
-                    title: Text(AppLocalization.of(context)
-                        .longPressSelectionIsDefault),
-                    value: widget.viewModel.longPressSelectionIsDefault,
-                    onChanged: (value) => widget.viewModel
-                        .onLongPressSelectionIsDefault(context, value),
-                    secondary: Icon(FontAwesomeIcons.checkSquare),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
                   ListTile(
                     leading: Icon(FontAwesomeIcons.syncAlt),
                     title: Text(AppLocalization.of(context).refreshData),
