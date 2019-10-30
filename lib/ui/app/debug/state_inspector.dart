@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -16,34 +14,38 @@ class _StateInspectorState extends State<StateInspector> {
   String _filter = '';
 
   dynamic filterJson(dynamic data, String filter) {
-    print('FILTER...');
     if (filter.contains('.')) {
-      filter.split('.')
+      final parts = filter.split('.')
         ..removeLast()
-        ..where((part) => part.isNotEmpty).forEach((part) {
-          print('part: $part');
+        ..where((part) => part.isNotEmpty);
 
-          String pattern = '.*';
-          part.split('').forEach((ch) => pattern += ch + '.*');
-          final regExp = RegExp(pattern, caseSensitive: true);
-          dynamic index;
+      if (parts.isNotEmpty) {
+        parts.forEach((part) {
+          String pattern = '';
+          part.split('').forEach((ch) => pattern += ch.toLowerCase() + '.*');
+          final regExp = RegExp(pattern, caseSensitive: false);
+
           try {
-            index = (data as Map)
+            final dynamic index = (data as Map)
                 .keys
                 .firstWhere((dynamic key) => regExp.hasMatch(key));
-          } catch (e) {
+
+            if (index != null) {
+              data = data[index];
+            }
+          } catch (e){
             // do nothing
           }
-
-          print('index: $index');
-
-          if (index != null) {
-            data = data[index];
-          }
         });
+      }
     }
 
-    return data;
+    if (data.runtimeType.toString() ==
+        '_InternalLinkedHashMap<String, Object>') {
+      return data;
+    } else {
+      return <String, dynamic>{'value': data};
+    }
   }
 
   @override
@@ -60,14 +62,14 @@ class _StateInspectorState extends State<StateInspector> {
               TextFormField(
                 autofocus: true,
                 onChanged: (value) {
-                  print('changed: $value');
                   setState(() {
                     _filter = value;
                   });
                 },
               ),
+              SizedBox(height: 20),
               Container(
-                color: Colors.white,
+                //color: Colors.white,
                 child: SingleChildScrollView(
                     child: JsonViewerWidget(filterJson(data, _filter))),
               ),
