@@ -28,17 +28,14 @@ class TaskList extends StatelessWidget {
 
     BaseEntity filteredEntity;
     String filteredMessage;
-    String label;
 
     if (listState.filterEntityType == EntityType.client) {
-      label = localization.filteredByClient;
       final filteredClientId = listState.filterEntityId;
       filteredMessage = localization.filteredByClient;
       filteredEntity = filteredClientId != null
           ? viewModel.clientMap[filteredClientId]
           : null;
     } else if (listState.filterEntityType == EntityType.project) {
-      label = localization.filteredByProject;
       final filteredProjectId = listState.filterEntityId;
       filteredMessage = localization.filteredByProject;
       filteredEntity = filteredProjectId != null

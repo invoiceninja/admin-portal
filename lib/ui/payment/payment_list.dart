@@ -31,17 +31,17 @@ class PaymentList extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     BaseEntity filteredEntity;
-    String label;
+    String filteredMessage;
 
     switch (listState.filterEntityType) {
       case EntityType.client:
-        label = localization.filteredByClient;
+        filteredMessage = localization.filteredByClient;
         filteredEntity = filteredEntityId != null
             ? state.clientState.map[filteredEntityId]
             : null;
         break;
       case EntityType.invoice:
-        label = localization.filteredByInvoice;
+        filteredMessage = localization.filteredByInvoice;
         filteredEntity = filteredEntityId != null
             ? state.invoiceState.map[filteredEntityId]
             : null;
@@ -53,7 +53,7 @@ class PaymentList extends StatelessWidget {
         if (filteredEntity != null)
           ListFilterMessage(
             title:
-                '${localization.filteredByGroup}: ${filteredEntity.listDisplayName}',
+            '$filteredMessage: ${filteredEntity.listDisplayName}',
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

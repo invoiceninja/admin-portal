@@ -285,7 +285,9 @@ class BlankScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: isMobile(context),
+      ),
       body: HelpText(message ?? ''),
     );
   }
