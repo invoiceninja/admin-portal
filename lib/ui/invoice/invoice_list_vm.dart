@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -135,10 +136,16 @@ class InvoiceListVM extends EntityListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterInvoicesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
+      onViewEntityFilterPressed: (BuildContext context) {
+        if (state.invoiceListState.filterEntityType == EntityType.client) {
+          store.dispatch(ViewClient(
               clientId: state.invoiceListState.filterEntityId,
-              context: context)),
+              context: context));
+        } else if (state.invoiceListState.filterEntityType == EntityType.user) {
+          store.dispatch(ViewUser(
+              userId: state.invoiceListState.filterEntityId, context: context));
+        }
+      },
       onEntityAction: (BuildContext context, List<BaseEntity> invoices,
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
