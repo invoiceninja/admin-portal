@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -42,10 +43,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   FocusScopeNode _focusNode;
-
-  bool autoValidate = false;
-
   WebViewController _controller;
+  final _debouncer = Debouncer(milliseconds: 500);
+
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
@@ -88,13 +88,16 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
   }
 
   void _onChanged() {
-    final str =
-        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-    final String contentBase64 = base64Encode(const Utf8Encoder().convert(str));
-    final url = 'data:text/html;base64,$contentBase64';
-    print('url: $url');
+    _debouncer.run(() {
+      final str =
+          '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
+      final String contentBase64 =
+      base64Encode(const Utf8Encoder().convert(str));
+      final url = 'data:text/html;base64,$contentBase64';
+      print('url: $url');
 
-    _controller.loadUrl(url);
+      _controller.loadUrl(url);
+    });
   }
 
   @override
