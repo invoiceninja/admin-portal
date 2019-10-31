@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
@@ -25,10 +27,10 @@ class TemplatesAndReminders extends StatefulWidget {
 class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  String _template = kEmailTemplateInvoice;
   FocusScopeNode _focusNode;
   WebViewController _controller;
   final _debouncer = Debouncer(milliseconds: 500);
-
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
@@ -75,10 +77,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
       final str =
           '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
       final String contentBase64 =
-      base64Encode(const Utf8Encoder().convert(str));
+          base64Encode(const Utf8Encoder().convert(str));
       final url = 'data:text/html;base64,$contentBase64';
-      print('url: $url');
-
       _controller.loadUrl(url);
     });
   }
@@ -87,13 +87,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-
-    /*
-    final String contentBase64 =
-        base64Encode(const Utf8Encoder().convert(kExamplePage));
-    final url = 'data:text/html;base64,$contentBase64';
-    print('url: $url');
-    */
 
     return SettingsScaffold(
       title: localization.templatesAndReminders,
@@ -105,6 +98,18 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  AppDropdownButton(
+                    labelText: localization.template,
+                    value: _template,
+                    showBlank: false,
+                    onChanged: (value) => setState(() => _template = value),
+                    items: kEmailTemplateTypes
+                        .map((item) => DropdownMenuItem<String>(
+                              child: Text(localization.lookup(item)),
+                              value: item,
+                            ))
+                        .toList(),
+                  ),
                   DecoratedFormField(
                     label: localization.subject,
                     controller: _subjectController,
@@ -126,9 +131,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
                 onWebViewCreated: (WebViewController webViewController) {
                   _controller = webViewController;
                 },
-                onPageFinished: (String url) {
-                  print('Page finished loading: $url');
-                },
+                //onPageFinished: (String url) {},
                 //javascriptMode: JavascriptMode.unrestricted,
               ),
             ),

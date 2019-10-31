@@ -14,10 +14,14 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'invoice_email': 'Invoice Email',
+      'payment_email': 'Payment Email',
+      'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
-      'administrator_help': 'Allow user to manage users, change settings and modify all records',
+      'administrator_help':
+          'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -15401,11 +15405,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get administrator => _localizedValues[localeCode]['administrator'];
 
-  String get administratorHelp => _localizedValues[localeCode]['administrator_help'];
+  String get administratorHelp =>
+      _localizedValues[localeCode]['administrator_help'];
 
   String get filteredByUser => _localizedValues[localeCode]['filtered_by_user'];
 
-  String get endlessReminder => _localizedValues[localeCode]['endless_reminder'];
+  String get endlessReminder =>
+      _localizedValues[localeCode]['endless_reminder'];
+
+  String get invoiceEmail => _localizedValues[localeCode]['invoice_email'];
+
+  String get paymentEmail => _localizedValues[localeCode]['payment_email'];
+
+  String get quoteEmail => _localizedValues[localeCode]['quote_email'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

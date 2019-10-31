@@ -132,6 +132,24 @@ const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
 
+const String kEmailTemplateInvoice = 'invoice_email';
+const String kEmailTemplateQuote = 'quote_email';
+const String kEmailTemplatePayment = 'payment_email';
+const String kEmailTemplateReminder1 = 'first_reminder';
+const String kEmailTemplateReminder2 = 'second_reminder';
+const String kEmailTemplateReminder3 = 'third_reminder';
+const String kEmailTemplateReminder4 = 'endless_reminder';
+
+const List<String> kEmailTemplateTypes = [
+  kEmailTemplateInvoice,
+  kEmailTemplateQuote,
+  kEmailTemplatePayment,
+  kEmailTemplateReminder1,
+  kEmailTemplateReminder2,
+  kEmailTemplateReminder3,
+  kEmailTemplateReminder4,
+];
+
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
