@@ -78,6 +78,7 @@ Completer<Null> errorCompleter(BuildContext context) {
   return completer;
 }
 
+// https://stackoverflow.com/a/55119208/497368
 class Debouncer {
   Debouncer({this.milliseconds});
 
