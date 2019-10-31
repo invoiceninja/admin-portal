@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -72,8 +73,41 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
     super.didChangeDependencies();
   }
 
+  void _loadTemplate(String type) {
+    final settings = widget.viewModel.settings;
+    String body = '';
+    String subject = '';
+
+    if (type == kEmailTemplateInvoice) {
+      subject = settings.emailSubjectInvoice;
+      body = settings.emailBodyInvoice;
+    } else if (type == kEmailTemplateQuote) {
+      subject = settings.emailSubjectQuote;
+      body = settings.emailBodyQuote;
+    }
+
+    _bodyController.text = body;
+    _subjectController.text = subject;
+  }
+
   void _onChanged() {
     _debouncer.run(() {
+      final String body = _bodyController.text.trim();
+      final String subject = _subjectController.text.trim();
+      SettingsEntity settings = widget.viewModel.settings;
+
+      if (_template == kEmailTemplateInvoice) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyInvoice = body
+          ..emailSubjectInvoice = subject);
+      } else if (_template == kEmailTemplateQuote) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyQuote = body
+          ..emailSubjectQuote = subject);
+      }
+
+      widget.viewModel.onSettingsChanged(settings);
+
       final str =
           '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
       final String contentBase64 =
@@ -102,7 +136,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
                     labelText: localization.template,
                     value: _template,
                     showBlank: false,
-                    onChanged: (value) => setState(() => _template = value),
+                    onChanged: (value) => setState(() {
+                      _template = value;
+                      _loadTemplate(_template);
+                    }),
                     items: kEmailTemplateTypes
                         .map((item) => DropdownMenuItem<String>(
                               child: Text(localization.lookup(item)),
