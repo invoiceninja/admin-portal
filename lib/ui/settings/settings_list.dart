@@ -158,12 +158,12 @@ class SettingsList extends StatelessWidget {
           viewModel: viewModel,
           icon: FontAwesomeIcons.solidEnvelope,
         ),
-        /*
         SettingsListTile(
           section: kSettingsTemplatesAndReminders,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.solidClock,
+          icon: FontAwesomeIcons.file,
         ),
+        /*
         SettingsListTile(
           section: kSettingsCreditCardsAndBanks,
           viewModel: viewModel,

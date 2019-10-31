@@ -98,6 +98,44 @@ String quoteStatsForClient(
   return str;
 }
 
+var memoizedQuoteStatsForUser = memo4((String userId,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    String activeLabel,
+    String archivedLabel) =>
+    quoteStatsForUser(userId, quoteMap, activeLabel, archivedLabel));
+
+String quoteStatsForUser(
+    String userId,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  quoteMap.forEach((quoteId, quote) {
+    // TODO change to user id match
+    if (quote.clientId == userId) {
+      if (quote.isActive) {
+        countActive++;
+      } else if (quote.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}
+
 bool hasQuoteChanges(
         InvoiceEntity quote, BuiltMap<String, InvoiceEntity> quoteMap) =>
     quote.isNew ? quote.isChanged : quote != quoteMap[quote.id];

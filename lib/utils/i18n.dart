@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help': 'Allow user to manage users, change settings and modify all records',
@@ -15404,6 +15405,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get filteredByUser => _localizedValues[localeCode]['filtered_by_user'];
 
+  String get endlessReminder => _localizedValues[localeCode]['endless_reminder'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

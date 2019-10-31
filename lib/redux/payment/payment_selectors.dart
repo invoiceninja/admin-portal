@@ -141,6 +141,49 @@ String paymentStatsForClient(
   return str;
 }
 
+var memoizedPaymentStatsForUser = memo5((String userId,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        String activeLabel,
+        String archivedLabel) =>
+    paymentStatsForClient(
+        userId, paymentMap, invoiceMap, activeLabel, archivedLabel));
+
+String paymentStatsForUser(
+    String userId,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    String activeLabel,
+    String archivedLabel) {
+  int countActive = 0;
+  int countArchived = 0;
+  paymentMap.forEach((paymentId, payment) {
+    if (invoiceMap.containsKey(payment.invoiceId))
+      // TODO enable this code
+    //&& invoiceMap[payment.invoiceId].userId == userId)
+    {
+      if (payment.isActive) {
+        countActive++;
+      } else if (payment.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  String str = '';
+  if (countActive > 0) {
+    str = '$countActive $activeLabel';
+    if (countArchived > 0) {
+      str += ' • ';
+    }
+  }
+  if (countArchived > 0) {
+    str += '$countArchived $archivedLabel';
+  }
+
+  return str;
+}
+
 bool hasPaymentChanges(
         PaymentEntity payment, BuiltMap<String, PaymentEntity> paymentMap) =>
     payment.isNew ? payment.isChanged : payment != paymentMap[payment.id];

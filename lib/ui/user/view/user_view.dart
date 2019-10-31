@@ -2,6 +2,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -29,6 +31,7 @@ class UserView extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final user = viewModel.user;
     final state = StoreProvider.of<AppState>(context).state;
+    final company = state.selectedCompany;
     final userCompany = state.userCompany;
 
     return Scaffold(
@@ -100,7 +103,6 @@ class UserView extends StatelessWidget {
                 localization.active,
                 localization.archived),
           ),
-          /*
         EntityListTile(
           bottomPadding: 1,
           icon: getEntityIcon(EntityType.payment),
@@ -131,6 +133,7 @@ class UserView extends StatelessWidget {
               localization.archived),
         )
             : Container(),
+          /*
         company.isModuleEnabled(EntityType.project)
             ? EntityListTile(
           bottomPadding: 1,
