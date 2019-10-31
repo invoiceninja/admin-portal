@@ -64,8 +64,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    //_subjectController.text =  ;
-    //_bodyController.text = widget.body;
+    _loadTemplate(kEmailTemplateInvoice);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -84,6 +83,18 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
     } else if (type == kEmailTemplateQuote) {
       subject = settings.emailSubjectQuote;
       body = settings.emailBodyQuote;
+    } else if (type == kEmailTemplatePayment) {
+      subject = settings.emailSubjectPayment;
+      body = settings.emailBodyPayment;
+    } else if (type == kEmailTemplateReminder1) {
+      subject = settings.emailSubjectReminder1;
+      body = settings.emailBodyReminder1;
+    } else if (type == kEmailTemplateReminder2) {
+      subject = settings.emailSubjectReminder2;
+      body = settings.emailBodyReminder2;
+    } else if (type == kEmailTemplateReminder3) {
+      subject = settings.emailSubjectReminder3;
+      body = settings.emailBodyReminder3;
     }
 
     _bodyController.text = body;
@@ -104,6 +115,22 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
         settings = settings.rebuild((b) => b
           ..emailBodyQuote = body
           ..emailSubjectQuote = subject);
+      } else if (_template == kEmailTemplatePayment) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyPayment = body
+          ..emailSubjectPayment = subject);
+      } else if (_template == kEmailTemplateReminder1) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder1 = body
+          ..emailSubjectReminder1 = subject);
+      } else if (_template == kEmailTemplateReminder2) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder2 = body
+          ..emailSubjectReminder2 = subject);
+      } else if (_template == kEmailTemplateReminder3) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder3 = body
+          ..emailSubjectReminder3 = subject);
       }
 
       widget.viewModel.onSettingsChanged(settings);
