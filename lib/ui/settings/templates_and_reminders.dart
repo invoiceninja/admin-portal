@@ -33,8 +33,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  //WebViewController _webViewController;
-
   final _debouncer = Debouncer(milliseconds: 500);
 
   final _subjectController = TextEditingController();
@@ -225,19 +223,53 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               ])
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: WebView(
-              debuggingEnabled: true,
-              initialUrl: _getUrl(_template),
-              onWebViewCreated: (WebViewController webViewController) {
-                //_webViewController = webViewController;
-              },
-              //onPageFinished: (String url) {},
-              javascriptMode: JavascriptMode.disabled,
-            ),
-          ),
+          TemplatePreview(_getUrl(_template)),
         ],
+      ),
+    );
+  }
+}
+
+class TemplatePreview extends StatefulWidget {
+  const TemplatePreview(this.html);
+
+  final String html;
+
+  @override
+  _TemplatePreviewState createState() => _TemplatePreviewState();
+}
+
+class _TemplatePreviewState extends State<TemplatePreview>
+    with AutomaticKeepAliveClientMixin<TemplatePreview> {
+
+  WebViewController _webViewController;
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.html != oldWidget.html) {
+      _webViewController.loadUrl(widget.html);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(15),
+      child: WebView(
+        debuggingEnabled: true,
+        initialUrl: widget.html,
+        onWebViewCreated: (WebViewController webViewController) {
+          _webViewController = webViewController;
+        },
+        //onPageFinished: (String url) {},
+        javascriptMode: JavascriptMode.disabled,
       ),
     );
   }

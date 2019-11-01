@@ -25,10 +25,12 @@ class SettingsList extends StatelessWidget {
         state.uiState.settingsUIState.entityType == EntityType.company;
     final settingsUIState = state.uiState.settingsUIState;
 
-    final title = settingsUIState.entityType == EntityType.client
+    final title = (settingsUIState.entityType == EntityType.client)
         ? localization.filteredByClient +
             ': ${settingsUIState.client.displayName}'
-        : localization.filteredByGroup + ': ${settingsUIState.group.name}';
+        : (settingsUIState.entityType == EntityType.group)
+            ? localization.filteredByGroup + ': ${settingsUIState.group.name}'
+            : '';
 
     return ListView(
       children: <Widget>[
