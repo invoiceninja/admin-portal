@@ -32,6 +32,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _template = kEmailTemplateInvoice;
   FocusScopeNode _focusNode;
   TabController _controller;
+
   //WebViewController _webViewController;
 
   final _debouncer = Debouncer(milliseconds: 500);
@@ -52,8 +53,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.dispose();
     _controller.removeListener(_handleTabSelection);
+    _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -109,40 +110,41 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _onChanged() {
-    _debouncer.run(() {
-      final String body = _bodyController.text.trim();
-      final String subject = _subjectController.text.trim();
-      SettingsEntity settings = widget.viewModel.settings;
+    final String body = _bodyController.text.trim();
+    final String subject = _subjectController.text.trim();
+    SettingsEntity settings = widget.viewModel.settings;
 
-      if (_template == kEmailTemplateInvoice) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyInvoice = body
-          ..emailSubjectInvoice = subject);
-      } else if (_template == kEmailTemplateQuote) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyQuote = body
-          ..emailSubjectQuote = subject);
-      } else if (_template == kEmailTemplatePayment) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyPayment = body
-          ..emailSubjectPayment = subject);
-      } else if (_template == kEmailTemplateReminder1) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder1 = body
-          ..emailSubjectReminder1 = subject);
-      } else if (_template == kEmailTemplateReminder2) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder2 = body
-          ..emailSubjectReminder2 = subject);
-      } else if (_template == kEmailTemplateReminder3) {
-        settings = settings.rebuild((b) => b
-          ..emailBodyReminder3 = body
-          ..emailSubjectReminder3 = subject);
-      }
+    if (_template == kEmailTemplateInvoice) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyInvoice = body
+        ..emailSubjectInvoice = subject);
+    } else if (_template == kEmailTemplateQuote) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyQuote = body
+        ..emailSubjectQuote = subject);
+    } else if (_template == kEmailTemplatePayment) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyPayment = body
+        ..emailSubjectPayment = subject);
+    } else if (_template == kEmailTemplateReminder1) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder1 = body
+        ..emailSubjectReminder1 = subject);
+    } else if (_template == kEmailTemplateReminder2) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder2 = body
+        ..emailSubjectReminder2 = subject);
+    } else if (_template == kEmailTemplateReminder3) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder3 = body
+        ..emailSubjectReminder3 = subject);
+    }
 
-      widget.viewModel.onSettingsChanged(settings);
+    if (settings != widget.viewModel.settings) {
+      _debouncer.run(() {
+        widget.viewModel.onSettingsChanged(settings);
 
-      /*
+        /*
       final str =
           '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
       final String contentBase64 =
@@ -150,7 +152,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       final url = 'data:text/html;base64,$contentBase64';
       _webViewController.loadUrl(url);
        */
-    });
+      });
+    }
   }
 
   void _handleTabSelection() {
@@ -161,8 +164,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _getUrl(String template) {
     final str =
         '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-    final String contentBase64 =
-    base64Encode(const Utf8Encoder().convert(str));
+    final String contentBase64 = base64Encode(const Utf8Encoder().convert(str));
     return 'data:text/html;base64,$contentBase64';
   }
 
@@ -226,6 +228,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           Padding(
             padding: const EdgeInsets.all(15),
             child: WebView(
+              debuggingEnabled: true,
               initialUrl: _getUrl(_template),
               onWebViewCreated: (WebViewController webViewController) {
                 //_webViewController = webViewController;

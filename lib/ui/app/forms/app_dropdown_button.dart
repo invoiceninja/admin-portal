@@ -17,8 +17,6 @@ class AppDropdownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Value: $labelText $value');
-
     return InputDecorator(
         decoration: InputDecoration(
           labelText: labelText,
