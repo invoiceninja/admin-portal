@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
@@ -171,6 +172,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.templatesAndReminders,
@@ -220,7 +222,34 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   controller: _bodyController,
                   maxLines: 8,
                 ),
-              ])
+              ]),
+              if ([
+                kEmailTemplateReminder1,
+                kEmailTemplateReminder2,
+                kEmailTemplateReminder3
+              ].contains(_template))
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.sendEmail,
+                      showBlank: state.settingsUIState.isFiltered,
+                      value: _template == kEmailTemplateReminder1
+                          ? settings.enableReminder1
+                          : _template == kEmailTemplateReminder2
+                              ? settings.enableReminder2
+                              : settings.enableReminder3,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          _template == kEmailTemplateReminder1
+                              ? settings
+                                  .rebuild((b) => b..enableReminder1 = value)
+                              : _template == kEmailTemplateReminder2
+                                  ? settings.rebuild(
+                                      (b) => b..enableReminder2 = value)
+                                  : settings.rebuild(
+                                      (b) => b..enableReminder3 = value)),
+                    ),
+                  ],
+                ),
             ],
           ),
           TemplatePreview(_getUrl(_template)),
@@ -241,7 +270,6 @@ class TemplatePreview extends StatefulWidget {
 
 class _TemplatePreviewState extends State<TemplatePreview>
     with AutomaticKeepAliveClientMixin<TemplatePreview> {
-
   WebViewController _webViewController;
 
   @override

@@ -950,6 +950,19 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'all_pages_footer')
   bool get allPagesFooter;
 
+  @nullable
+  @BuiltValueField(wireName: 'enableReminder1')
+  bool get enableReminder1;
+
+  @nullable
+  @BuiltValueField(wireName: 'enableReminder2')
+  bool get enableReminder2;
+
+  @nullable
+  @BuiltValueField(wireName: 'enableReminder3')
+  bool get enableReminder3;
+
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')

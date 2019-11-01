@@ -1395,6 +1395,24 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.allPagesFooter,
             specifiedType: const FullType(bool)));
     }
+    if (object.enableReminder1 != null) {
+      result
+        ..add('enableReminder1')
+        ..add(serializers.serialize(object.enableReminder1,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableReminder2 != null) {
+      result
+        ..add('enableReminder2')
+        ..add(serializers.serialize(object.enableReminder2,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enableReminder3 != null) {
+      result
+        ..add('enableReminder3')
+        ..add(serializers.serialize(object.enableReminder3,
+            specifiedType: const FullType(bool)));
+    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -1912,6 +1930,18 @@ class _$SettingsEntitySerializer
           break;
         case 'all_pages_footer':
           result.allPagesFooter = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enableReminder1':
+          result.enableReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enableReminder2':
+          result.enableReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enableReminder3':
+          result.enableReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_payment_terms':
@@ -3269,6 +3299,12 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool allPagesFooter;
   @override
+  final bool enableReminder1;
+  @override
+  final bool enableReminder2;
+  @override
+  final bool enableReminder3;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3400,6 +3436,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.embedDocuments,
       this.allPagesHeader,
       this.allPagesFooter,
+      this.enableReminder1,
+      this.enableReminder2,
+      this.enableReminder3,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3537,6 +3576,9 @@ class _$SettingsEntity extends SettingsEntity {
         embedDocuments == other.embedDocuments &&
         allPagesHeader == other.allPagesHeader &&
         allPagesFooter == other.allPagesFooter &&
+        enableReminder1 == other.enableReminder1 &&
+        enableReminder2 == other.enableReminder2 &&
+        enableReminder3 == other.enableReminder3 &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3563,22 +3605,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode),
-                                                                                phone.hashCode),
-                                                                            email.hashCode),
-                                                                        countryId.hashCode),
-                                                                    vatNumber.hashCode),
-                                                                idNumber.hashCode),
-                                                            pageSize.hashCode),
-                                                        fontSize.hashCode),
-                                                    primaryColor.hashCode),
-                                                secondaryColor.hashCode),
-                                            primaryFont.hashCode),
-                                        secondaryFont.hashCode),
-                                    hidePaidToDate.hashCode),
-                                embedDocuments.hashCode),
-                            allPagesHeader.hashCode),
-                        allPagesFooter.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode),
+                                                                                vatNumber.hashCode),
+                                                                            idNumber.hashCode),
+                                                                        pageSize.hashCode),
+                                                                    fontSize.hashCode),
+                                                                primaryColor.hashCode),
+                                                            secondaryColor.hashCode),
+                                                        primaryFont.hashCode),
+                                                    secondaryFont.hashCode),
+                                                hidePaidToDate.hashCode),
+                                            embedDocuments.hashCode),
+                                        allPagesHeader.hashCode),
+                                    allPagesFooter.hashCode),
+                                enableReminder1.hashCode),
+                            enableReminder2.hashCode),
+                        enableReminder3.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3707,6 +3749,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('embedDocuments', embedDocuments)
           ..add('allPagesHeader', allPagesHeader)
           ..add('allPagesFooter', allPagesFooter)
+          ..add('enableReminder1', enableReminder1)
+          ..add('enableReminder2', enableReminder2)
+          ..add('enableReminder3', enableReminder3)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4288,6 +4333,21 @@ class SettingsEntityBuilder
   set allPagesFooter(bool allPagesFooter) =>
       _$this._allPagesFooter = allPagesFooter;
 
+  bool _enableReminder1;
+  bool get enableReminder1 => _$this._enableReminder1;
+  set enableReminder1(bool enableReminder1) =>
+      _$this._enableReminder1 = enableReminder1;
+
+  bool _enableReminder2;
+  bool get enableReminder2 => _$this._enableReminder2;
+  set enableReminder2(bool enableReminder2) =>
+      _$this._enableReminder2 = enableReminder2;
+
+  bool _enableReminder3;
+  bool get enableReminder3 => _$this._enableReminder3;
+  set enableReminder3(bool enableReminder3) =>
+      _$this._enableReminder3 = enableReminder3;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4432,6 +4492,9 @@ class SettingsEntityBuilder
       _embedDocuments = _$v.embedDocuments;
       _allPagesHeader = _$v.allPagesHeader;
       _allPagesFooter = _$v.allPagesFooter;
+      _enableReminder1 = _$v.enableReminder1;
+      _enableReminder2 = _$v.enableReminder2;
+      _enableReminder3 = _$v.enableReminder3;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4579,6 +4642,9 @@ class SettingsEntityBuilder
               embedDocuments: embedDocuments,
               allPagesHeader: allPagesHeader,
               allPagesFooter: allPagesFooter,
+              enableReminder1: enableReminder1,
+              enableReminder2: enableReminder2,
+              enableReminder3: enableReminder3,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,
