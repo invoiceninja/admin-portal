@@ -64,7 +64,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _loadTemplate(kEmailTemplateInvoice);
+    //_loadTemplate(kEmailTemplateInvoice);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
