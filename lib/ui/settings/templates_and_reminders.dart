@@ -25,12 +25,15 @@ class TemplatesAndReminders extends StatefulWidget {
   _TemplatesAndRemindersState createState() => _TemplatesAndRemindersState();
 }
 
-class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
+class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _template = kEmailTemplateInvoice;
   FocusScopeNode _focusNode;
-  WebViewController _controller;
+  TabController _controller;
+  WebViewController _webViewController;
+
   final _debouncer = Debouncer(milliseconds: 500);
 
   final _subjectController = TextEditingController();
@@ -42,11 +45,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+    _controller = TabController(vsync: this, length: 2);
+    _controller.addListener(_handleTabSelection);
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.dispose();
+    _controller.removeListener(_handleTabSelection);
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -135,69 +142,96 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders> {
 
       widget.viewModel.onSettingsChanged(settings);
 
+      /*
       final str =
           '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
       final String contentBase64 =
           base64Encode(const Utf8Encoder().convert(str));
       final url = 'data:text/html;base64,$contentBase64';
-      _controller.loadUrl(url);
+      _webViewController.loadUrl(url);
+       */
     });
+  }
+
+  void _handleTabSelection() {
+    print('### TAB CHANGED ##');
+    //_webViewController.loadUrl(_getUrl(_template));
+  }
+
+  String _getUrl(String template) {
+    final str =
+        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
+    final String contentBase64 =
+    base64Encode(const Utf8Encoder().convert(str));
+    return 'data:text/html;base64,$contentBase64';
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
 
     return SettingsScaffold(
       title: localization.templatesAndReminders,
       onSavePressed: viewModel.onSavePressed,
-      body: Column(
+      appBarBottom: TabBar(
+        key: ValueKey(state.settingsUIState.updatedAt),
+        controller: _controller,
+        isScrollable: false,
+        tabs: [
+          Tab(
+            text: localization.edit,
+          ),
+          Tab(
+            text: localization.preview,
+          ),
+        ],
+      ),
+      body: AppTabForm(
+        tabController: _controller,
+        formKey: _formKey,
+        focusNode: _focusNode,
         children: <Widget>[
-          AppForm(
-            formKey: _formKey,
+          ListView(
             children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  AppDropdownButton(
-                    labelText: localization.template,
-                    value: _template,
-                    showBlank: false,
-                    onChanged: (value) => setState(() {
-                      _template = value;
-                      _loadTemplate(_template);
-                    }),
-                    items: kEmailTemplateTypes
-                        .map((item) => DropdownMenuItem<String>(
-                              child: Text(localization.lookup(item)),
-                              value: item,
-                            ))
-                        .toList(),
-                  ),
-                  DecoratedFormField(
-                    label: localization.subject,
-                    controller: _subjectController,
-                  ),
-                  DecoratedFormField(
-                    label: localization.body,
-                    controller: _bodyController,
-                    maxLines: 8,
-                  ),
-                ],
-              ),
+              FormCard(children: <Widget>[
+                AppDropdownButton(
+                  labelText: localization.template,
+                  value: _template,
+                  showBlank: false,
+                  onChanged: (value) => setState(() {
+                    _template = value;
+                    _loadTemplate(_template);
+                  }),
+                  items: kEmailTemplateTypes
+                      .map((item) => DropdownMenuItem<String>(
+                            child: Text(localization.lookup(item)),
+                            value: item,
+                          ))
+                      .toList(),
+                ),
+                DecoratedFormField(
+                  label: localization.subject,
+                  controller: _subjectController,
+                ),
+                DecoratedFormField(
+                  label: localization.body,
+                  controller: _bodyController,
+                  maxLines: 8,
+                ),
+              ])
             ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: WebView(
-                //initialUrl: url,
-                onWebViewCreated: (WebViewController webViewController) {
-                  _controller = webViewController;
-                },
-                //onPageFinished: (String url) {},
-                //javascriptMode: JavascriptMode.unrestricted,
-              ),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: WebView(
+              initialUrl: _getUrl(_template),
+              onWebViewCreated: (WebViewController webViewController) {
+                _webViewController = webViewController;
+              },
+              //onPageFinished: (String url) {},
+              //javascriptMode: JavascriptMode.unrestricted,
             ),
           ),
         ],
