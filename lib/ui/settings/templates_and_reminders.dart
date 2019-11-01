@@ -32,7 +32,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _template = kEmailTemplateInvoice;
   FocusScopeNode _focusNode;
   TabController _controller;
-  WebViewController _webViewController;
+  //WebViewController _webViewController;
 
   final _debouncer = Debouncer(milliseconds: 500);
 
@@ -228,10 +228,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             child: WebView(
               initialUrl: _getUrl(_template),
               onWebViewCreated: (WebViewController webViewController) {
-                _webViewController = webViewController;
+                //_webViewController = webViewController;
               },
               //onPageFinished: (String url) {},
-              //javascriptMode: JavascriptMode.unrestricted,
+              javascriptMode: JavascriptMode.disabled,
             ),
           ),
         ],
