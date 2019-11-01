@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -223,38 +224,58 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   maxLines: 8,
                 ),
               ]),
-              if ([
-                kEmailTemplateReminder1,
-                kEmailTemplateReminder2,
-                kEmailTemplateReminder3
-              ].contains(_template))
-                FormCard(
-                  children: <Widget>[
-                    BoolDropdownButton(
-                      label: localization.sendEmail,
-                      showBlank: state.settingsUIState.isFiltered,
-                      value: _template == kEmailTemplateReminder1
-                          ? settings.enableReminder1
-                          : _template == kEmailTemplateReminder2
-                              ? settings.enableReminder2
-                              : settings.enableReminder3,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          _template == kEmailTemplateReminder1
-                              ? settings
-                                  .rebuild((b) => b..enableReminder1 = value)
-                              : _template == kEmailTemplateReminder2
-                                  ? settings.rebuild(
-                                      (b) => b..enableReminder2 = value)
-                                  : settings.rebuild(
-                                      (b) => b..enableReminder3 = value)),
-                    ),
-                  ],
+              if (_template == kEmailTemplateReminder1)
+                ReminderSettings(
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder1,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableReminder1 = value)),
                 ),
+              if (_template == kEmailTemplateReminder2)
+                ReminderSettings(
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder2,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableReminder2 = value)),
+                ),
+              if (_template == kEmailTemplateReminder3)
+                ReminderSettings(
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder3,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableReminder3 = value)),
+                )
             ],
           ),
           TemplatePreview(_getUrl(_template)),
         ],
       ),
+    );
+  }
+}
+
+class ReminderSettings extends StatelessWidget {
+  const ReminderSettings({this.viewModel, this.enabled, this.onChanged});
+
+  final TemplatesAndRemindersVM viewModel;
+  final bool enabled;
+  final Function(bool) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final state = viewModel.state;
+
+    return FormCard(
+      children: <Widget>[
+        BoolDropdownButton(
+          label: localization.sendEmail,
+          showBlank: state.settingsUIState.isFiltered,
+          value: enabled,
+          onChanged: onChanged,
+          iconData: FontAwesomeIcons.solidEnvelope,
+        )
+      ],
     );
   }
 }
