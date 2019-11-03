@@ -24,13 +24,13 @@ class GroupEdit extends StatefulWidget {
 
 class _GroupEditState extends State<GroupEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -63,13 +63,15 @@ class _GroupEditState extends State<GroupEdit> {
   }
 
   void _onChanged() {
-    final group = widget.viewModel.group.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (group != widget.viewModel.group) {
-      widget.viewModel.onChanged(group);
-    }
+    _debouncer.run(() {
+      final group = widget.viewModel.group.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (group != widget.viewModel.group) {
+        widget.viewModel.onChanged(group);
+      }
+    });
   }
 
   @override
@@ -102,7 +104,8 @@ class _GroupEditState extends State<GroupEdit> {
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
-              isVisible: !(group.isDeleted ?? false), // TODO remove this
+              isVisible: !(group.isDeleted ?? false),
+              // TODO remove this
               isDirty: group.isNew || group != viewModel.origGroup,
               isSaving: viewModel.isSaving,
               onPressed: () {

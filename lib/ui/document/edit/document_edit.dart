@@ -54,12 +54,14 @@ class _DocumentEditState extends State<DocumentEdit> {
   }
 
   void _onChanged() {
-    final document = widget.viewModel.document.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        );
-    if (document != widget.viewModel.document) {
-      widget.viewModel.onChanged(document);
-    }
+    _debouncer.run(() {
+      final document = widget.viewModel.document.rebuild((b) => b
+          // STARTER: set value - do not remove comment
+          );
+      if (document != widget.viewModel.document) {
+        widget.viewModel.onChanged(document);
+      }
+    });
   }
 
   @override

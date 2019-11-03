@@ -67,14 +67,16 @@ class _UserEditState extends State<UserEdit> {
   }
 
   void _onChanged() {
-    final user = widget.viewModel.user.rebuild((b) => b
-      ..firstName = _firstNameController.text.trim()
-      ..lastName = _lastNameController.text.trim()
-      ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim());
-    if (user != widget.viewModel.user) {
-      widget.viewModel.onChanged(user);
-    }
+    _debouncer.run(() {
+      final user = widget.viewModel.user.rebuild((b) => b
+        ..firstName = _firstNameController.text.trim()
+        ..lastName = _lastNameController.text.trim()
+        ..email = _emailController.text.trim()
+        ..phone = _phoneController.text.trim());
+      if (user != widget.viewModel.user) {
+        widget.viewModel.onChanged(user);
+      }
+    });
   }
 
   @override

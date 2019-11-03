@@ -31,14 +31,9 @@ class InvoiceDesign extends StatefulWidget {
 class _InvoiceDesignState extends State<InvoiceDesign>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   TabController _controller;
   FocusScopeNode _focusNode;
-
-  //final _fontSizeController = TextEditingController();
-
-  List<TextEditingController> _controllers = [];
 
   @override
   void initState() {
@@ -51,37 +46,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
-    _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
     super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _controllers = [
-      //_fontSizeController,
-    ];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    //final settings = widget.viewModel.settings;
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
-  void _onChanged() {
-    /*
-    final settings = widget.viewModel.settings.rebuild((b) => b..
-    if (settings != widget.viewModel.settings) {
-      widget.viewModel.onSettingsChanged(settings);
-    }
-     */
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditContacts extends StatefulWidget {
@@ -157,6 +158,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
   @override
@@ -201,14 +203,16 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   }
 
   void _onChanged() {
-    final contact = widget.contact.rebuild((b) => b
-      ..firstName = _firstNameController.text.trim()
-      ..lastName = _lastNameController.text.trim()
-      ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim());
-    if (contact != widget.contact) {
-      widget.viewModel.onChangedContact(contact, widget.index);
-    }
+    _debouncer.run(() {
+      final contact = widget.contact.rebuild((b) => b
+        ..firstName = _firstNameController.text.trim()
+        ..lastName = _lastNameController.text.trim()
+        ..email = _emailController.text.trim()
+        ..phone = _phoneController.text.trim());
+      if (contact != widget.contact) {
+        widget.viewModel.onChangedContact(contact, widget.index);
+      }
+    });
   }
 
   @override

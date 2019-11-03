@@ -23,7 +23,6 @@ class TaxRateEdit extends StatefulWidget {
 
 class _TaxRateEditState extends State<TaxRateEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   bool autoValidate = false;
 
@@ -31,6 +30,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   final _rateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -62,12 +62,14 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onChanged() {
-    final taxRate = widget.viewModel.taxRate.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..rate = parseDouble(_rateController.text));
-    if (taxRate != widget.viewModel.taxRate) {
-      widget.viewModel.onChanged(taxRate);
-    }
+    _debouncer.run(() {
+      final taxRate = widget.viewModel.taxRate.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..rate = parseDouble(_rateController.text));
+      if (taxRate != widget.viewModel.taxRate) {
+        widget.viewModel.onChanged(taxRate);
+      }
+    });
   }
 
   @override

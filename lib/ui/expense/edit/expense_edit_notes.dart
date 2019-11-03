@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
@@ -21,6 +22,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   final _privateNotesController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -53,13 +55,15 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim());
-    if (expense != viewModel.expense) {
-      viewModel.onChanged(expense);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final expense = viewModel.expense.rebuild((b) => b
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim());
+      if (expense != viewModel.expense) {
+        viewModel.onChanged(expense);
+      }
+    });
   }
 
   @override

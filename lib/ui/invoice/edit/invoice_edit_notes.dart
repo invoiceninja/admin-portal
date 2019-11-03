@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditNotes extends StatefulWidget {
@@ -22,6 +23,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   final _footerController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -58,14 +60,16 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim()
-      ..terms = _termsController.text.trim()
-      ..footer = _footerController.text.trim());
-    if (invoice != widget.viewModel.invoice) {
-      widget.viewModel.onChanged(invoice);
-    }
+    _debouncer.run(() {
+      final invoice = widget.viewModel.invoice.rebuild((b) => b
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim()
+        ..terms = _termsController.text.trim()
+        ..footer = _footerController.text.trim());
+      if (invoice != widget.viewModel.invoice) {
+        widget.viewModel.onChanged(invoice);
+      }
+    });
   }
 
   @override

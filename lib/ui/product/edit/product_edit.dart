@@ -40,6 +40,7 @@ class _ProductEditState extends State<ProductEdit> {
   final _custom2Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -85,17 +86,19 @@ class _ProductEditState extends State<ProductEdit> {
   }
 
   void _onChanged() {
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..productKey = _productKeyController.text.trim()
-      ..notes = _notesController.text.trim()
-      ..price = parseDouble(_priceController.text)
-      ..quantity = parseDouble(_quantityController.text)
-      ..cost = parseDouble(_costController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
-    }
+    _debouncer.run(() {
+      final product = widget.viewModel.product.rebuild((b) => b
+        ..productKey = _productKeyController.text.trim()
+        ..notes = _notesController.text.trim()
+        ..price = parseDouble(_priceController.text)
+        ..quantity = parseDouble(_quantityController.text)
+        ..cost = parseDouble(_costController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (product != widget.viewModel.product) {
+        widget.viewModel.onChanged(product);
+      }
+    });
   }
 
   @override

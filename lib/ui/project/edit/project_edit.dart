@@ -83,16 +83,18 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..budgetedHours = parseDouble(_hoursController.text)
-      ..taskRate = parseDouble(_taskRateController.text)
-      ..privateNotes = _privateNotesController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (project != widget.viewModel.project) {
-      widget.viewModel.onChanged(project);
-    }
+    _debouncer.run(() {
+      final project = widget.viewModel.project.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..budgetedHours = parseDouble(_hoursController.text)
+        ..taskRate = parseDouble(_taskRateController.text)
+        ..privateNotes = _privateNotesController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (project != widget.viewModel.project) {
+        widget.viewModel.onChanged(project);
+      }
+    });
   }
 
   @override

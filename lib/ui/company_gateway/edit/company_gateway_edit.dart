@@ -32,7 +32,6 @@ class CompanyGatewayEdit extends StatefulWidget {
 class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
@@ -322,6 +321,7 @@ class GatewayConfigField extends StatefulWidget {
 class _GatewayConfigFieldState extends State<GatewayConfigField> {
   bool autoValidate = false;
   TextEditingController _textController;
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -347,7 +347,9 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
   }
 
   void _onChanged() {
-    widget.onChanged(_textController.text.trim());
+    _debouncer.run(() {
+      widget.onChanged(_textController.text.trim());
+    });
   }
 
   bool _obscureText(String field) {
@@ -432,6 +434,8 @@ class LimitEditor extends StatefulWidget {
 }
 
 class _LimitEditorState extends State<LimitEditor> {
+  final _debouncer = Debouncer();
+
   bool _enableMin = false;
   bool _enableMax = false;
 
@@ -481,16 +485,19 @@ class _LimitEditorState extends State<LimitEditor> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final companyGateway = viewModel.companyGateway;
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final companyGateway = viewModel.companyGateway;
 
-    final updatedGateway = companyGateway.rebuild((b) => b
-      ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
-      ..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : null);
+      final updatedGateway = companyGateway.rebuild((b) => b
+        ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
+        ..maxLimit =
+            _enableMax ? parseDouble(_maxController.text.trim()) : null);
 
-    if (companyGateway != updatedGateway) {
-      viewModel.onChanged(updatedGateway);
-    }
+      if (companyGateway != updatedGateway) {
+        viewModel.onChanged(updatedGateway);
+      }
+    });
   }
 
   @override
@@ -600,6 +607,7 @@ class _FeesEditorState extends State<FeesEditor> {
   final _capController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -638,22 +646,24 @@ class _FeesEditorState extends State<FeesEditor> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final companyGateway = viewModel.companyGateway;
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final companyGateway = viewModel.companyGateway;
 
-    final amount = parseDouble(_amountController.text.trim());
-    final percent = parseDouble(_percentController.text.trim());
-    final cap = parseDouble(_capController.text.trim());
-    final feesEnabled = amount != 0 || percent != 0;
+      final amount = parseDouble(_amountController.text.trim());
+      final percent = parseDouble(_percentController.text.trim());
+      final cap = parseDouble(_capController.text.trim());
+      final feesEnabled = amount != 0 || percent != 0;
 
-    final updatedGateway = companyGateway.rebuild((b) => b
-      ..feeAmount = feesEnabled ? amount : null
-      ..feePercent = feesEnabled ? percent : null
-      ..feeCap = feesEnabled ? cap : null);
+      final updatedGateway = companyGateway.rebuild((b) => b
+        ..feeAmount = feesEnabled ? amount : null
+        ..feePercent = feesEnabled ? percent : null
+        ..feeCap = feesEnabled ? cap : null);
 
-    if (companyGateway != updatedGateway) {
-      viewModel.onChanged(updatedGateway);
-    }
+      if (companyGateway != updatedGateway) {
+        viewModel.onChanged(updatedGateway);
+      }
+    });
   }
 
   @override

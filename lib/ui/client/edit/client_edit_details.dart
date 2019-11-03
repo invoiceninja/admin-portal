@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
@@ -30,6 +31,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   final List<TextEditingController> _controllers = [];
 
   @override
@@ -73,18 +75,20 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..phone = _phoneController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (client != viewModel.client) {
-      viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final client = viewModel.client.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..phone = _phoneController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (client != viewModel.client) {
+        viewModel.onChanged(client);
+      }
+    });
   }
 
   @override

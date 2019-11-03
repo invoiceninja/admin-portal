@@ -30,14 +30,13 @@ class PaymentEdit extends StatefulWidget {
 
 class _PaymentEditState extends State<PaymentEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   final _amountController = TextEditingController();
   final _transactionReferenceController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
-
+  final _debouncer = Debouncer();
   bool autoValidate = false;
 
   @override
@@ -72,13 +71,15 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onChanged() {
-    final payment = widget.viewModel.payment.rebuild((b) => b
-      ..amount = parseDouble(_amountController.text)
-      ..transactionReference = _transactionReferenceController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim());
-    if (payment != widget.viewModel.payment) {
-      widget.viewModel.onChanged(payment);
-    }
+    _debouncer.run(() {
+      final payment = widget.viewModel.payment.rebuild((b) => b
+        ..amount = parseDouble(_amountController.text)
+        ..transactionReference = _transactionReferenceController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim());
+      if (payment != widget.viewModel.payment) {
+        widget.viewModel.onChanged(payment);
+      }
+    });
   }
 
   @override

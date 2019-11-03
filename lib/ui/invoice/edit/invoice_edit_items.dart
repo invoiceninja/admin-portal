@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -114,6 +115,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   TaxRateEntity _taxRate2;
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -160,25 +162,27 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   void _onChanged() {
-    var invoiceItem = widget.invoiceItem.rebuild((b) => b
-      ..productKey = _productKeyController.text.trim()
-      ..notes = _notesController.text
-      ..cost = parseDouble(_costController.text)
-      ..quantity = parseDouble(_qtyController.text)
-      ..discount = parseDouble(_discountController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
+    _debouncer.run(() {
+      var invoiceItem = widget.invoiceItem.rebuild((b) => b
+        ..productKey = _productKeyController.text.trim()
+        ..notes = _notesController.text
+        ..cost = parseDouble(_costController.text)
+        ..quantity = parseDouble(_qtyController.text)
+        ..discount = parseDouble(_discountController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
 
-    if (_taxRate1 != null) {
-      invoiceItem = invoiceItem.applyTax(_taxRate1);
-    }
-    if (_taxRate2 != null) {
-      invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
-    }
+      if (_taxRate1 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate1);
+      }
+      if (_taxRate2 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+      }
 
-    if (invoiceItem != widget.invoiceItem) {
-      widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
-    }
+      if (invoiceItem != widget.invoiceItem) {
+        widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
+      }
+    });
   }
 
   @override

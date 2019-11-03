@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -27,6 +28,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   final _paymentTermsController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -62,12 +64,14 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) =>
-        b..settings.defaultTaskRate = parseDouble(_taskRateController.text));
-    if (client != viewModel.client) {
-      viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final client = viewModel.client.rebuild((b) =>
+          b..settings.defaultTaskRate = parseDouble(_taskRateController.text));
+      if (client != viewModel.client) {
+        viewModel.onChanged(client);
+      }
+    });
   }
 
   @override

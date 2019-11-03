@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
@@ -28,6 +29,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   final _postalCodeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -66,15 +68,17 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
   }
 
   void _onChanged() {
-    final client = widget.viewModel.client.rebuild((b) => b
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim());
-    if (client != widget.viewModel.client) {
-      widget.viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final client = widget.viewModel.client.rebuild((b) => b
+        ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim());
+      if (client != widget.viewModel.client) {
+        widget.viewModel.onChanged(client);
+      }
+    });
   }
 
   @override

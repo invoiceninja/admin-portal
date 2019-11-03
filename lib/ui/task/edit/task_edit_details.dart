@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
@@ -26,6 +27,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
   @override
@@ -59,13 +61,15 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   }
 
   void _onChanged() {
-    final task = widget.viewModel.task.rebuild((b) => b
-      ..description = _descriptionController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (task != widget.viewModel.task) {
-      widget.viewModel.onChanged(task);
-    }
+    _debouncer.run(() {
+      final task = widget.viewModel.task.rebuild((b) => b
+        ..description = _descriptionController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (task != widget.viewModel.task) {
+        widget.viewModel.onChanged(task);
+      }
+    });
   }
 
   @override

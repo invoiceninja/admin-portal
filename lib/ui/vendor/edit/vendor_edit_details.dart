@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditDetails extends StatefulWidget {
@@ -28,6 +29,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   final List<TextEditingController> _controllers = [];
 
   @override
@@ -71,18 +73,20 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..workPhone = _phoneController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (vendor != viewModel.vendor) {
-      viewModel.onChanged(vendor);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final vendor = viewModel.vendor.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..workPhone = _phoneController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (vendor != viewModel.vendor) {
+        viewModel.onChanged(vendor);
+      }
+    });
   }
 
   @override

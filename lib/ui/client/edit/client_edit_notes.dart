@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -24,6 +25,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   final _privateNotesController = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -56,13 +58,15 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
-    if (client != viewModel.client) {
-      viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final client = viewModel.client.rebuild((b) => b
+        ..publicNotes = _publicNotesController.text
+        ..privateNotes = _privateNotesController.text);
+      if (client != viewModel.client) {
+        viewModel.onChanged(client);
+      }
+    });
   }
 
   @override

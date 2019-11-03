@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
@@ -29,6 +30,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   final _shippingPostalCodeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -67,15 +69,17 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   }
 
   void _onChanged() {
-    final client = widget.viewModel.client.rebuild((b) => b
-      ..shippingAddress1 = _shippingAddress1Controller.text.trim()
-      ..shippingAddress2 = _shippingAddress2Controller.text.trim()
-      ..shippingCity = _shippingCityController.text.trim()
-      ..shippingState = _shippingStateController.text.trim()
-      ..shippingPostalCode = _shippingPostalCodeController.text.trim());
-    if (client != widget.viewModel.client) {
-      widget.viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final client = widget.viewModel.client.rebuild((b) => b
+        ..shippingAddress1 = _shippingAddress1Controller.text.trim()
+        ..shippingAddress2 = _shippingAddress2Controller.text.trim()
+        ..shippingCity = _shippingCityController.text.trim()
+        ..shippingState = _shippingStateController.text.trim()
+        ..shippingPostalCode = _shippingPostalCodeController.text.trim());
+      if (client != widget.viewModel.client) {
+        widget.viewModel.onChanged(client);
+      }
+    });
   }
 
   @override

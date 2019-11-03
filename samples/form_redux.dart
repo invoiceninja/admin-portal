@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 
@@ -193,6 +194,7 @@ class ClientPage extends StatefulWidget {
 
 class _ClientPageState extends State<ClientPage> {
   final _nameController = new TextEditingController();
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -211,11 +213,13 @@ class _ClientPageState extends State<ClientPage> {
   }
 
   void _onChanged() {
-    final name = _nameController.text.trim();
-    final store = StoreProvider.of<AppState>(context);
-    if (name != store.state.client.name) {
-      store.dispatch(UpdateClient(name));
-    }
+    _debouncer.run(() {
+      final name = _nameController.text.trim();
+      final store = StoreProvider.of<AppState>(context);
+      if (name != store.state.client.name) {
+        store.dispatch(UpdateClient(name));
+      }
+    });
   }
 
   @override
@@ -277,6 +281,7 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
   final _emailController = new TextEditingController();
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -294,11 +299,13 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   void _onChanged() {
-    final store = StoreProvider.of<AppState>(context);
-    final email = _emailController.text.trim();
-    if (email != widget.contact.email) {
-      store.dispatch(UpdateContact(email: email, index: widget.index));
-    }
+    _debouncer.run(() {
+      final store = StoreProvider.of<AppState>(context);
+      final email = _emailController.text.trim();
+      if (email != widget.contact.email) {
+        store.dispatch(UpdateContact(email: email, index: widget.index));
+      }
+    });
   }
 
   @override

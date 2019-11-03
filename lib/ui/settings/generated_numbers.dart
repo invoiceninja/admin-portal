@@ -27,7 +27,6 @@ class GeneratedNumbers extends StatefulWidget {
 class _GeneratedNumbersState extends State<GeneratedNumbers>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -37,6 +36,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   final _recurringPrefixController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
@@ -75,12 +75,15 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   }
 
   void _onChanged() {
-    final settings = widget.viewModel.settings.rebuild((b) => b
-      ..recurringInvoiceNumberPrefix = _recurringPrefixController.text.trim());
+    _debouncer.run(() {
+      final settings = widget.viewModel.settings.rebuild((b) => b
+        ..recurringInvoiceNumberPrefix =
+            _recurringPrefixController.text.trim());
 
-    if (settings != widget.viewModel.settings) {
-      widget.viewModel.onSettingsChanged(settings);
-    }
+      if (settings != widget.viewModel.settings) {
+        widget.viewModel.onSettingsChanged(settings);
+      }
+    });
   }
 
   @override
@@ -260,6 +263,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   final _patternController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -290,12 +294,14 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
   }
 
   void _onChanged() {
-    final int counter = parseDouble(_counterController.text.trim()).toInt();
-    final String pattern = _patternController.text.trim();
+    _debouncer.run(() {
+      final int counter = parseDouble(_counterController.text.trim()).toInt();
+      final String pattern = _patternController.text.trim();
 
-    if (counter != widget.counterValue || pattern != widget.patternValue) {
-      widget.onChanged(counter, pattern);
-    }
+      if (counter != widget.counterValue || pattern != widget.patternValue) {
+        widget.onChanged(counter, pattern);
+      }
+    });
   }
 
   @override

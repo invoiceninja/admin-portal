@@ -138,6 +138,7 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
   final _customField4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -174,21 +175,23 @@ class _CustomFieldsSettingsState extends State<CustomFieldsSettings> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final fieldType = widget.fieldType;
-    final company = widget.viewModel.company;
-    final origFields = company.customFields;
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final fieldType = widget.fieldType;
+      final company = widget.viewModel.company;
+      final origFields = company.customFields;
 
-    final updatedFields = origFields.rebuild((b) => b
-      ..addAll({'${fieldType}1': _customField1Controller.text.trim()})
-      ..addAll({'${fieldType}2': _customField2Controller.text.trim()})
-      ..addAll({'${fieldType}3': _customField3Controller.text.trim()})
-      ..addAll({'${fieldType}4': _customField4Controller.text.trim()}));
+      final updatedFields = origFields.rebuild((b) => b
+        ..addAll({'${fieldType}1': _customField1Controller.text.trim()})
+        ..addAll({'${fieldType}2': _customField2Controller.text.trim()})
+        ..addAll({'${fieldType}3': _customField3Controller.text.trim()})
+        ..addAll({'${fieldType}4': _customField4Controller.text.trim()}));
 
-    if (viewModel.company.customFields != updatedFields) {
-      viewModel.onCompanyChanged(
-          company.rebuild((b) => b..customFields.replace(updatedFields)));
-    }
+      if (viewModel.company.customFields != updatedFields) {
+        viewModel.onCompanyChanged(
+            company.rebuild((b) => b..customFields.replace(updatedFields)));
+      }
+    });
   }
 
   @override

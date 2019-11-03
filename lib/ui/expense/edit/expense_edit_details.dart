@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -31,6 +32,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   final _custom2Controller = TextEditingController();
 
   final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -66,14 +68,16 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
-      ..amount = parseDouble(_amountController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (expense != viewModel.expense) {
-      viewModel.onChanged(expense);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final expense = viewModel.expense.rebuild((b) => b
+        ..amount = parseDouble(_amountController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (expense != viewModel.expense) {
+        viewModel.onChanged(expense);
+      }
+    });
   }
 
   @override

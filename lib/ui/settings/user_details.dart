@@ -22,7 +22,6 @@ class UserDetails extends StatefulWidget {
 
 class _UserDetailsState extends State<UserDetails> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   bool autoValidate = false;
 
@@ -32,6 +31,7 @@ class _UserDetailsState extends State<UserDetails> {
   final _emailController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -67,14 +67,16 @@ class _UserDetailsState extends State<UserDetails> {
   }
 
   void _onChanged() {
-    final user = widget.viewModel.user.rebuild((b) => b
-      ..firstName = _firstNameController.text.trim()
-      ..lastName = _lastNameController.text.trim()
-      ..email = _emailController.text.trim()
-      ..firstName = _firstNameController.text.trim());
-    if (user != widget.viewModel.user) {
-      widget.viewModel.onChanged(user);
-    }
+    _debouncer.run(() {
+      final user = widget.viewModel.user.rebuild((b) => b
+        ..firstName = _firstNameController.text.trim()
+        ..lastName = _lastNameController.text.trim()
+        ..email = _emailController.text.trim()
+        ..firstName = _firstNameController.text.trim());
+      if (user != widget.viewModel.user) {
+        widget.viewModel.onChanged(user);
+      }
+    });
   }
 
   @override

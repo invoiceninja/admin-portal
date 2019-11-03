@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
@@ -29,6 +30,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   String emailSubject;
   String emailBody;
 
+  final _debouncer = Debouncer();
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
@@ -59,10 +61,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   }
 
   void _onChanged() {
-    setState(() {
-      emailSubject = _subjectController.text;
-      emailBody = _bodyController.text;
-      updateTemplate();
+    _debouncer.run(() {
+      setState(() {
+        emailSubject = _subjectController.text;
+        emailBody = _bodyController.text;
+        updateTemplate();
+      });
     });
   }
 
