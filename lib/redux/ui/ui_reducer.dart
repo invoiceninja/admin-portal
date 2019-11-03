@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 
@@ -255,5 +256,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return state.rebuild((b) => b
       ..client.replace(action.client)
       ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, FilterSettings>((state, action) {
+    return state.rebuild((b) => b..filter = action.filter);
   }),
 ]);

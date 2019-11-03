@@ -99,3 +99,9 @@ class SaveUserFailure implements StopSaving {
 
   final Object error;
 }
+
+class FilterSettings {
+  FilterSettings(this.filter);
+
+  final String filter;
+}
