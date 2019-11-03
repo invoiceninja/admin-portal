@@ -177,60 +177,60 @@ class SaveTaskFailure implements StopSaving {
 }
 
 class ArchiveTaskRequest implements StartSaving {
-  ArchiveTaskRequest(this.completer, this.taskId);
+  ArchiveTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final String taskId;
+  final List<String> taskIds;
 }
 
 class ArchiveTaskSuccess implements StopSaving, PersistData {
-  ArchiveTaskSuccess(this.task);
+  ArchiveTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class ArchiveTaskFailure implements StopSaving {
-  ArchiveTaskFailure(this.task);
+  ArchiveTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class DeleteTaskRequest implements StartSaving {
-  DeleteTaskRequest(this.completer, this.taskId);
+  DeleteTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final String taskId;
+  final List<String> taskIds;
 }
 
 class DeleteTaskSuccess implements StopSaving, PersistData {
-  DeleteTaskSuccess(this.task);
+  DeleteTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class DeleteTaskFailure implements StopSaving {
-  DeleteTaskFailure(this.task);
+  DeleteTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class RestoreTaskRequest implements StartSaving {
-  RestoreTaskRequest(this.completer, this.taskId);
+  RestoreTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final String taskId;
+  final List<String> taskIds;
 }
 
 class RestoreTaskSuccess implements StopSaving, PersistData {
-  RestoreTaskSuccess(this.task);
+  RestoreTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class RestoreTaskFailure implements StopSaving {
-  RestoreTaskFailure(this.task);
+  RestoreTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class FilterTasks {
@@ -293,6 +293,7 @@ void handleTaskAction(
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
   final task = tasks.first as TaskEntity;
+  final taskIds = tasks.map((task) => task.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -340,15 +341,15 @@ void handleTaskAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter(context, localization.restoredTask), task.id));
+          snackBarCompleter(context, localization.restoredTask), taskIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter(context, localization.archivedTask), task.id));
+          snackBarCompleter(context, localization.archivedTask), taskIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter(context, localization.deletedTask), task.id));
+          snackBarCompleter(context, localization.deletedTask), taskIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {
