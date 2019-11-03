@@ -86,17 +86,21 @@ Middleware<AppState> _viewDocumentList() {
 Middleware<AppState> _archiveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+
     repository
-        .saveData(store.state.credentials, origDocument, EntityAction.archive)
-        .then((DocumentEntity document) {
-      store.dispatch(ArchiveDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.archive)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(ArchiveDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveDocumentFailure(origDocument));
+      final documents = action.documentIds
+          .map((id) => store.state.documentState.map[id])
+          .toList();
+      store.dispatch(ArchiveDocumentFailure(documents));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -109,17 +113,21 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+
     repository
-        .saveData(store.state.credentials, origDocument, EntityAction.delete)
-        .then((DocumentEntity document) {
-      store.dispatch(DeleteDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.delete)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(DeleteDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteDocumentFailure(origDocument));
+      final documents = action.documentIds
+          .map((id) => store.state.documentState.map[id])
+          .toList();
+      store.dispatch(DeleteDocumentFailure(documents));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -132,17 +140,21 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
 Middleware<AppState> _restoreDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+
     repository
-        .saveData(store.state.credentials, origDocument, EntityAction.restore)
-        .then((DocumentEntity document) {
-      store.dispatch(RestoreDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.restore)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(RestoreDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreDocumentFailure(origDocument));
+      final documents = action.documentIds
+          .map((id) => store.state.documentState.map[id])
+          .toList();
+      store.dispatch(RestoreDocumentFailure(documents));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
