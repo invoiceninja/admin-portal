@@ -275,7 +275,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
 class ReminderSettings extends StatefulWidget {
   const ReminderSettings({
-    @required this.key,
+    Key key,
     @required this.viewModel,
     @required this.enabled,
     @required this.schedule,
@@ -283,7 +283,6 @@ class ReminderSettings extends StatefulWidget {
     @required this.numDays,
   }) : super(key: key);
 
-  final Key key;
   final TemplatesAndRemindersVM viewModel;
   final bool enabled;
   final int numDays;
@@ -354,44 +353,34 @@ class _ReminderSettingsState extends State<ReminderSettings> {
           },
           iconData: FontAwesomeIcons.solidEnvelope,
         ),
-        Row(
-          children: <Widget>[
-            Flexible(
-              flex: 1,
-              child: DecoratedFormField(
-                label: localization.days,
-                controller: _daysController,
-              ),
+        DecoratedFormField(
+          label: localization.days,
+          controller: _daysController,
+        ),
+        AppDropdownButton(
+          value: widget.schedule,
+          labelText: localization.schedule,
+          showBlank: state.settingsUIState.isFiltered,
+          onChanged: (value) {
+            _schedule = value;
+            _onChanged();
+          },
+          items: [
+            DropdownMenuItem(
+              child: SizedBox(),
+              value: null,
             ),
-            Flexible(
-              flex: 2,
-              child: AppDropdownButton(
-                value: widget.schedule,
-                labelText: localization.schedule,
-                showBlank: state.settingsUIState.isFiltered,
-                onChanged: (value) {
-                  _schedule = value;
-                  _onChanged();
-                },
-                items: [
-                  DropdownMenuItem(
-                    child: SizedBox(),
-                    value: null,
-                  ),
-                  DropdownMenuItem(
-                    child: Text(localization.daysAfterInvoiceDate),
-                    value: kReminderScheduleAfterInvoiceDate,
-                  ),
-                  DropdownMenuItem(
-                    child: Text(localization.daysBeforeDueDate),
-                    value: kReminderScheduleBeforeDueDate,
-                  ),
-                  DropdownMenuItem(
-                    child: Text(localization.daysAfterDueDate),
-                    value: kReminderScheduleAfterDueDate,
-                  ),
-                ],
-              ),
+            DropdownMenuItem(
+              child: Text(localization.daysAfterInvoiceDate),
+              value: kReminderScheduleAfterInvoiceDate,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.daysBeforeDueDate),
+              value: kReminderScheduleBeforeDueDate,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.daysAfterDueDate),
+              value: kReminderScheduleAfterDueDate,
             ),
           ],
         ),
