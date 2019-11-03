@@ -36,6 +36,8 @@ class TaxRateSettingsScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartTaxRateMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final taxRates = viewModel.taxRateList
             .map<TaxRateEntity>((taxRateId) => viewModel.taxRateMap[taxRateId])

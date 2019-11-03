@@ -36,6 +36,8 @@ class VendorScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.vendorList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartVendorMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final vendors = viewModel.vendorList
             .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])

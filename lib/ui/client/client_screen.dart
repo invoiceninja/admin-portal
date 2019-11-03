@@ -37,6 +37,8 @@ class ClientScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.clientList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartClientMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final clients = viewModel.clientList
             .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])

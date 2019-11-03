@@ -38,6 +38,8 @@ class ExpenseScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.expenseList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartExpenseMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final expenses = viewModel.expenseList
             .map<ExpenseEntity>((expenseId) => viewModel.expenseMap[expenseId])

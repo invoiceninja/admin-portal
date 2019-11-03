@@ -18,6 +18,7 @@ class AppScaffold extends StatelessWidget {
       this.floatingActionButton,
       this.isChecked,
       this.onCheckboxChanged,
+      this.onHamburgerLongPress,
       this.showCheckbox = false,
       this.hideHamburgerButton = false});
 
@@ -29,6 +30,7 @@ class AppScaffold extends StatelessWidget {
   final bool hideHamburgerButton;
   final bool showCheckbox;
   final Function(bool) onCheckboxChanged;
+  final Function() onHamburgerLongPress;
   final bool isChecked;
 
   @override
@@ -43,20 +45,30 @@ class AppScaffold extends StatelessWidget {
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
           appBar: AppBar(
-            automaticallyImplyLeading: isMobile(context),
+            automaticallyImplyLeading: false,
             leading: showCheckbox
                 ? Checkbox(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     onChanged: onCheckboxChanged,
                     activeColor: Theme.of(context).accentColor,
                     value: isChecked)
-                : hideHamburgerButton || isMobile(context)
+                : hideHamburgerButton
                     ? null
-                    : IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () =>
-                            store.dispatch(UpdateSidebar(AppSidebar.menu)),
-                      ),
+                    : Builder(
+                        builder: (context) => GestureDetector(
+                              onLongPress: onHamburgerLongPress,
+                              child: IconButton(
+                                icon: Icon(Icons.menu),
+                                onPressed: () {
+                                  if (isMobile(context)) {
+                                    Scaffold.of(context).openDrawer();
+                                  } else {
+                                    store.dispatch(
+                                        UpdateSidebar(AppSidebar.menu));
+                                  }
+                                },
+                              ),
+                            )),
             title: appBarTitle,
             actions: appBarActions,
           ),
