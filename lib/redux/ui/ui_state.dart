@@ -48,7 +48,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       requireAuthentication: requireAuthentication ?? false,
       emailPayment: false,
       autoStartTasks: false,
-      longPressSelectionIsDefault: true,
+      longPressSelectionIsDefault: longPressSelectionIsDefault ?? false,
       addDocumentsToInvoice: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
