@@ -420,13 +420,11 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               iconData: FontAwesomeIcons.solidEnvelope,
             ),
             DecoratedFormField(
-              enabled: widget.enabled,
               label: localization.days,
               controller: _daysController,
             ),
             AppDropdownButton(
               value: widget.schedule,
-              enabled: widget.enabled,
               labelText: localization.schedule,
               showBlank: state.settingsUIState.isFiltered,
               onChanged: (value) {
