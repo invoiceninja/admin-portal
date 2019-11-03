@@ -60,12 +60,12 @@ class InvoiceRepository {
             data: json.encode([ids]));
         break;
       default:
-      // Might have other actions in the future
+        // Might have other actions in the future
         break;
     }
 
     final InvoiceListResponse invoiceResponse =
-    serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return invoiceResponse.data.toList();
   }

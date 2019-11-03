@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -20,6 +21,7 @@ class DocumentEdit extends StatefulWidget {
 
 class _DocumentEditState extends State<DocumentEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
 

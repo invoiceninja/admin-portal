@@ -103,36 +103,36 @@ class UserView extends StatelessWidget {
                 localization.active,
                 localization.archived),
           ),
-        EntityListTile(
-          bottomPadding: 1,
-          icon: getEntityIcon(EntityType.payment),
-          title: localization.payments,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.payment, true),
-          subtitle: memoizedPaymentStatsForUser(
-              user.id,
-              state.paymentState.map,
-              state.invoiceState.map,
-              localization.active,
-              localization.archived),
-        ),
-        company.isModuleEnabled(EntityType.quote)
-            ? EntityListTile(
-          bottomPadding: 1,
-          icon: getEntityIcon(EntityType.quote),
-          title: localization.quotes,
-          onTap: () =>
-              viewModel.onEntityPressed(context, EntityType.quote),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.quote, true),
-          subtitle: memoizedQuoteStatsForUser(
-              user.id,
-              state.quoteState.map,
-              localization.active,
-              localization.archived),
-        )
-            : Container(),
+          EntityListTile(
+            bottomPadding: 1,
+            icon: getEntityIcon(EntityType.payment),
+            title: localization.payments,
+            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+            onLongPress: () =>
+                viewModel.onEntityPressed(context, EntityType.payment, true),
+            subtitle: memoizedPaymentStatsForUser(
+                user.id,
+                state.paymentState.map,
+                state.invoiceState.map,
+                localization.active,
+                localization.archived),
+          ),
+          company.isModuleEnabled(EntityType.quote)
+              ? EntityListTile(
+                  bottomPadding: 1,
+                  icon: getEntityIcon(EntityType.quote),
+                  title: localization.quotes,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.quote),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.quote, true),
+                  subtitle: memoizedQuoteStatsForUser(
+                      user.id,
+                      state.quoteState.map,
+                      localization.active,
+                      localization.archived),
+                )
+              : Container(),
           /*
         company.isModuleEnabled(EntityType.project)
             ? EntityListTile(

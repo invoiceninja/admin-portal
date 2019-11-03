@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -21,6 +22,7 @@ class DeviceSettings extends StatefulWidget {
 
 class _DeviceSettingsState extends State<DeviceSettings> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   @override
   Widget build(BuildContext context) {

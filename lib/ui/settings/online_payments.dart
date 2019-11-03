@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class OnlinePayments extends StatefulWidget {
@@ -18,8 +19,6 @@ class OnlinePayments extends StatefulWidget {
 
 class _OnlinePaymentsState extends State<OnlinePayments>
     with SingleTickerProviderStateMixin {
-  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   TabController _controller;
 
   bool autoValidate = false;

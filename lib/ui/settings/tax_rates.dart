@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRates extends StatefulWidget {
@@ -19,6 +20,7 @@ class TaxRates extends StatefulWidget {
 class _TaxRatesState extends State<TaxRates>
     with SingleTickerProviderStateMixin {
   //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   TabController _controller;
 

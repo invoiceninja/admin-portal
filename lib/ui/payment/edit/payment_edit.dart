@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -29,6 +30,7 @@ class PaymentEdit extends StatefulWidget {
 
 class _PaymentEditState extends State<PaymentEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   final _amountController = TextEditingController();
   final _transactionReferenceController = TextEditingController();

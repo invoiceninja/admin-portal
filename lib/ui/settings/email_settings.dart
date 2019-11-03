@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EmailSettings extends StatefulWidget {
@@ -25,6 +26,7 @@ class EmailSettings extends StatefulWidget {
 class _EmailSettingsState extends State<EmailSettings>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   TabController _tabController;
   FocusScopeNode _focusNode;

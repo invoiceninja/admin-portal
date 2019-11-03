@@ -217,7 +217,7 @@ class ArchiveQuoteRequest implements StartSaving {
   ArchiveQuoteRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  
+
   final List<String> quoteIds;
 }
 
@@ -237,7 +237,7 @@ class DeleteQuoteRequest implements StartSaving {
   DeleteQuoteRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  
+
   final List<String> quoteIds;
 }
 

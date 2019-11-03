@@ -37,7 +37,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
-
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 

@@ -1026,7 +1026,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
 
-
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')

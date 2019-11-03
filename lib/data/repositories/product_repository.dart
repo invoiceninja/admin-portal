@@ -47,12 +47,12 @@ class ProductRepository {
             data: json.encode([ids]));
         break;
       default:
-      // Might have other actions in the future
+        // Might have other actions in the future
         break;
     }
 
     final ProductListResponse productResponse =
-    serializers.deserializeWith(ProductListResponse.serializer, response);
+        serializers.deserializeWith(ProductListResponse.serializer, response);
 
     return productResponse.data.toList();
   }

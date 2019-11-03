@@ -20,6 +20,7 @@ class StubEdit extends StatefulWidget {
 
 class _StubEditState extends State<StubEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
 

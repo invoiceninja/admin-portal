@@ -52,8 +52,7 @@ class PaymentList extends StatelessWidget {
       children: <Widget>[
         if (filteredEntity != null)
           ListFilterMessage(
-            title:
-            '$filteredMessage: ${filteredEntity.listDisplayName}',
+            title: '$filteredMessage: ${filteredEntity.listDisplayName}',
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

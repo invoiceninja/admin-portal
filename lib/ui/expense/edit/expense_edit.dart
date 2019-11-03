@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -24,6 +25,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   @override
   void initState() {

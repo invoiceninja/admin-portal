@@ -314,7 +314,8 @@ abstract class InvoiceEntity extends Object
     }
 
     if (response == 0) {
-      return (invoiceA.invoiceNumber ?? '').compareTo(invoiceB.invoiceNumber ?? '');
+      return (invoiceA.invoiceNumber ?? '')
+          .compareTo(invoiceB.invoiceNumber ?? '');
     } else {
       return response;
     }

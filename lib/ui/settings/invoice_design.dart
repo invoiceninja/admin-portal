@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -30,6 +31,7 @@ class InvoiceDesign extends StatefulWidget {
 class _InvoiceDesignState extends State<InvoiceDesign>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   TabController _controller;
   FocusScopeNode _focusNode;

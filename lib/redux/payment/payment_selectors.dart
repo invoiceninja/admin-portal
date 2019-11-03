@@ -159,7 +159,7 @@ String paymentStatsForUser(
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
     if (invoiceMap.containsKey(payment.invoiceId))
-      // TODO enable this code
+    // TODO enable this code
     //&& invoiceMap[payment.invoiceId].userId == userId)
     {
       if (payment.isActive) {

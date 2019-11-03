@@ -15432,14 +15432,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get afterDueDate => _localizedValues[localeCode]['after_due_date'];
 
-  String get afterInvoiceDate => _localizedValues[localeCode]['after_invoice_date'];
+  String get afterInvoiceDate =>
+      _localizedValues[localeCode]['after_invoice_date'];
 
   String get schedule => _localizedValues[localeCode]['schedule'];
 
-
   String get lateFeeAmount => _localizedValues[localeCode]['late_fee_amount'];
   String get lateFeePercent => _localizedValues[localeCode]['late_fee_percent'];
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

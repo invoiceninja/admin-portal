@@ -99,9 +99,9 @@ String quoteStatsForClient(
 }
 
 var memoizedQuoteStatsForUser = memo4((String userId,
-    BuiltMap<String, InvoiceEntity> quoteMap,
-    String activeLabel,
-    String archivedLabel) =>
+        BuiltMap<String, InvoiceEntity> quoteMap,
+        String activeLabel,
+        String archivedLabel) =>
     quoteStatsForUser(userId, quoteMap, activeLabel, archivedLabel));
 
 String quoteStatsForUser(

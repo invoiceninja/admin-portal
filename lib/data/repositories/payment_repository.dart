@@ -47,12 +47,12 @@ class PaymentRepository {
             data: json.encode([ids]));
         break;
       default:
-      // Might have other actions in the future
+        // Might have other actions in the future
         break;
     }
 
     final PaymentListResponse paymentResponse =
-    serializers.deserializeWith(PaymentListResponse.serializer, response);
+        serializers.deserializeWith(PaymentListResponse.serializer, response);
 
     return paymentResponse.data.toList();
   }

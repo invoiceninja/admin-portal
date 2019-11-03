@@ -170,4 +170,3 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
     );
   }
 }
-
