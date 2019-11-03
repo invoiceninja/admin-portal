@@ -15,9 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'schedule': 'Schedule',
-      'days_before_due_date': 'days before the due date',
-      'days_after_due_date': 'days after the due date',
-      'days_after_invoice_date': 'days after the invoice date',
+      'before_due_date': 'Before the due date',
+      'after_due_date': 'After the due date',
+      'after_invoice_date': 'After the invoice date',
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
@@ -15426,11 +15426,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get days => _localizedValues[localeCode]['days'];
 
-  String get daysBeforeDueDate => _localizedValues[localeCode]['days_before_due_date'];
+  String get beforeDueDate => _localizedValues[localeCode]['before_due_date'];
 
-  String get daysAfterDueDate => _localizedValues[localeCode]['days_after_due_date'];
+  String get afterDueDate => _localizedValues[localeCode]['after_due_date'];
 
-  String get daysAfterInvoiceDate => _localizedValues[localeCode]['days_after_invoice_date'];
+  String get afterInvoiceDate => _localizedValues[localeCode]['after_invoice_date'];
 
   String get schedule => _localizedValues[localeCode]['schedule'];
 

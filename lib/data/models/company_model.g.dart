@@ -1449,6 +1449,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.scheduleReminder3,
             specifiedType: const FullType(String)));
     }
+    if (object.endlessReminderFrequencyId != null) {
+      result
+        ..add('endless_reminder_frequency_id')
+        ..add(serializers.serialize(object.endlessReminderFrequencyId,
+            specifiedType: const FullType(String)));
+    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -2002,6 +2008,10 @@ class _$SettingsEntitySerializer
           break;
         case 'schedule_reminder3':
           result.scheduleReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'endless_reminder_frequency_id':
+          result.endlessReminderFrequencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_payment_terms':
@@ -3377,6 +3387,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String scheduleReminder3;
   @override
+  final String endlessReminderFrequencyId;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3517,6 +3529,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.scheduleReminder1,
       this.scheduleReminder2,
       this.scheduleReminder3,
+      this.endlessReminderFrequencyId,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3663,6 +3676,7 @@ class _$SettingsEntity extends SettingsEntity {
         scheduleReminder1 == other.scheduleReminder1 &&
         scheduleReminder2 == other.scheduleReminder2 &&
         scheduleReminder3 == other.scheduleReminder3 &&
+        endlessReminderFrequencyId == other.endlessReminderFrequencyId &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3689,22 +3703,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode),
-                                                                                primaryFont.hashCode),
-                                                                            secondaryFont.hashCode),
-                                                                        hidePaidToDate.hashCode),
-                                                                    embedDocuments.hashCode),
-                                                                allPagesHeader.hashCode),
-                                                            allPagesFooter.hashCode),
-                                                        enableReminder1.hashCode),
-                                                    enableReminder2.hashCode),
-                                                enableReminder3.hashCode),
-                                            numDaysReminder1.hashCode),
-                                        numDaysReminder2.hashCode),
-                                    numDaysReminder3.hashCode),
-                                scheduleReminder1.hashCode),
-                            scheduleReminder2.hashCode),
-                        scheduleReminder3.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode),
+                                                                                secondaryFont.hashCode),
+                                                                            hidePaidToDate.hashCode),
+                                                                        embedDocuments.hashCode),
+                                                                    allPagesHeader.hashCode),
+                                                                allPagesFooter.hashCode),
+                                                            enableReminder1.hashCode),
+                                                        enableReminder2.hashCode),
+                                                    enableReminder3.hashCode),
+                                                numDaysReminder1.hashCode),
+                                            numDaysReminder2.hashCode),
+                                        numDaysReminder3.hashCode),
+                                    scheduleReminder1.hashCode),
+                                scheduleReminder2.hashCode),
+                            scheduleReminder3.hashCode),
+                        endlessReminderFrequencyId.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3842,6 +3856,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('scheduleReminder1', scheduleReminder1)
           ..add('scheduleReminder2', scheduleReminder2)
           ..add('scheduleReminder3', scheduleReminder3)
+          ..add('endlessReminderFrequencyId', endlessReminderFrequencyId)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4468,6 +4483,11 @@ class SettingsEntityBuilder
   set scheduleReminder3(String scheduleReminder3) =>
       _$this._scheduleReminder3 = scheduleReminder3;
 
+  String _endlessReminderFrequencyId;
+  String get endlessReminderFrequencyId => _$this._endlessReminderFrequencyId;
+  set endlessReminderFrequencyId(String endlessReminderFrequencyId) =>
+      _$this._endlessReminderFrequencyId = endlessReminderFrequencyId;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4621,6 +4641,7 @@ class SettingsEntityBuilder
       _scheduleReminder1 = _$v.scheduleReminder1;
       _scheduleReminder2 = _$v.scheduleReminder2;
       _scheduleReminder3 = _$v.scheduleReminder3;
+      _endlessReminderFrequencyId = _$v.endlessReminderFrequencyId;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4777,6 +4798,7 @@ class SettingsEntityBuilder
               scheduleReminder1: scheduleReminder1,
               scheduleReminder2: scheduleReminder2,
               scheduleReminder3: scheduleReminder3,
+              endlessReminderFrequencyId: endlessReminderFrequencyId,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

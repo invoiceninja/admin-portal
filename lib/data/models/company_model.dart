@@ -986,7 +986,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'schedule_reminder3')
   String get scheduleReminder3;
 
-
+  @nullable
+  @BuiltValueField(wireName: 'endless_reminder_frequency_id')
+  String get endlessReminderFrequencyId;
 
 
   // TODO remove this field

@@ -263,7 +263,33 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..enableReminder3 = enabled
                         ..numDaysReminder3 = days
                         ..scheduleReminder3 = schedule)),
-                )
+                ),
+              if (_template == kEmailTemplateReminder4)
+                InputDecorator(
+                  decoration: InputDecoration(
+                    labelText: localization.resetCounter,
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                        value: settings.endlessReminderFrequencyId,
+                        isExpanded: true,
+                        isDense: true,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..endlessReminderFrequencyId = value)),
+                        items: kFrequencies
+                            .map((id, frequency) =>
+                                MapEntry<String, DropdownMenuItem<String>>(
+                                    id,
+                                    DropdownMenuItem<String>(
+                                      child:
+                                          Text(localization.lookup(frequency)),
+                                      value: id,
+                                    )))
+                            .values
+                            .toList()),
+                  ),
+                ),
             ],
           ),
           TemplatePreview(_getUrl(_template)),
@@ -322,7 +348,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _daysController.text = widget.numDays.toString();
+    _daysController.text = '${widget.numDays ?? ''}';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -354,11 +380,13 @@ class _ReminderSettingsState extends State<ReminderSettings> {
           iconData: FontAwesomeIcons.solidEnvelope,
         ),
         DecoratedFormField(
+          enabled: widget.enabled,
           label: localization.days,
           controller: _daysController,
         ),
         AppDropdownButton(
           value: widget.schedule,
+          enabled: widget.enabled,
           labelText: localization.schedule,
           showBlank: state.settingsUIState.isFiltered,
           onChanged: (value) {
@@ -371,15 +399,15 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               value: null,
             ),
             DropdownMenuItem(
-              child: Text(localization.daysAfterInvoiceDate),
+              child: Text(localization.afterInvoiceDate),
               value: kReminderScheduleAfterInvoiceDate,
             ),
             DropdownMenuItem(
-              child: Text(localization.daysBeforeDueDate),
+              child: Text(localization.beforeDueDate),
               value: kReminderScheduleBeforeDueDate,
             ),
             DropdownMenuItem(
-              child: Text(localization.daysAfterDueDate),
+              child: Text(localization.afterDueDate),
               value: kReminderScheduleAfterDueDate,
             ),
           ],

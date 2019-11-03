@@ -7,6 +7,7 @@ class AppDropdownButton extends StatelessWidget {
     @required this.onChanged,
     @required this.items,
     @required this.showBlank,
+    this.enabled = true,
   });
 
   final String labelText;
@@ -14,6 +15,7 @@ class AppDropdownButton extends StatelessWidget {
   final Function(String) onChanged;
   final List<DropdownMenuItem<String>> items;
   final bool showBlank;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class AppDropdownButton extends StatelessWidget {
             value: value,
             isExpanded: true,
             isDense: true,
-            onChanged: onChanged,
+            onChanged: enabled ? onChanged : null,
             items: [
               if (showBlank)
                 DropdownMenuItem(
