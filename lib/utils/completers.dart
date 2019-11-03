@@ -80,7 +80,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 
 // https://stackoverflow.com/a/55119208/497368
 class Debouncer {
-  Debouncer({this.milliseconds});
+  Debouncer({this.milliseconds = 500});
 
   final int milliseconds;
   VoidCallback action;

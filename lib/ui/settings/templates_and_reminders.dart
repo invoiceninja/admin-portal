@@ -31,12 +31,12 @@ class TemplatesAndReminders extends StatefulWidget {
 class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _debouncer = Debouncer();
 
   String _template = kEmailTemplateInvoice;
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  final _debouncer = Debouncer(milliseconds: 500);
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
