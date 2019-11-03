@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WorkflowSettings extends StatefulWidget {
@@ -24,7 +23,6 @@ class WorkflowSettings extends StatefulWidget {
 class _WorkflowSettingsState extends State<WorkflowSettings>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   FocusScopeNode _focusNode;
   TabController _controller;

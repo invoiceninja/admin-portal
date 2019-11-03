@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
@@ -28,7 +27,6 @@ class _TaskEditState extends State<TaskEdit>
   TabController _controller;
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   static const kDetailsScreen = 0;
   static const kTimesScreen = 1;

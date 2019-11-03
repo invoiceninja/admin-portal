@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -28,7 +27,6 @@ class LocalizationSettings extends StatefulWidget {
 
 class _LocalizationSettingsState extends State<LocalizationSettings> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   bool autoValidate = false;
 
