@@ -97,7 +97,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 label: localization.currencyFormat,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..showCurrencyCode = value)),
-                showBlank: state.settingsUIState.isFiltered,
                 enabledLabel: '${localization.code}: ' +
                     formatNumber(1000, context,
                         showCurrencyCode: true,
@@ -150,7 +149,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
               BoolDropdownButton(
                 iconData: FontAwesomeIcons.clock,
                 label: localization.militaryTime,
-                showBlank: state.settingsUIState.isFiltered,
                 value: settings.enableMilitaryTime,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableMilitaryTime = value)),

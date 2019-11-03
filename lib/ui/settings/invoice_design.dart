@@ -84,7 +84,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.invoiceDesign,
                   value: settings.defaultInvoiceDesignId,
-                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(settings
                       .rebuild((b) => b..defaultInvoiceDesignId = value)),
                   items: designs
@@ -97,7 +96,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.quoteDesign,
                   value: settings.defaultQuoteDesignId,
-                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..defaultQuoteDesignId = value)),
                   items: designs
@@ -110,7 +108,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
-                  showBlank: state.settingsUIState.isFiltered,
                   onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..pageSize = value)),
                   items: kPageSizes
@@ -124,7 +121,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   labelText: localization.fontSize,
                   value:
                       settings.fontSize == null ? '' : '${settings.fontSize}',
-                  //showBlank: state.settingsUIState.isFiltered,
                   // TODO remove this and 0 from options
                   showBlank: true,
                   onChanged: (value) => viewModel.onSettingsChanged(
@@ -183,7 +179,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     label: localization.allPagesHeader,
                     value: settings.allPagesHeader,
                     iconData: FontAwesomeIcons.fileInvoice,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..allPagesHeader = value)),
                     enabledLabel: localization.allPages,
@@ -193,7 +188,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     label: localization.allPagesFooter,
                     value: settings.allPagesFooter,
                     iconData: FontAwesomeIcons.fileInvoice,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..allPagesFooter = value)),
                     enabledLabel: localization.allPages,
@@ -208,7 +202,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     helpLabel: localization.hidePaidToDateHelp,
                     value: settings.hidePaidToDate,
                     iconData: FontAwesomeIcons.fileInvoiceDollar,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..hidePaidToDate = value)),
                   ),
@@ -217,7 +210,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     helpLabel: localization.invoiceEmbedDocumentsHelp,
                     value: settings.embedDocuments,
                     iconData: FontAwesomeIcons.image,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),

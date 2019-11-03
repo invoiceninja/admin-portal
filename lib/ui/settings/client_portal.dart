@@ -176,21 +176,18 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.clientPortal,
                     value: false,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.cloud,
                     onChanged: (value) => null,
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
                     value: false,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.tachometerAlt,
                     onChanged: (value) => null,
                   ),
                   BoolDropdownButton(
                     label: localization.tasks,
                     value: settings.showTasksInPortal,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: getEntityIcon(EntityType.task),
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..showTasksInPortal = value)),
@@ -207,7 +204,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.enablePortalPassword,
                     helpLabel: localization.enablePortalPasswordHelp,
                     value: settings.enablePortalPassword,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.shieldAlt,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalPassword = value)),
@@ -215,7 +211,6 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.sendPortalPassword,
                     helpLabel: localization.sendPortalPasswordHelp,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.solidEnvelope,
                     value: settings.sendPortalPassword,
                     onChanged: (value) => viewModel.onSettingsChanged(
@@ -229,7 +224,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptInvoiceTerms,
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
                     value: settings.showAcceptInvoiceTerms,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.checkSquare,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptInvoiceTerms = value)),
@@ -238,7 +232,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
                     value: settings.showAcceptQuoteTerms,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.checkSquare,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptQuoteTerms = value)),
@@ -251,7 +244,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.requireInvoiceSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
                     value: settings.requireInvoiceSignature,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileSignature,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireInvoiceSignature = value)),
@@ -260,7 +252,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.requireQuoteSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
                     value: settings.requireQuoteSignature,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileSignature,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireQuoteSignature = value)),
@@ -269,7 +260,6 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,
                     value: settings.signatureOnPdf,
-                    showBlank: state.settingsUIState.isFiltered,
                     iconData: FontAwesomeIcons.fileContract,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..signatureOnPdf = value)),

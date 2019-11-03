@@ -79,7 +79,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoEmailInvoice = value)),
                       iconData: FontAwesomeIcons.solidEnvelope,
-                      showBlank: state.settingsUIState.isFiltered,
                     ),
                     BoolDropdownButton(
                       label: localization.autoArchiveInvoice,
@@ -88,7 +87,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       onChanged: (value) => viewModel.onSettingsChanged(settings
                           .rebuild((b) => b..autoArchiveInvoice = value)),
                       iconData: FontAwesomeIcons.archive,
-                      showBlank: state.settingsUIState.isFiltered,
                     ),
                   ],
                 ),
@@ -106,7 +104,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoConvertQuote = value)),
                       iconData: FontAwesomeIcons.fileInvoice,
-                      showBlank: state.settingsUIState.isFiltered,
                     ),
                     BoolDropdownButton(
                       label: localization.autoArchiveQuote,
@@ -115,7 +112,6 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoArchiveQuote = value)),
                       iconData: FontAwesomeIcons.archive,
-                      showBlank: state.settingsUIState.isFiltered,
                     ),
                   ],
                 ),

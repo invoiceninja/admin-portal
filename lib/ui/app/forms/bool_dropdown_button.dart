@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class BoolDropdownButton extends StatelessWidget {
@@ -6,7 +8,7 @@ class BoolDropdownButton extends StatelessWidget {
     @required this.label,
     @required this.value,
     @required this.onChanged,
-    @required this.showBlank,
+    this.showBlank,
     this.enabledLabel,
     this.helpLabel,
     this.disabledLabel,
@@ -28,7 +30,10 @@ class BoolDropdownButton extends StatelessWidget {
     final trueLabel = enabledLabel ?? localization.enabled;
     final falseLabel = disabledLabel ?? localization.disabled;
 
-    if (!showBlank && enabledLabel == null) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final _showBlank = showBlank ?? state.settingsUIState.isFiltered;
+
+    if (!_showBlank && enabledLabel == null) {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
         child: SwitchListTile(
@@ -44,11 +49,11 @@ class BoolDropdownButton extends StatelessWidget {
 
     return InputDecorator(
         decoration: InputDecoration(
-          border: showBlank ? null : InputBorder.none,
+          border: _showBlank ? null : InputBorder.none,
           labelText: label,
         ),
-        isEmpty: false,
-        child: showBlank
+        isEmpty: '${value ?? ''}'.isEmpty,
+        child: _showBlank
             ? DropdownButtonHideUnderline(
                 child: DropdownButton<bool>(
                   value: value,

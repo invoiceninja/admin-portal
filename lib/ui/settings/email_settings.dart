@@ -149,7 +149,6 @@ class _EmailSettingsState extends State<EmailSettings>
                     helpLabel: localization.enableMarkupHelp,
                     value: settings.enableEmailMarkup,
                     iconData: FontAwesomeIcons.solidEnvelope,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enableEmailMarkup = value)),
                   ),
@@ -175,7 +174,6 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.attachPdf,
                     value: settings.pdfEmailAttachment,
                     iconData: FontAwesomeIcons.fileInvoice,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..pdfEmailAttachment = value)),
                   ),
@@ -183,7 +181,6 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.attachDocuments,
                     value: settings.documentEmailAttachment,
                     iconData: FontAwesomeIcons.fileImage,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..documentEmailAttachment = value)),
                   ),
@@ -191,7 +188,6 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.attachUbl,
                     value: settings.ublEmailAttachment,
                     iconData: FontAwesomeIcons.fileArchive,
-                    showBlank: state.settingsUIState.isFiltered,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..ublEmailAttachment = value)),
                   ),

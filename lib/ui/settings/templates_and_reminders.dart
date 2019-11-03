@@ -287,7 +287,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   children: <Widget>[
                     BoolDropdownButton(
                       label: localization.sendEmail,
-                      showBlank: state.settingsUIState.isFiltered,
                       value: settings.enableReminder4,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..enableReminder4 = value)),
@@ -412,7 +411,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = widget.viewModel.state;
 
     return Column(
       children: <Widget>[
@@ -425,7 +423,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             AppDropdownButton(
               value: widget.schedule,
               labelText: localization.schedule,
-              showBlank: state.settingsUIState.isFiltered,
               onChanged: (value) {
                 _schedule = value;
                 _onChanged();
@@ -447,7 +444,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             ),
             BoolDropdownButton(
               label: localization.sendEmail,
-              showBlank: state.settingsUIState.isFiltered,
               value: widget.enabled,
               onChanged: (value) {
                 _enabled = value;

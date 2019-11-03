@@ -177,11 +177,12 @@ class SettingsList extends StatelessWidget {
           icon: FontAwesomeIcons.link,
         ),
          */
-        SettingsListTile(
-          section: kSettingsUserManagement,
-          viewModel: viewModel,
-          icon: FontAwesomeIcons.users,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsUserManagement,
+            viewModel: viewModel,
+            icon: FontAwesomeIcons.users,
+          ),
       ],
     );
   }
