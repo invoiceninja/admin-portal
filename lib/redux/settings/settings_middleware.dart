@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -98,10 +99,16 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
 Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as UploadLogoRequest;
-
+    final state = store.state;
+    final settingsState = state.uiState.settingsUIState;
+    final entityId = action.type == EntityType.company
+        ? state.selectedCompany.id
+        : action.type == EntityType.group
+            ? settingsState.group.id
+            : settingsState.client.id;
     settingsRepository
-        .uploadLogo(store.state.credentials, store.state.selectedCompany.id,
-            action.path)
+        .uploadLogo(store.state.credentials, entityId,
+            action.path, action.type)
         .then((company) {
       store.dispatch(UploadLogoSuccess(company));
       action.completer.complete();

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -64,10 +65,11 @@ class SaveCompanyFailure implements StopSaving {
 }
 
 class UploadLogoRequest implements StartSaving {
-  UploadLogoRequest({this.completer, this.path});
+  UploadLogoRequest({this.completer, this.path, this.type});
 
   final Completer completer;
   final String path;
+  final EntityType type;
 }
 
 class UploadLogoSuccess implements StopSaving, PersistData, PersistUI {

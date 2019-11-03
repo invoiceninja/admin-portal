@@ -75,9 +75,10 @@ class CompanyDetailsVM {
         }
       },
       onUploadLogo: (context, path) {
+        final type = state.uiState.settingsUIState.entityType;
         final completer = snackBarCompleter(
             context, AppLocalization.of(context).uploadedLogo);
-        store.dispatch(UploadLogoRequest(completer: completer, path: path));
+        store.dispatch(UploadLogoRequest(completer: completer, path: path, type: type));
       },
     );
   }

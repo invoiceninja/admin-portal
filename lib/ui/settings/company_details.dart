@@ -172,7 +172,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
-    final settings = company.settings;
+    final settings = viewModel.settings;
+
+    print('### LOGO: ${settings.companyLogo}');
 
     return SettingsScaffold(
       title: localization.companyDetails,

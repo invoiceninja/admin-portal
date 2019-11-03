@@ -43,9 +43,12 @@ class SettingsRepository {
     return userResponse.data;
   }
 
-  Future<CompanyEntity> uploadLogo(
-      Credentials credentials, String companyId, String path) async {
-    final url = '${credentials.url}/companies/$companyId';
+  Future<CompanyEntity> uploadLogo(Credentials credentials, String entityId,
+      String path, EntityType type) async {
+    final route = type == EntityType.company
+        ? 'companies'
+        : type == EntityType.group ? 'group_settings' : 'clients';
+    final url = '${credentials.url}/$route/$entityId';
 
     final dynamic response = await webClient.post(url, credentials.token,
         data: {'_method': 'PUT'}, filePath: path, fileIndex: 'company_logo');
