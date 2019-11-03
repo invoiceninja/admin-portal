@@ -26,7 +26,10 @@ class SettingsList extends StatelessWidget {
     final showAll = settingsUIState.entityType == EntityType.company;
 
     if (settingsUIState.filter != null)
-      return SettingsSearch(settingsUIState.filter);
+      return SettingsSearch(
+        viewModel: viewModel,
+        filter: settingsUIState.filter,
+      );
 
     final title = (settingsUIState.entityType == EntityType.client)
         ? localization.filteredByClient +
@@ -215,8 +218,9 @@ class SettingsListTile extends StatelessWidget {
 }
 
 class SettingsSearch extends StatelessWidget {
-  const SettingsSearch(this.filter);
+  const SettingsSearch({this.filter, this.viewModel});
 
+  final SettingsListVM viewModel;
   final String filter;
 
   static const map = {
@@ -227,8 +231,6 @@ class SettingsSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    print('## FILTER: $filter');
-
     return ListView(
       children: <Widget>[
         for (var section in map.keys)
@@ -239,6 +241,9 @@ class SettingsSearch extends StatelessWidget {
                 .contains(filter.toLowerCase()))
               ListTile(
                 title: Text(localization.lookup(field)),
+                leading: Icon(getSettingIcon(section)),
+                subtitle: Text(localization.lookup(section)),
+                onTap: () => viewModel.loadSection(context, section),
               ),
       ],
     );
