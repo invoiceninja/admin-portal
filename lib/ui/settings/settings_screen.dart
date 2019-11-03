@@ -27,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
       ),
       appBarActions: <Widget>[
         ListFilterButton(
-          //entityType: EntityType.client,
+          filter: state.settingsUIState.filter,
           onFilterPressed: (String value) {
             //store.dispatch(FilterClients(value));
           },
