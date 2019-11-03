@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -39,6 +40,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _designController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -89,20 +91,22 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice.rebuild((b) => b
-      ..invoiceNumber = widget.viewModel.invoice.isNew
-          ? ''
-          : _invoiceNumberController.text.trim()
-      ..poNumber = _poNumberController.text.trim()
-      ..discount = parseDouble(_discountController.text)
-      ..partial = parseDouble(_partialController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
-      ..customSurcharge2 = parseDouble(_surcharge2Controller.text));
-    if (invoice != widget.viewModel.invoice) {
-      widget.viewModel.onChanged(invoice);
-    }
+    _debouncer.run(() {
+      final invoice = widget.viewModel.invoice.rebuild((b) => b
+        ..invoiceNumber = widget.viewModel.invoice.isNew
+            ? ''
+            : _invoiceNumberController.text.trim()
+        ..poNumber = _poNumberController.text.trim()
+        ..discount = parseDouble(_discountController.text)
+        ..partial = parseDouble(_partialController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
+        ..customSurcharge2 = parseDouble(_surcharge2Controller.text));
+      if (invoice != widget.viewModel.invoice) {
+        widget.viewModel.onChanged(invoice);
+      }
+    });
   }
 
   @override

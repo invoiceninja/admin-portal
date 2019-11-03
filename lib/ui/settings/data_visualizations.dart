@@ -54,15 +54,7 @@ class _DataVisualizationsState extends State<DataVisualizations> {
     super.didChangeDependencies();
   }
 
-  void _onChanged() {
-    /*
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..customValue2 = _custom2Controller.text.trim());
-    if (product != widget.viewModel.product) {
-      widget.viewModel.onChanged(product);
-    }
-    */
-  }
+  void _onChanged() {}
 
   @override
   Widget build(BuildContext context) {

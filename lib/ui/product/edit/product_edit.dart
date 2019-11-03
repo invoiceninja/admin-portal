@@ -27,7 +27,6 @@ class ProductEdit extends StatefulWidget {
 
 class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _debouncer = Debouncer();
 
   bool autoValidate = false;
 

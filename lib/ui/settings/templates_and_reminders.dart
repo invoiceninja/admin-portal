@@ -113,42 +113,42 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _onChanged() {
-    final String body = _bodyController.text.trim();
-    final String subject = _subjectController.text.trim();
-    SettingsEntity settings = widget.viewModel.settings;
+    _debouncer.run(() {
+      final String body = _bodyController.text.trim();
+      final String subject = _subjectController.text.trim();
+      SettingsEntity settings = widget.viewModel.settings;
 
-    if (_template == kEmailTemplateInvoice) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyInvoice = body
-        ..emailSubjectInvoice = subject);
-    } else if (_template == kEmailTemplateQuote) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyQuote = body
-        ..emailSubjectQuote = subject);
-    } else if (_template == kEmailTemplatePayment) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyPayment = body
-        ..emailSubjectPayment = subject);
-    } else if (_template == kEmailTemplateReminder1) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder1 = body
-        ..emailSubjectReminder1 = subject);
-    } else if (_template == kEmailTemplateReminder2) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder2 = body
-        ..emailSubjectReminder2 = subject);
-    } else if (_template == kEmailTemplateReminder3) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder3 = body
-        ..emailSubjectReminder3 = subject);
-    } else if (_template == kEmailTemplateReminder4) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder4 = body
-        ..emailSubjectReminder4 = subject);
-    }
+      if (_template == kEmailTemplateInvoice) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyInvoice = body
+          ..emailSubjectInvoice = subject);
+      } else if (_template == kEmailTemplateQuote) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyQuote = body
+          ..emailSubjectQuote = subject);
+      } else if (_template == kEmailTemplatePayment) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyPayment = body
+          ..emailSubjectPayment = subject);
+      } else if (_template == kEmailTemplateReminder1) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder1 = body
+          ..emailSubjectReminder1 = subject);
+      } else if (_template == kEmailTemplateReminder2) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder2 = body
+          ..emailSubjectReminder2 = subject);
+      } else if (_template == kEmailTemplateReminder3) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder3 = body
+          ..emailSubjectReminder3 = subject);
+      } else if (_template == kEmailTemplateReminder4) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyReminder4 = body
+          ..emailSubjectReminder4 = subject);
+      }
 
-    if (settings != widget.viewModel.settings) {
-      _debouncer.run(() {
+      if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
 
         /*
@@ -159,8 +159,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       final url = 'data:text/html;base64,$contentBase64';
       _webViewController.loadUrl(url);
        */
-      });
-    }
+      }
+    });
   }
 
   void _handleTabSelection() {
@@ -362,6 +362,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   String _schedule;
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -399,11 +400,13 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   }
 
   void _onChanged() {
-    final int days = parseDouble(_daysController.text.trim()).toInt();
-    final feeAmount = parseDouble(_feeAmountController.text.trim());
-    final feePercent = parseDouble(_feePercentController.text.trim());
+    _debouncer.run(() {
+      final int days = parseDouble(_daysController.text.trim()).toInt();
+      final feeAmount = parseDouble(_feeAmountController.text.trim());
+      final feePercent = parseDouble(_feePercentController.text.trim());
 
-    widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
+      widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
+    });
   }
 
   @override
