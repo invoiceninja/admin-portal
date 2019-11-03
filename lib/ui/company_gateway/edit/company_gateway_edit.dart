@@ -606,7 +606,7 @@ class _FeesEditorState extends State<FeesEditor> {
   final _percentController = TextEditingController();
   final _capController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -621,7 +621,7 @@ class _FeesEditorState extends State<FeesEditor> {
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _amountController,
       _percentController,
       _capController,

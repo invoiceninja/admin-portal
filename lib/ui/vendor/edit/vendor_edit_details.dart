@@ -30,11 +30,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   final _custom2Controller = TextEditingController();
 
   final _debouncer = Debouncer();
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _nameController,
       _idNumberController,
       _vatNumberController,

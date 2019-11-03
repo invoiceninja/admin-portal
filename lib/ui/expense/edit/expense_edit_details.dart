@@ -31,12 +31,12 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _amountController,
       _custom1Controller,
       _custom2Controller,

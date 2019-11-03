@@ -24,12 +24,12 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _publicNotesController,
       _privateNotesController,
     ];

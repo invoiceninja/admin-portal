@@ -23,7 +23,7 @@ class ListFilter extends StatefulWidget {
 
 class _ListFilterState extends State<ListFilter> {
   final _filterController = TextEditingController();
-  final _debouncer = Debouncer();
+  final _debouncer = Debouncer(milliseconds: 300);
 
   @override
   void didChangeDependencies() {

@@ -27,13 +27,13 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   final _taskRateController = TextEditingController();
   final _paymentTermsController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
     final localization = AppLocalization.of(context);
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _taskRateController,
       _paymentTermsController,
     ];

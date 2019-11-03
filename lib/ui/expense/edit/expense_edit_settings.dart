@@ -31,12 +31,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   final _transactionReferenceController = TextEditingController();
   final _exchangeRateController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _transactionReferenceController,
       _exchangeRateController,
     ];
