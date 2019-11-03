@@ -110,17 +110,21 @@ Middleware<AppState> _viewTaxRateList() {
 Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaxRateRequest;
-    final origTaxRate = store.state.taxRateState.map[action.taxRateId];
+
     repository
-        .saveData(store.state.credentials, origTaxRate, EntityAction.archive)
-        .then((TaxRateEntity taxRate) {
-      store.dispatch(ArchiveTaxRateSuccess(taxRate));
+        .bulkAction(
+            store.state.credentials, action.taxRateIds, EntityAction.archive)
+        .then((List<TaxRateEntity> taxRates) {
+      store.dispatch(ArchiveTaxRateSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveTaxRateFailure(origTaxRate));
+      final taxRates = action.taxRateIds
+          .map((id) => store.state.taxRateState.map[id])
+          .toList();
+      store.dispatch(ArchiveTaxRateFailure(taxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -133,17 +137,21 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
 Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaxRateRequest;
-    final origTaxRate = store.state.taxRateState.map[action.taxRateId];
+
     repository
-        .saveData(store.state.credentials, origTaxRate, EntityAction.delete)
-        .then((TaxRateEntity taxRate) {
-      store.dispatch(DeleteTaxRateSuccess(taxRate));
+        .bulkAction(
+            store.state.credentials, action.taxRateIds, EntityAction.delete)
+        .then((List<TaxRateEntity> taxRates) {
+      store.dispatch(DeleteTaxRateSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteTaxRateFailure(origTaxRate));
+      final taxRates = action.taxRateIds
+          .map((id) => store.state.taxRateState.map[id])
+          .toList();
+      store.dispatch(DeleteTaxRateFailure(taxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,17 +164,21 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
 Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaxRateRequest;
-    final origTaxRate = store.state.taxRateState.map[action.taxRateId];
+
     repository
-        .saveData(store.state.credentials, origTaxRate, EntityAction.restore)
-        .then((TaxRateEntity taxRate) {
-      store.dispatch(RestoreTaxRateSuccess(taxRate));
+        .bulkAction(
+            store.state.credentials, action.taxRateIds, EntityAction.restore)
+        .then((List<TaxRateEntity> taxRates) {
+      store.dispatch(RestoreTaxRateSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreTaxRateFailure(origTaxRate));
+      final taxRates = action.taxRateIds
+          .map((id) => store.state.taxRateState.map[id])
+          .toList();
+      store.dispatch(RestoreTaxRateFailure(taxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -255,8 +267,8 @@ Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
         action.completer.complete(null);
       }
       /*
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
+      if (state.taxRateState.isStale) {
+        store.dispatch(LoadTaxRates());
       }
       */
     }).catchError((Object error) {
