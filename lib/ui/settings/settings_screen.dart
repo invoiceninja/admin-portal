@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
         key: ValueKey(state.settingsUIState.updatedAt),
         filter: state.settingsUIState.filter,
         onFilterChanged: (value) {
-
+          store.dispatch(FilterSettings(value));
         },
       ),
       appBarActions: <Widget>[

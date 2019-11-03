@@ -21,9 +21,11 @@ class SettingsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
-    final showAll =
-        state.uiState.settingsUIState.entityType == EntityType.company;
     final settingsUIState = state.uiState.settingsUIState;
+    final showAll = settingsUIState.entityType == EntityType.company;
+
+    if (settingsUIState.filter != null)
+      return SettingsSearch(settingsUIState.filter);
 
     final title = (settingsUIState.entityType == EntityType.client)
         ? localization.filteredByClient +
@@ -227,6 +229,37 @@ class SettingsListTile extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class SettingsSearch extends StatelessWidget {
+  const SettingsSearch(this.filter);
+
+  final String filter;
+
+  static const map = {
+    kSettingsCompanyDetails: ['id_number', 'vat_number', 'website'],
+    kSettingsUserDetails: ['first_name', 'last_name', 'email', 'phone'],
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    print('## FILTER: $filter');
+
+    return ListView(
+      children: <Widget>[
+        for (var section in map.keys)
+          for (var field in map[section])
+            if (localization
+                .lookup(field)
+                .toLowerCase()
+                .contains(filter.toLowerCase()))
+              ListTile(
+                title: Text(localization.lookup(field)),
+              ),
+      ],
     );
   }
 }

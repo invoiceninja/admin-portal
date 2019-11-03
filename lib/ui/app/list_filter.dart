@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -22,6 +23,7 @@ class ListFilter extends StatefulWidget {
 
 class _ListFilterState extends State<ListFilter> {
   final _filterController = TextEditingController();
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -72,7 +74,11 @@ class _ListFilterState extends State<ListFilter> {
                       hintText: localization.filter),
                   autofocus: true,
                   autocorrect: false,
-                  onChanged: (value) => widget.onFilterChanged(value),
+                  onChanged: (value) {
+                    _debouncer.run(() {
+                      widget.onFilterChanged(value);
+                    });
+                  },
                   controller: _filterController,
                 ),
               );
