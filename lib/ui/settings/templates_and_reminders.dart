@@ -409,16 +409,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            BoolDropdownButton(
-              label: localization.sendEmail,
-              showBlank: state.settingsUIState.isFiltered,
-              value: widget.enabled,
-              onChanged: (value) {
-                _enabled = value;
-                _onChanged();
-              },
-              iconData: FontAwesomeIcons.solidEnvelope,
-            ),
             DecoratedFormField(
               label: localization.days,
               controller: _daysController,
@@ -433,10 +423,6 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               },
               items: [
                 DropdownMenuItem(
-                  child: SizedBox(),
-                  value: null,
-                ),
-                DropdownMenuItem(
                   child: Text(localization.afterInvoiceDate),
                   value: kReminderScheduleAfterInvoiceDate,
                 ),
@@ -449,6 +435,16 @@ class _ReminderSettingsState extends State<ReminderSettings> {
                   value: kReminderScheduleAfterDueDate,
                 ),
               ],
+            ),
+            BoolDropdownButton(
+              label: localization.sendEmail,
+              showBlank: state.settingsUIState.isFiltered,
+              value: widget.enabled,
+              onChanged: (value) {
+                _enabled = value;
+                _onChanged();
+              },
+              iconData: FontAwesomeIcons.solidEnvelope,
             ),
           ],
         ),
