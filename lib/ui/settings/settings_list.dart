@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -58,49 +59,41 @@ class SettingsList extends StatelessWidget {
         SettingsListTile(
           section: kSettingsCompanyDetails,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.building,
         ),
         if (showAll)
           SettingsListTile(
             section: kSettingsUserDetails,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.userAlt,
           ),
         SettingsListTile(
           section: kSettingsLocalization,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.globe,
         ),
         if (showAll)
           SettingsListTile(
             section: kSettingsOnlinePayments,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.creditCard,
           ),
         if (showAll)
           SettingsListTile(
             section: kSettingsTaxRates,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.percent,
           ),
         if (showAll)
           SettingsListTile(
             section: kSettingsProducts,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.cube,
           ),
         /*
         if (showAll)
           SettingsListTile(
             section: kSettingsNotifications,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.bell,
           ),
         if (showAll)
           SettingsListTile(
             section: kSettingsImportExport,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.fileExport,
           ),
          */
         if (showAll)
@@ -122,68 +115,56 @@ class SettingsList extends StatelessWidget {
         SettingsListTile(
           section: kSettingsGroupSettings,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.layerGroup,
         ),
         SettingsListTile(
           section: kSettingsGeneratedNumbers,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.idBadge,
         ),
         SettingsListTile(
           section: kSettingsCustomFields,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.heading,
         ),
         SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.paintBrush,
         ),
         SettingsListTile(
           section: kSettingsWorkflowSettings,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.codeBranch,
         ),
         SettingsListTile(
           section: kSettingsClientPortal,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.cloud,
         ),
         /*
         if (showAll)
           SettingsListTile(
             section: kSettingsBuyNowButtons,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.link,
           ),
          */
         SettingsListTile(
           section: kSettingsEmailSettings,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.solidEnvelope,
         ),
         SettingsListTile(
           section: kSettingsTemplatesAndReminders,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.file,
         ),
         /*
         SettingsListTile(
           section: kSettingsCreditCardsAndBanks,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.link,
         ),
         SettingsListTile(
           section: kSettingsDataVisualizations,
           viewModel: viewModel,
-          icon: FontAwesomeIcons.link,
         ),
          */
         if (showAll)
           SettingsListTile(
             section: kSettingsUserManagement,
             viewModel: viewModel,
-            icon: FontAwesomeIcons.users,
           ),
       ],
     );
@@ -211,7 +192,7 @@ class SettingsListTile extends StatelessWidget {
       child: ListTile(
         leading: Padding(
           padding: const EdgeInsets.only(left: 6, top: 2),
-          child: Icon(icon, size: 20),
+          child: Icon(icon ?? getSettingIcon(section), size: 20),
         ),
         title: Text(localization.lookup(section)),
         onTap: () {

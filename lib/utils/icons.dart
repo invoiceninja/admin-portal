@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
@@ -92,6 +93,53 @@ IconData getFileTypeIcon(String type) {
     case 'ppt':
     case 'pptt':
       return FontAwesomeIcons.solidFilePowerpoint;
+    default:
+      return null;
+  }
+}
+
+IconData getSettingIcon(String section) {
+  switch (section) {
+    case kSettingsCompanyDetails:
+      return FontAwesomeIcons.building;
+    case kSettingsUserDetails:
+      return FontAwesomeIcons.userAlt;
+    case kSettingsLocalization:
+      return FontAwesomeIcons.globe;
+    case kSettingsOnlinePayments:
+      return FontAwesomeIcons.creditCard;
+    case kSettingsTaxRates:
+      return FontAwesomeIcons.percent;
+    case kSettingsProducts:
+      return FontAwesomeIcons.cube;
+    case kSettingsNotifications:
+      return FontAwesomeIcons.bell;
+    case kSettingsImportExport:
+      return FontAwesomeIcons.fileExport;
+    case kSettingsGroupSettings:
+      return FontAwesomeIcons.layerGroup;
+    case kSettingsGeneratedNumbers:
+      return FontAwesomeIcons.idBadge;
+    case kSettingsCustomFields:
+      return FontAwesomeIcons.heading;
+    case kSettingsInvoiceDesign:
+      return FontAwesomeIcons.paintBrush;
+    case kSettingsWorkflowSettings:
+      return FontAwesomeIcons.codeBranch;
+    case kSettingsClientPortal:
+      return FontAwesomeIcons.cloud;
+    case kSettingsBuyNowButtons:
+      return FontAwesomeIcons.link;
+    case kSettingsEmailSettings:
+      return FontAwesomeIcons.solidEnvelope;
+    case kSettingsTemplatesAndReminders:
+      return FontAwesomeIcons.file;
+    case kSettingsCreditCardsAndBanks:
+      return FontAwesomeIcons.link;
+    case kSettingsDataVisualizations:
+      return FontAwesomeIcons.link;
+    case kSettingsUserManagement:
+      return FontAwesomeIcons.users;
     default:
       return null;
   }
