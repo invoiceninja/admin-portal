@@ -1461,6 +1461,42 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.endlessReminderFrequencyId,
             specifiedType: const FullType(String)));
     }
+    if (object.lateFeeAmount1 != null) {
+      result
+        ..add('late_fee_amount1')
+        ..add(serializers.serialize(object.lateFeeAmount1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.lateFeeAmount2 != null) {
+      result
+        ..add('late_fee_amount2')
+        ..add(serializers.serialize(object.lateFeeAmount2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.lateFeeAmount3 != null) {
+      result
+        ..add('late_fee_amount3')
+        ..add(serializers.serialize(object.lateFeeAmount3,
+            specifiedType: const FullType(double)));
+    }
+    if (object.lateFeePercent1 != null) {
+      result
+        ..add('late_fee_percent1')
+        ..add(serializers.serialize(object.lateFeePercent1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.lateFeePercent2 != null) {
+      result
+        ..add('late_fee_percent2')
+        ..add(serializers.serialize(object.lateFeePercent2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.lateFeePercent3 != null) {
+      result
+        ..add('late_fee_percent3')
+        ..add(serializers.serialize(object.lateFeePercent3,
+            specifiedType: const FullType(double)));
+    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -2023,6 +2059,30 @@ class _$SettingsEntitySerializer
         case 'endless_reminder_frequency_id':
           result.endlessReminderFrequencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'late_fee_amount1':
+          result.lateFeeAmount1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'late_fee_amount2':
+          result.lateFeeAmount2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'late_fee_amount3':
+          result.lateFeeAmount3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'late_fee_percent1':
+          result.lateFeePercent1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'late_fee_percent2':
+          result.lateFeePercent2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'late_fee_percent3':
+          result.lateFeePercent3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
@@ -3401,6 +3461,18 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String endlessReminderFrequencyId;
   @override
+  final double lateFeeAmount1;
+  @override
+  final double lateFeeAmount2;
+  @override
+  final double lateFeeAmount3;
+  @override
+  final double lateFeePercent1;
+  @override
+  final double lateFeePercent2;
+  @override
+  final double lateFeePercent3;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3543,6 +3615,12 @@ class _$SettingsEntity extends SettingsEntity {
       this.scheduleReminder2,
       this.scheduleReminder3,
       this.endlessReminderFrequencyId,
+      this.lateFeeAmount1,
+      this.lateFeeAmount2,
+      this.lateFeeAmount3,
+      this.lateFeePercent1,
+      this.lateFeePercent2,
+      this.lateFeePercent3,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3691,6 +3769,12 @@ class _$SettingsEntity extends SettingsEntity {
         scheduleReminder2 == other.scheduleReminder2 &&
         scheduleReminder3 == other.scheduleReminder3 &&
         endlessReminderFrequencyId == other.endlessReminderFrequencyId &&
+        lateFeeAmount1 == other.lateFeeAmount1 &&
+        lateFeeAmount2 == other.lateFeeAmount2 &&
+        lateFeeAmount3 == other.lateFeeAmount3 &&
+        lateFeePercent1 == other.lateFeePercent1 &&
+        lateFeePercent2 == other.lateFeePercent2 &&
+        lateFeePercent3 == other.lateFeePercent3 &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3717,22 +3801,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode),
-                                                                                hidePaidToDate.hashCode),
-                                                                            embedDocuments.hashCode),
-                                                                        allPagesHeader.hashCode),
-                                                                    allPagesFooter.hashCode),
-                                                                enableReminder1.hashCode),
-                                                            enableReminder2.hashCode),
-                                                        enableReminder3.hashCode),
-                                                    enableReminder4.hashCode),
-                                                numDaysReminder1.hashCode),
-                                            numDaysReminder2.hashCode),
-                                        numDaysReminder3.hashCode),
-                                    scheduleReminder1.hashCode),
-                                scheduleReminder2.hashCode),
-                            scheduleReminder3.hashCode),
-                        endlessReminderFrequencyId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode),
+                                                                                enableReminder3.hashCode),
+                                                                            enableReminder4.hashCode),
+                                                                        numDaysReminder1.hashCode),
+                                                                    numDaysReminder2.hashCode),
+                                                                numDaysReminder3.hashCode),
+                                                            scheduleReminder1.hashCode),
+                                                        scheduleReminder2.hashCode),
+                                                    scheduleReminder3.hashCode),
+                                                endlessReminderFrequencyId.hashCode),
+                                            lateFeeAmount1.hashCode),
+                                        lateFeeAmount2.hashCode),
+                                    lateFeeAmount3.hashCode),
+                                lateFeePercent1.hashCode),
+                            lateFeePercent2.hashCode),
+                        lateFeePercent3.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3872,6 +3956,12 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('scheduleReminder2', scheduleReminder2)
           ..add('scheduleReminder3', scheduleReminder3)
           ..add('endlessReminderFrequencyId', endlessReminderFrequencyId)
+          ..add('lateFeeAmount1', lateFeeAmount1)
+          ..add('lateFeeAmount2', lateFeeAmount2)
+          ..add('lateFeeAmount3', lateFeeAmount3)
+          ..add('lateFeePercent1', lateFeePercent1)
+          ..add('lateFeePercent2', lateFeePercent2)
+          ..add('lateFeePercent3', lateFeePercent3)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4508,6 +4598,36 @@ class SettingsEntityBuilder
   set endlessReminderFrequencyId(String endlessReminderFrequencyId) =>
       _$this._endlessReminderFrequencyId = endlessReminderFrequencyId;
 
+  double _lateFeeAmount1;
+  double get lateFeeAmount1 => _$this._lateFeeAmount1;
+  set lateFeeAmount1(double lateFeeAmount1) =>
+      _$this._lateFeeAmount1 = lateFeeAmount1;
+
+  double _lateFeeAmount2;
+  double get lateFeeAmount2 => _$this._lateFeeAmount2;
+  set lateFeeAmount2(double lateFeeAmount2) =>
+      _$this._lateFeeAmount2 = lateFeeAmount2;
+
+  double _lateFeeAmount3;
+  double get lateFeeAmount3 => _$this._lateFeeAmount3;
+  set lateFeeAmount3(double lateFeeAmount3) =>
+      _$this._lateFeeAmount3 = lateFeeAmount3;
+
+  double _lateFeePercent1;
+  double get lateFeePercent1 => _$this._lateFeePercent1;
+  set lateFeePercent1(double lateFeePercent1) =>
+      _$this._lateFeePercent1 = lateFeePercent1;
+
+  double _lateFeePercent2;
+  double get lateFeePercent2 => _$this._lateFeePercent2;
+  set lateFeePercent2(double lateFeePercent2) =>
+      _$this._lateFeePercent2 = lateFeePercent2;
+
+  double _lateFeePercent3;
+  double get lateFeePercent3 => _$this._lateFeePercent3;
+  set lateFeePercent3(double lateFeePercent3) =>
+      _$this._lateFeePercent3 = lateFeePercent3;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4663,6 +4783,12 @@ class SettingsEntityBuilder
       _scheduleReminder2 = _$v.scheduleReminder2;
       _scheduleReminder3 = _$v.scheduleReminder3;
       _endlessReminderFrequencyId = _$v.endlessReminderFrequencyId;
+      _lateFeeAmount1 = _$v.lateFeeAmount1;
+      _lateFeeAmount2 = _$v.lateFeeAmount2;
+      _lateFeeAmount3 = _$v.lateFeeAmount3;
+      _lateFeePercent1 = _$v.lateFeePercent1;
+      _lateFeePercent2 = _$v.lateFeePercent2;
+      _lateFeePercent3 = _$v.lateFeePercent3;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4821,6 +4947,12 @@ class SettingsEntityBuilder
               scheduleReminder2: scheduleReminder2,
               scheduleReminder3: scheduleReminder3,
               endlessReminderFrequencyId: endlessReminderFrequencyId,
+              lateFeeAmount1: lateFeeAmount1,
+              lateFeeAmount2: lateFeeAmount2,
+              lateFeeAmount3: lateFeeAmount3,
+              lateFeePercent1: lateFeePercent1,
+              lateFeePercent2: lateFeePercent2,
+              lateFeePercent3: lateFeePercent3,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

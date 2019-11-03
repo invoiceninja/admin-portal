@@ -994,6 +994,30 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'endless_reminder_frequency_id')
   String get endlessReminderFrequencyId;
 
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_amount1')
+  double get lateFeeAmount1;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_amount2')
+  double get lateFeeAmount2;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_amount3')
+  double get lateFeeAmount3;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_percent1')
+  double get lateFeePercent1;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_percent2')
+  double get lateFeePercent2;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_percent3')
+  double get lateFeePercent3;
+
 
   // TODO remove this field
   @nullable

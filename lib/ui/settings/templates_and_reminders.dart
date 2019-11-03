@@ -232,11 +232,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   enabled: settings.enableReminder1,
                   numDays: settings.numDaysReminder1,
                   schedule: settings.scheduleReminder1,
-                  onChanged: (enabled, days, schedule) =>
+                  feeAmount: settings.lateFeeAmount1,
+                  feePercent: settings.lateFeePercent1,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder1 = enabled
                         ..numDaysReminder1 = days
-                        ..scheduleReminder1 = schedule)),
+                        ..scheduleReminder1 = schedule
+                        ..lateFeeAmount1 = feeAmount
+                        ..lateFeePercent1 = feePercent)),
                 ),
               if (_template == kEmailTemplateReminder2)
                 ReminderSettings(
@@ -245,11 +249,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   enabled: settings.enableReminder2,
                   numDays: settings.numDaysReminder2,
                   schedule: settings.scheduleReminder2,
-                  onChanged: (enabled, days, schedule) =>
+                  feeAmount: settings.lateFeeAmount2,
+                  feePercent: settings.lateFeePercent2,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder2 = enabled
                         ..numDaysReminder2 = days
-                        ..scheduleReminder2 = schedule)),
+                        ..scheduleReminder2 = schedule
+                        ..lateFeeAmount2 = feeAmount
+                        ..lateFeePercent2 = feePercent)),
                 ),
               if (_template == kEmailTemplateReminder3)
                 ReminderSettings(
@@ -258,11 +266,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   enabled: settings.enableReminder3,
                   numDays: settings.numDaysReminder3,
                   schedule: settings.scheduleReminder3,
-                  onChanged: (enabled, days, schedule) =>
+                  feeAmount: settings.lateFeeAmount3,
+                  feePercent: settings.lateFeePercent3,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..enableReminder3 = enabled
                         ..numDaysReminder3 = days
-                        ..scheduleReminder3 = schedule)),
+                        ..scheduleReminder3 = schedule
+                        ..lateFeeAmount3 = feeAmount
+                        ..lateFeePercent3 = feePercent)),
                 ),
               if (_template == kEmailTemplateReminder4)
                 FormCard(
@@ -319,13 +331,17 @@ class ReminderSettings extends StatefulWidget {
     @required this.schedule,
     @required this.onChanged,
     @required this.numDays,
+    @required this.feeAmount,
+    @required this.feePercent,
   }) : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
   final bool enabled;
   final int numDays;
+  final double feeAmount;
+  final double feePercent;
   final String schedule;
-  final Function(bool, int, String) onChanged;
+  final Function(bool, int, String, double, double) onChanged;
 
   @override
   _ReminderSettingsState createState() => _ReminderSettingsState();
@@ -333,6 +349,8 @@ class ReminderSettings extends StatefulWidget {
 
 class _ReminderSettingsState extends State<ReminderSettings> {
   final _daysController = TextEditingController();
+  final _feeAmountController = TextEditingController();
+  final _feePercentController = TextEditingController();
 
   bool _enabled;
   String _schedule;
@@ -355,12 +373,18 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
     _controllers = [
       _daysController,
+      _feeAmountController,
+      _feePercentController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _daysController.text = '${widget.numDays ?? ''}';
+    _feeAmountController.text = formatNumber(widget.feeAmount, context,
+        formatNumberType: FormatNumberType.input);
+    _feePercentController.text = formatNumber(widget.feePercent, context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -370,8 +394,10 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
   void _onChanged() {
     final int days = parseDouble(_daysController.text.trim()).toInt();
+    final feeAmount = parseDouble(_feeAmountController.text.trim());
+    final feePercent = parseDouble(_feePercentController.text.trim());
 
-    widget.onChanged(_enabled, days, _schedule);
+    widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
   }
 
   @override
@@ -379,48 +405,66 @@ class _ReminderSettingsState extends State<ReminderSettings> {
     final localization = AppLocalization.of(context);
     final state = widget.viewModel.state;
 
-    return FormCard(
+    return Column(
       children: <Widget>[
-        BoolDropdownButton(
-          label: localization.sendEmail,
-          showBlank: state.settingsUIState.isFiltered,
-          value: widget.enabled,
-          onChanged: (value) {
-            _enabled = value;
-            _onChanged();
-          },
-          iconData: FontAwesomeIcons.solidEnvelope,
+        FormCard(
+          children: <Widget>[
+            BoolDropdownButton(
+              label: localization.sendEmail,
+              showBlank: state.settingsUIState.isFiltered,
+              value: widget.enabled,
+              onChanged: (value) {
+                _enabled = value;
+                _onChanged();
+              },
+              iconData: FontAwesomeIcons.solidEnvelope,
+            ),
+            DecoratedFormField(
+              enabled: widget.enabled,
+              label: localization.days,
+              controller: _daysController,
+            ),
+            AppDropdownButton(
+              value: widget.schedule,
+              enabled: widget.enabled,
+              labelText: localization.schedule,
+              showBlank: state.settingsUIState.isFiltered,
+              onChanged: (value) {
+                _schedule = value;
+                _onChanged();
+              },
+              items: [
+                DropdownMenuItem(
+                  child: SizedBox(),
+                  value: null,
+                ),
+                DropdownMenuItem(
+                  child: Text(localization.afterInvoiceDate),
+                  value: kReminderScheduleAfterInvoiceDate,
+                ),
+                DropdownMenuItem(
+                  child: Text(localization.beforeDueDate),
+                  value: kReminderScheduleBeforeDueDate,
+                ),
+                DropdownMenuItem(
+                  child: Text(localization.afterDueDate),
+                  value: kReminderScheduleAfterDueDate,
+                ),
+              ],
+            ),
+          ],
         ),
-        DecoratedFormField(
-          enabled: widget.enabled,
-          label: localization.days,
-          controller: _daysController,
-        ),
-        AppDropdownButton(
-          value: widget.schedule,
-          enabled: widget.enabled,
-          labelText: localization.schedule,
-          showBlank: state.settingsUIState.isFiltered,
-          onChanged: (value) {
-            _schedule = value;
-            _onChanged();
-          },
-          items: [
-            DropdownMenuItem(
-              child: SizedBox(),
-              value: null,
+        FormCard(
+          children: <Widget>[
+            DecoratedFormField(
+              label: localization.lateFeeAmount,
+              controller: _feeAmountController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
-            DropdownMenuItem(
-              child: Text(localization.afterInvoiceDate),
-              value: kReminderScheduleAfterInvoiceDate,
-            ),
-            DropdownMenuItem(
-              child: Text(localization.beforeDueDate),
-              value: kReminderScheduleBeforeDueDate,
-            ),
-            DropdownMenuItem(
-              child: Text(localization.afterDueDate),
-              value: kReminderScheduleAfterDueDate,
+            DecoratedFormField(
+              label: localization.lateFeePercent,
+              controller: _feePercentController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
