@@ -104,6 +104,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     } else if (type == kEmailTemplateReminder3) {
       subject = settings.emailSubjectReminder3;
       body = settings.emailBodyReminder3;
+    } else if (type == kEmailTemplateReminder4) {
+      subject = settings.emailSubjectReminder4;
+      body = settings.emailBodyReminder4;
     }
 
     _bodyController.text = body;
@@ -139,6 +142,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       settings = settings.rebuild((b) => b
         ..emailBodyReminder3 = body
         ..emailSubjectReminder3 = subject);
+    } else if (_template == kEmailTemplateReminder4) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyReminder4 = body
+        ..emailSubjectReminder4 = subject);
     }
 
     if (settings != widget.viewModel.settings) {

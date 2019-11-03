@@ -1018,6 +1018,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'late_fee_percent3')
   double get lateFeePercent3;
 
+  @nullable
+  @BuiltValueField(wireName: 'email_subject_reminder4')
+  String get emailSubjectReminder4;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_reminder4')
+  String get emailBodyReminder4;
+
 
   // TODO remove this field
   @nullable
