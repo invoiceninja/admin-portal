@@ -174,8 +174,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    print('### LOGO: ${settings.companyLogo}');
-
     return SettingsScaffold(
       title: localization.companyDetails,
       onSavePressed: viewModel.onSavePressed,
@@ -317,8 +315,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
             padding: const EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
-                if (settings.companyLogo != null &&
-                    settings.companyLogo.isNotEmpty)
+                if ('${settings.companyLogo ?? ''}'.isNotEmpty)
                   Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: CachedImage(
@@ -328,19 +325,39 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       )),
                 Builder(
                   builder: (context) {
-                    return ElevatedButton(
-                      width: double.infinity,
-                      label: localization.uploadLogo,
-                      icon: Icons.cloud_upload,
-                      onPressed: () async {
-                        final image = await ImagePicker.pickImage(
-                            source: kReleaseMode
-                                ? ImageSource.gallery
-                                : ImageSource.camera);
-                        if (image != null) {
-                          viewModel.onUploadLogo(context, image.path);
-                        }
-                      },
+                    return Row(
+                      children: <Widget>[
+                        if ('${settings.companyLogo ?? ''}'.isNotEmpty) ...[
+                          Expanded(
+                            child: ElevatedButton(
+                              width: double.infinity,
+                              color: Colors.redAccent,
+                              label: localization.delete,
+                              icon: Icons.delete,
+                              onPressed: () {
+                                viewModel.onUploadLogo(context, null);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                        ],
+                        Expanded(
+                          child: ElevatedButton(
+                            width: double.infinity,
+                            label: localization.uploadLogo,
+                            icon: Icons.cloud_upload,
+                            onPressed: () async {
+                              final image = await ImagePicker.pickImage(
+                                  source: kReleaseMode
+                                      ? ImageSource.gallery
+                                      : ImageSource.camera);
+                              if (image != null) {
+                                viewModel.onUploadLogo(context, image.path);
+                              }
+                            },
+                          ),
+                        )
+                      ],
                     );
                   },
                 )
