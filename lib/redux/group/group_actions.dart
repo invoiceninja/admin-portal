@@ -147,60 +147,60 @@ class SaveGroupFailure implements StopSaving {
 }
 
 class ArchiveGroupRequest implements StartSaving {
-  ArchiveGroupRequest(this.completer, this.groupId);
+  ArchiveGroupRequest(this.completer, this.groupIds);
 
   final Completer completer;
-  final String groupId;
+  final List<String> groupIds;
 }
 
 class ArchiveGroupSuccess implements StopSaving, PersistData {
-  ArchiveGroupSuccess(this.group);
+  ArchiveGroupSuccess(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class ArchiveGroupFailure implements StopSaving {
-  ArchiveGroupFailure(this.group);
+  ArchiveGroupFailure(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class DeleteGroupRequest implements StartSaving {
-  DeleteGroupRequest(this.completer, this.groupId);
+  DeleteGroupRequest(this.completer, this.groupIds);
 
   final Completer completer;
-  final String groupId;
+  final List<String> groupIds;
 }
 
 class DeleteGroupSuccess implements StopSaving, PersistData {
-  DeleteGroupSuccess(this.group);
+  DeleteGroupSuccess(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class DeleteGroupFailure implements StopSaving {
-  DeleteGroupFailure(this.group);
+  DeleteGroupFailure(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class RestoreGroupRequest implements StartSaving {
-  RestoreGroupRequest(this.completer, this.groupId);
+  RestoreGroupRequest(this.completer, this.groupIds);
 
   final Completer completer;
-  final String groupId;
+  final List<String> groupIds;
 }
 
 class RestoreGroupSuccess implements StopSaving, PersistData {
-  RestoreGroupSuccess(this.group);
+  RestoreGroupSuccess(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class RestoreGroupFailure implements StopSaving {
-  RestoreGroupFailure(this.group);
+  RestoreGroupFailure(this.groups);
 
-  final GroupEntity group;
+  final List<GroupEntity> groups;
 }
 
 class FilterGroups {
@@ -245,6 +245,7 @@ void handleGroupAction(
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final group = groups[0];
+  final groupIds = groups.map((group) => group.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -261,15 +262,15 @@ void handleGroupAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreGroupRequest(
-          snackBarCompleter(context, localization.restoredGroup), group.id));
+          snackBarCompleter(context, localization.restoredGroup), groupIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter(context, localization.archivedGroup), group.id));
+          snackBarCompleter(context, localization.archivedGroup), groupIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteGroupRequest(
-          snackBarCompleter(context, localization.deletedGroup), group.id));
+          snackBarCompleter(context, localization.deletedGroup), groupIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {
