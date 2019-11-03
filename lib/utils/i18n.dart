@@ -14,6 +14,11 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'schedule': 'Schedule',
+      'days_before_due_date': 'days before the due date',
+      'days_after_due_date': 'days after the due date',
+      'days_after_invoice_date': 'days after the invoice date',
+      'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
       'quote_email': 'Quote Email',
@@ -15418,6 +15423,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get paymentEmail => _localizedValues[localeCode]['payment_email'];
 
   String get quoteEmail => _localizedValues[localeCode]['quote_email'];
+
+  String get days => _localizedValues[localeCode]['days'];
+
+  String get daysBeforeDueDate => _localizedValues[localeCode]['days_before_due_date'];
+
+  String get daysAfterDueDate => _localizedValues[localeCode]['days_after_due_date'];
+
+  String get daysAfterInvoiceDate => _localizedValues[localeCode]['days_after_invoice_date'];
+
+  String get schedule => _localizedValues[localeCode]['schedule'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

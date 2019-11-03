@@ -951,16 +951,42 @@ abstract class SettingsEntity
   bool get allPagesFooter;
 
   @nullable
-  @BuiltValueField(wireName: 'enableReminder1')
+  @BuiltValueField(wireName: 'enable_reminder1')
   bool get enableReminder1;
 
   @nullable
-  @BuiltValueField(wireName: 'enableReminder2')
+  @BuiltValueField(wireName: 'enable_reminder2')
   bool get enableReminder2;
 
   @nullable
-  @BuiltValueField(wireName: 'enableReminder3')
+  @BuiltValueField(wireName: 'enable_reminder3')
   bool get enableReminder3;
+
+  @nullable
+  @BuiltValueField(wireName: 'num_days_reminder1')
+  int get numDaysReminder1;
+
+  @nullable
+  @BuiltValueField(wireName: 'num_days_reminder2')
+  int get numDaysReminder2;
+
+  @nullable
+  @BuiltValueField(wireName: 'num_days_reminder3')
+  int get numDaysReminder3;
+
+  @nullable
+  @BuiltValueField(wireName: 'schedule_reminder1')
+  String get scheduleReminder1;
+
+  @nullable
+  @BuiltValueField(wireName: 'schedule_reminder2')
+  String get scheduleReminder2;
+
+  @nullable
+  @BuiltValueField(wireName: 'schedule_reminder3')
+  String get scheduleReminder3;
+
+
 
 
   // TODO remove this field

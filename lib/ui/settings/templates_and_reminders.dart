@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -226,24 +227,42 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               ]),
               if (_template == kEmailTemplateReminder1)
                 ReminderSettings(
+                  key: ValueKey('__reminder1_${_template}__'),
                   viewModel: viewModel,
                   enabled: settings.enableReminder1,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..enableReminder1 = value)),
+                  numDays: settings.numDaysReminder1,
+                  schedule: settings.scheduleReminder1,
+                  onChanged: (enabled, days, schedule) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder1 = enabled
+                        ..numDaysReminder1 = days
+                        ..scheduleReminder1 = schedule)),
                 ),
               if (_template == kEmailTemplateReminder2)
                 ReminderSettings(
+                  key: ValueKey('__reminder2_${_template}__'),
                   viewModel: viewModel,
                   enabled: settings.enableReminder2,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..enableReminder2 = value)),
+                  numDays: settings.numDaysReminder2,
+                  schedule: settings.scheduleReminder2,
+                  onChanged: (enabled, days, schedule) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder2 = enabled
+                        ..numDaysReminder2 = days
+                        ..scheduleReminder2 = schedule)),
                 ),
               if (_template == kEmailTemplateReminder3)
                 ReminderSettings(
+                  key: ValueKey('__reminder3_${_template}__'),
                   viewModel: viewModel,
                   enabled: settings.enableReminder3,
-                  onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..enableReminder3 = value)),
+                  numDays: settings.numDaysReminder3,
+                  schedule: settings.scheduleReminder3,
+                  onChanged: (enabled, days, schedule) =>
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableReminder3 = enabled
+                        ..numDaysReminder3 = days
+                        ..scheduleReminder3 = schedule)),
                 )
             ],
           ),
@@ -254,27 +273,128 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 }
 
-class ReminderSettings extends StatelessWidget {
-  const ReminderSettings({this.viewModel, this.enabled, this.onChanged});
+class ReminderSettings extends StatefulWidget {
+  const ReminderSettings({
+    @required this.key,
+    @required this.viewModel,
+    @required this.enabled,
+    @required this.schedule,
+    @required this.onChanged,
+    @required this.numDays,
+  }) : super(key: key);
 
+  final Key key;
   final TemplatesAndRemindersVM viewModel;
   final bool enabled;
-  final Function(bool) onChanged;
+  final int numDays;
+  final String schedule;
+  final Function(bool, int, String) onChanged;
+
+  @override
+  _ReminderSettingsState createState() => _ReminderSettingsState();
+}
+
+class _ReminderSettingsState extends State<ReminderSettings> {
+  final _daysController = TextEditingController();
+
+  bool _enabled;
+  String _schedule;
+
+  List<TextEditingController> _controllers = [];
+
+  @override
+  void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _enabled = widget.enabled;
+    _schedule = widget.schedule;
+
+    _controllers = [
+      _daysController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    _daysController.text = widget.numDays.toString();
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    final int days = parseDouble(_daysController.text.trim()).toInt();
+
+    widget.onChanged(_enabled, days, _schedule);
+  }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = viewModel.state;
+    final state = widget.viewModel.state;
 
     return FormCard(
       children: <Widget>[
         BoolDropdownButton(
           label: localization.sendEmail,
           showBlank: state.settingsUIState.isFiltered,
-          value: enabled,
-          onChanged: onChanged,
+          value: widget.enabled,
+          onChanged: (value) {
+            _enabled = value;
+            _onChanged();
+          },
           iconData: FontAwesomeIcons.solidEnvelope,
-        )
+        ),
+        Row(
+          children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: DecoratedFormField(
+                label: localization.days,
+                controller: _daysController,
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              child: AppDropdownButton(
+                value: widget.schedule,
+                labelText: localization.schedule,
+                showBlank: state.settingsUIState.isFiltered,
+                onChanged: (value) {
+                  _schedule = value;
+                  _onChanged();
+                },
+                items: [
+                  DropdownMenuItem(
+                    child: SizedBox(),
+                    value: null,
+                  ),
+                  DropdownMenuItem(
+                    child: Text(localization.daysAfterInvoiceDate),
+                    value: kReminderScheduleAfterInvoiceDate,
+                  ),
+                  DropdownMenuItem(
+                    child: Text(localization.daysBeforeDueDate),
+                    value: kReminderScheduleBeforeDueDate,
+                  ),
+                  DropdownMenuItem(
+                    child: Text(localization.daysAfterDueDate),
+                    value: kReminderScheduleAfterDueDate,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }

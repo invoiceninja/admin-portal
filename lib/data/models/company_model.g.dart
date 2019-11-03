@@ -1397,21 +1397,57 @@ class _$SettingsEntitySerializer
     }
     if (object.enableReminder1 != null) {
       result
-        ..add('enableReminder1')
+        ..add('enable_reminder1')
         ..add(serializers.serialize(object.enableReminder1,
             specifiedType: const FullType(bool)));
     }
     if (object.enableReminder2 != null) {
       result
-        ..add('enableReminder2')
+        ..add('enable_reminder2')
         ..add(serializers.serialize(object.enableReminder2,
             specifiedType: const FullType(bool)));
     }
     if (object.enableReminder3 != null) {
       result
-        ..add('enableReminder3')
+        ..add('enable_reminder3')
         ..add(serializers.serialize(object.enableReminder3,
             specifiedType: const FullType(bool)));
+    }
+    if (object.numDaysReminder1 != null) {
+      result
+        ..add('num_days_reminder1')
+        ..add(serializers.serialize(object.numDaysReminder1,
+            specifiedType: const FullType(int)));
+    }
+    if (object.numDaysReminder2 != null) {
+      result
+        ..add('num_days_reminder2')
+        ..add(serializers.serialize(object.numDaysReminder2,
+            specifiedType: const FullType(int)));
+    }
+    if (object.numDaysReminder3 != null) {
+      result
+        ..add('num_days_reminder3')
+        ..add(serializers.serialize(object.numDaysReminder3,
+            specifiedType: const FullType(int)));
+    }
+    if (object.scheduleReminder1 != null) {
+      result
+        ..add('schedule_reminder1')
+        ..add(serializers.serialize(object.scheduleReminder1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.scheduleReminder2 != null) {
+      result
+        ..add('schedule_reminder2')
+        ..add(serializers.serialize(object.scheduleReminder2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.scheduleReminder3 != null) {
+      result
+        ..add('schedule_reminder3')
+        ..add(serializers.serialize(object.scheduleReminder3,
+            specifiedType: const FullType(String)));
     }
     if (object.customPaymentTerms != null) {
       result
@@ -1932,17 +1968,41 @@ class _$SettingsEntitySerializer
           result.allPagesFooter = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'enableReminder1':
+        case 'enable_reminder1':
           result.enableReminder1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'enableReminder2':
+        case 'enable_reminder2':
           result.enableReminder2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'enableReminder3':
+        case 'enable_reminder3':
           result.enableReminder3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'num_days_reminder1':
+          result.numDaysReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'num_days_reminder2':
+          result.numDaysReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'num_days_reminder3':
+          result.numDaysReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'schedule_reminder1':
+          result.scheduleReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'schedule_reminder2':
+          result.scheduleReminder2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'schedule_reminder3':
+          result.scheduleReminder3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
@@ -3305,6 +3365,18 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool enableReminder3;
   @override
+  final int numDaysReminder1;
+  @override
+  final int numDaysReminder2;
+  @override
+  final int numDaysReminder3;
+  @override
+  final String scheduleReminder1;
+  @override
+  final String scheduleReminder2;
+  @override
+  final String scheduleReminder3;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3439,6 +3511,12 @@ class _$SettingsEntity extends SettingsEntity {
       this.enableReminder1,
       this.enableReminder2,
       this.enableReminder3,
+      this.numDaysReminder1,
+      this.numDaysReminder2,
+      this.numDaysReminder3,
+      this.scheduleReminder1,
+      this.scheduleReminder2,
+      this.scheduleReminder3,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3579,6 +3657,12 @@ class _$SettingsEntity extends SettingsEntity {
         enableReminder1 == other.enableReminder1 &&
         enableReminder2 == other.enableReminder2 &&
         enableReminder3 == other.enableReminder3 &&
+        numDaysReminder1 == other.numDaysReminder1 &&
+        numDaysReminder2 == other.numDaysReminder2 &&
+        numDaysReminder3 == other.numDaysReminder3 &&
+        scheduleReminder1 == other.scheduleReminder1 &&
+        scheduleReminder2 == other.scheduleReminder2 &&
+        scheduleReminder3 == other.scheduleReminder3 &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3605,22 +3689,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode),
-                                                                                vatNumber.hashCode),
-                                                                            idNumber.hashCode),
-                                                                        pageSize.hashCode),
-                                                                    fontSize.hashCode),
-                                                                primaryColor.hashCode),
-                                                            secondaryColor.hashCode),
-                                                        primaryFont.hashCode),
-                                                    secondaryFont.hashCode),
-                                                hidePaidToDate.hashCode),
-                                            embedDocuments.hashCode),
-                                        allPagesHeader.hashCode),
-                                    allPagesFooter.hashCode),
-                                enableReminder1.hashCode),
-                            enableReminder2.hashCode),
-                        enableReminder3.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), showInvoiceItemTaxes.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), enableSecondTaxRate.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode),
+                                                                                primaryFont.hashCode),
+                                                                            secondaryFont.hashCode),
+                                                                        hidePaidToDate.hashCode),
+                                                                    embedDocuments.hashCode),
+                                                                allPagesHeader.hashCode),
+                                                            allPagesFooter.hashCode),
+                                                        enableReminder1.hashCode),
+                                                    enableReminder2.hashCode),
+                                                enableReminder3.hashCode),
+                                            numDaysReminder1.hashCode),
+                                        numDaysReminder2.hashCode),
+                                    numDaysReminder3.hashCode),
+                                scheduleReminder1.hashCode),
+                            scheduleReminder2.hashCode),
+                        scheduleReminder3.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3752,6 +3836,12 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enableReminder1', enableReminder1)
           ..add('enableReminder2', enableReminder2)
           ..add('enableReminder3', enableReminder3)
+          ..add('numDaysReminder1', numDaysReminder1)
+          ..add('numDaysReminder2', numDaysReminder2)
+          ..add('numDaysReminder3', numDaysReminder3)
+          ..add('scheduleReminder1', scheduleReminder1)
+          ..add('scheduleReminder2', scheduleReminder2)
+          ..add('scheduleReminder3', scheduleReminder3)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4348,6 +4438,36 @@ class SettingsEntityBuilder
   set enableReminder3(bool enableReminder3) =>
       _$this._enableReminder3 = enableReminder3;
 
+  int _numDaysReminder1;
+  int get numDaysReminder1 => _$this._numDaysReminder1;
+  set numDaysReminder1(int numDaysReminder1) =>
+      _$this._numDaysReminder1 = numDaysReminder1;
+
+  int _numDaysReminder2;
+  int get numDaysReminder2 => _$this._numDaysReminder2;
+  set numDaysReminder2(int numDaysReminder2) =>
+      _$this._numDaysReminder2 = numDaysReminder2;
+
+  int _numDaysReminder3;
+  int get numDaysReminder3 => _$this._numDaysReminder3;
+  set numDaysReminder3(int numDaysReminder3) =>
+      _$this._numDaysReminder3 = numDaysReminder3;
+
+  String _scheduleReminder1;
+  String get scheduleReminder1 => _$this._scheduleReminder1;
+  set scheduleReminder1(String scheduleReminder1) =>
+      _$this._scheduleReminder1 = scheduleReminder1;
+
+  String _scheduleReminder2;
+  String get scheduleReminder2 => _$this._scheduleReminder2;
+  set scheduleReminder2(String scheduleReminder2) =>
+      _$this._scheduleReminder2 = scheduleReminder2;
+
+  String _scheduleReminder3;
+  String get scheduleReminder3 => _$this._scheduleReminder3;
+  set scheduleReminder3(String scheduleReminder3) =>
+      _$this._scheduleReminder3 = scheduleReminder3;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -4495,6 +4615,12 @@ class SettingsEntityBuilder
       _enableReminder1 = _$v.enableReminder1;
       _enableReminder2 = _$v.enableReminder2;
       _enableReminder3 = _$v.enableReminder3;
+      _numDaysReminder1 = _$v.numDaysReminder1;
+      _numDaysReminder2 = _$v.numDaysReminder2;
+      _numDaysReminder3 = _$v.numDaysReminder3;
+      _scheduleReminder1 = _$v.scheduleReminder1;
+      _scheduleReminder2 = _$v.scheduleReminder2;
+      _scheduleReminder3 = _$v.scheduleReminder3;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4645,6 +4771,12 @@ class SettingsEntityBuilder
               enableReminder1: enableReminder1,
               enableReminder2: enableReminder2,
               enableReminder3: enableReminder3,
+              numDaysReminder1: numDaysReminder1,
+              numDaysReminder2: numDaysReminder2,
+              numDaysReminder3: numDaysReminder3,
+              scheduleReminder1: scheduleReminder1,
+              scheduleReminder2: scheduleReminder2,
+              scheduleReminder3: scheduleReminder3,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

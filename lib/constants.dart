@@ -140,6 +140,10 @@ const String kEmailTemplateReminder2 = 'second_reminder';
 const String kEmailTemplateReminder3 = 'third_reminder';
 const String kEmailTemplateReminder4 = 'endless_reminder';
 
+const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
+const String kReminderScheduleBeforeDueDate = 'before_due_date';
+const String kReminderScheduleAfterDueDate = 'after_due_date';
+
 const List<String> kEmailTemplateTypes = [
   kEmailTemplateInvoice,
   kEmailTemplateQuote,
