@@ -57,7 +57,7 @@ class DocumentScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.document,
+            filter: state.documentListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterDocuments(value));
             },

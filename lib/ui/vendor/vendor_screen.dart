@@ -56,7 +56,7 @@ class VendorScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.vendor,
+            filter: state.vendorListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterVendors(value));
             },

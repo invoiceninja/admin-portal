@@ -56,7 +56,7 @@ class ProjectScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.project,
+            filter: state.projectListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterProjects(value));
             },

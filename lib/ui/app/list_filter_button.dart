@@ -7,22 +7,19 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ListFilterButton extends StatelessWidget {
   const ListFilterButton({
-    this.entityType,
+    this.filter,
     this.onFilterPressed,
   });
 
-  final EntityType entityType;
+  final String filter;
   final Function onFilterPressed;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return StoreConnector<AppState, String>(
-      converter: (Store<AppState> store) => entityType != null
-          ? store.state.getListState(entityType).filter
-          : store.state.uiState.filter,
-      builder: (BuildContext context, filter) {
+    return StoreBuilder(
+      builder: (BuildContext context, Store<AppState> store) {
         return FlatButton(
           child: Text(
             filter == null ? localization.search : localization.close,

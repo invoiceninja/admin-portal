@@ -56,7 +56,7 @@ class ProductScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.product,
+            filter: state.productListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterProducts(value));
             },

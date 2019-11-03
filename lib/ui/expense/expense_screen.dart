@@ -58,7 +58,7 @@ class ExpenseScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.expense,
+            filter: state.expenseListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterExpenses(value));
             },

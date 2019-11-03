@@ -58,7 +58,7 @@ class InvoiceScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.invoice,
+            filter: state.invoiceListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterInvoices(value));
             },

@@ -58,7 +58,7 @@ class QuoteScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.quote,
+            filter: state.quoteListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterQuotes(value));
             },

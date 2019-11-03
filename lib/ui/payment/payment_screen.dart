@@ -54,7 +54,7 @@ class PaymentScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.payment,
+            filter: state.paymentListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterPayments(value));
             },

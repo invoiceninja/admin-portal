@@ -60,7 +60,7 @@ class GroupSettingsScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.group,
+            filter: state.groupListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterGroups(value));
             },

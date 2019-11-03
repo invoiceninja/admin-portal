@@ -61,7 +61,7 @@ class CompanyGatewayScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.product,
+            filter: state.companyGatewayListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterCompanyGateways(value));
             },

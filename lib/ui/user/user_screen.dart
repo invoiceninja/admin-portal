@@ -60,7 +60,7 @@ class UserScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.user,
+            filter: state.userListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterUsers(value));
             },

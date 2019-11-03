@@ -57,7 +57,7 @@ class ClientScreen extends StatelessWidget {
       appBarActions: [
         if (!viewModel.isInMultiselect)
           ListFilterButton(
-            entityType: EntityType.client,
+            filter: state.clientListState.filter,
             onFilterPressed: (String value) {
               store.dispatch(FilterClients(value));
             },
