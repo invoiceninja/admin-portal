@@ -148,60 +148,60 @@ class SaveVendorFailure implements StopSaving {
 }
 
 class ArchiveVendorRequest implements StartSaving {
-  ArchiveVendorRequest(this.completer, this.vendorId);
+  ArchiveVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final String vendorId;
+  final List<String> vendorIds;
 }
 
 class ArchiveVendorSuccess implements StopSaving, PersistData {
-  ArchiveVendorSuccess(this.vendor);
+  ArchiveVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class ArchiveVendorFailure implements StopSaving {
-  ArchiveVendorFailure(this.vendor);
+  ArchiveVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class DeleteVendorRequest implements StartSaving {
-  DeleteVendorRequest(this.completer, this.vendorId);
+  DeleteVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final String vendorId;
+  final List<String> vendorIds;
 }
 
 class DeleteVendorSuccess implements StopSaving, PersistData {
-  DeleteVendorSuccess(this.vendor);
+  DeleteVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class DeleteVendorFailure implements StopSaving {
-  DeleteVendorFailure(this.vendor);
+  DeleteVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class RestoreVendorRequest implements StartSaving {
-  RestoreVendorRequest(this.completer, this.vendorId);
+  RestoreVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final String vendorId;
+  final List<String> vendorIds;
 }
 
 class RestoreVendorSuccess implements StopSaving, PersistData {
-  RestoreVendorSuccess(this.vendor);
+  RestoreVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class RestoreVendorFailure implements StopSaving {
-  RestoreVendorFailure(this.vendor);
+  RestoreVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class EditVendorContact implements PersistUI {
@@ -283,6 +283,7 @@ void handleVendorAction(
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
   final vendor = vendors.first as VendorEntity;
+  final vendorIds = vendors.map((vendor) => vendor.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -295,15 +296,15 @@ void handleVendorAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
-          snackBarCompleter(context, localization.restoredVendor), vendor.id));
+          snackBarCompleter(context, localization.restoredVendor), vendorIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter(context, localization.archivedVendor), vendor.id));
+          snackBarCompleter(context, localization.archivedVendor), vendorIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteVendorRequest(
-          snackBarCompleter(context, localization.deletedVendor), vendor.id));
+          snackBarCompleter(context, localization.deletedVendor), vendorIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {

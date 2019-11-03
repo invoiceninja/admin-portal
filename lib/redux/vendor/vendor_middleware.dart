@@ -112,17 +112,21 @@ Middleware<AppState> _viewVendorList() {
 Middleware<AppState> _archiveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+
     repository
-        .saveData(store.state.credentials, origVendor, EntityAction.archive)
-        .then((VendorEntity vendor) {
-      store.dispatch(ArchiveVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.archive)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(ArchiveVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveVendorFailure(origVendor));
+      final vendors = action.vendorIds
+          .map((id) => store.state.vendorState.map[id])
+          .toList();
+      store.dispatch(ArchiveVendorFailure(vendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -135,17 +139,21 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
 Middleware<AppState> _deleteVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+
     repository
-        .saveData(store.state.credentials, origVendor, EntityAction.delete)
-        .then((VendorEntity vendor) {
-      store.dispatch(DeleteVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.delete)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(DeleteVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteVendorFailure(origVendor));
+      final vendors = action.vendorIds
+          .map((id) => store.state.vendorState.map[id])
+          .toList();
+      store.dispatch(DeleteVendorFailure(vendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -158,17 +166,21 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
 Middleware<AppState> _restoreVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+
     repository
-        .saveData(store.state.credentials, origVendor, EntityAction.restore)
-        .then((VendorEntity vendor) {
-      store.dispatch(RestoreVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.restore)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(RestoreVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreVendorFailure(origVendor));
+      final vendors = action.vendorIds
+          .map((id) => store.state.vendorState.map[id])
+          .toList();
+      store.dispatch(RestoreVendorFailure(vendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
