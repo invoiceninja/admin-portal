@@ -63,7 +63,7 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterCompanyGatewaysByCustom2>(
       _filterCompanyGatewaysByCustom2),
   TypedReducer<ListUIState, FilterCompanyGatewaysByEntity>(
-      _filterCompanyGatewaysByClient),
+      _filterCompanyGatewaysByCompanyGateway),
   TypedReducer<ListUIState, StartCompanyGatewayMultiselect>(
       _startListMultiselect),
   TypedReducer<ListUIState, AddToCompanyGatewayMultiselect>(
@@ -74,7 +74,7 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _clearListMultiselect),
 ]);
 
-ListUIState _filterCompanyGatewaysByClient(
+ListUIState _filterCompanyGatewaysByCompanyGateway(
     ListUIState companyGatewayListState, FilterCompanyGatewaysByEntity action) {
   return companyGatewayListState.rebuild((b) => b
     ..filterEntityId = action.entityId
@@ -184,76 +184,117 @@ final companyGatewaysReducer = combineReducers<CompanyGatewayState>([
 CompanyGatewayState _archiveCompanyGatewayRequest(
     CompanyGatewayState companyGatewayState,
     ArchiveCompanyGatewayRequest action) {
-  final companyGateway = companyGatewayState.map[action.companyGatewayId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final companyGateways = action.companyGatewayIds
+      .map((id) => companyGatewayState.map[id])
+      .toList();
 
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGatewayId] = companyGateway);
+  for (int i = 0; i < companyGateways.length; i++) {
+    companyGateways[i] = companyGateways[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _archiveCompanyGatewaySuccess(
     CompanyGatewayState companyGatewayState,
     ArchiveCompanyGatewaySuccess action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _archiveCompanyGatewayFailure(
     CompanyGatewayState companyGatewayState,
     ArchiveCompanyGatewayFailure action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _deleteCompanyGatewayRequest(
     CompanyGatewayState companyGatewayState,
     DeleteCompanyGatewayRequest action) {
-  final companyGateway =
-      companyGatewayState.map[action.companyGatewayId].rebuild((b) => b
-        ..archivedAt = DateTime.now().millisecondsSinceEpoch
-        ..isDeleted = true);
+  final companyGateways = action.companyGatewayIds
+      .map((id) => companyGatewayState.map[id])
+      .toList();
 
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGatewayId] = companyGateway);
+  for (int i = 0; i < companyGateways.length; i++) {
+    companyGateways[i] = companyGateways[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _deleteCompanyGatewaySuccess(
     CompanyGatewayState companyGatewayState,
     DeleteCompanyGatewaySuccess action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _deleteCompanyGatewayFailure(
     CompanyGatewayState companyGatewayState,
     DeleteCompanyGatewayFailure action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _restoreCompanyGatewayRequest(
     CompanyGatewayState companyGatewayState,
     RestoreCompanyGatewayRequest action) {
-  final companyGateway =
-      companyGatewayState.map[action.companyGatewayId].rebuild((b) => b
-        ..archivedAt = null
-        ..isDeleted = false);
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGatewayId] = companyGateway);
+  final companyGateways = action.companyGatewayIds
+      .map((id) => companyGatewayState.map[id])
+      .toList();
+
+  for (int i = 0; i < companyGateways.length; i++) {
+    companyGateways[i] = companyGateways[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _restoreCompanyGatewaySuccess(
     CompanyGatewayState companyGatewayState,
     RestoreCompanyGatewaySuccess action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _restoreCompanyGatewayFailure(
     CompanyGatewayState companyGatewayState,
     RestoreCompanyGatewayFailure action) {
-  return companyGatewayState
-      .rebuild((b) => b..map[action.companyGateway.id] = action.companyGateway);
+  return companyGatewayState.rebuild((b) {
+    for (final companyGateway in action.companyGateways) {
+      b.map[companyGateway.id] = companyGateway;
+    }
+  });
 }
 
 CompanyGatewayState _addCompanyGateway(
