@@ -46,8 +46,9 @@ class ProductScreen extends StatelessWidget {
             context, products, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
+        title: localization.products,
         key: ValueKey(store.state.productListState.filterClearedAt),
-        entityType: EntityType.product,
+        filter: state.productListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterProducts(value));
         },

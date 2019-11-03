@@ -47,6 +47,7 @@ class StubScreen extends StatelessWidget {
                             context, stubs, EntityAction.toggleMultiselect);
                       },
                      appBarTitle: ListFilter(
+                       title: localization.stubs
                        key: ValueKey(state.stubListState.filterClearedAt),
                        entityType: EntityType.stub,
                        onFilterChanged: (value) {

@@ -47,8 +47,9 @@ class ClientScreen extends StatelessWidget {
             context, clients, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
+        title: localization.clients,
         key: ValueKey(state.clientListState.filterClearedAt),
-        entityType: EntityType.client,
+        filter: state.clientListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterClients(value));
         },

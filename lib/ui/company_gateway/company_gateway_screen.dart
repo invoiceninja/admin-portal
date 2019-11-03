@@ -51,8 +51,9 @@ class CompanyGatewayScreen extends StatelessWidget {
       },
       hideHamburgerButton: true,
       appBarTitle: ListFilter(
+        title: localization.companyGateways,
         key: ValueKey(state.companyGatewayListState.filterClearedAt),
-        entityType: EntityType.companyGateway,
+        filter: state.companyGatewayListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterCompanyGateways(value));
         },

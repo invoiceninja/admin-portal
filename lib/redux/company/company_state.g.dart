@@ -204,7 +204,12 @@ class _$SettingsUIStateSerializer
       serializers.serialize(object.section,
           specifiedType: const FullType(String)),
     ];
-
+    if (object.filter != null) {
+      result
+        ..add('filter')
+        ..add(serializers.serialize(object.filter,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -260,6 +265,10 @@ class _$SettingsUIStateSerializer
           break;
         case 'section':
           result.section = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'filter':
+          result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -691,6 +700,8 @@ class _$SettingsUIState extends SettingsUIState {
   final int updatedAt;
   @override
   final String section;
+  @override
+  final String filter;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
@@ -705,7 +716,8 @@ class _$SettingsUIState extends SettingsUIState {
       this.entityType,
       this.isChanged,
       this.updatedAt,
-      this.section})
+      this.section,
+      this.filter})
       : super._() {
     if (userCompany == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'userCompany');
@@ -760,7 +772,8 @@ class _$SettingsUIState extends SettingsUIState {
         entityType == other.entityType &&
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
-        section == other.section;
+        section == other.section &&
+        filter == other.filter;
   }
 
   @override
@@ -773,16 +786,18 @@ class _$SettingsUIState extends SettingsUIState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, userCompany.hashCode),
-                                        origUserCompany.hashCode),
-                                    client.hashCode),
-                                origClient.hashCode),
-                            group.hashCode),
-                        origGroup.hashCode),
-                    entityType.hashCode),
-                isChanged.hashCode),
-            updatedAt.hashCode),
-        section.hashCode));
+                                    $jc(
+                                        $jc($jc(0, userCompany.hashCode),
+                                            origUserCompany.hashCode),
+                                        client.hashCode),
+                                    origClient.hashCode),
+                                group.hashCode),
+                            origGroup.hashCode),
+                        entityType.hashCode),
+                    isChanged.hashCode),
+                updatedAt.hashCode),
+            section.hashCode),
+        filter.hashCode));
   }
 
   @override
@@ -797,7 +812,8 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('entityType', entityType)
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
-          ..add('section', section))
+          ..add('section', section)
+          ..add('filter', filter))
         .toString();
   }
 }
@@ -854,6 +870,10 @@ class SettingsUIStateBuilder
   String get section => _$this._section;
   set section(String section) => _$this._section = section;
 
+  String _filter;
+  String get filter => _$this._filter;
+  set filter(String filter) => _$this._filter = filter;
+
   SettingsUIStateBuilder();
 
   SettingsUIStateBuilder get _$this {
@@ -868,6 +888,7 @@ class SettingsUIStateBuilder
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
+      _filter = _$v.filter;
       _$v = null;
     }
     return this;
@@ -901,7 +922,8 @@ class SettingsUIStateBuilder
               entityType: entityType,
               isChanged: isChanged,
               updatedAt: updatedAt,
-              section: section);
+              section: section,
+              filter: filter);
     } catch (_) {
       String _$failedField;
       try {

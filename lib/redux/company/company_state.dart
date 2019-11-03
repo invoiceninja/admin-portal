@@ -155,6 +155,9 @@ abstract class SettingsUIState extends Object
 
   String get section;
 
+  @nullable
+  String get filter;
+
   bool get isFiltered => entityType != EntityType.company;
 
   SettingsEntity get settings {

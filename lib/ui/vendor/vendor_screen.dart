@@ -46,8 +46,9 @@ class VendorScreen extends StatelessWidget {
             context, vendors, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
+        title: localization.vendors,
         key: ValueKey(store.state.vendorListState.filterClearedAt),
-        entityType: EntityType.vendor,
+        filter: state.vendorListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterVendors(value));
         },

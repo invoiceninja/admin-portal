@@ -48,8 +48,9 @@ class InvoiceScreen extends StatelessWidget {
             context, invoices, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
+        title: localization.invoices,
         key: ValueKey(store.state.invoiceListState.filterClearedAt),
-        entityType: EntityType.invoice,
+        filter: state.invoiceListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterInvoices(value));
         },

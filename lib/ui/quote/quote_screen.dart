@@ -48,8 +48,9 @@ class QuoteScreen extends StatelessWidget {
             context, quotes, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
+        title: localization.quotes,
         key: ValueKey(store.state.quoteListState.filterClearedAt),
-        entityType: EntityType.quote,
+        filter: state.quoteListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterQuotes(value));
         },

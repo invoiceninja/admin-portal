@@ -47,8 +47,9 @@ class TaxRateSettingsScreen extends StatelessWidget {
       },
       hideHamburgerButton: true,
       appBarTitle: ListFilter(
+        title: localization.taxRates,
         key: ValueKey(state.taxRateListState.filterClearedAt),
-        entityType: EntityType.taxRate,
+        filter: state.taxRateListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTaxRates(value));
         },

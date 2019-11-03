@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -8,12 +7,12 @@ import 'package:redux/redux.dart';
 class ListFilter extends StatefulWidget {
   const ListFilter({
     Key key,
-    this.entityType,
+    this.filter,
     this.title,
     this.onFilterChanged,
   }) : super(key: key);
 
-  final EntityType entityType;
+  final String filter;
   final String title;
   final Function(String) onFilterChanged;
 
@@ -28,12 +27,7 @@ class _ListFilterState extends State<ListFilter> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final state = StoreProvider.of<AppState>(context).state;
-    final String filter = widget.entityType != null
-        ? state.getListState(widget.entityType).filter
-        : state.uiState.filter;
-
-    _filterController.text = filter;
+    _filterController.text = widget.filter;
   }
 
   @override
@@ -49,20 +43,15 @@ class _ListFilterState extends State<ListFilter> {
     return StoreConnector<AppState, AppState>(
       converter: (Store<AppState> store) => store.state,
       builder: (BuildContext context, state) {
-        final entityType = widget.entityType;
-        final filter = entityType != null
-            ? state.getListState(entityType).filter
-            : state.uiState.filter;
         final bool enableDarkMode = state.uiState.enableDarkMode;
-        return filter == null
-            ? Text(widget.title ??
-                localization.lookup(entityType.plural.toString()))
+        return widget.filter == null
+            ? Text('${widget.title ?? ''}')
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
                 height: 38.0,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
-                    color: filter != null && filter.isNotEmpty
+                    color: widget.filter != null && widget.filter.isNotEmpty
                         ? enableDarkMode
                             ? Colors.yellow.shade900
                             : Colors.yellow.shade200

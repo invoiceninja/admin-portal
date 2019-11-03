@@ -50,8 +50,9 @@ class GroupSettingsScreen extends StatelessWidget {
       },
       hideHamburgerButton: true,
       appBarTitle: ListFilter(
+        title: localization.groups,
         key: ValueKey(state.groupListState.filterClearedAt),
-        entityType: EntityType.group,
+        filter: state.groupListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterGroups(value));
         },

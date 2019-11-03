@@ -52,7 +52,7 @@ class UserScreen extends StatelessWidget {
       appBarTitle: ListFilter(
         title: localization.userManagement,
         key: ValueKey(state.userListState.filterClearedAt),
-        entityType: EntityType.user,
+        filter: state.userListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterUsers(value));
         },
