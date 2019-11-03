@@ -161,63 +161,103 @@ final expensesReducer = combineReducers<ExpenseState>([
 
 ExpenseState _archiveExpenseRequest(
     ExpenseState expenseState, ArchiveExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
 
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _archiveExpenseSuccess(
     ExpenseState expenseState, ArchiveExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _archiveExpenseFailure(
     ExpenseState expenseState, ArchiveExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseRequest(
     ExpenseState expenseState, DeleteExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
 
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseSuccess(
     ExpenseState expenseState, DeleteExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseFailure(
     ExpenseState expenseState, DeleteExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseRequest(
     ExpenseState expenseState, RestoreExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
+
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseSuccess(
     ExpenseState expenseState, RestoreExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseFailure(
     ExpenseState expenseState, RestoreExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _addExpense(ExpenseState expenseState, AddExpenseSuccess action) {

@@ -112,17 +112,21 @@ Middleware<AppState> _viewExpenseList() {
 Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+
     repository
-        .saveData(store.state.credentials, origExpense, EntityAction.archive)
-        .then((ExpenseEntity expense) {
-      store.dispatch(ArchiveExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.archive)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(ArchiveExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveExpenseFailure(origExpense));
+      final expenses = action.expenseIds
+          .map((id) => store.state.expenseState.map[id])
+          .toList();
+      store.dispatch(ArchiveExpenseFailure(expenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -135,17 +139,21 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
 Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+
     repository
-        .saveData(store.state.credentials, origExpense, EntityAction.delete)
-        .then((ExpenseEntity expense) {
-      store.dispatch(DeleteExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.delete)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(DeleteExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteExpenseFailure(origExpense));
+      final expenses = action.expenseIds
+          .map((id) => store.state.expenseState.map[id])
+          .toList();
+      store.dispatch(DeleteExpenseFailure(expenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -158,17 +166,21 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
 Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+
     repository
-        .saveData(store.state.credentials, origExpense, EntityAction.restore)
-        .then((ExpenseEntity expense) {
-      store.dispatch(RestoreExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.restore)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(RestoreExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreExpenseFailure(origExpense));
+      final expenses = action.expenseIds
+          .map((id) => store.state.expenseState.map[id])
+          .toList();
+      store.dispatch(RestoreExpenseFailure(expenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
