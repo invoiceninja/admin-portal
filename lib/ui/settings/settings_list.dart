@@ -224,8 +224,60 @@ class SettingsSearch extends StatelessWidget {
   final String filter;
 
   static const map = {
-    kSettingsCompanyDetails: ['id_number', 'vat_number', 'website'],
-    kSettingsUserDetails: ['first_name', 'last_name', 'email', 'phone'],
+    kSettingsCompanyDetails: [
+      'name',
+      'id_number',
+      'vat_number',
+      'website',
+      'email',
+      'phone',
+      'logo',
+      'address',
+      'postal_code',
+      'country',
+      'defaults',
+      'payment_type',
+      'payment_terms',
+      'task_rate',
+      'invoice_terms',
+      'invoice_footer',
+      'quote_terms',
+      'quote_footer',
+    ],
+    kSettingsUserDetails: [
+      'first_name',
+      'last_name',
+      'email',
+      'phone',
+    ],
+    kSettingsLocalization: [
+      'currency',
+      'language',
+      'timezone',
+      'date_format',
+      'military_time',
+      'first_day_of_the_week',
+      'first_month_of_the_year',
+    ],
+    kSettingsOnlinePayments: [
+      'accepted_card_logos',
+      'limits_and_fees',
+    ],
+    kSettingsTaxRates: [
+      'tax_rates',
+    ],
+    kSettingsProducts: [
+      'fill_products',
+      'update_products',
+      'convert_products',
+    ],
+    kSettingsDeviceSettings: [
+      'dark_mode',
+      'long_press_multiselect',
+      'biometric_authentication',
+      'refresh_data',
+      'logout',
+    ]
   };
 
   @override
@@ -241,7 +293,10 @@ class SettingsSearch extends StatelessWidget {
                 .contains(filter.toLowerCase()))
               ListTile(
                 title: Text(localization.lookup(field)),
-                leading: Icon(getSettingIcon(section)),
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 6, top: 10),
+                  child: Icon(getSettingIcon(section), size: 20),
+                ),
                 subtitle: Text(localization.lookup(section)),
                 onTap: () => viewModel.loadSection(context, section),
               ),

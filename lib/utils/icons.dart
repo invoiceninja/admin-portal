@@ -116,6 +116,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.bell;
     case kSettingsImportExport:
       return FontAwesomeIcons.fileExport;
+    case kSettingsDeviceSettings:
+      return FontAwesomeIcons.desktop;
     case kSettingsGroupSettings:
       return FontAwesomeIcons.layerGroup;
     case kSettingsGeneratedNumbers:
