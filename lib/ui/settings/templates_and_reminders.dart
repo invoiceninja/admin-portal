@@ -265,30 +265,42 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..scheduleReminder3 = schedule)),
                 ),
               if (_template == kEmailTemplateReminder4)
-                InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: localization.resetCounter,
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                        value: settings.endlessReminderFrequencyId,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..endlessReminderFrequencyId = value)),
-                        items: kFrequencies
-                            .map((id, frequency) =>
-                                MapEntry<String, DropdownMenuItem<String>>(
-                                    id,
-                                    DropdownMenuItem<String>(
-                                      child:
-                                          Text(localization.lookup(frequency)),
-                                      value: id,
-                                    )))
-                            .values
-                            .toList()),
-                  ),
+                FormCard(
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      label: localization.sendEmail,
+                      showBlank: state.settingsUIState.isFiltered,
+                      value: settings.enableReminder4,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..enableReminder4 = value)),
+                      iconData: FontAwesomeIcons.solidEnvelope,
+                    ),
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: localization.frequency,
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                            value: settings.endlessReminderFrequencyId,
+                            isExpanded: true,
+                            isDense: true,
+                            onChanged: (value) => viewModel.onSettingsChanged(
+                                settings.rebuild((b) =>
+                                    b..endlessReminderFrequencyId = value)),
+                            items: kFrequencies
+                                .map((id, frequency) =>
+                                    MapEntry<String, DropdownMenuItem<String>>(
+                                        id,
+                                        DropdownMenuItem<String>(
+                                          child: Text(
+                                              localization.lookup(frequency)),
+                                          value: id,
+                                        )))
+                                .values
+                                .toList()),
+                      ),
+                    ),
+                  ],
                 ),
             ],
           ),

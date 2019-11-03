@@ -963,6 +963,10 @@ abstract class SettingsEntity
   bool get enableReminder3;
 
   @nullable
+  @BuiltValueField(wireName: 'enable_reminder4')
+  bool get enableReminder4;
+
+  @nullable
   @BuiltValueField(wireName: 'num_days_reminder1')
   int get numDaysReminder1;
 
