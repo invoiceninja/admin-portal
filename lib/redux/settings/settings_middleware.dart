@@ -1,8 +1,13 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
@@ -40,8 +45,8 @@ Middleware<AppState> _viewSettings() {
         (action.section != null
             ? '/${action.section}'
             : uiState.mainRoute == kSettings
-                ? '/$kSettingsCompanyDetails'
-                : '/${uiState.settingsUIState.section}');
+            ? '/$kSettingsCompanyDetails'
+            : '/${uiState.settingsUIState.section}');
 
     next(action);
 
@@ -104,13 +109,19 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final entityId = action.type == EntityType.company
         ? state.selectedCompany.id
         : action.type == EntityType.group
-            ? settingsState.group.id
-            : settingsState.client.id;
+        ? settingsState.group.id
+        : settingsState.client.id;
     settingsRepository
-        .uploadLogo(store.state.credentials, entityId,
-            action.path, action.type)
-        .then((company) {
-      store.dispatch(UploadLogoSuccess(company));
+        .uploadLogo(store.state.credentials, entityId, action.path, action.type)
+        .then((entity) {
+      if (action.type == EntityType.client) {
+        store.dispatch(SaveClientSuccess(entity as ClientEntity));
+      } else if (action.type == EntityType.group) {
+        store.dispatch(SaveGroupSuccess(entity as GroupEntity));
+      } else {
+        store.dispatch(SaveCompanySuccess(entity as CompanyEntity));
+      }
+
       action.completer.complete();
     }).catchError((Object error) {
       print(error);

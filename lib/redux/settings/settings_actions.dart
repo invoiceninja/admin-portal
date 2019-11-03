@@ -32,16 +32,19 @@ class ResetSettings {}
 
 class UpdateCompany implements PersistUI {
   UpdateCompany({@required this.company});
+
   final CompanyEntity company;
 }
 
 class UpdateSettings implements PersistUI {
   UpdateSettings({@required this.settings});
+
   final SettingsEntity settings;
 }
 
 class UpdateUser implements PersistUI {
   UpdateUser({@required this.user});
+
   final UserEntity user;
 }
 
@@ -70,12 +73,6 @@ class UploadLogoRequest implements StartSaving {
   final Completer completer;
   final String path;
   final EntityType type;
-}
-
-class UploadLogoSuccess implements StopSaving, PersistData, PersistUI {
-  UploadLogoSuccess(this.company);
-
-  final CompanyEntity company;
 }
 
 class UploadLogoFailure implements StopSaving {

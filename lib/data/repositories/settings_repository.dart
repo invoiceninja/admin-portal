@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -43,7 +44,7 @@ class SettingsRepository {
     return userResponse.data;
   }
 
-  Future<CompanyEntity> uploadLogo(Credentials credentials, String entityId,
+  Future<BaseEntity> uploadLogo(Credentials credentials, String entityId,
       String path, EntityType type) async {
     final route = type == EntityType.company
         ? 'companies'
@@ -53,9 +54,18 @@ class SettingsRepository {
     final dynamic response = await webClient.post(url, credentials.token,
         data: {'_method': 'PUT'}, filePath: path, fileIndex: 'company_logo');
 
-    final CompanyItemResponse companyResponse =
-        serializers.deserializeWith(CompanyItemResponse.serializer, response);
-
-    return companyResponse.data;
+    if (type == EntityType.client) {
+      return serializers
+          .deserializeWith(ClientItemResponse.serializer, response)
+          .data;
+    } else if (type == EntityType.group) {
+      return serializers
+          .deserializeWith(GroupItemResponse.serializer, response)
+          .data;
+    } else {
+      return serializers
+          .deserializeWith(CompanyItemResponse.serializer, response)
+          .data;
+    }
   }
 }

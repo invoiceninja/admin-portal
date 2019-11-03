@@ -56,7 +56,6 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       loadCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
       saveCompanySuccessReducer),
-  TypedReducer<UserCompanyEntity, UploadLogoSuccess>(uploadLogoSuccessReducer),
   TypedReducer<UserCompanyEntity, SaveUserSuccess>((userCompany, action) =>
       userCompany.rebuild((b) => b..user.replace(action.user))),
 ]);
@@ -121,14 +120,6 @@ UserCompanyEntity saveCompanySuccessReducer(
     ..customFields.replace(userCompany.company.customFields));
 
   userCompany = userCompany.rebuild((b) => b..company.replace(company));
-
-  return userCompany;
-}
-
-UserCompanyEntity uploadLogoSuccessReducer(
-    UserCompanyEntity userCompany, UploadLogoSuccess action) {
-  userCompany = userCompany.rebuild((b) =>
-      b..company.settings.companyLogo = action.company.settings.companyLogo);
 
   return userCompany;
 }
