@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
@@ -158,54 +159,37 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
           if (!state.settingsUIState.isFiltered)
             FormCard(
               children: <Widget>[
-                InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: localization.firstDayOfTheWeek,
-                  ),
-                  isEmpty: company.startOfWeek == null,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                        value: company.startOfWeek,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onCompanyChanged(
-                            company.rebuild((b) => b..startOfWeek = value)),
-                        items: kDaysOfTheWeek
-                            .map((id, day) =>
-                                MapEntry<int, DropdownMenuItem<int>>(
-                                    id,
-                                    DropdownMenuItem<int>(
-                                      child: Text(localization.lookup(day)),
-                                      value: id,
-                                    )))
-                            .values
-                            .toList()),
-                  ),
+                AppDropdownButton(
+                  labelText: localization.firstDayOfTheWeek,
+                  value: company.firstDayOfWeek,
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..firstDayOfWeek = value)),
+                  items: kDaysOfTheWeek
+                      .map((id, day) =>
+                          MapEntry<String, DropdownMenuItem<String>>(
+                              id,
+                              DropdownMenuItem<String>(
+                                child: Text(localization.lookup(day)),
+                                value: id,
+                              )))
+                      .values
+                      .toList(),
                 ),
-                InputDecorator(
-                  decoration: InputDecoration(
+                AppDropdownButton(
                     labelText: localization.firstMonthOfTheYear,
-                  ),
-                  isEmpty: company.financialYearStart == null,
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<int>(
-                        value: company.financialYearStart,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onCompanyChanged(company
-                            .rebuild((b) => b..financialYearStart = value)),
-                        items: kMonthsOfTheYear
-                            .map((id, month) =>
-                                MapEntry<int, DropdownMenuItem<int>>(
-                                    id,
-                                    DropdownMenuItem<int>(
-                                      child: Text(localization.lookup(month)),
-                                      value: id,
-                                    )))
-                            .values
-                            .toList()),
-                  ),
-                ),
+                    value: company.firstMonthOfYear,
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..firstMonthOfYear = value)),
+                    items: kMonthsOfTheYear
+                        .map((id, month) =>
+                            MapEntry<String, DropdownMenuItem<String>>(
+                                id,
+                                DropdownMenuItem<String>(
+                                  child: Text(localization.lookup(month)),
+                                  value: id,
+                                )))
+                        .values
+                        .toList()),
               ],
             ),
         ],

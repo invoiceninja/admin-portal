@@ -123,17 +123,17 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.appUrl,
             specifiedType: const FullType(String)));
     }
-    if (object.startOfWeek != null) {
+    if (object.firstDayOfWeek != null) {
       result
-        ..add('start_of_week')
-        ..add(serializers.serialize(object.startOfWeek,
-            specifiedType: const FullType(int)));
+        ..add('first_day_of_week')
+        ..add(serializers.serialize(object.firstDayOfWeek,
+            specifiedType: const FullType(String)));
     }
-    if (object.financialYearStart != null) {
+    if (object.firstMonthOfYear != null) {
       result
-        ..add('financial_year_start')
-        ..add(serializers.serialize(object.financialYearStart,
-            specifiedType: const FullType(int)));
+        ..add('first_month_of_year')
+        ..add(serializers.serialize(object.firstMonthOfYear,
+            specifiedType: const FullType(String)));
     }
     if (object.taxRates != null) {
       result
@@ -301,13 +301,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.appUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'start_of_week':
-          result.startOfWeek = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'first_day_of_week':
+          result.firstDayOfWeek = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
-        case 'financial_year_start':
-          result.financialYearStart = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'first_month_of_year':
+          result.firstMonthOfYear = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
@@ -2203,9 +2203,9 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String appUrl;
   @override
-  final int startOfWeek;
+  final String firstDayOfWeek;
   @override
-  final int financialYearStart;
+  final String firstMonthOfYear;
   @override
   final BuiltList<GroupEntity> groups;
   @override
@@ -2262,8 +2262,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.plan,
       this.companyKey,
       this.appUrl,
-      this.startOfWeek,
-      this.financialYearStart,
+      this.firstDayOfWeek,
+      this.firstMonthOfYear,
       this.groups,
       this.taxRates,
       this.taskStatuses,
@@ -2325,8 +2325,8 @@ class _$CompanyEntity extends CompanyEntity {
         plan == other.plan &&
         companyKey == other.companyKey &&
         appUrl == other.appUrl &&
-        startOfWeek == other.startOfWeek &&
-        financialYearStart == other.financialYearStart &&
+        firstDayOfWeek == other.firstDayOfWeek &&
+        firstMonthOfYear == other.firstMonthOfYear &&
         groups == other.groups &&
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
@@ -2368,7 +2368,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), startOfWeek.hashCode), financialYearStart.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode),
                                                                                 groups.hashCode),
                                                                             taxRates.hashCode),
                                                                         taskStatuses.hashCode),
@@ -2406,8 +2406,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('appUrl', appUrl)
-          ..add('startOfWeek', startOfWeek)
-          ..add('financialYearStart', financialYearStart)
+          ..add('firstDayOfWeek', firstDayOfWeek)
+          ..add('firstMonthOfYear', firstMonthOfYear)
           ..add('groups', groups)
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
@@ -2493,14 +2493,15 @@ class CompanyEntityBuilder
   String get appUrl => _$this._appUrl;
   set appUrl(String appUrl) => _$this._appUrl = appUrl;
 
-  int _startOfWeek;
-  int get startOfWeek => _$this._startOfWeek;
-  set startOfWeek(int startOfWeek) => _$this._startOfWeek = startOfWeek;
+  String _firstDayOfWeek;
+  String get firstDayOfWeek => _$this._firstDayOfWeek;
+  set firstDayOfWeek(String firstDayOfWeek) =>
+      _$this._firstDayOfWeek = firstDayOfWeek;
 
-  int _financialYearStart;
-  int get financialYearStart => _$this._financialYearStart;
-  set financialYearStart(int financialYearStart) =>
-      _$this._financialYearStart = financialYearStart;
+  String _firstMonthOfYear;
+  String get firstMonthOfYear => _$this._firstMonthOfYear;
+  set firstMonthOfYear(String firstMonthOfYear) =>
+      _$this._firstMonthOfYear = firstMonthOfYear;
 
   ListBuilder<GroupEntity> _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -2617,8 +2618,8 @@ class CompanyEntityBuilder
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _appUrl = _$v.appUrl;
-      _startOfWeek = _$v.startOfWeek;
-      _financialYearStart = _$v.financialYearStart;
+      _firstDayOfWeek = _$v.firstDayOfWeek;
+      _firstMonthOfYear = _$v.firstMonthOfYear;
       _groups = _$v.groups?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
@@ -2675,8 +2676,8 @@ class CompanyEntityBuilder
               plan: plan,
               companyKey: companyKey,
               appUrl: appUrl,
-              startOfWeek: startOfWeek,
-              financialYearStart: financialYearStart,
+              firstDayOfWeek: firstDayOfWeek,
+              firstMonthOfYear: firstMonthOfYear,
               groups: groups.build(),
               taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),

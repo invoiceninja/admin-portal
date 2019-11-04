@@ -26,8 +26,8 @@ abstract class CompanyEntity extends Object
       settings: SettingsEntity(),
       appUrl: '',
       enabledModules: 0,
-      financialYearStart: 1,
-      startOfWeek: 1,
+      firstMonthOfYear: '0',
+      firstDayOfWeek: '0',
       updateProducts: true,
       fillProducts: true,
       convertProductExchangeRate: false,
@@ -100,13 +100,13 @@ abstract class CompanyEntity extends Object
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'start_of_week')
-  int get startOfWeek;
+  @BuiltValueField(wireName: 'first_day_of_week')
+  String get firstDayOfWeek;
 
   // TODO remove this
   @nullable
-  @BuiltValueField(wireName: 'financial_year_start')
-  int get financialYearStart;
+  @BuiltValueField(wireName: 'first_month_of_year')
+  String get firstMonthOfYear;
 
   BuiltList<GroupEntity> get groups;
 
@@ -267,11 +267,6 @@ abstract class CompanyEntity extends Object
   }
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
-
-  // TODO remove
-  // Handle bug in earlier version of API
-  int get firstMonthOfYear =>
-      financialYearStart == 2000 ? 1 : (financialYearStart ?? 1);
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
