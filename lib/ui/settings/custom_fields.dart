@@ -342,15 +342,13 @@ class _CustomFormFieldState extends State<CustomFormField> {
         ),
         if (_fieldType == kFieldTypeDropdown)
           Flexible(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: DecoratedFormField(
-                label: localization.options,
-                controller: _optionsController,
-                hint: localization.useCommaSeparatedList,
-              ),
+            child: DecoratedFormField(
+              label: localization.options,
+              controller: _optionsController,
+              hint: localization.useCommaSeparatedList,
             ),
           ),
+        SizedBox(height: 15),
       ],
     );
   }
