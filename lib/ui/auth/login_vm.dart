@@ -40,6 +40,7 @@ class LoginVM {
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
+    @required this.onRecoverPressed,
     @required this.onSignUpPressed,
     @required this.onGoogleLoginPressed,
     @required this.onGoogleSignUpPressed,
@@ -57,6 +58,14 @@ class LoginVM {
     @required String secret,
     @required String oneTimePassword,
   }) onLoginPressed;
+
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    @required String email,
+    @required String url,
+    @required String secret,
+  }) onRecoverPressed;
 
   final Function(
     BuildContext,
@@ -164,6 +173,31 @@ class LoginVM {
             platform: getPlatform(context),
           ));
           completer.future.then((_) => _handleLogin(context));
+        },
+        onRecoverPressed: (
+          BuildContext context,
+          Completer<Null> completer, {
+          @required String email,
+          @required String url,
+          @required String secret,
+        }) {
+          if (store.state.isLoading) {
+            return;
+          }
+
+          if (url.isNotEmpty && !url.startsWith('http')) {
+            url = 'https://' + url;
+          }
+
+          store.dispatch(RecoverPasswordRequest(
+            completer: completer,
+            email: email.trim(),
+            url: url.trim(),
+            secret: secret.trim(),
+          ));
+          completer.future.then((_) {
+            print('## DONE ##');
+          });
         },
         onLoginPressed: (
           BuildContext context,

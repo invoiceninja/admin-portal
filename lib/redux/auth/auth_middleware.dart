@@ -20,6 +20,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final signUpRequest = _createSignUpRequest(repository);
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
+  final recoverRequest = _createRecoverRequest(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -27,6 +28,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
+    TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
   ];
 }
 
@@ -201,5 +203,27 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         action.completer.completeError(error);
       }
     });
+  };
+}
+
+Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RecoverPasswordRequest;
+
+    repository
+        .recoverPassword(
+      email: action.email,
+      url: action.url,
+      secret: action.secret,
+    )
+        .then((data) {
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
   };
 }

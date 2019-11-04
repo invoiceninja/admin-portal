@@ -101,4 +101,16 @@ class AuthRepository {
 
     return loginResponse;
   }
+
+  Future<LoginResponse> recoverPassword(
+      {String email, String url, String secret, String platform}) async {
+    final credentials = {
+      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
+      'email': email,
+    };
+    url = formatApiUrl(url) + '/reset_password';
+
+    return sendRequest(url: url, data: credentials);
+  }
+
 }

@@ -69,8 +69,23 @@ class UserLoginFailure implements StopLoading {
   final Object error;
 }
 
+class RecoverPasswordRequest implements StartLoading {
+  RecoverPasswordRequest({
+    this.completer,
+    this.email,
+    this.url,
+    this.secret,
+  });
+
+  final Completer completer;
+  final String email;
+  final String url;
+  final String secret;
+}
+
 class UserLogout implements PersistData, PersistUI {
   UserLogout(this.context);
+
   final BuildContext context;
 }
 

@@ -44,6 +44,7 @@ class _LoginState extends State<LoginView> {
   String _loginError = '';
   bool _emailLogin = false;
   bool _createAccount = true;
+  bool _recovePassword = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
@@ -175,15 +176,25 @@ class _LoginState extends State<LoginView> {
     });
 
     if (_emailLogin) {
-      viewModel.onLoginPressed(
-        context,
-        completer,
-        email: _emailController.text,
-        password: _passwordController.text,
-        url: _isSelfHosted ? _urlController.text : '',
-        secret: _isSelfHosted ? _secretController.text : '',
-        oneTimePassword: _oneTimePasswordController.text,
-      );
+      if (_recovePassword) {
+        viewModel.onRecoverPressed(
+          context,
+          completer,
+          email: _emailController.text,
+          url: _isSelfHosted ? _urlController.text : '',
+          secret: _isSelfHosted ? _secretController.text : '',
+        );
+      } else {
+        viewModel.onLoginPressed(
+          context,
+          completer,
+          email: _emailController.text,
+          password: _passwordController.text,
+          url: _isSelfHosted ? _urlController.text : '',
+          secret: _isSelfHosted ? _secretController.text : '',
+          oneTimePassword: _oneTimePasswordController.text,
+        );
+      }
     } else {
       viewModel.onGoogleLoginPressed(context, completer,
           url: _isSelfHosted ? _urlController.text : '',
@@ -294,7 +305,7 @@ class _LoginState extends State<LoginView> {
                             onFieldSubmitted: (String value) =>
                                 FocusScope.of(context).nextFocus(),
                           ),
-                        if (_emailLogin)
+                        if (_emailLogin && !_recovePassword)
                           TextFormField(
                             controller: _passwordController,
                             key: ValueKey(localization.password),
@@ -428,7 +439,9 @@ class _LoginState extends State<LoginView> {
                                 : ElevatedButton(
                                     width: 280,
                                     label: (_emailLogin
-                                            ? localization.login
+                                            ? (_recovePassword
+                                                ? localization.submit
+                                                : localization.login)
                                             : localization.googleLogin)
                                         .toUpperCase(),
                                     onPressed: () => _submitLoginForm(),
@@ -440,60 +453,64 @@ class _LoginState extends State<LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.solidEnvelope, size: 16),
-                              _emailLogin
-                                  ? FlatButton(
-                                      onPressed: () => setState(() {
-                                            _emailLogin = false;
-                                            _loginError = '';
-                                          }),
-                                      child: Text(_createAccount
-                                          ? localization.googleSignUp
-                                          : localization.googleLogin))
-                                  : FlatButton(
-                                      key: ValueKey(localization.emailLogin),
-                                      onPressed: () => setState(() {
-                                            _emailLogin = true;
-                                            _loginError = '';
-                                          }),
-                                      child: Text(_createAccount
-                                          ? localization.emailSignUp
-                                          : localization.emailLogin)),
-                            ],
+                        if (!_recovePassword)
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.solidEnvelope, size: 16),
+                                _emailLogin
+                                    ? FlatButton(
+                                        onPressed: () => setState(() {
+                                              _emailLogin = false;
+                                              _loginError = '';
+                                            }),
+                                        child: Text(_createAccount
+                                            ? localization.googleSignUp
+                                            : localization.googleLogin))
+                                    : FlatButton(
+                                        key: ValueKey(localization.emailLogin),
+                                        onPressed: () => setState(() {
+                                              _emailLogin = true;
+                                              _loginError = '';
+                                            }),
+                                        child: Text(_createAccount
+                                            ? localization.emailSignUp
+                                            : localization.emailLogin)),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(FontAwesomeIcons.user, size: 16),
-                              _createAccount
-                                  ? FlatButton(
-                                      onPressed: () => setState(() {
-                                            _createAccount = false;
-                                            _loginError = '';
-                                          }),
-                                      child: Text(localization.accountLogin))
-                                  : FlatButton(
-                                      key: ValueKey(localization.createAccount),
-                                      onPressed: () => setState(() {
-                                            _createAccount = true;
-                                            _isSelfHosted = false;
-                                            _loginError = '';
-                                          }),
-                                      child: Text(localization.createAccount)),
-                            ],
+                        if (!_recovePassword)
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(FontAwesomeIcons.user, size: 16),
+                                _createAccount
+                                    ? FlatButton(
+                                        onPressed: () => setState(() {
+                                              _createAccount = false;
+                                              _loginError = '';
+                                            }),
+                                        child: Text(localization.accountLogin))
+                                    : FlatButton(
+                                        key: ValueKey(
+                                            localization.createAccount),
+                                        onPressed: () => setState(() {
+                                              _createAccount = true;
+                                              _isSelfHosted = false;
+                                              _loginError = '';
+                                            }),
+                                        child:
+                                            Text(localization.createAccount)),
+                              ],
+                            ),
                           ),
-                        ),
-                        if (!_createAccount)
+                        if (!_createAccount && !_recovePassword)
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Row(
@@ -519,6 +536,26 @@ class _LoginState extends State<LoginView> {
                                               }),
                                           child:
                                               Text(localization.selfhostLogin)),
+                                ]),
+                          ),
+                        if (!_createAccount && _emailLogin)
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  if (!_recovePassword)
+                                    Icon(FontAwesomeIcons.lock, size: 16),
+                                  FlatButton(
+                                      child: Text(_recovePassword
+                                          ? localization.cancel
+                                          : localization.recoverPassword),
+                                      onPressed: () {
+                                        setState(() {
+                                          _recovePassword = !_recovePassword;
+                                        });
+                                      }),
                                 ]),
                           ),
                         if (_createAccount)
