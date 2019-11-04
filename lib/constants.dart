@@ -124,6 +124,12 @@ const String kEntityStateActive = 'active';
 const String kEntityStateArchived = 'archived';
 const String kEntityStateDeleted = 'deleted';
 
+const String kFieldTypeSingleLineText = 'single_line_text';
+const String kFieldTypeMultiLineText = 'multi_line_text';
+const String kFieldTypeDropdown = 'dropdown';
+const String kFieldTypeDate = 'date';
+const String kFieldTypeSwitch = 'switch';
+
 const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';

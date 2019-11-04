@@ -14,6 +14,13 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'switch': 'Switch',
+      'use_comma_sparated_list': 'Use a comma separated list',
+      'options': 'Options',
+      'single_line_text': 'Single-line text',
+      'multi_line_text': 'Multi-line text',
+      'dropdown': 'Dropdown',
+      'field_type': 'Field Type',
       'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': 'Submit',
       'recover_password': 'Recover Password',
@@ -15460,6 +15467,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get recoverPasswordEmailSent =>
       _localizedValues[localeCode]['recover_password_email_sent'];
+
+  String get fieldType => _localizedValues[localeCode]['field_type'];
+
+  String get singleLineText => _localizedValues[localeCode]['single_line_text'];
+
+  String get multiLineText => _localizedValues[localeCode]['multi_line_text'];
+
+  String get dropdown => _localizedValues[localeCode]['dropdown'];
+
+  String get options => _localizedValues[localeCode]['options'];
+
+  String get useCommaSeparatedList =>
+      _localizedValues[localeCode]['use_comma_sparated_list'];
+
+  String get switchLabel => _localizedValues[localeCode]['switch'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
