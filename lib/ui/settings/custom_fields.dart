@@ -150,7 +150,7 @@ class CustomFieldsSettings extends StatelessWidget {
           label: localization.lookup('${fieldType}_field'),
           value: company.customFields['${fieldType}2'],
           onChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..customFields['${fieldType}1'] = value)),
+              company.rebuild((b) => b..customFields['${fieldType}2'] = value)),
           showTaxes: showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes2,
           onTaxesChanged: (value) => viewModel.onCompanyChanged(
@@ -160,7 +160,7 @@ class CustomFieldsSettings extends StatelessWidget {
           label: localization.lookup('${fieldType}_field'),
           value: company.customFields['${fieldType}3'],
           onChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..customFields['${fieldType}1'] = value)),
+              company.rebuild((b) => b..customFields['${fieldType}3'] = value)),
           showTaxes: showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes3,
           onTaxesChanged: (value) => viewModel.onCompanyChanged(
@@ -170,7 +170,7 @@ class CustomFieldsSettings extends StatelessWidget {
           label: localization.lookup('${fieldType}_field'),
           value: company.customFields['${fieldType}4'],
           onChanged: (value) => viewModel.onCompanyChanged(
-              company.rebuild((b) => b..customFields['${fieldType}1'] = value)),
+              company.rebuild((b) => b..customFields['${fieldType}4'] = value)),
           showTaxes: showChargeTaxes,
           taxesEnabled: company.enableCustomSurchargeTaxes4,
           onTaxesChanged: (value) => viewModel.onCompanyChanged(
@@ -307,6 +307,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
                   onChanged: (value) {
                     setState(() {
                       _fieldType = value;
+                      if (value != kFieldTypeDropdown) {
+                        _optionsController.text = '';
+                      }
                       _onChanged();
                     });
                   },
