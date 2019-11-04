@@ -38,6 +38,8 @@ class QuoteScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.quoteList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartQuoteMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final quotes = viewModel.quoteList
             .map<InvoiceEntity>((quoteId) => viewModel.quoteMap[quoteId])

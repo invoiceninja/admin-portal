@@ -38,6 +38,8 @@ class InvoiceScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.invoiceList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartInvoiceMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final invoices = viewModel.invoiceList
             .map<InvoiceEntity>((invoiceId) => viewModel.invoiceMap[invoiceId])

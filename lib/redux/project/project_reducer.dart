@@ -166,63 +166,103 @@ final projectsReducer = combineReducers<ProjectState>([
 
 ProjectState _archiveProjectRequest(
     ProjectState projectState, ArchiveProjectRequest action) {
-  final project = projectState.map[action.projectId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
 
-  return projectState.rebuild((b) => b..map[action.projectId] = project);
+  for (int i = 0; i < projects.length; i++) {
+    projects[i] = projects[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return projectState.rebuild((b) {
+    for (final project in projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _archiveProjectSuccess(
     ProjectState projectState, ArchiveProjectSuccess action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _archiveProjectFailure(
     ProjectState projectState, ArchiveProjectFailure action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _deleteProjectRequest(
     ProjectState projectState, DeleteProjectRequest action) {
-  final project = projectState.map[action.projectId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
 
-  return projectState.rebuild((b) => b..map[action.projectId] = project);
+  for (int i = 0; i < projects.length; i++) {
+    projects[i] = projects[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return projectState.rebuild((b) {
+    for (final project in projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _deleteProjectSuccess(
     ProjectState projectState, DeleteProjectSuccess action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _deleteProjectFailure(
     ProjectState projectState, DeleteProjectFailure action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _restoreProjectRequest(
     ProjectState projectState, RestoreProjectRequest action) {
-  final project = projectState.map[action.projectId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return projectState.rebuild((b) => b..map[action.projectId] = project);
+  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
+
+  for (int i = 0; i < projects.length; i++) {
+    projects[i] = projects[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return projectState.rebuild((b) {
+    for (final project in projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _restoreProjectSuccess(
     ProjectState projectState, RestoreProjectSuccess action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _restoreProjectFailure(
     ProjectState projectState, RestoreProjectFailure action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  return projectState.rebuild((b) {
+    for (final project in action.projects) {
+      b.map[project.id] = project;
+    }
+  });
 }
 
 ProjectState _addProject(ProjectState projectState, AddProjectSuccess action) {

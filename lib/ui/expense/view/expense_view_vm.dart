@@ -172,7 +172,7 @@ class ExpenseViewVM {
           store.dispatch(DeleteDocumentRequest(
               snackBarCompleter(
                   context, AppLocalization.of(context).deletedDocument),
-              document.id));
+              [document.id]));
         });
   }
 

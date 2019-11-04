@@ -145,60 +145,60 @@ class SaveCompanyGatewayFailure implements StopSaving {
 }
 
 class ArchiveCompanyGatewayRequest implements StartSaving {
-  ArchiveCompanyGatewayRequest(this.completer, this.companyGatewayId);
+  ArchiveCompanyGatewayRequest(this.completer, this.companyGatewayIds);
 
   final Completer completer;
-  final String companyGatewayId;
+  final List<String> companyGatewayIds;
 }
 
 class ArchiveCompanyGatewaySuccess implements StopSaving, PersistData {
-  ArchiveCompanyGatewaySuccess(this.companyGateway);
+  ArchiveCompanyGatewaySuccess(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class ArchiveCompanyGatewayFailure implements StopSaving {
-  ArchiveCompanyGatewayFailure(this.companyGateway);
+  ArchiveCompanyGatewayFailure(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class DeleteCompanyGatewayRequest implements StartSaving {
-  DeleteCompanyGatewayRequest(this.completer, this.companyGatewayId);
+  DeleteCompanyGatewayRequest(this.completer, this.companyGatewayIds);
 
   final Completer completer;
-  final String companyGatewayId;
+  final List<String> companyGatewayIds;
 }
 
 class DeleteCompanyGatewaySuccess implements StopSaving, PersistData {
-  DeleteCompanyGatewaySuccess(this.companyGateway);
+  DeleteCompanyGatewaySuccess(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class DeleteCompanyGatewayFailure implements StopSaving {
-  DeleteCompanyGatewayFailure(this.companyGateway);
+  DeleteCompanyGatewayFailure(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class RestoreCompanyGatewayRequest implements StartSaving {
-  RestoreCompanyGatewayRequest(this.completer, this.companyGatewayId);
+  RestoreCompanyGatewayRequest(this.completer, this.companyGatewayIds);
 
   final Completer completer;
-  final String companyGatewayId;
+  final List<String> companyGatewayIds;
 }
 
 class RestoreCompanyGatewaySuccess implements StopSaving, PersistData {
-  RestoreCompanyGatewaySuccess(this.companyGateway);
+  RestoreCompanyGatewaySuccess(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class RestoreCompanyGatewayFailure implements StopSaving {
-  RestoreCompanyGatewayFailure(this.companyGateway);
+  RestoreCompanyGatewayFailure(this.companyGateways);
 
-  final CompanyGatewayEntity companyGateway;
+  final List<CompanyGatewayEntity> companyGateways;
 }
 
 class FilterCompanyGateways {
@@ -253,6 +253,8 @@ void handleCompanyGatewayAction(BuildContext context,
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
+  final companyGatewayIds =
+      companyGateways.map((companyGateway) => companyGateway.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -262,17 +264,17 @@ void handleCompanyGatewayAction(BuildContext context,
     case EntityAction.restore:
       store.dispatch(RestoreCompanyGatewayRequest(
           snackBarCompleter(context, localization.restoredCompanyGateway),
-          companyGateway.id));
+          companyGatewayIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveCompanyGatewayRequest(
           snackBarCompleter(context, localization.archivedCompanyGateway),
-          companyGateway.id));
+          companyGatewayIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteCompanyGatewayRequest(
           snackBarCompleter(context, localization.deletedCompanyGateway),
-          companyGateway.id));
+          companyGatewayIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {

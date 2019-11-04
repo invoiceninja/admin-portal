@@ -41,6 +41,32 @@ class TaskRepository {
     return taskResponse.data;
   }
 
+  Future<List<TaskEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/tasks/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final TaskListResponse taskResponse =
+        serializers.deserializeWith(TaskListResponse.serializer, response);
+
+    return taskResponse.data.toList();
+  }
+
   Future<TaskEntity> saveData(Credentials credentials, TaskEntity task,
       [EntityAction action]) async {
     // Workaround for API issue

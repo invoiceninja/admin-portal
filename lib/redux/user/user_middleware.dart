@@ -110,17 +110,20 @@ Middleware<AppState> _viewUserList() {
 Middleware<AppState> _archiveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveUserRequest;
-    final origUser = store.state.userState.map[action.userId];
+
     repository
-        .saveData(store.state.credentials, origUser, EntityAction.archive)
-        .then((UserEntity user) {
-      store.dispatch(ArchiveUserSuccess(user));
+        .bulkAction(
+            store.state.credentials, action.userIds, EntityAction.archive)
+        .then((List<UserEntity> users) {
+      store.dispatch(ArchiveUserSuccess(users));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveUserFailure(origUser));
+      final users =
+          action.userIds.map((id) => store.state.userState.map[id]).toList();
+      store.dispatch(ArchiveUserFailure(users));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -133,17 +136,20 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
 Middleware<AppState> _deleteUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteUserRequest;
-    final origUser = store.state.userState.map[action.userId];
+
     repository
-        .saveData(store.state.credentials, origUser, EntityAction.delete)
-        .then((UserEntity user) {
-      store.dispatch(DeleteUserSuccess(user));
+        .bulkAction(
+            store.state.credentials, action.userIds, EntityAction.delete)
+        .then((List<UserEntity> users) {
+      store.dispatch(DeleteUserSuccess(users));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteUserFailure(origUser));
+      final users =
+          action.userIds.map((id) => store.state.userState.map[id]).toList();
+      store.dispatch(DeleteUserFailure(users));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,17 +162,20 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
 Middleware<AppState> _restoreUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreUserRequest;
-    final origUser = store.state.userState.map[action.userId];
+
     repository
-        .saveData(store.state.credentials, origUser, EntityAction.restore)
-        .then((UserEntity user) {
-      store.dispatch(RestoreUserSuccess(user));
+        .bulkAction(
+            store.state.credentials, action.userIds, EntityAction.restore)
+        .then((List<UserEntity> users) {
+      store.dispatch(RestoreUserSuccess(users));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreUserFailure(origUser));
+      final users =
+          action.userIds.map((id) => store.state.userState.map[id]).toList();
+      store.dispatch(RestoreUserFailure(users));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -255,8 +264,8 @@ Middleware<AppState> _loadUsers(UserRepository repository) {
         action.completer.complete(null);
       }
       /*
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
+      if (state.userState.isStale) {
+        store.dispatch(LoadUsers());
       }
       */
     }).catchError((Object error) {

@@ -37,6 +37,8 @@ class TaskScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taskList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartTaskMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final tasks = viewModel.taskList
             .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])

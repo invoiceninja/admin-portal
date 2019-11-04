@@ -151,63 +151,106 @@ final documentsReducer = combineReducers<DocumentState>([
 
 DocumentState _archiveDocumentRequest(
     DocumentState documentState, ArchiveDocumentRequest action) {
-  final document = documentState.map[action.documentId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
 
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _archiveDocumentSuccess(
     DocumentState documentState, ArchiveDocumentSuccess action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _archiveDocumentFailure(
     DocumentState documentState, ArchiveDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentRequest(
     DocumentState documentState, DeleteDocumentRequest action) {
-  final document = documentState.map[action.documentId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
 
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState.rebuild((b) =>
-      b..map.remove(action.document.id)..list.remove(action.document.id));
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentFailure(
     DocumentState documentState, DeleteDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentRequest(
     DocumentState documentState, RestoreDocumentRequest action) {
-  final document = documentState.map[action.documentId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
+
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentSuccess(
     DocumentState documentState, RestoreDocumentSuccess action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentFailure(
     DocumentState documentState, RestoreDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _addDocument(

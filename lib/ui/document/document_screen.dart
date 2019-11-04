@@ -36,6 +36,8 @@ class DocumentScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.documentList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartDocumentMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final documents = viewModel.documentList
             .map<DocumentEntity>(

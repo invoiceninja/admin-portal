@@ -42,6 +42,32 @@ class TaxRateRepository {
     return taxRateResponse.data;
   }
 
+  Future<List<TaxRateEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/tax_rates/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final TaxRateListResponse taxRateResponse =
+        serializers.deserializeWith(TaxRateListResponse.serializer, response);
+
+    return taxRateResponse.data.toList();
+  }
+
   Future<TaxRateEntity> saveData(Credentials credentials, TaxRateEntity taxRate,
       [EntityAction action]) async {
     final data = serializers.serializeWith(TaxRateEntity.serializer, taxRate);

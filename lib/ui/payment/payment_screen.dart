@@ -34,6 +34,8 @@ class PaymentScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartPaymentMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final payments = viewModel.paymentList
             .map<PaymentEntity>((paymentId) => viewModel.paymentMap[paymentId])
