@@ -31,7 +31,7 @@ class WebClient {
 
     final dynamic jsonResponse = json.decode(response.body);
 
-    //debugPrint(response.body);
+    //debugPrint(response.body, wrapWidth: 1000);
 
     return jsonResponse;
   }
@@ -40,7 +40,7 @@ class WebClient {
       {dynamic data, String filePath, String fileIndex}) async {
     url = _checkUrl(url);
     print('POST: $url');
-    debugPrint('Data: $data');
+    debugPrint('Data: $data', wrapWidth: 1000);
     http.Response response;
 
     if (filePath != null) {
@@ -61,7 +61,7 @@ class WebClient {
       {dynamic data, String filePath, String fileIndex = 'file'}) async {
     url = _checkUrl(url);
     print('PUT: $url');
-    debugPrint('Data: $data');
+    debugPrint('Data: $data', wrapWidth: 1000);
 
     http.Response response;
 
@@ -120,7 +120,7 @@ Map<String, String> _getHeaders(String token) => {
     };
 
 void _checkResponse(http.Response response) {
-  //debugPrint('response: ${response.statusCode} ${response.body}');
+  //debugPrint('response: ${response.statusCode} ${response.body}', wrapWidth: 1000);
   print('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
