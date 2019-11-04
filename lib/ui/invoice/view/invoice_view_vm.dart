@@ -213,7 +213,7 @@ class InvoiceViewVM extends EntityViewVM {
         store.dispatch(DeleteDocumentRequest(
             snackBarCompleter(
                 context, AppLocalization.of(context).deletedDocument),
-            document.id));
+            [document.id]));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
         store.dispatch(

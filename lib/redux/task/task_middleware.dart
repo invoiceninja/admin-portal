@@ -111,17 +111,20 @@ Middleware<AppState> _viewTaskList() {
 Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+
     repository
-        .saveData(store.state.credentials, origTask, EntityAction.archive)
-        .then((TaskEntity task) {
-      store.dispatch(ArchiveTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.archive)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(ArchiveTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveTaskFailure(origTask));
+      final tasks =
+          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+      store.dispatch(ArchiveTaskFailure(tasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -134,17 +137,20 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+
     repository
-        .saveData(store.state.credentials, origTask, EntityAction.delete)
-        .then((TaskEntity task) {
-      store.dispatch(DeleteTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.delete)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(DeleteTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteTaskFailure(origTask));
+      final tasks =
+          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+      store.dispatch(DeleteTaskFailure(tasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,17 +163,20 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+
     repository
-        .saveData(store.state.credentials, origTask, EntityAction.restore)
-        .then((TaskEntity task) {
-      store.dispatch(RestoreTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.restore)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(RestoreTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreTaskFailure(origTask));
+      final tasks =
+          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+      store.dispatch(RestoreTaskFailure(tasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

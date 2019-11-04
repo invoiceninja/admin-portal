@@ -143,60 +143,60 @@ class SaveUserFailure implements StopSaving {
 }
 
 class ArchiveUserRequest implements StartSaving {
-  ArchiveUserRequest(this.completer, this.userId);
+  ArchiveUserRequest(this.completer, this.userIds);
 
   final Completer completer;
-  final String userId;
+  final List<String> userIds;
 }
 
 class ArchiveUserSuccess implements StopSaving, PersistData {
-  ArchiveUserSuccess(this.user);
+  ArchiveUserSuccess(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class ArchiveUserFailure implements StopSaving {
-  ArchiveUserFailure(this.user);
+  ArchiveUserFailure(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class DeleteUserRequest implements StartSaving {
-  DeleteUserRequest(this.completer, this.userId);
+  DeleteUserRequest(this.completer, this.userIds);
 
   final Completer completer;
-  final String userId;
+  final List<String> userIds;
 }
 
 class DeleteUserSuccess implements StopSaving, PersistData {
-  DeleteUserSuccess(this.user);
+  DeleteUserSuccess(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class DeleteUserFailure implements StopSaving {
-  DeleteUserFailure(this.user);
+  DeleteUserFailure(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class RestoreUserRequest implements StartSaving {
-  RestoreUserRequest(this.completer, this.userId);
+  RestoreUserRequest(this.completer, this.userIds);
 
   final Completer completer;
-  final String userId;
+  final List<String> userIds;
 }
 
 class RestoreUserSuccess implements StopSaving, PersistData {
-  RestoreUserSuccess(this.user);
+  RestoreUserSuccess(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class RestoreUserFailure implements StopSaving {
-  RestoreUserFailure(this.user);
+  RestoreUserFailure(this.users);
 
-  final UserEntity user;
+  final List<UserEntity> users;
 }
 
 class FilterUsers {
@@ -242,6 +242,7 @@ void handleUserAction(
   //final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
+  final userIds = users.map((user) => user.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -249,15 +250,15 @@ void handleUserAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreUserRequest(
-          snackBarCompleter(context, localization.restoredUser), user.id));
+          snackBarCompleter(context, localization.restoredUser), userIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveUserRequest(
-          snackBarCompleter(context, localization.archivedUser), user.id));
+          snackBarCompleter(context, localization.archivedUser), userIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteUserRequest(
-          snackBarCompleter(context, localization.deletedUser), user.id));
+          snackBarCompleter(context, localization.deletedUser), userIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {

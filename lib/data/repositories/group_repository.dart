@@ -42,6 +42,32 @@ class GroupRepository {
     return groupResponse.data;
   }
 
+  Future<List<GroupEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/groups/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final GroupListResponse groupResponse =
+        serializers.deserializeWith(GroupListResponse.serializer, response);
+
+    return groupResponse.data.toList();
+  }
+
   Future<GroupEntity> saveData(Credentials credentials, GroupEntity group,
       [EntityAction action]) async {
     final data = serializers.serializeWith(GroupEntity.serializer, group);

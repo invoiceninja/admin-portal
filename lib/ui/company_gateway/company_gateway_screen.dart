@@ -38,6 +38,8 @@ class CompanyGatewayScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartCompanyGatewayMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final companyGateways = viewModel.companyGatewayList
             .map<CompanyGatewayEntity>((companyGatewayId) =>

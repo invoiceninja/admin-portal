@@ -146,60 +146,60 @@ class SaveExpenseFailure implements StopSaving {
 }
 
 class ArchiveExpenseRequest implements StartSaving {
-  ArchiveExpenseRequest(this.completer, this.expenseId);
+  ArchiveExpenseRequest(this.completer, this.expenseIds);
 
   final Completer completer;
-  final String expenseId;
+  final List<String> expenseIds;
 }
 
 class ArchiveExpenseSuccess implements StopSaving, PersistData {
-  ArchiveExpenseSuccess(this.expense);
+  ArchiveExpenseSuccess(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class ArchiveExpenseFailure implements StopSaving {
-  ArchiveExpenseFailure(this.expense);
+  ArchiveExpenseFailure(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class DeleteExpenseRequest implements StartSaving {
-  DeleteExpenseRequest(this.completer, this.expenseId);
+  DeleteExpenseRequest(this.completer, this.expenseIds);
 
   final Completer completer;
-  final String expenseId;
+  final List<String> expenseIds;
 }
 
 class DeleteExpenseSuccess implements StopSaving, PersistData {
-  DeleteExpenseSuccess(this.expense);
+  DeleteExpenseSuccess(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class DeleteExpenseFailure implements StopSaving {
-  DeleteExpenseFailure(this.expense);
+  DeleteExpenseFailure(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class RestoreExpenseRequest implements StartSaving {
-  RestoreExpenseRequest(this.completer, this.expenseId);
+  RestoreExpenseRequest(this.completer, this.expenseIds);
 
   final Completer completer;
-  final String expenseId;
+  final List<String> expenseIds;
 }
 
 class RestoreExpenseSuccess implements StopSaving, PersistData {
-  RestoreExpenseSuccess(this.expense);
+  RestoreExpenseSuccess(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class RestoreExpenseFailure implements StopSaving {
-  RestoreExpenseFailure(this.expense);
+  RestoreExpenseFailure(this.expenses);
 
-  final ExpenseEntity expense;
+  final List<ExpenseEntity> expenses;
 }
 
 class FilterExpenses {
@@ -262,6 +262,7 @@ void handleExpenseAction(
   final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
+  final expenseIds = expenses.map((expense) => expense.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -287,16 +288,16 @@ void handleExpenseAction(
     case EntityAction.restore:
       store.dispatch(RestoreExpenseRequest(
           snackBarCompleter(context, localization.restoredExpense),
-          expense.id));
+          expenseIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveExpenseRequest(
           snackBarCompleter(context, localization.archivedExpense),
-          expense.id));
+          expenseIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteExpenseRequest(
-          snackBarCompleter(context, localization.deletedExpense), expense.id));
+          snackBarCompleter(context, localization.deletedExpense), expenseIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {

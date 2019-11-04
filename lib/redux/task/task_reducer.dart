@@ -178,49 +178,95 @@ final tasksReducer = combineReducers<TaskState>([
 ]);
 
 TaskState _archiveTaskRequest(TaskState taskState, ArchiveTaskRequest action) {
-  final task = taskState.map[action.taskId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
 
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _archiveTaskFailure(TaskState taskState, ArchiveTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskRequest(TaskState taskState, DeleteTaskRequest action) {
-  final task = taskState.map[action.taskId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
 
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskSuccess(TaskState taskState, DeleteTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskFailure(TaskState taskState, DeleteTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskRequest(TaskState taskState, RestoreTaskRequest action) {
-  final task = taskState.map[action.taskId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
+
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskFailure(TaskState taskState, RestoreTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _addTask(TaskState taskState, AddTaskSuccess action) {

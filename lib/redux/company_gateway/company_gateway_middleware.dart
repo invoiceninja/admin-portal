@@ -115,19 +115,21 @@ Middleware<AppState> _archiveCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveCompanyGatewayRequest;
-    final origCompanyGateway =
-        store.state.companyGatewayState.map[action.companyGatewayId];
+
     repository
-        .saveData(
-            store.state.credentials, origCompanyGateway, EntityAction.archive)
-        .then((CompanyGatewayEntity companyGateway) {
-      store.dispatch(ArchiveCompanyGatewaySuccess(companyGateway));
+        .bulkAction(store.state.credentials, action.companyGatewayIds,
+            EntityAction.archive)
+        .then((List<CompanyGatewayEntity> companyGateways) {
+      store.dispatch(ArchiveCompanyGatewaySuccess(companyGateways));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveCompanyGatewayFailure(origCompanyGateway));
+      final companyGateways = action.companyGatewayIds
+          .map((id) => store.state.companyGatewayState.map[id])
+          .toList();
+      store.dispatch(ArchiveCompanyGatewayFailure(companyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -141,19 +143,20 @@ Middleware<AppState> _deleteCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteCompanyGatewayRequest;
-    final origCompanyGateway =
-        store.state.companyGatewayState.map[action.companyGatewayId];
     repository
-        .saveData(
-            store.state.credentials, origCompanyGateway, EntityAction.delete)
-        .then((CompanyGatewayEntity companyGateway) {
-      store.dispatch(DeleteCompanyGatewaySuccess(companyGateway));
+        .bulkAction(store.state.credentials, action.companyGatewayIds,
+            EntityAction.delete)
+        .then((List<CompanyGatewayEntity> companyGateways) {
+      store.dispatch(DeleteCompanyGatewaySuccess(companyGateways));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteCompanyGatewayFailure(origCompanyGateway));
+      final companyGateways = action.companyGatewayIds
+          .map((id) => store.state.companyGatewayState.map[id])
+          .toList();
+      store.dispatch(DeleteCompanyGatewayFailure(companyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -167,19 +170,21 @@ Middleware<AppState> _restoreCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreCompanyGatewayRequest;
-    final origCompanyGateway =
-        store.state.companyGatewayState.map[action.companyGatewayId];
+
     repository
-        .saveData(
-            store.state.credentials, origCompanyGateway, EntityAction.restore)
-        .then((CompanyGatewayEntity companyGateway) {
-      store.dispatch(RestoreCompanyGatewaySuccess(companyGateway));
+        .bulkAction(store.state.credentials, action.companyGatewayIds,
+            EntityAction.restore)
+        .then((List<CompanyGatewayEntity> companyGateways) {
+      store.dispatch(RestoreCompanyGatewaySuccess(companyGateways));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreCompanyGatewayFailure(origCompanyGateway));
+      final companyGateways = action.companyGatewayIds
+          .map((id) => store.state.companyGatewayState.map[id])
+          .toList();
+      store.dispatch(RestoreCompanyGatewayFailure(companyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

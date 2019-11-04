@@ -111,17 +111,20 @@ Middleware<AppState> _viewGroupList() {
 Middleware<AppState> _archiveGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveGroupRequest;
-    final origGroup = store.state.groupState.map[action.groupId];
+
     repository
-        .saveData(store.state.credentials, origGroup, EntityAction.archive)
-        .then((GroupEntity group) {
-      store.dispatch(ArchiveGroupSuccess(group));
+        .bulkAction(
+            store.state.credentials, action.groupIds, EntityAction.archive)
+        .then((List<GroupEntity> groups) {
+      store.dispatch(ArchiveGroupSuccess(groups));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveGroupFailure(origGroup));
+      final groups =
+          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+      store.dispatch(ArchiveGroupFailure(groups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -134,17 +137,20 @@ Middleware<AppState> _archiveGroup(GroupRepository repository) {
 Middleware<AppState> _deleteGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteGroupRequest;
-    final origGroup = store.state.groupState.map[action.groupId];
+
     repository
-        .saveData(store.state.credentials, origGroup, EntityAction.delete)
-        .then((GroupEntity group) {
-      store.dispatch(DeleteGroupSuccess(group));
+        .bulkAction(
+            store.state.credentials, action.groupIds, EntityAction.delete)
+        .then((List<GroupEntity> groups) {
+      store.dispatch(DeleteGroupSuccess(groups));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteGroupFailure(origGroup));
+      final groups =
+          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+      store.dispatch(DeleteGroupFailure(groups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,17 +163,20 @@ Middleware<AppState> _deleteGroup(GroupRepository repository) {
 Middleware<AppState> _restoreGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreGroupRequest;
-    final origGroup = store.state.groupState.map[action.groupId];
+
     repository
-        .saveData(store.state.credentials, origGroup, EntityAction.restore)
-        .then((GroupEntity group) {
-      store.dispatch(RestoreGroupSuccess(group));
+        .bulkAction(
+            store.state.credentials, action.groupIds, EntityAction.restore)
+        .then((List<GroupEntity> groups) {
+      store.dispatch(RestoreGroupSuccess(groups));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreGroupFailure(origGroup));
+      final groups =
+          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+      store.dispatch(RestoreGroupFailure(groups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

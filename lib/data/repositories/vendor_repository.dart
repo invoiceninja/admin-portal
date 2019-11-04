@@ -42,6 +42,32 @@ class VendorRepository {
     return vendorResponse.data;
   }
 
+  Future<List<VendorEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/vendors/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final VendorListResponse vendorResponse =
+        serializers.deserializeWith(VendorListResponse.serializer, response);
+
+    return vendorResponse.data.toList();
+  }
+
   Future<VendorEntity> saveData(Credentials credentials, VendorEntity vendor,
       [EntityAction action]) async {
     final data = serializers.serializeWith(VendorEntity.serializer, vendor);

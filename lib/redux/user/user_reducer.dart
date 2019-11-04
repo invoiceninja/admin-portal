@@ -109,24 +109,23 @@ ListUIState _sortUsers(ListUIState userListState, SortUsers action) {
 }
 
 ListUIState _startListMultiselect(
-    ListUIState productListState, StartUserMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
+    ListUIState userListState, StartUserMultiselect action) {
+  return userListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState productListState, AddToUserMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+    ListUIState userListState, AddToUserMultiselect action) {
+  return userListState.rebuild((b) => b..selectedIds.add(action.entity.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState productListState, RemoveFromUserMultiselect action) {
-  return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+    ListUIState userListState, RemoveFromUserMultiselect action) {
+  return userListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState productListState, ClearUserMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = null);
+    ListUIState userListState, ClearUserMultiselect action) {
+  return userListState.rebuild((b) => b..selectedIds = null);
 }
 
 final usersReducer = combineReducers<UserState>([
@@ -147,49 +146,95 @@ final usersReducer = combineReducers<UserState>([
 ]);
 
 UserState _archiveUserRequest(UserState userState, ArchiveUserRequest action) {
-  final user = userState.map[action.userId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final users = action.userIds.map((id) => userState.map[id]).toList();
 
-  return userState.rebuild((b) => b..map[action.userId] = user);
+  for (int i = 0; i < users.length; i++) {
+    users[i] = users[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return userState.rebuild((b) {
+    for (final user in users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _archiveUserSuccess(UserState userState, ArchiveUserSuccess action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _archiveUserFailure(UserState userState, ArchiveUserFailure action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _deleteUserRequest(UserState userState, DeleteUserRequest action) {
-  final user = userState.map[action.userId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final users = action.userIds.map((id) => userState.map[id]).toList();
 
-  return userState.rebuild((b) => b..map[action.userId] = user);
+  for (int i = 0; i < users.length; i++) {
+    users[i] = users[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return userState.rebuild((b) {
+    for (final user in users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _deleteUserSuccess(UserState userState, DeleteUserSuccess action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _deleteUserFailure(UserState userState, DeleteUserFailure action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _restoreUserRequest(UserState userState, RestoreUserRequest action) {
-  final user = userState.map[action.userId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return userState.rebuild((b) => b..map[action.userId] = user);
+  final users = action.userIds.map((id) => userState.map[id]).toList();
+
+  for (int i = 0; i < users.length; i++) {
+    users[i] = users[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return userState.rebuild((b) {
+    for (final user in users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _restoreUserSuccess(UserState userState, RestoreUserSuccess action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _restoreUserFailure(UserState userState, RestoreUserFailure action) {
-  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+  return userState.rebuild((b) {
+    for (final user in action.users) {
+      b.map[user.id] = user;
+    }
+  });
 }
 
 UserState _addUser(UserState userState, AddUserSuccess action) {

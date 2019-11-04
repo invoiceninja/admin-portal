@@ -112,17 +112,21 @@ Middleware<AppState> _viewProjectList() {
 Middleware<AppState> _archiveProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+
     repository
-        .saveData(store.state.credentials, origProject, EntityAction.archive)
-        .then((ProjectEntity project) {
-      store.dispatch(ArchiveProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.archive)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(ArchiveProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveProjectFailure(origProject));
+      final projects = action.projectIds
+          .map((id) => store.state.projectState.map[id])
+          .toList();
+      store.dispatch(ArchiveProjectFailure(projects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -135,17 +139,21 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
 Middleware<AppState> _deleteProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+
     repository
-        .saveData(store.state.credentials, origProject, EntityAction.delete)
-        .then((ProjectEntity project) {
-      store.dispatch(DeleteProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.delete)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(DeleteProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteProjectFailure(origProject));
+      final projects = action.projectIds
+          .map((id) => store.state.projectState.map[id])
+          .toList();
+      store.dispatch(DeleteProjectFailure(projects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -158,17 +166,21 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
 Middleware<AppState> _restoreProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+
     repository
-        .saveData(store.state.credentials, origProject, EntityAction.restore)
-        .then((ProjectEntity project) {
-      store.dispatch(RestoreProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.restore)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(RestoreProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreProjectFailure(origProject));
+      final projects = action.projectIds
+          .map((id) => store.state.projectState.map[id])
+          .toList();
+      store.dispatch(RestoreProjectFailure(projects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

@@ -39,6 +39,8 @@ class GroupSettingsScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,
+      onHamburgerLongPress: () =>
+          store.dispatch(StartGroupMultiselect(context: context)),
       onCheckboxChanged: (value) {
         final groups = viewModel.groupList
             .map<GroupEntity>((groupId) => viewModel.groupMap[groupId])

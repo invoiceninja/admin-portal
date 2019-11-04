@@ -42,6 +42,32 @@ class ProjectRepository {
     return projectResponse.data;
   }
 
+  Future<List<ProjectEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/projects/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final ProjectListResponse projectResponse =
+        serializers.deserializeWith(ProjectListResponse.serializer, response);
+
+    return projectResponse.data.toList();
+  }
+
   Future<ProjectEntity> saveData(Credentials credentials, ProjectEntity project,
       [EntityAction action]) async {
     final data = serializers.serializeWith(ProjectEntity.serializer, project);

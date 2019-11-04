@@ -44,6 +44,32 @@ class CompanyGatewayRepository {
     return companyGatewayResponse.data;
   }
 
+  Future<List<CompanyGatewayEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/company_gateways/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final CompanyGatewayListResponse companyGatewayResponse = serializers
+        .deserializeWith(CompanyGatewayListResponse.serializer, response);
+
+    return companyGatewayResponse.data.toList();
+  }
+
   Future<CompanyGatewayEntity> saveData(
       Credentials credentials, CompanyGatewayEntity companyGateway,
       [EntityAction action]) async {

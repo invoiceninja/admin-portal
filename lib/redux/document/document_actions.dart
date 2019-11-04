@@ -136,60 +136,60 @@ class SaveDocumentFailure implements StopSaving {
 }
 
 class ArchiveDocumentRequest implements StartSaving {
-  ArchiveDocumentRequest(this.completer, this.documentId);
+  ArchiveDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final String documentId;
+  final List<String> documentIds;
 }
 
 class ArchiveDocumentSuccess implements StopSaving, PersistData {
-  ArchiveDocumentSuccess(this.document);
+  ArchiveDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class ArchiveDocumentFailure implements StopSaving {
-  ArchiveDocumentFailure(this.document);
+  ArchiveDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentRequest implements StartSaving {
-  DeleteDocumentRequest(this.completer, this.documentId);
+  DeleteDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final String documentId;
+  final List<String> documentIds;
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {
-  DeleteDocumentSuccess(this.document);
+  DeleteDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentFailure implements StopSaving {
-  DeleteDocumentFailure(this.document);
+  DeleteDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class RestoreDocumentRequest implements StartSaving {
-  RestoreDocumentRequest(this.completer, this.documentId);
+  RestoreDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final String documentId;
+  final List<String> documentIds;
 }
 
 class RestoreDocumentSuccess implements StopSaving, PersistData {
-  RestoreDocumentSuccess(this.document);
+  RestoreDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class RestoreDocumentFailure implements StopSaving {
-  RestoreDocumentFailure(this.document);
+  RestoreDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class FilterDocuments {
@@ -244,6 +244,7 @@ void handleDocumentAction(
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final document = documents.first;
+  final documentIds = documents.map((document) => document.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -252,17 +253,17 @@ void handleDocumentAction(
     case EntityAction.restore:
       store.dispatch(RestoreDocumentRequest(
           snackBarCompleter(context, localization.restoredDocument),
-          document.id));
+          documentIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveDocumentRequest(
           snackBarCompleter(context, localization.archivedDocument),
-          document.id));
+          documentIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteDocumentRequest(
           snackBarCompleter(context, localization.deletedDocument),
-          document.id));
+          documentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.documentListState.isInMultiselect()) {

@@ -143,60 +143,60 @@ class SaveTaxRateFailure implements StopSaving {
 }
 
 class ArchiveTaxRateRequest implements StartSaving {
-  ArchiveTaxRateRequest(this.completer, this.taxRateId);
+  ArchiveTaxRateRequest(this.completer, this.taxRateIds);
 
   final Completer completer;
-  final String taxRateId;
+  final List<String> taxRateIds;
 }
 
 class ArchiveTaxRateSuccess implements StopSaving, PersistData {
-  ArchiveTaxRateSuccess(this.taxRate);
+  ArchiveTaxRateSuccess(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class ArchiveTaxRateFailure implements StopSaving {
-  ArchiveTaxRateFailure(this.taxRate);
+  ArchiveTaxRateFailure(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class DeleteTaxRateRequest implements StartSaving {
-  DeleteTaxRateRequest(this.completer, this.taxRateId);
+  DeleteTaxRateRequest(this.completer, this.taxRateIds);
 
   final Completer completer;
-  final String taxRateId;
+  final List<String> taxRateIds;
 }
 
 class DeleteTaxRateSuccess implements StopSaving, PersistData {
-  DeleteTaxRateSuccess(this.taxRate);
+  DeleteTaxRateSuccess(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class DeleteTaxRateFailure implements StopSaving {
-  DeleteTaxRateFailure(this.taxRate);
+  DeleteTaxRateFailure(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class RestoreTaxRateRequest implements StartSaving {
-  RestoreTaxRateRequest(this.completer, this.taxRateId);
+  RestoreTaxRateRequest(this.completer, this.taxRateIds);
 
   final Completer completer;
-  final String taxRateId;
+  final List<String> taxRateIds;
 }
 
 class RestoreTaxRateSuccess implements StopSaving, PersistData {
-  RestoreTaxRateSuccess(this.taxRate);
+  RestoreTaxRateSuccess(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class RestoreTaxRateFailure implements StopSaving {
-  RestoreTaxRateFailure(this.taxRate);
+  RestoreTaxRateFailure(this.taxRates);
 
-  final TaxRateEntity taxRate;
+  final List<TaxRateEntity> taxRates;
 }
 
 class FilterTaxRates {
@@ -251,6 +251,7 @@ void handleTaxRateAction(
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final taxRate = taxRates.first;
+  final taxRateIds = taxRates.map((taxRate) => taxRate.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -259,16 +260,16 @@ void handleTaxRateAction(
     case EntityAction.restore:
       store.dispatch(RestoreTaxRateRequest(
           snackBarCompleter(context, localization.restoredTaxRate),
-          taxRate.id));
+          taxRateIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaxRateRequest(
           snackBarCompleter(context, localization.archivedTaxRate),
-          taxRate.id));
+          taxRateIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaxRateRequest(
-          snackBarCompleter(context, localization.deletedTaxRate), taxRate.id));
+          snackBarCompleter(context, localization.deletedTaxRate), taxRateIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {

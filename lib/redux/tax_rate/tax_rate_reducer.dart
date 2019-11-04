@@ -151,63 +151,103 @@ final taxRatesReducer = combineReducers<TaxRateState>([
 
 TaxRateState _archiveTaxRateRequest(
     TaxRateState taxRateState, ArchiveTaxRateRequest action) {
-  final taxRate = taxRateState.map[action.taxRateId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
 
-  return taxRateState.rebuild((b) => b..map[action.taxRateId] = taxRate);
+  for (int i = 0; i < taxRates.length; i++) {
+    taxRates[i] = taxRates[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return taxRateState.rebuild((b) {
+    for (final taxRate in taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _archiveTaxRateSuccess(
     TaxRateState taxRateState, ArchiveTaxRateSuccess action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _archiveTaxRateFailure(
     TaxRateState taxRateState, ArchiveTaxRateFailure action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _deleteTaxRateRequest(
     TaxRateState taxRateState, DeleteTaxRateRequest action) {
-  final taxRate = taxRateState.map[action.taxRateId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
 
-  return taxRateState.rebuild((b) => b..map[action.taxRateId] = taxRate);
+  for (int i = 0; i < taxRates.length; i++) {
+    taxRates[i] = taxRates[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return taxRateState.rebuild((b) {
+    for (final taxRate in taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _deleteTaxRateSuccess(
     TaxRateState taxRateState, DeleteTaxRateSuccess action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _deleteTaxRateFailure(
     TaxRateState taxRateState, DeleteTaxRateFailure action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _restoreTaxRateRequest(
     TaxRateState taxRateState, RestoreTaxRateRequest action) {
-  final taxRate = taxRateState.map[action.taxRateId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return taxRateState.rebuild((b) => b..map[action.taxRateId] = taxRate);
+  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
+
+  for (int i = 0; i < taxRates.length; i++) {
+    taxRates[i] = taxRates[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return taxRateState.rebuild((b) {
+    for (final taxRate in taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _restoreTaxRateSuccess(
     TaxRateState taxRateState, RestoreTaxRateSuccess action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _restoreTaxRateFailure(
     TaxRateState taxRateState, RestoreTaxRateFailure action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  return taxRateState.rebuild((b) {
+    for (final taxRate in action.taxRates) {
+      b.map[taxRate.id] = taxRate;
+    }
+  });
 }
 
 TaxRateState _addTaxRate(TaxRateState taxRateState, AddTaxRateSuccess action) {

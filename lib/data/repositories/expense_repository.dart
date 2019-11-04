@@ -42,6 +42,32 @@ class ExpenseRepository {
     return expenseResponse.data;
   }
 
+  Future<List<ExpenseEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    dynamic response;
+
+    switch (action) {
+      case EntityAction.restore:
+      case EntityAction.archive:
+      case EntityAction.delete:
+        var url = credentials.url + '/expenses/bulk?include=activities';
+        if (action != null) {
+          url += '&action=' + action.toString();
+        }
+        response = await webClient.post(url, credentials.token,
+            data: json.encode([ids]));
+        break;
+      default:
+        // Might have other actions in the future
+        break;
+    }
+
+    final ExpenseListResponse expenseResponse =
+        serializers.deserializeWith(ExpenseListResponse.serializer, response);
+
+    return expenseResponse.data.toList();
+  }
+
   Future<ExpenseEntity> saveData(Credentials credentials, ExpenseEntity expense,
       [EntityAction action]) async {
     final data = serializers.serializeWith(ExpenseEntity.serializer, expense);

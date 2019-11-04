@@ -149,60 +149,60 @@ class SaveProjectFailure implements StopSaving {
 }
 
 class ArchiveProjectRequest implements StartSaving {
-  ArchiveProjectRequest(this.completer, this.projectId);
+  ArchiveProjectRequest(this.completer, this.projectIds);
 
   final Completer completer;
-  final String projectId;
+  final List<String> projectIds;
 }
 
 class ArchiveProjectSuccess implements StopSaving, PersistData {
-  ArchiveProjectSuccess(this.project);
+  ArchiveProjectSuccess(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class ArchiveProjectFailure implements StopSaving {
-  ArchiveProjectFailure(this.project);
+  ArchiveProjectFailure(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class DeleteProjectRequest implements StartSaving {
-  DeleteProjectRequest(this.completer, this.projectId);
+  DeleteProjectRequest(this.completer, this.projectIds);
 
   final Completer completer;
-  final String projectId;
+  final List<String> projectIds;
 }
 
 class DeleteProjectSuccess implements StopSaving, PersistData {
-  DeleteProjectSuccess(this.project);
+  DeleteProjectSuccess(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class DeleteProjectFailure implements StopSaving {
-  DeleteProjectFailure(this.project);
+  DeleteProjectFailure(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class RestoreProjectRequest implements StartSaving {
-  RestoreProjectRequest(this.completer, this.projectId);
+  RestoreProjectRequest(this.completer, this.projectIds);
 
   final Completer completer;
-  final String projectId;
+  final List<String> projectIds;
 }
 
 class RestoreProjectSuccess implements StopSaving, PersistData {
-  RestoreProjectSuccess(this.project);
+  RestoreProjectSuccess(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class RestoreProjectFailure implements StopSaving {
-  RestoreProjectFailure(this.project);
+  RestoreProjectFailure(this.projects);
 
-  final ProjectEntity project;
+  final List<ProjectEntity> projects;
 }
 
 class FilterProjects {
@@ -258,6 +258,7 @@ void handleProjectAction(
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;
   final project = projects.first as ProjectEntity;
+  final projectIds = projects.map((project) => project.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -288,19 +289,19 @@ void handleProjectAction(
       store.dispatch(RestoreProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).restoredProject),
-          project.id));
+          projectIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).archivedProject),
-          project.id));
+          projectIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProjectRequest(
           snackBarCompleter(
               context, AppLocalization.of(context).deletedProject),
-          project.id));
+          projectIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {
