@@ -87,7 +87,7 @@ class CompanyGatewayScreen extends StatelessWidget {
             child: Text(
               localization.done,
             ),
-            onPressed: state.productListState.selectedIds.isEmpty
+            onPressed: state.companyGatewayListState.selectedIds.isEmpty
                 ? null
                 : () async {
                     final companyGateways = viewModel.companyGatewayList

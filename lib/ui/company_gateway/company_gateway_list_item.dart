@@ -10,16 +10,17 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
+    Key key,
     @required this.user,
     @required this.onEntityAction,
     @required this.onTap,
-    @required this.onLongPress,
+    this.onLongPress,
     //@required this.onCheckboxChanged,
     @required this.companyGateway,
     @required this.filter,
     this.onCheckboxChanged,
     this.isChecked = false,
-  });
+  }) : super(key: key);
 
   final UserEntity user;
   final Function(EntityAction) onEntityAction;
