@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -168,6 +169,15 @@ class _LoginState extends State<LoginView> {
     completer.future.then((_) {
       setState(() {
         _loginError = '';
+        if (_recovePassword) {
+          _recovePassword = false;
+          showDialog<MessageDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return MessageDialog(
+                    AppLocalization.of(context).recoverPasswordEmailSent);
+              });
+        }
       });
     }).catchError((Object error) {
       setState(() {

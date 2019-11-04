@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': 'Submit',
       'recover_password': 'Recover Password',
       'late_fees': 'Late Fees',
@@ -15452,9 +15453,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get lateFees => _localizedValues[localeCode]['late_fees'];
 
-  String get recoverPassword => _localizedValues[localeCode]['recover_password'];
+  String get recoverPassword =>
+      _localizedValues[localeCode]['recover_password'];
 
   String get submit => _localizedValues[localeCode]['submit'];
+
+  String get recoverPasswordEmailSent =>
+      _localizedValues[localeCode]['recover_password_email_sent'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

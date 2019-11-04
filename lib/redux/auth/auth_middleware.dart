@@ -217,9 +217,11 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
       secret: action.secret,
     )
         .then((data) {
+      store.dispatch(RecoverPasswordSuccess());
       action.completer.complete(null);
     }).catchError((Object error) {
       if (action.completer != null) {
+        store.dispatch(RecoverPasswordFailure(error.toString()));
         action.completer.completeError(error);
       }
     });

@@ -83,6 +83,14 @@ class RecoverPasswordRequest implements StartLoading {
   final String secret;
 }
 
+class RecoverPasswordSuccess implements StopLoading {}
+
+class RecoverPasswordFailure implements StopLoading {
+  RecoverPasswordFailure(this.error);
+
+  final Object error;
+}
+
 class UserLogout implements PersistData, PersistUI {
   UserLogout(this.context);
 
