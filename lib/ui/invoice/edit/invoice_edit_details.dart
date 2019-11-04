@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -117,19 +118,19 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final company = viewModel.company;
 
     // TODO replace with company.getInvoiceDesigns
-    var designs = kInvoiceDesigns.values.toList();
+    var designIds = kInvoiceDesigns.keys.toList();
 
     if (!(company.settings.hasCustomDesign1 ?? true)) {
-      designs.remove(kDesignCustom1);
+      designIds.remove(kDesignCustom1);
     }
     if (!(company.settings.hasCustomDesign2 ?? true)) {
-      designs.remove(kDesignCustom2);
+      designIds.remove(kDesignCustom2);
     }
     if (!(company.settings.hasCustomDesign3 ?? true)) {
-      designs.remove(kDesignCustom3);
+      designIds.remove(kDesignCustom3);
     }
     if (!company.isProPlan) {
-      designs = designs.sublist(0, 4);
+      designIds = designIds.sublist(0, 4);
     }
 
     return ListView(
@@ -300,30 +301,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialTaxRate: invoice.taxRate2,
                   )
                 : Container(),
-            PopupMenuButton<String>(
-                padding: EdgeInsets.zero,
-                onSelected: (String design) {
-                  _designController.text = design;
-                  viewModel
-                      .onChanged(invoice.rebuild((b) => b..designId = design));
-                },
-                child: InkWell(
-                  child: IgnorePointer(
-                    child: TextFormField(
-                      controller: _designController,
-                      decoration: InputDecoration(
-                        labelText: localization.design,
-                        suffixIcon: const Icon(Icons.arrow_drop_down),
-                      ),
-                    ),
-                  ),
-                ),
-                itemBuilder: (BuildContext context) => designs
-                    .map((design) => PopupMenuItem<String>(
-                          value: design,
-                          child: Text(design),
-                        ))
-                    .toList()),
+            AppDropdownButton(
+              labelText: localization.design,
+              value: invoice.designId,
+              onChanged: (value) => viewModel
+                  .onChanged(invoice.rebuild((b) => b..designId = value)),
+              items: designIds
+                  .map((designId) => DropdownMenuItem<String>(
+                        value: designId,
+                        child: Text(kInvoiceDesigns[designId]),
+                      ))
+                  .toList(),
+            ),
           ],
         ),
       ],
