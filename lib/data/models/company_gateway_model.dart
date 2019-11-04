@@ -191,7 +191,8 @@ abstract class CompanyGatewayEntity extends Object
 
     switch (sortField) {
       case CompanyGatewayFields.priority:
-        response = companyGatewayA.priority.compareTo(companyGatewayB.priority);
+        response = (companyGatewayA.priority ?? 0)
+            .compareTo(companyGatewayB.priority ?? 0);
         break;
     }
 
