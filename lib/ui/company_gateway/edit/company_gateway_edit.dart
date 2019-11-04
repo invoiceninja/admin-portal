@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -261,29 +262,20 @@ class GatewayConfigSettings extends StatelessWidget {
     return Column(
       children: [
         if (gatewayTypes != null)
-          InputDecorator(
-            decoration: InputDecoration(
-              labelText: localization.paymentType,
-            ),
-            isEmpty: companyGateway.gatewayTypeId == null,
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                  value: companyGateway.gatewayTypeId,
-                  isExpanded: true,
-                  isDense: true,
-                  onChanged: (value) => viewModel.onChanged(
-                      companyGateway.rebuild((b) => b..gatewayTypeId = value)),
-                  items: gatewayTypes
-                      .map((id, type) =>
-                          MapEntry<String, DropdownMenuItem<String>>(
-                              id,
-                              DropdownMenuItem<String>(
-                                child: Text(localization.lookup(type)),
-                                value: id,
-                              )))
-                      .values
-                      .toList()),
-            ),
+          AppDropdownButton(
+            labelText: localization.paymentType,
+            value: companyGateway.gatewayTypeId,
+            onChanged: (value) => viewModel.onChanged(
+                companyGateway.rebuild((b) => b..gatewayTypeId = value)),
+            items: gatewayTypes
+                .map((id, type) => MapEntry<String, DropdownMenuItem<String>>(
+                    id,
+                    DropdownMenuItem<String>(
+                      child: Text(localization.lookup(type)),
+                      value: id,
+                    )))
+                .values
+                .toList(),
           ),
         ...gateway.parsedFields.keys
             .map((field) => GatewayConfigField(
@@ -387,25 +379,16 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
       final dynamic value =
           widget.value == widget.defaultValue ? '' : widget.value;
 
-      return InputDecorator(
-        decoration: InputDecoration(
-          labelText: toTitleCase(widget.field),
-        ),
-        isEmpty: value == null && value != '',
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            isExpanded: true,
-            isDense: true,
-            value: value,
-            onChanged: (value) => widget.onChanged(value),
-            items: options
-                .map((value) => DropdownMenuItem<String>(
-                      child: Text(value.trim()),
-                      value: value.trim(),
-                    ))
-                .toList(),
-          ),
-        ),
+      return AppDropdownButton(
+        labelText: toTitleCase(widget.field),
+        value: value,
+        onChanged: (value) => widget.onChanged(value),
+        items: options
+            .map((value) => DropdownMenuItem<String>(
+                  child: Text(value.trim()),
+                  value: value.trim(),
+                ))
+            .toList(),
       );
     } else if (widget.field.toLowerCase().contains('color')) {
       return FormColorPicker(

@@ -292,31 +292,23 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                           settings.rebuild((b) => b..enableReminder4 = value)),
                       iconData: FontAwesomeIcons.solidEnvelope,
                     ),
-                    InputDecorator(
-                      decoration: InputDecoration(
+                    AppDropdownButton(
                         labelText: localization.frequency,
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                            value: settings.endlessReminderFrequencyId,
-                            isExpanded: true,
-                            isDense: true,
-                            onChanged: (value) => viewModel.onSettingsChanged(
-                                settings.rebuild((b) =>
-                                    b..endlessReminderFrequencyId = value)),
-                            items: kFrequencies
-                                .map((id, frequency) =>
-                                    MapEntry<String, DropdownMenuItem<String>>(
-                                        id,
-                                        DropdownMenuItem<String>(
-                                          child: Text(
-                                              localization.lookup(frequency)),
-                                          value: id,
-                                        )))
-                                .values
-                                .toList()),
-                      ),
-                    ),
+                        value: settings.endlessReminderFrequencyId,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                                (b) => b..endlessReminderFrequencyId = value)),
+                        items: kFrequencies
+                            .map((id, frequency) =>
+                                MapEntry<String, DropdownMenuItem<String>>(
+                                    id,
+                                    DropdownMenuItem<String>(
+                                      child:
+                                          Text(localization.lookup(frequency)),
+                                      value: id,
+                                    )))
+                            .values
+                            .toList()),
                   ],
                 ),
             ],

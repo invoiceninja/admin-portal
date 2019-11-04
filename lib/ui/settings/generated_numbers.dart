@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -154,37 +155,29 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     label: localization.recurringPrefix,
                     controller: _recurringPrefixController,
                   ),
-                  InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: localization.resetCounter,
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: settings.resetCounterFrequencyId,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..resetCounterFrequencyId = value)),
-                        items: [
-                          DropdownMenuItem<String>(
-                            child: Text(localization.never),
-                            value: '0',
-                          ),
-                          ...kFrequencies
-                              .map((id, frequency) =>
-                                  MapEntry<String, DropdownMenuItem<String>>(
-                                      id,
-                                      DropdownMenuItem<String>(
-                                        child: Text(
-                                            localization.lookup(frequency)),
-                                        value: id,
-                                      )))
-                              .values
-                              .toList()
-                        ],
-                      ),
-                    ),
+                  AppDropdownButton(
+                    labelText: localization.resetCounter,
+                    value: settings.resetCounterFrequencyId,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                                  (b) => b..resetCounterFrequencyId = value)),
+                      items: [
+                        DropdownMenuItem<String>(
+                          child: Text(localization.never),
+                          value: '0',
+                        ),
+                        ...kFrequencies
+                            .map((id, frequency) =>
+                            MapEntry<String, DropdownMenuItem<String>>(
+                                id,
+                                DropdownMenuItem<String>(
+                                  child: Text(
+                                      localization.lookup(frequency)),
+                                  value: id,
+                                )))
+                            .values
+                            .toList()
+                      ],
                   ),
                   if ((settings.resetCounterFrequencyId ?? '').isNotEmpty)
                     DatePicker(

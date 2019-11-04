@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -122,35 +123,27 @@ class _ClientPortalState extends State<ClientPortal>
               if (!state.settingsUIState.isFiltered)
                 FormCard(
                   children: <Widget>[
-                    InputDecorator(
-                      decoration: InputDecoration(
-                        labelText: localization.portalMode,
-                      ),
-                      //isEmpty: false,
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                            value: viewModel.company.portalMode,
-                            isExpanded: true,
-                            isDense: true,
-                            onChanged: (value) => viewModel.onCompanyChanged(
-                                viewModel.company
-                                    .rebuild((b) => b..portalMode = value)),
-                            items: [
-                              DropdownMenuItem(
-                                child: Text(localization.subdomain),
-                                value: kClientPortalModeSubdomain,
-                              ),
-                              if (company.isEnterprisePlan)
-                                DropdownMenuItem(
-                                  child: Text(localization.domain),
-                                  value: kClientPortalModeDomain,
-                                ),
-                              DropdownMenuItem(
-                                child: Text('iFrame'),
-                                value: kClientPortalModeIFrame,
-                              ),
-                            ]),
-                      ),
+                    AppDropdownButton(
+                      labelText: localization.portalMode,
+                      value: viewModel.company.portalMode,
+                      onChanged: (value) => viewModel.onCompanyChanged(viewModel
+                          .company
+                          .rebuild((b) => b..portalMode = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.subdomain),
+                          value: kClientPortalModeSubdomain,
+                        ),
+                        if (company.isEnterprisePlan)
+                          DropdownMenuItem(
+                            child: Text(localization.domain),
+                            value: kClientPortalModeDomain,
+                          ),
+                        DropdownMenuItem(
+                          child: Text('iFrame'),
+                          value: kClientPortalModeIFrame,
+                        ),
+                      ],
                     ),
                     DecoratedFormField(
                       label: localization.subdomain,

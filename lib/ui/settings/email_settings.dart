@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -111,37 +112,28 @@ class _EmailSettingsState extends State<EmailSettings>
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: localization.emailDesign,
-                    ),
-                    isEmpty: false,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                  AppDropdownButton(
+                    labelText: localization.emailDesign,
+                    value: kEmailDesignPlain, // TODO Fix this
+                    onChanged: (value) => null,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.plain),
                         value: kEmailDesignPlain,
-                        onChanged: (value) => null,
-                        isExpanded: true,
-                        isDense: true,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text(localization.plain),
-                            value: kEmailDesignPlain,
-                          ),
-                          DropdownMenuItem(
-                            child: Text(localization.light),
-                            value: kEmailDesignLight,
-                          ),
-                          DropdownMenuItem(
-                            child: Text(localization.dark),
-                            value: kEmailDesignDark,
-                          ),
-                          DropdownMenuItem(
-                            child: Text(localization.custom),
-                            value: kEmailDesignCustom,
-                          ),
-                        ],
                       ),
-                    ),
+                      DropdownMenuItem(
+                        child: Text(localization.light),
+                        value: kEmailDesignLight,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.dark),
+                        value: kEmailDesignDark,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.custom),
+                        value: kEmailDesignCustom,
+                      ),
+                    ],
                   ),
                   SizedBox(height: 10),
                   BoolDropdownButton(
