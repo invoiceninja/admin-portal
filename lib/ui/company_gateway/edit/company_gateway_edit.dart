@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -288,6 +289,7 @@ class GatewayConfigSettings extends StatelessWidget {
             .map((field) => GatewayConfigField(
                   field: field,
                   value: companyGateway.parsedConfig[field],
+                  gateway: gateway,
                   defaultValue: gateway.parsedFields[field],
                   onChanged: (dynamic value) {
                     viewModel
@@ -303,12 +305,14 @@ class GatewayConfigSettings extends StatelessWidget {
 class GatewayConfigField extends StatefulWidget {
   const GatewayConfigField({
     Key key,
+    @required this.gateway,
     @required this.field,
     @required this.value,
     @required this.defaultValue,
     @required this.onChanged,
   }) : super(key: key);
 
+  final GatewayEntity gateway;
   final String field;
   final dynamic value;
   final dynamic defaultValue;
@@ -364,6 +368,13 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
   @override
   Widget build(BuildContext context) {
+    String label;
+    if (widget.gateway.id == kGatewayStripe && widget.field == 'apiKey') {
+      label = 'Secret Key';
+    } else {
+      label = toTitleCase(widget.field);
+    }
+
     if ('${widget.defaultValue}'.startsWith('[') &&
         '${widget.defaultValue}'.endsWith(']')) {
       final options = [
@@ -414,7 +425,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
       return TextFormField(
         controller: _textController,
         decoration: InputDecoration(
-          labelText: toTitleCase(widget.field),
+          labelText: label,
         ),
         onChanged: (value) => _onChanged(),
         obscureText: _obscureText(widget.field),
