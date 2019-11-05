@@ -30,12 +30,14 @@ import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
@@ -63,6 +65,8 @@ void main({bool isTesting = false}) async {
 
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
+  final accentColor = prefs.getString(kSharedPrefAccentColor) ?? '#FF0000';
+
   final longPressSelectionIsDefault =
       prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
   final requireAuthentication =
@@ -71,6 +75,7 @@ void main({bool isTesting = false}) async {
   final store = Store<AppState>(appReducer,
       initialState: AppState(
         enableDarkMode: enableDarkMode || isTesting,
+        accentColor: accentColor,
         longPressSelectionIsDefault: longPressSelectionIsDefault,
         requireAuthentication: requireAuthentication,
         layout: AppLayout.tablet,
@@ -261,9 +266,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           theme: state.uiState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,
-                  accentColor: Colors.lightBlueAccent,
+                  accentColor:
+                      convertHexStringToColor(state.uiState.accentColor) ??
+                          Colors.lightBlueAccent,
                 )
               : ThemeData().copyWith(
+                  accentColor: state.uiState.accentColor == null
+                      ? null
+                      : convertHexStringToColor(state.uiState.accentColor),
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),

@@ -151,6 +151,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.settingsUIState,
           specifiedType: const FullType(SettingsUIState)),
     ];
+    if (object.accentColor != null) {
+      result
+        ..add('accentColor')
+        ..add(serializers.serialize(object.accentColor,
+            specifiedType: const FullType(String)));
+    }
     if (object.filter != null) {
       result
         ..add('filter')
@@ -202,6 +208,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'enableDarkMode':
           result.enableDarkMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'accentColor':
+          result.accentColor = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'longPressSelectionIsDefault':
           result.longPressSelectionIsDefault = serializers.deserialize(value,
@@ -354,6 +364,8 @@ class _$UIState extends UIState {
   @override
   final bool enableDarkMode;
   @override
+  final String accentColor;
+  @override
   final bool longPressSelectionIsDefault;
   @override
   final bool requireAuthentication;
@@ -410,6 +422,7 @@ class _$UIState extends UIState {
       this.currentRoute,
       this.previousRoute,
       this.enableDarkMode,
+      this.accentColor,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.emailPayment,
@@ -542,6 +555,7 @@ class _$UIState extends UIState {
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
         enableDarkMode == other.enableDarkMode &&
+        accentColor == other.accentColor &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
@@ -586,7 +600,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode),
                                                                                 autoStartTasks.hashCode),
                                                                             addDocumentsToInvoice.hashCode),
                                                                         filter.hashCode),
@@ -619,6 +633,7 @@ class _$UIState extends UIState {
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
           ..add('enableDarkMode', enableDarkMode)
+          ..add('accentColor', accentColor)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
@@ -684,6 +699,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   bool get enableDarkMode => _$this._enableDarkMode;
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
+
+  String _accentColor;
+  String get accentColor => _$this._accentColor;
+  set accentColor(String accentColor) => _$this._accentColor = accentColor;
 
   bool _longPressSelectionIsDefault;
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
@@ -822,6 +841,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
       _enableDarkMode = _$v.enableDarkMode;
+      _accentColor = _$v.accentColor;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
@@ -876,6 +896,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               currentRoute: currentRoute,
               previousRoute: previousRoute,
               enableDarkMode: enableDarkMode,
+              accentColor: accentColor,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,

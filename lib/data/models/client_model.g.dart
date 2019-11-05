@@ -187,6 +187,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
+      'gateway_tokens',
+      serializers.serialize(object.gatewayTokens,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(GatewayTokenEntity)])),
     ];
     if (object.groupId != null) {
       result
@@ -426,6 +430,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'gateway_tokens':
+          result.gatewayTokens.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GatewayTokenEntity)]))
               as BuiltList<dynamic>);
           break;
         case 'isChanged':
@@ -896,6 +906,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<ActivityEntity> activities;
   @override
+  final BuiltList<GatewayTokenEntity> gatewayTokens;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -947,6 +959,7 @@ class _$ClientEntity extends ClientEntity {
       this.customValue2,
       this.contacts,
       this.activities,
+      this.gatewayTokens,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1030,6 +1043,9 @@ class _$ClientEntity extends ClientEntity {
     if (activities == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'activities');
     }
+    if (gatewayTokens == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
+    }
   }
 
   @override
@@ -1076,6 +1092,7 @@ class _$ClientEntity extends ClientEntity {
         customValue2 == other.customValue2 &&
         contacts == other.contacts &&
         activities == other.activities &&
+        gatewayTokens == other.gatewayTokens &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1105,19 +1122,19 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode),
-                                                                                currencyId.hashCode),
-                                                                            shippingAddress1.hashCode),
-                                                                        shippingAddress2.hashCode),
-                                                                    shippingCity.hashCode),
-                                                                shippingState.hashCode),
-                                                            shippingPostalCode.hashCode),
-                                                        shippingCountryId.hashCode),
-                                                    settings.hashCode),
-                                                customValue1.hashCode),
-                                            customValue2.hashCode),
-                                        contacts.hashCode),
-                                    activities.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode),
+                                                                                shippingAddress1.hashCode),
+                                                                            shippingAddress2.hashCode),
+                                                                        shippingCity.hashCode),
+                                                                    shippingState.hashCode),
+                                                                shippingPostalCode.hashCode),
+                                                            shippingCountryId.hashCode),
+                                                        settings.hashCode),
+                                                    customValue1.hashCode),
+                                                customValue2.hashCode),
+                                            contacts.hashCode),
+                                        activities.hashCode),
+                                    gatewayTokens.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
@@ -1163,6 +1180,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue2', customValue2)
           ..add('contacts', contacts)
           ..add('activities', activities)
+          ..add('gatewayTokens', gatewayTokens)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1321,6 +1339,12 @@ class ClientEntityBuilder
   set activities(ListBuilder<ActivityEntity> activities) =>
       _$this._activities = activities;
 
+  ListBuilder<GatewayTokenEntity> _gatewayTokens;
+  ListBuilder<GatewayTokenEntity> get gatewayTokens =>
+      _$this._gatewayTokens ??= new ListBuilder<GatewayTokenEntity>();
+  set gatewayTokens(ListBuilder<GatewayTokenEntity> gatewayTokens) =>
+      _$this._gatewayTokens = gatewayTokens;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1386,6 +1410,7 @@ class ClientEntityBuilder
       _customValue2 = _$v.customValue2;
       _contacts = _$v.contacts?.toBuilder();
       _activities = _$v.activities?.toBuilder();
+      _gatewayTokens = _$v.gatewayTokens?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1450,6 +1475,7 @@ class ClientEntityBuilder
               customValue2: customValue2,
               contacts: contacts.build(),
               activities: activities.build(),
+              gatewayTokens: gatewayTokens.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1467,6 +1493,8 @@ class ClientEntityBuilder
         contacts.build();
         _$failedField = 'activities';
         activities.build();
+        _$failedField = 'gatewayTokens';
+        gatewayTokens.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FormColorPicker extends StatefulWidget {
@@ -41,8 +42,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
     Color color = Colors.black;
     if (widget.initialValue != null && widget.initialValue.isNotEmpty) {
-      color = Color(int.parse(widget.initialValue.substring(1, 7), radix: 16) +
-          0xFF000000);
+      color = convertHexStringToColor(widget.initialValue);
     }
 
     showDialog<AlertDialog>(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.0';
+const String kAppVersion = '2.0.1';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://staging.invoicing.co';
 const String kAppPlansURL =
@@ -19,6 +19,7 @@ const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefToken = 'api_token';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
+const String kSharedPrefAccentColor = 'accent_color';
 const String kSharedPrefLongPressSelectionIsDefault = 'long_press_multiselect';
 const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';

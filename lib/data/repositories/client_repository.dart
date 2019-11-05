@@ -18,10 +18,10 @@ class ClientRepository {
 
   Future<ClientEntity> loadItem(
       Credentials credentials, String entityId, bool loadActivities) async {
-    String url = '${credentials.url}/clients/$entityId';
+    String url = '${credentials.url}/clients/$entityId?include=gateway_tokens';
 
     if (loadActivities) {
-      url += '?include=activities';
+      url += ',activities';
     }
 
     final dynamic response = await webClient.get(url, credentials.token);
@@ -56,7 +56,7 @@ class ClientRepository {
       case EntityAction.restore:
       case EntityAction.archive:
       case EntityAction.delete:
-        var url = credentials.url + '/clients/bulk?include=activities';
+        var url = credentials.url + '/clients/bulk?include=gateway_tokens,activities';
         if (action != null) {
           url += '&action=' + action.toString();
         }
@@ -81,10 +81,10 @@ class ClientRepository {
 
     if (client.isNew) {
       response = await webClient.post(
-          credentials.url + '/clients?include=activities', credentials.token,
+          credentials.url + '/clients?include=gateway_tokens,activities', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/clients/${client.id}?include=activities';
+      final url = credentials.url + '/clients/${client.id}?include=gateway_tokens,activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

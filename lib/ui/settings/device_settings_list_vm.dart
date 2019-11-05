@@ -37,13 +37,9 @@ class DeviceSettingsVM {
     @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
-    @required this.enableDarkMode,
-    @required this.longPressSelectionIsDefault,
-    @required this.autoStartTasks,
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onLongPressSelectionIsDefault,
-    @required this.requireAuthentication,
     @required this.authenticationSupported,
   });
 
@@ -129,11 +125,6 @@ class DeviceSettingsVM {
           store.dispatch(UserSettingsChanged(requireAuthentication: value));
         } else {}
       },
-      autoStartTasks: store.state.uiState.autoStartTasks,
-      enableDarkMode: store.state.uiState.enableDarkMode,
-      requireAuthentication: store.state.uiState.requireAuthentication,
-      longPressSelectionIsDefault:
-          store.state.uiState.longPressSelectionIsDefault,
       //authenticationSupported: LocalAuthentication().canCheckBiometrics,
       // TODO remove this once issue is resolved:
       // https://github.com/flutter/flutter/issues/24339
@@ -156,11 +147,7 @@ class DeviceSettingsVM {
   final Function(BuildContext context, bool value) onAutoStartTasksChanged;
   final Function(BuildContext context, bool value)
       onLongPressSelectionIsDefault;
-  final bool enableDarkMode;
-  final bool autoStartTasks;
   final Function(BuildContext context, bool value)
       onRequireAuthenticationChanged;
-  final bool requireAuthentication;
-  final bool longPressSelectionIsDefault;
   final Future<bool> authenticationSupported;
 }

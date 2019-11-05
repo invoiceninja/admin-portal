@@ -52,6 +52,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     String appVersion,
     bool enableDarkMode,
+    String accentColor,
     bool requireAuthentication,
     bool longPressSelectionIsDefault,
     AppLayout layout,
@@ -72,6 +73,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       uiState: UIState(
         CompanyEntity(),
         enableDarkMode: enableDarkMode,
+        accentColor: accentColor,
         longPressSelectionIsDefault: longPressSelectionIsDefault,
         requireAuthentication: requireAuthentication,
         layout: layout ?? AppLayout.mobile,

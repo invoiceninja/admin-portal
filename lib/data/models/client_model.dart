@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
@@ -91,6 +92,7 @@ abstract class ClientEntity extends Object
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       activities: BuiltList<ActivityEntity>(),
+      gatewayTokens: BuiltList<GatewayTokenEntity>(),
       lastUpdatedActivities: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -218,6 +220,9 @@ abstract class ClientEntity extends Object
   BuiltList<ContactEntity> get contacts;
 
   BuiltList<ActivityEntity> get activities;
+
+  @BuiltValueField(wireName: 'gateway_tokens')
+  BuiltList<GatewayTokenEntity> get gatewayTokens;
 
   //String get last_login;
   //String get custom_messages;
