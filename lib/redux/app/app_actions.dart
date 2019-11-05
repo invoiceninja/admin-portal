@@ -49,13 +49,14 @@ class LoadStaticSuccess implements PersistStatic {
 }
 
 class UserSettingsChanged implements PersistUI {
-  UserSettingsChanged(
-      {this.enableDarkMode,
-      this.emailPayment,
-      this.requireAuthentication,
-      this.autoStartTasks,
-      this.longPressSelectionIsDefault,
-      this.addDocumentsToInvoice});
+  UserSettingsChanged({this.enableDarkMode,
+    this.emailPayment,
+    this.requireAuthentication,
+    this.autoStartTasks,
+    this.longPressSelectionIsDefault,
+    this.addDocumentsToInvoice,
+    this.accentColor,
+  });
 
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
@@ -63,6 +64,7 @@ class UserSettingsChanged implements PersistUI {
   final bool requireAuthentication;
   final bool autoStartTasks;
   final bool addDocumentsToInvoice;
+  final String accentColor;
 }
 
 class LoadAccountSuccess {

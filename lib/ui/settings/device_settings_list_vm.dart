@@ -39,6 +39,7 @@ class DeviceSettingsVM {
     @required this.onDarkModeChanged,
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
+    @required this.onAccentColorChanged,
     @required this.onLongPressSelectionIsDefault,
     @required this.authenticationSupported,
   });
@@ -95,6 +96,12 @@ class DeviceSettingsVM {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
+      onAccentColorChanged: (BuildContext context, String value) async {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(kSharedPrefAccentColor, value);
+        store.dispatch(UserSettingsChanged(accentColor: value));
+        AppBuilder.of(context).rebuild();
+      },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefAutoStartTasks, value);
@@ -141,13 +148,14 @@ class DeviceSettingsVM {
   }
 
   final AppState state;
-  final Function(BuildContext context) onLogoutTap;
-  final Function(BuildContext context) onRefreshTap;
-  final Function(BuildContext context, bool value) onDarkModeChanged;
-  final Function(BuildContext context, bool value) onAutoStartTasksChanged;
-  final Function(BuildContext context, bool value)
+  final Function(BuildContext) onLogoutTap;
+  final Function(BuildContext) onRefreshTap;
+  final Function(BuildContext, bool) onDarkModeChanged;
+  final Function(BuildContext, String) onAccentColorChanged;
+  final Function(BuildContext, bool) onAutoStartTasksChanged;
+  final Function(BuildContext, bool)
       onLongPressSelectionIsDefault;
-  final Function(BuildContext context, bool value)
+  final Function(BuildContext, bool)
       onRequireAuthenticationChanged;
   final Future<bool> authenticationSupported;
 }

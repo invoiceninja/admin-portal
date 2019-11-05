@@ -46,6 +46,15 @@ class _DeviceSettingsState extends State<DeviceSettings> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  FormColorPicker(
+                    labelText: localization.accentColor,
+                    initialValue: uiState.accentColor,
+                    onSelected: (value) => null,
+                  ),
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
                   SwitchListTile(
                     title: Text(AppLocalization.of(context).darkMode),
                     value: uiState.enableDarkMode,
@@ -95,15 +104,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           activeColor: Theme.of(context).accentColor,
                         )
                       : SizedBox(),
-                ],
-              ),
-              FormCard(
-                children: <Widget>[
-                  FormColorPicker(
-                    labelText: localization.accentColor,
-                    initialValue: uiState.accentColor,
-                    onSelected: (value) => null,
-                  ),
                 ],
               ),
               FormCard(

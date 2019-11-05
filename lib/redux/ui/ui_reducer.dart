@@ -45,6 +45,7 @@ UIState uiReducer(UIState state, dynamic action) {
             : state.currentRoute
     ..currentRoute = currentRoute
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..accentColor = accentColorReducer(state.accentColor, action)
     ..longPressSelectionIsDefault =
         longPressReducer(state.longPressSelectionIsDefault, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -76,114 +77,89 @@ UIState uiReducer(UIState state, dynamic action) {
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([
-  TypedReducer<bool, UpdateSidebar>(updateMenuVisible),
+  TypedReducer<bool, UpdateSidebar>((value, action) {
+    return action.sidebar == AppSidebar.menu ? !value : value;
+  }),
 ]);
-
-bool updateMenuVisible(bool value, UpdateSidebar action) {
-  return action.sidebar == AppSidebar.menu ? !value : value;
-}
 
 Reducer<bool> historyVisibleReducer = combineReducers([
-  TypedReducer<bool, UpdateSidebar>(updateHistoryVisible),
+  TypedReducer<bool, UpdateSidebar>((value, action) {
+    return action.sidebar == AppSidebar.history ? !value : value;
+  }),
 ]);
-
-bool updateHistoryVisible(bool value, UpdateSidebar action) {
-  return action.sidebar == AppSidebar.history ? !value : value;
-}
 
 Reducer<String> filterReducer = combineReducers([
-  TypedReducer<String, FilterCompany>(updateFilter),
+  TypedReducer<String, FilterCompany>((filter, action) {
+    return action.filter;
+  }),
 ]);
-
-String updateFilter(String filter, FilterCompany action) {
-  return action.filter;
-}
 
 Reducer<AppLayout> layoutReducer = combineReducers([
-  TypedReducer<AppLayout, UpdateLayout>(updateLayout),
+  TypedReducer<AppLayout, UpdateLayout>((layout, action) {
+    return action.layout;
+  }),
 ]);
-
-AppLayout updateLayout(AppLayout layout, UpdateLayout action) {
-  return action.layout;
-}
 
 Reducer<bool> emailPaymentReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateEmailPaymentReducer),
+  TypedReducer<bool, UserSettingsChanged>((emailPayment, action) {
+    return action.emailPayment ?? emailPayment;
+  }),
 ]);
-
-bool updateEmailPaymentReducer(bool emailPayment, UserSettingsChanged action) {
-  return action.emailPayment ?? emailPayment;
-}
 
 Reducer<bool> darkModeReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateDarkModeReducer),
+  TypedReducer<bool, UserSettingsChanged>((enableDarkMode, action) {
+    return action.enableDarkMode ?? enableDarkMode;
+  }),
 ]);
 
-bool updateDarkModeReducer(bool enableDarkMode, UserSettingsChanged action) {
-  return action.enableDarkMode ?? enableDarkMode;
-}
+Reducer<String> accentColorReducer = combineReducers([
+  TypedReducer<String, UserSettingsChanged>((accentColor, action) {
+    return action.accentColor ?? accentColor;
+  }),
+]);
 
 Reducer<bool> longPressReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateLongPressReducer),
+  TypedReducer<bool, UserSettingsChanged>(
+      (longPressSelectionIsDefault, action) {
+    return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
+  }),
 ]);
-
-bool updateLongPressReducer(
-    bool longPressSelectionIsDefault, UserSettingsChanged action) {
-  return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
-}
 
 Reducer<bool> autoStartTasksReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateAutoStartTasksReducer),
+  TypedReducer<bool, UserSettingsChanged>((autoStartTasks, action) {
+    return action.autoStartTasks ?? autoStartTasks;
+  }),
 ]);
-
-bool updateAutoStartTasksReducer(
-    bool autoStartTasks, UserSettingsChanged action) {
-  return action.autoStartTasks ?? autoStartTasks;
-}
 
 Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateAddDocumentsToInvoiceReducer),
+  TypedReducer<bool, UserSettingsChanged>((addDocumentsToInvoice, action) {
+    return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
+  }),
 ]);
-
-bool updateAddDocumentsToInvoiceReducer(
-    bool addDocumentsToInvoice, UserSettingsChanged action) {
-  return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
-}
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(updateRequireAuthenticationReducer),
+  TypedReducer<bool, UserSettingsChanged>((requireAuthentication, action) {
+    return action.requireAuthentication ?? requireAuthentication;
+  }),
 ]);
-
-bool updateRequireAuthenticationReducer(
-    bool requireAuthentication, UserSettingsChanged action) {
-  return action.requireAuthentication ?? requireAuthentication;
-}
 
 Reducer<String> currentRouteReducer = combineReducers([
-  TypedReducer<String, UpdateCurrentRoute>(updateCurrentRouteReducer),
+  TypedReducer<String, UpdateCurrentRoute>((currentRoute, action) {
+    return action.route;
+  }),
 ]);
-
-String updateCurrentRouteReducer(
-    String currentRoute, UpdateCurrentRoute action) {
-  return action.route;
-}
 
 Reducer<String> previousRouteReducer = combineReducers([
-  TypedReducer<String, UpdateCurrentRoute>(updatePreviousRouteReducer),
+  TypedReducer<String, UpdateCurrentRoute>((currentRoute, action) {
+    return currentRoute;
+  }),
 ]);
-
-String updatePreviousRouteReducer(
-    String currentRoute, UpdateCurrentRoute action) {
-  return currentRoute;
-}
 
 Reducer<int> selectedCompanyIndexReducer = combineReducers([
-  TypedReducer<int, SelectCompany>(selectCompanyReducer),
+  TypedReducer<int, SelectCompany>((selectedCompanyIndex, action) {
+    return action.companyIndex;
+  }),
 ]);
-
-int selectCompanyReducer(int selectedCompanyIndex, SelectCompany action) {
-  return action.companyIndex;
-}
 
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
