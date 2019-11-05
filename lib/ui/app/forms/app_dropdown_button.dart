@@ -36,7 +36,7 @@ class AppDropdownButton extends StatelessWidget {
             isDense: true,
             onChanged: enabled ? onChanged : null,
             items: [
-              if (_showBlank)
+              if (_showBlank || value == '')
                 DropdownMenuItem(
                   value: '',
                   child: SizedBox(),

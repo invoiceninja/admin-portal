@@ -49,7 +49,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   FormColorPicker(
                     labelText: localization.accentColor,
                     initialValue: uiState.accentColor,
-                    onSelected: (value) => null,
+                    onSelected: (value) =>
+                        viewModel.onAccentColorChanged(context, value),
                   ),
                 ],
               ),
@@ -59,7 +60,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     title: Text(AppLocalization.of(context).darkMode),
                     value: uiState.enableDarkMode,
                     onChanged: (value) =>
-                        widget.viewModel.onDarkModeChanged(context, value),
+                        viewModel.onDarkModeChanged(context, value),
                     secondary: Icon(FontAwesomeIcons.moon),
                     activeColor: Theme.of(context).accentColor,
                   ),
@@ -67,20 +68,20 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     title: Text(AppLocalization.of(context)
                         .longPressSelectionIsDefault),
                     value: uiState.longPressSelectionIsDefault,
-                    onChanged: (value) => widget.viewModel
-                        .onLongPressSelectionIsDefault(context, value),
+                    onChanged: (value) =>
+                        viewModel.onLongPressSelectionIsDefault(context, value),
                     secondary: Icon(FontAwesomeIcons.checkSquare),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   FutureBuilder(
-                    future: widget.viewModel.authenticationSupported,
+                    future: viewModel.authenticationSupported,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData && snapshot.data == true) {
                         return SwitchListTile(
                           title: Text(AppLocalization.of(context)
                               .biometricAuthentication),
                           value: uiState.requireAuthentication,
-                          onChanged: (value) => widget.viewModel
+                          onChanged: (value) => viewModel
                               .onRequireAuthenticationChanged(context, value),
                           secondary: Icon(uiState.requireAuthentication
                               ? FontAwesomeIcons.lock
@@ -92,14 +93,14 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       }
                     },
                   ),
-                  widget.viewModel.state.selectedCompany
+                  viewModel.state.selectedCompany
                           .isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
                           title:
                               Text(AppLocalization.of(context).autoStartTasks),
                           value: uiState.autoStartTasks,
-                          onChanged: (value) => widget.viewModel
-                              .onAutoStartTasksChanged(context, value),
+                          onChanged: (value) =>
+                              viewModel.onAutoStartTasksChanged(context, value),
                           secondary: Icon(FontAwesomeIcons.clock),
                           activeColor: Theme.of(context).accentColor,
                         )
@@ -113,7 +114,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       leading: Icon(FontAwesomeIcons.syncAlt),
                       title: Text(AppLocalization.of(context).refreshData),
                       onTap: () {
-                        widget.viewModel.onRefreshTap(context);
+                        viewModel.onRefreshTap(context);
                       },
                     );
                   }),
@@ -121,7 +122,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     leading: Icon(FontAwesomeIcons.powerOff),
                     title: Text(AppLocalization.of(context).logout),
                     onTap: () {
-                      widget.viewModel.onLogoutTap(context);
+                      viewModel.onLogoutTap(context);
                     },
                   ),
                 ],
