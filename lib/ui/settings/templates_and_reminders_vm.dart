@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -74,10 +73,12 @@ class TemplatesAndRemindersVM {
       },
       loadTemplate: (String template) {
         print('## LOAD TEMPLATE');
+        /*
         final webClient = WebClient();
         final token = state.userCompany.token.token;
-        //final url = ''
-        //webClient.get(url, token);
+        final url = ''
+        webClient.get(url, token);
+         */
       },
     );
   }
