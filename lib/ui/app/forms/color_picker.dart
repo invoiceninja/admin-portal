@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FormColorPicker extends StatefulWidget {
@@ -26,6 +27,9 @@ class _FormColorPickerState extends State<FormColorPicker> {
   String _pendingColor;
   String _selectedColor;
 
+  final _debouncer = Debouncer();
+  List<TextEditingController> _controllers;
+
   @override
   void initState() {
     super.initState();
@@ -33,8 +37,30 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
   @override
   void didChangeDependencies() {
+    _controllers = [_textController];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
     _selectedColor = _textController.text = widget.initialValue;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
     super.didChangeDependencies();
+  }
+
+  void _onChanged() {
+    _debouncer.run(() {
+      _selectColor(_textController.text.trim());
+    });
+  }
+
+  void _selectColor(String color) {
+    setState(() {
+      _selectedColor = color;
+      widget.onSelected(color);
+    });
   }
 
   @override
@@ -107,9 +133,9 @@ class _FormColorPickerState extends State<FormColorPicker> {
               onTap: _showPicker,
               child: Container(
                 decoration: BoxDecoration(
-                  color: widget.initialValue == null
+                  color: _selectedColor == null
                       ? Colors.grey
-                      : convertHexStringToColor(widget.initialValue),
+                      : convertHexStringToColor(_selectedColor) ?? Colors.grey,
                   border: Border.all(
                     color: Colors.black38,
                   ),
@@ -124,10 +150,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
                 icon: Icon(Icons.clear),
                 onPressed: () {
                   _textController.text = '';
-                  setState(() {
-                    _selectedColor = null;
-                  });
-                  widget.onSelected(null);
+                  _selectColor(null);
                 },
               )
             else

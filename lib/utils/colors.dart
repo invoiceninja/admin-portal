@@ -5,10 +5,21 @@ Color convertHexStringToColor(String value) {
     return null;
   }
   value = value.replaceAll('#', '');
-  return Color(int.parse(value, radix: 16) + 0xFF000000);
+  if (value.length != 6) {
+    return null;
+  }
+  try {
+    return Color(int.parse(value, radix: 16) + 0xFF000000);
+  } catch(e) {
+    return null;
+  }
 }
 
 String convertColorToHexString(Color color) {
-  final hex = color.value.toRadixString(16);
-  return '#' + hex.substring(2, hex.length);
+  try {
+    final hex = color.value.toRadixString(16);
+    return '#' + hex.substring(2, hex.length);
+  } catch (e) {
+    return null;
+  }
 }
