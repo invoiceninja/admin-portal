@@ -65,7 +65,7 @@ void main({bool isTesting = false}) async {
 
   final prefs = await SharedPreferences.getInstance();
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
-  final accentColor = prefs.getString(kSharedPrefAccentColor) ?? '#FF0000';
+  final accentColor = prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
 
   final longPressSelectionIsDefault =
       prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
@@ -267,13 +267,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               ? ThemeData(
                   brightness: Brightness.dark,
                   accentColor:
-                      convertHexStringToColor(state.uiState.accentColor) ??
-                          Colors.lightBlueAccent,
+                      convertHexStringToColor(state.uiState.accentColor),
                 )
               : ThemeData().copyWith(
-                  accentColor: state.uiState.accentColor == null
-                      ? null
-                      : convertHexStringToColor(state.uiState.accentColor),
+                  accentColor:
+                      convertHexStringToColor(state.uiState.accentColor),
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),

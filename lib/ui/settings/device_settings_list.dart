@@ -49,6 +49,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   FormColorPicker(
                     labelText: localization.accentColor,
                     initialValue: uiState.accentColor,
+                    showClear: false,
                     onSelected: (value) =>
                         viewModel.onAccentColorChanged(context, value),
                   ),

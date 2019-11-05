@@ -97,6 +97,7 @@ class DeviceSettingsVM {
         AppBuilder.of(context).rebuild();
       },
       onAccentColorChanged: (BuildContext context, String value) async {
+        value ??= kDefaultAccentColor;
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(kSharedPrefAccentColor, value);
         store.dispatch(UserSettingsChanged(accentColor: value));

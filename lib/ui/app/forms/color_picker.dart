@@ -4,11 +4,17 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FormColorPicker extends StatefulWidget {
-  const FormColorPicker({this.labelText, this.initialValue, this.onSelected});
+  const FormColorPicker({
+    this.labelText,
+    this.initialValue,
+    this.onSelected,
+    this.showClear = true,
+  });
 
   final String labelText;
   final String initialValue;
   final Function(String) onSelected;
+  final bool showClear;
 
   @override
   _FormColorPickerState createState() => _FormColorPickerState();
@@ -27,7 +33,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
 
   @override
   void didChangeDependencies() {
-    _textController.text = widget.initialValue;
+    _selectedColor = _textController.text = widget.initialValue;
     super.didChangeDependencies();
   }
 
@@ -56,8 +62,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
             child: BlockPicker(
               pickerColor: color,
               onColorChanged: (color) {
-                final hex = color.value.toRadixString(16);
-                _pendingColor = '#' + hex.substring(2, hex.length);
+                _pendingColor = convertColorToHexString(color);
               },
             ),
           ),
@@ -98,18 +103,23 @@ class _FormColorPickerState extends State<FormColorPicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Container(
-              color: convertHexStringToColor(widget.initialValue),
-              width: 100,
-              height: 20,
+            GestureDetector(
+              onTap: _showPicker,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: widget.initialValue == null
+                      ? Colors.grey
+                      : convertHexStringToColor(widget.initialValue),
+                  border: Border.all(
+                    color: Colors.black38,
+                  ),
+                ),
+                width: 100,
+                height: 25,
+              ),
             ),
-            SizedBox(width: 20),
-            if (_selectedColor == null)
-              IconButton(
-                icon: Icon(Icons.color_lens),
-                onPressed: _showPicker,
-              )
-            else
+            SizedBox(width: 10),
+            if (widget.showClear && _selectedColor != null)
               IconButton(
                 icon: Icon(Icons.clear),
                 onPressed: () {
@@ -119,7 +129,12 @@ class _FormColorPickerState extends State<FormColorPicker> {
                   });
                   widget.onSelected(null);
                 },
-              ),
+              )
+            else
+              IconButton(
+                icon: Icon(Icons.color_lens),
+                onPressed: _showPicker,
+              )
           ],
         ),
       ],
