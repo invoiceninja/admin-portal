@@ -217,6 +217,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
         final localization = AppLocalization(Locale(Intl.defaultLocale));
+        final accentColor =
+            convertHexStringToColor(state.uiState.accentColor) ??
+                Colors.lightBlueAccent;
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))
@@ -267,14 +270,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           theme: state.uiState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,
-                  accentColor:
-                      convertHexStringToColor(state.uiState.accentColor) ??
-                          Colors.lightBlueAccent,
+                  accentColor: accentColor,
+                  textSelectionHandleColor: accentColor,
                 )
               : ThemeData().copyWith(
-                  accentColor:
-                      convertHexStringToColor(state.uiState.accentColor) ??
-                          Colors.lightBlueAccent,
+                  accentColor: accentColor,
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
