@@ -95,22 +95,33 @@ class _FormColorPickerState extends State<FormColorPicker> {
             labelText: widget.labelText,
           ),
         ),
-        if (_selectedColor == null)
-          IconButton(
-            icon: Icon(Icons.color_lens),
-            onPressed: _showPicker,
-          ),
-        if (_selectedColor != null)
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              _textController.text = '';
-              setState(() {
-                _selectedColor = null;
-              });
-              widget.onSelected(null);
-            },
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Container(
+              color: convertHexStringToColor(widget.initialValue),
+              width: 100,
+              height: 20,
+            ),
+            SizedBox(width: 20),
+            if (_selectedColor == null)
+              IconButton(
+                icon: Icon(Icons.color_lens),
+                onPressed: _showPicker,
+              )
+            else
+              IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  setState(() {
+                    _selectedColor = null;
+                  });
+                  widget.onSelected(null);
+                },
+              ),
+          ],
+        ),
       ],
     );
   }
