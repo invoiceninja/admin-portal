@@ -17,7 +17,8 @@ class FormColorPicker extends StatefulWidget {
 class _FormColorPickerState extends State<FormColorPicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
-  String _color;
+  String _pendingColor;
+  String _selectedColor;
 
   @override
   void initState() {
@@ -40,6 +41,8 @@ class _FormColorPickerState extends State<FormColorPicker> {
   void _showPicker() {
     final localization = AppLocalization.of(context);
 
+    _selectedColor = null;
+
     Color color = Colors.black;
     if (widget.initialValue != null && widget.initialValue.isNotEmpty) {
       color = convertHexStringToColor(widget.initialValue);
@@ -54,7 +57,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
               pickerColor: color,
               onColorChanged: (color) {
                 final hex = color.value.toRadixString(16);
-                _color = '#' + hex.substring(2, hex.length);
+                _pendingColor = '#' + hex.substring(2, hex.length);
               },
             ),
           ),
@@ -66,8 +69,11 @@ class _FormColorPickerState extends State<FormColorPicker> {
             FlatButton(
               child: Text(localization.done.toUpperCase()),
               onPressed: () {
-                widget.onSelected(_color);
-                _textController.text = _color;
+                widget.onSelected(_pendingColor);
+                _textController.text = _pendingColor;
+                setState(() {
+                  _selectedColor = _pendingColor;
+                });
                 Navigator.of(context).pop();
               },
             ),
@@ -89,16 +95,19 @@ class _FormColorPickerState extends State<FormColorPicker> {
             labelText: widget.labelText,
           ),
         ),
-        if (_textController.text.isEmpty)
+        if (_selectedColor == null)
           IconButton(
             icon: Icon(Icons.color_lens),
             onPressed: _showPicker,
           ),
-        if (_textController.text.isNotEmpty)
+        if (_selectedColor != null)
           IconButton(
             icon: Icon(Icons.clear),
             onPressed: () {
               _textController.text = '';
+              setState(() {
+                _selectedColor = null;
+              });
               widget.onSelected(null);
             },
           ),
