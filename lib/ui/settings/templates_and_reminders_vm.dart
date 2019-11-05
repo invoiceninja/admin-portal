@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -38,42 +39,52 @@ class TemplatesAndRemindersVM {
     @required this.onSettingsChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
+    @required this.loadTemplate,
   });
 
   static TemplatesAndRemindersVM fromStore(Store<AppState> store) {
     final state = store.state;
 
     return TemplatesAndRemindersVM(
-        state: state,
-        settings: state.uiState.settingsUIState.settings,
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-        },
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
-        onSavePressed: (context) {
-          final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter(
-              context, AppLocalization.of(context).savedSettings);
-          switch (settingsUIState.entityType) {
-            case EntityType.company:
-              store.dispatch(SaveCompanyRequest(
-                  completer: completer,
-                  company: settingsUIState.userCompany.company));
-              break;
-            case EntityType.group:
-              store.dispatch(SaveGroupRequest(
-                  completer: completer, group: settingsUIState.group));
-              break;
-            case EntityType.client:
-              store.dispatch(SaveClientRequest(
-                  completer: completer, client: settingsUIState.client));
-              break;
-          }
-        });
+      state: state,
+      settings: state.uiState.settingsUIState.settings,
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+      },
+      onCancelPressed: (context) => store.dispatch(ResetSettings()),
+      onSavePressed: (context) {
+        final settingsUIState = state.uiState.settingsUIState;
+        final completer = snackBarCompleter(
+            context, AppLocalization.of(context).savedSettings);
+        switch (settingsUIState.entityType) {
+          case EntityType.company:
+            store.dispatch(SaveCompanyRequest(
+                completer: completer,
+                company: settingsUIState.userCompany.company));
+            break;
+          case EntityType.group:
+            store.dispatch(SaveGroupRequest(
+                completer: completer, group: settingsUIState.group));
+            break;
+          case EntityType.client:
+            store.dispatch(SaveClientRequest(
+                completer: completer, client: settingsUIState.client));
+            break;
+        }
+      },
+      loadTemplate: (String template) {
+        print('## LOAD TEMPLATE');
+        final webClient = WebClient();
+        final token = state.userCompany.token.token;
+        //final url = ''
+        //webClient.get(url, token);
+      },
+    );
   }
 
   final AppState state;
   final SettingsEntity settings;
+  final Function(String) loadTemplate;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

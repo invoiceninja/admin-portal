@@ -1463,19 +1463,19 @@ class _$SettingsEntitySerializer
     }
     if (object.lateFeeAmount1 != null) {
       result
-        ..add('late_fee_amount1')
+        ..add('late_fee_amount1_HIDDEN')
         ..add(serializers.serialize(object.lateFeeAmount1,
             specifiedType: const FullType(double)));
     }
     if (object.lateFeeAmount2 != null) {
       result
-        ..add('late_fee_amount2')
+        ..add('late_fee_amount2_HIDDEN')
         ..add(serializers.serialize(object.lateFeeAmount2,
             specifiedType: const FullType(double)));
     }
     if (object.lateFeeAmount3 != null) {
       result
-        ..add('late_fee_amount3')
+        ..add('late_fee_amount3_HIDDEN')
         ..add(serializers.serialize(object.lateFeeAmount3,
             specifiedType: const FullType(double)));
     }
@@ -2072,15 +2072,15 @@ class _$SettingsEntitySerializer
           result.endlessReminderFrequencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'late_fee_amount1':
+        case 'late_fee_amount1_HIDDEN':
           result.lateFeeAmount1 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'late_fee_amount2':
+        case 'late_fee_amount2_HIDDEN':
           result.lateFeeAmount2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'late_fee_amount3':
+        case 'late_fee_amount3_HIDDEN':
           result.lateFeeAmount3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
