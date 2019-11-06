@@ -108,7 +108,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               initialValue:
                   viewModel.staticState.languageMap[client.languageId]?.name,
               onSelected: (SelectableEntity language) => viewModel.onChanged(
-                  client.rebuild((b) => b..languageId = language.id)),
+                  client.rebuild((b) => b..languageId = language?.id)),
             ),
             PopupMenuButton<PaymentTermEntity>(
               padding: EdgeInsets.zero,

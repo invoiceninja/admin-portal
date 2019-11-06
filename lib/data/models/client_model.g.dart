@@ -137,9 +137,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'postal_code',
       serializers.serialize(object.postalCode,
           specifiedType: const FullType(String)),
-      'country_id',
-      serializers.serialize(object.countryId,
-          specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
@@ -166,9 +163,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'shipping_postal_code',
       serializers.serialize(object.shippingPostalCode,
-          specifiedType: const FullType(String)),
-      'shipping_country_id',
-      serializers.serialize(object.shippingCountryId,
           specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
@@ -200,6 +194,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('lastUpdatedActivities')
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
+    }
+    if (object.countryId != null) {
+      result
+        ..add('country_id')
+        ..add(serializers.serialize(object.countryId,
+            specifiedType: const FullType(String)));
     }
     if (object.phone != null) {
       result
@@ -235,6 +235,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       result
         ..add('currency_id')
         ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.shippingCountryId != null) {
+      result
+        ..add('shipping_country_id')
+        ..add(serializers.serialize(object.shippingCountryId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -988,9 +994,6 @@ class _$ClientEntity extends ClientEntity {
     if (postalCode == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'postalCode');
     }
-    if (countryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
-    }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
     }
@@ -1017,9 +1020,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (shippingPostalCode == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingPostalCode');
-    }
-    if (shippingCountryId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'settings');

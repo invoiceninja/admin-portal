@@ -136,7 +136,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
             initialValue: viewModel
                 .staticState.countryMap[client.shippingCountryId]?.name,
             onSelected: (SelectableEntity country) => viewModel.onChanged(
-                client.rebuild((b) => b..shippingCountryId = country.id)),
+                client.rebuild((b) => b..shippingCountryId = country?.id)),
           ),
         ],
       ),

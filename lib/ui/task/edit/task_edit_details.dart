@@ -98,7 +98,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                         state.clientState.map, state.clientState.list),
                     onSelected: (client) {
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..clientId = client.id
+                        ..clientId = client?.id
                         ..projectId = null));
                     },
                     onAddPressed: (completer) {
@@ -124,8 +124,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     onSelected: (selected) {
                       final project = selected as ProjectEntity;
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..projectId = project.id
-                        ..clientId = project.clientId));
+                        ..projectId = project?.id
+                        ..clientId = project?.clientId));
                     },
                     onAddPressed: (completer) {
                       viewModel.onAddProjectPressed(context, completer);
@@ -146,7 +146,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     onSelected: (selected) {
                       final taskStatus = selected as TaskStatusEntity;
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..taskStatusId = taskStatus.id
+                        ..taskStatusId = taskStatus?.id
                         ..taskStatusSortOrder = 9999));
                     },
                   )

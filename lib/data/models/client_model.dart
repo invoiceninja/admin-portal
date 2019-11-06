@@ -153,6 +153,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'postal_code')
   String get postalCode;
 
+  @nullable
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
@@ -206,6 +207,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'shipping_postal_code')
   String get shippingPostalCode;
 
+  @nullable
   @BuiltValueField(wireName: 'shipping_country_id')
   String get shippingCountryId;
 

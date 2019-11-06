@@ -107,7 +107,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
               onSelected: (vendor) {
                 viewModel
-                    .onChanged(expense.rebuild((b) => b..vendorId = vendor.id));
+                    .onChanged(expense.rebuild((b) => b..vendorId = vendor?.id));
               },
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
@@ -117,6 +117,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 ? SizedBox()
                 : EntityDropdown(
                     key: ValueKey('__client_${expense.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
                     initialValue:
@@ -126,10 +127,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     entityList: memoizedDropdownClientList(
                         clientState.map, clientState.list),
                     onSelected: (client) {
-                      final currencyId = (client as ClientEntity).currencyId ??
+                      final currencyId = (client as ClientEntity)?.currencyId ??
                           company.currencyId;
                       viewModel.onChanged(expense.rebuild((b) => b
-                        ..clientId = client.id
+                        ..clientId = client?.id
                         ..invoiceCurrencyId = currencyId));
                     },
                     onAddPressed: (completer) {

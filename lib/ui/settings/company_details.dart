@@ -436,7 +436,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         .paymentTypeMap[settings.defaultPaymentTypeId]?.name,
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
                         settings.rebuild(
-                            (b) => b..defaultPaymentTypeId = paymentType.id)),
+                            (b) => b..defaultPaymentTypeId = paymentType?.id)),
                   ),
                   DecoratedFormField(
                     label: localization.paymentTerms,

@@ -134,7 +134,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             initialValue:
                 viewModel.state.staticState.countryMap[vendor.countryId]?.name,
             onSelected: (SelectableEntity country) => viewModel
-                .onChanged(vendor.rebuild((b) => b..countryId = country.id)),
+                .onChanged(vendor.rebuild((b) => b..countryId = country?.id)),
           ),
         ],
       ),
