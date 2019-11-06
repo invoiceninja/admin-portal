@@ -147,7 +147,7 @@ abstract class UserEntity extends Object
     } else if (phone.toLowerCase().contains(filter)) {
       return phone;
     }
-    
+
     return null;
   }
 

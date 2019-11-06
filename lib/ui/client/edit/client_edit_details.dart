@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -111,18 +112,11 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
-            if (state.userCompany.isAdmin)
-              EntityDropdown(
-                key: ValueKey('__user_${client.assignedUserId}'),
-                labelText: localization.user,
-                entityType: EntityType.user,
-                allowClearing: true,
-                onSelected: (user) => viewModel.onChanged(client.rebuild((b) => b
-                  ..assignedUserId = user?.id
-                )),
-                initialValue: state.userState.map[client.assignedUserId]?.fullName,
-                entityMap: state.userState.map,
-              ),
+            UserPicker(
+              userId: client.assignedUserId,
+              onChanged: (userId) => viewModel
+                  .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
+            ),
             EntityDropdown(
               key: ValueKey('__group_${client.groupId}__'),
               allowClearing: true,
