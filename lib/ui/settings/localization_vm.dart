@@ -79,8 +79,8 @@ class LocalizationSettingsVM {
 
   final AppState state;
   final CompanyEntity company;
-  final SettingsEntity settings;
   final Function(CompanyEntity) onCompanyChanged;
+  final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

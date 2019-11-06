@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -26,6 +28,7 @@ class _TaxSettingsState extends State<TaxSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
 
     return SettingsScaffold(
       title: localization.taxSettings,
@@ -34,7 +37,29 @@ class _TaxSettingsState extends State<TaxSettings> {
         formKey: _formKey,
         children: <Widget>[
           FormCard(
-            children: <Widget>[],
+            children: <Widget>[
+              BoolDropdownButton(
+                iconData: FontAwesomeIcons.fileInvoice,
+                label: localization.invoiceTax,
+                value: settings.enableInvoiceTaxes,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableInvoiceTaxes = value)),
+              ),
+              BoolDropdownButton(
+                iconData: FontAwesomeIcons.cubes,
+                label: localization.lineItemTax,
+                value: settings.enableInvoiceItemTaxes,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableInvoiceItemTaxes = value)),
+              ),
+              BoolDropdownButton(
+                iconData: FontAwesomeIcons.percent,
+                label: localization.inclusiveTaxes,
+                value: settings.enableInclusiveTaxes,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableInclusiveTaxes = value)),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

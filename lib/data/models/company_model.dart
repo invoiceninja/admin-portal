@@ -737,10 +737,6 @@ abstract class SettingsEntity
   String get invoiceLabels;
 
   @nullable
-  @BuiltValueField(wireName: 'show_item_taxes')
-  bool get showInvoiceItemTaxes;
-
-  @nullable
   @BuiltValueField(wireName: 'tax_name1')
   String get defaultTaxName1;
 

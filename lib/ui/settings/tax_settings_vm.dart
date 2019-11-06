@@ -32,6 +32,8 @@ class TaxSettingsVM {
   TaxSettingsVM({
     @required this.state,
     @required this.company,
+    @required this.settings,
+    @required this.onSettingsChanged,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
@@ -43,7 +45,11 @@ class TaxSettingsVM {
 
     return TaxSettingsVM(
         state: state,
+        settings: state.uiState.settingsUIState.settings,
         company: state.uiState.settingsUIState.userCompany.company,
+        onSettingsChanged: (settings) {
+          store.dispatch(UpdateSettings(settings: settings));
+        },
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onCancelPressed: (context) => store.dispatch(ResetSettings()),
@@ -63,6 +69,8 @@ class TaxSettingsVM {
   final AppState state;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
+  final SettingsEntity settings;
+  final Function(SettingsEntity) onSettingsChanged;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onConfigureRatesPressed;
