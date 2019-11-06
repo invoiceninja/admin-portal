@@ -1503,10 +1503,10 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.emailBodyReminder4,
             specifiedType: const FullType(String)));
     }
-    if (object.numberOfRates != null) {
+    if (object.numberOfTaxRates != null) {
       result
-        ..add('number_of_rates')
-        ..add(serializers.serialize(object.numberOfRates,
+        ..add('number_of_tax_rates')
+        ..add(serializers.serialize(object.numberOfTaxRates,
             specifiedType: const FullType(int)));
     }
     if (object.customPaymentTerms != null) {
@@ -2100,8 +2100,8 @@ class _$SettingsEntitySerializer
           result.emailBodyReminder4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'number_of_rates':
-          result.numberOfRates = serializers.deserialize(value,
+        case 'number_of_tax_rates':
+          result.numberOfTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'custom_payment_terms':
@@ -3496,7 +3496,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String emailBodyReminder4;
   @override
-  final int numberOfRates;
+  final int numberOfTaxRates;
   @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
@@ -3647,7 +3647,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.lateFeePercent3,
       this.emailSubjectReminder4,
       this.emailBodyReminder4,
-      this.numberOfRates,
+      this.numberOfTaxRates,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -3803,7 +3803,7 @@ class _$SettingsEntity extends SettingsEntity {
         lateFeePercent3 == other.lateFeePercent3 &&
         emailSubjectReminder4 == other.emailSubjectReminder4 &&
         emailBodyReminder4 == other.emailBodyReminder4 &&
-        numberOfRates == other.numberOfRates &&
+        numberOfTaxRates == other.numberOfTaxRates &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -3845,7 +3845,7 @@ class _$SettingsEntity extends SettingsEntity {
                                     lateFeePercent3.hashCode),
                                 emailSubjectReminder4.hashCode),
                             emailBodyReminder4.hashCode),
-                        numberOfRates.hashCode),
+                        numberOfTaxRates.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -3992,7 +3992,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('lateFeePercent3', lateFeePercent3)
           ..add('emailSubjectReminder4', emailSubjectReminder4)
           ..add('emailBodyReminder4', emailBodyReminder4)
-          ..add('numberOfRates', numberOfRates)
+          ..add('numberOfTaxRates', numberOfTaxRates)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4664,9 +4664,10 @@ class SettingsEntityBuilder
   set emailBodyReminder4(String emailBodyReminder4) =>
       _$this._emailBodyReminder4 = emailBodyReminder4;
 
-  int _numberOfRates;
-  int get numberOfRates => _$this._numberOfRates;
-  set numberOfRates(int numberOfRates) => _$this._numberOfRates = numberOfRates;
+  int _numberOfTaxRates;
+  int get numberOfTaxRates => _$this._numberOfTaxRates;
+  set numberOfTaxRates(int numberOfTaxRates) =>
+      _$this._numberOfTaxRates = numberOfTaxRates;
 
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
@@ -4830,7 +4831,7 @@ class SettingsEntityBuilder
       _lateFeePercent3 = _$v.lateFeePercent3;
       _emailSubjectReminder4 = _$v.emailSubjectReminder4;
       _emailBodyReminder4 = _$v.emailBodyReminder4;
-      _numberOfRates = _$v.numberOfRates;
+      _numberOfTaxRates = _$v.numberOfTaxRates;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -4996,7 +4997,7 @@ class SettingsEntityBuilder
               lateFeePercent3: lateFeePercent3,
               emailSubjectReminder4: emailSubjectReminder4,
               emailBodyReminder4: emailBodyReminder4,
-              numberOfRates: numberOfRates,
+              numberOfTaxRates: numberOfTaxRates,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

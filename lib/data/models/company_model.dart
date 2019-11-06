@@ -1018,8 +1018,8 @@ abstract class SettingsEntity
   String get emailBodyReminder4;
 
   @nullable
-  @BuiltValueField(wireName: 'number_of_rates')
-  int get numberOfRates;
+  @BuiltValueField(wireName: 'number_of_tax_rates')
+  int get numberOfTaxRates;
 
   // TODO remove this field
   @nullable

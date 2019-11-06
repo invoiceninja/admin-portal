@@ -71,11 +71,11 @@ class _TaxSettingsState extends State<TaxSettings> {
                 labelText: localization.numberOfRates,
                 // TODO remove this
                 showBlank: true,
-                value: settings.numberOfRates == null
+                value: settings.numberOfTaxRates == null
                     ? ''
-                    : '${settings.numberOfRates}',
+                    : '${settings.numberOfTaxRates}',
                 onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..numberOfRates = int.parse(value))),
+                    .rebuild((b) => b..numberOfTaxRates = int.parse(value))),
                 items: List<int>.generate(3, (i) => i + 1)
                     .map((value) => DropdownMenuItem<String>(
                           child: Text('$value'),
@@ -95,7 +95,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   initialTaxRate: settings.defaultTaxRate1,
                 ),
                 // TODO get null value from company
-                if ((settings.numberOfRates ?? 0) > 1)
+                if ((settings.numberOfTaxRates ?? 0) > 1)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
@@ -107,7 +107,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                     initialTaxRate: settings.defaultTaxRate2,
                   ),
                 // TODO get null value from company
-                if ((settings.numberOfRates ?? 0) > 2)
+                if ((settings.numberOfTaxRates ?? 0) > 2)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
