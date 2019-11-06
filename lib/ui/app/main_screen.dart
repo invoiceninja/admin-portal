@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -146,6 +147,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsOnlinePaymentsEdit:
         screen = CompanyGatewayEditScreen();
+        break;
+      case kSettingsTaxSettings:
+        screen = TaxSettingsScreen();
         break;
       case kSettingsTaxRates:
         screen = TaxRateScreenBuilder();

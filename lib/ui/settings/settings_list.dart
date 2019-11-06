@@ -79,7 +79,7 @@ class SettingsList extends StatelessWidget {
           ),
         if (showAll)
           SettingsListTile(
-            section: kSettingsTaxRates,
+            section: kSettingsTaxSettings,
             viewModel: viewModel,
           ),
         if (showAll)

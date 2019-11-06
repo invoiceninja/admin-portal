@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:local_auth/local_auth.dart';
@@ -339,6 +340,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             CompanyGatewayEditScreen.route: (context) =>
                 CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
+            TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
             TaxRatesScreen.route: (context) => TaxRatesScreen(),
             TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
             TaxRateViewScreen.route: (context) => TaxRateViewScreen(),

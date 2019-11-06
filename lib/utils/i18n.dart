@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'tax_settings': 'Tax Settings',
       'accent_color': 'Accent Color',
       'switch': 'Switch',
       'use_comma_sparated_list': 'Use a comma separated list',
@@ -15486,6 +15487,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get accentColor => _localizedValues[localeCode]['accent_color'];
 
+  String get taxSettings => _localizedValues[localeCode]['tax_settings'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

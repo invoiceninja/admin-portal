@@ -167,6 +167,7 @@ const String kSettingsLocalization = 'localization';
 const String kSettingsOnlinePayments = 'online_payments';
 const String kSettingsOnlinePaymentsView = 'online_payments_view';
 const String kSettingsOnlinePaymentsEdit = 'online_payments_edit';
+const String kSettingsTaxSettings = 'tax_settings';
 const String kSettingsTaxRates = 'tax_rates';
 const String kSettingsTaxRatesView = 'tax_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_rates_edit';
@@ -191,37 +192,6 @@ const String kSettingsApiTokens = 'api_tokens';
 const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
-
-const List<String> kSettingsSections = [
-  kSettingsCompanyDetails,
-  kSettingsUserDetails,
-  kSettingsLocalization,
-  kSettingsOnlinePayments,
-  kSettingsOnlinePaymentsView,
-  kSettingsOnlinePaymentsEdit,
-  kSettingsTaxRates,
-  kSettingsProducts,
-  kSettingsNotifications,
-  kSettingsImportExport,
-  kSettingsDeviceSettings,
-  kSettingsGroupSettings,
-  kSettingsGroupSettingsView,
-  kSettingsGroupSettingsEdit,
-  kSettingsCustomFields,
-  kSettingsGeneratedNumbers,
-  kSettingsWorkflowSettings,
-  kSettingsInvoiceDesign,
-  kSettingsClientPortal,
-  kSettingsBuyNowButtons,
-  kSettingsEmailSettings,
-  kSettingsTemplatesAndReminders,
-  kSettingsCreditCardsAndBanks,
-  kSettingsDataVisualizations,
-  kSettingsApiTokens,
-  kSettingsUserManagement,
-  kSettingsUserManagementView,
-  kSettingsUserManagementEdit,
-];
 
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
