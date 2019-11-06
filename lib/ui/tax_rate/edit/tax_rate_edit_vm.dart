@@ -44,6 +44,7 @@ class TaxRateEditVM {
     @required this.isSaving,
     @required this.origTaxRate,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -61,6 +62,11 @@ class TaxRateEditVM {
       company: state.selectedCompany,
       onChanged: (TaxRateEntity taxRate) {
         store.dispatch(UpdateTaxRate(taxRate));
+      },
+      onCancelPressed: (context) {
+        store.dispatch(
+            EditTaxRate(taxRate: TaxRateEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(TaxRateSettingsScreen.route)) {
@@ -100,6 +106,7 @@ class TaxRateEditVM {
   final Function(TaxRateEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function onBackPressed;
+  final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
   final TaxRateEntity origTaxRate;

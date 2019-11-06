@@ -12,11 +12,13 @@ class SettingsScaffold extends StatelessWidget {
     @required this.title,
     @required this.onSavePressed,
     @required this.body,
+    this.onCancelPressed,
     this.appBarBottom,
   }) : super(key: key);
 
   final String title;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Widget appBarBottom;
   final Widget body;
 
@@ -44,16 +46,11 @@ class SettingsScaffold extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
-                    store.dispatch(ResetSettings());
-                    /*
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    store.dispatch(ViewSettings(
-                      context: context,
-                      userCompany: state.userCompany,
-                      section: state.uiState.previousSubRoute,
-                      force: true,
-                    ));
-                     */
+                    if (onCancelPressed != null) {
+                      onCancelPressed(context);
+                    } else {
+                      store.dispatch(ResetSettings());
+                    }
                   },
                 );
               }),

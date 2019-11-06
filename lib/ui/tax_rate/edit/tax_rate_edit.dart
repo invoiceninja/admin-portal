@@ -82,6 +82,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
           ? localization.newTaxRate
           : localization.editTaxRate,
       onSavePressed: viewModel.onSavePressed,
+      onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[
