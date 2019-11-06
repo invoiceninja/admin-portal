@@ -135,6 +135,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             // TODO Remove isNotEmpty check in v2
             company.taskStatusMap.isNotEmpty
                 ? EntityDropdown(
+                    key: ValueKey('__task_status_${task.taskStatusId}__'),
                     entityType: EntityType.taskStatus,
                     labelText: localization.status,
                     initialValue: (company.taskStatusMap[task.taskStatusId] ??

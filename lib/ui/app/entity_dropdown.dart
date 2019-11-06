@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    Key key,
+    @required Key key,
     @required this.entityType,
     @required this.labelText,
     @required this.entityMap,

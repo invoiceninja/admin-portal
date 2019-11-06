@@ -138,6 +138,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             FormCard(
               children: <Widget>[
                 EntityDropdown(
+                  key: ValueKey('__primary_font_${settings.primaryFont}__'),
                   entityType: EntityType.font,
                   labelText: localization.primaryFont,
                   initialValue: settings.primaryFont,
@@ -147,6 +148,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   allowClearing: state.settingsUIState.isFiltered,
                 ),
                 EntityDropdown(
+                  key: ValueKey('__secondary_font_${settings.secondaryFont}__'),
                   entityType: EntityType.font,
                   labelText: localization.secondaryFont,
                   initialValue: settings.secondaryFont,

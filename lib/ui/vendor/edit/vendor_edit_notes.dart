@@ -74,6 +74,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final staticState = viewModel.state.staticState;
+    final vendor = viewModel.vendor;
 
     return ListView(
       shrinkWrap: true,
@@ -81,14 +82,14 @@ class VendorEditNotesState extends State<VendorEditNotes> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__currency_${vendor.currencyId}__'),
               entityType: EntityType.currency,
               entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue:
-                  staticState.currencyMap[viewModel.vendor.currencyId]?.name,
+              initialValue: staticState.currencyMap[vendor.currencyId]?.name,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.vendor.rebuild((b) => b..currencyId = currency.id)),
+                  vendor.rebuild((b) => b..currencyId = currency.id)),
             ),
             /*
             TextFormField(

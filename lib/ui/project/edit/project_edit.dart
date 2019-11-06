@@ -159,6 +159,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                   children: <Widget>[
                     project.isNew
                         ? EntityDropdown(
+                            key: ValueKey('__client_${project.clientId}__'),
                             entityType: EntityType.client,
                             labelText: localization.client,
                             initialValue:

@@ -139,6 +139,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           children: <Widget>[
             invoice.isNew
                 ? EntityDropdown(
+                    key: ValueKey('__client_${invoice.clientId}__'),
                     entityType: EntityType.client,
                     labelText: localization.client,
                     initialValue: (viewModel.clientMap[invoice.clientId] ??

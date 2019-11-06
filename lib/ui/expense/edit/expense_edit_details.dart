@@ -96,6 +96,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__vendor_${expense.vendorId}__'),
               allowClearing: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
@@ -115,6 +116,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             expense.isInvoiced
                 ? SizedBox()
                 : EntityDropdown(
+                    key: ValueKey('__client_${expense.clientId}__'),
                     entityType: EntityType.client,
                     labelText: localization.client,
                     initialValue:
@@ -135,6 +137,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     },
                   ),
             EntityDropdown(
+              key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,
               labelText: localization.category,
               initialValue: (company.expenseCategoryMap[expense.categoryId] ??
@@ -156,6 +159,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               ),
             ),
             EntityDropdown(
+              key: ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
               entityType: EntityType.currency,
               entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
