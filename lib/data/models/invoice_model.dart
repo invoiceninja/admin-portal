@@ -655,11 +655,11 @@ abstract class InvoiceItemEntity extends Object
 abstract class InvitationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  factory InvitationEntity() {
+  factory InvitationEntity({String contactId}) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
-      contactId: '',
+      contactId: contactId ?? '',
       key: '',
       link: '',
       sentDate: '',

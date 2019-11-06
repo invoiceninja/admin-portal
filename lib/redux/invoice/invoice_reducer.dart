@@ -62,6 +62,13 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, UpdateInvoiceItem>(_updateInvoiceItem),
   TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity, AddInvoiceContact>((invoice, action) {
+    return invoice.rebuild((b) =>
+        b..invitations.add(InvitationEntity(contactId: action.contact.id)));
+  }),
+  TypedReducer<InvoiceEntity, RemoveInvoiceContact>((invoice, action) {
+    return invoice.rebuild((b) => b..invitations.remove(action.invitation));
+  }),
 ]);
 
 InvoiceEntity _clearEditing(InvoiceEntity invoice, dynamic action) {

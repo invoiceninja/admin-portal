@@ -25,13 +25,17 @@ class InvoiceEditContacts extends StatelessWidget {
     }
 
     return ListView(
-      children: client.contacts
-          .map((contact) => _ContactListTile(
-                contact: contact,
-                invoice: invoice,
-                onTap: () => null,
-              ))
-          .toList(),
+      children: client.contacts.map((contact) {
+        final invitation = invoice.getInvitationForContact(contact);
+        return _ContactListTile(
+          contact: contact,
+          invoice: invoice,
+          invitation: invitation,
+          onTap: () => invitation == null
+              ? viewModel.onAddContact(contact)
+              : viewModel.onRemoveContact(invitation),
+        );
+      }).toList(),
     );
   }
 }
@@ -40,22 +44,23 @@ class _ContactListTile extends StatelessWidget {
   const _ContactListTile({
     this.contact,
     this.invoice,
+    this.invitation,
     this.onTap,
   });
 
   final InvoiceEntity invoice;
   final ContactEntity contact;
+  final InvitationEntity invitation;
   final Function onTap;
 
   @override
   Widget build(BuildContext context) {
-    final invitation = invoice.getInvitationForContact(contact);
-
     return ListTile(
       title: Text(contact.fullName),
       subtitle: Text(contact.email),
       onTap: onTap,
       leading: Checkbox(
+        activeColor: Theme.of(context).accentColor,
         value: invitation != null,
         onChanged: (value) => null,
       ),

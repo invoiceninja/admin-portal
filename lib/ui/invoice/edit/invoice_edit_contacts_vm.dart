@@ -30,13 +30,15 @@ class EntityEditContactsVM {
     @required this.company,
     @required this.invoice,
     @required this.client,
-    @required this.onChanged,
+    @required this.onAddContact,
+    @required this.onRemoveContact,
   });
 
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
-  final Function(InvoiceEntity) onChanged;
+  final Function(ContactEntity) onAddContact;
+  final Function(InvitationEntity) onRemoveContact;
 }
 
 class InvoiceEditContactsVM extends EntityEditContactsVM {
@@ -44,12 +46,14 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
-    Function(InvoiceEntity) onChanged,
+    Function(ContactEntity) onAddContact,
+    Function(InvitationEntity) onRemoveContact,
   }) : super(
           company: company,
           invoice: invoice,
           client: client,
-          onChanged: onChanged,
+          onAddContact: onAddContact,
+          onRemoveContact: onRemoveContact,
         );
 
   factory InvoiceEditContactsVM.fromStore(Store<AppState> store) {
@@ -60,8 +64,10 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       company: state.selectedCompany,
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
-      onChanged: (InvoiceEntity invoice) =>
-          store.dispatch(UpdateInvoice(invoice)),
+      onAddContact: (ContactEntity contact) =>
+          store.dispatch(AddInvoiceContact(contact: contact)),
+      onRemoveContact: (InvitationEntity invitation) =>
+          store.dispatch(RemoveInvoiceContact(invitation: invitation)),
     );
   }
 }
