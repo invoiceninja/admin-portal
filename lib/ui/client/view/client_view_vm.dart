@@ -63,9 +63,7 @@ class ClientViewVM {
 
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
       final completer = snackBarCompleter(
-          context, AppLocalization
-          .of(context)
-          .refreshComplete);
+          context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClient(
           completer: completer,
           clientId: client.id,
@@ -87,10 +85,8 @@ class ClientViewVM {
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: AppLocalization
-                    .of(context)
-                    .updatedClient,
-              )));
+            message: AppLocalization.of(context).updatedClient,
+          )));
         });
       },
       onEntityPressed: (BuildContext context, EntityType entityType,
@@ -138,7 +134,7 @@ class ClientViewVM {
               store.dispatch(EditProject(
                   context: context,
                   project:
-                  ProjectEntity().rebuild((b) => b..clientId = client.id)));
+                      ProjectEntity().rebuild((b) => b..clientId = client.id)));
             } else {
               store.dispatch(FilterProjectsByEntity(
                   entityId: client.id, entityType: EntityType.client));

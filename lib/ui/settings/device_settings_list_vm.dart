@@ -154,9 +154,7 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, String) onAccentColorChanged;
   final Function(BuildContext, bool) onAutoStartTasksChanged;
-  final Function(BuildContext, bool)
-      onLongPressSelectionIsDefault;
-  final Function(BuildContext, bool)
-      onRequireAuthenticationChanged;
+  final Function(BuildContext, bool) onLongPressSelectionIsDefault;
+  final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Future<bool> authenticationSupported;
 }

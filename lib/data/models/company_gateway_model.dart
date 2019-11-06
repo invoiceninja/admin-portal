@@ -172,7 +172,8 @@ abstract class CompanyGatewayEntity extends Object
   }
 
   int compareTo(CompanyGatewayEntity companyGateway, String sortField,
-      bool sortAscending) => 0;
+          bool sortAscending) =>
+      0;
 
   @override
   bool matchesFilter(String filter) {

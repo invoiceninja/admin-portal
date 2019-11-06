@@ -58,7 +58,7 @@ class PaymentList extends StatelessWidget {
           ),
         Expanded(
           child: !viewModel.isLoaded
-              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
+              ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.paymentList.isEmpty

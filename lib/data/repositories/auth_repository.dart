@@ -113,5 +113,4 @@ class AuthRepository {
 
     return sendRequest(url: url, data: credentials);
   }
-
 }

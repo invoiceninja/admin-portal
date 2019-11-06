@@ -106,8 +106,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList:
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
               onSelected: (vendor) {
-                viewModel
-                    .onChanged(expense.rebuild((b) => b..vendorId = vendor?.id));
+                viewModel.onChanged(
+                    expense.rebuild((b) => b..vendorId = vendor?.id));
               },
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
@@ -160,7 +160,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               ),
             ),
             EntityDropdown(
-              key: ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
+              key:
+                  ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
               entityType: EntityType.currency,
               entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),

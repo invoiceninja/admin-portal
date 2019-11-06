@@ -49,7 +49,8 @@ class LoadStaticSuccess implements PersistStatic {
 }
 
 class UserSettingsChanged implements PersistUI {
-  UserSettingsChanged({this.enableDarkMode,
+  UserSettingsChanged({
+    this.enableDarkMode,
     this.emailPayment,
     this.requireAuthentication,
     this.autoStartTasks,

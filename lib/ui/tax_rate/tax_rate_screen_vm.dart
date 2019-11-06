@@ -59,7 +59,8 @@ class TaxRateScreenVM {
               EntityAction action) =>
           handleTaxRateAction(context, taxRates, action),
       onBackPressed: (context) {
-        store.dispatch(ViewSettings(context: context, section: kSettingsTaxSettings));
+        store.dispatch(
+            ViewSettings(context: context, section: kSettingsTaxSettings));
       },
     );
   }

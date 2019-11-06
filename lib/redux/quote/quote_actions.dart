@@ -69,7 +69,6 @@ class UpdateQuoteClient implements PersistUI {
   final ClientEntity client;
 }
 
-
 class LoadQuote {
   LoadQuote({this.completer, this.quoteId});
 
@@ -144,7 +143,6 @@ class RemoveQuoteContact implements PersistUI {
 
   final InvitationEntity invitation;
 }
-
 
 class AddQuoteItem implements PersistUI {
   AddQuoteItem({this.quoteItem});

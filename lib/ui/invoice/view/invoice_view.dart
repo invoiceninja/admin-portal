@@ -129,7 +129,8 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(
         entity: invoice,
-        title: '${localization.invoice} ${invoice.invoiceNumber ?? '• ${localization.pending}'}',
+        title:
+            '${localization.invoice} ${invoice.invoiceNumber ?? '• ${localization.pending}'}',
       ),
       bottom: TabBar(
         controller: controller,

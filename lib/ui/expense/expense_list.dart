@@ -52,7 +52,7 @@ class ExpenseList extends StatelessWidget {
 
     widgets.add(Expanded(
       child: !viewModel.isLoaded
-          ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
+          ? LoadingIndicator()
           : RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
               child: viewModel.expenseList.isEmpty

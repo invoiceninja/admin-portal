@@ -45,8 +45,8 @@ Middleware<AppState> _viewSettings() {
         (action.section != null
             ? '/${action.section}'
             : uiState.mainRoute == kSettings
-            ? '/$kSettingsCompanyDetails'
-            : '/${uiState.settingsUIState.section}');
+                ? '/$kSettingsCompanyDetails'
+                : '/${uiState.settingsUIState.section}');
 
     next(action);
 
@@ -109,8 +109,8 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final entityId = action.type == EntityType.company
         ? state.selectedCompany.id
         : action.type == EntityType.group
-        ? settingsState.group.id
-        : settingsState.client.id;
+            ? settingsState.group.id
+            : settingsState.client.id;
     settingsRepository
         .uploadLogo(store.state.credentials, entityId, action.path, action.type)
         .then((entity) {

@@ -158,26 +158,24 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                                  (b) => b..resetCounterFrequencyId = value)),
-                      items: [
-                        DropdownMenuItem<String>(
-                          child: Text(localization.never),
-                          value: '0',
-                        ),
-                        ...kFrequencies
-                            .map((id, frequency) =>
-                            MapEntry<String, DropdownMenuItem<String>>(
-                                id,
-                                DropdownMenuItem<String>(
-                                  child: Text(
-                                      localization.lookup(frequency)),
-                                  value: id,
-                                )))
-                            .values
-                            .toList()
-                      ],
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..resetCounterFrequencyId = value)),
+                    items: [
+                      DropdownMenuItem<String>(
+                        child: Text(localization.never),
+                        value: '0',
+                      ),
+                      ...kFrequencies
+                          .map((id, frequency) =>
+                              MapEntry<String, DropdownMenuItem<String>>(
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(frequency)),
+                                    value: id,
+                                  )))
+                          .values
+                          .toList()
+                    ],
                   ),
                   if ((settings.resetCounterFrequencyId ?? '').isNotEmpty)
                     DatePicker(

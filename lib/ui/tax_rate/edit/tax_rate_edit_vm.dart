@@ -64,8 +64,8 @@ class TaxRateEditVM {
         store.dispatch(UpdateTaxRate(taxRate));
       },
       onCancelPressed: (context) {
-        store.dispatch(
-            EditTaxRate(taxRate: TaxRateEntity(), context: context, force: true));
+        store.dispatch(EditTaxRate(
+            taxRate: TaxRateEntity(), context: context, force: true));
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onBackPressed: () {

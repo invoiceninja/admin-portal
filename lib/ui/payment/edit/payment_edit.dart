@@ -200,7 +200,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                           )
                         : Container(),
                     EntityDropdown(
-                      key: ValueKey('__payment_type_${payment.paymentTypeId}__'),
+                      key:
+                          ValueKey('__payment_type_${payment.paymentTypeId}__'),
                       entityType: EntityType.paymentType,
                       entityMap: viewModel.staticState.paymentTypeMap,
                       entityList: memoizedPaymentTypeList(

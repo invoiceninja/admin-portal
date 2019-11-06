@@ -10,7 +10,7 @@ Color convertHexStringToColor(String value) {
   }
   try {
     return Color(int.parse(value, radix: 16) + 0xFF000000);
-  } catch(e) {
+  } catch (e) {
     return null;
   }
 }

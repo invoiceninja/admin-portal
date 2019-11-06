@@ -29,7 +29,7 @@ class VendorList extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: !viewModel.isLoaded
-              ? (viewModel.isLoading ? LoadingIndicator() : SizedBox())
+              ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
                   child: viewModel.vendorList.isEmpty
