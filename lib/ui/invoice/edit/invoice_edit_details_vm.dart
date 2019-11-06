@@ -39,6 +39,7 @@ class EntityEditDetailsVM {
     @required this.company,
     @required this.invoice,
     @required this.onChanged,
+    @required this.onClientChanged,
     @required this.clientMap,
     @required this.clientList,
     @required this.onAddClientPressed,
@@ -47,6 +48,7 @@ class EntityEditDetailsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
+  final Function(InvoiceEntity, ClientEntity) onClientChanged;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -58,6 +60,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
+    Function(InvoiceEntity, ClientEntity) onClientChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -66,6 +69,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
           company: company,
           invoice: invoice,
           onChanged: onChanged,
+          onClientChanged: onClientChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
@@ -82,6 +86,9 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
           store.dispatch(UpdateInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
+      onClientChanged: (invoice, client) {
+        store.dispatch(UpdateInvoiceClient(client: client));
+      },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
             client: ClientEntity(),

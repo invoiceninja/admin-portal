@@ -63,6 +63,13 @@ class UpdateQuote implements PersistUI {
   final InvoiceEntity quote;
 }
 
+class UpdateQuoteClient implements PersistUI {
+  UpdateQuoteClient({this.client});
+
+  final ClientEntity client;
+}
+
+
 class LoadQuote {
   LoadQuote({this.completer, this.quoteId});
 
@@ -124,6 +131,20 @@ class LoadQuotesSuccess implements StopLoading, PersistData {
     return 'LoadQuotesSuccess{quotes: $quotes}';
   }
 }
+
+class AddQuoteContact implements PersistUI {
+  AddQuoteContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemoveQuoteContact implements PersistUI {
+  RemoveQuoteContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
 
 class AddQuoteItem implements PersistUI {
   AddQuoteItem({this.quoteItem});

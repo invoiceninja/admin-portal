@@ -63,6 +63,12 @@ class UpdateInvoice implements PersistUI {
   final InvoiceEntity invoice;
 }
 
+class UpdateInvoiceClient implements PersistUI {
+  UpdateInvoiceClient({this.client});
+
+  final ClientEntity client;
+}
+
 class LoadInvoice {
   LoadInvoice({this.completer, this.invoiceId});
 

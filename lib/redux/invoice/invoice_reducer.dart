@@ -53,6 +53,14 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, UpdateInvoice>((invoice, action) {
     return action.invoice.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, UpdateInvoiceClient>((invoice, action) {
+    final client = action.client;
+    return invoice.rebuild((b) => b
+      ..isChanged = true
+      ..clientId = client.id
+      ..invitations.addAll(client.contacts
+          .map((contact) => InvitationEntity(contactId: contact.id))));
+  }),
   TypedReducer<InvoiceEntity, RestoreInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ArchiveInvoiceSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, DeleteInvoiceSuccess>(_updateEditing),

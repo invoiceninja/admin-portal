@@ -40,6 +40,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
+    Function(InvoiceEntity, ClientEntity) onClientChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -48,6 +49,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
           company: company,
           invoice: invoice,
           onChanged: onChanged,
+          onClientChanged: onClientChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
@@ -63,6 +65,9 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
+      onClientChanged: (invoice, client) {
+        store.dispatch(UpdateQuoteClient(client: client));
+      },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
           client: ClientEntity(),

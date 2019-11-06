@@ -86,9 +86,9 @@ class _ClientViewState extends State<ClientView>
                         onTap: () {
                           Navigator.of(context).pop();
                           store.dispatch(EditInvoice(
-                              invoice: InvoiceEntity(company: company)
-                                  .rebuild((b) => b.clientId = client.id),
+                              invoice: InvoiceEntity(company: company),
                               context: context));
+                          store.dispatch(UpdateInvoiceClient(client: client));
                         },
                       )
                     : Container(),
@@ -115,9 +115,9 @@ class _ClientViewState extends State<ClientView>
                         onTap: () {
                           Navigator.of(context).pop();
                           store.dispatch(EditQuote(
-                              quote: InvoiceEntity(isQuote: true)
-                                  .rebuild((b) => b.clientId = client.id),
+                              quote: InvoiceEntity(isQuote: true),
                               context: context));
+                          store.dispatch(UpdateQuoteClient(client: client));
                         },
                       )
                     : Container(),

@@ -292,9 +292,8 @@ void handleClientAction(
       break;
     case EntityAction.newInvoice:
       store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
-          context: context));
+          invoice: InvoiceEntity(company: company), context: context));
+      store.dispatch(UpdateInvoiceClient(client: client));
       break;
     case EntityAction.newExpense:
       store.dispatch(EditExpense(

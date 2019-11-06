@@ -16,7 +16,6 @@ class InvoiceEditContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    //final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final client = viewModel.client;
 

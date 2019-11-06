@@ -51,6 +51,14 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, UpdateQuote>((quote, action) {
     return action.quote.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, UpdateQuoteClient>((quote, action) {
+    final client = action.client;
+    return quote.rebuild((b) => b
+      ..isChanged = true
+      ..clientId = client.id
+      ..invitations.addAll(client.contacts
+          .map((contact) => InvitationEntity(contactId: contact.id))));
+  }),
   TypedReducer<InvoiceEntity, RestoreQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, ArchiveQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, DeleteQuoteSuccess>(_updateEditing),
@@ -60,6 +68,14 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, UpdateQuoteItem>(_updateQuoteItem),
   TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity, AddQuoteContact>((invoice, action) {
+    return invoice.rebuild((b) => b
+      ..invitations.add(
+          action.invitation ?? InvitationEntity(contactId: action.contact.id)));
+  }),
+  TypedReducer<InvoiceEntity, RemoveQuoteContact>((invoice, action) {
+    return invoice.rebuild((b) => b..invitations.remove(action.invitation));
+  }),
 ]);
 
 InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
