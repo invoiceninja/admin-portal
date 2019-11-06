@@ -21,7 +21,7 @@ class ElevatedButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        color: color ?? Theme.of(context).buttonColor,
+        color: color ?? Theme.of(context).accentColor,
         child: icon != null
             ? IconText(
                 icon: icon,

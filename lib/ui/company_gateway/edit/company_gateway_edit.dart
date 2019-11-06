@@ -119,6 +119,14 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 children: <Widget>[
                   SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.updateAddress),
+                    subtitle: Text(localization.updateAddressHelp),
+                    value: companyGateway.updateDetails,
+                    onChanged: (value) => viewModel.onChanged(companyGateway
+                        .rebuild((b) => b..updateDetails = value)),
+                  ),
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
                     title: Text(localization.billingAddress),
                     subtitle: Text(localization.requireBillingAddressHelp),
                     value: companyGateway.showBillingAddress,
@@ -132,14 +140,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     value: companyGateway.showShippingAddress,
                     onChanged: (value) => viewModel.onChanged(companyGateway
                         .rebuild((b) => b..showShippingAddress = value)),
-                  ),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.updateAddress),
-                    subtitle: Text(localization.updateAddressHelp),
-                    value: companyGateway.updateDetails,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..updateDetails = value)),
                   ),
                 ],
               ),
