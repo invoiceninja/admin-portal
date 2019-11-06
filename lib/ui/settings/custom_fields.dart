@@ -345,7 +345,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             child: DecoratedFormField(
               label: localization.options,
               controller: _optionsController,
-              hint: localization.useCommaSeparatedList,
+              hint: localization.commaSeparatedList,
             ),
           ),
         SizedBox(height: 15),

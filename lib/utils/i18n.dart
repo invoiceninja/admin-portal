@@ -19,7 +19,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_settings_rates': 'Tax Rates',
       'accent_color': 'Accent Color',
       'switch': 'Switch',
-      'use_comma_sparated_list': 'Use a comma separated list',
+      'comma_sparated_list': 'Comma separated list',
       'options': 'Options',
       'single_line_text': 'Single-line text',
       'multi_line_text': 'Multi-line text',
@@ -15482,8 +15482,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get options => _localizedValues[localeCode]['options'];
 
-  String get useCommaSeparatedList =>
-      _localizedValues[localeCode]['use_comma_sparated_list'];
+  String get commaSeparatedList =>
+      _localizedValues[localeCode]['comma_sparated_list'];
 
   String get switchLabel => _localizedValues[localeCode]['switch'];
 
