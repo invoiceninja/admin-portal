@@ -126,9 +126,10 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
 }
 
 class AddInvoiceContact implements PersistUI {
-  AddInvoiceContact({this.contact});
+  AddInvoiceContact({this.contact, this.invitation});
 
   final ContactEntity contact;
+  final InvitationEntity invitation;
 }
 
 class RemoveInvoiceContact implements PersistUI {

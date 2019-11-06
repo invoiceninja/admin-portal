@@ -64,8 +64,17 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       company: state.selectedCompany,
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
-      onAddContact: (ContactEntity contact) =>
-          store.dispatch(AddInvoiceContact(contact: contact)),
+      onAddContact: (ContactEntity contact) {
+        InvitationEntity invitation;
+        // prevent un-checking/checking a contact
+        // from creating a new invitation
+        if (invoice.isOld) {
+          invitation = state.invoiceState.map[invoice.id]
+              .getInvitationForContact(contact);
+        }
+        store.dispatch(
+            AddInvoiceContact(contact: contact, invitation: invitation));
+      },
       onRemoveContact: (InvitationEntity invitation) =>
           store.dispatch(RemoveInvoiceContact(invitation: invitation)),
     );
