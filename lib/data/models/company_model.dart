@@ -384,7 +384,6 @@ abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
-      isOwner: false,
       isAdmin: false,
       permissionsMap: BuiltMap<String, bool>(),
       company: CompanyEntity(),
@@ -394,9 +393,6 @@ abstract class UserCompanyEntity
   }
 
   UserCompanyEntity._();
-
-  @BuiltValueField(wireName: 'is_owner')
-  bool get isOwner;
 
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
@@ -433,7 +429,7 @@ abstract class UserCompanyEntity
     if (entity.isNew) {
       return canCreate(entity.entityType);
     } else {
-      return canEdit(entity.entityType) || (entity.isOwner ?? false);
+      return canEdit(entity.entityType) || user.canEdit(entity);
     }
   }
 

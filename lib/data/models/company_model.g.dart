@@ -222,11 +222,17 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
     }
     if (object.id != null) {
       result
@@ -401,9 +407,13 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -553,9 +563,6 @@ class _$UserCompanyEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserCompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'is_owner',
-      serializers.serialize(object.isOwner,
-          specifiedType: const FullType(bool)),
       'is_admin',
       serializers.serialize(object.isAdmin,
           specifiedType: const FullType(bool)),
@@ -589,10 +596,6 @@ class _$UserCompanyEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'is_admin':
           result.isAdmin = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -2241,7 +2244,9 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
+  @override
+  final String assignedUserId;
   @override
   final String id;
 
@@ -2281,7 +2286,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
       this.id})
       : super._() {
     if (companyKey == null) {
@@ -2344,7 +2350,8 @@ class _$CompanyEntity extends CompanyEntity {
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
         id == other.id;
   }
 
@@ -2368,25 +2375,25 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode),
-                                                                                groups.hashCode),
-                                                                            taxRates.hashCode),
-                                                                        taskStatuses.hashCode),
-                                                                    taskStatusMap.hashCode),
-                                                                companyGateways.hashCode),
-                                                            expenseCategories.hashCode),
-                                                        expenseCategoryMap.hashCode),
-                                                    users.hashCode),
-                                                userMap.hashCode),
-                                            customFields.hashCode),
-                                        settings.hashCode),
-                                    enabledModules.hashCode),
-                                isChanged.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                                taxRates.hashCode),
+                                                                            taskStatuses.hashCode),
+                                                                        taskStatusMap.hashCode),
+                                                                    companyGateways.hashCode),
+                                                                expenseCategories.hashCode),
+                                                            expenseCategoryMap.hashCode),
+                                                        users.hashCode),
+                                                    userMap.hashCode),
+                                                customFields.hashCode),
+                                            settings.hashCode),
+                                        enabledModules.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -2425,7 +2432,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
           ..add('id', id))
         .toString();
   }
@@ -2593,9 +2601,15 @@ class CompanyEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
+
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
 
   String _id;
   String get id => _$this._id;
@@ -2637,7 +2651,8 @@ class CompanyEntityBuilder
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
       _id = _$v.id;
       _$v = null;
     }
@@ -2695,7 +2710,8 @@ class CompanyEntityBuilder
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
-              isOwner: isOwner,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -2950,8 +2966,6 @@ class GatewayEntityBuilder
 
 class _$UserCompanyEntity extends UserCompanyEntity {
   @override
-  final bool isOwner;
-  @override
   final bool isAdmin;
   @override
   final CompanyEntity company;
@@ -2967,16 +2981,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
   _$UserCompanyEntity._(
-      {this.isOwner,
-      this.isAdmin,
-      this.company,
-      this.user,
-      this.token,
-      this.permissionsMap})
+      {this.isAdmin, this.company, this.user, this.token, this.permissionsMap})
       : super._() {
-    if (isOwner == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'isOwner');
-    }
     if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
     }
@@ -3006,7 +3012,6 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserCompanyEntity &&
-        isOwner == other.isOwner &&
         isAdmin == other.isAdmin &&
         company == other.company &&
         user == other.user &&
@@ -3017,11 +3022,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc($jc($jc(0, isOwner.hashCode), isAdmin.hashCode),
-                    company.hashCode),
-                user.hashCode),
+        $jc($jc($jc($jc(0, isAdmin.hashCode), company.hashCode), user.hashCode),
             token.hashCode),
         permissionsMap.hashCode));
   }
@@ -3029,7 +3030,6 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
-          ..add('isOwner', isOwner)
           ..add('isAdmin', isAdmin)
           ..add('company', company)
           ..add('user', user)
@@ -3042,10 +3042,6 @@ class _$UserCompanyEntity extends UserCompanyEntity {
 class UserCompanyEntityBuilder
     implements Builder<UserCompanyEntity, UserCompanyEntityBuilder> {
   _$UserCompanyEntity _$v;
-
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
 
   bool _isAdmin;
   bool get isAdmin => _$this._isAdmin;
@@ -3074,7 +3070,6 @@ class UserCompanyEntityBuilder
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
-      _isOwner = _$v.isOwner;
       _isAdmin = _$v.isAdmin;
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
@@ -3104,7 +3099,6 @@ class UserCompanyEntityBuilder
     try {
       _$result = _$v ??
           new _$UserCompanyEntity._(
-              isOwner: isOwner,
               isAdmin: isAdmin,
               company: company.build(),
               user: user.build(),

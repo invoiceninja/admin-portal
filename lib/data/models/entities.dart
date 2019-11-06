@@ -146,8 +146,12 @@ abstract class BaseEntity implements SelectableEntity {
   bool get isDeleted;
 
   @nullable
-  @BuiltValueField(wireName: 'is_owner')
-  bool get isOwner;
+  @BuiltValueField(wireName: 'user_id')
+  String get createdUserId;
+
+  @nullable
+  @BuiltValueField(wireName: 'assigned_user_id')
+  String get assignedUserId;
 
   String get entityKey => '__${entityType}__${id}__';
 

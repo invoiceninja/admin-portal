@@ -83,6 +83,9 @@ abstract class UserEntity extends Object
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
+  bool canEdit(BaseEntity entity) =>
+      entity.createdUserId == id || entity.assignedUserId == id;
+
   @override
   String get listDisplayName {
     return fullName;
