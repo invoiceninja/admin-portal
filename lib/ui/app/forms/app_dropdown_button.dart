@@ -28,7 +28,7 @@ class AppDropdownButton extends StatelessWidget {
         decoration: InputDecoration(
           labelText: labelText,
         ),
-        isEmpty: value == null && value != '',
+        isEmpty: value == null || value == '',
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             value: value,

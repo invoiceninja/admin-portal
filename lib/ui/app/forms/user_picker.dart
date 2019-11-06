@@ -26,8 +26,9 @@ class UserPicker extends StatelessWidget {
 
     if (users.length < 10) {
       return AppDropdownButton(
-        labelText: localization.users,
+        labelText: localization.user,
         value: userId,
+        showBlank: true,
         onChanged: (userId) => onChanged(userId),
         items: users.map((userId) => DropdownMenuItem(
           child: Text(state.userState.map[userId]?.fullName ?? ''),
