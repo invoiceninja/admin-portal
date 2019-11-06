@@ -94,7 +94,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                   initialTaxName: settings.defaultTaxName1,
                   initialTaxRate: settings.defaultTaxRate1,
                 ),
-                if (settings.numberOfRates > 1)
+                // TODO get null value from company
+                if ((settings.numberOfRates ?? 0) > 1)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
@@ -105,7 +106,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                     initialTaxName: settings.defaultTaxName2,
                     initialTaxRate: settings.defaultTaxRate2,
                   ),
-                if (settings.numberOfRates > 2)
+                // TODO get null value from company 
+                if ((settings.numberOfRates ?? 0) > 2)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
