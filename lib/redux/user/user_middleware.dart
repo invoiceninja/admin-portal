@@ -196,6 +196,7 @@ Middleware<AppState> _saveUser(UserRepository repository) {
       } else {
         store.dispatch(SaveUserSuccess(user));
       }
+      action.completer.complete(user);
       final userUIState = store.state.userUIState;
       if (userUIState.saveCompleter != null) {
         userUIState.saveCompleter.complete(user);

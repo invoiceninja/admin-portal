@@ -38,7 +38,7 @@ class _TaxRateViewState extends State<TaxRateView> {
         actions: [
           userCompany.canEditEntity(taxRate)
               ? EditIconButton(
-                  isVisible: !taxRate.isDeleted,
+                  isVisible: !(taxRate.isDeleted ?? false),
                   onPressed: () => viewModel.onEditPressed(context),
                 )
               : Container(),

@@ -118,7 +118,7 @@ class LoadUsersSuccess implements StopLoading, PersistData {
 }
 
 class SaveUserRequest implements StartSaving {
-  SaveUserRequest({this.completer, this.user});
+  SaveUserRequest({@required this.completer, @required this.user});
 
   final Completer completer;
   final UserEntity user;
