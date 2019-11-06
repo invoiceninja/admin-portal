@@ -1,6 +1,7 @@
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
@@ -62,15 +63,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     }
 
     if (invoice.lineItems.isEmpty) {
-      return Center(
-        child: Text(
-          localization.clickPlusToAddItem,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 20.0,
-          ),
-        ),
-      );
+      return HelpText(localization.clickPlusToAddItem);
     }
 
     final lineItems =

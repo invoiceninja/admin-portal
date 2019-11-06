@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
@@ -60,15 +61,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     }
 
     if (task.taskTimes.isEmpty) {
-      return Center(
-        child: Text(
-          localization.clickPlusToAddTime,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 20.0,
-          ),
-        ),
-      );
+      return HelpText(localization.clickPlusToAddTime);
     }
 
     final taskTimes = task.taskTimes
