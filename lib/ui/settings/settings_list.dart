@@ -201,9 +201,6 @@ class SettingsListTile extends StatelessWidget {
           if (section == kSettingsOnlinePayments &&
               state.companyGatewayState.list.isEmpty) {
             viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
-          } else if (section == kSettingsTaxRates &&
-              state.taxRateState.list.isEmpty) {
-            viewModel.loadSection(context, kSettingsTaxRatesEdit);
           } else if (section == kSettingsGroupSettings &&
               state.groupState.list.isEmpty) {
             viewModel.loadSection(context, kSettingsGroupSettingsEdit);

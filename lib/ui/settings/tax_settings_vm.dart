@@ -62,7 +62,13 @@ class TaxSettingsVM {
               company: settingsUIState.userCompany.company));
         },
         onConfigureRatesPressed: (context) {
-          store.dispatch(ViewSettings(context: context, section: kSettingsTaxRates));
+          if (state.taxRateState.list.isEmpty) {
+            store.dispatch(
+                ViewSettings(context: context, section: kSettingsTaxRatesEdit));
+          } else {
+            store.dispatch(
+                ViewSettings(context: context, section: kSettingsTaxRates));
+          }
         });
   }
 
