@@ -72,6 +72,5 @@ export 'package:invoiceninja_flutter/ui/user/user_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 export 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/online_payments_vm.dart';
-export 'package:invoiceninja_flutter/ui/settings/tax_rates_vm.dart';
 export 'package:invoiceninja_flutter/ui/document/document_screen_vm.dart';
 export 'package:invoiceninja_flutter/ui/group/group_screen.dart';

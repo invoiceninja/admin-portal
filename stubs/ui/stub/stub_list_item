@@ -61,7 +61,6 @@ class StubListItem extends StatelessWidget {
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
-                  //key: NinjaKeys.stubItemCheckbox(task.id),
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
@@ -76,7 +75,6 @@ class StubListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   stub.name,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),

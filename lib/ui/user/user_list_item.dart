@@ -59,7 +59,6 @@ class UserListItem extends StatelessWidget {
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
-                  //key: NinjaKeys.userItemCheckbox(task.id),
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
@@ -74,7 +73,6 @@ class UserListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   user.fullName,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),

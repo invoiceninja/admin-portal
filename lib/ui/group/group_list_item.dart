@@ -55,21 +55,10 @@ class GroupListItem extends StatelessWidget {
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.groupItemCheckbox(group.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
-                  //key: NinjaKeys.productItemCheckbox(task.id),
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
@@ -84,7 +73,6 @@ class GroupListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   group.name,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),

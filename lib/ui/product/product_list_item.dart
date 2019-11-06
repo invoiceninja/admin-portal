@@ -62,7 +62,6 @@ class ProductListItem extends StatelessWidget {
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
-                  //key: NinjaKeys.productItemCheckbox(task.id),
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
@@ -77,7 +76,6 @@ class ProductListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   product.productKey,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),

@@ -341,7 +341,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 CompanyGatewayEditScreen(),
             OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
             TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
-            TaxRatesScreen.route: (context) => TaxRatesScreen(),
             TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
             TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
             TaxRateEditScreen.route: (context) => TaxRateEditScreen(),

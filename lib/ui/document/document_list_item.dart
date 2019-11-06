@@ -59,21 +59,10 @@ class DocumentListItem extends StatelessWidget {
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
         onLongPress: onLongPress,
-        /*
-        leading: Checkbox(
-          //key: NinjaKeys.documentItemCheckbox(document.id),
-          value: true,
-          //onChanged: onCheckboxChanged,
-          onChanged: (value) {
-            return true;
-          },
-        ),
-        */
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
-                  //key: NinjaKeys.documentItemCheckbox(task.id),
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   onChanged: (value) => onCheckboxChanged(value),
@@ -88,7 +77,6 @@ class DocumentListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   document.name,
-                  //key: NinjaKeys.clientItemClientKey(client.id),
                   style: Theme.of(context).textTheme.title,
                 ),
               ),
