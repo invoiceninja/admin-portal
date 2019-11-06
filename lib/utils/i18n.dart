@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       'configure_rates': 'Configure rates',
       'tax_settings': 'Tax Settings',
+      'tax_settings_rates': 'Tax Rates',
       'accent_color': 'Accent Color',
       'switch': 'Switch',
       'use_comma_sparated_list': 'Use a comma separated list',
@@ -15492,6 +15493,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get configureRates => _localizedValues[localeCode]['configure_rates'];
 
+  String get taxSettingsRates => _localizedValues[localeCode]['tax_settings_rates'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

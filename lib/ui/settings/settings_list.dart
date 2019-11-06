@@ -263,6 +263,9 @@ class SettingsSearch extends StatelessWidget {
       'accepted_card_logos',
       'limits_and_fees',
     ],
+    kSettingsTaxSettings: [
+      'tax_settings',
+    ],
     kSettingsTaxRates: [
       'tax_rates',
     ],
