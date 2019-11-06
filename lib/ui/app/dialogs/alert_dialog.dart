@@ -44,14 +44,15 @@ class MessageDialog extends StatelessWidget {
                                 onDiscard();
                               }),
                         ),
-                      ElevatedButton(
+                      FlatButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                           if (onDismiss != null) {
                             onDismiss();
                           }
                         },
-                        label: dismissLabel ?? localization.dismiss,
+                        textColor: Theme.of(context).accentColor,
+                        child: Text(dismissLabel ?? localization.dismiss),
                       ),
                     ],
                   ),
