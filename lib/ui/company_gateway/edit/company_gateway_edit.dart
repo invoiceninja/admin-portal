@@ -100,9 +100,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           viewModel.onChanged(
                         companyGateway.rebuild((b) => b
                           ..gatewayId = gateway.id
-                          ..gatewayTypeId = null
-                          ..config =
-                              ''), // TODO set to gateway.defaultGatewayTypeId
+                          ..config = ''),
                       ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
@@ -234,50 +232,17 @@ class GatewayConfigSettings extends StatelessWidget {
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
 
-  Map<String, String> getGatewayTypes(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    switch (companyGateway.gatewayId) {
-      case kGatewayStripe:
-        return {
-          kGatewayTypeCreditCard: localization.creditCard,
-          kGatewayTypeBankTransfer: localization.bankTransfer,
-        };
-      default:
-        return null;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     if (gateway == null) {
       return SizedBox();
     }
 
-    final gatewayTypes = getGatewayTypes(context);
-
     return Column(
-      children: [
-        if (gatewayTypes != null)
-          AppDropdownButton(
-            labelText: localization.paymentType,
-            value: companyGateway.gatewayTypeId,
-            onChanged: (value) => viewModel.onChanged(
-                companyGateway.rebuild((b) => b..gatewayTypeId = value)),
-            items: gatewayTypes
-                .map((id, type) => MapEntry<String, DropdownMenuItem<String>>(
-                    id,
-                    DropdownMenuItem<String>(
-                      child: Text(localization.lookup(type)),
-                      value: id,
-                    )))
-                .values
-                .toList(),
-          ),
-        ...gateway.parsedFields.keys
+        children: gateway.parsedFields.keys
             .map((field) => GatewayConfigField(
                   field: field,
                   value: companyGateway.parsedConfig[field],
@@ -288,9 +253,7 @@ class GatewayConfigSettings extends StatelessWidget {
                         .onChanged(companyGateway.updateConfig(field, value));
                   },
                 ))
-            .toList()
-      ],
-    );
+            .toList());
   }
 }
 
