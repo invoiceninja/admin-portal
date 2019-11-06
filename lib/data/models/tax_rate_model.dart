@@ -50,7 +50,6 @@ abstract class TaxRateEntity extends Object
       isChanged: false,
       name: '',
       rate: 0.0,
-      isInclusive: false,
       isDeleted: false,
     );
   }
@@ -66,6 +65,7 @@ abstract class TaxRateEntity extends Object
 
   double get rate;
 
+  @nullable
   @BuiltValueField(wireName: 'is_inclusive')
   bool get isInclusive;
 

@@ -19,6 +19,7 @@ class AppScaffold extends StatelessWidget {
       this.isChecked,
       this.onCheckboxChanged,
       this.onHamburgerLongPress,
+      this.onBackPressed,
       this.showCheckbox = false,
       this.hideHamburgerButton = false});
 
@@ -31,6 +32,7 @@ class AppScaffold extends StatelessWidget {
   final bool showCheckbox;
   final Function(bool) onCheckboxChanged;
   final Function() onHamburgerLongPress;
+  final Function() onBackPressed;
   final bool isChecked;
 
   @override
@@ -52,23 +54,28 @@ class AppScaffold extends StatelessWidget {
                     onChanged: onCheckboxChanged,
                     activeColor: Theme.of(context).accentColor,
                     value: isChecked)
-                : hideHamburgerButton
-                    ? null
-                    : Builder(
-                        builder: (context) => GestureDetector(
-                              onLongPress: onHamburgerLongPress,
-                              child: IconButton(
-                                icon: Icon(Icons.menu),
-                                onPressed: () {
-                                  if (isMobile(context)) {
-                                    Scaffold.of(context).openDrawer();
-                                  } else {
-                                    store.dispatch(
-                                        UpdateSidebar(AppSidebar.menu));
-                                  }
-                                },
-                              ),
-                            )),
+                : onBackPressed != null
+                    ? IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: onBackPressed,
+                      )
+                    : hideHamburgerButton
+                        ? null
+                        : Builder(
+                            builder: (context) => GestureDetector(
+                                  onLongPress: onHamburgerLongPress,
+                                  child: IconButton(
+                                    icon: Icon(Icons.menu),
+                                    onPressed: () {
+                                      if (isMobile(context)) {
+                                        Scaffold.of(context).openDrawer();
+                                      } else {
+                                        store.dispatch(
+                                            UpdateSidebar(AppSidebar.menu));
+                                      }
+                                    },
+                                  ),
+                                )),
             title: appBarTitle,
             actions: appBarActions,
           ),

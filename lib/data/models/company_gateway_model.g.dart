@@ -155,12 +155,6 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.gatewayTypeId,
             specifiedType: const FullType(String)));
     }
-    if (object.priority != null) {
-      result
-        ..add('priority_id')
-        ..add(serializers.serialize(object.priority,
-            specifiedType: const FullType(int)));
-    }
     if (object.customValue1 != null) {
       result
         ..add('custom_value1')
@@ -323,10 +317,6 @@ class _$CompanyGatewayEntitySerializer
         case 'update_details':
           result.updateDetails = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'priority_id':
-          result.priority = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -627,8 +617,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final bool updateDetails;
   @override
-  final int priority;
-  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -683,7 +671,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.showBillingAddress,
       this.showShippingAddress,
       this.updateDetails,
-      this.priority,
       this.customValue1,
       this.customValue2,
       this.minLimit,
@@ -750,7 +737,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         showBillingAddress == other.showBillingAddress &&
         showShippingAddress == other.showShippingAddress &&
         updateDetails == other.updateDetails &&
-        priority == other.priority &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         minLimit == other.minLimit &&
@@ -794,7 +780,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), gatewayTypeId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), priority.hashCode), customValue1.hashCode), customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), gatewayTypeId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), customValue1.hashCode), customValue2.hashCode),
                                                                                 minLimit.hashCode),
                                                                             maxLimit.hashCode),
                                                                         feeAmount.hashCode),
@@ -826,7 +812,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('showBillingAddress', showBillingAddress)
           ..add('showShippingAddress', showShippingAddress)
           ..add('updateDetails', updateDetails)
-          ..add('priority', priority)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('minLimit', minLimit)
@@ -889,10 +874,6 @@ class CompanyGatewayEntityBuilder
   bool get updateDetails => _$this._updateDetails;
   set updateDetails(bool updateDetails) =>
       _$this._updateDetails = updateDetails;
-
-  int _priority;
-  int get priority => _$this._priority;
-  set priority(int priority) => _$this._priority = priority;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -989,7 +970,6 @@ class CompanyGatewayEntityBuilder
       _showBillingAddress = _$v.showBillingAddress;
       _showShippingAddress = _$v.showShippingAddress;
       _updateDetails = _$v.updateDetails;
-      _priority = _$v.priority;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _minLimit = _$v.minLimit;
@@ -1042,7 +1022,6 @@ class CompanyGatewayEntityBuilder
               showBillingAddress: showBillingAddress,
               showShippingAddress: showShippingAddress,
               updateDetails: updateDetails,
-              priority: priority,
               customValue1: customValue1,
               customValue2: customValue2,
               minLimit: minLimit,

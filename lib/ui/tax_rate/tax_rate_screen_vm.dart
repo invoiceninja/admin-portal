@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
@@ -33,6 +35,7 @@ class TaxRateScreenVM {
     @required this.taxRateList,
     @required this.userCompany,
     @required this.onEntityAction,
+    @required this.onBackPressed,
     @required this.taxRateMap,
   });
 
@@ -40,6 +43,7 @@ class TaxRateScreenVM {
   final UserCompanyEntity userCompany;
   final List<String> taxRateList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
+  final Function(BuildContext) onBackPressed;
   final BuiltMap<String, TaxRateEntity> taxRateMap;
 
   static TaxRateScreenVM fromStore(Store<AppState> store) {
@@ -54,6 +58,9 @@ class TaxRateScreenVM {
       onEntityAction: (BuildContext context, List<BaseEntity> taxRates,
               EntityAction action) =>
           handleTaxRateAction(context, taxRates, action),
+      onBackPressed: (context) {
+        store.dispatch(ViewSettings(context: context, section: kSettingsTaxSettings));
+      },
     );
   }
 }

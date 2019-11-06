@@ -116,7 +116,6 @@ class CompanyGatewayScreen extends StatelessWidget {
         onSelectedCustom2: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom2(value)),
         sortFields: [
-          CompanyGatewayFields.priority,
           CompanyGatewayFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {

@@ -47,7 +47,7 @@ abstract class CompanyGatewayUIState extends Object
     implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
   factory CompanyGatewayUIState() {
     return _$CompanyGatewayUIState._(
-      listUIState: ListUIState(CompanyGatewayFields.priority),
+      listUIState: ListUIState(CompanyGatewayFields.name),
       editing: CompanyGatewayEntity(),
       selectedId: '',
     );

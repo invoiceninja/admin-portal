@@ -122,10 +122,13 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
-      'is_inclusive',
-      serializers.serialize(object.isInclusive,
-          specifiedType: const FullType(bool)),
     ];
+    if (object.isInclusive != null) {
+      result
+        ..add('is_inclusive')
+        ..add(serializers.serialize(object.isInclusive,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -461,9 +464,6 @@ class _$TaxRateEntity extends TaxRateEntity {
     }
     if (rate == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'rate');
-    }
-    if (isInclusive == null) {
-      throw new BuiltValueNullFieldError('TaxRateEntity', 'isInclusive');
     }
   }
 

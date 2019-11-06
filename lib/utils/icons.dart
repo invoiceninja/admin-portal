@@ -108,7 +108,7 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.globe;
     case kSettingsOnlinePayments:
       return FontAwesomeIcons.creditCard;
-    case kSettingsTaxRates:
+    case kSettingsTaxSettings:
       return FontAwesomeIcons.percent;
     case kSettingsProducts:
       return FontAwesomeIcons.cube;

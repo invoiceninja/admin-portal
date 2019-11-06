@@ -35,6 +35,7 @@ class TaxSettingsVM {
     @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
+    @required this.onConfigureRatesPressed,
   });
 
   static TaxSettingsVM fromStore(Store<AppState> store) {
@@ -53,6 +54,9 @@ class TaxSettingsVM {
           store.dispatch(SaveCompanyRequest(
               completer: completer,
               company: settingsUIState.userCompany.company));
+        },
+        onConfigureRatesPressed: (context) {
+          store.dispatch(ViewSettings(context: context, section: kSettingsTaxRates));
         });
   }
 
@@ -61,4 +65,5 @@ class TaxSettingsVM {
   final Function(BuildContext) onCancelPressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
+  final Function(BuildContext) onConfigureRatesPressed;
 }
