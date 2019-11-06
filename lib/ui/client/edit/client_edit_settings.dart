@@ -97,6 +97,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                   client.rebuild((b) => b..currencyId = currency.id)),
             ),
             EntityDropdown(
+              allowClearing: true,
               entityType: EntityType.language,
               entityMap: viewModel.staticState.languageMap,
               entityList:

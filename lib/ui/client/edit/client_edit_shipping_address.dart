@@ -128,6 +128,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
           ),
           EntityDropdown(
             key: ValueKey(client.shippingCountryId),
+            allowClearing: true,
             entityType: EntityType.country,
             entityMap: viewModel.staticState.countryMap,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),

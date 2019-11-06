@@ -125,6 +125,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
           ),
           EntityDropdown(
             key: ValueKey(vendor.countryId),
+            allowClearing: true,
             entityType: EntityType.country,
             entityMap: viewModel.state.staticState.countryMap,
             entityList:

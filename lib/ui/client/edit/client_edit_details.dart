@@ -112,6 +112,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                   : null,
             ),
             EntityDropdown(
+              key: ValueKey('__group_${client.groupId}__'),
+              allowClearing: true,
               entityType: EntityType.group,
               entityMap: state.groupState.map,
               entityList: memoizedGroupList(state.groupState.map),
@@ -119,7 +121,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               initialValue: state.groupState.map[client.groupId]?.name,
               onSelected: (SelectableEntity group) => viewModel
                   .onChanged(client.rebuild((b) => b..groupId = group?.id)),
-              allowClearing: true,
             ),
             DecoratedFormField(
               label: localization.idNumber,

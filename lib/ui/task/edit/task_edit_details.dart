@@ -87,6 +87,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             !task.isInvoiced
                 ? EntityDropdown(
                     key: Key('__client_${task.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
                     initialValue:
@@ -108,6 +109,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             !task.isInvoiced
                 ? EntityDropdown(
                     key: Key('__project_${task.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.project,
                     labelText: localization.project,
                     initialValue: (state.projectState.map[task.projectId] ??

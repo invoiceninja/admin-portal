@@ -96,6 +96,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              allowClearing: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               initialValue:
