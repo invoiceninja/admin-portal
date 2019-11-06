@@ -358,7 +358,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   @override
   void dispose() {
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
+      controller.removeListener(_onTextChanged);
       controller.dispose();
     });
     super.dispose();
@@ -375,8 +375,8 @@ class _ReminderSettingsState extends State<ReminderSettings> {
       _feePercentController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.removeListener(_onTextChanged));
 
     _daysController.text = '${widget.numDays ?? ''}';
     _feeAmountController.text = formatNumber(widget.feeAmount, context,
@@ -384,20 +384,24 @@ class _ReminderSettingsState extends State<ReminderSettings> {
     _feePercentController.text = formatNumber(widget.feePercent, context,
         formatNumberType: FormatNumberType.input);
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.addListener(_onTextChanged));
 
     super.didChangeDependencies();
   }
 
-  void _onChanged() {
+  void _onTextChanged() {
     _debouncer.run(() {
-      final int days = parseDouble(_daysController.text.trim()).toInt();
-      final feeAmount = parseDouble(_feeAmountController.text.trim());
-      final feePercent = parseDouble(_feePercentController.text.trim());
-
-      widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
+      _onChanged();
     });
+  }
+
+  void _onChanged() {
+    final int days = parseDouble(_daysController.text.trim()).toInt();
+    final feeAmount = parseDouble(_feeAmountController.text.trim());
+    final feePercent = parseDouble(_feePercentController.text.trim());
+
+    widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
   }
 
   @override
@@ -434,19 +438,18 @@ class _ReminderSettingsState extends State<ReminderSettings> {
                 ),
               ],
             ),
-            BoolDropdownButton(
-              label: localization.sendEmail,
-              value: widget.enabled,
-              onChanged: (value) {
-                _enabled = value;
-                _onChanged();
-              },
-              iconData: FontAwesomeIcons.solidEnvelope,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: BoolDropdownButton(
+                label: localization.sendEmail,
+                value: widget.enabled,
+                onChanged: (value) {
+                  _enabled = value;
+                  _onChanged();
+                },
+                iconData: FontAwesomeIcons.solidEnvelope,
+              ),
             ),
-          ],
-        ),
-        FormCard(
-          children: <Widget>[
             DecoratedFormField(
               label: localization.lateFeeAmount,
               controller: _feeAmountController,
