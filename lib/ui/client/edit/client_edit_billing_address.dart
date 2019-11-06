@@ -126,7 +126,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
             ),
           ),
           EntityDropdown(
-            //key: ValueKey('__billing_country_${client.countryId}__'),
+            key: ValueKey('__billing_country_${client.countryId}__'),
             allowClearing: true,
             entityType: EntityType.country,
             entityMap: viewModel.staticState.countryMap,
