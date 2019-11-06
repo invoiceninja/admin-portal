@@ -55,5 +55,20 @@ List<String> filteredUsersSelector(BuiltMap<String, UserEntity> userMap,
   return list;
 }
 
+var memoizedUserList =
+    memo1((BuiltMap<String, UserEntity> userMap) => userList(userMap));
+
+List<String> userList(BuiltMap<String, UserEntity> userMap) {
+  final list =
+      userMap.keys.where((userId) => userMap[userId].isActive).toList();
+
+  list.sort((idA, idB) => userMap[idA]
+      .fullName
+      .toLowerCase()
+      .compareTo(userMap[idB].fullName.toLowerCase()));
+
+  return list;
+}
+
 bool hasUserChanges(UserEntity user, BuiltMap<String, UserEntity> userMap) =>
     user.isNew ? user.isChanged : user != userMap[user.id];
