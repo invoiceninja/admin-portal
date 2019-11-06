@@ -37,7 +37,6 @@ class TemplatesAndRemindersVM {
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.loadTemplate,
   });
 
@@ -50,7 +49,6 @@ class TemplatesAndRemindersVM {
       onSettingsChanged: (settings) {
         store.dispatch(UpdateSettings(settings: settings));
       },
-      onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         final completer = snackBarCompleter(
@@ -88,5 +86,4 @@ class TemplatesAndRemindersVM {
   final Function(String) loadTemplate;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

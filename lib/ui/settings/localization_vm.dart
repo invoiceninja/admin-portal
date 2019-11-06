@@ -39,7 +39,6 @@ class LocalizationSettingsVM {
     @required this.onSettingsChanged,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static LocalizationSettingsVM fromStore(Store<AppState> store) {
@@ -54,7 +53,6 @@ class LocalizationSettingsVM {
         },
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -83,5 +81,4 @@ class LocalizationSettingsVM {
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

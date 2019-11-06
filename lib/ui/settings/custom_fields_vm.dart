@@ -35,7 +35,6 @@ class CustomFieldsVM {
   CustomFieldsVM({
     @required this.state,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.company,
     @required this.onCompanyChanged,
   });
@@ -48,7 +47,6 @@ class CustomFieldsVM {
         company: state.uiState.settingsUIState.userCompany.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -73,7 +71,6 @@ class CustomFieldsVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
 }

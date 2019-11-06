@@ -33,7 +33,6 @@ class UserDetailsVM {
     @required this.state,
     @required this.onChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -43,7 +42,6 @@ class UserDetailsVM {
         state: state,
         user: state.uiState.settingsUIState.userCompany.user,
         onChanged: (user) => store.dispatch(UpdateUser(user: user)),
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final completer = snackBarCompleter(
               context, AppLocalization.of(context).savedSettings);
@@ -57,5 +55,4 @@ class UserDetailsVM {
   final UserEntity user;
   final Function(UserEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

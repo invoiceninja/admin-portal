@@ -37,7 +37,6 @@ class EmailSettingsVM {
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static EmailSettingsVM fromStore(Store<AppState> store) {
@@ -49,7 +48,6 @@ class EmailSettingsVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -74,7 +72,6 @@ class EmailSettingsVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
 }

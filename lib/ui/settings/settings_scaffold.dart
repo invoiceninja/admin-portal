@@ -44,6 +44,8 @@ class SettingsScaffold extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
+                    store.dispatch(ResetSettings());
+                    /*
                     FocusScope.of(context).requestFocus(FocusNode());
                     store.dispatch(ViewSettings(
                       context: context,
@@ -51,6 +53,7 @@ class SettingsScaffold extends StatelessWidget {
                       section: state.uiState.previousSubRoute,
                       force: true,
                     ));
+                     */
                   },
                 );
               }),

@@ -38,7 +38,6 @@ class CompanyDetailsVM {
     @required this.onCompanyChanged,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.onUploadLogo,
   });
 
@@ -53,7 +52,6 @@ class CompanyDetailsVM {
           store.dispatch(UpdateSettings(settings: settings)),
       onCompanyChanged: (company) =>
           store.dispatch(UpdateCompany(company: company)),
-      onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         final completer = snackBarCompleter(
@@ -89,6 +87,5 @@ class CompanyDetailsVM {
   final Function(SettingsEntity) onSettingsChanged;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, String) onUploadLogo;
 }

@@ -36,7 +36,6 @@ class TaxSettingsVM {
     @required this.onSettingsChanged,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.onConfigureRatesPressed,
   });
 
@@ -52,7 +51,6 @@ class TaxSettingsVM {
         },
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -74,7 +72,6 @@ class TaxSettingsVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final CompanyEntity company;

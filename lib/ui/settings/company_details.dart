@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -34,6 +35,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
   bool autoValidate = false;
+  final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
   final _idNumberController = TextEditingController();
@@ -139,31 +141,33 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
-    final settings = widget.viewModel.settings.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..phone = _phoneController.text.trim()
-      ..email = _emailController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim()
-      ..defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
-      ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim()
-      ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
-      ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
-      ..defaultQuoteFooter = _quoteFooterController.text.trim()
-      ..defaultQuoteTerms = _quoteTermsController.text.trim());
-    if (settings != widget.viewModel.settings) {
-      widget.viewModel.onSettingsChanged(settings);
-    }
+    _debouncer.run(() {
+      final settings = widget.viewModel.settings.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..phone = _phoneController.text.trim()
+        ..email = _emailController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim()
+        ..defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
+        ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
+        ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
+        ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
+        ..defaultQuoteFooter = _quoteFooterController.text.trim()
+        ..defaultQuoteTerms = _quoteTermsController.text.trim());
+      if (settings != widget.viewModel.settings) {
+        widget.viewModel.onSettingsChanged(settings);
+      }
+    });
   }
 
   @override

@@ -35,7 +35,6 @@ class GeneratedNumbersVM {
   GeneratedNumbersVM({
     @required this.state,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.company,
@@ -54,7 +53,6 @@ class GeneratedNumbersVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -79,7 +77,6 @@ class GeneratedNumbersVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final CompanyEntity company;

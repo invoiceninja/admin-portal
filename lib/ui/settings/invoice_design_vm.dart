@@ -36,7 +36,6 @@ class InvoiceDesignVM {
     @required this.state,
     @required this.company,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
     @required this.settings,
     @required this.onSettingsChanged,
   });
@@ -51,7 +50,6 @@ class InvoiceDesignVM {
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -79,5 +77,4 @@ class InvoiceDesignVM {
   final CompanyEntity company;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
 }

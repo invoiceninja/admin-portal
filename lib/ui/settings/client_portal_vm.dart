@@ -39,7 +39,6 @@ class ClientPortalVM {
     @required this.onCompanyChanged,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static ClientPortalVM fromStore(Store<AppState> store) {
@@ -53,7 +52,6 @@ class ClientPortalVM {
           store.dispatch(UpdateSettings(settings: settings)),
       onCompanyChanged: (company) =>
           store.dispatch(UpdateCompany(company: company)),
-      onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         final completer = snackBarCompleter(
@@ -81,7 +79,6 @@ class ClientPortalVM {
   final CompanyEntity company;
   final SettingsEntity settings;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(SettingsEntity) onSettingsChanged;
 }

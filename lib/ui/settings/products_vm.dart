@@ -34,7 +34,6 @@ class ProductSettingsVM {
     @required this.company,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
-    @required this.onCancelPressed,
   });
 
   static ProductSettingsVM fromStore(Store<AppState> store) {
@@ -45,7 +44,6 @@ class ProductSettingsVM {
         company: state.uiState.settingsUIState.userCompany.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
-        onCancelPressed: (context) => store.dispatch(ResetSettings()),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter(
@@ -58,7 +56,6 @@ class ProductSettingsVM {
 
   final AppState state;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
 }
