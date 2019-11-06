@@ -292,6 +292,8 @@ abstract class InvoiceEntity extends Object
   bool get isApproved =>
       statusId == kInvoiceStatusApproved || (quoteInvoiceId ?? '').isNotEmpty;
 
+  bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
+
   //String get last_login;
   //String get custom_messages;
 
@@ -482,6 +484,12 @@ abstract class InvoiceEntity extends Object
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
+  InvitationEntity getInvitationForContact(ContactEntity contact) {
+    return invitations.firstWhere(
+        (invitation) => invitation.contactId == contact.id,
+        orElse: () => null);
+  }
+
   String get invitationLink =>
       invitations.isEmpty ? '' : invitations.first.link;
 
@@ -651,6 +659,7 @@ abstract class InvitationEntity extends Object
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
+      contactId: '',
       key: '',
       link: '',
       sentDate: '',
@@ -667,8 +676,9 @@ abstract class InvitationEntity extends Object
 
   String get link;
 
-  //@BuiltValueField(wireName: 'contact_id')
-  //int get contactId;
+  @nullable // TODO remove
+  @BuiltValueField(wireName: 'contact_id')
+  String get contactId;
 
   @BuiltValueField(wireName: 'sent_date')
   String get sentDate;

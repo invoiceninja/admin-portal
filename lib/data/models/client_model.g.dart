@@ -170,9 +170,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'shipping_country_id',
       serializers.serialize(object.shippingCountryId,
           specifiedType: const FullType(String)),
-      'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -407,10 +404,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'shipping_country_id':
           result.shippingCountryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,

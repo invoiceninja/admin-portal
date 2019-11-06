@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'no_client_selected': 'No client selected',
       'configure_rates': 'Configure rates',
       'tax_settings': 'Tax Settings',
       'tax_settings_rates': 'Tax Rates',
@@ -15494,6 +15495,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get configureRates => _localizedValues[localeCode]['configure_rates'];
 
   String get taxSettingsRates => _localizedValues[localeCode]['tax_settings_rates'];
+
+  String get noClientSelected => _localizedValues[localeCode]['no_client_selected'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

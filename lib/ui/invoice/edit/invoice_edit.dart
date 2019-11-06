@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -29,8 +30,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
   TabController _controller;
 
   static const kDetailsScreen = 0;
-  static const kItemScreen = 1;
-  static const kNotesScreen = 2;
+  static const kContactScreen = 2;
+  static const kItemScreen = 3;
+  static const kNotesScreen = 4;
 
   @override
   void initState() {
@@ -41,7 +43,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     final index =
         invoice.lineItems.contains(invoiceItem) ? kItemScreen : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    _controller = TabController(vsync: this, length: 4, initialIndex: index);
   }
 
   @override
@@ -99,6 +101,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 text: localization.details,
               ),
               Tab(
+                text: localization.contacts,
+              ),
+              Tab(
                 text: localization.items,
               ),
               Tab(
@@ -114,6 +119,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
             controller: _controller,
             children: <Widget>[
               InvoiceEditDetailsScreen(),
+              InvoiceEditContactsScreen(),
               InvoiceEditItemsScreen(),
               InvoiceEditNotesScreen(),
             ],

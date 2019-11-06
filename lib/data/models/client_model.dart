@@ -209,6 +209,8 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'shipping_country_id')
   String get shippingCountryId;
 
+  // TODO remove this line of code
+  @BuiltValueField(serialize: false)
   SettingsEntity get settings;
 
   @BuiltValueField(wireName: 'custom_value1')
