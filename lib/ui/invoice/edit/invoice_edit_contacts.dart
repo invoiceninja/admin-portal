@@ -23,8 +23,19 @@ class InvoiceEditContacts extends StatelessWidget {
       return HelpText(localization.noClientSelected);
     }
 
+    final contacts = client.contacts.toList()
+      ..sort((contactA, contactB) {
+        if (contactA.sendInvoice != contactB.sendInvoice) {
+          return contactA.sendInvoice ? 1 : -1;
+        } else {
+          return contactA.fullName
+              .toLowerCase()
+              .compareTo(contactB.fullName.toLowerCase());
+        }
+      });
+
     return ListView(
-      children: client.contacts.map((contact) {
+      children: contacts.map((contact) {
         final invitation = invoice.getInvitationForContact(contact);
         return _ContactListTile(
           contact: contact,
