@@ -74,6 +74,8 @@ abstract class TaxRateEntity extends Object
     return name;
   }
 
+  bool get isEmpty => rate == 0 && name.isEmpty;
+
   int compareTo(TaxRateEntity taxRate, String sortField, bool sortAscending) {
     const int response = 0;
     final TaxRateEntity taxRateA = sortAscending ? this : taxRate;
