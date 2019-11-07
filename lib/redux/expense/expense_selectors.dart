@@ -111,11 +111,13 @@ List<String> filteredExpensesSelector(
   return list;
 }
 
-String expenseStatsForVendor(
+var memoizedExpenseStatsForVendor = memo2((String vendorId,
+    BuiltMap<String, ExpenseEntity> expenseMap) =>
+    expenseStatsForVendor(vendorId, expenseMap));
+
+EntityStats expenseStatsForVendor(
     String vendorId,
-    BuiltMap<String, ExpenseEntity> expenseMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -128,31 +130,16 @@ String expenseStatsForVendor(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedExpenseStatsForClient = memo4((String clientId,
-        BuiltMap<String, ExpenseEntity> expenseMap,
-        String activeLabel,
-        String archivedLabel) =>
-    expenseStatsForClient(clientId, expenseMap, activeLabel, archivedLabel));
+var memoizedExpenseStatsForClient = memo2((String clientId,
+        BuiltMap<String, ExpenseEntity> expenseMap) =>
+    expenseStatsForClient(clientId, expenseMap));
 
-String expenseStatsForClient(
+EntityStats expenseStatsForClient(
     String clientId,
-    BuiltMap<String, ExpenseEntity> expenseMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -165,25 +152,8 @@ String expenseStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
-
-var memoizedExpenseStatsForVendor = memo4((String vendorId,
-        BuiltMap<String, ExpenseEntity> expenseMap,
-        String activeLabel,
-        String archivedLabel) =>
-    expenseStatsForVendor(vendorId, expenseMap, activeLabel, archivedLabel));
 
 var memoizedClientExpenseList = memo2(
     (BuiltMap<String, ExpenseEntity> expenseMap, String clientId) =>

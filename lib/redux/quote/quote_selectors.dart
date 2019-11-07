@@ -61,17 +61,13 @@ List<String> filteredQuotesSelector(
   return list;
 }
 
-var memoizedQuoteStatsForClient = memo4((String clientId,
-        BuiltMap<String, InvoiceEntity> quoteMap,
-        String activeLabel,
-        String archivedLabel) =>
-    quoteStatsForClient(clientId, quoteMap, activeLabel, archivedLabel));
+var memoizedQuoteStatsForClient = memo2((String clientId,
+        BuiltMap<String, InvoiceEntity> quoteMap) =>
+    quoteStatsForClient(clientId, quoteMap));
 
-String quoteStatsForClient(
+EntityStats quoteStatsForClient(
     String clientId,
-    BuiltMap<String, InvoiceEntity> quoteMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> quoteMap) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
@@ -84,18 +80,7 @@ String quoteStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 var memoizedQuoteStatsForUser = memo2((String userId,

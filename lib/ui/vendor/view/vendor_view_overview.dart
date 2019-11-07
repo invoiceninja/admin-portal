@@ -69,11 +69,9 @@ class VendorOverview extends StatelessWidget {
           onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.expense, true),
-          subtitle: memoizedExpenseStatsForVendor(
-              vendor.id,
-              state.expenseState.map,
-              localization.active,
-              localization.archived),
+          subtitle:
+              memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
+                  .present(localization.active, localization.archived),
         ),
       ],
     );

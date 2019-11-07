@@ -76,8 +76,9 @@ class _GroupViewState extends State<GroupView> {
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),
-            subtitle: memoizedClientStatsForGroup(state.clientState.map,
-                group.id, localization.active, localization.archived),
+            subtitle:
+                memoizedClientStatsForGroup(state.clientState.map, group.id)
+                    .present(localization.active, localization.archived),
           ),
           Container(
             color: Theme.of(context).backgroundColor,

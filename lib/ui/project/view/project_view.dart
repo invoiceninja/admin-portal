@@ -115,10 +115,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () =>
                       viewModel.onTasksPressed(context, longPress: true),
                   subtitle: memoizedTaskStatsForProject(
-                      project.id,
-                      viewModel.state.taskState.map,
-                      localization.active,
-                      localization.archived),
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
                 ),
                 Container(
                   color: Theme.of(context).backgroundColor,

@@ -100,20 +100,16 @@ List<String> filteredPaymentsSelector(
   return list;
 }
 
-var memoizedPaymentStatsForClient = memo5((String clientId,
+var memoizedPaymentStatsForClient = memo3((String clientId,
         BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        String activeLabel,
-        String archivedLabel) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap) =>
     paymentStatsForClient(
-        clientId, paymentMap, invoiceMap, activeLabel, archivedLabel));
+        clientId, paymentMap, invoiceMap));
 
-String paymentStatsForClient(
+EntityStats paymentStatsForClient(
     String clientId,
     BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
@@ -127,34 +123,19 @@ String paymentStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedPaymentStatsForUser = memo5((String userId,
+var memoizedPaymentStatsForUser = memo3((String userId,
         BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        String activeLabel,
-        String archivedLabel) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap) =>
     paymentStatsForClient(
-        userId, paymentMap, invoiceMap, activeLabel, archivedLabel));
+        userId, paymentMap, invoiceMap));
 
-String paymentStatsForUser(
+EntityStats paymentStatsForUser(
     String userId,
     BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
@@ -167,18 +148,7 @@ String paymentStatsForUser(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasPaymentChanges(

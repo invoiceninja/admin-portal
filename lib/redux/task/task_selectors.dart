@@ -155,11 +155,12 @@ double taskRateSelector(
   return 0;
 }
 
-var memoizedTaskStatsForClient = memo2((String clientId,
-        BuiltMap<String, TaskEntity> taskMap) =>
-    taskStatsForClient(clientId, taskMap));
+var memoizedTaskStatsForClient = memo2(
+    (String clientId, BuiltMap<String, TaskEntity> taskMap) =>
+        taskStatsForClient(clientId, taskMap));
 
-EntityStats taskStatsForClient(String clientId, BuiltMap<String, TaskEntity> taskMap) {
+EntityStats taskStatsForClient(
+    String clientId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -175,17 +176,14 @@ EntityStats taskStatsForClient(String clientId, BuiltMap<String, TaskEntity> tas
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedTaskStatsForProject = memo4((String projectId,
-        BuiltMap<String, TaskEntity> taskMap,
-        String activeLabel,
-        String archivedLabel) =>
-    taskStatsForProject(projectId, taskMap, activeLabel, archivedLabel));
+var memoizedTaskStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, TaskEntity> taskMap,
+) =>
+    taskStatsForProject(projectId, taskMap));
 
-String taskStatsForProject(
-    String projectId,
-    BuiltMap<String, TaskEntity> taskMap,
-    String activeLabel,
-    String archivedLabel) {
+EntityStats taskStatsForProject(
+    String projectId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -198,18 +196,7 @@ String taskStatsForProject(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>

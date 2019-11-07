@@ -106,17 +106,13 @@ List<String> filteredInvoicesSelector(
   return list;
 }
 
-var memoizedInvoiceStatsForClient = memo4((String clientId,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        String activeLabel,
-        String archivedLabel) =>
-    invoiceStatsForClient(clientId, invoiceMap, activeLabel, archivedLabel));
+var memoizedInvoiceStatsForClient = memo2((String clientId,
+        BuiltMap<String, InvoiceEntity> invoiceMap) =>
+    invoiceStatsForClient(clientId, invoiceMap));
 
-String invoiceStatsForClient(
+EntityStats invoiceStatsForClient(
     String clientId,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
@@ -129,31 +125,16 @@ String invoiceStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedInvoiceStatsForUser = memo4((String userId,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        String activeLabel,
-        String archivedLabel) =>
-    invoiceStatsForUser(userId, invoiceMap, activeLabel, archivedLabel));
+var memoizedInvoiceStatsForUser = memo2((String userId,
+        BuiltMap<String, InvoiceEntity> invoiceMap) =>
+    invoiceStatsForUser(userId, invoiceMap));
 
-String invoiceStatsForUser(
+EntityStats invoiceStatsForUser(
     String userId,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
@@ -166,18 +147,7 @@ String invoiceStatsForUser(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasInvoiceChanges(

@@ -97,11 +97,9 @@ class UserView extends StatelessWidget {
             onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.invoice, true),
-            subtitle: memoizedInvoiceStatsForUser(
-                user.id,
-                state.invoiceState.map,
-                localization.active,
-                localization.archived),
+            subtitle:
+                memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
+                    .present(localization.active, localization.archived),
           ),
           EntityListTile(
             bottomPadding: 1,
@@ -111,11 +109,8 @@ class UserView extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.payment, true),
             subtitle: memoizedPaymentStatsForUser(
-                user.id,
-                state.paymentState.map,
-                state.invoiceState.map,
-                localization.active,
-                localization.archived),
+                    user.id, state.paymentState.map, state.invoiceState.map)
+                .present(localization.active, localization.archived),
           ),
           company.isModuleEnabled(EntityType.quote)
               ? EntityListTile(

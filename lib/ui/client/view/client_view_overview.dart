@@ -78,11 +78,9 @@ class ClientOverview extends StatelessWidget {
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.invoice, true),
-          subtitle: memoizedInvoiceStatsForClient(
-              client.id,
-              state.invoiceState.map,
-              localization.active,
-              localization.archived),
+          subtitle:
+              memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
+                  .present(localization.active, localization.archived),
         ),
         EntityListTile(
           bottomPadding: 1,
@@ -92,11 +90,8 @@ class ClientOverview extends StatelessWidget {
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.payment, true),
           subtitle: memoizedPaymentStatsForClient(
-              client.id,
-              state.paymentState.map,
-              state.invoiceState.map,
-              localization.active,
-              localization.archived),
+                  client.id, state.paymentState.map, state.invoiceState.map)
+              .present(localization.active, localization.archived),
         ),
         company.isModuleEnabled(EntityType.quote)
             ? EntityListTile(
@@ -107,11 +102,9 @@ class ClientOverview extends StatelessWidget {
                     viewModel.onEntityPressed(context, EntityType.quote),
                 onLongPress: () =>
                     viewModel.onEntityPressed(context, EntityType.quote, true),
-                subtitle: memoizedQuoteStatsForClient(
-                    client.id,
-                    state.quoteState.map,
-                    localization.active,
-                    localization.archived),
+                subtitle:
+                    memoizedQuoteStatsForClient(client.id, state.quoteState.map)
+                        .present(localization.active, localization.archived),
               )
             : Container(),
         company.isModuleEnabled(EntityType.project)
@@ -125,9 +118,7 @@ class ClientOverview extends StatelessWidget {
                     context, EntityType.project, true),
                 subtitle: memoizedProjectStatsForClient(
                     client.id,
-                    state.projectState.map,
-                    localization.active,
-                    localization.archived),
+                    state.projectState.map).present(localization.active, localization.archived),
               )
             : Container(),
         company.isModuleEnabled(EntityType.task)
@@ -154,10 +145,8 @@ class ClientOverview extends StatelessWidget {
                 onLongPress: () => viewModel.onEntityPressed(
                     context, EntityType.expense, true),
                 subtitle: memoizedExpenseStatsForClient(
-                    client.id,
-                    state.expenseState.map,
-                    localization.active,
-                    localization.archived),
+                        client.id, state.expenseState.map)
+                    .present(localization.active, localization.archived),
               )
             : Container(),
       ],

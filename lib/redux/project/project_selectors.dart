@@ -131,17 +131,13 @@ Duration taskDurationForProject(
   return Duration(seconds: total);
 }
 
-var memoizedProjectStatsForClient = memo4((String clientId,
-        BuiltMap<String, ProjectEntity> projectMap,
-        String activeLabel,
-        String archivedLabel) =>
-    projectStatsForClient(clientId, projectMap, activeLabel, archivedLabel));
+var memoizedProjectStatsForClient = memo2((String clientId,
+        BuiltMap<String, ProjectEntity> projectMap) =>
+    projectStatsForClient(clientId, projectMap));
 
-String projectStatsForClient(
+EntityStats projectStatsForClient(
     String clientId,
-    BuiltMap<String, ProjectEntity> projectMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, ProjectEntity> projectMap) {
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
@@ -154,18 +150,7 @@ String projectStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasProjectChanges(
