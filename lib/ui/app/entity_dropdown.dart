@@ -61,7 +61,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
 
     if (_entityMap == null) {
-      print('MAP IS NUL: ${widget.entityType}');
+      print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
     } else {
       _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
     }

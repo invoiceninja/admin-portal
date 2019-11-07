@@ -82,7 +82,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
 
   @override
   void dispose() {
-    _controllers.forEach((dynamic controller) {
+    _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
     });

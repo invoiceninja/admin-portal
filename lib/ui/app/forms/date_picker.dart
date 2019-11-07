@@ -33,6 +33,7 @@ class _DatePickerState extends State<DatePicker> {
   @override
   void dispose() {
     _textController.dispose();
+
     super.dispose();
   }
 

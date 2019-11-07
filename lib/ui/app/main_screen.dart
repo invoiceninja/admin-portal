@@ -21,9 +21,68 @@ class MainScreen extends StatelessWidget {
         onInit: (Store<AppState> store) => store.dispatch(LoadDashboard()),
         builder: (BuildContext context, Store<AppState> store) {
           final uiState = store.state.uiState;
-          final mainRoute = uiState.mainRoute;
-          int mainIndex = 0;
+          final mainRoute = '/' + uiState.mainRoute;
+          Widget screen = BlankScreen();
 
+          switch (mainRoute) {
+            case DashboardScreen.route:
+              screen = DashboardScreen();
+              break;
+            case ClientScreen.route:
+              screen = EntityScreens(
+                  entityType: EntityType.client,
+                  listWidget: ClientScreenBuilder(),
+                  viewWidget: ClientViewScreen(),
+                  editWidget: ClientEditScreen());
+              break;
+            case ProductScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.product,
+                listWidget: ProductScreenBuilder(),
+                viewWidget: ProductViewScreen(),
+                editWidget: ProductEditScreen(),
+              );
+              break;
+            case InvoiceScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.invoice,
+                listWidget: InvoiceScreenBuilder(),
+                viewWidget: InvoiceViewScreen(),
+                editWidget: InvoiceEditScreen(),
+              );
+              break;
+            case PaymentScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.payment,
+                listWidget: PaymentScreenBuilder(),
+                viewWidget: PaymentViewScreen(),
+                editWidget: PaymentEditScreen(),
+              );
+              break;
+            case QuoteScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.quote,
+                listWidget: QuoteScreenBuilder(),
+                viewWidget: QuoteViewScreen(),
+                editWidget: QuoteEditScreen(),
+              );
+              break;
+            case SettingsScreen.route:
+              screen = SettingsScreens();
+              break;
+          }
+
+          return Row(children: <Widget>[
+            if (uiState.isMenuVisible) ...[
+              AppDrawerBuilder(),
+              VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+            ],
+            Expanded(child: screen)
+          ]);
+
+          /*
+          int mainIndex = 0;
+          
           // TODO use constants array to lookup index
           if (mainRoute == EntityType.client.name) {
             mainIndex = 1;
@@ -121,7 +180,8 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
             ],
-          );
+          );          
+           */
         });
   }
 }
