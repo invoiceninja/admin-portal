@@ -84,7 +84,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 allowClearing: state.settingsUIState.isFiltered,
                 key: ValueKey('__currency_${settings.currencyId}'),
                 entityType: EntityType.currency,
-                entityMap: state.staticState.currencyMap,
                 entityList: memoizedCurrencyList(state.staticState.currencyMap),
                 labelText: localization.currency,
                 initialValue:
@@ -111,7 +110,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 allowClearing: state.settingsUIState.isFiltered,
                 key: ValueKey('__language_${settings.languageId}'),
                 entityType: EntityType.language,
-                entityMap: state.staticState.languageMap,
                 entityList: memoizedLanguageList(state.staticState.languageMap),
                 labelText: localization.language,
                 initialValue:
@@ -124,7 +122,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 allowClearing: state.settingsUIState.isFiltered,
                 key: ValueKey('__timezone_${settings.timezoneId}'),
                 entityType: EntityType.timezone,
-                entityMap: state.staticState.timezoneMap,
                 entityList: memoizedTimezoneList(state.staticState.timezoneMap),
                 labelText: localization.timezone,
                 initialValue:
@@ -137,7 +134,6 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 allowClearing: state.settingsUIState.isFiltered,
                 key: ValueKey('__date_format_${settings.dateFormatId}'),
                 entityType: EntityType.dateFormat,
-                entityMap: state.staticState.dateFormatMap,
                 entityList:
                     memoizedDateFormatList(state.staticState.dateFormatMap),
                 labelText: localization.dateFormat,

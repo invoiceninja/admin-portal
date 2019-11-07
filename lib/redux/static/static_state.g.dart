@@ -44,12 +44,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
             const FullType(String),
             const FullType(DateFormatEntity)
           ])),
-      'datetimeFormatMap',
-      serializers.serialize(object.datetimeFormatMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(DatetimeFormatEntity)
-          ])),
       'languageMap',
       serializers.serialize(object.languageMap,
           specifiedType: const FullType(BuiltMap,
@@ -137,13 +131,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(DateFormatEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
-        case 'datetimeFormatMap':
-          result.datetimeFormatMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(DatetimeFormatEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
-          break;
         case 'languageMap':
           result.languageMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -195,8 +182,6 @@ class _$StaticState extends StaticState {
   @override
   final BuiltMap<String, DateFormatEntity> dateFormatMap;
   @override
-  final BuiltMap<String, DatetimeFormatEntity> datetimeFormatMap;
-  @override
   final BuiltMap<String, LanguageEntity> languageMap;
   @override
   final BuiltMap<String, PaymentTypeEntity> paymentTypeMap;
@@ -216,7 +201,6 @@ class _$StaticState extends StaticState {
       this.industryMap,
       this.timezoneMap,
       this.dateFormatMap,
-      this.datetimeFormatMap,
       this.languageMap,
       this.paymentTypeMap,
       this.countryMap,
@@ -239,9 +223,6 @@ class _$StaticState extends StaticState {
     }
     if (dateFormatMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'dateFormatMap');
-    }
-    if (datetimeFormatMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'datetimeFormatMap');
     }
     if (languageMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'languageMap');
@@ -275,7 +256,6 @@ class _$StaticState extends StaticState {
         industryMap == other.industryMap &&
         timezoneMap == other.timezoneMap &&
         dateFormatMap == other.dateFormatMap &&
-        datetimeFormatMap == other.datetimeFormatMap &&
         languageMap == other.languageMap &&
         paymentTypeMap == other.paymentTypeMap &&
         countryMap == other.countryMap &&
@@ -293,15 +273,13 @@ class _$StaticState extends StaticState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc($jc(0, updatedAt.hashCode),
-                                                currencyMap.hashCode),
-                                            sizeMap.hashCode),
-                                        gatewayMap.hashCode),
-                                    industryMap.hashCode),
-                                timezoneMap.hashCode),
-                            dateFormatMap.hashCode),
-                        datetimeFormatMap.hashCode),
+                                        $jc($jc(0, updatedAt.hashCode),
+                                            currencyMap.hashCode),
+                                        sizeMap.hashCode),
+                                    gatewayMap.hashCode),
+                                industryMap.hashCode),
+                            timezoneMap.hashCode),
+                        dateFormatMap.hashCode),
                     languageMap.hashCode),
                 paymentTypeMap.hashCode),
             countryMap.hashCode),
@@ -318,7 +296,6 @@ class _$StaticState extends StaticState {
           ..add('industryMap', industryMap)
           ..add('timezoneMap', timezoneMap)
           ..add('dateFormatMap', dateFormatMap)
-          ..add('datetimeFormatMap', datetimeFormatMap)
           ..add('languageMap', languageMap)
           ..add('paymentTypeMap', paymentTypeMap)
           ..add('countryMap', countryMap)
@@ -370,14 +347,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   set dateFormatMap(MapBuilder<String, DateFormatEntity> dateFormatMap) =>
       _$this._dateFormatMap = dateFormatMap;
 
-  MapBuilder<String, DatetimeFormatEntity> _datetimeFormatMap;
-  MapBuilder<String, DatetimeFormatEntity> get datetimeFormatMap =>
-      _$this._datetimeFormatMap ??=
-          new MapBuilder<String, DatetimeFormatEntity>();
-  set datetimeFormatMap(
-          MapBuilder<String, DatetimeFormatEntity> datetimeFormatMap) =>
-      _$this._datetimeFormatMap = datetimeFormatMap;
-
   MapBuilder<String, LanguageEntity> _languageMap;
   MapBuilder<String, LanguageEntity> get languageMap =>
       _$this._languageMap ??= new MapBuilder<String, LanguageEntity>();
@@ -415,7 +384,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _industryMap = _$v.industryMap?.toBuilder();
       _timezoneMap = _$v.timezoneMap?.toBuilder();
       _dateFormatMap = _$v.dateFormatMap?.toBuilder();
-      _datetimeFormatMap = _$v.datetimeFormatMap?.toBuilder();
       _languageMap = _$v.languageMap?.toBuilder();
       _paymentTypeMap = _$v.paymentTypeMap?.toBuilder();
       _countryMap = _$v.countryMap?.toBuilder();
@@ -451,7 +419,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               industryMap: industryMap.build(),
               timezoneMap: timezoneMap.build(),
               dateFormatMap: dateFormatMap.build(),
-              datetimeFormatMap: datetimeFormatMap.build(),
               languageMap: languageMap.build(),
               paymentTypeMap: paymentTypeMap.build(),
               countryMap: countryMap.build(),
@@ -471,8 +438,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         timezoneMap.build();
         _$failedField = 'dateFormatMap';
         dateFormatMap.build();
-        _$failedField = 'datetimeFormatMap';
-        datetimeFormatMap.build();
         _$failedField = 'languageMap';
         languageMap.build();
         _$failedField = 'paymentTypeMap';

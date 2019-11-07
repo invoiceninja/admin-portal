@@ -93,7 +93,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     initialValue:
                         (state.clientState.map[task.clientId] ?? ClientEntity())
                             .displayName,
-                    entityMap: state.clientState.map,
                     entityList: memoizedDropdownClientList(
                         state.clientState.map, state.clientState.list),
                     onSelected: (client) {
@@ -115,7 +114,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     initialValue: (state.projectState.map[task.projectId] ??
                             ProjectEntity())
                         .name,
-                    entityMap: state.projectState.map,
                     entityList: memoizedDropdownProjectList(
                         state.projectState.map,
                         state.projectState.list,
@@ -141,7 +139,6 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     initialValue: (company.taskStatusMap[task.taskStatusId] ??
                             TaskStatusEntity())
                         .name,
-                    entityMap: company.taskStatusMap,
                     entityList: company.taskStatusMap.keys.toList(),
                     onSelected: (selected) {
                       final taskStatus = selected as TaskStatusEntity;

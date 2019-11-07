@@ -102,7 +102,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               labelText: localization.vendor,
               initialValue:
                   (vendorState.map[expense.vendorId] ?? VendorEntity()).name,
-              entityMap: vendorState.map,
               entityList:
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
               onSelected: (vendor) {
@@ -123,7 +122,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     initialValue:
                         (clientState.map[expense.clientId] ?? ClientEntity())
                             .displayName,
-                    entityMap: clientState.map,
                     entityList: memoizedDropdownClientList(
                         clientState.map, clientState.list),
                     onSelected: (client) {
@@ -144,7 +142,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               initialValue: (company.expenseCategoryMap[expense.categoryId] ??
                       ExpenseCategoryEntity())
                   .name,
-              entityMap: company.expenseCategoryMap,
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
               onSelected: (category) {
@@ -163,7 +160,6 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               key:
                   ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
               entityType: EntityType.currency,
-              entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               initialValue: staticState

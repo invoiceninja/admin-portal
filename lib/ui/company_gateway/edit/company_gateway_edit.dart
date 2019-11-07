@@ -90,7 +90,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     EntityDropdown(
                       key: ValueKey('__gateway_${companyGateway.gatewayId}__'),
                       entityType: EntityType.gateway,
-                      entityMap: state.staticState.gatewayMap,
                       entityList:
                           memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,

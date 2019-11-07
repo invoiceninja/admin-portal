@@ -88,7 +88,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             EntityDropdown(
               key: ValueKey('__currency_${client.currencyId}__'),
               entityType: EntityType.currency,
-              entityMap: viewModel.staticState.currencyMap,
               entityList:
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
@@ -101,7 +100,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               key: ValueKey('__language_${client.languageId}__'),
               allowClearing: true,
               entityType: EntityType.language,
-              entityMap: viewModel.staticState.languageMap,
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,

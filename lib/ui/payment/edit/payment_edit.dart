@@ -144,7 +144,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                             key: Key('__client_${payment.clientId}__'),
                             entityType: EntityType.client,
                             labelText: AppLocalization.of(context).client,
-                            entityMap: viewModel.clientMap,
                             initialValue:
                                 (viewModel.clientMap[payment.clientId] ??
                                         ClientEntity())
@@ -163,7 +162,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                             key: Key('__invoice_${payment.clientId}__'),
                             entityType: EntityType.invoice,
                             labelText: AppLocalization.of(context).invoice,
-                            entityMap: viewModel.invoiceMap,
                             initialValue: viewModel
                                 .invoiceMap[payment.invoiceId]?.listDisplayName,
                             autoValidate: autoValidate,
@@ -203,7 +201,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                       key:
                           ValueKey('__payment_type_${payment.paymentTypeId}__'),
                       entityType: EntityType.paymentType,
-                      entityMap: viewModel.staticState.paymentTypeMap,
                       entityList: memoizedPaymentTypeList(
                           viewModel.staticState.paymentTypeMap),
                       labelText: localization.paymentType,

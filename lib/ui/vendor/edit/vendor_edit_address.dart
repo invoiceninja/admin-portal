@@ -127,7 +127,6 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             key: ValueKey(vendor.countryId),
             allowClearing: true,
             entityType: EntityType.country,
-            entityMap: viewModel.state.staticState.countryMap,
             entityList:
                 memoizedCountryList(viewModel.state.staticState.countryMap),
             labelText: localization.country,

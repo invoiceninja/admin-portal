@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -11,8 +13,8 @@ class EntityDropdown extends StatefulWidget {
     @required Key key,
     @required this.entityType,
     @required this.labelText,
-    @required this.entityMap,
     @required this.onSelected,
+    this.entityMap,
     this.entityList,
     this.allowClearing = false,
     this.autoValidate = false,
@@ -23,10 +25,10 @@ class EntityDropdown extends StatefulWidget {
   }) : super(key: key);
 
   final EntityType entityType;
-  final BuiltMap<String, SelectableEntity> entityMap;
   final List<String> entityList;
   final String labelText;
   final String initialValue;
+  final BuiltMap<String, SelectableEntity> entityMap;
   final Function(SelectableEntity) onSelected;
   final Function validator;
   final bool autoValidate;
@@ -41,6 +43,7 @@ class EntityDropdown extends StatefulWidget {
 class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
+  BuiltMap<String, SelectableEntity> _entityMap;
 
   @override
   void initState() {
@@ -54,6 +57,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   void didChangeDependencies() {
+    final state = StoreProvider.of<AppState>(context).state;
+    _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
+
     _textController.text = widget.initialValue;
     super.didChangeDependencies();
   }
@@ -70,8 +76,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
         context: context,
         builder: (BuildContext context) {
           return EntityDropdownDialog(
-            entityMap: widget.entityMap,
-            entityList: widget.entityList ?? widget.entityMap.keys.toList(),
+            entityMap: _entityMap,
+            entityList: widget.entityList ?? _entityMap.keys.toList(),
             onSelected: (entity) {
               _textController.text = entity.listDisplayName;
               widget.onSelected(entity);

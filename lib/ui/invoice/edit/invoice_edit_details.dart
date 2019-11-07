@@ -145,7 +145,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     initialValue: (viewModel.clientMap[invoice.clientId] ??
                             ClientEntity())
                         .displayName,
-                    entityMap: viewModel.clientMap,
                     entityList: memoizedDropdownClientList(
                         viewModel.clientMap, viewModel.clientList),
                     validator: (String val) => val.trim().isEmpty

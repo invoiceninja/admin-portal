@@ -56,7 +56,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final designs = company.getInvoiceDesigns();
-    final fontMap = memoizedFontMap(kGoogleFonts);
 
     return SettingsScaffold(
       title: localization.invoiceDesign,
@@ -142,7 +141,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   entityType: EntityType.font,
                   labelText: localization.primaryFont,
                   initialValue: settings.primaryFont,
-                  entityMap: fontMap,
+                  entityMap: memoizedFontMap(kGoogleFonts),
                   onSelected: (font) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..primaryFont = font?.id)),
                   allowClearing: state.settingsUIState.isFiltered,

@@ -99,7 +99,6 @@ class ClientEditNotesState extends State<ClientEditNotes> {
             EntityDropdown(
               key: ValueKey('__size_${client.sizeId}__'),
               entityType: EntityType.size,
-              entityMap: viewModel.staticState.sizeMap,
               entityList: memoizedSizeList(viewModel.staticState.sizeMap),
               labelText: localization.size,
               initialValue: viewModel.staticState.sizeMap[client.sizeId]?.name,
@@ -109,7 +108,6 @@ class ClientEditNotesState extends State<ClientEditNotes> {
             EntityDropdown(
               key: ValueKey('__industry_${client.industryId}__'),
               entityType: EntityType.industry,
-              entityMap: viewModel.staticState.industryMap,
               entityList:
                   memoizedIndustryList(viewModel.staticState.industryMap),
               labelText: localization.industry,

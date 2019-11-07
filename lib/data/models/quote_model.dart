@@ -333,7 +333,7 @@ abstract class QuoteEntity extends Object
       return true;
     }
 
-    if (invoiceNumber.toLowerCase().contains(filter)) {
+    if (invoiceNumber != null && invoiceNumber.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue1.isNotEmpty &&
         customValue1.toLowerCase().contains(filter)) {

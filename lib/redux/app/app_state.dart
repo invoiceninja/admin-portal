@@ -148,7 +148,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Credentials get credentials =>
       Credentials(token: selectedCompanyState.token.token, url: authState.url);
 
-  BuiltMap<String, BaseEntity> getEntityMap(EntityType type) {
+  BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:
         return projectState.map;
@@ -179,6 +179,24 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentState.map;
       case EntityType.quote:
         return quoteState.map;
+      case EntityType.paymentType:
+        return staticState.paymentTypeMap;
+      case EntityType.currency:
+        return staticState.currencyMap;
+      case EntityType.country:
+        return staticState.countryMap;
+      case EntityType.language:
+        return staticState.languageMap;
+      case EntityType.industry:
+        return staticState.industryMap;
+      case EntityType.size:
+        return staticState.sizeMap;
+      case EntityType.gateway:
+        return staticState.gatewayMap;
+      case EntityType.dateFormat:
+        return staticState.dateFormatMap;
+      case EntityType.timezone:
+        return staticState.timezoneMap;
       default:
         return null;
     }

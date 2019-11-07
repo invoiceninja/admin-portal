@@ -286,7 +286,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     EntityDropdown(
                       key: ValueKey('__size_${company.sizeId}__'),
                       entityType: EntityType.size,
-                      entityMap: state.staticState.sizeMap,
                       entityList: memoizedSizeList(state.staticState.sizeMap),
                       labelText: localization.size,
                       initialValue:
@@ -300,7 +299,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     EntityDropdown(
                       key: ValueKey('__industry_${company.industryId}__'),
                       entityType: EntityType.industry,
-                      entityMap: state.staticState.industryMap,
                       entityList:
                           memoizedIndustryList(state.staticState.industryMap),
                       labelText: localization.industry,
@@ -406,7 +404,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     allowClearing: state.settingsUIState.isFiltered,
                     key: ValueKey('__country_${settings.countryId}__'),
                     entityType: EntityType.country,
-                    entityMap: state.staticState.countryMap,
                     entityList:
                         memoizedCountryList(state.staticState.countryMap),
                     labelText: localization.country,
@@ -428,7 +425,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     key: ValueKey(
                         '__payment_type_${settings.defaultPaymentTypeId}__'),
                     entityType: EntityType.paymentType,
-                    entityMap: state.staticState.paymentTypeMap,
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),
                     labelText: localization.paymentType,

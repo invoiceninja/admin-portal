@@ -166,7 +166,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                                 (state.clientState.map[project.clientId] ??
                                         ClientEntity())
                                     .displayName,
-                            entityMap: state.clientState.map,
                             entityList: memoizedDropdownClientList(
                                 state.clientState.map, state.clientState.list),
                             validator: (String val) => val.trim().isEmpty

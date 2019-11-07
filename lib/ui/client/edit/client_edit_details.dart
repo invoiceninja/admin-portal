@@ -121,7 +121,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               key: ValueKey('__group_${client.groupId}__'),
               allowClearing: true,
               entityType: EntityType.group,
-              entityMap: state.groupState.map,
               entityList: memoizedGroupList(state.groupState.map),
               labelText: localization.group,
               initialValue: state.groupState.map[client.groupId]?.name,

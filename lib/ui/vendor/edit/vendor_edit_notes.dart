@@ -84,7 +84,6 @@ class VendorEditNotesState extends State<VendorEditNotes> {
             EntityDropdown(
               key: ValueKey('__currency_${vendor.currencyId}__'),
               entityType: EntityType.currency,
-              entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               initialValue: staticState.currencyMap[vendor.currencyId]?.name,

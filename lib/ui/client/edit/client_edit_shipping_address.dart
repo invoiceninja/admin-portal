@@ -130,7 +130,6 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
             key: ValueKey(client.shippingCountryId),
             allowClearing: true,
             entityType: EntityType.country,
-            entityMap: viewModel.staticState.countryMap,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
             initialValue: viewModel

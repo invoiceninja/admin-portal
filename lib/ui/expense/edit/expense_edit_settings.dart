@@ -174,7 +174,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         key: ValueKey(
                             '__payment_type_${expense.paymentTypeId}__'),
                         entityType: EntityType.paymentType,
-                        entityMap: staticState.paymentTypeMap,
                         entityList:
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
@@ -228,7 +227,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         key: ValueKey(
                             '__invoice_currency_${expense.invoiceCurrencyId}__'),
                         entityType: EntityType.currency,
-                        entityMap: staticState.currencyMap,
                         entityList:
                             memoizedCurrencyList(staticState.currencyMap),
                         labelText: localization.currency,
