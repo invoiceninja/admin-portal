@@ -91,8 +91,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               entityList:
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
-              initialValue:
-                  viewModel.staticState.currencyMap[client.currencyId]?.name,
+              entityId: client.currencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   client.rebuild((b) => b..currencyId = currency.id)),
             ),
@@ -103,8 +102,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,
-              initialValue:
-                  viewModel.staticState.languageMap[client.languageId]?.name,
+              entityId: client.languageId,
               onSelected: (SelectableEntity language) => viewModel.onChanged(
                   client.rebuild((b) => b..languageId = language?.id)),
             ),

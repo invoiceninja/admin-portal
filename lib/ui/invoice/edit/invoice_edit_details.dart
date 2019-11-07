@@ -1,5 +1,4 @@
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -142,9 +141,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     key: ValueKey('__client_${invoice.clientId}__'),
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue: (viewModel.clientMap[invoice.clientId] ??
-                            ClientEntity())
-                        .displayName,
+                    entityId: invoice.clientId,
                     entityList: memoizedDropdownClientList(
                         viewModel.clientMap, viewModel.clientList),
                     validator: (String val) => val.trim().isEmpty

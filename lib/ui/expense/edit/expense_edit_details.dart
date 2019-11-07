@@ -100,8 +100,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               allowClearing: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
-              initialValue:
-                  (vendorState.map[expense.vendorId] ?? VendorEntity()).name,
+              entityId: expense.vendorId,
               entityList:
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
               onSelected: (vendor) {
@@ -119,9 +118,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue:
-                        (clientState.map[expense.clientId] ?? ClientEntity())
-                            .displayName,
+                    entityId: expense.clientId,
                     entityList: memoizedDropdownClientList(
                         clientState.map, clientState.list),
                     onSelected: (client) {
@@ -139,9 +136,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,
               labelText: localization.category,
-              initialValue: (company.expenseCategoryMap[expense.categoryId] ??
-                      ExpenseCategoryEntity())
-                  .name,
+              entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
               onSelected: (category) {
@@ -162,8 +157,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityType: EntityType.currency,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue: staticState
-                  .currencyMap[viewModel.expense.expenseCurrencyId]?.name,
+              entityId: expense.expenseCurrencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.expense
                       .rebuild((b) => b..expenseCurrencyId = currency.id)),

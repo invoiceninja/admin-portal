@@ -162,10 +162,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                             key: ValueKey('__client_${project.clientId}__'),
                             entityType: EntityType.client,
                             labelText: localization.client,
-                            initialValue:
-                                (state.clientState.map[project.clientId] ??
-                                        ClientEntity())
-                                    .displayName,
+                            entityId: project.clientId,
                             entityList: memoizedDropdownClientList(
                                 state.clientState.map, state.clientState.list),
                             validator: (String val) => val.trim().isEmpty

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -144,10 +143,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                             key: Key('__client_${payment.clientId}__'),
                             entityType: EntityType.client,
                             labelText: AppLocalization.of(context).client,
-                            initialValue:
-                                (viewModel.clientMap[payment.clientId] ??
-                                        ClientEntity())
-                                    .listDisplayName,
+                            entityId: payment.clientId,
                             onSelected: (client) {
                               viewModel.onChanged(payment.rebuild((b) => b
                                 ..clientId = client.id
@@ -162,8 +158,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                             key: Key('__invoice_${payment.clientId}__'),
                             entityType: EntityType.invoice,
                             labelText: AppLocalization.of(context).invoice,
-                            initialValue: viewModel
-                                .invoiceMap[payment.invoiceId]?.listDisplayName,
+                            entityId: payment.invoiceId,
                             autoValidate: autoValidate,
                             validator: (String val) => val.trim().isEmpty
                                 ? AppLocalization.of(context)
@@ -204,8 +199,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       entityList: memoizedPaymentTypeList(
                           viewModel.staticState.paymentTypeMap),
                       labelText: localization.paymentType,
-                      initialValue: viewModel.staticState
-                          .paymentTypeMap[payment.paymentTypeId]?.name,
+                      entityId: payment.paymentTypeId,
                       onSelected: (paymentType) => viewModel.onChanged(payment
                           .rebuild((b) => b..paymentTypeId = paymentType.id)),
                     ),

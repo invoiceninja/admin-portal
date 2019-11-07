@@ -66,8 +66,10 @@ class _ContactListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(contact.fullName),
-      subtitle: Text(contact.email),
+      title: Text(contact.fullName.isNotEmpty
+          ? contact.fullName
+          : AppLocalization.of(context).blankContact),
+      subtitle: contact.email != null ? Text(contact.email) : null,
       onTap: onTap,
       leading: Checkbox(
         activeColor: Theme.of(context).accentColor,

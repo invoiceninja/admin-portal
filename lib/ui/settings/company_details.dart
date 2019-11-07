@@ -288,8 +288,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityType: EntityType.size,
                       entityList: memoizedSizeList(state.staticState.sizeMap),
                       labelText: localization.size,
-                      initialValue:
-                          state.staticState.sizeMap[company.sizeId]?.name,
+                      entityId: company.sizeId,
                       onSelected: (SelectableEntity size) =>
                           viewModel.onCompanyChanged(
                         company.rebuild((b) => b..sizeId = size.id),
@@ -302,8 +301,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityList:
                           memoizedIndustryList(state.staticState.industryMap),
                       labelText: localization.industry,
-                      initialValue: state
-                          .staticState.industryMap[company.industryId]?.name,
+                      entityId: company.industryId,
                       onSelected: (SelectableEntity industry) =>
                           viewModel.onCompanyChanged(
                         company.rebuild((b) => b..industryId = industry.id),
@@ -407,8 +405,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     entityList:
                         memoizedCountryList(state.staticState.countryMap),
                     labelText: localization.country,
-                    initialValue:
-                        state.staticState.countryMap[settings.countryId]?.name,
+                    entityId: settings.countryId,
                     onSelected: (SelectableEntity country) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..countryId = country?.id)),
@@ -428,8 +425,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     entityList: memoizedPaymentTypeList(
                         state.staticState.paymentTypeMap),
                     labelText: localization.paymentType,
-                    initialValue: state.staticState
-                        .paymentTypeMap[settings.defaultPaymentTypeId]?.name,
+                    entityId: settings.defaultPaymentTypeId,
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),

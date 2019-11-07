@@ -144,7 +144,7 @@ abstract class CompanyEntity extends Object
   @nullable
   BuiltMap<String, UserEntity> get userMap;
 
-  @BuiltValueField(wireName: 'custom_fields')
+  @BuiltValueField(wireName: 'custom_fields_HIDDEN')
   BuiltMap<String, String> get customFields;
 
   SettingsEntity get settings;

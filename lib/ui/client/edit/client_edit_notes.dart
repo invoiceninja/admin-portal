@@ -101,7 +101,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               entityType: EntityType.size,
               entityList: memoizedSizeList(viewModel.staticState.sizeMap),
               labelText: localization.size,
-              initialValue: viewModel.staticState.sizeMap[client.sizeId]?.name,
+              entityId: client.sizeId,
               onSelected: (SelectableEntity size) => viewModel
                   .onChanged(client.rebuild((b) => b..sizeId = size.id)),
             ),
@@ -111,8 +111,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               entityList:
                   memoizedIndustryList(viewModel.staticState.industryMap),
               labelText: localization.industry,
-              initialValue:
-                  viewModel.staticState.industryMap[client.industryId]?.name,
+              entityId: client.industryId,
               onSelected: (SelectableEntity industry) => viewModel.onChanged(
                   client.rebuild((b) => b..industryId = industry.id)),
             ),

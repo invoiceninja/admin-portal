@@ -41,7 +41,7 @@ class DynamicSelector extends StatelessWidget {
         entityType: entityType,
         allowClearing: true,
         onSelected: (entity) => onChanged(entity.id),
-        initialValue: entityMap[entityId]?.listDisplayName,
+        entityId: entityId,
         entityList: entityIds,
       );
     }

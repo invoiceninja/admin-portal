@@ -676,8 +676,7 @@ abstract class InvitationEntity extends Object
 
   String get link;
 
-  @nullable // TODO remove
-  @BuiltValueField(wireName: 'contact_id')
+  @BuiltValueField(wireName: 'client_contact_id')
   String get contactId;
 
   @BuiltValueField(wireName: 'sent_date')

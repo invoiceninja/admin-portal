@@ -787,6 +787,9 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
+      'client_contact_id',
+      serializers.serialize(object.contactId,
+          specifiedType: const FullType(String)),
       'sent_date',
       serializers.serialize(object.sentDate,
           specifiedType: const FullType(String)),
@@ -794,12 +797,6 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
     ];
-    if (object.contactId != null) {
-      result
-        ..add('contact_id')
-        ..add(serializers.serialize(object.contactId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -871,7 +868,7 @@ class _$InvitationEntitySerializer
           result.link = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'contact_id':
+        case 'client_contact_id':
           result.contactId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
@@ -2334,6 +2331,9 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (link == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'link');
+    }
+    if (contactId == null) {
+      throw new BuiltValueNullFieldError('InvitationEntity', 'contactId');
     }
     if (sentDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'sentDate');

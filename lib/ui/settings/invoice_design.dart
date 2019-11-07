@@ -140,7 +140,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   key: ValueKey('__primary_font_${settings.primaryFont}__'),
                   entityType: EntityType.font,
                   labelText: localization.primaryFont,
-                  initialValue: settings.primaryFont,
+                  entityId: settings.primaryFont,
                   entityMap: memoizedFontMap(kGoogleFonts),
                   onSelected: (font) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..primaryFont = font?.id)),
@@ -150,7 +150,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   key: ValueKey('__secondary_font_${settings.secondaryFont}__'),
                   entityType: EntityType.font,
                   labelText: localization.secondaryFont,
-                  initialValue: settings.secondaryFont,
+                  entityId: settings.secondaryFont,
                   entityMap: memoizedFontMap(kGoogleFonts),
                   onSelected: (font) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..secondaryFont = font?.id)),

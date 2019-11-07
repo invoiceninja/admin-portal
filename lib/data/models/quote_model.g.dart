@@ -527,6 +527,9 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
+      'client_contact_id',
+      serializers.serialize(object.contactId,
+          specifiedType: const FullType(int)),
       'sent_date',
       serializers.serialize(object.sentDate,
           specifiedType: const FullType(String)),
@@ -604,6 +607,10 @@ class _$InvitationEntitySerializer
         case 'link':
           result.link = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'client_contact_id':
+          result.contactId = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'sent_date':
           result.sentDate = serializers.deserialize(value,
@@ -1636,6 +1643,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String link;
   @override
+  final int contactId;
+  @override
   final String sentDate;
   @override
   final String viewedDate;
@@ -1663,6 +1672,7 @@ class _$InvitationEntity extends InvitationEntity {
   _$InvitationEntity._(
       {this.key,
       this.link,
+      this.contactId,
       this.sentDate,
       this.viewedDate,
       this.isChanged,
@@ -1679,6 +1689,9 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (link == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'link');
+    }
+    if (contactId == null) {
+      throw new BuiltValueNullFieldError('InvitationEntity', 'contactId');
     }
     if (sentDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'sentDate');
@@ -1702,6 +1715,7 @@ class _$InvitationEntity extends InvitationEntity {
     return other is InvitationEntity &&
         key == other.key &&
         link == other.link &&
+        contactId == other.contactId &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
         isChanged == other.isChanged &&
@@ -1726,8 +1740,10 @@ class _$InvitationEntity extends InvitationEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, key.hashCode),
-                                                link.hashCode),
+                                            $jc(
+                                                $jc($jc(0, key.hashCode),
+                                                    link.hashCode),
+                                                contactId.hashCode),
                                             sentDate.hashCode),
                                         viewedDate.hashCode),
                                     isChanged.hashCode),
@@ -1745,6 +1761,7 @@ class _$InvitationEntity extends InvitationEntity {
     return (newBuiltValueToStringHelper('InvitationEntity')
           ..add('key', key)
           ..add('link', link)
+          ..add('contactId', contactId)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
           ..add('isChanged', isChanged)
@@ -1770,6 +1787,10 @@ class InvitationEntityBuilder
   String _link;
   String get link => _$this._link;
   set link(String link) => _$this._link = link;
+
+  int _contactId;
+  int get contactId => _$this._contactId;
+  set contactId(int contactId) => _$this._contactId = contactId;
 
   String _sentDate;
   String get sentDate => _$this._sentDate;
@@ -1819,6 +1840,7 @@ class InvitationEntityBuilder
     if (_$v != null) {
       _key = _$v.key;
       _link = _$v.link;
+      _contactId = _$v.contactId;
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
       _isChanged = _$v.isChanged;
@@ -1853,6 +1875,7 @@ class InvitationEntityBuilder
         new _$InvitationEntity._(
             key: key,
             link: link,
+            contactId: contactId,
             sentDate: sentDate,
             viewedDate: viewedDate,
             isChanged: isChanged,

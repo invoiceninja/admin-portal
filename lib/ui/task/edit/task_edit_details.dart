@@ -90,9 +90,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue:
-                        (state.clientState.map[task.clientId] ?? ClientEntity())
-                            .displayName,
+                    entityId: task.clientId,
                     entityList: memoizedDropdownClientList(
                         state.clientState.map, state.clientState.list),
                     onSelected: (client) {
@@ -111,9 +109,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     allowClearing: true,
                     entityType: EntityType.project,
                     labelText: localization.project,
-                    initialValue: (state.projectState.map[task.projectId] ??
-                            ProjectEntity())
-                        .name,
+                    entityId: task.projectId,
                     entityList: memoizedDropdownProjectList(
                         state.projectState.map,
                         state.projectState.list,
@@ -136,9 +132,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     key: ValueKey('__task_status_${task.taskStatusId}__'),
                     entityType: EntityType.taskStatus,
                     labelText: localization.status,
-                    initialValue: (company.taskStatusMap[task.taskStatusId] ??
-                            TaskStatusEntity())
-                        .name,
+                    entityId: task.taskStatusId,
                     entityList: company.taskStatusMap.keys.toList(),
                     onSelected: (selected) {
                       final taskStatus = selected as TaskStatusEntity;

@@ -179,6 +179,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentState.map;
       case EntityType.quote:
         return quoteState.map;
+      case EntityType.expenseCategory:
+        // TODO move to expenseCategoryState.map
+        return selectedCompany.expenseCategoryMap;
       case EntityType.paymentType:
         return staticState.paymentTypeMap;
       case EntityType.currency:

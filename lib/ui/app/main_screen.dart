@@ -86,6 +86,11 @@ class MainScreen extends StatelessWidget {
                       viewWidget: QuoteViewScreen(),
                       editWidget: QuoteEditScreen(),
                     ),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    SizedBox(),
+                    /*
                     EntityScreens(
                       entityType: EntityType.project,
                       listWidget: ProjectScreenBuilder(),
@@ -110,6 +115,7 @@ class MainScreen extends StatelessWidget {
                       viewWidget: ExpenseViewScreen(),
                       editWidget: ExpenseEditScreen(),
                     ),
+                     */
                     SettingsScreens(),
                   ],
                 ),

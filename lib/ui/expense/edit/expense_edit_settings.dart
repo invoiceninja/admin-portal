@@ -177,8 +177,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         entityList:
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
-                        initialValue: staticState
-                            .paymentTypeMap[expense.paymentTypeId]?.name,
+                        entityId: expense.paymentTypeId,
                         onSelected: (paymentType) => viewModel.onChanged(expense
                             .rebuild((b) => b..paymentTypeId = paymentType.id)),
                       ),
@@ -230,9 +229,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         entityList:
                             memoizedCurrencyList(staticState.currencyMap),
                         labelText: localization.currency,
-                        initialValue: staticState
-                            .currencyMap[viewModel.expense.invoiceCurrencyId]
-                            ?.name,
+                        entityId: expense.invoiceCurrencyId,
                         onSelected: (SelectableEntity currency) =>
                             _setCurrency(currency),
                       ),

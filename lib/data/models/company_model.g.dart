@@ -43,7 +43,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
             const FullType(String),
             const FullType(TaskStatusEntity)
           ])),
-      'custom_fields',
+      'custom_fields_HIDDEN',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
@@ -372,7 +372,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                 const FullType(UserEntity)
               ])) as BuiltMap<dynamic, dynamic>);
           break;
-        case 'custom_fields':
+        case 'custom_fields_HIDDEN':
           result.customFields.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),

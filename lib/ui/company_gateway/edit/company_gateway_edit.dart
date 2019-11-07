@@ -93,8 +93,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       entityList:
                           memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,
-                      initialValue: state.staticState
-                          .gatewayMap[companyGateway.gatewayId]?.name,
+                      entityId: companyGateway.gatewayId,
                       onSelected: (SelectableEntity gateway) =>
                           viewModel.onChanged(
                         companyGateway.rebuild((b) => b

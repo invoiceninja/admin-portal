@@ -86,8 +86,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 entityType: EntityType.currency,
                 entityList: memoizedCurrencyList(state.staticState.currencyMap),
                 labelText: localization.currency,
-                initialValue:
-                    state.staticState.currencyMap[settings.currencyId]?.name,
+                entityId: settings.currencyId,
                 onSelected: (SelectableEntity currency) =>
                     viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..currencyId = currency?.id)),
@@ -112,8 +111,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 entityType: EntityType.language,
                 entityList: memoizedLanguageList(state.staticState.languageMap),
                 labelText: localization.language,
-                initialValue:
-                    state.staticState.languageMap[settings.languageId]?.name,
+                entityId: settings.languageId,
                 onSelected: (SelectableEntity language) =>
                     viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..languageId = language?.id)),
@@ -124,8 +122,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 entityType: EntityType.timezone,
                 entityList: memoizedTimezoneList(state.staticState.timezoneMap),
                 labelText: localization.timezone,
-                initialValue:
-                    state.staticState.timezoneMap[settings.timezoneId]?.name,
+                entityId: settings.timezoneId,
                 onSelected: (SelectableEntity timezone) =>
                     viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..timezoneId = timezone?.id)),
@@ -137,8 +134,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 entityList:
                     memoizedDateFormatList(state.staticState.dateFormatMap),
                 labelText: localization.dateFormat,
-                initialValue: state
-                    .staticState.dateFormatMap[settings.dateFormatId]?.preview,
+                entityId: settings.dateFormatId,
                 onSelected: (SelectableEntity dateFormat) =>
                     viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..dateFormatId = dateFormat?.id)),

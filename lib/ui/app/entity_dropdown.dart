@@ -19,7 +19,7 @@ class EntityDropdown extends StatefulWidget {
     this.allowClearing = false,
     this.autoValidate = false,
     this.validator,
-    this.initialValue,
+    this.entityId,
     this.onAddPressed,
     this.onFieldSubmitted,
   }) : super(key: key);
@@ -27,7 +27,7 @@ class EntityDropdown extends StatefulWidget {
   final EntityType entityType;
   final List<String> entityList;
   final String labelText;
-  final String initialValue;
+  final String entityId;
   final BuiltMap<String, SelectableEntity> entityMap;
   final Function(SelectableEntity) onSelected;
   final Function validator;
@@ -60,7 +60,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
     final state = StoreProvider.of<AppState>(context).state;
     _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
 
-    _textController.text = widget.initialValue;
+    if (_entityMap == null) {
+      print('MAP IS NUL: ${widget.entityType}');
+    } else {
+      _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
+    }
+
     super.didChangeDependencies();
   }
 
@@ -94,8 +99,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   bool get showClear =>
       widget.allowClearing &&
-      widget.initialValue != null &&
-      widget.initialValue.isNotEmpty;
+      widget.entityId != null &&
+      widget.entityId.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {

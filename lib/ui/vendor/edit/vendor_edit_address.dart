@@ -130,8 +130,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
             entityList:
                 memoizedCountryList(viewModel.state.staticState.countryMap),
             labelText: localization.country,
-            initialValue:
-                viewModel.state.staticState.countryMap[vendor.countryId]?.name,
+            entityId: vendor.countryId,
             onSelected: (SelectableEntity country) => viewModel
                 .onChanged(vendor.rebuild((b) => b..countryId = country?.id)),
           ),
