@@ -255,31 +255,28 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.settings.enableInvoiceItemTaxes
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) {
-                      _taxRate1 = taxRate;
-                      _onChanged();
-                    },
-                    labelText: localization.tax,
-                    initialTaxName: invoiceItem.taxName1,
-                    initialTaxRate: invoiceItem.taxRate1,
-                  )
-                : Container(),
-            company.settings.enableInvoiceItemTaxes &&
-                    company.settings.enableSecondTaxRate
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) {
-                      _taxRate2 = taxRate;
-                      _onChanged();
-                    },
-                    labelText: localization.tax,
-                    initialTaxName: invoiceItem.taxName2,
-                    initialTaxRate: invoiceItem.taxRate2,
-                  )
-                : Container(),
+            if (company.settings.enableFirstItemTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) {
+                  _taxRate1 = taxRate;
+                  _onChanged();
+                },
+                labelText: localization.tax,
+                initialTaxName: invoiceItem.taxName1,
+                initialTaxRate: invoiceItem.taxRate1,
+              ),
+            if (company.settings.enableSecondItemTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) {
+                  _taxRate2 = taxRate;
+                  _onChanged();
+                },
+                labelText: localization.tax,
+                initialTaxName: invoiceItem.taxName2,
+                initialTaxRate: invoiceItem.taxRate2,
+              ),
           ],
         ),
       ),

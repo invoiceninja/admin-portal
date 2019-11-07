@@ -112,28 +112,28 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TaxRateDropdown(
-              taxRates: company.taxRates,
-              onSelected: (taxRate) =>
-                  viewModel.onChanged(expense.rebuild((b) => b
-                    ..taxRate1 = taxRate.rate
-                    ..taxName1 = taxRate.name)),
-              labelText: localization.tax,
-              initialTaxName: expense.taxName1,
-              initialTaxRate: expense.taxRate1,
-            ),
-            company.settings.enableSecondTaxRate
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(expense.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: expense.taxName2,
-                    initialTaxRate: expense.taxRate2,
-                  )
-                : SizedBox(),
+            if (company.settings.enableFirstItemTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(expense.rebuild((b) => b
+                      ..taxRate1 = taxRate.rate
+                      ..taxName1 = taxRate.name)),
+                labelText: localization.tax,
+                initialTaxName: expense.taxName1,
+                initialTaxRate: expense.taxRate1,
+              ),
+            if (company.settings.enableSecondItemTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(expense.rebuild((b) => b
+                      ..taxRate2 = taxRate.rate
+                      ..taxName2 = taxRate.name)),
+                labelText: localization.tax,
+                initialTaxName: expense.taxName2,
+                initialTaxRate: expense.taxRate2,
+              ),
             SizedBox(height: 16),
             expense.isInvoiced
                 ? SizedBox()

@@ -709,12 +709,12 @@ abstract class SettingsEntity
   String get defaultQuoteFooter;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_taxes')
-  bool get enableInvoiceTaxes;
+  @BuiltValueField(wireName: 'invoice_taxes_HIDDEN')
+  int get numberOfInvoiceTaxRates;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_item_taxes')
-  bool get enableInvoiceItemTaxes;
+  @BuiltValueField(wireName: 'invoice_item_taxes_HIDDEN')
+  int get numberOfItemTaxRates;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_design_id')
@@ -759,10 +759,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'payment_type_id')
   String get defaultPaymentTypeId;
-
-  @nullable
-  @BuiltValueField(wireName: 'enable_second_tax_rate')
-  bool get enableSecondTaxRate;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_fields')
@@ -1013,10 +1009,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
 
-  @nullable
-  @BuiltValueField(wireName: 'number_of_tax_rates')
-  int get numberOfTaxRates;
-
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
@@ -1036,6 +1028,18 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
   bool get hasCustomDesign3;
+
+  bool get enableFirstInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 1;
+
+  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 2;
+
+  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 3;
+
+  bool get enableFirstItemTaxRate => (numberOfItemTaxRates ?? 0) >= 1;
+
+  bool get enableSecondItemTaxRate => (numberOfItemTaxRates ?? 0) >= 2;
+
+  bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 

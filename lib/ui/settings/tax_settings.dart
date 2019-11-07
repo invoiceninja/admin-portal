@@ -42,19 +42,22 @@ class _TaxSettingsState extends State<TaxSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
-              BoolDropdownButton(
-                iconData: FontAwesomeIcons.fileInvoice,
-                label: localization.invoiceTax,
-                value: settings.enableInvoiceTaxes,
+              AppDropdownButton(
+                labelText: localization.invoiceTaxRates,
+                // TODO remove this
+                showBlank: true,
+                value: settings.numberOfInvoiceTaxRates == null
+                    ? ''
+                    : '${settings.numberOfInvoiceTaxRates}',
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableInvoiceTaxes = value)),
-              ),
-              BoolDropdownButton(
-                iconData: FontAwesomeIcons.cubes,
-                label: localization.lineItemTax,
-                value: settings.enableInvoiceItemTaxes,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableInvoiceItemTaxes = value)),
+                    settings.rebuild(
+                        (b) => b..numberOfInvoiceTaxRates = int.parse(value))),
+                items: List<int>.generate(3, (i) => i + 1)
+                    .map((value) => DropdownMenuItem<String>(
+                          child: Text('$value'),
+                          value: '$value',
+                        ))
+                    .toList(),
               ),
               BoolDropdownButton(
                 iconData: FontAwesomeIcons.percent,
@@ -65,62 +68,43 @@ class _TaxSettingsState extends State<TaxSettings> {
               ),
             ],
           ),
-          FormCard(
-            children: <Widget>[
-              AppDropdownButton(
-                labelText: localization.numberOfRates,
-                // TODO remove this
-                showBlank: true,
-                value: settings.numberOfTaxRates == null
-                    ? ''
-                    : '${settings.numberOfTaxRates}',
-                onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..numberOfTaxRates = int.parse(value))),
-                items: List<int>.generate(3, (i) => i + 1)
-                    .map((value) => DropdownMenuItem<String>(
-                          child: Text('$value'),
-                          value: '$value',
-                        ))
-                    .toList(),
-              ),
-              if (settings.enableInvoiceTaxes) ...[
+          if (settings.enableFirstInvoiceTaxRate)
+            FormCard(
+              children: <Widget>[
                 TaxRateDropdown(
                   taxRates: company.taxRates,
                   onSelected: (taxRate) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..defaultTaxName1 = taxRate.name
                         ..defaultTaxRate1 = taxRate.rate)),
-                  labelText: localization.tax,
+                  labelText: localization.defaultTaxRate,
                   initialTaxName: settings.defaultTaxName1,
                   initialTaxRate: settings.defaultTaxRate1,
                 ),
-                // TODO get null value from company
-                if ((settings.numberOfTaxRates ?? 0) > 1)
+                if (settings.enableSecondInvoiceTaxRate)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
                           ..defaultTaxName2 = taxRate.name
                           ..defaultTaxRate2 = taxRate.rate)),
-                    labelText: localization.tax,
+                    labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName2,
                     initialTaxRate: settings.defaultTaxRate2,
                   ),
-                // TODO get null value from company
-                if ((settings.numberOfTaxRates ?? 0) > 2)
+                if (settings.enableThirdInvoiceTaxRate)
                   TaxRateDropdown(
                     taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
                           ..defaultTaxName3 = taxRate.name
                           ..defaultTaxRate3 = taxRate.rate)),
-                    labelText: localization.tax,
+                    labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName3,
                     initialTaxRate: settings.defaultTaxRate3,
                   ),
               ],
-            ],
-          ),
+            ),
           if (!state.uiState.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

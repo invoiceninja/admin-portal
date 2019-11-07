@@ -276,27 +276,24 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            (company.settings.enableInvoiceTaxes ?? false)
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(invoice.applyTax(taxRate)),
-                    labelText: localization.tax,
-                    initialTaxName: invoice.taxName1,
-                    initialTaxRate: invoice.taxRate1,
-                  )
-                : Container(),
-            (company.settings.enableInvoiceTaxes ?? false) &&
-                    company.settings.enableSecondTaxRate
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) => viewModel
-                        .onChanged(invoice.applyTax(taxRate, isSecond: true)),
-                    labelText: localization.tax,
-                    initialTaxName: invoice.taxName2,
-                    initialTaxRate: invoice.taxRate2,
-                  )
-                : Container(),
+            if (company.settings.enableFirstInvoiceTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(invoice.applyTax(taxRate)),
+                labelText: localization.tax,
+                initialTaxName: invoice.taxName1,
+                initialTaxRate: invoice.taxRate1,
+              ),
+            if (company.settings.enableSecondInvoiceTaxRate)
+              TaxRateDropdown(
+                taxRates: company.taxRates,
+                onSelected: (taxRate) => viewModel
+                    .onChanged(invoice.applyTax(taxRate, isSecond: true)),
+                labelText: localization.tax,
+                initialTaxName: invoice.taxName2,
+                initialTaxRate: invoice.taxRate2,
+              ),
             AppDropdownButton(
               labelText: localization.design,
               value: invoice.designId,

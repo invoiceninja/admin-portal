@@ -208,31 +208,28 @@ class _ProductEditState extends State<ProductEdit> {
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),
-                  (company.settings.enableInvoiceItemTaxes ?? false)
-                      ? TaxRateDropdown(
-                          taxRates: company.taxRates,
-                          onSelected: (taxRate) =>
-                              viewModel.onChanged(product.rebuild((b) => b
-                                ..taxRate1 = taxRate.rate
-                                ..taxName1 = taxRate.name)),
-                          labelText: localization.tax,
-                          initialTaxName: product.taxName1,
-                          initialTaxRate: product.taxRate1,
-                        )
-                      : Container(),
-                  (company.settings.enableInvoiceItemTaxes ?? false) &&
-                          company.settings.enableSecondTaxRate
-                      ? TaxRateDropdown(
-                          taxRates: company.taxRates,
-                          onSelected: (taxRate) =>
-                              viewModel.onChanged(product.rebuild((b) => b
-                                ..taxRate2 = taxRate.rate
-                                ..taxName2 = taxRate.name)),
-                          labelText: localization.tax,
-                          initialTaxName: product.taxName2,
-                          initialTaxRate: product.taxRate2,
-                        )
-                      : Container(),
+                  if (company.settings.enableFirstItemTaxRate)
+                    TaxRateDropdown(
+                      taxRates: company.taxRates,
+                      onSelected: (taxRate) =>
+                          viewModel.onChanged(product.rebuild((b) => b
+                            ..taxRate1 = taxRate.rate
+                            ..taxName1 = taxRate.name)),
+                      labelText: localization.tax,
+                      initialTaxName: product.taxName1,
+                      initialTaxRate: product.taxRate1,
+                    ),
+                  if (company.settings.enableSecondItemTaxRate)
+                    TaxRateDropdown(
+                      taxRates: company.taxRates,
+                      onSelected: (taxRate) =>
+                          viewModel.onChanged(product.rebuild((b) => b
+                            ..taxRate2 = taxRate.rate
+                            ..taxName2 = taxRate.name)),
+                      labelText: localization.tax,
+                      initialTaxName: product.taxName2,
+                      initialTaxRate: product.taxRate2,
+                    ),
                 ],
               ),
             ],

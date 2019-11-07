@@ -642,7 +642,7 @@ class _FeesEditorState extends State<FeesEditor> {
           label: localization.feeCap,
           controller: _capController,
         ),
-        if (company.settings.enableInvoiceItemTaxes)
+        if (company.settings.enableFirstItemTaxRate)
           TaxRateDropdown(
             taxRates: company.taxRates,
             onSelected: (taxRate) =>
@@ -653,8 +653,7 @@ class _FeesEditorState extends State<FeesEditor> {
             initialTaxName: companyGateway.taxName1,
             initialTaxRate: companyGateway.taxRate1,
           ),
-        if (company.settings.enableInvoiceItemTaxes &&
-            company.settings.enableSecondTaxRate)
+        if (company.settings.enableSecondItemTaxRate)
           TaxRateDropdown(
             taxRates: company.taxRates,
             onSelected: (taxRate) =>
