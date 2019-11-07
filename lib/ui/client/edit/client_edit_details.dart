@@ -112,17 +112,17 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
-            UserPicker(
-              userId: client.assignedUserId,
-              onChanged: (userId) => viewModel
-                  .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
-            ),
             DynamicSelector(
               entityType: EntityType.group,
               entityIds: memoizedGroupList(state.groupState.map),
               entityId: client.groupId,
               onChanged: (groupId) => viewModel
                   .onChanged(client.rebuild((b) => b..groupId = groupId)),
+            ),
+            UserPicker(
+              userId: client.assignedUserId,
+              onChanged: (userId) => viewModel
+                  .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
             ),
             DecoratedFormField(
               label: localization.idNumber,
