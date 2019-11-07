@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -147,6 +148,42 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Credentials get credentials =>
       Credentials(token: selectedCompanyState.token.token, url: authState.url);
 
+  BuiltMap<String, BaseEntity> getEntityMap(EntityType type) {
+    switch (type) {
+      case EntityType.product:
+        return projectState.map;
+      case EntityType.client:
+        return clientState.map;
+      case EntityType.invoice:
+        return invoiceState.map;
+    // STARTER: states switch - do not remove comment
+      case EntityType.user:
+        return userState.map;
+      case EntityType.taxRate:
+        return taxRateState.map;
+      case EntityType.companyGateway:
+        return companyGatewayState.map;
+      case EntityType.group:
+        return groupState.map;
+      case EntityType.document:
+        return documentState.map;
+      case EntityType.expense:
+        return expenseState.map;
+      case EntityType.vendor:
+        return vendorState.map;
+      case EntityType.task:
+        return taskState.map;
+      case EntityType.project:
+        return projectState.map;
+      case EntityType.payment:
+        return paymentState.map;
+      case EntityType.quote:
+        return quoteState.map;
+      default:
+        return null;
+    }
+  }
+
   EntityUIState getUIState(EntityType type) {
     switch (type) {
       case EntityType.product:
@@ -158,16 +195,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.user:
         return userUIState;
-
       case EntityType.taxRate:
         return taxRateUIState;
-
       case EntityType.companyGateway:
         return companyGatewayUIState;
-
       case EntityType.group:
         return groupUIState;
-
       case EntityType.document:
         return documentUIState;
       case EntityType.expense:
@@ -211,7 +244,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   UserState get userState => selectedCompanyState.userState;
+
   ListUIState get userListState => uiState.userUIState.listUIState;
+
   UserUIState get userUIState => uiState.userUIState;
 
   TaxRateState get taxRateState => selectedCompanyState.taxRateState;
