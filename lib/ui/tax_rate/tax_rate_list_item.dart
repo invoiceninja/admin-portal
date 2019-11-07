@@ -49,10 +49,7 @@ class TaxRateListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: taxRate,
-      isSelected: taxRate.id ==
-          (uiState.isEditing
-              ? taxRateUIState.editing.id
-              : taxRateUIState.selectedId),
+      isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect

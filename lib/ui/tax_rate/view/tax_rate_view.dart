@@ -2,9 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaxRateView extends StatefulWidget {
@@ -25,6 +28,7 @@ class _TaxRateViewState extends State<TaxRateView> {
     final viewModel = widget.viewModel;
     final userCompany = viewModel.state.userCompany;
     final taxRate = viewModel.taxRate;
+    final localization = AppLocalization.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,8 +54,14 @@ class _TaxRateViewState extends State<TaxRateView> {
           )
         ],
       ),
-      body: FormCard(children: [
-        // STARTER: widgets - do not remove comment
+      body: ListView(children: [
+        TwoValueHeader(
+          label1: localization.name,
+          value1: taxRate.name,
+          label2: localization.rate,
+          value2: formatNumber(taxRate.rate, context,
+              formatNumberType: FormatNumberType.percent),
+        ),
       ]),
     );
   }

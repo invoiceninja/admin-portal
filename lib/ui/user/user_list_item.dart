@@ -47,8 +47,7 @@ class UserListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: user,
-      isSelected: user.id ==
-          (uiState.isEditing ? userUIState.editing.id : userUIState.selectedId),
+      isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
