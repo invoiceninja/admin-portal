@@ -56,10 +56,23 @@ List<String> filteredInvoicesSelector(
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
-    if (invoiceListState.filterEntityId != null) {
+    if (invoiceListState.filterEntityType == EntityType.client) {
       if (!invoiceListState.entityMatchesFilter(client)) {
         return false;
       }
+    } else {
+      if (!client.isActive) {
+        return false;
+      }
+
+      if (invoiceListState.filterEntityType == EntityType.user) {
+        if (!invoice.userCanAccess(invoiceListState.filterEntityId)) {
+          return false;
+        }
+      }
+    }
+
+    if (invoiceListState.filterEntityId != null) {
     } else if (!client.isActive) {
       return false;
     }
@@ -144,8 +157,13 @@ String invoiceStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    countActive++;
-    countArchived++;
+    if (invoice.userCanAccess(userId)) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isDeleted) {
+        countArchived++;
+      }
+    }
   });
 
   String str = '';

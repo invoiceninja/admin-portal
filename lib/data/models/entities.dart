@@ -165,6 +165,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
+  bool userCanAccess(String userId) => createdUserId == userId || assignedUserId == userId;
+
   String get entityState => isActive
       ? kEntityStateActive
       : (isArchived ? kEntityStateArchived : kEntityStateDeleted);

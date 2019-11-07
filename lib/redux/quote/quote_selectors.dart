@@ -112,8 +112,7 @@ String quoteStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
-    // TODO change to user id match
-    if (quote.clientId == userId) {
+    if (quote.userCanAccess(userId)) {
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {
