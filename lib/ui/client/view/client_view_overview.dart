@@ -139,11 +139,9 @@ class ClientOverview extends StatelessWidget {
                     viewModel.onEntityPressed(context, EntityType.task),
                 onLongPress: () =>
                     viewModel.onEntityPressed(context, EntityType.task, true),
-                subtitle: memoizedTaskStatsForClient(
-                    client.id,
-                    state.taskState.map,
-                    localization.active,
-                    localization.archived),
+                subtitle:
+                    memoizedTaskStatsForClient(client.id, state.taskState.map)
+                        .present(localization.active, localization.archived),
               )
             : Container(),
         company.isModuleEnabled(EntityType.expense)

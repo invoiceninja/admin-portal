@@ -127,10 +127,9 @@ class UserView extends StatelessWidget {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.quote, true),
                   subtitle: memoizedQuoteStatsForUser(
-                      user.id,
-                      state.quoteState.map,
-                      localization.active,
-                      localization.archived),
+                    user.id,
+                    state.quoteState.map,
+                  ).present(localization.active, localization.archived),
                 )
               : Container(),
           /*

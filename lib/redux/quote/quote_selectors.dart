@@ -98,17 +98,13 @@ String quoteStatsForClient(
   return str;
 }
 
-var memoizedQuoteStatsForUser = memo4((String userId,
-        BuiltMap<String, InvoiceEntity> quoteMap,
-        String activeLabel,
-        String archivedLabel) =>
-    quoteStatsForUser(userId, quoteMap, activeLabel, archivedLabel));
+var memoizedQuoteStatsForUser = memo2((String userId,
+        BuiltMap<String, InvoiceEntity> quoteMap) =>
+    quoteStatsForUser(userId, quoteMap));
 
-String quoteStatsForUser(
+EntityStats quoteStatsForUser(
     String userId,
-    BuiltMap<String, InvoiceEntity> quoteMap,
-    String activeLabel,
-    String archivedLabel) {
+    BuiltMap<String, InvoiceEntity> quoteMap,) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
@@ -121,18 +117,7 @@ String quoteStatsForUser(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasQuoteChanges(

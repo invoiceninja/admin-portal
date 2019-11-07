@@ -106,6 +106,28 @@ abstract class EntityStatus {
   String get name;
 }
 
+class EntityStats {
+  const EntityStats({this.countActive, this.countArchived});
+
+  final int countActive;
+
+  final int countArchived;
+
+  String present(String activeLabel, String archivedLabel) {
+    String str = '';
+    if (countActive > 0) {
+      str = '$countActive $activeLabel';
+      if (countArchived > 0) {
+        str += ' • ';
+      }
+    }
+    if (countArchived > 0) {
+      str += '$countArchived $archivedLabel';
+    }
+    return str;
+  }
+}
+
 abstract class SelectableEntity {
   @nullable
   String get id;
@@ -165,7 +187,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
-  bool userCanAccess(String userId) => createdUserId == userId || assignedUserId == userId;
+  bool userCanAccess(String userId) =>
+      createdUserId == userId || assignedUserId == userId;
 
   String get entityState => isActive
       ? kEntityStateActive
