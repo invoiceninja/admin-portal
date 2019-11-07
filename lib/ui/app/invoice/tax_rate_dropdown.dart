@@ -89,16 +89,13 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
                 ),
               if (taxRate.isNew)
                 DropdownMenuItem(
-                  child: Text(taxRate.isEmpty
-                      ? ''
-                      : '${taxRate.name} - ${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)}'),
+                  child: Text(taxRate.isEmpty ? '' : _formatTaxRate(taxRate)),
                   value: taxRate,
                 ),
               ...taxRates
                   .map((taxRate) => DropdownMenuItem(
-                        child: Text(taxRate.isEmpty
-                            ? ''
-                            : '${taxRate.name} - ${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)}'),
+                        child: Text(
+                            taxRate.isEmpty ? '' : _formatTaxRate(taxRate)),
                         value: taxRate,
                       ))
                   .toList()

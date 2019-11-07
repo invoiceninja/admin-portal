@@ -44,7 +44,7 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
   bool _emailLogin = false;
-  bool _createAccount = true;
+  bool _createAccount = false;
   bool _recovePassword = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
@@ -68,7 +68,6 @@ class _LoginState extends State<LoginView> {
       _lastNameController.text = 'TEST';
       _privacyChecked = true;
       _termsChecked = true;
-      _createAccount = false;
       _emailLogin = true;
     }
 
