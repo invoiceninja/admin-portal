@@ -132,8 +132,6 @@ class NumberOfRatesSelector extends StatelessWidget {
 
     return AppDropdownButton(
       labelText: label,
-      // TODO remove this
-      showBlank: true,
       value: numberOfRates == null ? '' : '$numberOfRates',
       onChanged: (value) =>
           onChanged(value == null || value.isEmpty ? null : int.parse(value)),

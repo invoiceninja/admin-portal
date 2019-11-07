@@ -138,6 +138,7 @@ final taxRatesReducer = combineReducers<TaxRateState>([
   TypedReducer<TaxRateState, AddTaxRateSuccess>(_addTaxRate),
   TypedReducer<TaxRateState, LoadTaxRatesSuccess>(_setLoadedTaxRates),
   TypedReducer<TaxRateState, LoadTaxRateSuccess>(_setLoadedTaxRate),
+  TypedReducer<TaxRateState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaxRateState, ArchiveTaxRateRequest>(_archiveTaxRateRequest),
   TypedReducer<TaxRateState, ArchiveTaxRateSuccess>(_archiveTaxRateSuccess),
   TypedReducer<TaxRateState, ArchiveTaxRateFailure>(_archiveTaxRateFailure),
@@ -274,6 +275,19 @@ TaxRateState _setLoadedTaxRates(
     ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.taxRates,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}
+
+TaxRateState _setLoadedCompany(
+    TaxRateState taxRateState, LoadCompanySuccess action) {
+  final state = taxRateState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.userCompany.company.taxRates,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));
