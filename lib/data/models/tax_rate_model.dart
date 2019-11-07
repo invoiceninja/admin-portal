@@ -44,12 +44,12 @@ class TaxRateFields {
 abstract class TaxRateEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  factory TaxRateEntity({String id}) {
+  factory TaxRateEntity({String id, String name, double rate}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
-      name: '',
-      rate: 0.0,
+      name: name ?? '',
+      rate: rate ?? 0.0,
       isDeleted: false,
     );
   }

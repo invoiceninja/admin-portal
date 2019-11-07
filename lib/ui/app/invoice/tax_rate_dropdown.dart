@@ -32,14 +32,15 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     final taxRates = widget.taxRates;
 
     _selectedTaxRate = taxRates.firstWhere(
-        (taxRate) =>
-            taxRate.name == widget.initialTaxName &&
+            (taxRate) =>
+        taxRate.name == widget.initialTaxName &&
             taxRate.rate == widget.initialTaxRate,
-        orElse: () => TaxRateEntity().rebuild((b) => b
-          ..rate = widget.initialTaxRate
-          ..name = widget.initialTaxName));
+        orElse: () =>
+            TaxRateEntity(
+                name: widget.initialTaxName, rate: widget.initialTaxRate));
 
-    if (_selectedTaxRate.rate != 0) {
+        if (_selectedTaxRate.rate != 0)
+    {
       _textController.text = _formatTaxRate(_selectedTaxRate);
     }
 
@@ -53,7 +54,8 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
   }
 
   String _formatTaxRate(TaxRateEntity taxRate) {
-    return '${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
+    return '${formatNumber(taxRate.rate, context,
+        formatNumberType: FormatNumberType.percent)} ${taxRate.name}';
   }
 
   @override
@@ -66,19 +68,20 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
 
     final options = taxRates
         .where((taxRate) => taxRate.archivedAt == null)
-        .map((taxRate) => PopupMenuItem<TaxRateEntity>(
-              value: taxRate,
-              child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 70.0,
-                    child: Text(formatNumber(taxRate.rate, context,
-                        formatNumberType: FormatNumberType.percent)),
-                  ),
-                  Text(taxRate.name),
-                ],
+        .map((taxRate) =>
+        PopupMenuItem<TaxRateEntity>(
+          value: taxRate,
+          child: Row(
+            children: <Widget>[
+              SizedBox(
+                width: 70.0,
+                child: Text(formatNumber(taxRate.rate, context,
+                    formatNumberType: FormatNumberType.percent)),
               ),
-            ))
+              Text(taxRate.name),
+            ],
+          ),
+        ))
         .toList();
 
     options.insert(
