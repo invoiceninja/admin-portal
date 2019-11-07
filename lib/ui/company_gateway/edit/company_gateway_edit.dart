@@ -644,7 +644,6 @@ class _FeesEditorState extends State<FeesEditor> {
         ),
         if (company.settings.enableFirstItemTaxRate)
           TaxRateDropdown(
-            taxRates: company.taxRates,
             onSelected: (taxRate) =>
                 viewModel.onChanged(companyGateway.rebuild((b) => b
                   ..taxRate1 = taxRate.rate
@@ -655,7 +654,6 @@ class _FeesEditorState extends State<FeesEditor> {
           ),
         if (company.settings.enableSecondItemTaxRate)
           TaxRateDropdown(
-            taxRates: company.taxRates,
             onSelected: (taxRate) =>
                 viewModel.onChanged(companyGateway.rebuild((b) => b
                   ..taxRate2 = taxRate.rate

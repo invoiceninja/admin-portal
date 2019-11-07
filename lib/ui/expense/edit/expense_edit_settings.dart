@@ -114,7 +114,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
           children: <Widget>[
             if (company.settings.enableFirstItemTaxRate)
               TaxRateDropdown(
-                taxRates: company.taxRates,
                 onSelected: (taxRate) =>
                     viewModel.onChanged(expense.rebuild((b) => b
                       ..taxRate1 = taxRate.rate
@@ -125,7 +124,6 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               ),
             if (company.settings.enableSecondItemTaxRate)
               TaxRateDropdown(
-                taxRates: company.taxRates,
                 onSelected: (taxRate) =>
                     viewModel.onChanged(expense.rebuild((b) => b
                       ..taxRate2 = taxRate.rate

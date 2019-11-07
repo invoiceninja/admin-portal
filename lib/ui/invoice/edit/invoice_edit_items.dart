@@ -257,7 +257,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 : Container(),
             if (company.settings.enableFirstItemTaxRate)
               TaxRateDropdown(
-                taxRates: company.taxRates,
                 onSelected: (taxRate) {
                   _taxRate1 = taxRate;
                   _onChanged();
@@ -268,7 +267,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               ),
             if (company.settings.enableSecondItemTaxRate)
               TaxRateDropdown(
-                taxRates: company.taxRates,
                 onSelected: (taxRate) {
                   _taxRate2 = taxRate;
                   _onChanged();

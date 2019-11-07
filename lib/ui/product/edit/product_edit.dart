@@ -210,7 +210,6 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   if (company.settings.enableFirstItemTaxRate)
                     TaxRateDropdown(
-                      taxRates: company.taxRates,
                       onSelected: (taxRate) =>
                           viewModel.onChanged(product.rebuild((b) => b
                             ..taxRate1 = taxRate.rate
@@ -221,7 +220,6 @@ class _ProductEditState extends State<ProductEdit> {
                     ),
                   if (company.settings.enableSecondItemTaxRate)
                     TaxRateDropdown(
-                      taxRates: company.taxRates,
                       onSelected: (taxRate) =>
                           viewModel.onChanged(product.rebuild((b) => b
                             ..taxRate2 = taxRate.rate

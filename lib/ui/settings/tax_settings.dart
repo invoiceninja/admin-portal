@@ -30,7 +30,6 @@ class _TaxSettingsState extends State<TaxSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
     final settings = viewModel.settings;
     final state = viewModel.state;
 
@@ -54,6 +53,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..numberOfItemTaxRates = value)),
               ),
+              SizedBox(height: 15),
               BoolDropdownButton(
                 iconData: FontAwesomeIcons.percent,
                 label: localization.inclusiveTaxes,
@@ -64,11 +64,10 @@ class _TaxSettingsState extends State<TaxSettings> {
             ],
           ),
           if (settings.enableFirstInvoiceTaxRate &&
-              state.taskState.list.isNotEmpty)
+              state.taxRateState.list.isNotEmpty)
             FormCard(
               children: <Widget>[
                 TaxRateDropdown(
-                  taxRates: company.taxRates,
                   onSelected: (taxRate) =>
                       viewModel.onSettingsChanged(settings.rebuild((b) => b
                         ..defaultTaxName1 = taxRate.name
@@ -79,7 +78,6 @@ class _TaxSettingsState extends State<TaxSettings> {
                 ),
                 if (settings.enableSecondInvoiceTaxRate)
                   TaxRateDropdown(
-                    taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
                           ..defaultTaxName2 = taxRate.name
@@ -90,7 +88,6 @@ class _TaxSettingsState extends State<TaxSettings> {
                   ),
                 if (settings.enableThirdInvoiceTaxRate)
                   TaxRateDropdown(
-                    taxRates: company.taxRates,
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
                           ..defaultTaxName3 = taxRate.name
