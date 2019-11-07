@@ -982,15 +982,15 @@ abstract class SettingsEntity
   String get endlessReminderFrequencyId;
 
   @nullable
-  @BuiltValueField(wireName: 'late_fee_amount1_HIDDEN')
+  @BuiltValueField(wireName: 'late_fee_amount1')
   double get lateFeeAmount1;
 
   @nullable
-  @BuiltValueField(wireName: 'late_fee_amount2_HIDDEN')
+  @BuiltValueField(wireName: 'late_fee_amount2')
   double get lateFeeAmount2;
 
   @nullable
-  @BuiltValueField(wireName: 'late_fee_amount3_HIDDEN')
+  @BuiltValueField(wireName: 'late_fee_amount3')
   double get lateFeeAmount3;
 
   @nullable

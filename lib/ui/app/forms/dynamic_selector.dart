@@ -21,16 +21,12 @@ class DynamicSelector extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final entityMap = state.getEntityMap(entityType);
 
-    if (!state.userCompany.isAdmin) {
-      return SizedBox();
-    }
-
     if (entityIds.length < 10) {
       return AppDropdownButton(
-        labelText: localization.user,
+        labelText: localization.lookup('$entityType'),
         value: entityId,
         showBlank: true,
-        onChanged: (userId) => onChanged(userId),
+        onChanged: (entityId) => onChanged(entityId),
         items: entityIds
             .map((entityId) => DropdownMenuItem(
                   child: Text(entityMap[entityId]?.listDisplayName ?? ''),
