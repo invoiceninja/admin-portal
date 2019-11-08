@@ -236,8 +236,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
   TypedReducer<SettingsUIState, FilterSettings>((state, action) {
     return state.rebuild((b) => b
       ..filter = action.filter
-      ..updatedAt = action.filter == null
+      ..filterClearedAt = action.filter == null
           ? DateTime.now().millisecondsSinceEpoch
-          : state.updatedAt);
+          : state.filterClearedAt);
   }),
 ]);

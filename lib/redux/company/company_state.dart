@@ -129,6 +129,7 @@ abstract class SettingsUIState extends Object
       origUserCompany: origUserCompany ?? UserCompanyEntity(),
       isChanged: false,
       updatedAt: 0,
+      filterClearedAt: 0,
       section: section ?? kSettingsCompanyDetails,
     );
   }
@@ -157,6 +158,8 @@ abstract class SettingsUIState extends Object
 
   @nullable
   String get filter;
+
+  int get filterClearedAt;
 
   bool get isFiltered => entityType != EntityType.company;
 

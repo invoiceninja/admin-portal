@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -290,7 +291,7 @@ class SettingsScreens extends StatelessWidget {
 
     return Row(children: <Widget>[
       Expanded(
-        child: SettingsScreen(),
+        child: SettingsScreenBuilder(),
         flex: 2,
       ),
       VerticalDivider(width: isDarkMode(context) ? 1 : .5),

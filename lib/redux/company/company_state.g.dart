@@ -203,6 +203,9 @@ class _$SettingsUIStateSerializer
       'section',
       serializers.serialize(object.section,
           specifiedType: const FullType(String)),
+      'filterClearedAt',
+      serializers.serialize(object.filterClearedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.filter != null) {
       result
@@ -270,6 +273,10 @@ class _$SettingsUIStateSerializer
         case 'filter':
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterClearedAt':
+          result.filterClearedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -702,6 +709,8 @@ class _$SettingsUIState extends SettingsUIState {
   final String section;
   @override
   final String filter;
+  @override
+  final int filterClearedAt;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
       (new SettingsUIStateBuilder()..update(updates)).build();
@@ -717,7 +726,8 @@ class _$SettingsUIState extends SettingsUIState {
       this.isChanged,
       this.updatedAt,
       this.section,
-      this.filter})
+      this.filter,
+      this.filterClearedAt})
       : super._() {
     if (userCompany == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'userCompany');
@@ -749,6 +759,9 @@ class _$SettingsUIState extends SettingsUIState {
     if (section == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'section');
     }
+    if (filterClearedAt == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'filterClearedAt');
+    }
   }
 
   @override
@@ -773,7 +786,8 @@ class _$SettingsUIState extends SettingsUIState {
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
         section == other.section &&
-        filter == other.filter;
+        filter == other.filter &&
+        filterClearedAt == other.filterClearedAt;
   }
 
   @override
@@ -787,17 +801,19 @@ class _$SettingsUIState extends SettingsUIState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, userCompany.hashCode),
-                                            origUserCompany.hashCode),
-                                        client.hashCode),
-                                    origClient.hashCode),
-                                group.hashCode),
-                            origGroup.hashCode),
-                        entityType.hashCode),
-                    isChanged.hashCode),
-                updatedAt.hashCode),
-            section.hashCode),
-        filter.hashCode));
+                                        $jc(
+                                            $jc($jc(0, userCompany.hashCode),
+                                                origUserCompany.hashCode),
+                                            client.hashCode),
+                                        origClient.hashCode),
+                                    group.hashCode),
+                                origGroup.hashCode),
+                            entityType.hashCode),
+                        isChanged.hashCode),
+                    updatedAt.hashCode),
+                section.hashCode),
+            filter.hashCode),
+        filterClearedAt.hashCode));
   }
 
   @override
@@ -813,7 +829,8 @@ class _$SettingsUIState extends SettingsUIState {
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
           ..add('section', section)
-          ..add('filter', filter))
+          ..add('filter', filter)
+          ..add('filterClearedAt', filterClearedAt))
         .toString();
   }
 }
@@ -874,6 +891,11 @@ class SettingsUIStateBuilder
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
 
+  int _filterClearedAt;
+  int get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int filterClearedAt) =>
+      _$this._filterClearedAt = filterClearedAt;
+
   SettingsUIStateBuilder();
 
   SettingsUIStateBuilder get _$this {
@@ -889,6 +911,7 @@ class SettingsUIStateBuilder
       _updatedAt = _$v.updatedAt;
       _section = _$v.section;
       _filter = _$v.filter;
+      _filterClearedAt = _$v.filterClearedAt;
       _$v = null;
     }
     return this;
@@ -923,7 +946,8 @@ class SettingsUIStateBuilder
               isChanged: isChanged,
               updatedAt: updatedAt,
               section: section,
-              filter: filter);
+              filter: filter,
+              filterClearedAt: filterClearedAt);
     } catch (_) {
       String _$failedField;
       try {
