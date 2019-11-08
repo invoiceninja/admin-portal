@@ -415,6 +415,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             DecoratedFormField(
               label: localization.days,
               controller: _daysController,
+              keyboardType: TextInputType.number,
             ),
             AppDropdownButton(
               value: widget.schedule,

@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -35,7 +35,7 @@ class GroupSettingsScreen extends StatelessWidget {
     final listUIState = state.uiState.groupUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return AppScaffold(
+    return ListScaffold(
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,
@@ -50,7 +50,7 @@ class GroupSettingsScreen extends StatelessWidget {
         viewModel.onEntityAction(
             context, groups, EntityAction.toggleMultiselect);
       },
-      hideHamburgerButton: true,
+      isSettings: true,
       appBarTitle: ListFilter(
         title: localization.groups,
         key: ValueKey(state.groupListState.filterClearedAt),

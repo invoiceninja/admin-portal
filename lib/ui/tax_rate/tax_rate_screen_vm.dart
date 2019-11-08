@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class TaxRateScreenBuilder extends StatelessWidget {
@@ -59,8 +60,12 @@ class TaxRateScreenVM {
               EntityAction action) =>
           handleTaxRateAction(context, taxRates, action),
       onBackPressed: (context) {
-        store.dispatch(
-            ViewSettings(context: context, section: kSettingsTaxSettings));
+        if (isMobile(context)) {
+          Navigator.pop(context);
+        } else {
+          store.dispatch(
+              ViewSettings(context: context, section: kSettingsTaxSettings));
+        }
       },
     );
   }

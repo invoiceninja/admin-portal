@@ -9,30 +9,29 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'app_drawer_vm.dart';
 
-class AppScaffold extends StatelessWidget {
-  const AppScaffold(
-      {@required this.appBarTitle,
-      @required this.body,
-      this.appBarActions,
-      this.bottomNavigationBar,
-      this.floatingActionButton,
-      this.isChecked,
-      this.onCheckboxChanged,
-      this.onHamburgerLongPress,
-      this.onBackPressed,
-      this.showCheckbox = false,
-      this.hideHamburgerButton = false});
+class ListScaffold extends StatelessWidget {
+  const ListScaffold({
+    @required this.appBarTitle,
+    @required this.body,
+    this.appBarActions,
+    this.bottomNavigationBar,
+    this.floatingActionButton,
+    this.isChecked,
+    this.onCheckboxChanged,
+    this.onHamburgerLongPress,
+    this.isSettings = false,
+    this.showCheckbox = false,
+  });
 
   final Widget body;
   final AppBottomBar bottomNavigationBar;
   final FloatingActionButton floatingActionButton;
   final Widget appBarTitle;
   final List<Widget> appBarActions;
-  final bool hideHamburgerButton;
+  final bool isSettings;
   final bool showCheckbox;
   final Function(bool) onCheckboxChanged;
   final Function() onHamburgerLongPress;
-  final Function() onBackPressed;
   final bool isChecked;
 
   @override
@@ -54,28 +53,28 @@ class AppScaffold extends StatelessWidget {
                     onChanged: onCheckboxChanged,
                     activeColor: Theme.of(context).accentColor,
                     value: isChecked)
-                : onBackPressed != null
-                    ? IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: onBackPressed,
-                      )
-                    : hideHamburgerButton
-                        ? null
-                        : Builder(
-                            builder: (context) => GestureDetector(
-                                  onLongPress: onHamburgerLongPress,
-                                  child: IconButton(
-                                    icon: Icon(Icons.menu),
-                                    onPressed: () {
-                                      if (isMobile(context)) {
-                                        Scaffold.of(context).openDrawer();
-                                      } else {
-                                        store.dispatch(
-                                            UpdateSidebar(AppSidebar.menu));
-                                      }
-                                    },
-                                  ),
-                                )),
+                : isSettings
+                    ? (isMobile(context)
+                        ? IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () => Navigator.pop(context),
+                          )
+                        : null)
+                    : Builder(
+                        builder: (context) => GestureDetector(
+                              onLongPress: onHamburgerLongPress,
+                              child: IconButton(
+                                icon: Icon(Icons.menu),
+                                onPressed: () {
+                                  if (isMobile(context)) {
+                                    Scaffold.of(context).openDrawer();
+                                  } else {
+                                    store.dispatch(
+                                        UpdateSidebar(AppSidebar.menu));
+                                  }
+                                },
+                              ),
+                            )),
             title: appBarTitle,
             actions: appBarActions,
           ),

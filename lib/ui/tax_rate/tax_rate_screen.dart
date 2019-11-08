@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -32,11 +32,11 @@ class TaxRateSettingsScreen extends StatelessWidget {
     final listUIState = state.uiState.taxRateUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return AppScaffold(
+    return ListScaffold(
+      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
-      onBackPressed: () => viewModel.onBackPressed(context),
       onHamburgerLongPress: () =>
           store.dispatch(StartTaxRateMultiselect(context: context)),
       onCheckboxChanged: (value) {
@@ -48,7 +48,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
         viewModel.onEntityAction(
             context, taxRates, EntityAction.toggleMultiselect);
       },
-      hideHamburgerButton: true,
       appBarTitle: ListFilter(
         title: localization.taxRates,
         key: ValueKey(state.taxRateListState.filterClearedAt),
@@ -67,7 +66,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
-            key: key,
             child: Text(
               localization.cancel,
               style: TextStyle(color: Colors.white),
@@ -78,7 +76,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
           ),
         if (viewModel.isInMultiselect)
           FlatButton(
-            key: key,
             textColor: Colors.white,
             disabledTextColor: Colors.white54,
             child: Text(

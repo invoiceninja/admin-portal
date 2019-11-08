@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -33,7 +33,8 @@ class UserScreen extends StatelessWidget {
     final listUIState = state.uiState.userUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return AppScaffold(
+    return ListScaffold(
+      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.userList.length,
       showCheckbox: isInMultiselect,
@@ -50,7 +51,6 @@ class UserScreen extends StatelessWidget {
             context, users, EntityAction.toggleMultiselect);            
          */
       },
-      hideHamburgerButton: true,
       appBarTitle: ListFilter(
         title: localization.userManagement,
         key: ValueKey(state.userListState.filterClearedAt),

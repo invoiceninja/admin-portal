@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -30,7 +30,7 @@ class PaymentScreen extends StatelessWidget {
     final listUIState = state.uiState.paymentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return AppScaffold(
+    return ListScaffold(
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,

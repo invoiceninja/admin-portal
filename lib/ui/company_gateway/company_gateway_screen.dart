@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -34,7 +34,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return AppScaffold(
+    return ListScaffold(
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,
@@ -51,7 +51,7 @@ class CompanyGatewayScreen extends StatelessWidget {
         viewModel.onEntityAction(
             context, companyGateways, EntityAction.toggleMultiselect);
       },
-      hideHamburgerButton: true,
+      isSettings: true,
       appBarTitle: ListFilter(
         title: localization.companyGateways,
         key: ValueKey(state.companyGatewayListState.filterClearedAt),
