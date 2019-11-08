@@ -51,6 +51,7 @@ void _loadAuthLocal(Store<AppState> store) async {
 
   store.dispatch(UserSettingsChanged(
     enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? true,
+    accentColor: prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor,
     emailPayment: prefs.getBool(kSharedPrefEmailPayment) ?? false,
     requireAuthentication:
         prefs.getBool(kSharedPrefRequireAuthentication) ?? false,

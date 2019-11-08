@@ -68,7 +68,6 @@ void main({bool isTesting = false}) async {
   final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
   final accentColor =
       prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
-
   final longPressSelectionIsDefault =
       prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
   final requireAuthentication =

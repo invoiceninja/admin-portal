@@ -24,7 +24,7 @@ AppState appReducer(AppState state, dynamic action) {
     return AppState().rebuild((b) => b
       ..authState
           .replace(state.authState.rebuild((b) => b..isAuthenticated = false))
-      ..uiState.enableDarkMode = state.uiState.enableDarkMode
+      //..uiState.enableDarkMode = state.uiState.enableDarkMode
       ..uiState.isTesting = state.uiState.isTesting);
   } else if (action is LoadStateSuccess) {
     return action.state.rebuild((b) => b
