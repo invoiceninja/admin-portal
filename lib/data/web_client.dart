@@ -120,8 +120,7 @@ Map<String, String> _getHeaders(String token) => {
     };
 
 void _checkResponse(http.Response response) {
-  //debugPrint('response: ${response.statusCode} ${response.body}', wrapWidth: 1000);
-  print('response: ${response.statusCode} ${response.body}');
+  debugPrint('response: ${response.statusCode} ${response.body}', wrapWidth: 1000);
   print('headers: ${response.headers}');
 
   final version = response.headers['x-app-version'];

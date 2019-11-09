@@ -77,10 +77,11 @@ class SettingsList extends StatelessWidget {
             section: kSettingsOnlinePayments,
             viewModel: viewModel,
           ),
-        SettingsListTile(
-          section: kSettingsTaxSettings,
-          viewModel: viewModel,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsTaxSettings,
+            viewModel: viewModel,
+          ),
         if (showAll)
           SettingsListTile(
             section: kSettingsProducts,
