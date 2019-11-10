@@ -274,6 +274,8 @@ abstract class ClientEntity extends Object
     }
   }
 
+  bool get hasGroup => groupId != null && groupId.isNotEmpty;
+
   bool get hasLanguage => languageId != null && languageId.isNotEmpty;
 
   bool get hasEmailAddress =>
