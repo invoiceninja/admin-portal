@@ -62,7 +62,7 @@ class ClientRepository {
           url += '&action=' + action.toString();
         }
         response = await webClient.post(url, credentials.token,
-            data: json.encode([ids]));
+            data: json.encode(ids));
         break;
       default:
         // Might have other actions in the future
