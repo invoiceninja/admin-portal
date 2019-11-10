@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -283,17 +284,19 @@ class _CompanyDetailsState extends State<CompanyDetails>
               if (!state.settingsUIState.isFiltered)
                 FormCard(
                   children: <Widget>[
-                    EntityDropdown(
-                      key: ValueKey('__size_${company.sizeId}__'),
-                      entityType: EntityType.size,
-                      entityList: memoizedSizeList(state.staticState.sizeMap),
+                    AppDropdownButton(
+                      value: company.sizeId,
                       labelText: localization.size,
-                      entityId: company.sizeId,
-                      onSelected: (SelectableEntity size) =>
-                          viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..sizeId = size.id),
+                      items: memoizedSizeList(state.staticState.sizeMap)
+                          .map((sizeId) => DropdownMenuItem(
+                                child: Text(
+                                    state.staticState.sizeMap[sizeId].name),
+                                value: sizeId,
+                              )).toList(),
+                      onChanged: (sizeId) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..sizeId = sizeId),
                       ),
-                      //onFieldSubmitted: (String value) => _node.nextFocus(),
+                      showBlank: true,
                     ),
                     EntityDropdown(
                       key: ValueKey('__industry_${company.industryId}__'),
@@ -304,8 +307,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityId: company.industryId,
                       onSelected: (SelectableEntity industry) =>
                           viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..industryId = industry.id),
+                        company.rebuild((b) => b..industryId = industry?.id),
                       ),
+                      allowClearing: true,
                     ),
                   ],
                 ),

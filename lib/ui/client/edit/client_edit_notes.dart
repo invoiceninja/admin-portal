@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -73,6 +74,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final client = viewModel.client;
 
     return ListView(
@@ -96,14 +98,19 @@ class ClientEditNotesState extends State<ClientEditNotes> {
                 labelText: localization.privateNotes,
               ),
             ),
-            EntityDropdown(
-              key: ValueKey('__size_${client.sizeId}__'),
-              entityType: EntityType.size,
-              entityList: memoizedSizeList(viewModel.staticState.sizeMap),
+            AppDropdownButton(
+              value: client.sizeId,
               labelText: localization.size,
-              entityId: client.sizeId,
-              onSelected: (SelectableEntity size) => viewModel
-                  .onChanged(client.rebuild((b) => b..sizeId = size.id)),
+              items: memoizedSizeList(state.staticState.sizeMap)
+                  .map((sizeId) => DropdownMenuItem(
+                child: Text(
+                    state.staticState.sizeMap[sizeId].name),
+                value: sizeId,
+              )).toList(),
+              onChanged: (sizeId) => viewModel.onChanged(
+                client.rebuild((b) => b..sizeId = sizeId),
+              ),
+              showBlank: true,
             ),
             EntityDropdown(
               key: ValueKey('__industry_${client.industryId}__'),
@@ -113,7 +120,8 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               labelText: localization.industry,
               entityId: client.industryId,
               onSelected: (SelectableEntity industry) => viewModel.onChanged(
-                  client.rebuild((b) => b..industryId = industry.id)),
+                  client.rebuild((b) => b..industryId = industry?.id)),
+              allowClearing: true,
             ),
           ],
         ),
