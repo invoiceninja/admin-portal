@@ -50,6 +50,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final itemIndex = viewModel.invoiceItemIndex;
+
     final invoiceItem =
         itemIndex != null && invoice.lineItems.length > itemIndex
             ? invoice.lineItems[itemIndex]

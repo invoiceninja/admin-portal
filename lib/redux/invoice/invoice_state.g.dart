@@ -95,12 +95,6 @@ class _$InvoiceUIStateSerializer
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(InvoiceEntity)));
     }
-    if (object.editingItemIndex != null) {
-      result
-        ..add('editingItemIndex')
-        ..add(serializers.serialize(object.editingItemIndex,
-            specifiedType: const FullType(int)));
-    }
     if (object.selectedId != null) {
       result
         ..add('selectedId')
@@ -125,10 +119,6 @@ class _$InvoiceUIStateSerializer
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
-          break;
-        case 'editingItemIndex':
-          result.editingItemIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,

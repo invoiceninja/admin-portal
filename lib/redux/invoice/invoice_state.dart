@@ -69,6 +69,7 @@ abstract class InvoiceUIState extends Object
   InvoiceEntity get editing;
 
   @nullable
+  @BuiltValueField(serialize: false)
   int get editingItemIndex;
 
   @override
