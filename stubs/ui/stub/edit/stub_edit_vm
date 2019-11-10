@@ -76,13 +76,15 @@ class StubEditVM {
         final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
         return completer.future.then((savedStub) {
-          store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
           if (isMobile(context)) {
+                store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
               if (stub.isNew) {
                 Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
               } else {
                 Navigator.of(context).pop(savedStub);
               }
+          } else {
+              store.dispatch(ViewStub(context: context, stubId: savedStub.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

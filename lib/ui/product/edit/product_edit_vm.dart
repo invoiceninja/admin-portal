@@ -80,14 +80,17 @@ class ProductEditVM {
         store.dispatch(
             SaveProductRequest(completer: completer, product: product));
         return completer.future.then((savedProduct) {
-          store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
             if (product.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(ProductViewScreen.route);
             } else {
               Navigator.of(context).pop(savedProduct);
             }
+          } else {
+            store.dispatch(ViewProduct(
+                context: context, productId: savedProduct.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

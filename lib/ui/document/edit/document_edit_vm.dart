@@ -73,14 +73,16 @@ class DocumentEditVM {
         store.dispatch(
             SaveDocumentRequest(completer: completer, document: document));
         return completer.future.then((savedDocument) {
-          store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
             if (document.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(DocumentViewScreen.route);
             } else {
               Navigator.of(context).pop(savedDocument);
             }
+          } else {
+            store.dispatch(ViewDocument(context: context, documentId: savedDocument.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -109,14 +109,17 @@ class InvoiceEditVM extends EntityEditVM {
         store.dispatch(
             SaveInvoiceRequest(completer: completer, invoice: invoice));
         return completer.future.then((savedInvoice) {
-          store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
             if (invoice.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(InvoiceViewScreen.route);
             } else {
               Navigator.of(context).pop(savedInvoice);
             }
+          } else {
+            store.dispatch(ViewInvoice(
+                context: context, invoiceId: savedInvoice.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

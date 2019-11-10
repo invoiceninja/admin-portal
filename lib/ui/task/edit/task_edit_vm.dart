@@ -93,13 +93,16 @@ class TaskEditVM {
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(SaveTaskRequest(completer: completer, task: task));
         return completer.future.then((savedTask) {
-          store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
             if (task.isNew) {
               Navigator.of(context).pushReplacementNamed(TaskViewScreen.route);
             } else {
               Navigator.of(context).pop(savedTask);
             }
+          } else {
+            store.dispatch(
+                ViewTask(context: context, taskId: savedTask.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

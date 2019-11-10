@@ -86,14 +86,19 @@ class CompanyGatewayEditVM {
         store.dispatch(SaveCompanyGatewayRequest(
             completer: completer, companyGateway: companyGateway));
         return completer.future.then((savedCompanyGateway) {
-          store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
             if (companyGateway.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(CompanyGatewayViewScreen.route);
             } else {
               Navigator.of(context).pop(savedCompanyGateway);
             }
+          } else {
+            store.dispatch(ViewCompanyGateway(
+                context: context,
+                companyGatewayId: savedCompanyGateway.id,
+                force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

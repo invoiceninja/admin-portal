@@ -16,10 +16,11 @@ class ViewDocumentList implements PersistUI {
 }
 
 class ViewDocument implements PersistUI {
-  ViewDocument({this.documentId, this.context});
+  ViewDocument({this.documentId, this.context, this.force});
 
   final String documentId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditDocument implements PersistUI {

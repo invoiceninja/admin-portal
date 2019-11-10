@@ -109,14 +109,17 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
-            store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
               if (client.isNew && state.clientUIState.saveCompleter == null) {
                 Navigator.of(context)
                     .pushReplacementNamed(ClientViewScreen.route);
               } else {
                 Navigator.of(context).pop(savedClient);
               }
+            } else {
+              store.dispatch(
+                  ViewClient(context: context, clientId: savedClient.id, force: true));
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

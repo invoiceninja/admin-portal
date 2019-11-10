@@ -78,13 +78,16 @@ class UserEditVM {
         final Completer<UserEntity> completer = new Completer<UserEntity>();
         store.dispatch(SaveUserRequest(completer: completer, user: user));
         return completer.future.then((savedUser) {
-          store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
             if (user.isNew) {
               Navigator.of(context).pushReplacementNamed(UserViewScreen.route);
             } else {
               Navigator.of(context).pop(savedUser);
             }
+          } else {
+            store.dispatch(
+                ViewUser(context: context, userId: savedUser.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

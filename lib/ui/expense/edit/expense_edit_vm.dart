@@ -126,14 +126,17 @@ class ExpenseEditVM {
         store.dispatch(
             SaveExpenseRequest(completer: completer, expense: expense));
         return completer.future.then((savedExpense) {
-          store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
             if (expense.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(ExpenseViewScreen.route);
             } else {
               Navigator.of(context).pop(savedExpense);
             }
+          } else {
+            store.dispatch(ViewExpense(
+                context: context, expenseId: savedExpense.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -91,14 +91,17 @@ class VendorEditVM {
         final Completer<VendorEntity> completer = new Completer<VendorEntity>();
         store.dispatch(SaveVendorRequest(completer: completer, vendor: vendor));
         return completer.future.then((savedVendor) {
-          store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
             if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
               Navigator.of(context)
                   .pushReplacementNamed(VendorViewScreen.route);
             } else {
               Navigator.of(context).pop(savedVendor);
             }
+          } else {
+            store.dispatch(
+                ViewVendor(context: context, vendorId: savedVendor.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -81,14 +81,17 @@ class TaxRateEditVM {
         store.dispatch(
             SaveTaxRateRequest(completer: completer, taxRate: taxRate));
         return completer.future.then((savedTaxRate) {
-          store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
             if (taxRate.isNew) {
               Navigator.of(context)
                   .pushReplacementNamed(TaxRateViewScreen.route);
             } else {
               Navigator.of(context).pop(savedTaxRate);
             }
+          } else {
+            store.dispatch(ViewTaxRate(
+                context: context, taxRateId: savedTaxRate.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

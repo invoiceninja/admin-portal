@@ -82,13 +82,16 @@ class QuoteEditVM extends EntityEditVM {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
-          store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
             if (quote.isNew) {
               Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
             } else {
               Navigator.of(context).pop(savedQuote);
             }
+          } else {
+            store.dispatch(ViewQuote(
+                context: context, quoteId: savedQuote.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

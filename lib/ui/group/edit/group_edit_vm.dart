@@ -78,13 +78,16 @@ class GroupEditVM {
         final Completer<GroupEntity> completer = new Completer<GroupEntity>();
         store.dispatch(SaveGroupRequest(completer: completer, group: group));
         return completer.future.then((savedGroup) {
-          store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
             if (group.isNew) {
               Navigator.of(context).pushReplacementNamed(GroupViewScreen.route);
             } else {
               Navigator.of(context).pop(savedGroup);
             }
+          } else {
+            store.dispatch(
+                ViewGroup(context: context, groupId: savedGroup.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

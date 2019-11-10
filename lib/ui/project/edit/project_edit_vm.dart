@@ -109,8 +109,8 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
           if (isMobile(context)) {
+            store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
             if (project.isNew && state.projectUIState.saveCompleter == null) {
               Navigator.of(context)
                   .pushReplacementNamed(ProjectViewScreen.route);
@@ -118,7 +118,8 @@ class ProjectEditVM {
               Navigator.of(context).pop(savedProject);
             }
           } else {
-            Navigator.of(context).pop(savedProject);
+            store.dispatch(ViewProject(
+                context: context, projectId: savedProject.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
