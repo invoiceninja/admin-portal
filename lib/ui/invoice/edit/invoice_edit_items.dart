@@ -105,6 +105,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
   TaxRateEntity _taxRate1;
   TaxRateEntity _taxRate2;
+  TaxRateEntity _taxRate3;
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -169,6 +170,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       }
       if (_taxRate2 != null) {
         invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+      }
+      if (_taxRate3 != null) {
+        invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
       }
 
       if (invoiceItem != widget.invoiceItem) {
@@ -273,6 +277,16 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 labelText: localization.tax,
                 initialTaxName: invoiceItem.taxName2,
                 initialTaxRate: invoiceItem.taxRate2,
+              ),
+            if (company.settings.enableThirdItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) {
+                  _taxRate3 = taxRate;
+                  _onChanged();
+                },
+                labelText: localization.tax,
+                initialTaxName: invoiceItem.taxName3,
+                initialTaxRate: invoiceItem.taxRate3,
               ),
           ],
         ),

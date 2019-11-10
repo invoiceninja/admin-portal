@@ -90,6 +90,8 @@ abstract class InvoiceEntity extends Object
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
       taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
+      taxName3: company?.settings?.defaultTaxName3 ?? '',
+      taxRate3: company?.settings?.defaultTaxRate3 ?? 0.0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
@@ -208,6 +210,14 @@ abstract class InvoiceEntity extends Object
   @override
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
+
+  @override
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @override
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
 
   @override
   @BuiltValueField(wireName: 'is_amount_discount')
@@ -426,10 +436,15 @@ abstract class InvoiceEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  InvoiceEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
+  InvoiceEntity applyTax(TaxRateEntity taxRate,
+      {bool isSecond = false, bool isThird = false}) {
     InvoiceEntity invoice;
 
-    if (isSecond) {
+    if (isThird) {
+      invoice = rebuild((b) => b
+        ..taxRate3 = taxRate.rate
+        ..taxName3 = taxRate.name);
+    } else if (isSecond) {
       invoice = rebuild((b) => b
         ..taxRate2 = taxRate.rate
         ..taxName2 = taxRate.name);
@@ -581,10 +596,15 @@ abstract class InvoiceItemEntity
 
   bool get isExpense => expenseId != null && expenseId.isNotEmpty;
 
-  InvoiceItemEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
+  InvoiceItemEntity applyTax(TaxRateEntity taxRate,
+      {bool isSecond = false, bool isThird = false}) {
     InvoiceItemEntity item;
 
-    if (isSecond) {
+    if (isThird) {
+      item = rebuild((b) => b
+        ..taxRate3 = taxRate.rate
+        ..taxName3 = taxRate.name);
+    } else if (isSecond) {
       item = rebuild((b) => b
         ..taxRate2 = taxRate.rate
         ..taxName2 = taxRate.name);

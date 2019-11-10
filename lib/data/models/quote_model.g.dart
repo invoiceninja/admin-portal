@@ -159,6 +159,12 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
+      'tax_name3',
+      serializers.serialize(object.taxName3,
+          specifiedType: const FullType(String)),
+      'tax_rate3',
+      serializers.serialize(object.taxRate3,
+          specifiedType: const FullType(double)),
       'is_amount_discount',
       serializers.serialize(object.isAmountDiscount,
           specifiedType: const FullType(bool)),
@@ -375,6 +381,14 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           break;
         case 'tax_rate2':
           result.taxRate2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'tax_name3':
+          result.taxName3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate3':
+          result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'is_amount_discount':
@@ -882,6 +896,10 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final double taxRate2;
   @override
+  final String taxName3;
+  @override
+  final double taxRate3;
+  @override
   final bool isAmountDiscount;
   @override
   final double partial;
@@ -966,6 +984,8 @@ class _$QuoteEntity extends QuoteEntity {
       this.taxRate1,
       this.taxName2,
       this.taxRate2,
+      this.taxName3,
+      this.taxRate3,
       this.isAmountDiscount,
       this.partial,
       this.partialDueDate,
@@ -1045,6 +1065,12 @@ class _$QuoteEntity extends QuoteEntity {
     }
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'taxRate2');
+    }
+    if (taxName3 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'taxName3');
+    }
+    if (taxRate3 == null) {
+      throw new BuiltValueNullFieldError('QuoteEntity', 'taxRate3');
     }
     if (isAmountDiscount == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'isAmountDiscount');
@@ -1146,6 +1172,8 @@ class _$QuoteEntity extends QuoteEntity {
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
         taxRate2 == other.taxRate2 &&
+        taxName3 == other.taxName3 &&
+        taxRate3 == other.taxRate3 &&
         isAmountDiscount == other.isAmountDiscount &&
         partial == other.partial &&
         partialDueDate == other.partialDueDate &&
@@ -1199,7 +1227,7 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
                                                                                 customSurcharge4.hashCode),
                                                                             customTaxes1.hashCode),
                                                                         customTaxes2.hashCode),
@@ -1242,6 +1270,8 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
           ..add('taxRate2', taxRate2)
+          ..add('taxName3', taxName3)
+          ..add('taxRate3', taxRate3)
           ..add('isAmountDiscount', isAmountDiscount)
           ..add('partial', partial)
           ..add('partialDueDate', partialDueDate)
@@ -1352,6 +1382,14 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   double _taxRate2;
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
   bool _isAmountDiscount;
   bool get isAmountDiscount => _$this._isAmountDiscount;
@@ -1513,6 +1551,8 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
       _taxRate2 = _$v.taxRate2;
+      _taxName3 = _$v.taxName3;
+      _taxRate3 = _$v.taxRate3;
       _isAmountDiscount = _$v.isAmountDiscount;
       _partial = _$v.partial;
       _partialDueDate = _$v.partialDueDate;
@@ -1586,6 +1626,8 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               taxRate1: taxRate1,
               taxName2: taxName2,
               taxRate2: taxRate2,
+              taxName3: taxName3,
+              taxRate3: taxRate3,
               isAmountDiscount: isAmountDiscount,
               partial: partial,
               partialDueDate: partialDueDate,

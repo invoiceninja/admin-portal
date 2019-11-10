@@ -298,6 +298,14 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName2,
                 initialTaxRate: invoice.taxRate2,
               ),
+            if (company.settings.enableThirdInvoiceTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) => viewModel
+                    .onChanged(invoice.applyTax(taxRate, isThird: true)),
+                labelText: localization.tax,
+                initialTaxName: invoice.taxName3,
+                initialTaxRate: invoice.taxRate3,
+              ),
             AppDropdownButton(
               labelText: localization.design,
               value: invoice.designId,

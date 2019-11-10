@@ -176,6 +176,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
+      'tax_name3',
+      serializers.serialize(object.taxName3,
+          specifiedType: const FullType(String)),
+      'tax_rate3',
+      serializers.serialize(object.taxRate3,
+          specifiedType: const FullType(double)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -344,6 +350,14 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'tax_rate2':
           result.taxRate2 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'tax_name3':
+          result.taxName3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate3':
+          result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'client_id':
@@ -809,6 +823,10 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double taxRate2;
   @override
+  final String taxName3;
+  @override
+  final double taxRate3;
+  @override
   final String clientId;
   @override
   final String invoiceId;
@@ -858,6 +876,8 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.taxName2,
       this.taxRate1,
       this.taxRate2,
+      this.taxName3,
+      this.taxRate3,
       this.clientId,
       this.invoiceId,
       this.vendorId,
@@ -927,6 +947,12 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
     }
+    if (taxName3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName3');
+    }
+    if (taxRate3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate3');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
     }
@@ -965,6 +991,8 @@ class _$ExpenseEntity extends ExpenseEntity {
         taxName2 == other.taxName2 &&
         taxRate1 == other.taxRate1 &&
         taxRate2 == other.taxRate2 &&
+        taxName3 == other.taxName3 &&
+        taxRate3 == other.taxRate3 &&
         clientId == other.clientId &&
         invoiceId == other.invoiceId &&
         vendorId == other.vendorId &&
@@ -1000,13 +1028,13 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode),
-                                                                                invoiceCurrencyId.hashCode),
-                                                                            paymentTypeId.hashCode),
-                                                                        taxName1.hashCode),
-                                                                    taxName2.hashCode),
-                                                                taxRate1.hashCode),
-                                                            taxRate2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode),
+                                                                                taxName1.hashCode),
+                                                                            taxName2.hashCode),
+                                                                        taxRate1.hashCode),
+                                                                    taxRate2.hashCode),
+                                                                taxName3.hashCode),
+                                                            taxRate3.hashCode),
                                                         clientId.hashCode),
                                                     invoiceId.hashCode),
                                                 vendorId.hashCode),
@@ -1044,6 +1072,8 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('taxName2', taxName2)
           ..add('taxRate1', taxRate1)
           ..add('taxRate2', taxRate2)
+          ..add('taxName3', taxName3)
+          ..add('taxRate3', taxRate3)
           ..add('clientId', clientId)
           ..add('invoiceId', invoiceId)
           ..add('vendorId', vendorId)
@@ -1148,6 +1178,14 @@ class ExpenseEntityBuilder
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
 
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+
   String _clientId;
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
@@ -1225,6 +1263,8 @@ class ExpenseEntityBuilder
       _taxName2 = _$v.taxName2;
       _taxRate1 = _$v.taxRate1;
       _taxRate2 = _$v.taxRate2;
+      _taxName3 = _$v.taxName3;
+      _taxRate3 = _$v.taxRate3;
       _clientId = _$v.clientId;
       _invoiceId = _$v.invoiceId;
       _vendorId = _$v.vendorId;
@@ -1279,6 +1319,8 @@ class ExpenseEntityBuilder
             taxName2: taxName2,
             taxRate1: taxRate1,
             taxRate2: taxRate2,
+            taxName3: taxName3,
+            taxRate3: taxRate3,
             clientId: clientId,
             invoiceId: invoiceId,
             vendorId: vendorId,

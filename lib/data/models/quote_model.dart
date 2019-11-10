@@ -87,6 +87,8 @@ abstract class QuoteEntity extends Object
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
       taxRate2: company?.settings?.defaultTaxRate2 ?? 0.0,
+      taxName3: company?.settings?.defaultTaxName3 ?? '',
+      taxRate3: company?.settings?.defaultTaxRate3 ?? 0.0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
@@ -203,6 +205,14 @@ abstract class QuoteEntity extends Object
   @override
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
+
+  @override
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @override
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
 
   @override
   @BuiltValueField(wireName: 'is_amount_discount')

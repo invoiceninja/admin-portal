@@ -164,7 +164,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _handleTabSelection() {
-    print('### TAB CHANGED ##');
     //_webViewController.loadUrl(_getUrl(_template));
   }
 

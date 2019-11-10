@@ -228,6 +228,16 @@ class _ProductEditState extends State<ProductEdit> {
                       initialTaxName: product.taxName2,
                       initialTaxRate: product.taxRate2,
                     ),
+                  if (company.settings.enableThirdItemTaxRate)
+                    TaxRateDropdown(
+                      onSelected: (taxRate) =>
+                          viewModel.onChanged(product.rebuild((b) => b
+                            ..taxRate3 = taxRate.rate
+                            ..taxName3 = taxRate.name)),
+                      labelText: localization.tax,
+                      initialTaxName: product.taxName3,
+                      initialTaxRate: product.taxRate3,
+                    ),
                 ],
               ),
             ],

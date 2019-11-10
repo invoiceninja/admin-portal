@@ -5,9 +5,11 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 abstract class CalculateInvoiceTotal {
   bool get isAmountDiscount;
   String get taxName1;
-  String get taxName2;
   double get taxRate1;
+  String get taxName2;
   double get taxRate2;
+  String get taxName3;
+  double get taxRate3;
   double get discount;
   double get customSurcharge1;
   double get customSurcharge2;
@@ -70,6 +72,11 @@ abstract class CalculateInvoiceTotal {
         map.update(item.taxName2, (value) => value + taxAmount,
             ifAbsent: () => taxAmount);
       }
+      if (taxRate3 != 0) {
+        taxAmount = _calculateTaxAmount(lineTotal, taxRate3, useInclusiveTaxes);
+        map.update(item.taxName3, (value) => value + taxAmount,
+            ifAbsent: () => taxAmount);
+      }
     });
 
     if (discount != 0.0) {
@@ -97,6 +104,12 @@ abstract class CalculateInvoiceTotal {
     if (taxRate2 != 0) {
       taxAmount = _calculateTaxAmount(total, taxRate2, useInclusiveTaxes);
       map.update(taxName2, (value) => value + taxAmount,
+          ifAbsent: () => taxAmount);
+    }
+
+    if (taxRate3 != 0) {
+      taxAmount = _calculateTaxAmount(total, taxRate3, useInclusiveTaxes);
+      map.update(taxName3, (value) => value + taxAmount,
           ifAbsent: () => taxAmount);
     }
 

@@ -98,6 +98,8 @@ abstract class ExpenseEntity extends Object
       taxName2: '',
       taxRate1: 0,
       taxRate2: 0,
+      taxName3: '',
+      taxRate3: 0,
       clientId: client?.id,
       vendorId: vendor?.id,
       invoiceId: '',
@@ -180,6 +182,12 @@ abstract class ExpenseEntity extends Object
 
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
+
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
 
   @nullable
   @override

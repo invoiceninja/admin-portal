@@ -60,6 +60,8 @@ abstract class ProductEntity extends Object
       taxRate1: 0,
       taxName2: '',
       taxRate2: 0,
+      taxName3: '',
+      taxRate3: 0,
       customValue1: '',
       customValue2: '',
       updatedAt: 0,
@@ -101,6 +103,12 @@ abstract class ProductEntity extends Object
 
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
+
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
