@@ -45,10 +45,12 @@ The architecture is based off these two projects:
 - [Architectural review](https://hillelcoren.com/2018/08/10/an-architectural-review-of-the-invoice-ninja-flutter-app/)
 - [Additional thoughts](https://hillelcoren.com/2018/08/24/ongoing-adventures-with-flutter-and-redux/)
 
-## Developer Notes
+## Setting up the app
 - Run `cp lib/.env.dart.example lib/.env.dart` to create the config file.
 - Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
 - Run `flutter run` while you have a device connected to the computer or an emulator running and now you can run it.
+
+## Developer Notes
 
 ### Code generation
 - Run `flutter packages pub run build_runner build --delete-conflicting-outputs` to regenerate the model files. It will also remove the old generated files so conflicts are avoided..
@@ -81,4 +83,3 @@ The architecture is based off these two projects:
 We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
 
 Create pull requests for v1 against the 'legacy' branch and for v2 against the 'develop' branch.
-
