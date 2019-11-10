@@ -33,11 +33,11 @@ class EditQuote implements PersistUI {
       {this.quote,
       this.context,
       this.completer,
-      this.quoteItem,
+      this.quoteItemIndex,
       this.force = false});
 
   final InvoiceEntity quote;
-  final InvoiceItemEntity quoteItem;
+  final int quoteItemIndex;
   final BuildContext context;
   final Completer completer;
   final bool force;
@@ -52,9 +52,9 @@ class ShowEmailQuote {
 }
 
 class EditQuoteItem implements PersistUI {
-  EditQuoteItem([this.quoteItem]);
+  EditQuoteItem([this.quoteItemIndex]);
 
-  final InvoiceItemEntity quoteItem;
+  final int quoteItemIndex;
 }
 
 class UpdateQuote implements PersistUI {

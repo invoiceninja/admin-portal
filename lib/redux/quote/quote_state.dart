@@ -51,7 +51,6 @@ abstract class QuoteUIState extends Object
     return _$QuoteUIState._(
       listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
       editing: InvoiceEntity(),
-      editingItem: InvoiceItemEntity(),
       selectedId: '',
     );
   }
@@ -62,7 +61,7 @@ abstract class QuoteUIState extends Object
   InvoiceEntity get editing;
 
   @nullable
-  InvoiceItemEntity get editingItem;
+  int get editingItemIndex;
 
   @override
   bool get isCreatingNew => editing.isNew;

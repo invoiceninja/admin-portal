@@ -36,11 +36,10 @@ class _QuoteEditState extends State<QuoteEdit>
   void initState() {
     super.initState();
 
-    final invoice = widget.viewModel.invoice;
-    final invoiceItem = widget.viewModel.invoiceItem;
+    final viewModel = widget.viewModel;
 
     final index =
-        invoice.lineItems.contains(invoiceItem) ? kItemScreen : kDetailsScreen;
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
     _controller = TabController(vsync: this, length: 3, initialIndex: index);
   }
 

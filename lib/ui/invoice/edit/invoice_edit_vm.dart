@@ -41,7 +41,7 @@ class EntityEditVM {
     @required this.state,
     @required this.company,
     @required this.invoice,
-    @required this.invoiceItem,
+    @required this.invoiceItemIndex,
     @required this.origInvoice,
     @required this.onSavePressed,
     @required this.onItemsAdded,
@@ -53,7 +53,7 @@ class EntityEditVM {
   final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
+  final int invoiceItemIndex;
   final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
   final Function(List<InvoiceItemEntity>, String) onItemsAdded;
@@ -67,7 +67,7 @@ class InvoiceEditVM extends EntityEditVM {
     AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
-    InvoiceItemEntity invoiceItem,
+    int invoiceItemIndex,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
     Function(List<InvoiceItemEntity>, String) onItemsAdded,
@@ -78,7 +78,7 @@ class InvoiceEditVM extends EntityEditVM {
           state: state,
           company: company,
           invoice: invoice,
-          invoiceItem: invoiceItem,
+          invoiceItemIndex: invoiceItemIndex,
           origInvoice: origInvoice,
           onSavePressed: onSavePressed,
           onItemsAdded: onItemsAdded,
@@ -96,7 +96,7 @@ class InvoiceEditVM extends EntityEditVM {
       company: state.selectedCompany,
       isSaving: state.isSaving,
       invoice: invoice,
-      invoiceItem: state.invoiceUIState.editingItem,
+      invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
@@ -134,7 +134,7 @@ class InvoiceEditVM extends EntityEditVM {
         store.dispatch(AddInvoiceItems(items));
         // if we're just adding one item automatically show the editor
         if (items.length == 1) {
-          store.dispatch(EditInvoiceItem(items[0]));
+          store.dispatch(EditInvoiceItem(invoice.lineItems.length));
         }
       },
       onCancelPressed: (BuildContext context) {

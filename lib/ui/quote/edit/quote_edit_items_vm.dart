@@ -30,14 +30,14 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
   QuoteEditItemsVM({
     CompanyEntity company,
     InvoiceEntity invoice,
-    InvoiceItemEntity invoiceItem,
+    int invoiceItemIndex,
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
           company: company,
           invoice: invoice,
-          invoiceItem: invoiceItem,
+          invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
@@ -50,7 +50,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     return QuoteEditItemsVM(
         company: state.selectedCompany,
         invoice: quote,
-        invoiceItem: state.quoteUIState.editingItem,
+        invoiceItemIndex: state.quoteUIState.editingItemIndex,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteQuoteItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),

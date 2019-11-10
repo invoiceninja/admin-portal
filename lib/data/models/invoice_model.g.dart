@@ -606,54 +606,6 @@ class _$InvoiceItemEntitySerializer
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
     }
-    if (object.isChanged != null) {
-      result
-        ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.isDeleted != null) {
-      result
-        ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.createdUserId != null) {
-      result
-        ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.assignedUserId != null) {
-      result
-        ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
     return result;
   }
 
@@ -731,38 +683,6 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'expense_public_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -1894,22 +1814,6 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   final String taskId;
   @override
   final String expenseId;
-  @override
-  final bool isChanged;
-  @override
-  final int createdAt;
-  @override
-  final int updatedAt;
-  @override
-  final int archivedAt;
-  @override
-  final bool isDeleted;
-  @override
-  final String createdUserId;
-  @override
-  final String assignedUserId;
-  @override
-  final String id;
 
   factory _$InvoiceItemEntity(
           [void Function(InvoiceItemEntityBuilder) updates]) =>
@@ -1931,15 +1835,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.customValue2,
       this.discount,
       this.taskId,
-      this.expenseId,
-      this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      this.id})
+      this.expenseId})
       : super._() {
     if (productKey == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'productKey');
@@ -2013,15 +1909,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         customValue2 == other.customValue2 &&
         discount == other.discount &&
         taskId == other.taskId &&
-        expenseId == other.expenseId &&
-        isChanged == other.isChanged &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted &&
-        createdUserId == other.createdUserId &&
-        assignedUserId == other.assignedUserId &&
-        id == other.id;
+        expenseId == other.expenseId;
   }
 
   @override
@@ -2042,28 +1930,24 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), quantity.hashCode), taxName1.hashCode),
-                                                                                taxRate1.hashCode),
-                                                                            taxName2.hashCode),
-                                                                        taxRate2.hashCode),
-                                                                    taxName3.hashCode),
-                                                                taxRate3.hashCode),
-                                                            invoiceItemTypeId.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                discount.hashCode),
-                                            taskId.hashCode),
-                                        expenseId.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        id.hashCode));
+                                                                    0,
+                                                                    productKey
+                                                                        .hashCode),
+                                                                notes.hashCode),
+                                                            cost.hashCode),
+                                                        quantity.hashCode),
+                                                    taxName1.hashCode),
+                                                taxRate1.hashCode),
+                                            taxName2.hashCode),
+                                        taxRate2.hashCode),
+                                    taxName3.hashCode),
+                                taxRate3.hashCode),
+                            invoiceItemTypeId.hashCode),
+                        customValue1.hashCode),
+                    customValue2.hashCode),
+                discount.hashCode),
+            taskId.hashCode),
+        expenseId.hashCode));
   }
 
   @override
@@ -2084,15 +1968,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('customValue2', customValue2)
           ..add('discount', discount)
           ..add('taskId', taskId)
-          ..add('expenseId', expenseId)
-          ..add('isChanged', isChanged)
-          ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt)
-          ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted)
-          ..add('createdUserId', createdUserId)
-          ..add('assignedUserId', assignedUserId)
-          ..add('id', id))
+          ..add('expenseId', expenseId))
         .toString();
   }
 }
@@ -2166,40 +2042,6 @@ class InvoiceItemEntityBuilder
   String get expenseId => _$this._expenseId;
   set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
-
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
-
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
-
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
-      _$this._createdUserId = createdUserId;
-
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
-      _$this._assignedUserId = assignedUserId;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
   InvoiceItemEntityBuilder();
 
   InvoiceItemEntityBuilder get _$this {
@@ -2220,14 +2062,6 @@ class InvoiceItemEntityBuilder
       _discount = _$v.discount;
       _taskId = _$v.taskId;
       _expenseId = _$v.expenseId;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -2265,15 +2099,7 @@ class InvoiceItemEntityBuilder
             customValue2: customValue2,
             discount: discount,
             taskId: taskId,
-            expenseId: expenseId,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+            expenseId: expenseId);
     replace(_$result);
     return _$result;
   }

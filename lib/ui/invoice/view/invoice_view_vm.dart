@@ -67,7 +67,7 @@ class EntityViewVM {
   final bool isSaving;
   final bool isDirty;
   final Function(BuildContext, EntityAction) onActionSelected;
-  final Function(BuildContext, [InvoiceItemEntity]) onEditPressed;
+  final Function(BuildContext, [int]) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed;
@@ -87,7 +87,7 @@ class InvoiceViewVM extends EntityViewVM {
     bool isSaving,
     bool isDirty,
     Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
+    Function(BuildContext, [int]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
     Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
     Function(BuildContext) onPaymentsPressed,
@@ -133,14 +133,14 @@ class InvoiceViewVM extends EntityViewVM {
       isDirty: invoice.isNew,
       invoice: invoice,
       client: client,
-      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+      onEditPressed: (BuildContext context, [invoiceItemIndex]) {
         final Completer<InvoiceEntity> completer =
             new Completer<InvoiceEntity>();
         store.dispatch(EditInvoice(
             invoice: invoice,
             context: context,
             completer: completer,
-            invoiceItem: invoiceItem));
+            invoiceItemIndex: invoiceItemIndex));
         completer.future.then((invoice) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

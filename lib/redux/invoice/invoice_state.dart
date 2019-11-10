@@ -59,7 +59,6 @@ abstract class InvoiceUIState extends Object
       listUIState:
           ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
       editing: InvoiceEntity(),
-      editingItem: InvoiceItemEntity(),
       selectedId: '',
     );
   }
@@ -70,7 +69,7 @@ abstract class InvoiceUIState extends Object
   InvoiceEntity get editing;
 
   @nullable
-  InvoiceItemEntity get editingItem;
+  int get editingItemIndex;
 
   @override
   bool get isCreatingNew => editing.isNew;

@@ -42,7 +42,7 @@ class QuoteEditVM extends EntityEditVM {
     AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
-    InvoiceItemEntity invoiceItem,
+    int invoiceItemIndex,
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
     Function(List<InvoiceItemEntity>, String) onItemsAdded,
@@ -53,7 +53,7 @@ class QuoteEditVM extends EntityEditVM {
           state: state,
           company: company,
           invoice: invoice,
-          invoiceItem: invoiceItem,
+          invoiceItemIndex: invoiceItemIndex,
           origInvoice: origInvoice,
           onSavePressed: onSavePressed,
           onItemsAdded: onItemsAdded,
@@ -70,7 +70,7 @@ class QuoteEditVM extends EntityEditVM {
       company: state.selectedCompany,
       isSaving: state.isSaving,
       invoice: quote,
-      invoiceItem: state.quoteUIState.editingItem,
+      invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
@@ -100,7 +100,7 @@ class QuoteEditVM extends EntityEditVM {
       },
       onItemsAdded: (items, clientId) {
         if (items.length == 1) {
-          store.dispatch(EditQuoteItem(items[0]));
+          store.dispatch(EditQuoteItem(quote.lineItems.length));
         }
         store.dispatch(AddQuoteItems(items));
       },

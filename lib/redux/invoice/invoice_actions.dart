@@ -33,11 +33,11 @@ class EditInvoice implements PersistUI {
       {this.invoice,
       this.context,
       this.completer,
-      this.invoiceItem,
+      this.invoiceItemIndex,
       this.force = false});
 
   final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
+  final int invoiceItemIndex;
   final BuildContext context;
   final Completer completer;
   final bool force;
@@ -52,9 +52,9 @@ class ShowEmailInvoice {
 }
 
 class EditInvoiceItem implements PersistUI {
-  EditInvoiceItem([this.invoiceItem]);
+  EditInvoiceItem([this.invoiceItemIndex]);
 
-  final InvoiceItemEntity invoiceItem;
+  final int invoiceItemIndex;
 }
 
 class UpdateInvoice implements PersistUI {

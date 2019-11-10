@@ -13,19 +13,14 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(invoiceListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..editingItem.replace(editingItemReducer(state.editingItem, action))
+    ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-final editingItemReducer = combineReducers<InvoiceItemEntity>([
-  TypedReducer<InvoiceItemEntity, EditInvoice>(editInvoiceItem),
-  TypedReducer<InvoiceItemEntity, EditInvoiceItem>(editInvoiceItem),
+final editingItemIndexReducer = combineReducers<int>([
+  TypedReducer<int, EditInvoice>((index, action) => action.invoiceItemIndex),
+  TypedReducer<int, EditInvoiceItem>((index, action) => action.invoiceItemIndex),
 ]);
-
-InvoiceItemEntity editInvoiceItem(
-    InvoiceItemEntity invoiceItem, dynamic action) {
-  return action.invoiceItem ?? InvoiceItemEntity();
-}
 
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterInvoiceDropdown>(filterInvoiceDropdownReducer),

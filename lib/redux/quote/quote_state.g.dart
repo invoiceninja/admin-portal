@@ -93,11 +93,11 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(InvoiceEntity)));
     }
-    if (object.editingItem != null) {
+    if (object.editingItemIndex != null) {
       result
-        ..add('editingItem')
-        ..add(serializers.serialize(object.editingItem,
-            specifiedType: const FullType(InvoiceItemEntity)));
+        ..add('editingItemIndex')
+        ..add(serializers.serialize(object.editingItemIndex,
+            specifiedType: const FullType(int)));
     }
     if (object.selectedId != null) {
       result
@@ -123,10 +123,9 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
           break;
-        case 'editingItem':
-          result.editingItem.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(InvoiceItemEntity))
-              as InvoiceItemEntity);
+        case 'editingItemIndex':
+          result.editingItemIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -265,7 +264,7 @@ class _$QuoteUIState extends QuoteUIState {
   @override
   final InvoiceEntity editing;
   @override
-  final InvoiceItemEntity editingItem;
+  final int editingItemIndex;
   @override
   final ListUIState listUIState;
   @override
@@ -280,7 +279,7 @@ class _$QuoteUIState extends QuoteUIState {
 
   _$QuoteUIState._(
       {this.editing,
-      this.editingItem,
+      this.editingItemIndex,
       this.listUIState,
       this.selectedId,
       this.saveCompleter,
@@ -303,7 +302,7 @@ class _$QuoteUIState extends QuoteUIState {
     if (identical(other, this)) return true;
     return other is QuoteUIState &&
         editing == other.editing &&
-        editingItem == other.editingItem &&
+        editingItemIndex == other.editingItemIndex &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         saveCompleter == other.saveCompleter &&
@@ -315,7 +314,7 @@ class _$QuoteUIState extends QuoteUIState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, editing.hashCode), editingItem.hashCode),
+                $jc($jc($jc(0, editing.hashCode), editingItemIndex.hashCode),
                     listUIState.hashCode),
                 selectedId.hashCode),
             saveCompleter.hashCode),
@@ -326,7 +325,7 @@ class _$QuoteUIState extends QuoteUIState {
   String toString() {
     return (newBuiltValueToStringHelper('QuoteUIState')
           ..add('editing', editing)
-          ..add('editingItem', editingItem)
+          ..add('editingItemIndex', editingItemIndex)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('saveCompleter', saveCompleter)
@@ -344,11 +343,10 @@ class QuoteUIStateBuilder
       _$this._editing ??= new InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
 
-  InvoiceItemEntityBuilder _editingItem;
-  InvoiceItemEntityBuilder get editingItem =>
-      _$this._editingItem ??= new InvoiceItemEntityBuilder();
-  set editingItem(InvoiceItemEntityBuilder editingItem) =>
-      _$this._editingItem = editingItem;
+  int _editingItemIndex;
+  int get editingItemIndex => _$this._editingItemIndex;
+  set editingItemIndex(int editingItemIndex) =>
+      _$this._editingItemIndex = editingItemIndex;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -375,7 +373,7 @@ class QuoteUIStateBuilder
   QuoteUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
-      _editingItem = _$v.editingItem?.toBuilder();
+      _editingItemIndex = _$v.editingItemIndex;
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
       _saveCompleter = _$v.saveCompleter;
@@ -405,7 +403,7 @@ class QuoteUIStateBuilder
       _$result = _$v ??
           new _$QuoteUIState._(
               editing: _editing?.build(),
-              editingItem: _editingItem?.build(),
+              editingItemIndex: editingItemIndex,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               saveCompleter: saveCompleter,
@@ -415,8 +413,7 @@ class QuoteUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
-        _$failedField = 'editingItem';
-        _editingItem?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

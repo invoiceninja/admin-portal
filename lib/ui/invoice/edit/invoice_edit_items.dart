@@ -28,8 +28,7 @@ class InvoiceEditItems extends StatefulWidget {
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
   InvoiceItemEntity selectedInvoiceItem;
 
-  void _showInvoiceItemEditor(
-      InvoiceItemEntity invoiceItem, BuildContext context) {
+  void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
@@ -38,10 +37,9 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
           return ItemEditDetails(
             viewModel: viewModel,
-            key: Key(invoiceItem.entityKey),
-            invoiceItem: invoiceItem,
-            index: invoice.lineItems.indexOf(
-                invoice.lineItems.firstWhere((i) => i.id == invoiceItem.id)),
+            key: ValueKey('__${lineItemIndex}__'),
+            invoiceItem: invoice.lineItems[lineItemIndex],
+            index: lineItemIndex,
           );
         });
   }
@@ -51,30 +49,31 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final invoiceItem = invoice.lineItems.contains(viewModel.invoiceItem)
-        ? viewModel.invoiceItem
-        : null;
+    final itemIndex = viewModel.invoiceItemIndex;
+    final invoiceItem =
+        itemIndex != null && invoice.lineItems.length > itemIndex
+            ? invoice.lineItems[itemIndex]
+            : null;
 
     if (invoiceItem != null && invoiceItem != selectedInvoiceItem) {
       selectedInvoiceItem = invoiceItem;
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        _showInvoiceItemEditor(invoiceItem, context);
+        _showInvoiceItemEditor(itemIndex, context);
       });
     }
 
     if (invoice.lineItems.isEmpty) {
       return HelpText(localization.clickPlusToAddItem);
     }
-
-    final lineItems =
-        invoice.lineItems.map((invoiceItem) => InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoiceItem,
-              onTap: () => _showInvoiceItemEditor(invoiceItem, context),
-            ));
-
     return ListView(
-      children: lineItems.toList(),
+      children: [
+        for (int i = 0; i < invoice.lineItems.length; i++)
+          InvoiceItemListTile(
+            invoice: invoice,
+            invoiceItem: invoice.lineItems[i],
+            onTap: () => _showInvoiceItemEditor(i, context),
+          )
+      ],
     );
   }
 }

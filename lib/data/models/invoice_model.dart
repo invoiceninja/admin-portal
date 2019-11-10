@@ -512,13 +512,10 @@ abstract class InvoiceEntity extends Object
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
-abstract class InvoiceItemEntity extends Object
-    with BaseEntity, SelectableEntity
+abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity({String productKey, double quantity}) {
     return _$InvoiceItemEntity._(
-      id: BaseEntity.nextId,
-      isChanged: false,
       productKey: productKey ?? '',
       notes: '',
       cost: 0.0,
@@ -533,18 +530,10 @@ abstract class InvoiceItemEntity extends Object
       customValue1: '',
       customValue2: '',
       discount: 0.0,
-      updatedAt: 0,
-      archivedAt: 0,
-      isDeleted: false,
     );
   }
 
   InvoiceItemEntity._();
-
-  @override
-  EntityType get entityType {
-    return EntityType.invoiceItem;
-  }
 
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
@@ -598,24 +587,6 @@ abstract class InvoiceItemEntity extends Object
 
   bool get isExpense => expenseId != null && expenseId.isNotEmpty;
 
-  @override
-  bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    return false;
-  }
-
-  @override
-  String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    return null;
-  }
-
   InvoiceItemEntity applyTax(TaxRateEntity taxRate, {bool isSecond = false}) {
     InvoiceItemEntity item;
 
@@ -636,17 +607,6 @@ abstract class InvoiceItemEntity extends Object
 
     return item;
   }
-
-  @override
-  String get listDisplayName {
-    return '';
-  }
-
-  @override
-  double get listDisplayAmount => null;
-
-  @override
-  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   static Serializer<InvoiceItemEntity> get serializer =>
       _$invoiceItemEntitySerializer;

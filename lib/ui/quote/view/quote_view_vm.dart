@@ -49,7 +49,7 @@ class QuoteViewVM extends EntityViewVM {
     bool isSaving,
     bool isDirty,
     Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
+    Function(BuildContext, [int]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
@@ -98,14 +98,14 @@ class QuoteViewVM extends EntityViewVM {
       isDirty: quote.isNew,
       invoice: quote,
       client: client,
-      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
+      onEditPressed: (BuildContext context, [int index]) {
         final Completer<InvoiceEntity> completer =
             new Completer<InvoiceEntity>();
         store.dispatch(EditQuote(
             quote: quote,
             context: context,
             completer: completer,
-            quoteItem: invoiceItem));
+            quoteItemIndex: index));
         completer.future.then((invoice) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
