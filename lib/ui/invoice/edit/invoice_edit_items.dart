@@ -138,8 +138,15 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _custom2Controller,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.addListener(_onTextChanged));
+
+    _taxRate1 =
+        TaxRateEntity(name: invoiceItem.taxName1, rate: invoiceItem.taxRate1);
+    _taxRate2 =
+        TaxRateEntity(name: invoiceItem.taxName2, rate: invoiceItem.taxRate2);
+    _taxRate3 =
+        TaxRateEntity(name: invoiceItem.taxName3, rate: invoiceItem.taxRate3);
 
     super.didChangeDependencies();
   }
@@ -147,45 +154,48 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   @override
   void dispose() {
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
+      controller.removeListener(_onTextChanged);
       controller.dispose();
     });
 
     super.dispose();
   }
 
-  void _onChanged() {
+  void _onTextChanged() {
     _debouncer.run(() {
-      var invoiceItem = widget.invoiceItem.rebuild((b) => b
-        ..productKey = _productKeyController.text.trim()
-        ..notes = _notesController.text
-        ..cost = parseDouble(_costController.text)
-        ..quantity = parseDouble(_qtyController.text)
-        ..discount = parseDouble(_discountController.text)
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
-
-      if (_taxRate1 != null) {
-        invoiceItem = invoiceItem.applyTax(_taxRate1);
-      }
-      if (_taxRate2 != null) {
-        invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
-      }
-      if (_taxRate3 != null) {
-        invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
-      }
-
-      if (invoiceItem != widget.invoiceItem) {
-        widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
-      }
+      _onChanged();
     });
+  }
+
+  void _onChanged() {
+    var invoiceItem = widget.invoiceItem.rebuild((b) => b
+      ..productKey = _productKeyController.text.trim()
+      ..notes = _notesController.text
+      ..cost = parseDouble(_costController.text)
+      ..quantity = parseDouble(_qtyController.text)
+      ..discount = parseDouble(_discountController.text)
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim());
+
+    if (_taxRate1 != null && !_taxRate1.isEmpty) {
+      invoiceItem = invoiceItem.applyTax(_taxRate1);
+    }
+    if (_taxRate2 != null && !_taxRate2.isEmpty) {
+      invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+    }
+    if (_taxRate3 != null && !_taxRate3.isEmpty) {
+      invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
+    }
+
+    if (invoiceItem != widget.invoiceItem) {
+      widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
 
     return ResponsivePadding(
@@ -261,32 +271,38 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             if (company.settings.enableFirstItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
-                  _taxRate1 = taxRate;
-                  _onChanged();
+                  setState(() {
+                    _taxRate1 = taxRate;
+                    _onChanged();
+                  });
                 },
                 labelText: localization.tax,
-                initialTaxName: invoiceItem.taxName1,
-                initialTaxRate: invoiceItem.taxRate1,
+                initialTaxName: _taxRate1.name,
+                initialTaxRate: _taxRate1.rate,
               ),
             if (company.settings.enableSecondItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
-                  _taxRate2 = taxRate;
-                  _onChanged();
+                  setState(() {
+                    _taxRate2 = taxRate;
+                    _onChanged();
+                  });
                 },
                 labelText: localization.tax,
-                initialTaxName: invoiceItem.taxName2,
-                initialTaxRate: invoiceItem.taxRate2,
+                initialTaxName: _taxRate2.name,
+                initialTaxRate: _taxRate2.rate,
               ),
             if (company.settings.enableThirdItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
-                  _taxRate3 = taxRate;
-                  _onChanged();
+                  setState(() {
+                    _taxRate3 = taxRate;
+                    _onChanged();
+                  });
                 },
                 labelText: localization.tax,
-                initialTaxName: invoiceItem.taxName3,
-                initialTaxRate: invoiceItem.taxRate3,
+                initialTaxName: _taxRate3.name,
+                initialTaxRate: _taxRate3.rate,
               ),
           ],
         ),

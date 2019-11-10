@@ -7,11 +7,12 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TaxRateDropdown extends StatefulWidget {
   const TaxRateDropdown({
+    Key key,
     @required this.labelText,
     @required this.onSelected,
     this.initialTaxName = '',
     this.initialTaxRate = 0.0,
-  });
+  }) : super(key: key);
 
   final String labelText;
   final Function(TaxRateEntity) onSelected;
