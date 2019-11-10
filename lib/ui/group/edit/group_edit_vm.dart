@@ -75,7 +75,7 @@ class GroupEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
-        final Completer<GroupEntity> completer = new Completer<GroupEntity>();
+        final Completer<GroupEntity> completer = Completer<GroupEntity>();
         store.dispatch(SaveGroupRequest(completer: completer, group: group));
         return completer.future.then((savedGroup) {
           if (isMobile(context)) {

@@ -67,7 +67,7 @@ class ExpenseViewVM {
     final invoice = state.invoiceState.map[expense.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadExpense(completer: completer, expenseId: expense.id));
       return completer.future;
@@ -170,7 +170,7 @@ class ExpenseViewVM {
         },
         onDeleteDocument: (BuildContext context, DocumentEntity document) {
           store.dispatch(DeleteDocumentRequest(
-              snackBarCompleter(
+              snackBarCompleter<Null>(
                   context, AppLocalization.of(context).deletedDocument),
               [document.id]));
         });

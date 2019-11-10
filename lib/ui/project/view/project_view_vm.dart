@@ -60,7 +60,7 @@ class ProjectViewVM {
         ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProject(completer: completer, projectId: project.id));
       return completer.future;

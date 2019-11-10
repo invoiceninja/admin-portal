@@ -25,9 +25,9 @@ Completer<Null> refreshCompleter(BuildContext context) {
 }
 */
 
-Completer<Null> snackBarCompleter(BuildContext context, String message,
+Completer<T> snackBarCompleter<T>(BuildContext context, String message,
     {bool shouldPop = false}) {
-  final Completer<Null> completer = Completer<Null>();
+  final Completer<T> completer = Completer<T>();
 
   completer.future.then((_) {
     if (shouldPop) {

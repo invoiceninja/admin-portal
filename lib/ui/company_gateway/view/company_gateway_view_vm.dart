@@ -55,7 +55,7 @@ class CompanyGatewayViewVM {
             CompanyGatewayEntity(id: state.companyGatewayUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadCompanyGateway(
           completer: completer, companyGatewayId: companyGateway.id));

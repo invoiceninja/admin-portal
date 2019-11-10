@@ -54,7 +54,7 @@ class StubViewVM {
         StubEntity(id: state.stubUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadStub(completer: completer, stubId: stub.id));
       return completer.future;

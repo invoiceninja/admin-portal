@@ -230,17 +230,17 @@ void handleProductAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(
-          snackBarCompleter(context, localization.restoredProduct),
+          snackBarCompleter<Null>(context, localization.restoredProduct),
           productIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProductRequest(
-          snackBarCompleter(context, localization.archivedProduct),
+          snackBarCompleter<Null>(context, localization.archivedProduct),
           productIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProductRequest(
-          snackBarCompleter(context, localization.deletedProduct), productIds));
+          snackBarCompleter<Null>(context, localization.deletedProduct), productIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {

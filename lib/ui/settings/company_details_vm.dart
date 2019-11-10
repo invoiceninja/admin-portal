@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -54,19 +56,23 @@ class CompanyDetailsVM {
           store.dispatch(UpdateCompany(company: company)),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
-        final completer = snackBarCompleter(
-            context, AppLocalization.of(context).savedSettings);
         switch (settingsUIState.entityType) {
           case EntityType.company:
+            final completer = snackBarCompleter<Null>(
+                context, AppLocalization.of(context).savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer,
                 company: settingsUIState.userCompany.company));
             break;
           case EntityType.group:
+            final completer = snackBarCompleter<GroupEntity>(
+                context, AppLocalization.of(context).savedSettings);
             store.dispatch(SaveGroupRequest(
                 completer: completer, group: settingsUIState.group));
             break;
           case EntityType.client:
+            final completer = snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).savedSettings);
             store.dispatch(SaveClientRequest(
                 completer: completer, client: settingsUIState.client));
             break;
@@ -74,7 +80,7 @@ class CompanyDetailsVM {
       },
       onUploadLogo: (context, path) {
         final type = state.uiState.settingsUIState.entityType;
-        final completer = snackBarCompleter(
+        final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).uploadedLogo);
         store.dispatch(
             UploadLogoRequest(completer: completer, path: path, type: type));

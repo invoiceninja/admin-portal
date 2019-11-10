@@ -296,15 +296,15 @@ void handleVendorAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
-          snackBarCompleter(context, localization.restoredVendor), vendorIds));
+          snackBarCompleter<Null>(context, localization.restoredVendor), vendorIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter(context, localization.archivedVendor), vendorIds));
+          snackBarCompleter<Null>(context, localization.archivedVendor), vendorIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteVendorRequest(
-          snackBarCompleter(context, localization.deletedVendor), vendorIds));
+          snackBarCompleter<Null>(context, localization.deletedVendor), vendorIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {

@@ -255,15 +255,15 @@ void handleStubAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreStubRequest(
-          snackBarCompleter(context, localization.restoredStub), stub.id));
+          snackBarCompleter<Null>(context, localization.restoredStub), stub.id));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveStubRequest(
-          snackBarCompleter(context, localization.archivedStub), stub.id));
+          snackBarCompleter<Null>(context, localization.archivedStub), stub.id));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteStubRequest(
-          snackBarCompleter(context, localization.deletedStub), stub.id));
+          snackBarCompleter<Null>(context, localization.deletedStub), stub.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.stubListState.isInMultiselect()) {

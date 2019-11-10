@@ -85,7 +85,7 @@ class QuoteViewVM extends EntityViewVM {
         ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
@@ -156,7 +156,7 @@ class QuoteViewVM extends EntityViewVM {
       },
       onDeleteDocument: (BuildContext context, DocumentEntity document) {
         store.dispatch(DeleteDocumentRequest(
-            snackBarCompleter(
+            snackBarCompleter<Null>(
                 context, AppLocalization.of(context).deletedDocument),
             [document.id]));
       },

@@ -120,7 +120,7 @@ class InvoiceViewVM extends EntityViewVM {
     final client = state.clientState.get(invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future;
@@ -211,7 +211,7 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onDeleteDocument: (BuildContext context, DocumentEntity document) {
         store.dispatch(DeleteDocumentRequest(
-            snackBarCompleter(
+            snackBarCompleter<Null>(
                 context, AppLocalization.of(context).deletedDocument),
             [document.id]));
       },

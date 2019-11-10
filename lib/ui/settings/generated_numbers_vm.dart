@@ -55,7 +55,7 @@ class GeneratedNumbersVM {
         },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter(
+          final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
           switch (settingsUIState.entityType) {
             case EntityType.company:

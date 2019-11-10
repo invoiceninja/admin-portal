@@ -58,7 +58,7 @@ class VendorViewVM {
         VendorEntity(id: state.vendorUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadVendor(completer: completer, vendorId: vendor.id));
       return completer.future;

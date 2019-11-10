@@ -341,15 +341,15 @@ void handleTaskAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter(context, localization.restoredTask), taskIds));
+          snackBarCompleter<Null>(context, localization.restoredTask), taskIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter(context, localization.archivedTask), taskIds));
+          snackBarCompleter<Null>(context, localization.archivedTask), taskIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter(context, localization.deletedTask), taskIds));
+          snackBarCompleter<Null>(context, localization.deletedTask), taskIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {

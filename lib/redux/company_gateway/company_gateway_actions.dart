@@ -263,17 +263,17 @@ void handleCompanyGatewayAction(BuildContext context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreCompanyGatewayRequest(
-          snackBarCompleter(context, localization.restoredCompanyGateway),
+          snackBarCompleter<Null>(context, localization.restoredCompanyGateway),
           companyGatewayIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveCompanyGatewayRequest(
-          snackBarCompleter(context, localization.archivedCompanyGateway),
+          snackBarCompleter<Null>(context, localization.archivedCompanyGateway),
           companyGatewayIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteCompanyGatewayRequest(
-          snackBarCompleter(context, localization.deletedCompanyGateway),
+          snackBarCompleter<Null>(context, localization.deletedCompanyGateway),
           companyGatewayIds));
       break;
     case EntityAction.toggleMultiselect:

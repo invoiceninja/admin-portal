@@ -250,15 +250,15 @@ void handleUserAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreUserRequest(
-          snackBarCompleter(context, localization.restoredUser), userIds));
+          snackBarCompleter<Null>(context, localization.restoredUser), userIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveUserRequest(
-          snackBarCompleter(context, localization.archivedUser), userIds));
+          snackBarCompleter<Null>(context, localization.archivedUser), userIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteUserRequest(
-          snackBarCompleter(context, localization.deletedUser), userIds));
+          snackBarCompleter<Null>(context, localization.deletedUser), userIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {

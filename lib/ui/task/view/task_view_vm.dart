@@ -68,7 +68,7 @@ class TaskViewVM {
     final invoice = state.invoiceState.map[task.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;

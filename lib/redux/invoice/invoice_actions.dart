@@ -372,12 +372,12 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentInvoiceRequest(
-          snackBarCompleter(context, localization.markedInvoiceAsSent),
+          snackBarCompleter<Null>(context, localization.markedInvoiceAsSent),
           invoice.id));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailInvoice(
-          completer: snackBarCompleter(context, localization.emailedInvoice),
+          completer: snackBarCompleter<Null>(context, localization.emailedInvoice),
           invoice: invoice,
           context: context));
       break;
@@ -394,17 +394,17 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(
-          snackBarCompleter(context, localization.restoredInvoice),
+          snackBarCompleter<Null>(context, localization.restoredInvoice),
           invoiceIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveInvoiceRequest(
-          snackBarCompleter(context, localization.archivedInvoice),
+          snackBarCompleter<Null>(context, localization.archivedInvoice),
           invoiceIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter(context, localization.deletedInvoice), invoiceIds));
+          snackBarCompleter<Null>(context, localization.deletedInvoice), invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {

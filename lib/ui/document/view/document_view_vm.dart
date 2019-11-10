@@ -55,7 +55,7 @@ class DocumentViewVM {
             DocumentEntity(id: state.documentUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(
           LoadDocument(completer: completer, documentId: document.id));

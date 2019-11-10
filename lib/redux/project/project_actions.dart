@@ -287,19 +287,19 @@ void handleProjectAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProjectRequest(
-          snackBarCompleter(
+          snackBarCompleter<Null>(
               context, AppLocalization.of(context).restoredProject),
           projectIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveProjectRequest(
-          snackBarCompleter(
+          snackBarCompleter<Null>(
               context, AppLocalization.of(context).archivedProject),
           projectIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProjectRequest(
-          snackBarCompleter(
+          snackBarCompleter<Null>(
               context, AppLocalization.of(context).deletedProject),
           projectIds));
       break;

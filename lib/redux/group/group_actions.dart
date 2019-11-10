@@ -262,15 +262,15 @@ void handleGroupAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreGroupRequest(
-          snackBarCompleter(context, localization.restoredGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.restoredGroup), groupIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter(context, localization.archivedGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.archivedGroup), groupIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteGroupRequest(
-          snackBarCompleter(context, localization.deletedGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.deletedGroup), groupIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {

@@ -57,7 +57,7 @@ class GroupViewVM {
         GroupEntity(id: state.groupUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadGroup(completer: completer, groupId: group.id));
       return completer.future;

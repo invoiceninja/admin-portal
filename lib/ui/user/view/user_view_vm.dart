@@ -61,7 +61,7 @@ class UserViewVM {
         UserEntity(id: state.userUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadUser(completer: completer, userId: user.id));
       return completer.future;

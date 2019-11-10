@@ -253,17 +253,17 @@ void handleDocumentAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter(context, localization.restoredDocument),
+          snackBarCompleter<Null>(context, localization.restoredDocument),
           documentIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter(context, localization.archivedDocument),
+          snackBarCompleter<Null>(context, localization.archivedDocument),
           documentIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteDocumentRequest(
-          snackBarCompleter(context, localization.deletedDocument),
+          snackBarCompleter<Null>(context, localization.deletedDocument),
           documentIds));
       break;
     case EntityAction.toggleMultiselect:

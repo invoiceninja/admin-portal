@@ -64,7 +64,7 @@ class  ClientViewVM {
         ClientEntity(id: state.clientUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClient(
           completer: completer,

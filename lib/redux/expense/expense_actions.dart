@@ -287,17 +287,17 @@ void handleExpenseAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreExpenseRequest(
-          snackBarCompleter(context, localization.restoredExpense),
+          snackBarCompleter<Null>(context, localization.restoredExpense),
           expenseIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveExpenseRequest(
-          snackBarCompleter(context, localization.archivedExpense),
+          snackBarCompleter<Null>(context, localization.archivedExpense),
           expenseIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteExpenseRequest(
-          snackBarCompleter(context, localization.deletedExpense), expenseIds));
+          snackBarCompleter<Null>(context, localization.deletedExpense), expenseIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {

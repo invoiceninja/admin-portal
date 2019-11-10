@@ -55,7 +55,7 @@ class ProductViewVM {
 
     /*
     Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProduct(
           completer: completer,

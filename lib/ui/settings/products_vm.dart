@@ -46,7 +46,7 @@ class ProductSettingsVM {
             store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter(
+          final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer,
