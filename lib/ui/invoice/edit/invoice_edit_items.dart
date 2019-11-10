@@ -26,7 +26,7 @@ class InvoiceEditItems extends StatefulWidget {
 }
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
-  InvoiceItemEntity selectedInvoiceItem;
+  int selectedItemIndex;
 
   void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
@@ -55,8 +55,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             ? invoice.lineItems[itemIndex]
             : null;
 
-    if (invoiceItem != null && invoiceItem != selectedInvoiceItem) {
-      selectedInvoiceItem = invoiceItem;
+    if (invoiceItem != null && itemIndex != selectedItemIndex) {
+      selectedItemIndex = itemIndex;
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         _showInvoiceItemEditor(itemIndex, context);
       });

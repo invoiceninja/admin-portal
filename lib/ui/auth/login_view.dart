@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -223,7 +224,7 @@ class _LoginState extends State<LoginView> {
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
     final TextStyle linkStyle =
-        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+        themeData.textTheme.body2.copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -372,7 +373,7 @@ class _LoginState extends State<LoginView> {
                                       setState(() => _termsChecked = value),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Theme.of(context).accentColor,
+                                  activeColor: convertHexStringToColor(kDefaultAccentColor),
                                   value: _termsChecked,
                                   title: RichText(
                                     text: TextSpan(
@@ -395,7 +396,7 @@ class _LoginState extends State<LoginView> {
                                       setState(() => _privacyChecked = value),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: Theme.of(context).accentColor,
+                                  activeColor: convertHexStringToColor(kDefaultAccentColor),
                                   value: _privacyChecked,
                                   title: RichText(
                                     text: TextSpan(
