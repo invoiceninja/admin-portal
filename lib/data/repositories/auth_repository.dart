@@ -90,7 +90,7 @@ class AuthRepository {
       'company.users',
       'company.tax_rates',
       'company.groups',
-      'company.company_gateways',
+      'company.company_gateways.gateway',
     ];
     url += '?include=${includes.join(',')}&include_static=true';
 
