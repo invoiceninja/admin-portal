@@ -123,12 +123,6 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
     ];
-    if (object.isInclusive != null) {
-      result
-        ..add('is_inclusive')
-        ..add(serializers.serialize(object.isInclusive,
-            specifiedType: const FullType(bool)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -199,10 +193,6 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
         case 'rate':
           result.rate = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
-          break;
-        case 'is_inclusive':
-          result.isInclusive = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -438,8 +428,6 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final double rate;
   @override
-  final bool isInclusive;
-  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -462,7 +450,6 @@ class _$TaxRateEntity extends TaxRateEntity {
   _$TaxRateEntity._(
       {this.name,
       this.rate,
-      this.isInclusive,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -493,7 +480,6 @@ class _$TaxRateEntity extends TaxRateEntity {
     return other is TaxRateEntity &&
         name == other.name &&
         rate == other.rate &&
-        isInclusive == other.isInclusive &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -513,11 +499,7 @@ class _$TaxRateEntity extends TaxRateEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            rate.hashCode),
-                                        isInclusive.hashCode),
+                                $jc($jc($jc(0, name.hashCode), rate.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -533,7 +515,6 @@ class _$TaxRateEntity extends TaxRateEntity {
     return (newBuiltValueToStringHelper('TaxRateEntity')
           ..add('name', name)
           ..add('rate', rate)
-          ..add('isInclusive', isInclusive)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -557,10 +538,6 @@ class TaxRateEntityBuilder
   double _rate;
   double get rate => _$this._rate;
   set rate(double rate) => _$this._rate = rate;
-
-  bool _isInclusive;
-  bool get isInclusive => _$this._isInclusive;
-  set isInclusive(bool isInclusive) => _$this._isInclusive = isInclusive;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -602,7 +579,6 @@ class TaxRateEntityBuilder
     if (_$v != null) {
       _name = _$v.name;
       _rate = _$v.rate;
-      _isInclusive = _$v.isInclusive;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -635,7 +611,6 @@ class TaxRateEntityBuilder
         new _$TaxRateEntity._(
             name: name,
             rate: rate,
-            isInclusive: isInclusive,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

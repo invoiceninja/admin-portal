@@ -431,14 +431,6 @@ abstract class QuoteEntity extends Object
         ..taxName1 = taxRate.name);
     }
 
-    if (taxRate.isInclusive) {
-      quote = quote.rebuild((b) => b
-        ..lineItems.replace(lineItems
-            .map((item) => item.rebuild(
-                (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
-            .toList()));
-    }
-
     return quote;
   }
 

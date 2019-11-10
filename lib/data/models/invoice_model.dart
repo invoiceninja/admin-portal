@@ -439,14 +439,6 @@ abstract class InvoiceEntity extends Object
         ..taxName1 = taxRate.name);
     }
 
-    if (taxRate.isInclusive) {
-      invoice = invoice.rebuild((b) => b
-        ..lineItems.replace(lineItems
-            .map((item) => item.rebuild(
-                (b) => b.cost = round(b.cost / (100 + taxRate.rate) * 100, 2)))
-            .toList()));
-    }
-
     return invoice;
   }
 
@@ -600,11 +592,6 @@ abstract class InvoiceItemEntity
       item = rebuild((b) => b
         ..taxRate1 = taxRate.rate
         ..taxName1 = taxRate.name);
-    }
-
-    if (taxRate.isInclusive) {
-      item = item.rebuild(
-          (b) => b..cost = round(b.cost / (100 + taxRate.rate) * 100, 2));
     }
 
     return item;

@@ -65,10 +65,6 @@ abstract class TaxRateEntity extends Object
 
   double get rate;
 
-  @nullable
-  @BuiltValueField(wireName: 'is_inclusive')
-  bool get isInclusive;
-
   @override
   String get listDisplayName {
     return name;
