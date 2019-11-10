@@ -468,6 +468,415 @@ abstract class SettingsEntity
       dateFormatId: clientSettings?.dateFormatId ??
           groupSettings?.dateFormatId ??
           companySettings?.dateFormatId,
+      enableMilitaryTime: clientSettings.enableMilitaryTime ??
+          groupSettings.enableMilitaryTime ??
+          companySettings.enableMilitaryTime,
+      languageId: clientSettings.languageId ??
+          groupSettings.languageId ??
+          companySettings.languageId,
+      showCurrencyCode: clientSettings.showCurrencyCode ??
+          groupSettings.showCurrencyCode ??
+          companySettings.showCurrencyCode,
+      currencyId: clientSettings.currencyId ??
+          groupSettings.currencyId ??
+          companySettings.currencyId,
+      customValue1: clientSettings.customValue1 ??
+          groupSettings.customValue1 ??
+          companySettings.customValue1,
+      customValue2: clientSettings.customValue2 ??
+          groupSettings.customValue2 ??
+          companySettings.customValue2,
+      customValue3: clientSettings.customValue3 ??
+          groupSettings.customValue3 ??
+          companySettings.customValue3,
+      customValue4: clientSettings.customValue4 ??
+          groupSettings.customValue4 ??
+          companySettings.customValue4,
+      defaultPaymentTerms: clientSettings.defaultPaymentTerms ??
+          groupSettings.defaultPaymentTerms ??
+          companySettings.defaultPaymentTerms,
+      companyGatewayIds: clientSettings.companyGatewayIds ??
+          groupSettings.companyGatewayIds ??
+          companySettings.companyGatewayIds,
+      defaultTaskRate: clientSettings.defaultTaskRate ??
+          groupSettings.defaultTaskRate ??
+          companySettings.defaultTaskRate,
+      sendReminders: clientSettings.sendReminders ??
+          groupSettings.sendReminders ??
+          companySettings.sendReminders,
+      showTasksInPortal: clientSettings.showTasksInPortal ??
+          groupSettings.showTasksInPortal ??
+          companySettings.showTasksInPortal,
+      emailStyle: clientSettings.emailStyle ??
+          groupSettings.emailStyle ??
+          companySettings.emailStyle,
+      replyToEmail: clientSettings.replyToEmail ??
+          groupSettings.replyToEmail ??
+          companySettings.replyToEmail,
+      bccEmail: clientSettings.bccEmail ??
+          groupSettings.bccEmail ??
+          companySettings.bccEmail,
+      pdfEmailAttachment: clientSettings.pdfEmailAttachment ??
+          groupSettings.pdfEmailAttachment ??
+          companySettings.pdfEmailAttachment,
+      ublEmailAttachment: clientSettings.ublEmailAttachment ??
+          groupSettings.ublEmailAttachment ??
+          companySettings.ublEmailAttachment,
+      documentEmailAttachment: clientSettings.documentEmailAttachment ??
+          groupSettings.documentEmailAttachment ??
+          companySettings.documentEmailAttachment,
+      emailStyleCustom: clientSettings.emailStyleCustom ??
+          groupSettings.emailStyleCustom ??
+          companySettings.emailStyleCustom,
+      customMessageDashboard: clientSettings.customMessageDashboard ??
+          groupSettings.customMessageDashboard ??
+          companySettings.customMessageDashboard,
+      customMessageUnpaidInvoice: clientSettings.customMessageUnpaidInvoice ??
+          groupSettings.customMessageUnpaidInvoice ??
+          companySettings.customMessageUnpaidInvoice,
+      customMessagePaidInvoice: clientSettings.customMessagePaidInvoice ??
+          groupSettings.customMessagePaidInvoice ??
+          companySettings.customMessagePaidInvoice,
+      customMessageUnapprovedQuote:
+          clientSettings.customMessageUnapprovedQuote ??
+              groupSettings.customMessageUnapprovedQuote ??
+              companySettings.customMessageUnapprovedQuote,
+      lockSentInvoices: clientSettings.lockSentInvoices ??
+          groupSettings.lockSentInvoices ??
+          companySettings.lockSentInvoices,
+      autoArchiveInvoice: clientSettings.autoArchiveInvoice ??
+          groupSettings.autoArchiveInvoice ??
+          companySettings.autoArchiveInvoice,
+      autoArchiveQuote: clientSettings.autoArchiveQuote ??
+          groupSettings.autoArchiveQuote ??
+          companySettings.autoArchiveQuote,
+      autoEmailInvoice: clientSettings.autoEmailInvoice ??
+          groupSettings.autoEmailInvoice ??
+          companySettings.autoEmailInvoice,
+      autoConvertQuote: clientSettings.autoConvertQuote ??
+          groupSettings.autoConvertQuote ??
+          companySettings.autoConvertQuote,
+      enableInclusiveTaxes: clientSettings.enableInclusiveTaxes ??
+          groupSettings.enableInclusiveTaxes ??
+          companySettings.enableInclusiveTaxes,
+      translations: clientSettings.translations ??
+          groupSettings.translations ??
+          companySettings.translations,
+      taskNumberPattern: clientSettings.taskNumberPattern ??
+          groupSettings.taskNumberPattern ??
+          companySettings.taskNumberPattern,
+      taskNumberCounter: clientSettings.taskNumberCounter ??
+          groupSettings.taskNumberCounter ??
+          companySettings.taskNumberCounter,
+      expenseNumberPattern: clientSettings.expenseNumberPattern ??
+          groupSettings.expenseNumberPattern ??
+          companySettings.expenseNumberPattern,
+      expenseNumberCounter: clientSettings.expenseNumberCounter ??
+          groupSettings.expenseNumberCounter ??
+          companySettings.expenseNumberCounter,
+      vendorNumberPattern: clientSettings.vendorNumberPattern ??
+          groupSettings.vendorNumberPattern ??
+          companySettings.vendorNumberPattern,
+      vendorNumberCounter: clientSettings.vendorNumberCounter ??
+          groupSettings.vendorNumberCounter ??
+          companySettings.vendorNumberCounter,
+      ticketNumberPattern: clientSettings.ticketNumberPattern ??
+          groupSettings.ticketNumberPattern ??
+          companySettings.ticketNumberPattern,
+      ticketNumberCounter: clientSettings.ticketNumberCounter ??
+          groupSettings.ticketNumberCounter ??
+          companySettings.ticketNumberCounter,
+      paymentNumberPattern: clientSettings.paymentNumberPattern ??
+          groupSettings.paymentNumberPattern ??
+          companySettings.paymentNumberPattern,
+      paymentNumberCounter: clientSettings.paymentNumberCounter ??
+          groupSettings.paymentNumberCounter ??
+          companySettings.paymentNumberCounter,
+      invoiceNumberPattern: clientSettings.invoiceNumberPattern ??
+          groupSettings.invoiceNumberPattern ??
+          companySettings.invoiceNumberPattern,
+      invoiceNumberCounter: clientSettings.invoiceNumberCounter ??
+          groupSettings.invoiceNumberCounter ??
+          companySettings.invoiceNumberCounter,
+      quoteNumberPattern: clientSettings.quoteNumberPattern ??
+          groupSettings.quoteNumberPattern ??
+          companySettings.quoteNumberPattern,
+      quoteNumberCounter: clientSettings.quoteNumberCounter ??
+          groupSettings.quoteNumberCounter ??
+          companySettings.quoteNumberCounter,
+      clientNumberPattern: clientSettings.clientNumberPattern ??
+          groupSettings.clientNumberPattern ??
+          companySettings.clientNumberPattern,
+      clientNumberCounter: clientSettings.clientNumberCounter ??
+          groupSettings.clientNumberCounter ??
+          companySettings.clientNumberCounter,
+      creditNumberPattern: clientSettings.creditNumberPattern ??
+          groupSettings.creditNumberPattern ??
+          companySettings.creditNumberPattern,
+      creditNumberCounter: clientSettings.creditNumberCounter ??
+          groupSettings.creditNumberCounter ??
+          companySettings.creditNumberCounter,
+      recurringInvoiceNumberPrefix:
+          clientSettings.recurringInvoiceNumberPrefix ??
+              groupSettings.recurringInvoiceNumberPrefix ??
+              companySettings.recurringInvoiceNumberPrefix,
+      resetCounterFrequencyId: clientSettings.resetCounterFrequencyId ??
+          groupSettings.resetCounterFrequencyId ??
+          companySettings.resetCounterFrequencyId,
+      resetCounterDate: clientSettings.resetCounterDate ??
+          groupSettings.resetCounterDate ??
+          companySettings.resetCounterDate,
+      counterPadding: clientSettings.counterPadding ??
+          groupSettings.counterPadding ??
+          companySettings.counterPadding,
+      sharedInvoiceQuoteCounter: clientSettings.sharedInvoiceQuoteCounter ??
+          groupSettings.sharedInvoiceQuoteCounter ??
+          companySettings.sharedInvoiceQuoteCounter,
+      defaultInvoiceTerms: clientSettings.defaultInvoiceTerms ??
+          groupSettings.defaultInvoiceTerms ??
+          companySettings.defaultInvoiceTerms,
+      defaultQuoteTerms: clientSettings.defaultQuoteTerms ??
+          groupSettings.defaultQuoteTerms ??
+          companySettings.defaultQuoteTerms,
+      defaultQuoteFooter: clientSettings.defaultQuoteFooter ??
+          groupSettings.defaultQuoteFooter ??
+          companySettings.defaultQuoteFooter,
+      numberOfInvoiceTaxRates: clientSettings.numberOfInvoiceTaxRates ??
+          groupSettings.numberOfInvoiceTaxRates ??
+          companySettings.numberOfInvoiceTaxRates,
+      numberOfItemTaxRates: clientSettings.numberOfItemTaxRates ??
+          groupSettings.numberOfItemTaxRates ??
+          companySettings.numberOfItemTaxRates,
+      defaultInvoiceDesignId: clientSettings.defaultInvoiceDesignId ??
+          groupSettings.defaultInvoiceDesignId ??
+          companySettings.defaultInvoiceDesignId,
+      defaultQuoteDesignId: clientSettings.defaultQuoteDesignId ??
+          groupSettings.defaultQuoteDesignId ??
+          companySettings.defaultQuoteDesignId,
+      defaultInvoiceFooter: clientSettings.defaultInvoiceFooter ??
+          groupSettings.defaultInvoiceFooter ??
+          companySettings.defaultInvoiceFooter,
+      invoiceLabels: clientSettings.invoiceLabels ??
+          groupSettings.invoiceLabels ??
+          companySettings.invoiceLabels,
+      defaultTaxName1: clientSettings.defaultTaxName1 ??
+          groupSettings.defaultTaxName1 ??
+          companySettings.defaultTaxName1,
+      defaultTaxRate1: clientSettings.defaultTaxRate1 ??
+          groupSettings.defaultTaxRate1 ??
+          companySettings.defaultTaxRate1,
+      defaultTaxName2: clientSettings.defaultTaxName2 ??
+          groupSettings.defaultTaxName2 ??
+          companySettings.defaultTaxName2,
+      defaultTaxRate2: clientSettings.defaultTaxRate2 ??
+          groupSettings.defaultTaxRate2 ??
+          companySettings.defaultTaxRate2,
+      defaultTaxName3: clientSettings.defaultTaxName3 ??
+          groupSettings.defaultTaxName3 ??
+          companySettings.defaultTaxName3,
+      defaultTaxRate3: clientSettings.defaultTaxRate3 ??
+          groupSettings.defaultTaxRate3 ??
+          companySettings.defaultTaxRate3,
+      defaultPaymentTypeId: clientSettings.defaultPaymentTypeId ??
+          groupSettings.defaultPaymentTypeId ??
+          companySettings.defaultPaymentTypeId,
+      invoiceFields: clientSettings.invoiceFields ??
+          groupSettings.invoiceFields ??
+          companySettings.invoiceFields,
+      emailFooter: clientSettings.emailFooter ??
+          groupSettings.emailFooter ??
+          companySettings.emailFooter,
+      emailSubjectInvoice: clientSettings.emailSubjectInvoice ??
+          groupSettings.emailSubjectInvoice ??
+          companySettings.emailSubjectInvoice,
+      emailSubjectQuote: clientSettings.emailSubjectQuote ??
+          groupSettings.emailSubjectQuote ??
+          companySettings.emailSubjectQuote,
+      emailSubjectPayment: clientSettings.emailSubjectPayment ??
+          groupSettings.emailSubjectPayment ??
+          companySettings.emailSubjectPayment,
+      emailBodyInvoice: clientSettings.emailBodyInvoice ??
+          groupSettings.emailBodyInvoice ??
+          companySettings.emailBodyInvoice,
+      emailBodyQuote: clientSettings.emailBodyQuote ??
+          groupSettings.emailBodyQuote ??
+          companySettings.emailBodyQuote,
+      emailBodyPayment: clientSettings.emailBodyPayment ??
+          groupSettings.emailBodyPayment ??
+          companySettings.emailBodyPayment,
+      emailSubjectReminder1: clientSettings.emailSubjectReminder1 ??
+          groupSettings.emailSubjectReminder1 ??
+          companySettings.emailSubjectReminder1,
+      emailSubjectReminder2: clientSettings.emailSubjectReminder2 ??
+          groupSettings.emailSubjectReminder2 ??
+          companySettings.emailSubjectReminder2,
+      emailSubjectReminder3: clientSettings.emailSubjectReminder3 ??
+          groupSettings.emailSubjectReminder3 ??
+          companySettings.emailSubjectReminder3,
+      emailBodyReminder1: clientSettings.emailBodyReminder1 ??
+          groupSettings.emailBodyReminder1 ??
+          companySettings.emailBodyReminder1,
+      emailBodyReminder2: clientSettings.emailBodyReminder2 ??
+          groupSettings.emailBodyReminder2 ??
+          companySettings.emailBodyReminder2,
+      emailBodyReminder3: clientSettings.emailBodyReminder3 ??
+          groupSettings.emailBodyReminder3 ??
+          companySettings.emailBodyReminder3,
+      enablePortalPassword: clientSettings.enablePortalPassword ??
+          groupSettings.enablePortalPassword ??
+          companySettings.enablePortalPassword,
+      sendPortalPassword: clientSettings.sendPortalPassword ??
+          groupSettings.sendPortalPassword ??
+          companySettings.sendPortalPassword,
+      signatureOnPdf: clientSettings.signatureOnPdf ??
+          groupSettings.signatureOnPdf ??
+          companySettings.signatureOnPdf,
+      enableEmailMarkup: clientSettings.enableEmailMarkup ??
+          groupSettings.enableEmailMarkup ??
+          companySettings.enableEmailMarkup,
+      showAcceptInvoiceTerms: clientSettings.showAcceptInvoiceTerms ??
+          groupSettings.showAcceptInvoiceTerms ??
+          companySettings.showAcceptInvoiceTerms,
+      showAcceptQuoteTerms: clientSettings.showAcceptQuoteTerms ??
+          groupSettings.showAcceptQuoteTerms ??
+          companySettings.showAcceptQuoteTerms,
+      requireInvoiceSignature: clientSettings.requireInvoiceSignature ??
+          groupSettings.requireInvoiceSignature ??
+          companySettings.requireInvoiceSignature,
+      requireQuoteSignature: clientSettings.requireQuoteSignature ??
+          groupSettings.requireQuoteSignature ??
+          companySettings.requireQuoteSignature,
+      name: clientSettings.name ?? groupSettings.name ?? companySettings.name,
+      companyLogo: clientSettings.companyLogo ??
+          groupSettings.companyLogo ??
+          companySettings.companyLogo,
+      website: clientSettings.website ??
+          groupSettings.website ??
+          companySettings.website,
+      address1: clientSettings.address1 ??
+          groupSettings.address1 ??
+          companySettings.address1,
+      address2: clientSettings.address2 ??
+          groupSettings.address2 ??
+          companySettings.address2,
+      city: clientSettings.city ?? groupSettings.city ?? companySettings.city,
+      state:
+          clientSettings.state ?? groupSettings.state ?? companySettings.state,
+      postalCode: clientSettings.postalCode ??
+          groupSettings.postalCode ??
+          companySettings.postalCode,
+      phone:
+          clientSettings.phone ?? groupSettings.phone ?? companySettings.phone,
+      email:
+          clientSettings.email ?? groupSettings.email ?? companySettings.email,
+      countryId: clientSettings.countryId ??
+          groupSettings.countryId ??
+          companySettings.countryId,
+      vatNumber: clientSettings.vatNumber ??
+          groupSettings.vatNumber ??
+          companySettings.vatNumber,
+      idNumber: clientSettings.idNumber ??
+          groupSettings.idNumber ??
+          companySettings.idNumber,
+      pageSize: clientSettings.pageSize ??
+          groupSettings.pageSize ??
+          companySettings.pageSize,
+      fontSize: clientSettings.fontSize ??
+          groupSettings.fontSize ??
+          companySettings.fontSize,
+      primaryColor: clientSettings.primaryColor ??
+          groupSettings.primaryColor ??
+          companySettings.primaryColor,
+      secondaryColor: clientSettings.secondaryColor ??
+          groupSettings.secondaryColor ??
+          companySettings.secondaryColor,
+      primaryFont: clientSettings.primaryFont ??
+          groupSettings.primaryFont ??
+          companySettings.primaryFont,
+      secondaryFont: clientSettings.secondaryFont ??
+          groupSettings.secondaryFont ??
+          companySettings.secondaryFont,
+      hidePaidToDate: clientSettings.hidePaidToDate ??
+          groupSettings.hidePaidToDate ??
+          companySettings.hidePaidToDate,
+      embedDocuments: clientSettings.embedDocuments ??
+          groupSettings.embedDocuments ??
+          companySettings.embedDocuments,
+      allPagesHeader: clientSettings.allPagesHeader ??
+          groupSettings.allPagesHeader ??
+          companySettings.allPagesHeader,
+      allPagesFooter: clientSettings.allPagesFooter ??
+          groupSettings.allPagesFooter ??
+          companySettings.allPagesFooter,
+      enableReminder1: clientSettings.enableReminder1 ??
+          groupSettings.enableReminder1 ??
+          companySettings.enableReminder1,
+      enableReminder2: clientSettings.enableReminder2 ??
+          groupSettings.enableReminder2 ??
+          companySettings.enableReminder2,
+      enableReminder3: clientSettings.enableReminder3 ??
+          groupSettings.enableReminder3 ??
+          companySettings.enableReminder3,
+      enableReminder4: clientSettings.enableReminder4 ??
+          groupSettings.enableReminder4 ??
+          companySettings.enableReminder4,
+      numDaysReminder1: clientSettings.numDaysReminder1 ??
+          groupSettings.numDaysReminder1 ??
+          companySettings.numDaysReminder1,
+      numDaysReminder2: clientSettings.numDaysReminder2 ??
+          groupSettings.numDaysReminder2 ??
+          companySettings.numDaysReminder2,
+      numDaysReminder3: clientSettings.numDaysReminder3 ??
+          groupSettings.numDaysReminder3 ??
+          companySettings.numDaysReminder3,
+      scheduleReminder1: clientSettings.scheduleReminder1 ??
+          groupSettings.scheduleReminder1 ??
+          companySettings.scheduleReminder1,
+      scheduleReminder2: clientSettings.scheduleReminder2 ??
+          groupSettings.scheduleReminder2 ??
+          companySettings.scheduleReminder2,
+      scheduleReminder3: clientSettings.scheduleReminder3 ??
+          groupSettings.scheduleReminder3 ??
+          companySettings.scheduleReminder3,
+      endlessReminderFrequencyId: clientSettings.endlessReminderFrequencyId ??
+          groupSettings.endlessReminderFrequencyId ??
+          companySettings.endlessReminderFrequencyId,
+      lateFeeAmount1: clientSettings.lateFeeAmount1 ??
+          groupSettings.lateFeeAmount1 ??
+          companySettings.lateFeeAmount1,
+      lateFeeAmount2: clientSettings.lateFeeAmount2 ??
+          groupSettings.lateFeeAmount2 ??
+          companySettings.lateFeeAmount2,
+      lateFeeAmount3: clientSettings.lateFeeAmount3 ??
+          groupSettings.lateFeeAmount3 ??
+          companySettings.lateFeeAmount3,
+      lateFeePercent1: clientSettings.lateFeePercent1 ??
+          groupSettings.lateFeePercent1 ??
+          companySettings.lateFeePercent1,
+      lateFeePercent2: clientSettings.lateFeePercent2 ??
+          groupSettings.lateFeePercent2 ??
+          companySettings.lateFeePercent2,
+      lateFeePercent3: clientSettings.lateFeePercent3 ??
+          groupSettings.lateFeePercent3 ??
+          companySettings.lateFeePercent3,
+      emailSubjectReminder4: clientSettings.emailSubjectReminder4 ??
+          groupSettings.emailSubjectReminder4 ??
+          companySettings.emailSubjectReminder4,
+      emailBodyReminder4: clientSettings.emailBodyReminder4 ??
+          groupSettings.emailBodyReminder4 ??
+          companySettings.emailBodyReminder4,
+      customPaymentTerms: clientSettings.customPaymentTerms ??
+          groupSettings.customPaymentTerms ??
+          companySettings.customPaymentTerms,
+      hasCustomDesign1: clientSettings.hasCustomDesign1 ??
+          groupSettings.hasCustomDesign1 ??
+          companySettings.hasCustomDesign1,
+      hasCustomDesign2: clientSettings.hasCustomDesign2 ??
+          groupSettings.hasCustomDesign2 ??
+          companySettings.hasCustomDesign2,
+      hasCustomDesign3: clientSettings.hasCustomDesign3 ??
+          groupSettings.hasCustomDesign3 ??
+          companySettings.hasCustomDesign3,
     );
   }
 
