@@ -189,7 +189,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
       } else {
         store.dispatch(SaveProductSuccess(product));
       }
-      action.completer.complete(null);
+      action.completer.complete(product);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProductFailure(error));

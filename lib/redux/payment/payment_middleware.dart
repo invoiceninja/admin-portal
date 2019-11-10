@@ -203,7 +203,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
         store.dispatch(SavePaymentSuccess(payment));
       }
       store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
-      action.completer.complete(null);
+      action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SavePaymentFailure(error));
