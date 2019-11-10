@@ -58,6 +58,7 @@ class CompanyGatewayListItem extends StatelessWidget {
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
         onLongPress: onLongPress,
+        //trailing: ,
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -68,7 +69,7 @@ class CompanyGatewayListItem extends StatelessWidget {
                   activeColor: Theme.of(context).accentColor,
                 ),
               )
-            : null,
+            : Icon(Icons.drag_handle),
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
