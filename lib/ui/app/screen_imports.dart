@@ -59,7 +59,7 @@ export 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/notifications_vm.dart';
-export 'package:invoiceninja_flutter/ui/settings/products_vm.dart';
+export 'package:invoiceninja_flutter/ui/settings/product_settings_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 export 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';

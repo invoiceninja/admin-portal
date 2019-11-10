@@ -4,6 +4,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -50,19 +52,23 @@ class WorkflowSettingsVM {
         },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).savedSettings);
           switch (settingsUIState.entityType) {
             case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer,
                   company: settingsUIState.userCompany.company));
               break;
             case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                  context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveGroupRequest(
                   completer: completer, group: settingsUIState.group));
               break;
             case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                  context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveClientRequest(
                   completer: completer, client: settingsUIState.client));
               break;
