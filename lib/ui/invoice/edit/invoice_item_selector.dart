@@ -53,7 +53,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   }
 
   void _addBlankItem() {
-    widget.onItemsSelected([InvoiceItemEntity()]);
+    widget.onItemsSelected([InvoiceItemEntity(quantity: 1)]);
     Navigator.pop(context);
   }
 
@@ -69,9 +69,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           items.add(
               convertProductToInvoiceItem(product: product, context: context));
         } else {
-          items.add(InvoiceItemEntity().rebuild((b) => b
-            ..productKey = product.productKey
-            ..quantity = 1));
+          items.add(InvoiceItemEntity(productKey: product.productKey, quantity: 1));
         }
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;

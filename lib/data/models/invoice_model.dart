@@ -515,14 +515,14 @@ abstract class InvoiceEntity extends Object
 abstract class InvoiceItemEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  factory InvoiceItemEntity() {
+  factory InvoiceItemEntity({String productKey, double quantity}) {
     return _$InvoiceItemEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
-      productKey: '',
+      productKey: productKey ?? '',
       notes: '',
       cost: 0.0,
-      quantity: 0.0,
+      quantity: quantity ?? 0.0,
       taxName1: '',
       taxRate1: 0.0,
       taxName2: '',

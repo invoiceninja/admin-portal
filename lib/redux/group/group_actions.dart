@@ -244,7 +244,7 @@ void handleGroupAction(
     BuildContext context, List<BaseEntity> groups, EntityAction action) {
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final group = groups[0];
+  final group = groups.first;
   final groupIds = groups.map((group) => group.id).toList();
 
   switch (action) {
