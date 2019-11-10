@@ -88,6 +88,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   String get previousRoute;
 
+  String get verifiedPreviousRoute =>
+      currentRoute == previousRoute ? null : previousRoute;
+
   bool get enableDarkMode;
 
   @nullable

@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -87,9 +87,8 @@ class UserViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
-        if (state.uiState.currentRoute.contains(UserScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(UserScreen.route));
-        }
+        store.dispatch(UpdateCurrentRoute(
+            state.uiState.verifiedPreviousRoute ?? UserScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleUserAction(context, [user], action),

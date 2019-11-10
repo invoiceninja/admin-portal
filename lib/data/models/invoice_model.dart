@@ -395,7 +395,9 @@ abstract class InvoiceEntity extends Object
         actions.add(EntityAction.markSent);
       }
 
-      if (userCompany.canEditEntity(this) && client.hasEmailAddress) {
+      if (userCompany.canEditEntity(this) &&
+          client != null &&
+          client.hasEmailAddress) {
         actions.add(EntityAction.sendEmail);
       }
 
