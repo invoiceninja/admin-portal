@@ -37,6 +37,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
+  String _gatewayTypeId;
 
   @override
   void initState() {
@@ -184,11 +185,37 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
           ListView(
             children: <Widget>[
+              if (companyGateway.gatewayId == kGatewayStripe)
+                FormCard(
+                  children: <Widget>[
+                    AppDropdownButton(
+                      labelText: localization.paymentType,
+                      value: _gatewayTypeId,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.creditCard),
+                          value: kGatewayTypeCreditCard,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.bankTransfer),
+                          value: kGatewayTypeBankTransfer,
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _gatewayTypeId = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               LimitEditor(
+                gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
               ),
               FeesEditor(
+                gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
               ),
@@ -380,10 +407,11 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 }
 
 class LimitEditor extends StatefulWidget {
-  const LimitEditor({this.companyGateway, this.viewModel});
+  const LimitEditor({this.companyGateway, this.viewModel, this.gatewayTypeId});
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
+  final String gatewayTypeId;
 
   @override
   _LimitEditorState createState() => _LimitEditorState();
@@ -418,20 +446,22 @@ class _LimitEditorState extends State<LimitEditor> {
     _maxController.removeListener(_onChanged);
 
     final companyGateway = widget.companyGateway;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
-    if (companyGateway.minLimit != null) {
+    if (settings.minLimit != null) {
       _enableMin = true;
     }
 
-    if (companyGateway.maxLimit != null) {
+    if (settings.maxLimit != null) {
       _enableMax = true;
     }
 
     _minController.text = formatNumber(
-        (companyGateway.minLimit ?? 0).toDouble(), context,
+        (settings.minLimit ?? 0).toDouble(), context,
         formatNumberType: FormatNumberType.input);
     _maxController.text = formatNumber(
-        (companyGateway.maxLimit ?? 0).toDouble(), context,
+        (settings.maxLimit ?? 0).toDouble(), context,
         formatNumberType: FormatNumberType.input);
 
     _minController.addListener(_onChanged);
@@ -444,14 +474,17 @@ class _LimitEditorState extends State<LimitEditor> {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
       final companyGateway = viewModel.companyGateway;
+      final settings =
+          companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
-      final updatedGateway = companyGateway.rebuild((b) => b
+      final updatedSettings = settings.rebuild((b) => b
         ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
         ..maxLimit =
             _enableMax ? parseDouble(_maxController.text.trim()) : null);
 
-      if (companyGateway != updatedGateway) {
-        viewModel.onChanged(updatedGateway);
+      if (settings != updatedSettings) {
+        viewModel.onChanged(companyGateway.rebuild((b) =>
+            b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
       }
     });
   }
@@ -548,10 +581,11 @@ class _LimitEditorState extends State<LimitEditor> {
 }
 
 class FeesEditor extends StatefulWidget {
-  const FeesEditor({this.companyGateway, this.viewModel});
+  const FeesEditor({this.companyGateway, this.viewModel, this.gatewayTypeId});
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
+  final String gatewayTypeId;
 
   @override
   _FeesEditorState createState() => _FeesEditorState();
@@ -584,15 +618,17 @@ class _FeesEditorState extends State<FeesEditor> {
     ];
 
     final companyGateway = widget.companyGateway;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _amountController.text = formatNumber(companyGateway.feeAmount, context,
+    _amountController.text = formatNumber(settings.feeAmount, context,
         formatNumberType: FormatNumberType.input);
-    _percentController.text = formatNumber(companyGateway.feePercent, context,
+    _percentController.text = formatNumber(settings.feePercent, context,
         formatNumberType: FormatNumberType.input);
-    _capController.text = formatNumber(companyGateway.feeCap, context,
+    _capController.text = formatNumber(settings.feeCap, context,
         formatNumberType: FormatNumberType.input);
 
     _controllers
@@ -605,19 +641,22 @@ class _FeesEditorState extends State<FeesEditor> {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
       final companyGateway = viewModel.companyGateway;
+      final settings =
+          companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
       final amount = parseDouble(_amountController.text.trim());
       final percent = parseDouble(_percentController.text.trim());
       final cap = parseDouble(_capController.text.trim());
       final feesEnabled = amount != 0 || percent != 0;
 
-      final updatedGateway = companyGateway.rebuild((b) => b
+      final updatedSettings = settings.rebuild((b) => b
         ..feeAmount = feesEnabled ? amount : null
         ..feePercent = feesEnabled ? percent : null
         ..feeCap = feesEnabled ? cap : null);
 
-      if (companyGateway != updatedGateway) {
-        viewModel.onChanged(updatedGateway);
+      if (settings != updatedSettings) {
+        viewModel.onChanged(companyGateway.rebuild((b) =>
+            b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
       }
     });
   }
@@ -628,6 +667,8 @@ class _FeesEditorState extends State<FeesEditor> {
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
     final company = viewModel.state.selectedCompany;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
     return FormCard(
       children: <Widget>[
@@ -645,23 +686,39 @@ class _FeesEditorState extends State<FeesEditor> {
         ),
         if (company.settings.enableFirstItemTaxRate)
           TaxRateDropdown(
-            onSelected: (taxRate) =>
-                viewModel.onChanged(companyGateway.rebuild((b) => b
-                  ..taxRate1 = taxRate.rate
-                  ..taxName1 = taxRate.name)),
+            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+                (b) => b
+                  ..feesAndLimitsMap[widget.gatewayTypeId] =
+                      settings.rebuild((b) => b
+                        ..taxRate1 = taxRate.rate
+                        ..taxName1 = taxRate.name))),
             labelText: localization.tax,
-            initialTaxName: companyGateway.taxName1,
-            initialTaxRate: companyGateway.taxRate1,
+            initialTaxName: settings.taxName1,
+            initialTaxRate: settings.taxRate1,
           ),
         if (company.settings.enableSecondItemTaxRate)
           TaxRateDropdown(
-            onSelected: (taxRate) =>
-                viewModel.onChanged(companyGateway.rebuild((b) => b
-                  ..taxRate2 = taxRate.rate
-                  ..taxName2 = taxRate.name)),
+            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+                (b) => b
+                  ..feesAndLimitsMap[widget.gatewayTypeId] =
+                      settings.rebuild((b) => b
+                        ..taxRate2 = taxRate.rate
+                        ..taxName2 = taxRate.name))),
             labelText: localization.tax,
-            initialTaxName: companyGateway.taxName2,
-            initialTaxRate: companyGateway.taxRate2,
+            initialTaxName: settings.taxName2,
+            initialTaxRate: settings.taxRate2,
+          ),
+        if (company.settings.enableThirdItemTaxRate)
+          TaxRateDropdown(
+            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+                (b) => b
+                  ..feesAndLimitsMap[widget.gatewayTypeId] =
+                      settings.rebuild((b) => b
+                        ..taxRate3 = taxRate.rate
+                        ..taxName3 = taxRate.name))),
+            labelText: localization.tax,
+            initialTaxName: settings.taxName3,
+            initialTaxRate: settings.taxRate3,
           ),
       ],
     );

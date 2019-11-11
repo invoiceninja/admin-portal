@@ -12,6 +12,8 @@ Serializer<CompanyGatewayItemResponse> _$companyGatewayItemResponseSerializer =
     new _$CompanyGatewayItemResponseSerializer();
 Serializer<CompanyGatewayEntity> _$companyGatewayEntitySerializer =
     new _$CompanyGatewayEntitySerializer();
+Serializer<FeesAndLimitsSettings> _$feesAndLimitsSettingsSerializer =
+    new _$FeesAndLimitsSettingsSerializer();
 
 class _$CompanyGatewayListResponseSerializer
     implements StructuredSerializer<CompanyGatewayListResponse> {
@@ -139,6 +141,12 @@ class _$CompanyGatewayEntitySerializer
       'update_details',
       serializers.serialize(object.updateDetails,
           specifiedType: const FullType(bool)),
+      'fees_and_limits',
+      serializers.serialize(object.feesAndLimitsMap,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(FeesAndLimitsSettings)
+          ])),
       'config',
       serializers.serialize(object.config,
           specifiedType: const FullType(String)),
@@ -159,72 +167,6 @@ class _$CompanyGatewayEntitySerializer
       result
         ..add('custom_value2')
         ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.minLimit != null) {
-      result
-        ..add('min_limit')
-        ..add(serializers.serialize(object.minLimit,
-            specifiedType: const FullType(double)));
-    }
-    if (object.maxLimit != null) {
-      result
-        ..add('max_limit')
-        ..add(serializers.serialize(object.maxLimit,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feeAmount != null) {
-      result
-        ..add('fee_amount')
-        ..add(serializers.serialize(object.feeAmount,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feePercent != null) {
-      result
-        ..add('fee_percent')
-        ..add(serializers.serialize(object.feePercent,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feeCap != null) {
-      result
-        ..add('fee_cap')
-        ..add(serializers.serialize(object.feeCap,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxRate1 != null) {
-      result
-        ..add('fee_tax_rate1')
-        ..add(serializers.serialize(object.taxRate1,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxName1 != null) {
-      result
-        ..add('fee_tax_name1')
-        ..add(serializers.serialize(object.taxName1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate2 != null) {
-      result
-        ..add('fee_tax_rate2')
-        ..add(serializers.serialize(object.taxRate2,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxName2 != null) {
-      result
-        ..add('fee_tax_name2')
-        ..add(serializers.serialize(object.taxName2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxRate3 != null) {
-      result
-        ..add('fee_tax_rate3')
-        ..add(serializers.serialize(object.taxRate3,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxName3 != null) {
-      result
-        ..add('fee_tax_name3')
-        ..add(serializers.serialize(object.taxName3,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -322,6 +264,152 @@ class _$CompanyGatewayEntitySerializer
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'fees_and_limits':
+          result.feesAndLimitsMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(FeesAndLimitsSettings)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'config':
+          result.config = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$FeesAndLimitsSettingsSerializer
+    implements StructuredSerializer<FeesAndLimitsSettings> {
+  @override
+  final Iterable<Type> types = const [
+    FeesAndLimitsSettings,
+    _$FeesAndLimitsSettings
+  ];
+  @override
+  final String wireName = 'FeesAndLimitsSettings';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, FeesAndLimitsSettings object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.minLimit != null) {
+      result
+        ..add('min_limit')
+        ..add(serializers.serialize(object.minLimit,
+            specifiedType: const FullType(double)));
+    }
+    if (object.maxLimit != null) {
+      result
+        ..add('max_limit')
+        ..add(serializers.serialize(object.maxLimit,
+            specifiedType: const FullType(double)));
+    }
+    if (object.feeAmount != null) {
+      result
+        ..add('fee_amount')
+        ..add(serializers.serialize(object.feeAmount,
+            specifiedType: const FullType(double)));
+    }
+    if (object.feePercent != null) {
+      result
+        ..add('fee_percent')
+        ..add(serializers.serialize(object.feePercent,
+            specifiedType: const FullType(double)));
+    }
+    if (object.feeCap != null) {
+      result
+        ..add('fee_cap')
+        ..add(serializers.serialize(object.feeCap,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxRate1 != null) {
+      result
+        ..add('fee_tax_rate1')
+        ..add(serializers.serialize(object.taxRate1,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName1 != null) {
+      result
+        ..add('fee_tax_name1')
+        ..add(serializers.serialize(object.taxName1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate2 != null) {
+      result
+        ..add('fee_tax_rate2')
+        ..add(serializers.serialize(object.taxRate2,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName2 != null) {
+      result
+        ..add('fee_tax_name2')
+        ..add(serializers.serialize(object.taxName2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.taxRate3 != null) {
+      result
+        ..add('fee_tax_rate3')
+        ..add(serializers.serialize(object.taxRate3,
+            specifiedType: const FullType(double)));
+    }
+    if (object.taxName3 != null) {
+      result
+        ..add('fee_tax_name3')
+        ..add(serializers.serialize(object.taxName3,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  FeesAndLimitsSettings deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new FeesAndLimitsSettingsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
         case 'min_limit':
           result.minLimit = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
@@ -364,42 +452,6 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'fee_tax_name3':
           result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'config':
-          result.config = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -619,27 +671,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String customValue2;
   @override
-  final double minLimit;
-  @override
-  final double maxLimit;
-  @override
-  final double feeAmount;
-  @override
-  final double feePercent;
-  @override
-  final double feeCap;
-  @override
-  final double taxRate1;
-  @override
-  final String taxName1;
-  @override
-  final double taxRate2;
-  @override
-  final String taxName2;
-  @override
-  final double taxRate3;
-  @override
-  final String taxName3;
+  final BuiltMap<String, FeesAndLimitsSettings> feesAndLimitsMap;
   @override
   final String config;
   @override
@@ -672,17 +704,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.updateDetails,
       this.customValue1,
       this.customValue2,
-      this.minLimit,
-      this.maxLimit,
-      this.feeAmount,
-      this.feePercent,
-      this.feeCap,
-      this.taxRate1,
-      this.taxName1,
-      this.taxRate2,
-      this.taxName2,
-      this.taxRate3,
-      this.taxName3,
+      this.feesAndLimitsMap,
       this.config,
       this.isChanged,
       this.createdAt,
@@ -712,6 +734,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'updateDetails');
     }
+    if (feesAndLimitsMap == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'feesAndLimitsMap');
+    }
     if (config == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
     }
@@ -738,17 +764,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         updateDetails == other.updateDetails &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        minLimit == other.minLimit &&
-        maxLimit == other.maxLimit &&
-        feeAmount == other.feeAmount &&
-        feePercent == other.feePercent &&
-        feeCap == other.feeCap &&
-        taxRate1 == other.taxRate1 &&
-        taxName1 == other.taxName1 &&
-        taxRate2 == other.taxRate2 &&
-        taxName2 == other.taxName2 &&
-        taxRate3 == other.taxRate3 &&
-        taxName3 == other.taxName3 &&
+        feesAndLimitsMap == other.feesAndLimitsMap &&
         config == other.config &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -780,17 +796,21 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode), showShippingAddress.hashCode), updateDetails.hashCode), customValue1.hashCode), customValue2.hashCode), minLimit.hashCode),
-                                                                                maxLimit.hashCode),
-                                                                            feeAmount.hashCode),
-                                                                        feePercent.hashCode),
-                                                                    feeCap.hashCode),
-                                                                taxRate1.hashCode),
-                                                            taxName1.hashCode),
-                                                        taxRate2.hashCode),
-                                                    taxName2.hashCode),
-                                                taxRate3.hashCode),
-                                            taxName3.hashCode),
+                                                                            0,
+                                                                            gateway
+                                                                                .hashCode),
+                                                                        gatewayId
+                                                                            .hashCode),
+                                                                    acceptedCreditCards
+                                                                        .hashCode),
+                                                                showBillingAddress
+                                                                    .hashCode),
+                                                            showShippingAddress
+                                                                .hashCode),
+                                                        updateDetails.hashCode),
+                                                    customValue1.hashCode),
+                                                customValue2.hashCode),
+                                            feesAndLimitsMap.hashCode),
                                         config.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -813,17 +833,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('updateDetails', updateDetails)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('minLimit', minLimit)
-          ..add('maxLimit', maxLimit)
-          ..add('feeAmount', feeAmount)
-          ..add('feePercent', feePercent)
-          ..add('feeCap', feeCap)
-          ..add('taxRate1', taxRate1)
-          ..add('taxName1', taxName1)
-          ..add('taxRate2', taxRate2)
-          ..add('taxName2', taxName2)
-          ..add('taxRate3', taxRate3)
-          ..add('taxName3', taxName3)
+          ..add('feesAndLimitsMap', feesAndLimitsMap)
           ..add('config', config)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -878,49 +888,13 @@ class CompanyGatewayEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  double _minLimit;
-  double get minLimit => _$this._minLimit;
-  set minLimit(double minLimit) => _$this._minLimit = minLimit;
-
-  double _maxLimit;
-  double get maxLimit => _$this._maxLimit;
-  set maxLimit(double maxLimit) => _$this._maxLimit = maxLimit;
-
-  double _feeAmount;
-  double get feeAmount => _$this._feeAmount;
-  set feeAmount(double feeAmount) => _$this._feeAmount = feeAmount;
-
-  double _feePercent;
-  double get feePercent => _$this._feePercent;
-  set feePercent(double feePercent) => _$this._feePercent = feePercent;
-
-  double _feeCap;
-  double get feeCap => _$this._feeCap;
-  set feeCap(double feeCap) => _$this._feeCap = feeCap;
-
-  double _taxRate1;
-  double get taxRate1 => _$this._taxRate1;
-  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
-
-  String _taxName1;
-  String get taxName1 => _$this._taxName1;
-  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
-
-  double _taxRate2;
-  double get taxRate2 => _$this._taxRate2;
-  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
-
-  String _taxName2;
-  String get taxName2 => _$this._taxName2;
-  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
-
-  double _taxRate3;
-  double get taxRate3 => _$this._taxRate3;
-  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
-
-  String _taxName3;
-  String get taxName3 => _$this._taxName3;
-  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+  MapBuilder<String, FeesAndLimitsSettings> _feesAndLimitsMap;
+  MapBuilder<String, FeesAndLimitsSettings> get feesAndLimitsMap =>
+      _$this._feesAndLimitsMap ??=
+          new MapBuilder<String, FeesAndLimitsSettings>();
+  set feesAndLimitsMap(
+          MapBuilder<String, FeesAndLimitsSettings> feesAndLimitsMap) =>
+      _$this._feesAndLimitsMap = feesAndLimitsMap;
 
   String _config;
   String get config => _$this._config;
@@ -972,17 +946,7 @@ class CompanyGatewayEntityBuilder
       _updateDetails = _$v.updateDetails;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _minLimit = _$v.minLimit;
-      _maxLimit = _$v.maxLimit;
-      _feeAmount = _$v.feeAmount;
-      _feePercent = _$v.feePercent;
-      _feeCap = _$v.feeCap;
-      _taxRate1 = _$v.taxRate1;
-      _taxName1 = _$v.taxName1;
-      _taxRate2 = _$v.taxRate2;
-      _taxName2 = _$v.taxName2;
-      _taxRate3 = _$v.taxRate3;
-      _taxName3 = _$v.taxName3;
+      _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
       _config = _$v.config;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1024,17 +988,7 @@ class CompanyGatewayEntityBuilder
               updateDetails: updateDetails,
               customValue1: customValue1,
               customValue2: customValue2,
-              minLimit: minLimit,
-              maxLimit: maxLimit,
-              feeAmount: feeAmount,
-              feePercent: feePercent,
-              feeCap: feeCap,
-              taxRate1: taxRate1,
-              taxName1: taxName1,
-              taxRate2: taxRate2,
-              taxName2: taxName2,
-              taxRate3: taxRate3,
-              taxName3: taxName3,
+              feesAndLimitsMap: feesAndLimitsMap.build(),
               config: config,
               isChanged: isChanged,
               createdAt: createdAt,
@@ -1049,12 +1003,226 @@ class CompanyGatewayEntityBuilder
       try {
         _$failedField = 'gateway';
         gateway.build();
+
+        _$failedField = 'feesAndLimitsMap';
+        feesAndLimitsMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'CompanyGatewayEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
+  @override
+  final double minLimit;
+  @override
+  final double maxLimit;
+  @override
+  final double feeAmount;
+  @override
+  final double feePercent;
+  @override
+  final double feeCap;
+  @override
+  final double taxRate1;
+  @override
+  final String taxName1;
+  @override
+  final double taxRate2;
+  @override
+  final String taxName2;
+  @override
+  final double taxRate3;
+  @override
+  final String taxName3;
+
+  factory _$FeesAndLimitsSettings(
+          [void Function(FeesAndLimitsSettingsBuilder) updates]) =>
+      (new FeesAndLimitsSettingsBuilder()..update(updates)).build();
+
+  _$FeesAndLimitsSettings._(
+      {this.minLimit,
+      this.maxLimit,
+      this.feeAmount,
+      this.feePercent,
+      this.feeCap,
+      this.taxRate1,
+      this.taxName1,
+      this.taxRate2,
+      this.taxName2,
+      this.taxRate3,
+      this.taxName3})
+      : super._();
+
+  @override
+  FeesAndLimitsSettings rebuild(
+          void Function(FeesAndLimitsSettingsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  FeesAndLimitsSettingsBuilder toBuilder() =>
+      new FeesAndLimitsSettingsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is FeesAndLimitsSettings &&
+        minLimit == other.minLimit &&
+        maxLimit == other.maxLimit &&
+        feeAmount == other.feeAmount &&
+        feePercent == other.feePercent &&
+        feeCap == other.feeCap &&
+        taxRate1 == other.taxRate1 &&
+        taxName1 == other.taxName1 &&
+        taxRate2 == other.taxRate2 &&
+        taxName2 == other.taxName2 &&
+        taxRate3 == other.taxRate3 &&
+        taxName3 == other.taxName3;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, minLimit.hashCode),
+                                            maxLimit.hashCode),
+                                        feeAmount.hashCode),
+                                    feePercent.hashCode),
+                                feeCap.hashCode),
+                            taxRate1.hashCode),
+                        taxName1.hashCode),
+                    taxRate2.hashCode),
+                taxName2.hashCode),
+            taxRate3.hashCode),
+        taxName3.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('FeesAndLimitsSettings')
+          ..add('minLimit', minLimit)
+          ..add('maxLimit', maxLimit)
+          ..add('feeAmount', feeAmount)
+          ..add('feePercent', feePercent)
+          ..add('feeCap', feeCap)
+          ..add('taxRate1', taxRate1)
+          ..add('taxName1', taxName1)
+          ..add('taxRate2', taxRate2)
+          ..add('taxName2', taxName2)
+          ..add('taxRate3', taxRate3)
+          ..add('taxName3', taxName3))
+        .toString();
+  }
+}
+
+class FeesAndLimitsSettingsBuilder
+    implements Builder<FeesAndLimitsSettings, FeesAndLimitsSettingsBuilder> {
+  _$FeesAndLimitsSettings _$v;
+
+  double _minLimit;
+  double get minLimit => _$this._minLimit;
+  set minLimit(double minLimit) => _$this._minLimit = minLimit;
+
+  double _maxLimit;
+  double get maxLimit => _$this._maxLimit;
+  set maxLimit(double maxLimit) => _$this._maxLimit = maxLimit;
+
+  double _feeAmount;
+  double get feeAmount => _$this._feeAmount;
+  set feeAmount(double feeAmount) => _$this._feeAmount = feeAmount;
+
+  double _feePercent;
+  double get feePercent => _$this._feePercent;
+  set feePercent(double feePercent) => _$this._feePercent = feePercent;
+
+  double _feeCap;
+  double get feeCap => _$this._feeCap;
+  set feeCap(double feeCap) => _$this._feeCap = feeCap;
+
+  double _taxRate1;
+  double get taxRate1 => _$this._taxRate1;
+  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+
+  String _taxName1;
+  String get taxName1 => _$this._taxName1;
+  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+
+  double _taxRate2;
+  double get taxRate2 => _$this._taxRate2;
+  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+
+  String _taxName2;
+  String get taxName2 => _$this._taxName2;
+  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+
+  FeesAndLimitsSettingsBuilder();
+
+  FeesAndLimitsSettingsBuilder get _$this {
+    if (_$v != null) {
+      _minLimit = _$v.minLimit;
+      _maxLimit = _$v.maxLimit;
+      _feeAmount = _$v.feeAmount;
+      _feePercent = _$v.feePercent;
+      _feeCap = _$v.feeCap;
+      _taxRate1 = _$v.taxRate1;
+      _taxName1 = _$v.taxName1;
+      _taxRate2 = _$v.taxRate2;
+      _taxName2 = _$v.taxName2;
+      _taxRate3 = _$v.taxRate3;
+      _taxName3 = _$v.taxName3;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(FeesAndLimitsSettings other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$FeesAndLimitsSettings;
+  }
+
+  @override
+  void update(void Function(FeesAndLimitsSettingsBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$FeesAndLimitsSettings build() {
+    final _$result = _$v ??
+        new _$FeesAndLimitsSettings._(
+            minLimit: minLimit,
+            maxLimit: maxLimit,
+            feeAmount: feeAmount,
+            feePercent: feePercent,
+            feeCap: feeCap,
+            taxRate1: taxRate1,
+            taxName1: taxName1,
+            taxRate2: taxRate2,
+            taxName2: taxName2,
+            taxRate3: taxRate3,
+            taxName3: taxName3);
     replace(_$result);
     return _$result;
   }

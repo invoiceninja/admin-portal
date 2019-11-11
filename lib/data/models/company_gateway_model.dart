@@ -62,6 +62,7 @@ abstract class CompanyGatewayEntity extends Object
       customValue1: '',
       customValue2: '',
       config: '',
+      feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
     );
   }
 
@@ -98,54 +99,16 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
-  @BuiltValueField(wireName: 'min_limit')
-  double get minLimit;
-
-  @nullable
-  @BuiltValueField(wireName: 'max_limit')
-  double get maxLimit;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_amount')
-  double get feeAmount;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_percent')
-  double get feePercent;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_cap')
-  double get feeCap;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_rate1')
-  double get taxRate1;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_name1')
-  String get taxName1;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_rate2')
-  double get taxRate2;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_name2')
-  String get taxName2;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_rate3')
-  double get taxRate3;
-
-  @nullable
-  @BuiltValueField(wireName: 'fee_tax_name3')
-  String get taxName3;
+  @BuiltValueField(wireName: 'fees_and_limits')
+  BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
 
   String get config;
 
   Map<String, dynamic> get parsedConfig =>
       config.isEmpty ? <String, dynamic>{} : jsonDecode(config);
+
+  FeesAndLimitsSettings getSettingsForGatewayTypeId(String gatewayTypeId) =>
+      feesAndLimitsMap.containsKey(gatewayTypeId) ?? FeesAndLimitsSettings();
 
   @override
   String get listDisplayName {
@@ -228,4 +191,60 @@ abstract class CompanyGatewayEntity extends Object
 
   static Serializer<CompanyGatewayEntity> get serializer =>
       _$companyGatewayEntitySerializer;
+}
+
+abstract class FeesAndLimitsSettings
+    implements Built<FeesAndLimitsSettings, FeesAndLimitsSettingsBuilder> {
+  factory FeesAndLimitsSettings({String id}) {
+    return _$FeesAndLimitsSettings._();
+  }
+
+  FeesAndLimitsSettings._();
+
+  @nullable
+  @BuiltValueField(wireName: 'min_limit')
+  double get minLimit;
+
+  @nullable
+  @BuiltValueField(wireName: 'max_limit')
+  double get maxLimit;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_amount')
+  double get feeAmount;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_percent')
+  double get feePercent;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_cap')
+  double get feeCap;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate1')
+  double get taxRate1;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name1')
+  String get taxName1;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate2')
+  double get taxRate2;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name2')
+  String get taxName2;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_rate3')
+  double get taxRate3;
+
+  @nullable
+  @BuiltValueField(wireName: 'fee_tax_name3')
+  String get taxName3;
+
+  static Serializer<FeesAndLimitsSettings> get serializer =>
+      _$feesAndLimitsSettingsSerializer;
 }

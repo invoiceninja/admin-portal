@@ -94,21 +94,23 @@ class CompanyGatewayScreen extends StatelessWidget {
           store.dispatch(FilterCompanyGatewaysByState(state));
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.companyGateway)
-          ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
               heroTag: 'company_gateway_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditCompanyGateway(
-                    companyGateway: CompanyGatewayEntity(), context: context));
+                if (state.settingsUIState.isFiltered) {
+
+                } else {
+                  store.dispatch(EditCompanyGateway(
+                      companyGateway: CompanyGatewayEntity(), context: context));
+                }
               },
               child: Icon(
                 Icons.add,
                 color: Colors.white,
               ),
               tooltip: localization.newCompanyGateway,
-            )
-          : null,
+            ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
@@ -32,6 +33,29 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final userCompany = viewModel.state.userCompany;
     final companyGateway = viewModel.companyGateway;
     final localization = AppLocalization.of(context);
+
+    final Map<String, String> fields = {};
+    for (var gatewayTypeId in kGatewayTypes.keys)
+      if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {
+        final settings =
+            companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
+        fields[localization.feeAmount] = settings.feeAmount == null
+            ? null
+            : formatNumber(settings.feeAmount, context);
+        fields[localization.feePercent] = settings.feePercent == null
+            ? null
+            : formatNumber(settings.feePercent, context,
+                formatNumberType: FormatNumberType.percent);
+        fields[localization.feeCap] = settings.feeCap == null
+            ? null
+            : formatNumber(settings.feeCap, context);
+        fields[localization.minLimit] = settings.minLimit == null
+            ? null
+            : formatNumber(settings.minLimit, context);
+        fields[localization.maxLimit] = settings.maxLimit == null
+            ? null
+            : formatNumber(settings.maxLimit, context);
+      }
 
     return Scaffold(
       appBar: AppBar(
@@ -79,23 +103,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             color: Theme.of(context).backgroundColor,
             height: 12.0,
           ),
-          FieldGrid({
-            localization.feeAmount: companyGateway.feeAmount == null
-                ? null
-                : formatNumber(companyGateway.feeAmount, context),
-            localization.feePercent: companyGateway.feePercent == null
-                ? null
-                : formatNumber(companyGateway.feePercent, context,
-                    formatNumberType: FormatNumberType.percent),
-            localization.feeCap: companyGateway.feeCap == null
-                ? null
-                : formatNumber(companyGateway.feeCap, context),
-            localization.minLimit: companyGateway.minLimit == null
-                ? null
-                : formatNumber(companyGateway.minLimit, context),
-            companyGateway.maxLimit == null ? null : localization.maxLimit:
-                formatNumber(companyGateway.maxLimit, context),
-          }),
+          FieldGrid({}),
         ],
       ),
     );
