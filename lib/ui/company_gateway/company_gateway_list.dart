@@ -43,9 +43,21 @@ class CompanyGatewayList extends StatelessWidget {
                   child: viewModel.companyGatewayList.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ReorderableListView(
-                          onReorder: (a, b) {
-                            print('REORDER: $a $b');
-                            viewModel.onSortChanged(a, b);
+                          onReorder: (oldIndex, newIndex) {
+                            print('REORDER: $oldIndex $newIndex');
+
+                            // https://stackoverflow.com/a/54164333/497368
+                            // These two lines are workarounds for ReorderableListView problems
+                            if (newIndex > viewModel.companyGatewayList.length) {
+                              newIndex = viewModel.companyGatewayList.length;
+                            }
+                            if (oldIndex < newIndex) {
+                              newIndex--;
+                            }
+
+                            print('REORDER FIXED: $oldIndex $newIndex');
+
+                            viewModel.onSortChanged(oldIndex, newIndex);
                           },
                           children: viewModel.companyGatewayList
                               .map((companyGatewayId) {

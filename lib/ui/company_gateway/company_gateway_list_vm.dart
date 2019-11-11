@@ -63,18 +63,19 @@ class CompanyGatewayListVM {
     }
 
     final state = store.state;
+    final gatewayIds = memoizedFilteredCompanyGatewayList(
+      state.companyGatewayState.map,
+      state.companyGatewayState.list,
+      state.companyGatewayListState,
+      state.uiState.settingsUIState.settings.companyGatewayIds,
+      !state.uiState.settingsUIState.isFiltered,
+    );
 
     return CompanyGatewayListVM(
       state: state,
       userCompany: state.userCompany,
       listState: state.companyGatewayListState,
-      companyGatewayList: memoizedFilteredCompanyGatewayList(
-        state.companyGatewayState.map,
-        state.companyGatewayState.list,
-        state.companyGatewayListState,
-        state.uiState.settingsUIState.settings.companyGatewayIds,
-        !state.uiState.settingsUIState.isFiltered,
-      ),
+      companyGatewayList: gatewayIds,
       companyGatewayMap: state.companyGatewayState.map,
       isLoading: state.isLoading,
       isLoaded: state.companyGatewayState.isLoaded,
@@ -93,11 +94,14 @@ class CompanyGatewayListVM {
               EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateway, action),
       onRefreshed: (context) => _handleRefresh(context),
-      onSortChanged: (int first, int second) {
+      onSortChanged: (int oldIndex, int newIndex) {
         final uiState = state.uiState.settingsUIState;
-        final gatewayMap = state.companyGatewayState.map;
+        final gatewayId = gatewayIds[oldIndex];
+        gatewayIds.remove(gatewayId);
+        gatewayIds.insert(newIndex, gatewayId);
+
         final settings = uiState.settings
-            .rebuild((b) => b..companyGatewayIds = gatewayMap.keys.join(','));
+            .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
     );
