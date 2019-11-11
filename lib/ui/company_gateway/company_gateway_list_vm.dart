@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -47,6 +50,8 @@ class CompanyGatewayListVM {
     @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortChanged,
+    @required this.onSavePressed,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -88,6 +93,38 @@ class CompanyGatewayListVM {
               EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateway, action),
       onRefreshed: (context) => _handleRefresh(context),
+      onSortChanged: (int first, int second) {
+        final uiState = state.uiState.settingsUIState;
+        final gatewayMap = state.companyGatewayState.map;
+        final settings = uiState.settings.rebuild((b) => b
+            ..companyGatewayIds = gatewayMap.keys.join(',')
+        );
+        store.dispatch(UpdateSettings(settings: settings));
+      },
+      onSavePressed: (context) {
+        final settingsUIState = state.uiState.settingsUIState;
+        switch (settingsUIState.entityType) {
+          case EntityType.company:
+            final completer = snackBarCompleter<Null>(
+                context, AppLocalization.of(context).savedSettings);
+            store.dispatch(SaveCompanyRequest(
+                completer: completer,
+                company: settingsUIState.userCompany.company));
+            break;
+          case EntityType.group:
+            final completer = snackBarCompleter<GroupEntity>(
+                context, AppLocalization.of(context).savedSettings);
+            store.dispatch(SaveGroupRequest(
+                completer: completer, group: settingsUIState.group));
+            break;
+          case EntityType.client:
+            final completer = snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).savedSettings);
+            store.dispatch(SaveClientRequest(
+                completer: completer, client: settingsUIState.client));
+            break;
+        }
+      },
     );
   }
 
@@ -104,4 +141,6 @@ class CompanyGatewayListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final Function(int, int) onSortChanged;
+  final Function(BuildContext) onSavePressed;
 }

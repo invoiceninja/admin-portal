@@ -52,22 +52,8 @@ class CompanyGatewayScreen extends StatelessWidget {
             context, companyGateways, EntityAction.toggleMultiselect);
       },
       isSettings: true,
-      appBarTitle: ListFilter(
-        title: localization.companyGateways,
-        key: ValueKey(state.companyGatewayListState.filterClearedAt),
-        filter: state.companyGatewayListState.filter,
-        onFilterChanged: (value) {
-          store.dispatch(FilterCompanyGateways(value));
-        },
-      ),
+      appBarTitle: Text(localization.companyGateways),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.companyGatewayListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterCompanyGateways(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           FlatButton(
             key: key,

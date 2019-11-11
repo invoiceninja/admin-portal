@@ -45,6 +45,7 @@ class CompanyGatewayList extends StatelessWidget {
                       : ReorderableListView(
                           onReorder: (a, b) {
                             print('REORDER: $a $b');
+                            viewModel.onSortChanged(a, b);
                           },
                           children: viewModel.companyGatewayList
                               .map((companyGatewayId) {
