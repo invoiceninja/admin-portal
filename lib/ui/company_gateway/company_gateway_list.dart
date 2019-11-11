@@ -48,7 +48,8 @@ class CompanyGatewayList extends StatelessWidget {
 
                             // https://stackoverflow.com/a/54164333/497368
                             // These two lines are workarounds for ReorderableListView problems
-                            if (newIndex > viewModel.companyGatewayList.length) {
+                            if (newIndex >
+                                viewModel.companyGatewayList.length) {
                               newIndex = viewModel.companyGatewayList.length;
                             }
                             if (oldIndex < newIndex) {
@@ -71,6 +72,10 @@ class CompanyGatewayList extends StatelessWidget {
                                 companyGateway: companyGateway,
                                 onTap: () => viewModel.onCompanyGatewayTap(
                                     context, companyGateway),
+                                onRemovePressed:
+                                    viewModel.state.settingsUIState.isFiltered
+                                        ? () => viewModel.onRemovePressed(companyGatewayId)
+                                        : null,
                                 onEntityAction: (EntityAction action) {
                                   if (action == EntityAction.more) {
                                     showDialog(companyGateway);

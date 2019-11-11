@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
@@ -14,10 +15,10 @@ class CompanyGatewayListItem extends StatelessWidget {
     @required this.user,
     @required this.onEntityAction,
     @required this.onTap,
-    this.onLongPress,
-    //@required this.onCheckboxChanged,
     @required this.companyGateway,
     @required this.filter,
+    this.onRemovePressed,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   }) : super(key: key);
@@ -26,10 +27,10 @@ class CompanyGatewayListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  //final ValueChanged<bool> onCheckboxChanged;
   final CompanyGatewayEntity companyGateway;
   final String filter;
   final Function(bool) onCheckboxChanged;
+  final Function onRemovePressed;
   final bool isChecked;
 
   static final companyGatewayItemKey =
@@ -58,7 +59,10 @@ class CompanyGatewayListItem extends StatelessWidget {
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
         onLongPress: onLongPress,
-        //trailing: ,
+        trailing: onRemovePressed == null ? null : FlatButton(
+          child: Text(AppLocalization.of(context).remove),
+          onPressed: onRemovePressed,
+        ),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

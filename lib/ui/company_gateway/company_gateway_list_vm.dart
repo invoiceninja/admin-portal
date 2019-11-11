@@ -49,6 +49,7 @@ class CompanyGatewayListVM {
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
     @required this.onSortChanged,
+    @required this.onRemovePressed,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -63,6 +64,7 @@ class CompanyGatewayListVM {
     }
 
     final state = store.state;
+    final uiState = state.uiState.settingsUIState;
     final gatewayIds = memoizedFilteredCompanyGatewayList(
       state.companyGatewayState.map,
       state.companyGatewayState.list,
@@ -94,8 +96,13 @@ class CompanyGatewayListVM {
               EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateway, action),
       onRefreshed: (context) => _handleRefresh(context),
+      onRemovePressed: (gatewayId) {
+        gatewayIds.remove(gatewayId);
+        final settings = uiState.settings
+            .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
+        store.dispatch(UpdateSettings(settings: settings));
+      },
       onSortChanged: (int oldIndex, int newIndex) {
-        final uiState = state.uiState.settingsUIState;
         final gatewayId = gatewayIds[oldIndex];
         gatewayIds.remove(gatewayId);
         gatewayIds.insert(newIndex, gatewayId);
@@ -121,4 +128,5 @@ class CompanyGatewayListVM {
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final Function(int, int) onSortChanged;
+  final Function(String) onRemovePressed;
 }
