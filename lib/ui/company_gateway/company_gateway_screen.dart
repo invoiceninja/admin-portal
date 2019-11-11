@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
@@ -53,27 +54,11 @@ class CompanyGatewayScreen extends StatelessWidget {
       appBarTitle: Text(localization.companyGateways),
       appBarActions: [
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearCompanyGatewayMultiselect(context: context));
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.companyGatewayListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.companyGatewayListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final companyGateways = viewModel.companyGatewayList
                         .map<CompanyGatewayEntity>((companyGatewayId) =>
                             viewModel.companyGatewayMap[companyGatewayId])
@@ -85,10 +70,17 @@ class CompanyGatewayScreen extends StatelessWidget {
                         context: context,
                         onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
+
                     store.dispatch(
                         ClearCompanyGatewayMultiselect(context: context));
                   },
-          ),
+            onCancelPressed: (context) => store
+                .dispatch(ClearCompanyGatewayMultiselect(context: context)),
+          )
+        else
+          SaveCancelButtons(
+        //onSavePressed: viewModel.on,
+        ),
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(

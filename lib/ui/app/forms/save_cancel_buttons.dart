@@ -7,7 +7,7 @@ class SaveCancelButtons extends StatelessWidget {
     this.onSavePressed,
     this.onCancelPressed,
     this.saveLabel,
-    this.isWorking,
+    this.isWorking = false,
   });
 
   final bool isWorking;
