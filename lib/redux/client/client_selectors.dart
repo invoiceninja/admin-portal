@@ -42,8 +42,16 @@ List<String> filteredClientsSelector(
       if (!clientListState.entityMatchesFilter(group)) {
         return false;
       }
-    } else if (!client.isActive) {
-      return false;
+    } else {
+      if (!client.isActive) {
+        return false;
+      }
+
+      if (clientListState.filterEntityType == EntityType.user) {
+        if (!client.userCanAccess(clientListState.filterEntityId)) {
+          return false;
+        }
+      }
     }
 
     if (!client.matchesStates(clientListState.stateFilters)) {
