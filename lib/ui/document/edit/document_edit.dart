@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -92,8 +92,7 @@ class _DocumentEditState extends State<DocumentEdit> {
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
               */
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !document.isDeleted,
               isDirty: document.isNew || document != viewModel.origDocument,

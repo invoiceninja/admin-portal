@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEdit extends StatefulWidget {
@@ -63,8 +63,7 @@ class _VendorEditState extends State<VendorEdit>
                 ),
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !vendor.isDeleted,
               isDirty: vendor.isNew || vendor != viewModel.origVendor,

@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_shipping_address.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientEdit extends StatefulWidget {
@@ -65,8 +65,7 @@ class _ClientEditState extends State<ClientEdit>
                 ),
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !client.isDeleted,
               isDirty: client.isNew || client != viewModel.origClient,

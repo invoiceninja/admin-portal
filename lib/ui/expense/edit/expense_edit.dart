@@ -5,7 +5,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
@@ -63,8 +63,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
                 ),
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !expense.isDeleted,
               isDirty: expense.isNew || expense != viewModel.origExpense,

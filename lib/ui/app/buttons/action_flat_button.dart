@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class ActionIconButton extends StatelessWidget {
-  const ActionIconButton({
+class ActionFlatButton extends StatelessWidget {
+  const ActionFlatButton({
     this.onPressed,
     this.tooltip,
-    this.icon,
     this.isSaving = false,
     this.isDirty = false,
     this.isVisible = true,
@@ -17,7 +16,6 @@ class ActionIconButton extends StatelessWidget {
   final bool isVisible;
   final Function onPressed;
   final String tooltip;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {

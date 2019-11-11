@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class QuoteEdit extends StatefulWidget {
@@ -74,8 +74,7 @@ class _QuoteEditState extends State<QuoteEdit>
                 ),
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !invoice.isDeleted,
               isSaving: widget.viewModel.isSaving,

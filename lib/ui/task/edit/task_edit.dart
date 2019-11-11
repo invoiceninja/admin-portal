@@ -6,7 +6,7 @@ import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskEdit extends StatefulWidget {
@@ -80,8 +80,7 @@ class _TaskEditState extends State<TaskEdit>
                 ),
                 onPressed: () => viewModel.onCancelPressed(context),
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
+            ActionFlatButton(
               tooltip: localization.save,
               isVisible: !task.isDeleted,
               isSaving: widget.viewModel.isSaving,

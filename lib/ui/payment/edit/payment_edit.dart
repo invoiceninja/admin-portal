@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -108,8 +108,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   onPressed: () => viewModel.onCancelPressed(context),
                 ),
               Builder(builder: (BuildContext context) {
-                return ActionIconButton(
-                  icon: Icons.cloud_upload,
+                return ActionFlatButton(
                   tooltip: AppLocalization.of(context).save,
                   isVisible: !payment.isDeleted,
                   isSaving: viewModel.isSaving,

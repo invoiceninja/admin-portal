@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductEdit extends StatefulWidget {
@@ -133,8 +133,7 @@ class _ProductEditState extends State<ProductEdit> {
                 return Container();
               }
 
-              return ActionIconButton(
-                icon: Icons.cloud_upload,
+              return ActionFlatButton(
                 tooltip: localization.save,
                 isVisible: !product.isDeleted,
                 isSaving: viewModel.isSaving,

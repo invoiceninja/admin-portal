@@ -8,8 +8,6 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actio
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
