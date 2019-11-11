@@ -115,6 +115,22 @@ class SettingsViewer extends StatelessWidget {
       localization.idNumber: settings.idNumber,
       localization.vatNumber: settings.vatNumber,
       localization.website: settings.website,
+      localization.address1: settings.address1,
+      localization.address2: settings.address2,
+      localization.city: settings.city,
+      localization.state: settings.state,
+      localization.country: settings.countryId != null
+          ? state.staticState.countryMap[settings.countryId]?.name
+          : null,
+      localization.postalCode: settings.postalCode,
+      localization.pageSize: settings.pageSize,
+      localization.fontSize: settings.fontSize?.toString(),
+      localization.primaryColor: settings.primaryColor,
+      localization.secondaryColor: settings.secondaryColor,
+      localization.primaryFont: settings.primaryFont,
+      localization.secondaryFont: settings.secondaryFont,
+      localization.hidePaidToDate: settings.hidePaidToDate?.toString(),
+      localization.invoiceEmbedDocuments: settings.embedDocuments?.toString(),
       localization.timezone: settings.hasTimezone
           ? staticState.timezoneMap[settings.timezoneId]?.name
           : null,
@@ -139,6 +155,153 @@ class SettingsViewer extends StatelessWidget {
       localization.paymentType: settings.hasDefaultPaymentTypeId
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,
+      localization.invoiceFields: settings.invoiceFields,
+      localization.emailSignature: settings.emailFooter,
+      localization.emailStyle: settings.emailStyle,
+      localization.replyToEmail: settings.replyToEmail,
+      localization.bccEmail: settings.bccEmail,
+      localization.customValue1: settings.customValue1,
+      localization.customValue2: settings.customValue2,
+      localization.customValue3: settings.customValue3,
+      localization.customValue4: settings.customValue4,
+      //localization.paymentTerms: settings.defaultPaymentTerms,
+      localization.paymentTerms: settings.companyGatewayIds != null
+          ? state.companyGatewayState.map[settings.companyGatewayIds]
+              ?.listDisplayName
+          : null,
+      localization.taskRate: settings.defaultTaskRate?.toString(),
+      localization.attachPdf: settings.pdfEmailAttachment?.toString(),
+      localization.attachUbl: settings.ublEmailAttachment?.toString(),
+      localization.attachDocuments:
+          settings.documentEmailAttachment?.toString(),
+      localization.attachDocuments:
+          settings.documentEmailAttachment?.toString(),
+      localization.emailStyleCustom: settings.emailStyleCustom?.toString(),
+      localization.emailSubjectInvoice:
+          settings.emailSubjectInvoice?.toString(),
+      localization.emailSubjectQuote: settings.emailSubjectQuote?.toString(),
+      localization.emailSubjectPayment:
+          settings.emailSubjectPayment?.toString(),
+      //localization.emailBodyInvoice:
+      //    settings.emailBodyInvoice?.toString(),
+      //localization.emailBodyQuote:
+      //    settings.emailBodyQuote?.toString(),
+      //localization.emailBodyPayment:
+      //    settings.emailBodyPayment?.toString(),
+      //localization.emailSubjectReminder1:
+      //    settings.emailSubjectReminder1?.toString(),
+      //localization.emailSubjectReminder2:
+      //    settings.emailSubjectReminder2?.toString(),
+      //localization.emailSubjectReminder3:
+      //    settings.emailSubjectReminder3?.toString(),
+      //localization.emailSubjectReminder4:
+      //    settings.emailSubjectReminder4?.toString(),
+      //localization.emailBodyReminder1:
+      //    settings.emailBodyReminder1?.toString(),
+      //localization.emailBodyReminder2:
+      //    settings.emailBodyReminder2?.toString(),
+      //localization.emailBodyReminder3:
+      //    settings.emailBodyReminder3?.toString(),
+      //localization.emailBodyReminder4:
+      //    settings.emailBodyReminder4?.toString(),
+      localization.customMessageDashboard:
+          settings.customMessageDashboard?.toString(),
+      localization.customMessageUnpaidInvoice:
+          settings.customMessageUnpaidInvoice?.toString(),
+      localization.customMessagePaidInvoice:
+          settings.customMessagePaidInvoice?.toString(),
+      localization.customMessageUnapprovedQuote:
+          settings.customMessageUnapprovedQuote?.toString(),
+      localization.lockSentInvoices: settings.lockSentInvoices?.toString(),
+      localization.autoArchiveInvoice: settings.autoArchiveInvoice?.toString(),
+      localization.autoArchiveQuote: settings.autoArchiveQuote?.toString(),
+      localization.autoEmailInvoice: settings.autoEmailInvoice?.toString(),
+      localization.autoConvertQuote: settings.autoConvertQuote?.toString(),
+      localization.inclusiveTaxes: settings.enableInclusiveTaxes?.toString(),
+      localization.translations: settings.translations?.keys?.join(', '),
+      localization.taskNumberPattern: settings.taskNumberPattern,
+      localization.taskNumberCounter: settings.taskNumberCounter?.toString(),
+      localization.expenseNumberPattern: settings.expenseNumberPattern,
+      localization.expenseNumberCounter:
+          settings.expenseNumberCounter?.toString(),
+      localization.vendorNumberPattern: settings.vendorNumberPattern,
+      localization.vendorNumberCounter:
+          settings.vendorNumberCounter?.toString(),
+      localization.ticketNumberPattern: settings.ticketNumberPattern,
+      localization.ticketNumberCounter:
+          settings.ticketNumberCounter?.toString(),
+      localization.paymentNumberPattern: settings.paymentNumberPattern,
+      localization.paymentNumberCounter:
+          settings.paymentNumberCounter?.toString(),
+      localization.invoiceNumberPattern: settings.invoiceNumberPattern,
+      localization.invoiceNumberCounter:
+          settings.invoiceNumberCounter?.toString(),
+      localization.quoteNumberPattern: settings.quoteNumberPattern,
+      localization.quoteNumberCounter: settings.quoteNumberCounter?.toString(),
+      localization.clientNumberPattern: settings.clientNumberPattern,
+      localization.clientNumberCounter:
+          settings.clientNumberCounter?.toString(),
+      localization.creditNumberPattern: settings.creditNumberPattern,
+      localization.creditNumberCounter:
+          settings.creditNumberCounter?.toString(),
+      localization.recurringPrefix:
+          settings.recurringInvoiceNumberPrefix?.toString(),
+      localization.resetCounter: settings.resetCounterFrequencyId?.toString(),
+      localization.resetCounterDate: settings.resetCounterDate?.toString(),
+      localization.counterPadding: settings.counterPadding?.toString(),
+      localization.sharedInvoiceQuoteCounter:
+          settings.sharedInvoiceQuoteCounter?.toString(),
+      //localization.defaultInvoiceTerms: settings.defaultInvoiceTerms,
+      //localization.defaultQuoteTerms: settings.defaultQuoteTerms,
+      localization.quoteFooter: settings.defaultQuoteFooter?.toString(),
+      localization.invoiceTaxRates:
+          settings.numberOfInvoiceTaxRates?.toString(),
+      localization.itemTaxRates: settings.numberOfItemTaxRates?.toString(),
+      //localization.defaultInvoiceDesignId: settings.defaultInvoiceDesignId,
+      //localization.defaultQuoteDesignId: settings.defaultQuoteDesignId,
+      localization.invoiceFooter: settings.defaultInvoiceFooter?.toString(),
+      localization.invoiceLabels: settings.invoiceLabels?.toString(),
+      localization.defaultTaxName1: settings.defaultTaxName1?.toString(),
+      localization.defaultTaxRate1: settings.defaultTaxRate1?.toString(),
+      localization.defaultTaxName2: settings.defaultTaxName2?.toString(),
+      localization.defaultTaxRate2: settings.defaultTaxRate2?.toString(),
+      localization.defaultTaxName3: settings.defaultTaxName3?.toString(),
+      localization.defaultTaxRate3: settings.defaultTaxRate3?.toString(),
+      //localization.defaultPaymentTypeId: settings.defaultPaymentTypeId,
+      localization.enablePortalPassword:
+          settings.enablePortalPassword?.toString(),
+      localization.sendPortalPassword: settings.sendPortalPassword?.toString(),
+      localization.signatureOnPdf: settings.signatureOnPdf?.toString(),
+      localization.enableMarkup: settings.enableEmailMarkup?.toString(),
+      localization.showAcceptInvoiceTerms:
+          settings.showAcceptInvoiceTerms?.toString(),
+      localization.showAcceptQuoteTerms:
+          settings.showAcceptQuoteTerms?.toString(),
+      localization.requireInvoiceSignature:
+          settings.requireInvoiceSignature?.toString(),
+      localization.requireQuoteSignature:
+          settings.requireQuoteSignature?.toString(),
+      localization.allPagesHeader:
+          settings.allPagesHeader?.toString(),
+      localization.allPagesFooter:
+          settings.allPagesFooter?.toString(),
+      //localization.enableReminder1: settings.enableReminder1,
+      //localization.enableReminder2: settings.enableReminder2,
+      //localization.enableReminder3: settings.enableReminder3,
+      //localization.enableReminder4: settings.enableReminder4,
+      //localization.numDaysReminder1: settings.numDaysReminder1,
+      //localization.numDaysReminder2: settings.numDaysReminder2,
+      //localization.numDaysReminder3: settings.numDaysReminder3,
+      //localization.scheduleReminder1: settings.scheduleReminder1,
+      //localization.scheduleReminder2: settings.scheduleReminder2,
+      //localization.scheduleReminder3: settings.scheduleReminder3,
+      //localization.endlessReminderFrequencyId: settings.endlessReminderFrequencyId,
+      //localization.lateFeeAmount1: settings.lateFeeAmount1,
+      //localization.lateFeeAmount2: settings.lateFeeAmount2,
+      //localization.lateFeeAmount3: settings.lateFeeAmount3,
+      //localization.lateFeePercent1: settings.lateFeePercent1,
+      //localization.lateFeePercent2: settings.lateFeePercent2,
+      //localization.lateFeePercent3: settings.lateFeePercent3,
     });
   }
 }

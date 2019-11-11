@@ -747,7 +747,48 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
-      'long_press_multiselect': 'Long-press Multiselect'
+      'long_press_multiselect': 'Long-press Multiselect',
+      'custom_value_1': 'Custom Value 1',
+      'custom_value_2': 'Custom Value 2',
+      'custom_value_3': 'Custom Value 3',
+      'custom_value_4': 'Custom Value 4',
+      'email_style_custom': 'Custom Email Style',
+      'custom_message_dashboard': 'Custom Dashboard Message',
+      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
+      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
+      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
+      'lock_sent_invoices': 'Lock Sent Invoices',
+      'translations': 'Translations',
+      'task_number_pattern': 'Task Number Pattern',
+      'task_number_counter': 'Task Number Counter',
+      'expense_number_pattern': 'Expense Number Pattern',
+      'expense_number_counter': 'Expense Number Counter',
+      'vendor_number_pattern': 'Vendor Number Pattern',
+      'vendor_number_counter': 'Vendor Number Counter',
+      'ticket_number_pattern': 'Ticket Number Pattern',
+      'ticket_number_counter': 'Ticket Number Counter',
+      'payment_number_pattern': 'Payment Number Pattern',
+      'payment_number_counter': 'Payment Number Counter',
+      'invoice_number_pattern': 'Invoice Number Pattern',
+      'invoice_number_counter': 'Invoice Number Counter',
+      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_counter': 'Quote Number Counter',
+      'client_number_pattern': 'Credit Number Pattern',
+      'client_number_counter': 'Credit Number Counter',
+      'credit_number_pattern': 'Credit Number Pattern',
+      'credit_number_counter': 'Credit Number Counter',
+      'reset_counter_date': 'Reset Counter Date',
+      'counter_padding': 'Counter Padding',
+      'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
+      'default_tax_name_1': 'Default Tax Name 1',
+      'default_tax_rate_1': 'Default Tax Rate 1',
+      'default_tax_name_2': 'Default Tax Name 2',
+      'default_tax_rate_2': 'Default Tax Rate 2',
+      'default_tax_name_3': 'Default Tax Name 3',
+      'default_tax_rate_3': 'Default Tax Rate 3',
+      'email_subject_invoice': 'Email Invoice Subject',
+      'email_subject_quote': 'Email Quote Subject',
+      'email_subject_payment': 'Email Payment Subject'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -15530,6 +15571,125 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get twoTaxRates => _localizedValues[localeCode]['two_tax_rates'];
 
   String get threeTaxRates => _localizedValues[localeCode]['three_tax_rates'];
+
+  String get customValue1 => _localizedValues[localeCode]['custom_value_1'];
+
+  String get customValue2 => _localizedValues[localeCode]['custom_value_2'];
+
+  String get customValue3 => _localizedValues[localeCode]['custom_value_3'];
+
+  String get customValue4 => _localizedValues[localeCode]['custom_value_4'];
+
+  String get emailStyleCustom =>
+      _localizedValues[localeCode]['email_style_custom'];
+
+  String get customMessageDashboard =>
+      _localizedValues[localeCode]['custom_message_dashboard'];
+
+  String get customMessageUnpaidInvoice =>
+      _localizedValues[localeCode]['custom_message_unpaid_invoice'];
+
+  String get customMessagePaidInvoice =>
+      _localizedValues[localeCode]['custom_message_paid_invoice'];
+
+  String get customMessageUnapprovedQuote =>
+      _localizedValues[localeCode]['custom_message_unapproved_quote'];
+
+  String get lockSentInvoices =>
+      _localizedValues[localeCode]['lock_sent_invoices'];
+
+  String get translations => _localizedValues[localeCode]['translations'];
+
+  String get taskNumberPattern =>
+      _localizedValues[localeCode]['task_number_pattern'];
+
+  String get taskNumberCounter =>
+      _localizedValues[localeCode]['task_number_counter'];
+
+  String get expenseNumberPattern =>
+      _localizedValues[localeCode]['expense_number_pattern'];
+
+  String get expenseNumberCounter =>
+      _localizedValues[localeCode]['expense_number_counter'];
+
+  String get vendorNumberPattern =>
+      _localizedValues[localeCode]['vendor_number_pattern'];
+
+  String get vendorNumberCounter =>
+      _localizedValues[localeCode]['vendor_number_counter'];
+
+  String get ticketNumberPattern =>
+      _localizedValues[localeCode]['ticket_number_pattern'];
+
+  String get ticketNumberCounter =>
+      _localizedValues[localeCode]['ticket_number_counter'];
+
+  String get paymentNumberPattern =>
+      _localizedValues[localeCode]['payment_number_pattern'];
+
+  String get paymentNumberCounter =>
+      _localizedValues[localeCode]['payment_number_counter'];
+
+  String get invoiceNumberPattern =>
+      _localizedValues[localeCode]['invoice_number_pattern'];
+
+  String get invoiceNumberCounter =>
+      _localizedValues[localeCode]['invoice_number_counter'];
+
+  String get quoteNumberPattern =>
+      _localizedValues[localeCode]['quote_number_pattern'];
+
+  String get quoteNumberCounter =>
+      _localizedValues[localeCode]['quote_number_counter'];
+
+  String get clientNumberPattern =>
+      _localizedValues[localeCode]['client_number_pattern'];
+
+  String get clientNumberCounter =>
+      _localizedValues[localeCode]['client_number_counter'];
+
+  String get creditNumberPattern =>
+      _localizedValues[localeCode]['credit_number_pattern'];
+
+  String get creditNumberCounter =>
+      _localizedValues[localeCode]['credit_number_counter'];
+
+  String get resetCounterDate =>
+      _localizedValues[localeCode]['reset_counter_date'];
+
+  String get counterPadding => _localizedValues[localeCode]['counter_padding'];
+
+  String get sharedInvoiceQuoteCounter =>
+      _localizedValues[localeCode]['shared_invoice_quote_counter'];
+
+  String get invoiceLabels => _localizedValues[localeCode]['invoice_labels'];
+
+  String get defaultTaxName1 =>
+      _localizedValues[localeCode]['default_tax_name_1'];
+
+  String get defaultTaxRate1 =>
+      _localizedValues[localeCode]['default_tax_rate_1'];
+
+  String get defaultTaxName2 =>
+      _localizedValues[localeCode]['default_tax_name_2'];
+
+  String get defaultTaxRate2 =>
+      _localizedValues[localeCode]['default_tax_rate_2'];
+
+  String get defaultTaxName3 =>
+      _localizedValues[localeCode]['default_tax_name_3'];
+
+  String get defaultTaxRate3 =>
+      _localizedValues[localeCode]['default_tax_rate_3'];
+
+  String get emailSubjectInvoice =>
+      _localizedValues[localeCode]['email_subject_invoice'];
+
+  String get emailSubjectQuote =>
+      _localizedValues[localeCode]['email_subject_quote'];
+
+  String get emailSubjectPayment =>
+      _localizedValues[localeCode]['email_subject_payment'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
