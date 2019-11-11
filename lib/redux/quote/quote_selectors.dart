@@ -24,12 +24,21 @@ List<String> filteredQuotesSelector(
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
-    if (quoteListState.filterEntityId != null) {
+
+    if (quoteListState.filterEntityType == EntityType.client) {
       if (!quoteListState.entityMatchesFilter(client)) {
         return false;
       }
-    } else if (!client.isActive) {
-      return false;
+    } else {
+      if (!client.isActive) {
+        return false;
+      }
+
+      if (quoteListState.filterEntityType == EntityType.user) {
+        if (!quote.userCanAccess(quoteListState.filterEntityId)) {
+          return false;
+        }
+      }
     }
 
     if (!quote.matchesStates(quoteListState.stateFilters)) {

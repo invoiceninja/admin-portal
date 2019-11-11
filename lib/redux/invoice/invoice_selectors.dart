@@ -72,10 +72,6 @@ List<String> filteredInvoicesSelector(
       }
     }
 
-    if (invoiceListState.filterEntityId != null) {
-    } else if (!client.isActive) {
-      return false;
-    }
 
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
