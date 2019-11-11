@@ -79,8 +79,9 @@ class CompanyGatewayScreen extends StatelessWidget {
           )
         else
           SaveCancelButtons(
-        //onSavePressed: viewModel.on,
-        ),
+            onSavePressed: viewModel.onSavePressed,
+            onCancelPressed: viewModel.onCancelPressed,
+          ),
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(

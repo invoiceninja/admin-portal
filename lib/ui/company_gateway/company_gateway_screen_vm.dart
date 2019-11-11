@@ -43,6 +43,7 @@ class CompanyGatewayScreenVM {
     @required this.onEntityAction,
     @required this.companyGatewayMap,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
   });
 
   final bool isInMultiselect;
@@ -51,6 +52,7 @@ class CompanyGatewayScreenVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, CompanyGatewayEntity> companyGatewayMap;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
 
   static CompanyGatewayScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -66,6 +68,7 @@ class CompanyGatewayScreenVM {
       onEntityAction: (BuildContext context, List<BaseEntity> companyGateways,
               EntityAction action) =>
           handleCompanyGatewayAction(context, companyGateways, action),
+      onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         switch (settingsUIState.entityType) {
