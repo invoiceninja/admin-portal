@@ -23,25 +23,17 @@ class ExpenseList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
     final state = viewModel.state;
     final widgets = <Widget>[];
-    BaseEntity filteredEntity;
-
-    if (listState.filterEntityType == EntityType.vendor) {
-      filteredEntity = state.vendorState.map[listState.filterEntityId];
-    } else if (listState.filterEntityType == EntityType.client) {
-      filteredEntity = state.clientState.map[listState.filterEntityId];
-    }
 
     final documentMap = memoizedEntityDocumentMap(
         EntityType.expense, state.documentState.map, state.expenseState.map);
 
-    if (filteredEntity != null) {
+    if (listState.filterEntityId != null) {
       widgets.add(ListFilterMessage(
-        title:
-            '${listState.filterEntityType == EntityType.vendor ? localization.filteredByVendor : localization.filteredByClient}: ${filteredEntity.listDisplayName}',
+        filterEntityType: listState.filterEntityType,
+        filterEntityId: listState.filterEntityId,
         onPressed: viewModel.onViewEntityFilterPressed,
         onClearPressed: viewModel.onClearEntityFilterPressed,
       ));

@@ -23,19 +23,15 @@ class ProjectList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
-    final filteredClientId = listState.filterEntityId;
-    final filteredClient =
-        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     final isInMultiselect = listState.isInMultiselect();
 
     return Column(
       children: <Widget>[
-        if (filteredClient != null)
+        if (listState.filterEntityId != null)
           ListFilterMessage(
-            title:
-                '${localization.filteredByGroup}: ${filteredClient.listDisplayName}',
+            filterEntityId: listState.filterEntityId,
+            filterEntityType: listState.filterEntityType,
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

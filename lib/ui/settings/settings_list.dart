@@ -31,20 +31,16 @@ class SettingsList extends StatelessWidget {
         filter: settingsUIState.filter,
       );
 
-    final title = (settingsUIState.entityType == EntityType.client)
-        ? localization.filteredByClient +
-            ': ${settingsUIState.client.displayName}'
-        : (settingsUIState.entityType == EntityType.group)
-            ? localization.filteredByGroup + ': ${settingsUIState.group.name}'
-            : '';
-
     return ListView(
       children: <Widget>[
         if (settingsUIState.isFiltered)
           Container(
             color: Colors.orangeAccent,
             child: ListFilterMessage(
-              title: title,
+              filterEntityType: settingsUIState.entityType,
+              filterEntityId: settingsUIState.entityType == EntityType.group
+                  ? settingsUIState.group.id
+                  : settingsUIState.client.id,
               onPressed: settingsUIState.entityType == EntityType.client
                   ? viewModel.onViewClientPressed
                   : viewModel.onViewGroupPressed,

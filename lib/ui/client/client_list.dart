@@ -24,18 +24,14 @@ class ClientList extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
     final listState = viewModel.state.clientListState;
-    final filteredGroupId = listState.filterEntityId;
-    final filteredGroup =
-        filteredGroupId != null ? state.groupState.map[filteredGroupId] : null;
 
     return Column(
       children: <Widget>[
-        if (filteredGroup != null)
+        if (listState.filterEntityId != null)
           ListFilterMessage(
-            title:
-                '${localization.filteredByGroup}: ${filteredGroup.listDisplayName}',
+            filterEntityId: listState.filterEntityId,
+            filterEntityType: listState.filterEntityType,
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

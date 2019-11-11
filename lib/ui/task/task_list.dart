@@ -20,34 +20,17 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final listState = viewModel.listState;
     final listUIState = state.uiState.taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    BaseEntity filteredEntity;
-    String filteredMessage;
-
-    if (listState.filterEntityType == EntityType.client) {
-      final filteredClientId = listState.filterEntityId;
-      filteredMessage = localization.filteredByClient;
-      filteredEntity = filteredClientId != null
-          ? viewModel.clientMap[filteredClientId]
-          : null;
-    } else if (listState.filterEntityType == EntityType.project) {
-      final filteredProjectId = listState.filterEntityId;
-      filteredMessage = localization.filteredByProject;
-      filteredEntity = filteredProjectId != null
-          ? state.projectState.map[filteredProjectId]
-          : null;
-    }
-
     return Column(
       children: <Widget>[
-        if (filteredEntity != null)
+        if (listState.filterEntityId != null)
           ListFilterMessage(
-            title: '$filteredMessage: ${filteredEntity.listDisplayName}',
+            filterEntityId: listState.filterEntityId,
+            filterEntityType: listState.filterEntityType,
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),

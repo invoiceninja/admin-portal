@@ -23,36 +23,17 @@ class PaymentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final listState = viewModel.listState;
-    final filteredEntityId = listState.filterEntityId;
     final listUIState = state.uiState.paymentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    BaseEntity filteredEntity;
-    String filteredMessage;
-
-    switch (listState.filterEntityType) {
-      case EntityType.client:
-        filteredMessage = localization.filteredByClient;
-        filteredEntity = filteredEntityId != null
-            ? state.clientState.map[filteredEntityId]
-            : null;
-        break;
-      case EntityType.invoice:
-        filteredMessage = localization.filteredByInvoice;
-        filteredEntity = filteredEntityId != null
-            ? state.invoiceState.map[filteredEntityId]
-            : null;
-        break;
-    }
-
     return Column(
       children: <Widget>[
-        if (filteredEntity != null)
+        if (listState.filterEntityId != null)
           ListFilterMessage(
-            title: '$filteredMessage: ${filteredEntity.listDisplayName}',
+            filterEntityId: listState.filterEntityId,
+            filterEntityType: listState.filterEntityType,
             onPressed: viewModel.onViewEntityFilterPressed,
             onClearPressed: viewModel.onClearEntityFilterPressed,
           ),
