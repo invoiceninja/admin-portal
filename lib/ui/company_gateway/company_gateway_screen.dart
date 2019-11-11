@@ -109,15 +109,10 @@ class CompanyGatewayScreen extends StatelessWidget {
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.companyGateway,
-        onSelectedSortField: (value) =>
-            store.dispatch(SortCompanyGateways(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom2(value)),
-        sortFields: [
-          CompanyGatewayFields.updatedAt,
-        ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterCompanyGatewaysByState(state));
         },

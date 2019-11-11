@@ -126,11 +126,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
 
     if (!isLoaded) {
-      if (state.isLoading) {
-        return LoadingIndicator(useCard: true);
-      } else {
-        return SizedBox();
-      }
+      return LoadingIndicator(useCard: true);
     }
 
     currentData.forEach((dataGroup) {

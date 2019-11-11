@@ -62,6 +62,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ? localization.newCompanyGateway
           : companyGateway.gateway.name,
       onSavePressed: viewModel.onSavePressed,
+      onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,

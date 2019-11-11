@@ -9,7 +9,7 @@ import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
   const AppBottomBar({
-    this.sortFields,
+    this.sortFields = const [],
     this.onSelectedSortField,
     this.entityType,
     this.onSelectedState,
@@ -265,11 +265,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
         shape: CircularNotchedRectangle(),
         child: Row(
           children: <Widget>[
-            IconButton(
-              tooltip: AppLocalization.of(context).sort,
-              icon: Icon(Icons.sort_by_alpha),
-              onPressed: _showSortSheet,
-            ),
+            if (widget.sortFields.isNotEmpty)
+              IconButton(
+                tooltip: AppLocalization.of(context).sort,
+                icon: Icon(Icons.sort_by_alpha),
+                onPressed: _showSortSheet,
+              ),
             IconButton(
               key: Key(localization.filter),
               tooltip: AppLocalization.of(context).filter,
@@ -279,42 +280,38 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ? Theme.of(context).accentColor
                   : null,
             ),
-            widget.statuses.isNotEmpty
-                ? IconButton(
-                    tooltip: AppLocalization.of(context).filter,
-                    icon: Icon(Icons.filter),
-                    onPressed: _showFilterStatusSheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasStatusFilters
+            if (widget.statuses.isNotEmpty)
+              IconButton(
+                tooltip: AppLocalization.of(context).filter,
+                icon: Icon(Icons.filter),
+                onPressed: _showFilterStatusSheet,
+                color:
+                    store.state.getListState(widget.entityType).hasStatusFilters
                         ? Theme.of(context).accentColor
                         : null,
-                  )
-                : SizedBox(width: 0.0),
-            widget.customValues1.isNotEmpty
-                ? IconButton(
-                    tooltip: AppLocalization.of(context).filter,
-                    icon: Icon(Icons.looks_one),
-                    onPressed: _showFilterCustom1Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom1Filters
-                        ? Theme.of(context).accentColor
-                        : null,
-                  )
-                : SizedBox(width: 0.0),
-            widget.customValues2.isNotEmpty
-                ? IconButton(
-                    tooltip: AppLocalization.of(context).filter,
-                    icon: Icon(Icons.looks_two),
-                    onPressed: _showFilterCustom2Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom2Filters
-                        ? Theme.of(context).accentColor
-                        : null,
-                  )
-                : SizedBox(width: 0.0),
+              ),
+            if (widget.customValues1.isNotEmpty)
+              IconButton(
+                tooltip: AppLocalization.of(context).filter,
+                icon: Icon(Icons.looks_one),
+                onPressed: _showFilterCustom1Sheet,
+                color: store.state
+                        .getListState(widget.entityType)
+                        .hasCustom1Filters
+                    ? Theme.of(context).accentColor
+                    : null,
+              ),
+            if (widget.customValues2.isNotEmpty)
+              IconButton(
+                tooltip: AppLocalization.of(context).filter,
+                icon: Icon(Icons.looks_two),
+                onPressed: _showFilterCustom2Sheet,
+                color: store.state
+                        .getListState(widget.entityType)
+                        .hasCustom2Filters
+                    ? Theme.of(context).accentColor
+                    : null,
+              ),
           ],
         ),
       );
