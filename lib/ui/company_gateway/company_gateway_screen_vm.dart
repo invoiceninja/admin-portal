@@ -24,7 +24,6 @@ class CompanyGatewayScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CompanyGatewayScreenVM>(
-      //rebuildOnChange: true,
       converter: CompanyGatewayScreenVM.fromStore,
       builder: (context, vm) {
         return CompanyGatewayScreen(
@@ -60,9 +59,12 @@ class CompanyGatewayScreenVM {
     return CompanyGatewayScreenVM(
       companyGatewayMap: state.companyGatewayState.map,
       companyGatewayList: memoizedFilteredCompanyGatewayList(
-          state.companyGatewayState.map,
-          state.companyGatewayState.list,
-          state.companyGatewayListState),
+        state.companyGatewayState.map,
+        state.companyGatewayState.list,
+        state.companyGatewayListState,
+        state.uiState.settingsUIState.settings.companyGatewayIds,
+        !state.uiState.settingsUIState.isFiltered,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.companyGatewayListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> companyGateways,

@@ -33,46 +33,45 @@ List<String> dropdownCompanyGatewaysSelector(
   return list;
 }
 
-var memoizedFilteredCompanyGatewayList = memo3(
+var memoizedFilteredCompanyGatewayList = memo5(
     (BuiltMap<String, CompanyGatewayEntity> companyGatewayMap,
             BuiltList<String> companyGatewayList,
-            ListUIState companyGatewayListState) =>
-        filteredCompanyGatewaysSelector(
-            companyGatewayMap, companyGatewayList, companyGatewayListState));
+            ListUIState companyGatewayListState,
+            String companyGatewayIds,
+            bool includeAll) =>
+        filteredCompanyGatewaysSelector(companyGatewayMap, companyGatewayList,
+            companyGatewayListState, companyGatewayIds, includeAll));
 
 List<String> filteredCompanyGatewaysSelector(
     BuiltMap<String, CompanyGatewayEntity> companyGatewayMap,
     BuiltList<String> companyGatewayList,
-    ListUIState companyGatewayListState) {
+    ListUIState companyGatewayListState,
+    String companyGatewayIds,
+    bool includeAll) {
   final list = companyGatewayList.where((companyGatewayId) {
     final companyGateway = companyGatewayMap[companyGatewayId];
 
     if (!companyGateway.matchesStates(companyGatewayListState.stateFilters)) {
       return false;
     }
-    if (companyGatewayListState.custom1Filters.isNotEmpty &&
-        !companyGatewayListState.custom1Filters
-            .contains(companyGateway.customValue1)) {
-      return false;
-    }
-    if (companyGatewayListState.custom2Filters.isNotEmpty &&
-        !companyGatewayListState.custom2Filters
-            .contains(companyGateway.customValue2)) {
-      return false;
-    }
-    return companyGateway.matchesFilter(companyGatewayListState.filter);
+
+    return true;
   }).toList();
 
-  list.sort((companyGatewayAId, companyGatewayBId) {
-    final companyGatewayA = companyGatewayMap[companyGatewayAId];
-    final companyGatewayB = companyGatewayMap[companyGatewayBId];
-    return companyGatewayA.compareTo(
-        companyGatewayB,
-        companyGatewayListState.sortField,
-        companyGatewayListState.sortAscending);
-  });
+  final List<String> gatewaysIds = companyGatewayIds
+      .split(',')
+      .where((id) => id.isNotEmpty && companyGatewayMap.containsKey(id))
+      .toList();
 
-  return list;
+  if (includeAll) {
+    list.forEach((id) {
+      if (!gatewaysIds.contains(id)) {
+        gatewaysIds.add(id);
+      }
+    });
+  }
+
+  return gatewaysIds;
 }
 
 bool hasCompanyGatewayChanges(CompanyGatewayEntity companyGateway,

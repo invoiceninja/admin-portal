@@ -69,9 +69,12 @@ class CompanyGatewayListVM {
       userCompany: state.userCompany,
       listState: state.companyGatewayListState,
       companyGatewayList: memoizedFilteredCompanyGatewayList(
-          state.companyGatewayState.map,
-          state.companyGatewayState.list,
-          state.companyGatewayListState),
+        state.companyGatewayState.map,
+        state.companyGatewayState.list,
+        state.companyGatewayListState,
+        state.uiState.settingsUIState.settings.companyGatewayIds,
+        !state.uiState.settingsUIState.isFiltered,
+      ),
       companyGatewayMap: state.companyGatewayState.map,
       isLoading: state.isLoading,
       isLoaded: state.companyGatewayState.isLoaded,
@@ -93,9 +96,8 @@ class CompanyGatewayListVM {
       onSortChanged: (int first, int second) {
         final uiState = state.uiState.settingsUIState;
         final gatewayMap = state.companyGatewayState.map;
-        final settings = uiState.settings.rebuild((b) => b
-            ..companyGatewayIds = gatewayMap.keys.join(',')
-        );
+        final settings = uiState.settings
+            .rebuild((b) => b..companyGatewayIds = gatewayMap.keys.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
     );
