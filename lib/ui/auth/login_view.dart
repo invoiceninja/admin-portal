@@ -223,8 +223,8 @@ class _LoginState extends State<LoginView> {
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle =
-        themeData.textTheme.body2.copyWith(color: convertHexStringToColor(kDefaultAccentColor));
+    final TextStyle linkStyle = themeData.textTheme.body2
+        .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
     if (!viewModel.authState.isInitialized) {
       return Container();
@@ -362,6 +362,7 @@ class _LoginState extends State<LoginView> {
                             decoration:
                                 InputDecoration(labelText: localization.secret),
                             obscureText: true,
+                            onFieldSubmitted: (value) => _submitLoginForm(),
                           ),
                         if (_createAccount)
                           Padding(
@@ -373,7 +374,8 @@ class _LoginState extends State<LoginView> {
                                       setState(() => _termsChecked = value),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: convertHexStringToColor(kDefaultAccentColor),
+                                  activeColor: convertHexStringToColor(
+                                      kDefaultAccentColor),
                                   value: _termsChecked,
                                   title: RichText(
                                     text: TextSpan(
@@ -396,7 +398,8 @@ class _LoginState extends State<LoginView> {
                                       setState(() => _privacyChecked = value),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  activeColor: convertHexStringToColor(kDefaultAccentColor),
+                                  activeColor: convertHexStringToColor(
+                                      kDefaultAccentColor),
                                   value: _privacyChecked,
                                   title: RichText(
                                     text: TextSpan(

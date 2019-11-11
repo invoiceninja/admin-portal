@@ -37,7 +37,7 @@ class SettingsScaffold extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             SaveCancelButtons(
-              isWorking: state.isSaving,
+              isSaving: state.isSaving,
               onSavePressed: (context) => onSavePressed(context),
               onCancelPressed: isMobile(context)
                   ? null
