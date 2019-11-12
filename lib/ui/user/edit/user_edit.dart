@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -202,19 +203,29 @@ class _UserEditState extends State<UserEdit> {
                       Text(localization.all),
                     ),
                     DataCell(
-                        Checkbox(
-                          value: viewModel.user.permissions
-                              .contains(kPermissionCreateAll),
-                          onChanged: null,
-                          activeColor: Theme.of(context).accentColor,
+                        _PermissionCheckbox(
+                          user: viewModel.user,
+                          permission: kPermissionCreateAll,
+                          onChanged: (value) =>
+                              _togglePermission(kPermissionCreateAll),
                         ),
                         onTap: () => _togglePermission(kPermissionCreateAll)),
                     DataCell(
-                      Text('test'),
-                    ),
+                        _PermissionCheckbox(
+                          user: viewModel.user,
+                          permission: kPermissionViewAll,
+                          onChanged: (value) =>
+                              _togglePermission(kPermissionViewAll),
+                        ),
+                        onTap: () => _togglePermission(kPermissionViewAll)),
                     DataCell(
-                      Text('test'),
-                    ),
+                        _PermissionCheckbox(
+                          user: viewModel.user,
+                          permission: kPermissionEditAll,
+                          onChanged: (value) =>
+                              _togglePermission(kPermissionEditAll),
+                        ),
+                        onTap: () => _togglePermission(kPermissionEditAll)),
                   ]),
                   ...<EntityType>[
                     EntityType.client,
@@ -237,6 +248,27 @@ class _UserEditState extends State<UserEdit> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _PermissionCheckbox extends StatelessWidget {
+  const _PermissionCheckbox({
+    @required this.user,
+    @required this.permission,
+    @required this.onChanged,
+  });
+
+  final UserEntity user;
+  final String permission;
+  final Function(bool) onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+      value: user.permissions.contains(permission),
+      onChanged: onChanged,
+      activeColor: Theme.of(context).accentColor,
     );
   }
 }
