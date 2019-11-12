@@ -106,8 +106,8 @@ class _UserEditState extends State<UserEdit> {
       }
     });
 
-    widget.viewModel
-        .onChanged(user.rebuild((b) => b..permissions = userPermissions.join(',')));
+    widget.viewModel.onChanged(
+        user.rebuild((b) => b..permissions = userPermissions.join(',')));
   }
 
   @override
@@ -255,9 +255,15 @@ class _UserEditState extends State<UserEdit> {
                     EntityType.quote,
                   ].map((EntityType type) {
                     final createPermission = 'create_' + toSnakeCase('$type');
+                    final editPermission = 'edit_' + toSnakeCase('$type');
+                    final viewPermission = 'view_' + toSnakeCase('$type');
                     return DataRow(cells: [
                       DataCell(Text(localization.lookup('$type')), onTap: () {
-                        _togglePermission(createPermission);
+                        _togglePermissions([
+                          createPermission,
+                          viewPermission,
+                          editPermission,
+                        ]);
                       }),
                       DataCell(
                           _PermissionCheckbox(
@@ -267,8 +273,22 @@ class _UserEditState extends State<UserEdit> {
                                 _togglePermission(createPermission),
                           ),
                           onTap: () => _togglePermission(createPermission)),
-                      DataCell(Text('')),
-                      DataCell(Text('')),
+                      DataCell(
+                          _PermissionCheckbox(
+                            user: viewModel.user,
+                            permission: viewPermission,
+                            onChanged: (value) =>
+                                _togglePermission(viewPermission),
+                          ),
+                          onTap: () => _togglePermission(viewPermission)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            user: viewModel.user,
+                            permission: editPermission,
+                            onChanged: (value) =>
+                                _togglePermission(editPermission),
+                          ),
+                          onTap: () => _togglePermission(editPermission)),
                     ]);
                   }).toList()
                 ],
