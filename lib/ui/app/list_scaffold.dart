@@ -45,6 +45,7 @@ class ListScaffold extends StatelessWidget {
         },
         child: Scaffold(
           drawer: isMobile(context) ? AppDrawerBuilder() : null,
+          //endDrawer: isMobile(context),
           appBar: AppBar(
             automaticallyImplyLeading: false,
             leading: showCheckbox
@@ -76,7 +77,22 @@ class ListScaffold extends StatelessWidget {
                               ),
                             )),
             title: appBarTitle,
-            actions: appBarActions,
+            actions: [
+              ...appBarActions,
+              if (!showCheckbox)
+                Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      if (isMobile(context)) {
+                        Scaffold.of(context).openEndDrawer();
+                      } else {
+                        store.dispatch(UpdateSidebar(AppSidebar.history));
+                      }
+                    },
+                  ),
+                )
+            ],
           ),
           body: body,
           bottomNavigationBar: bottomNavigationBar,

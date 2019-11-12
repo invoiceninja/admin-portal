@@ -242,6 +242,10 @@ void handleDocumentAction(
           documents.length == 1,
       'Cannot perform this action on more than one document');
 
+  if (documents.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final document = documents.first;

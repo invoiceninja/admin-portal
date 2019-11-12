@@ -242,6 +242,11 @@ class FilterGroupsByEntity implements PersistUI {
 
 void handleGroupAction(
     BuildContext context, List<BaseEntity> groups, EntityAction action) {
+
+  if (groups.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final group = groups.first;

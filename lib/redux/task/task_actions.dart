@@ -288,6 +288,10 @@ void handleTaskAction(
           tasks.length == 1,
       'Cannot perform this action on more than one task');
 
+  if (tasks.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;

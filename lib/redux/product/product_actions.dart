@@ -206,6 +206,11 @@ void handleProductAction(
           ].contains(action) ||
           products.length == 1,
       'Cannot perform this action on more than one product');
+
+  if (products.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);

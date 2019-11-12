@@ -277,8 +277,13 @@ void handleClientAction(
             EntityAction.delete,
             EntityAction.toggleMultiselect
           ].contains(action) ||
-          clients.length == 1,
+          clients.length <= 1,
       'Cannot perform this action on more than one client');
+
+  if (clients.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;

@@ -244,6 +244,11 @@ class FilterUsersByEntity implements PersistUI {
 
 void handleUserAction(
     BuildContext context, List<BaseEntity> users, EntityAction action) {
+
+  if (users.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   //final state = store.state;
   final localization = AppLocalization.of(context);

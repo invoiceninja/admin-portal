@@ -254,6 +254,10 @@ void handleProjectAction(
           projects.length == 1,
       'Cannot perform this action on more than one project');
 
+  if (projects.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final CompanyEntity company = state.selectedCompany;

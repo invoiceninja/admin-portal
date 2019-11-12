@@ -263,6 +263,10 @@ void handlePaymentAction(
           payments.length == 1,
       'Cannot perform this action on more than one payment');
 
+  if (payments.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final paymentIds = payments.map((payment) => payment.id).toList();

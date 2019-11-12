@@ -66,10 +66,12 @@ class _ListFilterState extends State<ListFilter> {
                     borderRadius: BorderRadius.circular(6.0)),
                 child: TextField(
                   decoration: InputDecoration(
+                      /*
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(right: 8.0),
                         child: Icon(Icons.search),
                       ),
+                     */
                       border: InputBorder.none,
                       hintText: localization.filter),
                   autofocus: true,

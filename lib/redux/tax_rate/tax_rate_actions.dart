@@ -248,6 +248,10 @@ void handleTaxRateAction(
           taxRates.length == 1,
       'Cannot perform this action on more than one tax rate');
 
+  if (taxRates.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final taxRate = taxRates.first;
