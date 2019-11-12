@@ -16,8 +16,9 @@ class HistoryDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('testk')
+            Text('History')
           ],
         ),
       ),
