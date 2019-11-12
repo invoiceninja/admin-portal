@@ -10,8 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
-import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
