@@ -85,8 +85,7 @@ class CompanyGatewayViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(
-            state.uiState.verifiedPreviousRoute ?? CompanyGatewayScreen.route));
+        store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleCompanyGatewayAction(context, [companyGateway], action),

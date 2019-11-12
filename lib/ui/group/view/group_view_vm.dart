@@ -83,9 +83,7 @@ class GroupViewVM {
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
-          store.dispatch(UpdateCurrentRoute(
-              state.uiState.verifiedPreviousRoute ??
-                  GroupSettingsScreen.route));
+          store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
             handleGroupAction(context, [group], action),

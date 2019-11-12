@@ -80,9 +80,7 @@ class TaxRateViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
-        if (state.uiState.currentRoute.contains(TaxRateSettingsScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
-        }
+        store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleTaxRateAction(context, [taxRate], action),

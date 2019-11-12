@@ -87,8 +87,7 @@ class UserViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(
-            state.uiState.verifiedPreviousRoute ?? UserScreen.route));
+        store.dispatch(UpdateCurrentRoute(UserScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleUserAction(context, [user], action),
