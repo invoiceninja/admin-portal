@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';

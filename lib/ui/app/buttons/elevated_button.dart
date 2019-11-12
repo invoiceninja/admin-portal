@@ -30,7 +30,7 @@ class ElevatedButton extends StatelessWidget {
             : Text(label),
         textColor: Colors.white,
         elevation: 4.0,
-        onPressed: () => this.onPressed(),
+        onPressed: () => onPressed(),
       ),
     );
   }

@@ -23,22 +23,22 @@ dependencies:
   built_value: ^6.7.1
   built_collection: ^4.2.2
   memoize: ^2.0.0
-  cached_network_image: ^1.1.1
+  cached_network_image: ^2.0.0-rc.1
   url_launcher: ^5.1.2
   share: ^0.6.2+1
-  intl: ^0.15.8
+  intl: any
   flutter_slidable: ^0.5.3
   charts_flutter: ^0.8.0
   google_sign_in: ^4.0.7
   firebase_auth: ^0.14.0+5
-  local_auth: ^0.5.2+4
+  local_auth: any
   sentry: ^2.2.0
   image_picker: ^0.6.1+4
   zefyr: ^0.8.0
-  native_pdf_renderer: any
   flutter_colorpicker: any
   flutter_json_widget: ^1.0.2
   webview_flutter: ^0.3.15+1
+  #native_pdf_renderer: any
   #quick_actions: ^0.2.1
 
 dev_dependencies:
