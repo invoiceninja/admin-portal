@@ -71,6 +71,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState3: UserCompanyState(),
       companyState4: UserCompanyState(),
       companyState5: UserCompanyState(),
+      companyState6: UserCompanyState(),
+      companyState7: UserCompanyState(),
+      companyState8: UserCompanyState(),
+      companyState9: UserCompanyState(),
+      companyState10: UserCompanyState(),
       uiState: UIState(
         CompanyEntity(),
         enableDarkMode: enableDarkMode,
@@ -109,6 +114,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UserCompanyState get companyState5;
 
+  UserCompanyState get companyState6;
+
+  UserCompanyState get companyState7;
+
+  UserCompanyState get companyState8;
+
+  UserCompanyState get companyState9;
+
+  UserCompanyState get companyState10;
+
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
@@ -124,6 +139,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return companyState4;
       case 5:
         return companyState5;
+      case 6:
+        return companyState6;
+      case 7:
+        return companyState7;
+      case 8:
+        return companyState8;
+      case 9:
+        return companyState9;
+      case 10:
+        return companyState10;
     }
 
     return companyState1;
@@ -156,7 +181,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientState.map;
       case EntityType.invoice:
         return invoiceState.map;
-    // STARTER: states switch - do not remove comment
+      // STARTER: states switch - do not remove comment
       case EntityType.user:
         return userState.map;
       case EntityType.taxRate:

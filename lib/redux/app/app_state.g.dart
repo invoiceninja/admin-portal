@@ -54,6 +54,21 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'companyState5',
       serializers.serialize(object.companyState5,
           specifiedType: const FullType(UserCompanyState)),
+      'companyState6',
+      serializers.serialize(object.companyState6,
+          specifiedType: const FullType(UserCompanyState)),
+      'companyState7',
+      serializers.serialize(object.companyState7,
+          specifiedType: const FullType(UserCompanyState)),
+      'companyState8',
+      serializers.serialize(object.companyState8,
+          specifiedType: const FullType(UserCompanyState)),
+      'companyState9',
+      serializers.serialize(object.companyState9,
+          specifiedType: const FullType(UserCompanyState)),
+      'companyState10',
+      serializers.serialize(object.companyState10,
+          specifiedType: const FullType(UserCompanyState)),
     ];
 
     return result;
@@ -123,6 +138,31 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
                   specifiedType: const FullType(UserCompanyState))
               as UserCompanyState);
           break;
+        case 'companyState6':
+          result.companyState6.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
+          break;
+        case 'companyState7':
+          result.companyState7.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
+          break;
+        case 'companyState8':
+          result.companyState8.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
+          break;
+        case 'companyState9':
+          result.companyState9.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
+          break;
+        case 'companyState10':
+          result.companyState10.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyState))
+              as UserCompanyState);
+          break;
       }
     }
 
@@ -155,6 +195,16 @@ class _$AppState extends AppState {
   final UserCompanyState companyState4;
   @override
   final UserCompanyState companyState5;
+  @override
+  final UserCompanyState companyState6;
+  @override
+  final UserCompanyState companyState7;
+  @override
+  final UserCompanyState companyState8;
+  @override
+  final UserCompanyState companyState9;
+  @override
+  final UserCompanyState companyState10;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -171,7 +221,12 @@ class _$AppState extends AppState {
       this.companyState2,
       this.companyState3,
       this.companyState4,
-      this.companyState5})
+      this.companyState5,
+      this.companyState6,
+      this.companyState7,
+      this.companyState8,
+      this.companyState9,
+      this.companyState10})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
@@ -209,6 +264,21 @@ class _$AppState extends AppState {
     if (companyState5 == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyState5');
     }
+    if (companyState6 == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyState6');
+    }
+    if (companyState7 == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyState7');
+    }
+    if (companyState8 == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyState8');
+    }
+    if (companyState9 == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyState9');
+    }
+    if (companyState10 == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyState10');
+    }
   }
 
   @override
@@ -233,7 +303,12 @@ class _$AppState extends AppState {
         companyState2 == other.companyState2 &&
         companyState3 == other.companyState3 &&
         companyState4 == other.companyState4 &&
-        companyState5 == other.companyState5;
+        companyState5 == other.companyState5 &&
+        companyState6 == other.companyState6 &&
+        companyState7 == other.companyState7 &&
+        companyState8 == other.companyState8 &&
+        companyState9 == other.companyState9 &&
+        companyState10 == other.companyState10;
   }
 
   @override
@@ -248,18 +323,35 @@ class _$AppState extends AppState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, isLoading.hashCode),
-                                                isSaving.hashCode),
-                                            lastError.hashCode),
-                                        serverVersion.hashCode),
-                                    authState.hashCode),
-                                staticState.hashCode),
-                            uiState.hashCode),
-                        companyState1.hashCode),
-                    companyState2.hashCode),
-                companyState3.hashCode),
-            companyState4.hashCode),
-        companyState5.hashCode));
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        isLoading
+                                                                            .hashCode),
+                                                                    isSaving
+                                                                        .hashCode),
+                                                                lastError
+                                                                    .hashCode),
+                                                            serverVersion
+                                                                .hashCode),
+                                                        authState.hashCode),
+                                                    staticState.hashCode),
+                                                uiState.hashCode),
+                                            companyState1.hashCode),
+                                        companyState2.hashCode),
+                                    companyState3.hashCode),
+                                companyState4.hashCode),
+                            companyState5.hashCode),
+                        companyState6.hashCode),
+                    companyState7.hashCode),
+                companyState8.hashCode),
+            companyState9.hashCode),
+        companyState10.hashCode));
   }
 }
 
@@ -328,6 +420,36 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set companyState5(UserCompanyStateBuilder companyState5) =>
       _$this._companyState5 = companyState5;
 
+  UserCompanyStateBuilder _companyState6;
+  UserCompanyStateBuilder get companyState6 =>
+      _$this._companyState6 ??= new UserCompanyStateBuilder();
+  set companyState6(UserCompanyStateBuilder companyState6) =>
+      _$this._companyState6 = companyState6;
+
+  UserCompanyStateBuilder _companyState7;
+  UserCompanyStateBuilder get companyState7 =>
+      _$this._companyState7 ??= new UserCompanyStateBuilder();
+  set companyState7(UserCompanyStateBuilder companyState7) =>
+      _$this._companyState7 = companyState7;
+
+  UserCompanyStateBuilder _companyState8;
+  UserCompanyStateBuilder get companyState8 =>
+      _$this._companyState8 ??= new UserCompanyStateBuilder();
+  set companyState8(UserCompanyStateBuilder companyState8) =>
+      _$this._companyState8 = companyState8;
+
+  UserCompanyStateBuilder _companyState9;
+  UserCompanyStateBuilder get companyState9 =>
+      _$this._companyState9 ??= new UserCompanyStateBuilder();
+  set companyState9(UserCompanyStateBuilder companyState9) =>
+      _$this._companyState9 = companyState9;
+
+  UserCompanyStateBuilder _companyState10;
+  UserCompanyStateBuilder get companyState10 =>
+      _$this._companyState10 ??= new UserCompanyStateBuilder();
+  set companyState10(UserCompanyStateBuilder companyState10) =>
+      _$this._companyState10 = companyState10;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
@@ -344,6 +466,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _companyState3 = _$v.companyState3?.toBuilder();
       _companyState4 = _$v.companyState4?.toBuilder();
       _companyState5 = _$v.companyState5?.toBuilder();
+      _companyState6 = _$v.companyState6?.toBuilder();
+      _companyState7 = _$v.companyState7?.toBuilder();
+      _companyState8 = _$v.companyState8?.toBuilder();
+      _companyState9 = _$v.companyState9?.toBuilder();
+      _companyState10 = _$v.companyState10?.toBuilder();
       _$v = null;
     }
     return this;
@@ -379,7 +506,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               companyState2: companyState2.build(),
               companyState3: companyState3.build(),
               companyState4: companyState4.build(),
-              companyState5: companyState5.build());
+              companyState5: companyState5.build(),
+              companyState6: companyState6.build(),
+              companyState7: companyState7.build(),
+              companyState8: companyState8.build(),
+              companyState9: companyState9.build(),
+              companyState10: companyState10.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -399,6 +531,16 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         companyState4.build();
         _$failedField = 'companyState5';
         companyState5.build();
+        _$failedField = 'companyState6';
+        companyState6.build();
+        _$failedField = 'companyState7';
+        companyState7.build();
+        _$failedField = 'companyState8';
+        companyState8.build();
+        _$failedField = 'companyState9';
+        companyState9.build();
+        _$failedField = 'companyState10';
+        companyState10.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

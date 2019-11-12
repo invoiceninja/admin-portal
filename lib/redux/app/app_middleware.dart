@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -77,45 +76,103 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       getApplicationDocumentsDirectory,
     ),
   ),
+  PersistenceRepository company6Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company6_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company7Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company7_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company8Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company8_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company9Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company9_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
+  PersistenceRepository company10Repository = const PersistenceRepository(
+    fileStorage: const FileStorage(
+      'company10_state',
+      getApplicationDocumentsDirectory,
+    ),
+  ),
 ]) {
   final loadState = _createLoadState(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    company1Repository,
+    company2Repository,
+    company3Repository,
+    company4Repository,
+    company5Repository,
+    company6Repository,
+    company7Repository,
+    company8Repository,
+    company9Repository,
+    company10Repository,
+  );
 
   final accountLoaded = _createAccountLoaded();
 
-  final persistData = _createPersistData(company1Repository, company2Repository,
-      company3Repository, company4Repository, company5Repository);
+  final persistData = _createPersistData(
+    company1Repository,
+    company2Repository,
+    company3Repository,
+    company4Repository,
+    company5Repository,
+    company6Repository,
+    company7Repository,
+    company8Repository,
+    company9Repository,
+    company10Repository,
+  );
 
   final persistStatic = _createPersistStatic(staticRepository);
 
   final userLoggedIn = _createUserLoggedIn(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    company1Repository,
+    company2Repository,
+    company3Repository,
+    company4Repository,
+    company5Repository,
+    company6Repository,
+    company7Repository,
+    company8Repository,
+    company9Repository,
+    company10Repository,
+  );
 
   final persistUI = _createPersistUI(uiRepository);
 
   final deleteState = _createDeleteState(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    company1Repository,
+    company2Repository,
+    company3Repository,
+    company4Repository,
+    company5Repository,
+    company6Repository,
+    company7Repository,
+    company8Repository,
+    company9Repository,
+    company10Repository,
+  );
 
   final viewMainScreen = _createViewMainScreen();
 
@@ -140,6 +197,11 @@ Middleware<AppState> _createLoadState(
   PersistenceRepository company3Repository,
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
+  PersistenceRepository company6Repository,
+  PersistenceRepository company7Repository,
+  PersistenceRepository company8Repository,
+  PersistenceRepository company9Repository,
+  PersistenceRepository company10Repository,
 ) {
   AuthState authState;
   UIState uiState;
@@ -149,6 +211,11 @@ Middleware<AppState> _createLoadState(
   UserCompanyState company3State;
   UserCompanyState company4State;
   UserCompanyState company5State;
+  UserCompanyState company6State;
+  UserCompanyState company7State;
+  UserCompanyState company8State;
+  UserCompanyState company9State;
+  UserCompanyState company10State;
 
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
@@ -170,6 +237,11 @@ Middleware<AppState> _createLoadState(
       company3State = await company3Repository.loadCompanyState(3);
       company4State = await company4Repository.loadCompanyState(4);
       company5State = await company5Repository.loadCompanyState(5);
+      company6State = await company6Repository.loadCompanyState(6);
+      company7State = await company7Repository.loadCompanyState(7);
+      company8State = await company8Repository.loadCompanyState(8);
+      company9State = await company9Repository.loadCompanyState(9);
+      company10State = await company10Repository.loadCompanyState(10);
 
       final AppState appState = AppState().rebuild((b) => b
         ..authState.replace(authState)
@@ -179,7 +251,12 @@ Middleware<AppState> _createLoadState(
         ..companyState2.replace(company2State)
         ..companyState3.replace(company3State)
         ..companyState4.replace(company4State)
-        ..companyState5.replace(company5State));
+        ..companyState5.replace(company5State)
+        ..companyState6.replace(company6State)
+        ..companyState7.replace(company7State)
+        ..companyState8.replace(company8State)
+        ..companyState9.replace(company9State)
+        ..companyState10.replace(company10State));
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
@@ -284,6 +361,11 @@ Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository company3Repository,
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
+  PersistenceRepository company6Repository,
+  PersistenceRepository company7Repository,
+  PersistenceRepository company8Repository,
+  PersistenceRepository company9Repository,
+  PersistenceRepository company10Repository,
 ) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as UserLoginSuccess;
@@ -299,6 +381,11 @@ Middleware<AppState> _createUserLoggedIn(
     company3Repository.saveCompanyState(state.companyState3);
     company4Repository.saveCompanyState(state.companyState4);
     company5Repository.saveCompanyState(state.companyState5);
+    company6Repository.saveCompanyState(state.companyState6);
+    company7Repository.saveCompanyState(state.companyState7);
+    company8Repository.saveCompanyState(state.companyState8);
+    company9Repository.saveCompanyState(state.companyState9);
+    company10Repository.saveCompanyState(state.companyState10);
   };
 }
 
@@ -360,6 +447,11 @@ Middleware<AppState> _createPersistData(
   PersistenceRepository company3Repository,
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
+  PersistenceRepository company6Repository,
+  PersistenceRepository company7Repository,
+  PersistenceRepository company8Repository,
+  PersistenceRepository company9Repository,
+  PersistenceRepository company10Repository,
 ) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as PersistData;
@@ -384,6 +476,21 @@ Middleware<AppState> _createPersistData(
       case 5:
         company5Repository.saveCompanyState(state.companyState5);
         break;
+      case 6:
+        company6Repository.saveCompanyState(state.companyState6);
+        break;
+      case 7:
+        company7Repository.saveCompanyState(state.companyState7);
+        break;
+      case 8:
+        company8Repository.saveCompanyState(state.companyState8);
+        break;
+      case 9:
+        company9Repository.saveCompanyState(state.companyState9);
+        break;
+      case 10:
+        company10Repository.saveCompanyState(state.companyState10);
+        break;
     }
   };
 }
@@ -397,9 +504,13 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company3Repository,
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
+  PersistenceRepository company6Repository,
+  PersistenceRepository company7Repository,
+  PersistenceRepository company8Repository,
+  PersistenceRepository company9Repository,
+  PersistenceRepository company10Repository,
 ) {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -408,13 +519,15 @@ Middleware<AppState> _createDeleteState(
     company3Repository.delete();
     company4Repository.delete();
     company5Repository.delete();
+    company6Repository.delete();
+    company7Repository.delete();
+    company8Repository.delete();
+    company9Repository.delete();
+    company10Repository.delete();
 
-    final action = dynamicAction as UserLogout;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    for (int i = 0; i < 5; i++) {
-      prefs.setString(kSharedPrefToken, '');
-    }
+    prefs.setString(kSharedPrefToken, '');
 
     next(action);
   };
