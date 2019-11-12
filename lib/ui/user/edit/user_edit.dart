@@ -96,21 +96,6 @@ class _UserEditState extends State<UserEdit> {
     //.onUserChanged(userCompany.rebuild((b) => b..permissions = permissions.join(',')));
   }
 
-  void _togglePermissions(List<String> permissions) {
-    final userCompany = widget.viewModel.userCompany;
-    final userPermissions = (userCompany.permissions ?? '').split(',');
-    permissions.forEach((permission) {
-      if (userPermissions.contains(permission)) {
-        userPermissions.remove(permission);
-      } else {
-        userPermissions.add(permission);
-      }
-    });
-
-    //widget.viewModel.onUserChanged(
-    //userCompany.rebuild((b) => b..permissions = userPermissions.join(',')));
-  }
-
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
@@ -199,104 +184,107 @@ class _UserEditState extends State<UserEdit> {
                 ),
               ],
             ),
-            FormCard(
-              child: DataTable(
-                columns: [
-                  DataColumn(
-                    label: SizedBox(),
-                  ),
-                  DataColumn(
-                    label: Text(localization.create),
-                  ),
-                  DataColumn(
-                    label: Text(localization.view),
-                  ),
-                  DataColumn(
-                    label: Text(localization.edit),
-                  ),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text(localization.all), onTap: () {
-                      _togglePermissions([
-                        kPermissionCreateAll,
-                        kPermissionViewAll,
-                        kPermissionEditAll
+            if (!userCompany.isAdmin)
+              FormCard(
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                      label: SizedBox(),
+                    ),
+                    DataColumn(
+                      label: Text(localization.create),
+                    ),
+                    DataColumn(
+                      label: Text(localization.view),
+                    ),
+                    DataColumn(
+                      label: Text(localization.edit),
+                    ),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text(localization.all)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionCreateAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionCreateAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionCreateAll)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionViewAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionViewAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionViewAll)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionEditAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionEditAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionEditAll)),
+                    ]),
+                    ...<EntityType>[
+                      EntityType.client,
+                      EntityType.product,
+                      EntityType.invoice,
+                      EntityType.payment,
+                      EntityType.quote,
+                    ].map((EntityType type) {
+                      final createPermission = 'create_' + toSnakeCase('$type');
+                      final editPermission = 'edit_' + toSnakeCase('$type');
+                      final viewPermission = 'view_' + toSnakeCase('$type');
+                      return DataRow(cells: [
+                        DataCell(Text(localization.lookup('$type'))),
+                        DataCell(
+                            _PermissionCheckbox(
+                              userCompany: userCompany,
+                              permission: createPermission,
+                              onChanged: (value) =>
+                                  _togglePermission(createPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionCreateAll),
+                            ),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionCreateAll)
+                                ? null
+                                : () => _togglePermission(createPermission)),
+                        DataCell(
+                            _PermissionCheckbox(
+                              userCompany: userCompany,
+                              permission: viewPermission,
+                              onChanged: (value) =>
+                                  _togglePermission(viewPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionViewAll),
+                            ),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionViewAll)
+                                ? null
+                                : () => _togglePermission(viewPermission)),
+                        DataCell(
+                            _PermissionCheckbox(
+                              userCompany: userCompany,
+                              permission: editPermission,
+                              onChanged: (value) =>
+                                  _togglePermission(editPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionEditAll),
+                            ),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionEditAll)
+                                ? null
+                                : () => _togglePermission(editPermission)),
                       ]);
-                    }),
-                    DataCell(
-                        _PermissionCheckbox(
-                          userCompany: userCompany,
-                          permission: kPermissionCreateAll,
-                          onChanged: (value) =>
-                              _togglePermission(kPermissionCreateAll),
-                        ),
-                        onTap: () => _togglePermission(kPermissionCreateAll)),
-                    DataCell(
-                        _PermissionCheckbox(
-                          userCompany: userCompany,
-                          permission: kPermissionViewAll,
-                          onChanged: (value) =>
-                              _togglePermission(kPermissionViewAll),
-                        ),
-                        onTap: () => _togglePermission(kPermissionViewAll)),
-                    DataCell(
-                        _PermissionCheckbox(
-                          userCompany: userCompany,
-                          permission: kPermissionEditAll,
-                          onChanged: (value) =>
-                              _togglePermission(kPermissionEditAll),
-                        ),
-                        onTap: () => _togglePermission(kPermissionEditAll)),
-                  ]),
-                  ...<EntityType>[
-                    EntityType.client,
-                    EntityType.product,
-                    EntityType.invoice,
-                    EntityType.payment,
-                    EntityType.quote,
-                  ].map((EntityType type) {
-                    final createPermission = 'create_' + toSnakeCase('$type');
-                    final editPermission = 'edit_' + toSnakeCase('$type');
-                    final viewPermission = 'view_' + toSnakeCase('$type');
-                    return DataRow(cells: [
-                      DataCell(Text(localization.lookup('$type')), onTap: () {
-                        _togglePermissions([
-                          createPermission,
-                          viewPermission,
-                          editPermission,
-                        ]);
-                      }),
-                      DataCell(
-                          _PermissionCheckbox(
-                            userCompany: userCompany,
-                            permission: createPermission,
-                            onChanged: (value) =>
-                                _togglePermission(createPermission),
-                            //checkAll: ,
-                          ),
-                          onTap: () => _togglePermission(createPermission)),
-                      DataCell(
-                          _PermissionCheckbox(
-                            userCompany: userCompany,
-                            permission: viewPermission,
-                            onChanged: (value) =>
-                                _togglePermission(viewPermission),
-                          ),
-                          onTap: () => _togglePermission(viewPermission)),
-                      DataCell(
-                          _PermissionCheckbox(
-                            userCompany: userCompany,
-                            permission: editPermission,
-                            onChanged: (value) =>
-                                _togglePermission(editPermission),
-                          ),
-                          onTap: () => _togglePermission(editPermission)),
-                    ]);
-                  }).toList()
-                ],
-              ),
-            )
+                    }).toList()
+                  ],
+                ),
+              )
           ],
         ),
       ),

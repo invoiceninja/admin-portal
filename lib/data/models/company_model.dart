@@ -348,7 +348,6 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
 
-
   //bool get recommended;
   //bool get visible;
 
@@ -425,6 +424,7 @@ abstract class UserCompanyEntity
 
   bool can(UserPermission permission, EntityType entityType) =>
       (isAdmin ?? false) ||
+      permissions.contains('${permission}_all') ||
       permissions.contains('${permission}_$entityType');
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
