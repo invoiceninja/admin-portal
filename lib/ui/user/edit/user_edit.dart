@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -163,6 +164,56 @@ class _UserEditState extends State<UserEdit> {
                   onChanged: (value) => viewModel
                       .onChanged(user.rebuild((b) => b..isAdmin = value)),
                   activeColor: Theme.of(context).accentColor,
+                ),
+              ],
+            ),
+            FormCard(
+              children: <Widget>[
+                DataTable(
+                  columns: [
+                    DataColumn(
+                      label: Text(localization.module),
+                    ),
+                    DataColumn(
+                      label: Text(localization.create),
+                    ),
+                    DataColumn(
+                      label: Text(localization.view),
+                    ),
+                    DataColumn(
+                      label: Text(localization.edit),
+                    ),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(
+                        Text(localization.all),
+                      ),
+                      DataCell(
+                        Text('test'),
+                      ),
+                      DataCell(
+                        Text('test'),
+                      ),
+                      DataCell(
+                        Text('test'),
+                      ),
+                    ]),
+                    ...<EntityType>[
+                      EntityType.client,
+                      EntityType.product,
+                      EntityType.invoice,
+                      EntityType.payment,
+                      EntityType.quote,
+                    ]
+                        .map((EntityType type) => DataRow(cells: [
+                              DataCell(Text(type.toString())),
+                              DataCell(Text(type.toString())),
+                              DataCell(Text(type.toString())),
+                              DataCell(Text(type.toString())),
+                            ]))
+                        .toList()
+                  ],
                 ),
               ],
             )
