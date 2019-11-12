@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -72,10 +73,10 @@ class TaxRateListVM {
       filter: state.taxRateUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterTaxRatesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.taxRateListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.taxRateListState.filterEntityId,
+          entityType: state.taxRateListState.filterEntityType),
       onTaxRateTap: (context, taxRate) {
         store.dispatch(ViewTaxRate(taxRateId: taxRate.id, context: context));
       },

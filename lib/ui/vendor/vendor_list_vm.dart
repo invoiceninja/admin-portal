@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -71,10 +72,10 @@ class VendorListVM {
       isLoaded: state.vendorState.isLoaded,
       filter: state.vendorUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterVendorsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.vendorListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.vendorListState.filterEntityId,
+          entityType: state.vendorListState.filterEntityType),
       onVendorTap: (context, vendor) {
         store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
       },

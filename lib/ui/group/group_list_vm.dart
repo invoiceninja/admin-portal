@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
@@ -72,9 +73,10 @@ class GroupListVM {
       isLoaded: state.groupState.isLoaded,
       filter: state.groupUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterGroupsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.groupListState.filterEntityId, context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.groupListState.filterEntityId,
+          entityType: state.groupListState.filterEntityType),
       onGroupTap: (context, group) {
         store.dispatch(ViewGroup(groupId: group.id, context: context));
       },

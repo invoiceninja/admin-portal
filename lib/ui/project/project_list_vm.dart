@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -77,10 +78,10 @@ class ProjectListVM {
       filter: state.projectUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterProjectsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.projectListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.projectListState.filterEntityId,
+          entityType: state.projectListState.filterEntityType),
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
       },

@@ -12,27 +12,30 @@ class EntityType extends EnumClass {
 
   static Serializer<EntityType> get serializer => _$entityTypeSerializer;
 
-  static const EntityType company = _$company;
   static const EntityType taxRate = _$taxRate;
   static const EntityType companyGateway = _$companyGateway;
-  static const EntityType gateway = _$gateway;
-  static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoice = _$invoice;
   static const EntityType recurringInvoice = _$recurringInvoice;
-  static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType quote = _$quote;
-  static const EntityType quoteItem = _$quoteItem;
   static const EntityType product = _$product;
   static const EntityType client = _$client;
-  static const EntityType contact = _$contact;
   static const EntityType task = _$task;
   static const EntityType project = _$project;
   static const EntityType expense = _$expense;
   static const EntityType expenseCategory = _$expenseCategory;
   static const EntityType vendor = _$vendor;
-  static const EntityType vendorContact = _$vendorContact;
   static const EntityType credit = _$credit;
   static const EntityType payment = _$payment;
+  static const EntityType group = _$group;
+  static const EntityType user = _$user;
+
+  static const EntityType company = _$company;
+  static const EntityType gateway = _$gateway;
+  static const EntityType gatewayToken = _$gatewayToken;
+  static const EntityType invoiceItem = _$invoiceItem;
+  static const EntityType quoteItem = _$quoteItem;
+  static const EntityType contact = _$contact;
+  static const EntityType vendorContact = _$vendorContact;
   static const EntityType country = _$country;
   static const EntityType currency = _$currency;
   static const EntityType language = _$language;
@@ -41,11 +44,9 @@ class EntityType extends EnumClass {
   static const EntityType paymentType = _$paymentType;
   static const EntityType taskStatus = _$taskStatus;
   static const EntityType document = _$document;
-  static const EntityType group = _$group;
   static const EntityType timezone = _$timezone;
   static const EntityType dateFormat = _$dateFormat;
   static const EntityType font = _$font;
-  static const EntityType user = _$user;
 
   String get plural {
     return toString() + 's';

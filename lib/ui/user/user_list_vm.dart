@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -71,9 +72,10 @@ class UserListVM {
       isLoaded: state.userState.isLoaded,
       filter: state.userUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterUsersByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.userListState.filterEntityId, context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.userListState.filterEntityId,
+          entityType: state.userListState.filterEntityType),
       onUserTap: (context, user) {
         store.dispatch(ViewUser(userId: user.id, context: context));
       },

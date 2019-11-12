@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -72,10 +73,10 @@ class DocumentListVM {
       filter: state.documentUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterDocumentsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.documentListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.documentListState.filterEntityId,
+          entityType: state.documentListState.filterEntityType),
       onDocumentTap: (context, document) {
         store.dispatch(ViewDocument(documentId: document.id, context: context));
       },

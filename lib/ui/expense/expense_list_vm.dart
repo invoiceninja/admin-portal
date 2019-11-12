@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
@@ -79,20 +80,10 @@ class ExpenseListVM {
       filter: state.expenseUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterExpensesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) {
-        switch (state.expenseListState.filterEntityType) {
-          case EntityType.client:
-            store.dispatch(ViewClient(
-                clientId: state.expenseListState.filterEntityId,
-                context: context));
-            break;
-          case EntityType.vendor:
-            store.dispatch(ViewVendor(
-                vendorId: state.expenseListState.filterEntityId,
-                context: context));
-            break;
-        }
-      },
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.expenseListState.filterEntityId,
+          entityType: state.expenseListState.filterEntityType),
       onExpenseTap: (context, expense) {
         store.dispatch(ViewExpense(expenseId: expense.id, context: context));
       },

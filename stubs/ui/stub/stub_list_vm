@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -72,10 +73,10 @@ class StubListVM {
         filter: state.stubUIState.listUIState.filter,
           onClearEntityFilterPressed: () =>
               store.dispatch(FilterStubsByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.stubListState.filterEntityId,
-                  context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.stubListState.filterEntityId,
+          entityType: state.stubListState.filterEntityType),
         onStubTap: (context, stub) {
           store.dispatch(ViewStub(stubId: stub.id, context: context));
         },

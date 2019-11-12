@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -136,16 +137,10 @@ class InvoiceListVM extends EntityListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterInvoicesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) {
-        if (state.invoiceListState.filterEntityType == EntityType.client) {
-          store.dispatch(ViewClient(
-              clientId: state.invoiceListState.filterEntityId,
-              context: context));
-        } else if (state.invoiceListState.filterEntityType == EntityType.user) {
-          store.dispatch(ViewUser(
-              userId: state.invoiceListState.filterEntityId, context: context));
-        }
-      },
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.invoiceListState.filterEntityId,
+          entityType: state.invoiceListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> invoices,
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),

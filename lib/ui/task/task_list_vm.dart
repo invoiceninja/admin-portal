@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -80,20 +82,10 @@ class TaskListVM {
       isLoaded: state.taskState.isLoaded,
       filter: state.taskUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterTasksByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) {
-        switch (state.taskListState.filterEntityType) {
-          case EntityType.client:
-            store.dispatch(ViewClient(
-                clientId: state.taskListState.filterEntityId,
-                context: context));
-            break;
-          case EntityType.project:
-            store.dispatch(ViewProject(
-                projectId: state.taskListState.filterEntityId,
-                context: context));
-            break;
-        }
-      },
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.taskListState.filterEntityId,
+          entityType: state.taskListState.filterEntityType),
       onTaskTap: (context, task) {
         store.dispatch(ViewTask(taskId: task.id, context: context));
       },

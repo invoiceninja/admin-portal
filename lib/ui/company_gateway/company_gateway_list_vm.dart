@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +85,10 @@ class CompanyGatewayListVM {
       filter: state.companyGatewayUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterCompanyGatewaysByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.companyGatewayListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.companyGatewayListState.filterEntityId,
+          entityType: state.companyGatewayListState.filterEntityType),
       onCompanyGatewayTap: (context, companyGateway) {
         store.dispatch(ViewCompanyGateway(
             companyGatewayId: companyGateway.id, context: context));

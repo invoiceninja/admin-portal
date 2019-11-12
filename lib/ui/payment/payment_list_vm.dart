@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -85,20 +87,10 @@ class PaymentListVM {
           handlePaymentAction(context, payments, action),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) {
-        switch (state.paymentListState.filterEntityType) {
-          case EntityType.client:
-            store.dispatch(ViewClient(
-                clientId: state.paymentListState.filterEntityId,
-                context: context));
-            break;
-          case EntityType.invoice:
-            store.dispatch(ViewInvoice(
-                invoiceId: state.paymentListState.filterEntityId,
-                context: context));
-            break;
-        }
-      },
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.paymentListState.filterEntityId,
+          entityType: state.paymentListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
