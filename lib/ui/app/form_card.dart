@@ -5,10 +5,12 @@ class FormCard extends StatelessWidget {
   const FormCard({
     Key key,
     this.isResponsive = false,
-    @required this.children,
+    this.children,
+    this.child,
     this.crossAxisAlignment,
   }) : super(key: key);
 
+  final Widget child;
   final List<Widget> children;
   final CrossAxisAlignment crossAxisAlignment;
   final bool isResponsive;
@@ -27,7 +29,7 @@ class FormCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(
               left: 16.0, top: 16.0, right: 16.0, bottom: 20.0),
-          child: Container(
+          child: child != null ? child : Container(
             width: double.infinity,
             child: Column(
               mainAxisSize: MainAxisSize.max,

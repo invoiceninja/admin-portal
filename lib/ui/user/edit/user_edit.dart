@@ -168,54 +168,59 @@ class _UserEditState extends State<UserEdit> {
               ],
             ),
             FormCard(
-              children: <Widget>[
-                DataTable(
-                  columns: [
-                    DataColumn(
-                      label: Text(localization.module),
+              child: DataTable(
+                columns: [
+                  DataColumn(
+                    label: SizedBox(),
+                  ),
+                  DataColumn(
+                    label: Text(localization.create),
+                  ),
+                  DataColumn(
+                    label: Text(localization.view),
+                  ),
+                  DataColumn(
+                    label: Text(localization.edit),
+                  ),
+                ],
+                rows: [
+                  DataRow(cells: [
+                    DataCell(
+                      Text(localization.all),
                     ),
-                    DataColumn(
-                      label: Text(localization.create),
+                    DataCell(
+                      Checkbox(
+                        value: false,
+                        onChanged: null,
+                        activeColor: Theme.of(context).accentColor,
+                      ),
+                      onTap: () {
+                        
+                      }
                     ),
-                    DataColumn(
-                      label: Text(localization.view),
+                    DataCell(
+                      Text('test'),
                     ),
-                    DataColumn(
-                      label: Text(localization.edit),
+                    DataCell(
+                      Text('test'),
                     ),
-                  ],
-                  rows: [
-                    DataRow(cells: [
-                      DataCell(
-                        Text(localization.all),
-                      ),
-                      DataCell(
-                        Text('test'),
-                      ),
-                      DataCell(
-                        Text('test'),
-                      ),
-                      DataCell(
-                        Text('test'),
-                      ),
-                    ]),
-                    ...<EntityType>[
-                      EntityType.client,
-                      EntityType.product,
-                      EntityType.invoice,
-                      EntityType.payment,
-                      EntityType.quote,
-                    ]
-                        .map((EntityType type) => DataRow(cells: [
-                              DataCell(Text(type.toString())),
-                              DataCell(Text(type.toString())),
-                              DataCell(Text(type.toString())),
-                              DataCell(Text(type.toString())),
-                            ]))
-                        .toList()
-                  ],
-                ),
-              ],
+                  ]),
+                  ...<EntityType>[
+                    EntityType.client,
+                    EntityType.product,
+                    EntityType.invoice,
+                    EntityType.payment,
+                    EntityType.quote,
+                  ]
+                      .map((EntityType type) => DataRow(cells: [
+                    DataCell(Text(localization.lookup(type.toString()))),
+                    DataCell(Text('')),
+                    DataCell(Text('')),
+                    DataCell(Text('')),
+                  ]))
+                      .toList()
+                ],
+              ),
             )
           ],
         ),
