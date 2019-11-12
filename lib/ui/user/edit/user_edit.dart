@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -78,6 +79,18 @@ class _UserEditState extends State<UserEdit> {
         widget.viewModel.onChanged(user);
       }
     });
+  }
+
+  void _togglePermission(String permission) {
+    final user = widget.viewModel.user;
+    final permissions = (user.permissions ?? '').split(',');
+    if (permissions.contains(permission)) {
+      permissions.remove(permission);
+    } else {
+      permissions.add(permission);
+    }
+    widget.viewModel
+        .onChanged(user.rebuild((b) => b..permissions = permissions.join(',')));
   }
 
   @override
@@ -189,15 +202,13 @@ class _UserEditState extends State<UserEdit> {
                       Text(localization.all),
                     ),
                     DataCell(
-                      Checkbox(
-                        value: false,
-                        onChanged: null,
-                        activeColor: Theme.of(context).accentColor,
-                      ),
-                      onTap: () {
-                        
-                      }
-                    ),
+                        Checkbox(
+                          value: viewModel.user.permissions
+                              .contains(kPermissionCreateAll),
+                          onChanged: null,
+                          activeColor: Theme.of(context).accentColor,
+                        ),
+                        onTap: () => _togglePermission(kPermissionCreateAll)),
                     DataCell(
                       Text('test'),
                     ),
@@ -213,11 +224,12 @@ class _UserEditState extends State<UserEdit> {
                     EntityType.quote,
                   ]
                       .map((EntityType type) => DataRow(cells: [
-                    DataCell(Text(localization.lookup(type.toString()))),
-                    DataCell(Text('')),
-                    DataCell(Text('')),
-                    DataCell(Text('')),
-                  ]))
+                            DataCell(
+                                Text(localization.lookup(type.toString()))),
+                            DataCell(Text('')),
+                            DataCell(Text('')),
+                            DataCell(Text('')),
+                          ]))
                       .toList()
                 ],
               ),

@@ -210,6 +210,10 @@ const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
 
+const String kPermissionCreateAll = 'create_all';
+const String kPermissionViewAll = 'view_all';
+const String kPermissionEditAll = 'edit_all';
+
 const int kPaymentStatusPending = 1;
 const int kPaymentStatusVoided = 2;
 const int kPaymentStatusFailed = 3;

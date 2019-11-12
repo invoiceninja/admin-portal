@@ -6,27 +6,29 @@ part of 'entities.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const EntityType _$company = const EntityType._('company');
 const EntityType _$taxRate = const EntityType._('taxRate');
 const EntityType _$companyGateway = const EntityType._('companyGateway');
-const EntityType _$gateway = const EntityType._('gateway');
-const EntityType _$gatewayToken = const EntityType._('gatewayToken');
 const EntityType _$invoice = const EntityType._('invoice');
 const EntityType _$recurringInvoice = const EntityType._('recurringInvoice');
-const EntityType _$invoiceItem = const EntityType._('invoiceItem');
 const EntityType _$quote = const EntityType._('quote');
-const EntityType _$quoteItem = const EntityType._('quoteItem');
 const EntityType _$product = const EntityType._('product');
 const EntityType _$client = const EntityType._('client');
-const EntityType _$contact = const EntityType._('contact');
 const EntityType _$task = const EntityType._('task');
 const EntityType _$project = const EntityType._('project');
 const EntityType _$expense = const EntityType._('expense');
 const EntityType _$expenseCategory = const EntityType._('expenseCategory');
 const EntityType _$vendor = const EntityType._('vendor');
-const EntityType _$vendorContact = const EntityType._('vendorContact');
 const EntityType _$credit = const EntityType._('credit');
 const EntityType _$payment = const EntityType._('payment');
+const EntityType _$group = const EntityType._('group');
+const EntityType _$user = const EntityType._('user');
+const EntityType _$company = const EntityType._('company');
+const EntityType _$gateway = const EntityType._('gateway');
+const EntityType _$gatewayToken = const EntityType._('gatewayToken');
+const EntityType _$invoiceItem = const EntityType._('invoiceItem');
+const EntityType _$quoteItem = const EntityType._('quoteItem');
+const EntityType _$contact = const EntityType._('contact');
+const EntityType _$vendorContact = const EntityType._('vendorContact');
 const EntityType _$country = const EntityType._('country');
 const EntityType _$currency = const EntityType._('currency');
 const EntityType _$language = const EntityType._('language');
@@ -35,40 +37,26 @@ const EntityType _$size = const EntityType._('size');
 const EntityType _$paymentType = const EntityType._('paymentType');
 const EntityType _$taskStatus = const EntityType._('taskStatus');
 const EntityType _$document = const EntityType._('document');
-const EntityType _$group = const EntityType._('group');
 const EntityType _$timezone = const EntityType._('timezone');
 const EntityType _$dateFormat = const EntityType._('dateFormat');
 const EntityType _$font = const EntityType._('font');
-const EntityType _$user = const EntityType._('user');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
-    case 'company':
-      return _$company;
     case 'taxRate':
       return _$taxRate;
     case 'companyGateway':
       return _$companyGateway;
-    case 'gateway':
-      return _$gateway;
-    case 'gatewayToken':
-      return _$gatewayToken;
     case 'invoice':
       return _$invoice;
     case 'recurringInvoice':
       return _$recurringInvoice;
-    case 'invoiceItem':
-      return _$invoiceItem;
     case 'quote':
       return _$quote;
-    case 'quoteItem':
-      return _$quoteItem;
     case 'product':
       return _$product;
     case 'client':
       return _$client;
-    case 'contact':
-      return _$contact;
     case 'task':
       return _$task;
     case 'project':
@@ -79,12 +67,28 @@ EntityType _$typeValueOf(String name) {
       return _$expenseCategory;
     case 'vendor':
       return _$vendor;
-    case 'vendorContact':
-      return _$vendorContact;
     case 'credit':
       return _$credit;
     case 'payment':
       return _$payment;
+    case 'group':
+      return _$group;
+    case 'user':
+      return _$user;
+    case 'company':
+      return _$company;
+    case 'gateway':
+      return _$gateway;
+    case 'gatewayToken':
+      return _$gatewayToken;
+    case 'invoiceItem':
+      return _$invoiceItem;
+    case 'quoteItem':
+      return _$quoteItem;
+    case 'contact':
+      return _$contact;
+    case 'vendorContact':
+      return _$vendorContact;
     case 'country':
       return _$country;
     case 'currency':
@@ -101,16 +105,12 @@ EntityType _$typeValueOf(String name) {
       return _$taskStatus;
     case 'document':
       return _$document;
-    case 'group':
-      return _$group;
     case 'timezone':
       return _$timezone;
     case 'dateFormat':
       return _$dateFormat;
     case 'font':
       return _$font;
-    case 'user':
-      return _$user;
     default:
       throw new ArgumentError(name);
   }
@@ -118,27 +118,29 @@ EntityType _$typeValueOf(String name) {
 
 final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
-  _$company,
   _$taxRate,
   _$companyGateway,
-  _$gateway,
-  _$gatewayToken,
   _$invoice,
   _$recurringInvoice,
-  _$invoiceItem,
   _$quote,
-  _$quoteItem,
   _$product,
   _$client,
-  _$contact,
   _$task,
   _$project,
   _$expense,
   _$expenseCategory,
   _$vendor,
-  _$vendorContact,
   _$credit,
   _$payment,
+  _$group,
+  _$user,
+  _$company,
+  _$gateway,
+  _$gatewayToken,
+  _$invoiceItem,
+  _$quoteItem,
+  _$contact,
+  _$vendorContact,
   _$country,
   _$currency,
   _$language,
@@ -147,11 +149,9 @@ final BuiltSet<EntityType> _$typeValues =
   _$paymentType,
   _$taskStatus,
   _$document,
-  _$group,
   _$timezone,
   _$dateFormat,
   _$font,
-  _$user,
 ]);
 
 const EntityState _$active = const EntityState._('active');

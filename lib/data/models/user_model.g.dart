@@ -122,6 +122,12 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.permissions != null) {
+      result
+        ..add('permissions')
+        ..add(serializers.serialize(object.permissions,
+            specifiedType: const FullType(String)));
+    }
     if (object.isAdmin != null) {
       result
         ..add('is_admin')
@@ -204,6 +210,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'permissions':
+          result.permissions = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'is_admin':
@@ -444,6 +454,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String phone;
   @override
+  final String permissions;
+  @override
   final bool isAdmin;
   @override
   final bool isChanged;
@@ -470,6 +482,7 @@ class _$UserEntity extends UserEntity {
       this.lastName,
       this.email,
       this.phone,
+      this.permissions,
       this.isAdmin,
       this.isChanged,
       this.createdAt,
@@ -509,6 +522,7 @@ class _$UserEntity extends UserEntity {
         lastName == other.lastName &&
         email == other.email &&
         phone == other.phone &&
+        permissions == other.permissions &&
         isAdmin == other.isAdmin &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -533,10 +547,14 @@ class _$UserEntity extends UserEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, firstName.hashCode),
-                                                    lastName.hashCode),
-                                                email.hashCode),
-                                            phone.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            firstName.hashCode),
+                                                        lastName.hashCode),
+                                                    email.hashCode),
+                                                phone.hashCode),
+                                            permissions.hashCode),
                                         isAdmin.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -555,6 +573,7 @@ class _$UserEntity extends UserEntity {
           ..add('lastName', lastName)
           ..add('email', email)
           ..add('phone', phone)
+          ..add('permissions', permissions)
           ..add('isAdmin', isAdmin)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -586,6 +605,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String _phone;
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
+
+  String _permissions;
+  String get permissions => _$this._permissions;
+  set permissions(String permissions) => _$this._permissions = permissions;
 
   bool _isAdmin;
   bool get isAdmin => _$this._isAdmin;
@@ -633,6 +656,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _lastName = _$v.lastName;
       _email = _$v.email;
       _phone = _$v.phone;
+      _permissions = _$v.permissions;
       _isAdmin = _$v.isAdmin;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -668,6 +692,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
             lastName: lastName,
             email: email,
             phone: phone,
+            permissions: permissions,
             isAdmin: isAdmin,
             isChanged: isChanged,
             createdAt: createdAt,

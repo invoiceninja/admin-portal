@@ -57,6 +57,7 @@ abstract class UserEntity extends Object
       archivedAt: 0,
       isDeleted: false,
       isAdmin: false,
+      permissions: '',
     );
   }
 
@@ -76,6 +77,9 @@ abstract class UserEntity extends Object
   String get email;
 
   String get phone;
+
+  @nullable
+  String get permissions;
 
   @nullable
   @BuiltValueField(wireName: 'is_admin')
