@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class UserEdit extends StatefulWidget {
   const UserEdit({
@@ -92,6 +93,21 @@ class _UserEditState extends State<UserEdit> {
     }
     widget.viewModel
         .onChanged(user.rebuild((b) => b..permissions = permissions.join(',')));
+  }
+
+  void _togglePermissions(List<String> permissions) {
+    final user = widget.viewModel.user;
+    final userPermissions = (user.permissions ?? '').split(',');
+    permissions.forEach((permission) {
+      if (userPermissions.contains(permission)) {
+        userPermissions.remove(permission);
+      } else {
+        userPermissions.add(permission);
+      }
+    });
+
+    widget.viewModel
+        .onChanged(user.rebuild((b) => b..permissions = userPermissions.join(',')));
   }
 
   @override
@@ -199,9 +215,13 @@ class _UserEditState extends State<UserEdit> {
                 ],
                 rows: [
                   DataRow(cells: [
-                    DataCell(
-                      Text(localization.all),
-                    ),
+                    DataCell(Text(localization.all), onTap: () {
+                      _togglePermissions([
+                        kPermissionCreateAll,
+                        kPermissionViewAll,
+                        kPermissionEditAll
+                      ]);
+                    }),
                     DataCell(
                         _PermissionCheckbox(
                           user: viewModel.user,
@@ -233,15 +253,24 @@ class _UserEditState extends State<UserEdit> {
                     EntityType.invoice,
                     EntityType.payment,
                     EntityType.quote,
-                  ]
-                      .map((EntityType type) => DataRow(cells: [
-                            DataCell(
-                                Text(localization.lookup(type.toString()))),
-                            DataCell(Text('')),
-                            DataCell(Text('')),
-                            DataCell(Text('')),
-                          ]))
-                      .toList()
+                  ].map((EntityType type) {
+                    final createPermission = 'create_' + toSnakeCase('$type');
+                    return DataRow(cells: [
+                      DataCell(Text(localization.lookup('$type')), onTap: () {
+                        _togglePermission(createPermission);
+                      }),
+                      DataCell(
+                          _PermissionCheckbox(
+                            user: viewModel.user,
+                            permission: createPermission,
+                            onChanged: (value) =>
+                                _togglePermission(createPermission),
+                          ),
+                          onTap: () => _togglePermission(createPermission)),
+                      DataCell(Text('')),
+                      DataCell(Text('')),
+                    ]);
+                  }).toList()
                 ],
               ),
             )
