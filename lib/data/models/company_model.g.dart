@@ -514,6 +514,12 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
         ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
+    if (object.defaultGatewayTypeId != null) {
+      result
+        ..add('default_gateway_type_id')
+        ..add(serializers.serialize(object.defaultGatewayTypeId,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -540,6 +546,10 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
         case 'sort_order':
           result.sortOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'default_gateway_type_id':
+          result.defaultGatewayTypeId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'fields':
           result.fields = serializers.deserialize(value,
@@ -2835,12 +2845,19 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final int sortOrder;
   @override
+  final String defaultGatewayTypeId;
+  @override
   final String fields;
 
   factory _$GatewayEntity([void Function(GatewayEntityBuilder) updates]) =>
       (new GatewayEntityBuilder()..update(updates)).build();
 
-  _$GatewayEntity._({this.id, this.name, this.sortOrder, this.fields})
+  _$GatewayEntity._(
+      {this.id,
+      this.name,
+      this.sortOrder,
+      this.defaultGatewayTypeId,
+      this.fields})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
@@ -2867,13 +2884,15 @@ class _$GatewayEntity extends GatewayEntity {
         id == other.id &&
         name == other.name &&
         sortOrder == other.sortOrder &&
+        defaultGatewayTypeId == other.defaultGatewayTypeId &&
         fields == other.fields;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
+            defaultGatewayTypeId.hashCode),
         fields.hashCode));
   }
 
@@ -2883,6 +2902,7 @@ class _$GatewayEntity extends GatewayEntity {
           ..add('id', id)
           ..add('name', name)
           ..add('sortOrder', sortOrder)
+          ..add('defaultGatewayTypeId', defaultGatewayTypeId)
           ..add('fields', fields))
         .toString();
   }
@@ -2904,6 +2924,11 @@ class GatewayEntityBuilder
   int get sortOrder => _$this._sortOrder;
   set sortOrder(int sortOrder) => _$this._sortOrder = sortOrder;
 
+  String _defaultGatewayTypeId;
+  String get defaultGatewayTypeId => _$this._defaultGatewayTypeId;
+  set defaultGatewayTypeId(String defaultGatewayTypeId) =>
+      _$this._defaultGatewayTypeId = defaultGatewayTypeId;
+
   String _fields;
   String get fields => _$this._fields;
   set fields(String fields) => _$this._fields = fields;
@@ -2915,6 +2940,7 @@ class GatewayEntityBuilder
       _id = _$v.id;
       _name = _$v.name;
       _sortOrder = _$v.sortOrder;
+      _defaultGatewayTypeId = _$v.defaultGatewayTypeId;
       _fields = _$v.fields;
       _$v = null;
     }
@@ -2938,7 +2964,11 @@ class GatewayEntityBuilder
   _$GatewayEntity build() {
     final _$result = _$v ??
         new _$GatewayEntity._(
-            id: id, name: name, sortOrder: sortOrder, fields: fields);
+            id: id,
+            name: name,
+            sortOrder: sortOrder,
+            defaultGatewayTypeId: defaultGatewayTypeId,
+            fields: fields);
     replace(_$result);
     return _$result;
   }

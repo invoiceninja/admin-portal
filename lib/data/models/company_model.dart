@@ -314,6 +314,7 @@ abstract class GatewayEntity extends Object
       name: '',
       sortOrder: 0,
       fields: '',
+      defaultGatewayTypeId: kGatewayTypeCreditCard,
     );
   }
 
@@ -330,6 +331,11 @@ abstract class GatewayEntity extends Object
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
+
+  @nullable
+  @BuiltValueField(wireName: 'default_gateway_type_id')
+  String get defaultGatewayTypeId;
+
 
   //bool get recommended;
   //bool get visible;

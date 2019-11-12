@@ -99,8 +99,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       onSelected: (SelectableEntity gateway) =>
                           viewModel.onChanged(
                         companyGateway.rebuild((b) => b
+                          ..feesAndLimitsMap[(gateway as GatewayEntity)
+                              .defaultGatewayTypeId ?? kGatewayTypeCreditCard] = FeesAndLimitsSettings()
                           ..gatewayId = gateway.id
-                          ..config = ''),
+                          ..config = '{}'),
                       ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
