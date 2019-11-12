@@ -14,6 +14,15 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'show_cost': 'Show Cost',
+      'show_cost_help':
+          'Display a product cost field to track the markup/profit',
+      'show_quantity': 'Show Quantity',
+      'show_quantity_help':
+          'Display a product quantity field, otherwise default to one',
+      'default_quantity': 'Default Quantity',
+      'default_quantity_help':
+          'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -15690,6 +15699,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailSubjectPayment =>
       _localizedValues[localeCode]['email_subject_payment'];
+
+  String get showCost => _localizedValues[localeCode]['show_cost'];
+
+  String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
+
+  String get showQuantity => _localizedValues[localeCode]['show_quantity'];
+
+  String get showQuantityHelp =>
+      _localizedValues[localeCode]['show_quantity_help'];
+
+  String get defaultQuantity =>
+      _localizedValues[localeCode]['default_quantity'];
+
+  String get defaultQuantityHelp =>
+      _localizedValues[localeCode]['default_quantity_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

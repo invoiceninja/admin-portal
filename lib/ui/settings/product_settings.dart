@@ -37,6 +37,34 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showCost),
+                value: company.enableProductCost ?? false,
+                subtitle: Text(localization.showCostHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableProductCost = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showQuantity),
+                value: company.enableProductQuantity ?? false,
+                subtitle: Text(localization.showQuantityHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableProductQuantity = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.defaultQuantity),
+                value: company.defaultQuantity ?? false,
+                subtitle: Text(localization.defaultQuantityHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..defaultQuantity = value)),
+              ),
+            ],
+          ),
+          FormCard(
+            children: <Widget>[
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
                 title: Text(localization.fillProducts),
                 value: company.fillProducts ?? false,
                 subtitle: Text(localization.fillProductsHelp),

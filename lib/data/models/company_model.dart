@@ -30,7 +30,14 @@ abstract class CompanyEntity extends Object
       firstDayOfWeek: '0',
       updateProducts: true,
       fillProducts: true,
+      enableProductCost: false,
+      enableProductQuantity: true,
+      defaultQuantity: true,
       convertProductExchangeRate: false,
+      enableCustomSurchargeTaxes1: false,
+      enableCustomSurchargeTaxes2: false,
+      enableCustomSurchargeTaxes3: false,
+      enableCustomSurchargeTaxes4: false,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -46,20 +53,16 @@ abstract class CompanyEntity extends Object
 
   CompanyEntity._();
 
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes1')
+  @BuiltValueField(wireName: 'custom_surcharge_taxes1')
   bool get enableCustomSurchargeTaxes1;
 
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes2')
+  @BuiltValueField(wireName: 'custom_surcharge_taxes2')
   bool get enableCustomSurchargeTaxes2;
 
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes3')
+  @BuiltValueField(wireName: 'custom_surcharge_taxes3')
   bool get enableCustomSurchargeTaxes3;
 
-  @nullable
-  @BuiltValueField(wireName: 'custom_invoice_taxes4')
+  @BuiltValueField(wireName: 'custom_surcharge_taxes4')
   bool get enableCustomSurchargeTaxes4;
 
   @nullable
@@ -85,6 +88,15 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'fill_products')
   bool get fillProducts;
+
+  @BuiltValueField(wireName: 'enable_product_cost')
+  bool get enableProductCost;
+
+  @BuiltValueField(wireName: 'enable_product_quantity')
+  bool get enableProductQuantity;
+
+  @BuiltValueField(wireName: 'default_quantity')
+  bool get defaultQuantity;
 
   // TODO remove this
   @nullable

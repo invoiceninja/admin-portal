@@ -30,6 +30,27 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
   Iterable<Object> serialize(Serializers serializers, CompanyEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'custom_surcharge_taxes1',
+      serializers.serialize(object.enableCustomSurchargeTaxes1,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_taxes2',
+      serializers.serialize(object.enableCustomSurchargeTaxes2,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_taxes3',
+      serializers.serialize(object.enableCustomSurchargeTaxes3,
+          specifiedType: const FullType(bool)),
+      'custom_surcharge_taxes4',
+      serializers.serialize(object.enableCustomSurchargeTaxes4,
+          specifiedType: const FullType(bool)),
+      'enable_product_cost',
+      serializers.serialize(object.enableProductCost,
+          specifiedType: const FullType(bool)),
+      'enable_product_quantity',
+      serializers.serialize(object.enableProductQuantity,
+          specifiedType: const FullType(bool)),
+      'default_quantity',
+      serializers.serialize(object.defaultQuantity,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -51,30 +72,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
-    if (object.enableCustomSurchargeTaxes1 != null) {
-      result
-        ..add('custom_invoice_taxes1')
-        ..add(serializers.serialize(object.enableCustomSurchargeTaxes1,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableCustomSurchargeTaxes2 != null) {
-      result
-        ..add('custom_invoice_taxes2')
-        ..add(serializers.serialize(object.enableCustomSurchargeTaxes2,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableCustomSurchargeTaxes3 != null) {
-      result
-        ..add('custom_invoice_taxes3')
-        ..add(serializers.serialize(object.enableCustomSurchargeTaxes3,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableCustomSurchargeTaxes4 != null) {
-      result
-        ..add('custom_invoice_taxes4')
-        ..add(serializers.serialize(object.enableCustomSurchargeTaxes4,
-            specifiedType: const FullType(bool)));
-    }
     if (object.sizeId != null) {
       result
         ..add('size_id')
@@ -255,19 +252,19 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'custom_invoice_taxes1':
+        case 'custom_surcharge_taxes1':
           result.enableCustomSurchargeTaxes1 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_invoice_taxes2':
+        case 'custom_surcharge_taxes2':
           result.enableCustomSurchargeTaxes2 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_invoice_taxes3':
+        case 'custom_surcharge_taxes3':
           result.enableCustomSurchargeTaxes3 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'custom_invoice_taxes4':
+        case 'custom_surcharge_taxes4':
           result.enableCustomSurchargeTaxes4 = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
@@ -293,6 +290,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'fill_products':
           result.fillProducts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_product_cost':
+          result.enableProductCost = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_product_quantity':
+          result.enableProductQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'default_quantity':
+          result.defaultQuantity = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
@@ -2190,6 +2199,12 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool fillProducts;
   @override
+  final bool enableProductCost;
+  @override
+  final bool enableProductQuantity;
+  @override
+  final bool defaultQuantity;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -2254,6 +2269,9 @@ class _$CompanyEntity extends CompanyEntity {
       this.updateProducts,
       this.convertProductExchangeRate,
       this.fillProducts,
+      this.enableProductCost,
+      this.enableProductQuantity,
+      this.defaultQuantity,
       this.plan,
       this.companyKey,
       this.appUrl,
@@ -2280,6 +2298,32 @@ class _$CompanyEntity extends CompanyEntity {
       this.assignedUserId,
       this.id})
       : super._() {
+    if (enableCustomSurchargeTaxes1 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomSurchargeTaxes1');
+    }
+    if (enableCustomSurchargeTaxes2 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomSurchargeTaxes2');
+    }
+    if (enableCustomSurchargeTaxes3 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomSurchargeTaxes3');
+    }
+    if (enableCustomSurchargeTaxes4 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableCustomSurchargeTaxes4');
+    }
+    if (enableProductCost == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'enableProductCost');
+    }
+    if (enableProductQuantity == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableProductQuantity');
+    }
+    if (defaultQuantity == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuantity');
+    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
@@ -2318,6 +2362,9 @@ class _$CompanyEntity extends CompanyEntity {
         updateProducts == other.updateProducts &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
         fillProducts == other.fillProducts &&
+        enableProductCost == other.enableProductCost &&
+        enableProductQuantity == other.enableProductQuantity &&
+        defaultQuantity == other.defaultQuantity &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         appUrl == other.appUrl &&
@@ -2365,7 +2412,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
                                                                                 taxRates.hashCode),
                                                                             taskStatuses.hashCode),
                                                                         taskStatusMap.hashCode),
@@ -2400,6 +2447,9 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('updateProducts', updateProducts)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
           ..add('fillProducts', fillProducts)
+          ..add('enableProductCost', enableProductCost)
+          ..add('enableProductQuantity', enableProductQuantity)
+          ..add('defaultQuantity', defaultQuantity)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('appUrl', appUrl)
@@ -2478,6 +2528,21 @@ class CompanyEntityBuilder
   bool _fillProducts;
   bool get fillProducts => _$this._fillProducts;
   set fillProducts(bool fillProducts) => _$this._fillProducts = fillProducts;
+
+  bool _enableProductCost;
+  bool get enableProductCost => _$this._enableProductCost;
+  set enableProductCost(bool enableProductCost) =>
+      _$this._enableProductCost = enableProductCost;
+
+  bool _enableProductQuantity;
+  bool get enableProductQuantity => _$this._enableProductQuantity;
+  set enableProductQuantity(bool enableProductQuantity) =>
+      _$this._enableProductQuantity = enableProductQuantity;
+
+  bool _defaultQuantity;
+  bool get defaultQuantity => _$this._defaultQuantity;
+  set defaultQuantity(bool defaultQuantity) =>
+      _$this._defaultQuantity = defaultQuantity;
 
   String _plan;
   String get plan => _$this._plan;
@@ -2619,6 +2684,9 @@ class CompanyEntityBuilder
       _updateProducts = _$v.updateProducts;
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
       _fillProducts = _$v.fillProducts;
+      _enableProductCost = _$v.enableProductCost;
+      _enableProductQuantity = _$v.enableProductQuantity;
+      _defaultQuantity = _$v.defaultQuantity;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _appUrl = _$v.appUrl;
@@ -2678,6 +2746,9 @@ class CompanyEntityBuilder
               updateProducts: updateProducts,
               convertProductExchangeRate: convertProductExchangeRate,
               fillProducts: fillProducts,
+              enableProductCost: enableProductCost,
+              enableProductQuantity: enableProductQuantity,
+              defaultQuantity: defaultQuantity,
               plan: plan,
               companyKey: companyKey,
               appUrl: appUrl,
