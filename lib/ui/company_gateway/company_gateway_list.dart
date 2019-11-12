@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -35,7 +36,8 @@ class CompanyGatewayList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Expanded(
+        Flexible(
+          fit: FlexFit.tight,
           child: !viewModel.isLoaded
               ? LoadingIndicator()
               : RefreshIndicator(
@@ -44,8 +46,6 @@ class CompanyGatewayList extends StatelessWidget {
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ReorderableListView(
                           onReorder: (oldIndex, newIndex) {
-                            print('REORDER: $oldIndex $newIndex');
-
                             // https://stackoverflow.com/a/54164333/497368
                             // These two lines are workarounds for ReorderableListView problems
                             if (newIndex >
@@ -55,8 +55,6 @@ class CompanyGatewayList extends StatelessWidget {
                             if (oldIndex < newIndex) {
                               newIndex--;
                             }
-
-                            print('REORDER FIXED: $oldIndex $newIndex');
 
                             viewModel.onSortChanged(oldIndex, newIndex);
                           },
@@ -89,6 +87,9 @@ class CompanyGatewayList extends StatelessWidget {
                           }).toList(),
                         ),
                 ),
+        ),
+        Expanded(
+          child: SizedBox(),
         ),
       ],
     );

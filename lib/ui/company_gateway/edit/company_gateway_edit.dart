@@ -100,7 +100,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           viewModel.onChanged(
                         companyGateway.rebuild((b) => b
                           ..feesAndLimitsMap[(gateway as GatewayEntity)
-                              .defaultGatewayTypeId ?? kGatewayTypeCreditCard] = FeesAndLimitsSettings()
+                                  .defaultGatewayTypeId ??
+                              kGatewayTypeCreditCard] = FeesAndLimitsSettings()
                           ..gatewayId = gateway.id
                           ..config = '{}'),
                       ),
@@ -212,11 +213,13 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   ],
                 ),
               LimitEditor(
+                key: ValueKey('__${_gatewayTypeId}__'),
                 gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
               ),
               FeesEditor(
+                key: ValueKey('__${_gatewayTypeId}__'),
                 gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
@@ -409,7 +412,9 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 }
 
 class LimitEditor extends StatefulWidget {
-  const LimitEditor({this.companyGateway, this.viewModel, this.gatewayTypeId});
+  const LimitEditor(
+      {Key key, this.companyGateway, this.viewModel, this.gatewayTypeId})
+      : super(key: key);
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
@@ -583,7 +588,9 @@ class _LimitEditorState extends State<LimitEditor> {
 }
 
 class FeesEditor extends StatefulWidget {
-  const FeesEditor({this.companyGateway, this.viewModel, this.gatewayTypeId});
+  const FeesEditor(
+      {Key key, this.companyGateway, this.viewModel, this.gatewayTypeId})
+      : super(key: key);
 
   final CompanyGatewayEntity companyGateway;
   final CompanyGatewayEditVM viewModel;
