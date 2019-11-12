@@ -4,20 +4,20 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer.dart';
+import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
-class AppDrawerBuilder extends StatelessWidget {
-  const AppDrawerBuilder({Key key}) : super(key: key);
+class MenuDrawerBuilder extends StatelessWidget {
+  const MenuDrawerBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AppDrawerVM>(
       converter: AppDrawerVM.fromStore,
       builder: (context, viewModel) {
-        return AppDrawer(viewModel: viewModel);
+        return MenuDrawer(viewModel: viewModel);
       },
     );
   }

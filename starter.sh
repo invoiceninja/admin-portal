@@ -85,9 +85,9 @@ if [ ${action} = "init" ]; then
         './lib/redux/ui/ui_state.dart'
         './lib/ui/auth/login.dart'
         './lib/ui/auth/login_vm.dart'
-        './lib/ui/app/app_drawer.dart'
+        './lib/ui/app/menu_drawer.dart'
         './lib/ui/app/init.dart'
-        './lib/ui/app/app_drawer_vm.dart'
+        './lib/ui/app/menu_drawer_vm.dart'
         './lib/ui/app/actions_menu_button.dart'
         './lib/ui/app/app_bottom_bar.dart'
         './lib/ui/app/app_search.dart'
@@ -336,7 +336,7 @@ else
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart
 
     comment="STARTER: menu - do not remove comment"
     code="DrawerTile(${lineBreak}"
@@ -351,7 +351,7 @@ else
     code="${code}${module_camel}: ${Module}Entity(), context: context));${lineBreak}"
     code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/app_drawer.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"

@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -28,8 +28,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 // STARTER: import - do not remove comment
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({
+class MenuDrawer extends StatelessWidget {
+  const MenuDrawer({
     Key key,
     @required this.viewModel,
   }) : super(key: key);

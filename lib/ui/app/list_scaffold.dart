@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-import 'app_drawer_vm.dart';
+import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
   const ListScaffold({
@@ -44,7 +44,7 @@ class ListScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          drawer: isMobile(context) ? AppDrawerBuilder() : null,
+          drawer: isMobile(context) ? MenuDrawerBuilder() : null,
           //endDrawer: isMobile(context),
           appBar: AppBar(
             automaticallyImplyLeading: false,

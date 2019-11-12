@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
@@ -57,7 +57,7 @@ class _DashboardViewState extends State<DashboardView>
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
-        drawer: isMobile(context) ? AppDrawerBuilder() : null,
+        drawer: isMobile(context) ? MenuDrawerBuilder() : null,
         appBar: AppBar(
           leading: !isMobile(context)
               ? IconButton(
