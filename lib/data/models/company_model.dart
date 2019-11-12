@@ -403,7 +403,7 @@ abstract class UserCompanyEntity
   factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
       isAdmin: false,
-      permissionsMap: BuiltMap<String, bool>(),
+      permissions: '',
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
@@ -421,13 +421,11 @@ abstract class UserCompanyEntity
 
   TokenEntity get token;
 
-  // TODO fix this
-  @BuiltValueField(wireName: 'permissions_HIDDEN')
-  BuiltMap<String, bool> get permissionsMap;
+  String get permissions;
 
   bool can(UserPermission permission, EntityType entityType) =>
       (isAdmin ?? false) ||
-      permissionsMap.containsKey('${permission}_$entityType');
+      permissions.contains('${permission}_$entityType');
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 

@@ -47,6 +47,12 @@ class UpdateUser implements PersistUI {
   final UserEntity user;
 }
 
+class UpdateUserCompany implements PersistUI {
+  UpdateUserCompany(this.userCompany);
+
+  final UserCompanyEntity userCompany;
+}
+
 class LoadUser {
   LoadUser({this.completer, this.userId, this.loadActivities = false});
 

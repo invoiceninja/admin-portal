@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -78,26 +78,27 @@ class _UserEditState extends State<UserEdit> {
         ..email = _emailController.text.trim()
         ..phone = _phoneController.text.trim());
       if (user != widget.viewModel.user) {
-        widget.viewModel.onChanged(user);
+        widget.viewModel.onUserChanged(user);
       }
     });
   }
 
   void _togglePermission(String permission) {
-    final user = widget.viewModel.user;
-    final permissions = (user.permissions ?? '').split(',');
+    final userCompany = widget.viewModel.userCompany;
+    final permissions = (userCompany.permissions ?? '').split(',');
     if (permissions.contains(permission)) {
       permissions.remove(permission);
     } else {
       permissions.add(permission);
     }
-    widget.viewModel
-        .onChanged(user.rebuild((b) => b..permissions = permissions.join(',')));
+
+    //widget.viewModel
+    //.onUserChanged(userCompany.rebuild((b) => b..permissions = permissions.join(',')));
   }
 
   void _togglePermissions(List<String> permissions) {
-    final user = widget.viewModel.user;
-    final userPermissions = (user.permissions ?? '').split(',');
+    final userCompany = widget.viewModel.userCompany;
+    final userPermissions = (userCompany.permissions ?? '').split(',');
     permissions.forEach((permission) {
       if (userPermissions.contains(permission)) {
         userPermissions.remove(permission);
@@ -106,14 +107,15 @@ class _UserEditState extends State<UserEdit> {
       }
     });
 
-    widget.viewModel.onChanged(
-        user.rebuild((b) => b..permissions = userPermissions.join(',')));
+    //widget.viewModel.onUserChanged(
+    //userCompany.rebuild((b) => b..permissions = userPermissions.join(',')));
   }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
+    final userCompany = viewModel.userCompany;
     final user = viewModel.user;
 
     return WillPopScope(
@@ -190,9 +192,9 @@ class _UserEditState extends State<UserEdit> {
                 SwitchListTile(
                   title: Text(localization.administrator),
                   subtitle: Text(localization.administratorHelp),
-                  value: user.isAdmin ?? false,
-                  onChanged: (value) => viewModel
-                      .onChanged(user.rebuild((b) => b..isAdmin = value)),
+                  value: userCompany.isAdmin ?? false,
+                  //onChanged: (value) => viewModel
+                  //.onUserChanged(user.rebuild((b) => b..isAdmin = value)),
                   activeColor: Theme.of(context).accentColor,
                 ),
               ],
@@ -224,7 +226,7 @@ class _UserEditState extends State<UserEdit> {
                     }),
                     DataCell(
                         _PermissionCheckbox(
-                          user: viewModel.user,
+                          userCompany: userCompany,
                           permission: kPermissionCreateAll,
                           onChanged: (value) =>
                               _togglePermission(kPermissionCreateAll),
@@ -232,7 +234,7 @@ class _UserEditState extends State<UserEdit> {
                         onTap: () => _togglePermission(kPermissionCreateAll)),
                     DataCell(
                         _PermissionCheckbox(
-                          user: viewModel.user,
+                          userCompany: userCompany,
                           permission: kPermissionViewAll,
                           onChanged: (value) =>
                               _togglePermission(kPermissionViewAll),
@@ -240,7 +242,7 @@ class _UserEditState extends State<UserEdit> {
                         onTap: () => _togglePermission(kPermissionViewAll)),
                     DataCell(
                         _PermissionCheckbox(
-                          user: viewModel.user,
+                          userCompany: userCompany,
                           permission: kPermissionEditAll,
                           onChanged: (value) =>
                               _togglePermission(kPermissionEditAll),
@@ -267,15 +269,16 @@ class _UserEditState extends State<UserEdit> {
                       }),
                       DataCell(
                           _PermissionCheckbox(
-                            user: viewModel.user,
+                            userCompany: userCompany,
                             permission: createPermission,
                             onChanged: (value) =>
                                 _togglePermission(createPermission),
+                            //checkAll: ,
                           ),
                           onTap: () => _togglePermission(createPermission)),
                       DataCell(
                           _PermissionCheckbox(
-                            user: viewModel.user,
+                            userCompany: userCompany,
                             permission: viewPermission,
                             onChanged: (value) =>
                                 _togglePermission(viewPermission),
@@ -283,7 +286,7 @@ class _UserEditState extends State<UserEdit> {
                           onTap: () => _togglePermission(viewPermission)),
                       DataCell(
                           _PermissionCheckbox(
-                            user: viewModel.user,
+                            userCompany: userCompany,
                             permission: editPermission,
                             onChanged: (value) =>
                                 _togglePermission(editPermission),
@@ -303,20 +306,24 @@ class _UserEditState extends State<UserEdit> {
 
 class _PermissionCheckbox extends StatelessWidget {
   const _PermissionCheckbox({
-    @required this.user,
+    @required this.userCompany,
     @required this.permission,
     @required this.onChanged,
+    this.checkAll = false,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final String permission;
   final Function(bool) onChanged;
+  final bool checkAll;
 
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: user.permissions.contains(permission),
-      onChanged: onChanged,
+      value: checkAll
+          ? true
+          : (userCompany.permissions ?? '').contains(permission),
+      onChanged: checkAll ? null : onChanged,
       activeColor: Theme.of(context).accentColor,
     );
   }

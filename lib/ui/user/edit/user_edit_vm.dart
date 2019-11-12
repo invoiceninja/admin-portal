@@ -39,8 +39,10 @@ class UserEditVM {
   UserEditVM({
     @required this.state,
     @required this.user,
+    @required this.userCompany,
     @required this.company,
-    @required this.onChanged,
+    @required this.onUserChanged,
+    @required this.onUserCompanyChanged,
     @required this.isSaving,
     @required this.origUser,
     @required this.onSavePressed,
@@ -59,9 +61,13 @@ class UserEditVM {
       isSaving: state.isSaving,
       origUser: state.userState.map[user.id],
       user: user,
+      userCompany: state.userCompany,
       company: state.selectedCompany,
-      onChanged: (UserEntity user) {
+      onUserChanged: (UserEntity user) {
         store.dispatch(UpdateUser(user));
+      },
+      onUserCompanyChanged: (UserCompanyEntity userCompany) {
+        store.dispatch(UpdateUserCompany(userCompany));
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(UserScreen.route)) {
@@ -101,8 +107,10 @@ class UserEditVM {
   }
 
   final UserEntity user;
+  final UserCompanyEntity userCompany;
   final CompanyEntity company;
-  final Function(UserEntity) onChanged;
+  final Function(UserEntity) onUserChanged;
+  final Function(UserCompanyEntity) onUserCompanyChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;

@@ -594,10 +594,9 @@ class _$UserCompanyEntitySerializer
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(TokenEntity)),
-      'permissions_HIDDEN',
-      serializers.serialize(object.permissionsMap,
-          specifiedType: const FullType(
-              BuiltMap, const [const FullType(String), const FullType(bool)])),
+      'permissions',
+      serializers.serialize(object.permissions,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -631,12 +630,9 @@ class _$UserCompanyEntitySerializer
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
           break;
-        case 'permissions_HIDDEN':
-          result.permissionsMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(bool)
-              ])) as BuiltMap<dynamic, dynamic>);
+        case 'permissions':
+          result.permissions = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -3115,14 +3111,14 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final TokenEntity token;
   @override
-  final BuiltMap<String, bool> permissionsMap;
+  final String permissions;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
   _$UserCompanyEntity._(
-      {this.isAdmin, this.company, this.user, this.token, this.permissionsMap})
+      {this.isAdmin, this.company, this.user, this.token, this.permissions})
       : super._() {
     if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
@@ -3136,8 +3132,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     if (token == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'token');
     }
-    if (permissionsMap == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissionsMap');
+    if (permissions == null) {
+      throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissions');
     }
   }
 
@@ -3157,7 +3153,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         company == other.company &&
         user == other.user &&
         token == other.token &&
-        permissionsMap == other.permissionsMap;
+        permissions == other.permissions;
   }
 
   @override
@@ -3165,7 +3161,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     return $jf($jc(
         $jc($jc($jc($jc(0, isAdmin.hashCode), company.hashCode), user.hashCode),
             token.hashCode),
-        permissionsMap.hashCode));
+        permissions.hashCode));
   }
 
   @override
@@ -3175,7 +3171,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('company', company)
           ..add('user', user)
           ..add('token', token)
-          ..add('permissionsMap', permissionsMap))
+          ..add('permissions', permissions))
         .toString();
   }
 }
@@ -3201,11 +3197,9 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
 
-  MapBuilder<String, bool> _permissionsMap;
-  MapBuilder<String, bool> get permissionsMap =>
-      _$this._permissionsMap ??= new MapBuilder<String, bool>();
-  set permissionsMap(MapBuilder<String, bool> permissionsMap) =>
-      _$this._permissionsMap = permissionsMap;
+  String _permissions;
+  String get permissions => _$this._permissions;
+  set permissions(String permissions) => _$this._permissions = permissions;
 
   UserCompanyEntityBuilder();
 
@@ -3215,7 +3209,7 @@ class UserCompanyEntityBuilder
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
-      _permissionsMap = _$v.permissionsMap?.toBuilder();
+      _permissions = _$v.permissions;
       _$v = null;
     }
     return this;
@@ -3244,7 +3238,7 @@ class UserCompanyEntityBuilder
               company: company.build(),
               user: user.build(),
               token: token.build(),
-              permissionsMap: permissionsMap.build());
+              permissions: permissions);
     } catch (_) {
       String _$failedField;
       try {
@@ -3254,8 +3248,6 @@ class UserCompanyEntityBuilder
         user.build();
         _$failedField = 'token';
         token.build();
-        _$failedField = 'permissionsMap';
-        permissionsMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyEntity', _$failedField, e.toString());
