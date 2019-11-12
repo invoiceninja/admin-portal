@@ -433,7 +433,12 @@ abstract class ClientEntity extends Object
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
   bool get hasNameSet {
+    if (contacts.isEmpty) {
+      return false;
+    }
+
     final contact = contacts.first;
+
     return name.isNotEmpty ||
         contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
