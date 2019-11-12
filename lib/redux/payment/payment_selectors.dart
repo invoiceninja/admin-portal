@@ -82,6 +82,9 @@ List<String> filteredPaymentsSelector(
       } else if (paymentListState.filterEntityType == EntityType.invoice &&
           payment.invoiceId != paymentListState.filterEntityId) {
         return false;
+      } else if (paymentListState.filterEntityType == EntityType.user &&
+          !payment.userCanAccess(paymentListState.filterEntityId)) {
+        return false;
       }
     } else if (invoice.isDeleted || !client.isActive) {
       return false;
@@ -103,8 +106,7 @@ List<String> filteredPaymentsSelector(
 var memoizedPaymentStatsForClient = memo3((String clientId,
         BuiltMap<String, PaymentEntity> paymentMap,
         BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    paymentStatsForClient(
-        clientId, paymentMap, invoiceMap));
+    paymentStatsForClient(clientId, paymentMap, invoiceMap));
 
 EntityStats paymentStatsForClient(
     String clientId,
@@ -129,8 +131,7 @@ EntityStats paymentStatsForClient(
 var memoizedPaymentStatsForUser = memo3((String userId,
         BuiltMap<String, PaymentEntity> paymentMap,
         BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    paymentStatsForClient(
-        userId, paymentMap, invoiceMap));
+    paymentStatsForClient(userId, paymentMap, invoiceMap));
 
 EntityStats paymentStatsForUser(
     String userId,
