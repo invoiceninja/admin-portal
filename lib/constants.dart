@@ -157,6 +157,9 @@ const String kEmailTemplateReminder1 = 'first_reminder';
 const String kEmailTemplateReminder2 = 'second_reminder';
 const String kEmailTemplateReminder3 = 'third_reminder';
 const String kEmailTemplateReminder4 = 'endless_reminder';
+const String kEmailTemplateCustom1 = 'first_custom';
+const String kEmailTemplateCustom2 = 'second_custom';
+const String kEmailTemplateCustom3 = 'third_custom';
 
 const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
@@ -170,6 +173,9 @@ const List<String> kEmailTemplateTypes = [
   kEmailTemplateReminder2,
   kEmailTemplateReminder3,
   kEmailTemplateReminder4,
+  kEmailTemplateCustom1,
+  kEmailTemplateCustom2,
+  kEmailTemplateCustom3,
 ];
 
 const String kSettingsCompanyDetails = 'company_details';

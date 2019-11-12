@@ -106,10 +106,19 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     } else if (type == kEmailTemplateReminder4) {
       subject = settings.emailSubjectReminder4;
       body = settings.emailBodyReminder4;
+    } else if (type == kEmailTemplateCustom1) {
+      subject = settings.emailSubjectCustom1;
+      body = settings.emailBodyCustom1;
+    } else if (type == kEmailTemplateCustom2) {
+      subject = settings.emailSubjectCustom2;
+      body = settings.emailBodyCustom2;
+    } else if (type == kEmailTemplateCustom3) {
+      subject = settings.emailSubjectCustom3;
+      body = settings.emailBodyCustom3;
     }
 
-    _bodyController.text = body;
-    _subjectController.text = subject;
+    _bodyController.text = body ?? '';
+    _subjectController.text = subject ?? '';
   }
 
   void _onChanged() {
@@ -146,6 +155,18 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyReminder4 = body
           ..emailSubjectReminder4 = subject);
+      } else if (_template == kEmailTemplateCustom1) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyCustom1 = body
+          ..emailSubjectCustom1 = subject);
+      } else if (_template == kEmailTemplateCustom2) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyCustom2 = body
+          ..emailSubjectCustom2 = subject);
+      } else if (_template == kEmailTemplateCustom3) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyCustom3 = body
+          ..emailSubjectCustom3 = subject);
       }
 
       if (settings != widget.viewModel.settings) {

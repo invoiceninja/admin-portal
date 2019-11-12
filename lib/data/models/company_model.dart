@@ -1249,6 +1249,30 @@ abstract class SettingsEntity
   String get emailBodyReminder3;
 
   @nullable
+  @BuiltValueField(wireName: 'email_subject_custom1')
+  String get emailSubjectCustom1;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_custom1')
+  String get emailBodyCustom1;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_subject_custom2')
+  String get emailSubjectCustom2;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_custom2')
+  String get emailBodyCustom2;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_subject_custom3')
+  String get emailSubjectCustom3;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_custom3')
+  String get emailBodyCustom3;
+
+  @nullable
   @BuiltValueField(wireName: 'enable_portal_password')
   bool get enablePortalPassword;
 
