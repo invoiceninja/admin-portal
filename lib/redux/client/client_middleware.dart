@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
@@ -213,7 +214,7 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
     final action = dynamicAction as LoadClient;
     final AppState state = store.state;
 
-    if (state.isLoading) {
+    if (state.isLoading || Config.DEMO_MODE) {
       next(action);
       return;
     }

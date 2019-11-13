@@ -171,7 +171,7 @@ const dynamic kMockLogin = '''
                     "endless_reminder_frequency_id": "0",
                     "client_online_payment_notification": true,
                     "client_manual_payment_notification": true,
-                    "name": "User",
+                    "name": "Demo Account",
                     "company_logo": "",
                     "website": "",
                     "address1": "",

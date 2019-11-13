@@ -283,8 +283,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   brightness: Brightness.dark,
                   accentColor: accentColor,
                   textSelectionHandleColor: accentColor,
+                  fontFamily: 'Roboto',
                 )
-              : ThemeData().copyWith(
+              : ThemeData(fontFamily: 'Roboto').copyWith(
                   accentColor: accentColor,
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
