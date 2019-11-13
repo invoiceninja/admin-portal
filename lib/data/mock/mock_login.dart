@@ -12,7 +12,7 @@ const dynamic kMockLogin = '''
             "user": {
                 "id": "MVyb8mdvAZ",
                 "first_name": "Demo",
-                "last_name": "Account",
+                "last_name": "User",
                 "email": "demo@example.com",
                 "last_login": 1573645743,
                 "updated_at": 1573645743,
@@ -199,7 +199,7 @@ const dynamic kMockLogin = '''
                     {
                         "id": "MVyb8mdvAZ",
                         "first_name": "Demo",
-                        "last_name": "Account",
+                        "last_name": "User",
                         "email": "demo@example.com",
                         "last_login": 1573645743,
                         "updated_at": 1573645743,
@@ -215,7 +215,7 @@ const dynamic kMockLogin = '''
             },
             "token": {
                 "token": "d2oWWAP4POflJAVLELCthSF5G94D0f3kRb0tjyF6uGY8LGgR1qIbJxffI8OwEHXS",
-                "name": "Demo Account"
+                "name": "Demo User"
             },
             "account": {
                 "id": "O5xe7jd7rJ",
