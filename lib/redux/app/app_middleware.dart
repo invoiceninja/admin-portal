@@ -383,20 +383,22 @@ Middleware<AppState> _createUserLoggedIn(
 
     next(action);
 
-    final state = store.state;
-    authRepository.saveAuthState(state.authState);
-    uiRepository.saveUIState(state.uiState);
-    staticRepository.saveStaticState(state.staticState);
-    company1Repository.saveCompanyState(state.companyState1);
-    company2Repository.saveCompanyState(state.companyState2);
-    company3Repository.saveCompanyState(state.companyState3);
-    company4Repository.saveCompanyState(state.companyState4);
-    company5Repository.saveCompanyState(state.companyState5);
-    company6Repository.saveCompanyState(state.companyState6);
-    company7Repository.saveCompanyState(state.companyState7);
-    company8Repository.saveCompanyState(state.companyState8);
-    company9Repository.saveCompanyState(state.companyState9);
-    company10Repository.saveCompanyState(state.companyState10);
+    if (!kIsWeb) {
+      final state = store.state;
+      authRepository.saveAuthState(state.authState);
+      uiRepository.saveUIState(state.uiState);
+      staticRepository.saveStaticState(state.staticState);
+      company1Repository.saveCompanyState(state.companyState1);
+      company2Repository.saveCompanyState(state.companyState2);
+      company3Repository.saveCompanyState(state.companyState3);
+      company4Repository.saveCompanyState(state.companyState4);
+      company5Repository.saveCompanyState(state.companyState5);
+      company6Repository.saveCompanyState(state.companyState6);
+      company7Repository.saveCompanyState(state.companyState7);
+      company8Repository.saveCompanyState(state.companyState8);
+      company9Repository.saveCompanyState(state.companyState9);
+      company10Repository.saveCompanyState(state.companyState10);
+    }
   };
 }
 
