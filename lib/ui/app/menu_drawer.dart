@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -334,13 +332,10 @@ class MenuDrawer extends StatelessWidget {
                       ),
                     ],
                   )),
-            /*
             Align(
               child: SidebarFooter(),
               alignment: Alignment(0, 1),
             ),
-            
-             */
           ],
         ),
       ),
@@ -478,14 +473,15 @@ class SidebarFooter extends StatelessWidget {
             icon: Icon(Icons.info_outline),
             onPressed: () => showAbout(),
           ),
-          IconButton(
-            icon: Icon(Icons.memory),
-            onPressed: () => showDialog<StateInspector>(
-                context: context,
-                builder: (BuildContext context) {
-                  return StateInspector();
-                }),
-          ),
+          if (kDebugMode)
+            IconButton(
+              icon: Icon(Icons.memory),
+              onPressed: () => showDialog<StateInspector>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return StateInspector();
+                  }),
+            ),
           /*
           if (state.lastError.isNotEmpty)
             IconButton(
@@ -506,6 +502,7 @@ class SidebarFooter extends StatelessWidget {
                */
             ),
            */
+          /*
           if (!Platform.isIOS &&
               isHosted(context) &&
               !isPaidAccount(context)) ...[
@@ -521,6 +518,7 @@ class SidebarFooter extends StatelessWidget {
             ),
             SizedBox(width: 14)
           ],
+           */
         ],
       ),
     );
