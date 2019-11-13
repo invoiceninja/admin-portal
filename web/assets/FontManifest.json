@@ -1,0 +1,18 @@
+[
+  {
+    "family": "Roboto",
+    "fonts": [
+      {
+        "asset": "fonts/Roboto-Regular.ttf"
+      }
+    ]
+  },
+  {
+    "family": "MaterialIcons",
+    "fonts": [
+      {
+        "asset": "https://fonts.gstatic.com/s/materialicons/v42/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
+      }
+    ]
+  }
+]

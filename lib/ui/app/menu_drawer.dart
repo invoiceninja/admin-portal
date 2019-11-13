@@ -334,10 +334,13 @@ class MenuDrawer extends StatelessWidget {
                       ),
                     ],
                   )),
+            /*
             Align(
               child: SidebarFooter(),
               alignment: Alignment(0, 1),
             ),
+            
+             */
           ],
         ),
       ),
