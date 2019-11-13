@@ -15,7 +15,7 @@ const dynamic kMockInvoices = '''
           "invoice_number": "0001",
           "discount": 0,
           "po_number": "",
-          "invoice_date": "",
+          "invoice_date": "2020-01-01",
           "due_date": "",
           "terms": "",
           "public_notes": "",

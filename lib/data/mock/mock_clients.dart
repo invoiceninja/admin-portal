@@ -46,7 +46,7 @@ const dynamic kMockClients = '''
           "id": "JAPdRlLaGy",
           "first_name": "John",
           "last_name": "Lennon",
-          "email": "john@example.com",
+          "email": "",
           "updated_at": 1573652395,
           "archived_at": null,
           "is_primary": false,
