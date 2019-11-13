@@ -25,7 +25,7 @@ const dynamic kMockLogin = '''
                 "id": "yJrb2KdWLD",
                 "company_key": "rnrK2qYyitKPs9xxf78edGQxYhyeoLDKVvcwuqqw1ZLRpGXlxNPciocwxMavFqxe",
                 "update_products": false,
-                "fill_products": false,
+                "fill_products": true,
                 "convert_products": false,
                 "custom_surcharge_taxes1": false,
                 "custom_surcharge_taxes2": false,
