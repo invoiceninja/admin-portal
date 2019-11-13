@@ -62,7 +62,9 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     value: uiState.enableDarkMode,
                     onChanged: (value) =>
                         viewModel.onDarkModeChanged(context, value),
-                    secondary: Icon(FontAwesomeIcons.moon),
+                    secondary: Icon(kIsWeb
+                        ? Icons.lightbulb_outline
+                        : FontAwesomeIcons.moon),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   SwitchListTile(
@@ -71,7 +73,9 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     value: uiState.longPressSelectionIsDefault,
                     onChanged: (value) =>
                         viewModel.onLongPressSelectionIsDefault(context, value),
-                    secondary: Icon(FontAwesomeIcons.checkSquare),
+                    secondary: Icon(kIsWeb
+                        ? Icons.check_box
+                        : FontAwesomeIcons.checkSquare),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   FutureBuilder(
@@ -102,7 +106,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           value: uiState.autoStartTasks,
                           onChanged: (value) =>
                               viewModel.onAutoStartTasksChanged(context, value),
-                          secondary: Icon(FontAwesomeIcons.clock),
+                          secondary: Icon(
+                              kIsWeb ? Icons.timer : FontAwesomeIcons.clock),
                           activeColor: Theme.of(context).accentColor,
                         )
                       : SizedBox(),
@@ -112,7 +117,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 children: <Widget>[
                   Builder(builder: (BuildContext context) {
                     return ListTile(
-                      leading: Icon(FontAwesomeIcons.syncAlt),
+                      leading: Icon(
+                          kIsWeb ? Icons.refresh : FontAwesomeIcons.syncAlt),
                       title: Text(AppLocalization.of(context).refreshData),
                       onTap: () {
                         viewModel.onRefreshTap(context);
@@ -120,7 +126,9 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     );
                   }),
                   ListTile(
-                    leading: Icon(FontAwesomeIcons.powerOff),
+                    leading: Icon(kIsWeb
+                        ? Icons.power_settings_new
+                        : FontAwesomeIcons.powerOff),
                     title: Text(AppLocalization.of(context).logout),
                     onTap: () {
                       viewModel.onLogoutTap(context);

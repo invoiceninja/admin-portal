@@ -52,7 +52,7 @@ IconData getEntityIcon(EntityType entityType) {
   if (kIsWeb) {
     switch (entityType) {
       case EntityType.product:
-        return Icons.view_carousel;
+        return Icons.widgets;
       case EntityType.project:
         return Icons.work;
       case EntityType.client:
@@ -130,6 +130,56 @@ IconData getFileTypeIcon(String type) {
 }
 
 IconData getSettingIcon(String section) {
+  if (kIsWeb) {
+    switch (section) {
+      case kSettingsCompanyDetails:
+        return Icons.business;
+      case kSettingsUserDetails:
+        return Icons.person;
+      case kSettingsLocalization:
+        return Icons.language;
+      case kSettingsOnlinePayments:
+        return Icons.payment;
+      case kSettingsTaxSettings:
+      case kSettingsTaxRates:
+        return Icons.account_balance;
+      case kSettingsProducts:
+        return Icons.widgets;
+      case kSettingsNotifications:
+        return Icons.notifications;
+      case kSettingsImportExport:
+        return Icons.import_export;
+      case kSettingsDeviceSettings:
+        return Icons.desktop_mac;
+      case kSettingsGroupSettings:
+        return Icons.layers;
+      case kSettingsGeneratedNumbers:
+        return Icons.format_list_numbered;
+      case kSettingsCustomFields:
+        return Icons.text_fields;
+      case kSettingsInvoiceDesign:
+        return Icons.palette;
+      case kSettingsWorkflowSettings:
+        return Icons.autorenew;
+      case kSettingsClientPortal:
+        return Icons.cloud;
+      case kSettingsBuyNowButtons:
+        return Icons.add_shopping_cart;
+      case kSettingsEmailSettings:
+        return Icons.email;
+      case kSettingsTemplatesAndReminders:
+        return Icons.insert_drive_file;
+      case kSettingsCreditCardsAndBanks:
+        return Icons.link;
+      case kSettingsDataVisualizations:
+        return Icons.link;
+      case kSettingsUserManagement:
+        return Icons.supervised_user_circle;
+      default:
+        return null;
+    }
+  }
+  
   switch (section) {
     case kSettingsCompanyDetails:
       return FontAwesomeIcons.building;

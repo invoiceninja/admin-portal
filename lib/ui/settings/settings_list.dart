@@ -99,9 +99,11 @@ class SettingsList extends StatelessWidget {
           SettingsListTile(
             section: kSettingsDeviceSettings,
             viewModel: viewModel,
-            icon: isMobile(context)
-                ? FontAwesomeIcons.mobileAlt
-                : FontAwesomeIcons.desktop,
+            icon: kIsWeb
+                ? Icons.desktop_mac
+                : isMobile(context)
+                    ? FontAwesomeIcons.mobileAlt
+                    : FontAwesomeIcons.desktop,
           ),
         Container(
           color: Theme.of(context).bottomAppBarColor,

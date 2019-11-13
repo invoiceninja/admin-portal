@@ -56,7 +56,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               ),
               SizedBox(height: 15),
               BoolDropdownButton(
-                iconData: FontAwesomeIcons.percent,
+                iconData: kIsWeb ? Icons.add : FontAwesomeIcons.percent,
                 label: localization.inclusiveTaxes,
                 value: settings.enableInclusiveTaxes,
                 onChanged: (value) => viewModel.onSettingsChanged(
