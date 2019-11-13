@@ -29,6 +29,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
@@ -82,7 +83,6 @@ void main({bool isTesting = false}) async {
     requireAuthentication =
         prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
   }
-
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
@@ -276,8 +276,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ],
                   ),
                 )
-              //: InitScreen(),
-              : LoginScreen(),
+              : InitScreen(),
           locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(

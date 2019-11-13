@@ -194,10 +194,14 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     _loadAuthLocal(store);
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String url =
-        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final String token = prefs.getString(kSharedPrefToken);
+    String url;
+    String token;
+
+    if (!kIsWeb) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+      token = prefs.getString(kSharedPrefToken);
+    }
 
     repository
         .refresh(url: url, token: token, platform: action.platform)

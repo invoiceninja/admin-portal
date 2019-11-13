@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -222,6 +223,10 @@ Middleware<AppState> _createLoadState(
       NextDispatcher next) async {
     final action = dynamicAction as LoadStateRequest;
     try {
+      if (kIsWeb) {
+        throw 'Local storage not yet supported on web';
+      }
+
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
       prefs.setString(kSharedPrefAppVersion, kAppVersion);
@@ -294,8 +299,13 @@ Middleware<AppState> _createLoadState(
     } catch (error) {
       print(error);
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(kSharedPrefToken) ?? '';
+      String token;
+      if (kIsWeb) {
+        token = Config.DEMO_MODE ? 'DEMO' : '';
+      } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        token = prefs.getString(kSharedPrefToken) ?? '';
+      }
 
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
