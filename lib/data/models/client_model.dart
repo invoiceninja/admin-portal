@@ -265,7 +265,8 @@ abstract class ClientEntity extends Object
   }
 
   String getPaymentTerm(String netLabel) {
-    if (settings.defaultPaymentTerms == 0) {
+    if (settings.defaultPaymentTerms == 0 ||
+        settings.defaultPaymentTerms == null) {
       return '';
     } else if (settings.defaultPaymentTerms == -1) {
       return '$netLabel 0';
