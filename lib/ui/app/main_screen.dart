@@ -411,7 +411,6 @@ class _CustomDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //VerticalDivider(width: isDarkMode(context) ? 1 : .5, color: Colors.black),
-
     return Container(
       width: .5,
       height: double.infinity,

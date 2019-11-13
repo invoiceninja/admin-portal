@@ -231,7 +231,7 @@ abstract class CompanyEntity extends Object
   }
 
   bool get isSelfHost {
-    if (!kReleaseMode) {
+    if (!kReleaseMode || Config.DEMO_MODE) {
       return true;
     }
 
