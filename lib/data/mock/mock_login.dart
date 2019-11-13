@@ -210,8 +210,15 @@ const dynamic kMockLogin = '''
                     }
                 ],
                 "tax_rates": [],
-                "groups": [],
-                "company_gateways": []
+                "groups": [
+                   {
+                    "id":"237123421",
+                    "name":"Test Group",
+                    "settings":{}                    
+                   }
+                ],
+                "company_gateways": [
+                ]
             },
             "token": {
                 "token": "d2oWWAP4POflJAVLELCthSF5G94D0f3kRb0tjyF6uGY8LGgR1qIbJxffI8OwEHXS",
