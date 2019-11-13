@@ -44,7 +44,7 @@ class ClientRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseClients);
+      response = json.decode(kMockClients);
     } else {
       response =
       await webClient.get(url, credentials.token);

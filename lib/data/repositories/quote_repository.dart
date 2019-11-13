@@ -41,7 +41,7 @@ class QuoteRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseQuotes);
+      response = json.decode(kMockQuotes);
     } else {
       response = await webClient.get(url, credentials.token);
     }

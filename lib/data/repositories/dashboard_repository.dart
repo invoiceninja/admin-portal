@@ -18,7 +18,7 @@ class DashboardRepository {
   Future<DashboardEntity> loadItem(Credentials connectionInfo) async {
     dynamic response;
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseDashboard);
+      response = json.decode(kMockDashboard);
     } else {
       response = await webClient.get(
           connectionInfo.url + '/dashboard?only_activity=true',

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 
 part 'company_model.g.dart';
 
@@ -244,6 +245,20 @@ abstract class CompanyEntity extends Object
   bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
   bool isModuleEnabled(EntityType entityType) {
+    if (Config.DEMO_MODE) {
+      if ([
+        //EntityType.recurringInvoice,
+        //EntityType.credit,
+        EntityType.project,
+        EntityType.task,
+        EntityType.expense,
+        EntityType.vendor,
+      ].contains(entityType)) {
+        return true;
+      }
+    }
+
+
     // TODO remove this
     if ([
       EntityType.recurringInvoice,

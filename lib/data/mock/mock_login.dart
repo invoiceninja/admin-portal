@@ -1,4 +1,4 @@
-const dynamic kAPIResponseLogin = '''
+const dynamic kMockLogin = '''
 {
     "data": [
         {

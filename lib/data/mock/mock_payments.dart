@@ -1,4 +1,4 @@
-const dynamic kAPIResponsePayments = '''
+const dynamic kMockPayments = '''
 {
     "data": [],
     "meta": {

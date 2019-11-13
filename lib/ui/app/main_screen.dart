@@ -69,6 +69,39 @@ class MainScreen extends StatelessWidget {
                 editWidget: QuoteEditScreen(),
               );
               break;
+            case ProjectScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.project,
+                listWidget: ProjectScreenBuilder(),
+                viewWidget: ProjectViewScreen(),
+                editWidget: ProjectEditScreen(),
+              );
+              break;
+            case TaskScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.task,
+                listWidget: TaskScreenBuilder(),
+                viewWidget: TaskViewScreen(),
+                editWidget: TaskEditScreen(),
+              );
+              break;
+            case VendorScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.vendor,
+                listWidget: VendorScreenBuilder(),
+                viewWidget: VendorViewScreen(),
+                editWidget: VendorEditScreen(),
+              );
+              break;
+            case ExpenseScreen.route:
+              screen = EntityScreens(
+                entityType: EntityType.expense,
+                listWidget: ExpenseScreenBuilder(),
+                viewWidget: ExpenseViewScreen(),
+                editWidget: ExpenseEditScreen(),
+              );
+              break;
+
             case SettingsScreen.route:
               screen = SettingsScreens();
               break;

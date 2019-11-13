@@ -1,4 +1,4 @@
-const dynamic kMockInvoices = '''
+const dynamic kMockVendors = '''
 {
     "data": [],
     "meta": {

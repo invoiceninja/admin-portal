@@ -1,4 +1,4 @@
-const dynamic kAPIResponseProducts = '''
+const dynamic kMockProducts = '''
 {
     "data": [],
     "meta": {

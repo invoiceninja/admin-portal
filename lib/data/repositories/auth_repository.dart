@@ -98,7 +98,7 @@ class AuthRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseLogin);
+      response = json.decode(kMockLogin);
     } else {
       response =
           await webClient.post(url, token ?? '', data: json.encode(data));

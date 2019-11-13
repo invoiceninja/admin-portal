@@ -41,7 +41,7 @@ class InvoiceRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseInvoices);
+      response = json.decode(kMockInvoices);
     } else {
       response =
       await webClient.get(url, credentials.token);

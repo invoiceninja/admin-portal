@@ -1,4 +1,4 @@
-const dynamic kAPIResponseDashboard = '''
+const dynamic kMockDashboard = '''
 {
     "data": {
       "activities": []

@@ -1,4 +1,4 @@
-const dynamic kAPIResponseQuotes = '''
+const dynamic kMockQuotes = '''
 {
     "data": [],
     "meta": {

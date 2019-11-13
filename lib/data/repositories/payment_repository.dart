@@ -28,7 +28,7 @@ class PaymentRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponsePayments);
+      response = json.decode(kMockPayments);
     } else {
       response =
       await webClient.get(url, credentials.token);

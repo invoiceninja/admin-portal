@@ -28,7 +28,7 @@ class ProductRepository {
     dynamic response;
 
     if (Config.DEMO_MODE) {
-      response = json.decode(kAPIResponseProducts);
+      response = json.decode(kMockProducts);
     } else {
       response = await webClient.get(url, credentials.token);
     }
