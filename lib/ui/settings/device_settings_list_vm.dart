@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -91,27 +92,35 @@ class DeviceSettingsVM {
       onLogoutTap: (BuildContext context) => _confirmLogout(context),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefEnableDarkMode, value);
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefEnableDarkMode, value);
+        }
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
       onAccentColorChanged: (BuildContext context, String value) async {
         value ??= kDefaultAccentColor;
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(kSharedPrefAccentColor, value);
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefAccentColor, value);
+        }
         store.dispatch(UserSettingsChanged(accentColor: value));
         AppBuilder.of(context).rebuild();
       },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefAutoStartTasks, value);
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefAutoStartTasks, value);
+        }
         store.dispatch(UserSettingsChanged(autoStartTasks: value));
         AppBuilder.of(context).rebuild();
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefLongPressSelectionIsDefault, value);
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setBool(kSharedPrefLongPressSelectionIsDefault, value);
+        }
         store.dispatch(UserSettingsChanged(longPressSelectionIsDefault: value));
         AppBuilder.of(context).rebuild();
       },
