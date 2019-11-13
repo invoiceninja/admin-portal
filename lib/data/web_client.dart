@@ -120,6 +120,11 @@ Map<String, String> _getHeaders(String token) => {
     };
 
 void _checkResponse(http.Response response) {
+
+  if (Config.DEMO_MODE) {
+    throw 'Saving is not supported in the demo';
+  }
+
   //debugPrint('response: ${response.statusCode} ${response.body}', wrapWidth: 1000);
   print('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');

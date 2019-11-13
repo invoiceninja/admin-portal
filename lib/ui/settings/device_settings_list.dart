@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -131,29 +132,30 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       : SizedBox(),
                 ],
               ),
-              FormCard(
-                children: <Widget>[
-                  Builder(builder: (BuildContext context) {
-                    return ListTile(
-                      leading: Icon(
-                          kIsWeb ? Icons.refresh : FontAwesomeIcons.syncAlt),
-                      title: Text(AppLocalization.of(context).refreshData),
+              if (!Config.DEMO_MODE)
+                FormCard(
+                  children: <Widget>[
+                    Builder(builder: (BuildContext context) {
+                      return ListTile(
+                        leading: Icon(
+                            kIsWeb ? Icons.refresh : FontAwesomeIcons.syncAlt),
+                        title: Text(AppLocalization.of(context).refreshData),
+                        onTap: () {
+                          viewModel.onRefreshTap(context);
+                        },
+                      );
+                    }),
+                    ListTile(
+                      leading: Icon(kIsWeb
+                          ? Icons.power_settings_new
+                          : FontAwesomeIcons.powerOff),
+                      title: Text(AppLocalization.of(context).logout),
                       onTap: () {
-                        viewModel.onRefreshTap(context);
+                        viewModel.onLogoutTap(context);
                       },
-                    );
-                  }),
-                  ListTile(
-                    leading: Icon(kIsWeb
-                        ? Icons.power_settings_new
-                        : FontAwesomeIcons.powerOff),
-                    title: Text(AppLocalization.of(context).logout),
-                    onTap: () {
-                      viewModel.onLogoutTap(context);
-                    },
-                  ),
-                ],
-              )
+                    ),
+                  ],
+                )
             ],
           ),
         ),

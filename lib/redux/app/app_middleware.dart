@@ -310,12 +310,13 @@ Middleware<AppState> _createLoadState(
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          if (uiState.layout == AppLayout.mobile) {
+          if (store.state.uiState.layout == AppLayout.mobile) {
             store.dispatch(ViewDashboard(context: action.context));
           } else {
             store.dispatch(ViewMainScreen(action.context));
           }
         }).catchError((Object error) {
+          print('Error: $error');
           store.dispatch(UserLogout(action.context));
         });
         store.dispatch(RefreshData(

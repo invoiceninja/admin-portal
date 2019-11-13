@@ -1200,7 +1200,7 @@ const dynamic kAPIResponseLogin = '''
                 "site_url": null,
                 "is_offsite": false,
                 "is_secure": false,
-                "fields": "{'apiKey':'', 'publishableKey':''}",
+                "fields": "{}",
                 "default_gateway_type_id": "1",
                 "created_at": 1573630686,
                 "updated_at": 1573630686
