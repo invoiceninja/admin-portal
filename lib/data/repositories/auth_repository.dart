@@ -94,13 +94,16 @@ class AuthRepository {
     ];
     url += '?include=${includes.join(',')}&include_static=true';
 
-    final dynamic response =
-        await webClient.post(url, token ?? '', data: json.encode(data));
+    dynamic response;
 
-    final LoginResponse loginResponse =
-        serializers.deserializeWith(LoginResponse.serializer, response);
+    if (Config.DEMO_MODE) {
+      response = json.decode(kAPIResponseLogin);
+    } else {
+      response =
+          await webClient.post(url, token ?? '', data: json.encode(data));
+    }
 
-    return loginResponse;
+    return serializers.deserializeWith(LoginResponse.serializer, response);
   }
 
   Future<LoginResponse> recoverPassword(
