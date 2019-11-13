@@ -6,7 +6,7 @@ const dynamic kMockProducts = '''
           "user_id": "MVyb8mdvAZ",
           "assigned_user_id": "",
           "product_key": "Bass",
-          "notes": "RICKENBACKER 4001S",
+          "notes": "Rickenbacker 4001S",
           "cost": 20,
           "price": 20,
           "quantity": 1,
