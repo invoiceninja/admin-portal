@@ -77,11 +77,16 @@ class MainScreen extends StatelessWidget {
           return Row(children: <Widget>[
             if (uiState.isMenuVisible) ...[
               MenuDrawerBuilder(),
-              VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+              _CustomDivider(),
+              Container(
+                width: 1,
+                height: double.infinity,
+                color: Colors.black,
+              ),
             ],
             Expanded(child: screen),
             if (uiState.isHistoryVisible) ...[
-              VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+              _CustomDivider(),
               HistoryDrawerBuilder(),
             ],
           ]);
@@ -299,7 +304,7 @@ class SettingsScreens extends StatelessWidget {
         child: SettingsScreenBuilder(),
         flex: 2,
       ),
-      VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+      _CustomDivider(),
       Expanded(
         flex: 3,
         child: screen,
@@ -335,7 +340,7 @@ class EntityScreens extends StatelessWidget {
           child: listWidget,
           flex: 2,
         ),
-        VerticalDivider(width: isDarkMode(context) ? 1 : .5),
+        _CustomDivider(),
         Expanded(
           flex: 3,
           child: IndexedStack(
@@ -365,6 +370,19 @@ class BlankScreen extends StatelessWidget {
         automaticallyImplyLeading: isMobile(context),
       ),
       body: HelpText(message ?? ''),
+    );
+  }
+}
+
+class _CustomDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //VerticalDivider(width: isDarkMode(context) ? 1 : .5, color: Colors.black),
+
+    return Container(
+      width: .5,
+      height: double.infinity,
+      color: Colors.black38,
     );
   }
 }
