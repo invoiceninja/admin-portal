@@ -310,7 +310,10 @@ Middleware<AppState> _createLoadState(
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          if (store.state.uiState.layout == AppLayout.mobile) {
+          final layout = calculateLayout(action.context);
+          if (store.state.uiState.layout == AppLayout.tablet &&
+              layout == AppLayout.mobile) {
+            store.dispatch(UpdateLayout(layout));
             store.dispatch(ViewDashboard(context: action.context));
           } else {
             store.dispatch(ViewMainScreen(action.context));
