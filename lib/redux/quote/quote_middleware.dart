@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
@@ -353,15 +354,16 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      // TODO update once supported
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      // TODO remove once all modules are supported
+      if (Config.DEMO_MODE) {
+        if (state.projectState.isStale) {
+          store.dispatch(LoadProjects());
+        }
+      } else {
+        if (state.dashboardState.isStale) {
+          store.dispatch(LoadDashboard());
+        }
       }
-      /*
-      if (state.projectState.isStale) {
-        store.dispatch(LoadProjects());
-      }
-       */
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuotesFailure(error));
