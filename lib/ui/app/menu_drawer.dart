@@ -32,7 +32,7 @@ class MenuDrawer extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final AppDrawerVM viewModel;
+  final MenuDrawerVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class MenuDrawer extends StatelessWidget {
                     children: <Widget>[
                       DrawerTile(
                         company: company,
-                        icon: FontAwesomeIcons.tachometerAlt,
+                        icon: kIsWeb ? Icons.dashboard : FontAwesomeIcons.tachometerAlt,
                         title: localization.dashboard,
                         onTap: () =>
                             store.dispatch(ViewDashboard(context: context)),
@@ -319,7 +319,7 @@ class MenuDrawer extends StatelessWidget {
                       // STARTER: menu - do not remove comment
                       DrawerTile(
                         company: company,
-                        icon: FontAwesomeIcons.cog,
+                        icon: kIsWeb ? Icons.settings : FontAwesomeIcons.cog,
                         title: localization.settings,
                         onTap: () {
                           if (isMobile(context)) {

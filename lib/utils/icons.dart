@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -48,6 +49,36 @@ IconData getEntityActionIcon(EntityAction entityAction) {
 }
 
 IconData getEntityIcon(EntityType entityType) {
+  if (kIsWeb) {
+    switch (entityType) {
+      case EntityType.product:
+        return Icons.view_carousel;
+      case EntityType.project:
+        return Icons.work;
+      case EntityType.client:
+        return Icons.people;
+      case EntityType.invoice:
+        return Icons.book;
+      case EntityType.payment:
+        return Icons.payment;
+      case EntityType.credit:
+        return Icons.book;
+      case EntityType.quote:
+        return Icons.book;
+      case EntityType.vendor:
+        return Icons.business;
+      case EntityType.expense:
+        return Icons.image;
+      case EntityType.task:
+        return Icons.timer;
+      case EntityType.group:
+        return Icons.layers;
+      default:
+        return null;
+    }
+  }
+  
+  
   switch (entityType) {
     case EntityType.product:
       return FontAwesomeIcons.cube;

@@ -14,8 +14,8 @@ class MenuDrawerBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, AppDrawerVM>(
-      converter: AppDrawerVM.fromStore,
+    return StoreConnector<AppState, MenuDrawerVM>(
+      converter: MenuDrawerVM.fromStore,
       builder: (context, viewModel) {
         return MenuDrawer(viewModel: viewModel);
       },
@@ -23,8 +23,8 @@ class MenuDrawerBuilder extends StatelessWidget {
   }
 }
 
-class AppDrawerVM {
-  AppDrawerVM({
+class MenuDrawerVM {
+  MenuDrawerVM({
     @required this.companies,
     @required this.selectedCompany,
     @required this.user,
@@ -40,10 +40,10 @@ class AppDrawerVM {
   final Function(BuildContext context, String, CompanyEntity) onCompanyChanged;
   final bool isLoading;
 
-  static AppDrawerVM fromStore(Store<AppState> store) {
+  static MenuDrawerVM fromStore(Store<AppState> store) {
     final AppState state = store.state;
 
-    return AppDrawerVM(
+    return MenuDrawerVM(
       isLoading: state.isLoading,
       companies: companiesSelector(state),
       user: state.user,
