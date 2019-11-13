@@ -83,7 +83,7 @@ if [ ${action} = "init" ]; then
         './lib/data/models/serializers.dart'
         './test/login_test.dart'
         './lib/redux/ui/ui_state.dart'
-        './lib/ui/auth/login.dart'
+        './lib/ui/auth/mock_login.dart'
         './lib/ui/auth/login_vm.dart'
         './lib/ui/app/menu_drawer.dart'
         './lib/ui/app/init.dart'
