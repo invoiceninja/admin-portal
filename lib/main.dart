@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -28,7 +29,6 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
-import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
@@ -56,7 +56,8 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 void main({bool isTesting = false}) async {
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
+
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
@@ -66,14 +67,22 @@ void main({bool isTesting = false}) async {
             environment: Config.PLATFORM,
           ));
 
-  final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
-  final accentColor =
-      prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
-  final longPressSelectionIsDefault =
-      prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
-  final requireAuthentication =
-      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
+  bool enableDarkMode = true;
+  bool longPressSelectionIsDefault;
+  bool requireAuthentication;
+  String accentColor = kDefaultAccentColor;
+
+  if (!kIsWeb) {
+    final prefs = await SharedPreferences.getInstance();
+    enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
+    accentColor =
+        prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
+    longPressSelectionIsDefault =
+        prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
+    requireAuthentication =
+        prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
+  }
+
 
   final store = Store<AppState>(appReducer,
       initialState: AppState(
@@ -267,7 +276,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ],
                   ),
                 )
-              : InitScreen(),
+              //: InitScreen(),
+              : LoginScreen(),
           locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.uiState.enableDarkMode
               ? ThemeData(

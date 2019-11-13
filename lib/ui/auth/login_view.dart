@@ -226,29 +226,26 @@ class _LoginState extends State<LoginView> {
     final TextStyle linkStyle = themeData.textTheme.body2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
-    if (!viewModel.authState.isInitialized) {
-      return Container();
-    }
-
     return Stack(
       children: <Widget>[
-        SizedBox(
-          height: 250.0,
-          child: ClipPath(
-            clipper: ArcClipper(),
-            child: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                colors: [
-                  //Colors.grey.shade800,
-                  //Colors.black87,
-                  Theme.of(context).buttonColor,
-                  Theme.of(context).buttonColor.withOpacity(.7),
-                ],
-              )),
+        if (!kIsWeb)
+          SizedBox(
+            height: 250.0,
+            child: ClipPath(
+              clipper: ArcClipper(),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  colors: [
+                    //Colors.grey.shade800,
+                    //Colors.black87,
+                    Theme.of(context).buttonColor,
+                    Theme.of(context).buttonColor.withOpacity(.7),
+                  ],
+                )),
+              ),
             ),
           ),
-        ),
         ListView(
           shrinkWrap: true,
           children: <Widget>[

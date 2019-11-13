@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -395,6 +396,10 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
+    if (kIsWeb) {
+      return;
+    }
+
     uiRepository.saveUIState(store.state.uiState);
   };
 }
@@ -405,12 +410,11 @@ Middleware<AppState> _createAccountLoaded() {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data: response.static));
-
     if (action.loadCompanies) {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
-        if (i == 0) {
+        if (i == 0 && !kIsWeb) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString(kSharedPrefToken, userCompany.token.token);
         }
@@ -437,6 +441,10 @@ Middleware<AppState> _createPersistStatic(
     // first process the action so the data is in the state
     next(action);
 
+    if (kIsWeb) {
+      return;
+    }
+
     staticRepository.saveStaticState(store.state.staticState);
   };
 }
@@ -457,6 +465,10 @@ Middleware<AppState> _createPersistData(
     final action = dynamicAction as PersistData;
 
     next(action);
+
+    if (kIsWeb) {
+      return;
+    }
 
     final AppState state = store.state;
 
@@ -511,6 +523,11 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company10Repository,
 ) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+    if (kIsWeb) {
+      next(action);
+      return;
+    }
+
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();

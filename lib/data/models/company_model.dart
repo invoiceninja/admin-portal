@@ -1463,6 +1463,25 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
 
+
+  // Added
+  @nullable
+  @BuiltValueField(wireName: 'enable_client_portal')
+  bool get enableClientPortal;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_client_portal_dashboard')
+  bool get enableClientPortalDashboard;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_online_payment_notification')
+  bool get clientOnlinePaymentNotification;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_manual_payment_notification')
+  bool get clientManualPaymentNotification;
+
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')

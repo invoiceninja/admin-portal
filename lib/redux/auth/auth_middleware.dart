@@ -34,6 +34,10 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(
     {String email = '', String url = '', String secret = ''}) async {
+  if (kIsWeb) {
+    return;
+  }
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
@@ -41,12 +45,17 @@ void _saveAuthLocal(
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
+  if (kIsWeb) {
+    return;
+  }
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = kReleaseMode
       ? (prefs.getString(kSharedPrefEmail) ?? '')
       : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
+
   store.dispatch(UserLoginLoaded(email, url, secret));
 
   store.dispatch(UserSettingsChanged(
