@@ -83,7 +83,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.invoiceDesign,
                   value: settings.defaultInvoiceDesignId,
-                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(settings
                       .rebuild((b) => b..defaultInvoiceDesignId = value)),
                   items: designs
                       .map((designId) => DropdownMenuItem<String>(
@@ -95,7 +95,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.quoteDesign,
                   value: settings.defaultQuoteDesignId,
-                  onChanged: (value) => viewModel.onSettingsChanged(
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..defaultQuoteDesignId = value)),
                   items: designs
                       .map((designId) => DropdownMenuItem<String>(
@@ -107,7 +107,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
-                  onChanged: (value) => viewModel.onSettingsChanged(
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..pageSize = value)),
                   items: kPageSizes
                       .map((pageSize) => DropdownMenuItem<String>(
@@ -122,7 +122,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       settings.fontSize == null ? '' : '${settings.fontSize}',
                   // TODO remove this and 0 from options
                   showBlank: true,
-                  onChanged: (value) => viewModel.onSettingsChanged(
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..fontSize = int.parse(value))),
                   items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                       .map((fontSize) => DropdownMenuItem<String>(

@@ -230,7 +230,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   labelText: localization.template,
                   value: _template,
                   showBlank: false,
-                  onChanged: (value) => setState(() {
+                  onChanged: (dynamic value) => setState(() {
                     _template = value;
                     _loadTemplate(_template);
                   }),
@@ -315,7 +315,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     AppDropdownButton(
                         labelText: localization.frequency,
                         value: settings.endlessReminderFrequencyId,
-                        onChanged: (value) => viewModel.onSettingsChanged(
+                        onChanged: (dynamic value) => viewModel.onSettingsChanged(
                             settings.rebuild(
                                 (b) => b..endlessReminderFrequencyId = value)),
                         items: kFrequencies
@@ -440,7 +440,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             AppDropdownButton(
               value: widget.schedule,
               labelText: localization.schedule,
-              onChanged: (value) {
+              onChanged: (dynamic value) {
                 _schedule = value;
                 _onChanged();
               },

@@ -309,7 +309,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             AppDropdownButton(
               labelText: localization.design,
               value: invoice.designId,
-              onChanged: (value) => viewModel
+              onChanged: (dynamic value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value)),
               items: designIds
                   .map((designId) => DropdownMenuItem<String>(

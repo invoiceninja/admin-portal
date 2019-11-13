@@ -431,7 +431,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'Custom fields [UI]: ${uiState.settingsUIState.userCompany.company.customFields}, [DB] ${selectedCompany.customFields}';
     //return 'Permissions: ${uiState.userUIState.editing.id}';
-    return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';
+    return 'Layout: ${uiState.layout}';
+    //return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
     //return 'Routes: Current: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'Route: ${uiState.currentRoute}, Setting Type: ${uiState.settingsUIState.entityType}, Name: ${uiState.settingsUIState.settings.name}, Updated: ${uiState.settingsUIState.updatedAt}';

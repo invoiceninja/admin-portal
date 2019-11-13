@@ -154,7 +154,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 AppDropdownButton(
                   labelText: localization.firstDayOfTheWeek,
                   value: company.firstDayOfWeek,
-                  onChanged: (value) => viewModel.onCompanyChanged(
+                  onChanged: (dynamic value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..firstDayOfWeek = value)),
                   items: kDaysOfTheWeek
                       .map((id, day) =>
@@ -170,7 +170,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 AppDropdownButton(
                     labelText: localization.firstMonthOfTheYear,
                     value: company.firstMonthOfYear,
-                    onChanged: (value) => viewModel.onCompanyChanged(
+                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..firstMonthOfYear = value)),
                     items: kMonthsOfTheYear
                         .map((id, month) =>

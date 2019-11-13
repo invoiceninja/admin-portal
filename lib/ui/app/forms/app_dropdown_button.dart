@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class AppDropdownButton extends StatelessWidget {
+class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
     @required this.labelText,
     @required this.value,
@@ -13,9 +13,9 @@ class AppDropdownButton extends StatelessWidget {
   });
 
   final String labelText;
-  final String value;
-  final Function(String) onChanged;
-  final List<DropdownMenuItem<String>> items;
+  final dynamic value;
+  final Function(dynamic) onChanged;
+  final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
 
@@ -30,7 +30,7 @@ class AppDropdownButton extends StatelessWidget {
         ),
         isEmpty: value == null || value == '',
         child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
+          child: DropdownButton<T>(
             value: value,
             isExpanded: true,
             isDense: true,
@@ -38,7 +38,7 @@ class AppDropdownButton extends StatelessWidget {
             items: [
               if (_showBlank || value == '')
                 DropdownMenuItem(
-                  value: '',
+                  value: '' as dynamic,
                   child: SizedBox(),
                 ),
               ...items

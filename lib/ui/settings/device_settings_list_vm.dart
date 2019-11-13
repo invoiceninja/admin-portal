@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
@@ -38,6 +39,7 @@ class DeviceSettingsVM {
     @required this.onLogoutTap,
     @required this.onRefreshTap,
     @required this.onDarkModeChanged,
+    @required this.onLayoutChanged,
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onAccentColorChanged,
@@ -124,6 +126,16 @@ class DeviceSettingsVM {
         store.dispatch(UserSettingsChanged(longPressSelectionIsDefault: value));
         AppBuilder.of(context).rebuild();
       },
+      onLayoutChanged: (BuildContext context, AppLayout value) {
+        store.dispatch(UpdateLayout(value));
+        AppBuilder.of(context).rebuild();
+        if (value == AppLayout.mobile) {
+          store.dispatch(ViewDashboard(context: context));
+        } else {
+          store.dispatch(ViewMainScreen(context));
+        }
+
+      },
       onRequireAuthenticationChanged: (BuildContext context, bool value) async {
         bool authenticated = false;
         try {
@@ -161,6 +173,7 @@ class DeviceSettingsVM {
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext, bool) onDarkModeChanged;
+  final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, String) onAccentColorChanged;
   final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;

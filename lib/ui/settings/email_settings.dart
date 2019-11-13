@@ -115,7 +115,7 @@ class _EmailSettingsState extends State<EmailSettings>
                   AppDropdownButton(
                     labelText: localization.emailDesign,
                     value: kEmailDesignPlain, // TODO Fix this
-                    onChanged: (value) => null,
+                    onChanged: (dynamic value) => null,
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.plain),

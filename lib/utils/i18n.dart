@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'tablet': 'Tablet',
+      'mobile': 'Mobile',
+      'desktop': 'Desktop',
+      'layout': 'Layout',
       'view': 'View',
       'module': 'Module',
       'first_custom': 'First Custom',
@@ -15729,6 +15733,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get module => _localizedValues[localeCode]['module'];
 
   String get view => _localizedValues[localeCode]['view'];
+
+  String get layout => _localizedValues[localeCode]['layout'];
+
+  String get mobile => _localizedValues[localeCode]['mobile'];
+
+  String get desktop => _localizedValues[localeCode]['desktop'];
+
+  String get tablet => _localizedValues[localeCode]['tablet'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

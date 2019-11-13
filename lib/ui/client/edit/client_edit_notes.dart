@@ -107,7 +107,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
                     state.staticState.sizeMap[sizeId].name),
                 value: sizeId,
               )).toList(),
-              onChanged: (sizeId) => viewModel.onChanged(
+              onChanged: (dynamic sizeId) => viewModel.onChanged(
                 client.rebuild((b) => b..sizeId = sizeId),
               ),
               showBlank: true,

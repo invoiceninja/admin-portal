@@ -304,7 +304,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                 child: AppDropdownButton(
                   labelText: localization.fieldType,
                   value: _fieldType,
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     setState(() {
                       _fieldType = value;
                       if (value != kFieldTypeDropdown) {

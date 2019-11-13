@@ -26,7 +26,7 @@ class DynamicSelector extends StatelessWidget {
         labelText: localization.lookup('$entityType'),
         value: entityId,
         showBlank: true,
-        onChanged: (entityId) => onChanged(entityId),
+        onChanged: (dynamic entityId) => onChanged(entityId),
         items: entityIds
             .map((entityId) => DropdownMenuItem(
                   child: Text(entityMap[entityId]?.listDisplayName ?? ''),

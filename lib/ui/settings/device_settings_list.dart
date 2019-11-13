@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -46,6 +48,22 @@ class _DeviceSettingsState extends State<DeviceSettings> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  AppDropdownButton<AppLayout>(
+                    labelText: localization.layout,
+                    value: viewModel.state.uiState.layout,
+                    onChanged: (dynamic value) =>
+                        viewModel.onLayoutChanged(context, value),
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.tablet),
+                        value: AppLayout.tablet,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.mobile),
+                        value: AppLayout.mobile,
+                      ),
+                    ],
+                  ),
                   FormColorPicker(
                     labelText: localization.accentColor,
                     initialValue: uiState.accentColor,

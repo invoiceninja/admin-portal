@@ -204,7 +204,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           value: kGatewayTypeBankTransfer,
                         ),
                       ],
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         setState(() {
                           _gatewayTypeId = value;
                         });
@@ -376,7 +376,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
       return AppDropdownButton(
         labelText: toTitleCase(widget.field),
         value: value,
-        onChanged: (value) => widget.onChanged(value),
+        onChanged: (dynamic value) => widget.onChanged(value),
         items: options
             .map((value) => DropdownMenuItem<String>(
                   child: Text(value.trim()),
