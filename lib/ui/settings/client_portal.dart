@@ -169,13 +169,15 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.clientPortal,
                     value: false,
-                    iconData: FontAwesomeIcons.cloud,
+                    iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.cloud,
                     onChanged: (value) => null,
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
                     value: false,
-                    iconData: FontAwesomeIcons.tachometerAlt,
+                    iconData: kIsWeb
+                        ? Icons.dashboard
+                        : FontAwesomeIcons.tachometerAlt,
                     onChanged: (value) => null,
                   ),
                   BoolDropdownButton(
@@ -197,14 +199,16 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.enablePortalPassword,
                     helpLabel: localization.enablePortalPasswordHelp,
                     value: settings.enablePortalPassword,
-                    iconData: FontAwesomeIcons.shieldAlt,
+                    iconData:
+                        kIsWeb ? Icons.security : FontAwesomeIcons.shieldAlt,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalPassword = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.sendPortalPassword,
                     helpLabel: localization.sendPortalPasswordHelp,
-                    iconData: FontAwesomeIcons.solidEnvelope,
+                    iconData:
+                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
                     value: settings.sendPortalPassword,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..sendPortalPassword = value)),

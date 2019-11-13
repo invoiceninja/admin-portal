@@ -78,7 +78,8 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoEmailInvoice ?? false,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoEmailInvoice = value)),
-                      iconData: FontAwesomeIcons.solidEnvelope,
+                      iconData:
+                          kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
                     ),
                     BoolDropdownButton(
                       label: localization.autoArchiveInvoice,
@@ -86,7 +87,8 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoArchiveInvoice ?? false,
                       onChanged: (value) => viewModel.onSettingsChanged(settings
                           .rebuild((b) => b..autoArchiveInvoice = value)),
-                      iconData: FontAwesomeIcons.archive,
+                      iconData:
+                          kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
                     ),
                   ],
                 ),
@@ -103,7 +105,8 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoConvertQuote ?? false,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoConvertQuote = value)),
-                      iconData: FontAwesomeIcons.fileInvoice,
+                      iconData:
+                          kIsWeb ? Icons.book : FontAwesomeIcons.fileInvoice,
                     ),
                     BoolDropdownButton(
                       label: localization.autoArchiveQuote,
@@ -111,7 +114,8 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoArchiveQuote ?? false,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoArchiveQuote = value)),
-                      iconData: FontAwesomeIcons.archive,
+                      iconData:
+                          kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
                     ),
                   ],
                 ),
