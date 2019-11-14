@@ -56,19 +56,20 @@ class ListScaffold extends StatelessWidget {
           : null;
     } else {
       leadingWidget = Builder(
-          builder: (context) => GestureDetector(
-                onLongPress: onHamburgerLongPress,
-                child: IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    if (isMobile(context) || state.uiState.isMenuFloated) {
-                      Scaffold.of(context).openDrawer();
-                    } else {
-                      store.dispatch(UpdateSidebar(AppSidebar.menu));
-                    }
-                  },
-                ),
-              ));
+        builder: (context) => GestureDetector(
+          onLongPress: onHamburgerLongPress,
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              if (isMobile(context) || state.uiState.isMenuFloated) {
+                Scaffold.of(context).openDrawer();
+              } else {
+                store.dispatch(UpdateSidebar(AppSidebar.menu));
+              }
+            },
+          ),
+        ),
+      );
     }
 
     return WillPopScope(
