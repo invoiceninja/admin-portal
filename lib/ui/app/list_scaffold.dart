@@ -95,7 +95,7 @@ class ListScaffold extends StatelessWidget {
                   builder: (context) => IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () {
-                      if (isMobile(context)) {
+                      if (isMobile(context) || state.uiState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
                         store.dispatch(UpdateSidebar(AppSidebar.history));

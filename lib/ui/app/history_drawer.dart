@@ -18,6 +18,7 @@ class HistoryDrawer extends StatelessWidget {
     return Drawer(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(localization.history),
         ),
       ),
