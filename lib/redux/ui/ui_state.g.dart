@@ -49,9 +49,35 @@ final BuiltSet<AppSidebar> _$valuesSidebar =
   _$history,
 ]);
 
+const AppSidebarMode _$float = const AppSidebarMode._('float');
+const AppSidebarMode _$hide = const AppSidebarMode._('hide');
+const AppSidebarMode _$collapse = const AppSidebarMode._('collapse');
+
+AppSidebarMode _$valueOfSidebarMode(String name) {
+  switch (name) {
+    case 'float':
+      return _$float;
+    case 'hide':
+      return _$hide;
+    case 'collapse':
+      return _$collapse;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
+    new BuiltSet<AppSidebarMode>(const <AppSidebarMode>[
+  _$float,
+  _$hide,
+  _$collapse,
+]);
+
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
 Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
 Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
+Serializer<AppSidebarMode> _$appSidebarModeSerializer =
+    new _$AppSidebarModeSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -66,6 +92,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'layout',
       serializers.serialize(object.layout,
           specifiedType: const FullType(AppLayout)),
+      'menuSidebarMode',
+      serializers.serialize(object.menuSidebarMode,
+          specifiedType: const FullType(AppSidebarMode)),
+      'historySidebarMode',
+      serializers.serialize(object.historySidebarMode,
+          specifiedType: const FullType(AppSidebarMode)),
       'isTesting',
       serializers.serialize(object.isTesting,
           specifiedType: const FullType(bool)),
@@ -180,6 +212,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'layout':
           result.layout = serializers.deserialize(value,
               specifiedType: const FullType(AppLayout)) as AppLayout;
+          break;
+        case 'menuSidebarMode':
+          result.menuSidebarMode = serializers.deserialize(value,
+              specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
+          break;
+        case 'historySidebarMode':
+          result.historySidebarMode = serializers.deserialize(value,
+              specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
           break;
         case 'isTesting':
           result.isTesting = serializers.deserialize(value,
@@ -346,9 +386,31 @@ class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
       AppSidebar.valueOf(serialized as String);
 }
 
+class _$AppSidebarModeSerializer
+    implements PrimitiveSerializer<AppSidebarMode> {
+  @override
+  final Iterable<Type> types = const <Type>[AppSidebarMode];
+  @override
+  final String wireName = 'AppSidebarMode';
+
+  @override
+  Object serialize(Serializers serializers, AppSidebarMode object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  AppSidebarMode deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      AppSidebarMode.valueOf(serialized as String);
+}
+
 class _$UIState extends UIState {
   @override
   final AppLayout layout;
+  @override
+  final AppSidebarMode menuSidebarMode;
+  @override
+  final AppSidebarMode historySidebarMode;
   @override
   final bool isTesting;
   @override
@@ -415,6 +477,8 @@ class _$UIState extends UIState {
 
   _$UIState._(
       {this.layout,
+      this.menuSidebarMode,
+      this.historySidebarMode,
       this.isTesting,
       this.isMenuVisible,
       this.isHistoryVisible,
@@ -448,6 +512,12 @@ class _$UIState extends UIState {
       : super._() {
     if (layout == null) {
       throw new BuiltValueNullFieldError('UIState', 'layout');
+    }
+    if (menuSidebarMode == null) {
+      throw new BuiltValueNullFieldError('UIState', 'menuSidebarMode');
+    }
+    if (historySidebarMode == null) {
+      throw new BuiltValueNullFieldError('UIState', 'historySidebarMode');
     }
     if (isTesting == null) {
       throw new BuiltValueNullFieldError('UIState', 'isTesting');
@@ -548,6 +618,8 @@ class _$UIState extends UIState {
     if (identical(other, this)) return true;
     return other is UIState &&
         layout == other.layout &&
+        menuSidebarMode == other.menuSidebarMode &&
+        historySidebarMode == other.historySidebarMode &&
         isTesting == other.isTesting &&
         isMenuVisible == other.isMenuVisible &&
         isHistoryVisible == other.isHistoryVisible &&
@@ -600,7 +672,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode),
                                                                                 autoStartTasks.hashCode),
                                                                             addDocumentsToInvoice.hashCode),
                                                                         filter.hashCode),
@@ -626,6 +698,8 @@ class _$UIState extends UIState {
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
           ..add('layout', layout)
+          ..add('menuSidebarMode', menuSidebarMode)
+          ..add('historySidebarMode', historySidebarMode)
           ..add('isTesting', isTesting)
           ..add('isMenuVisible', isMenuVisible)
           ..add('isHistoryVisible', isHistoryVisible)
@@ -666,6 +740,16 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   AppLayout _layout;
   AppLayout get layout => _$this._layout;
   set layout(AppLayout layout) => _$this._layout = layout;
+
+  AppSidebarMode _menuSidebarMode;
+  AppSidebarMode get menuSidebarMode => _$this._menuSidebarMode;
+  set menuSidebarMode(AppSidebarMode menuSidebarMode) =>
+      _$this._menuSidebarMode = menuSidebarMode;
+
+  AppSidebarMode _historySidebarMode;
+  AppSidebarMode get historySidebarMode => _$this._historySidebarMode;
+  set historySidebarMode(AppSidebarMode historySidebarMode) =>
+      _$this._historySidebarMode = historySidebarMode;
 
   bool _isTesting;
   bool get isTesting => _$this._isTesting;
@@ -834,6 +918,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   UIStateBuilder get _$this {
     if (_$v != null) {
       _layout = _$v.layout;
+      _menuSidebarMode = _$v.menuSidebarMode;
+      _historySidebarMode = _$v.historySidebarMode;
       _isTesting = _$v.isTesting;
       _isMenuVisible = _$v.isMenuVisible;
       _isHistoryVisible = _$v.isHistoryVisible;
@@ -889,6 +975,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$result = _$v ??
           new _$UIState._(
               layout: layout,
+              menuSidebarMode: menuSidebarMode,
+              historySidebarMode: historySidebarMode,
               isTesting: isTesting,
               isMenuVisible: isMenuVisible,
               isHistoryVisible: isHistoryVisible,

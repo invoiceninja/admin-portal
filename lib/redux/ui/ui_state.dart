@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -30,17 +31,21 @@ part 'ui_state.g.dart';
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState(
     CompanyEntity company, {
-    bool enableDarkMode,
-    String accentColor,
-    bool requireAuthentication,
-    bool longPressSelectionIsDefault,
-    AppLayout layout,
-    bool isTesting,
+    @required bool enableDarkMode,
+    @required String accentColor,
+    @required bool requireAuthentication,
+    @required bool longPressSelectionIsDefault,
+    @required AppLayout layout,
+    @required bool isTesting,
   }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       //layout: layout ?? AppLayout.mobile,
       layout: layout ?? AppLayout.tablet,
+      historySidebarMode: (layout ?? AppLayout.tablet) == AppLayout.tablet
+          ? AppSidebarMode.hide
+          : AppSidebarMode.float,
+      menuSidebarMode: AppSidebarMode.float,
       isTesting: isTesting ?? false,
       isMenuVisible: true,
       isHistoryVisible: false,
@@ -75,6 +80,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   UIState._();
 
   AppLayout get layout;
+
+  AppSidebarMode get menuSidebarMode;
+
+  AppSidebarMode get historySidebarMode;
 
   bool get isTesting;
 
@@ -193,4 +202,19 @@ class AppSidebar extends EnumClass {
   static BuiltSet<AppSidebar> get values => _$valuesSidebar;
 
   static AppSidebar valueOf(String name) => _$valueOfSidebar(name);
+}
+
+class AppSidebarMode extends EnumClass {
+  const AppSidebarMode._(String name) : super(name);
+
+  static Serializer<AppSidebarMode> get serializer =>
+      _$appSidebarModeSerializer;
+
+  static const AppSidebarMode float = _$float;
+  static const AppSidebarMode hide = _$hide;
+  static const AppSidebarMode collapse = _$collapse;
+
+  static BuiltSet<AppSidebarMode> get values => _$valuesSidebarMode;
+
+  static AppSidebarMode valueOf(String name) => _$valueOfSidebarMode(name);
 }

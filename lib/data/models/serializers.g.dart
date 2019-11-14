@@ -9,6 +9,7 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ActivityEntity.serializer)
       ..add(AppLayout.serializer)
+      ..add(AppSidebarMode.serializer)
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
       ..add(ClientEntity.serializer)

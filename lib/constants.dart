@@ -23,12 +23,17 @@ const String kSharedPrefSecret = 'secret';
 const String kSharedPrefToken = 'api_token';
 const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
 const String kSharedPrefAccentColor = 'accent_color';
-const String kSharedPrefLongPressSelectionIsDefault = 'long_press_multiselect';
-const String kSharedPrefEmailPayment = 'email_payment';
-const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
+const String kSharedPrefLongPressSelection = 'long_press_multiselect';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefRequireAuthentication = 'require_authentication';
+const String kSharedPrefLayout = 'layout';
+const String kSharedPrefMenuMode = 'menu_mode';
+const String kSharedPrefHistoryMode = 'history_mode';
+
+// TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
+const String kSharedPrefEmailPayment = 'email_payment';
+const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 
 const String kProductPlanPro = 'v1_pro_yearly';
 const String kProductPlanEnterprise2 = 'v1_enterprise_2_yearly';

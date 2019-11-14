@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HistoryDrawer extends StatelessWidget {
   const HistoryDrawer({
@@ -12,14 +13,12 @@ class HistoryDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
     return Drawer(
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('History')
-          ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(localization.history),
         ),
       ),
     );

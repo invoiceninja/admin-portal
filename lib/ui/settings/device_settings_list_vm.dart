@@ -45,6 +45,8 @@ class DeviceSettingsVM {
     @required this.onAccentColorChanged,
     @required this.onLongPressSelectionIsDefault,
     @required this.authenticationSupported,
+    @required this.onMenuModeChanged,
+    @required this.onHistoryModeChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -121,12 +123,30 @@ class DeviceSettingsVM {
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
         if (!kIsWeb) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefLongPressSelectionIsDefault, value);
+          prefs.setBool(kSharedPrefLongPressSelection, value);
         }
         store.dispatch(UserSettingsChanged(longPressSelectionIsDefault: value));
         AppBuilder.of(context).rebuild();
       },
-      onLayoutChanged: (BuildContext context, AppLayout value) {
+      onMenuModeChanged: (context, value) async {
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefMenuMode, '$value');
+        }
+        store.dispatch(UserSettingsChanged(menuMode: value));
+      },
+      onHistoryModeChanged: (context, value) async {
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefHistoryMode, '$value');
+        }
+        store.dispatch(UserSettingsChanged(historyMode: value));
+      },
+      onLayoutChanged: (BuildContext context, AppLayout value) async {
+        if (!kIsWeb) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefLayout, '$value');
+        }
         store.dispatch(UpdateLayout(value));
         AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {
@@ -134,7 +154,6 @@ class DeviceSettingsVM {
         } else {
           store.dispatch(ViewMainScreen(context));
         }
-
       },
       onRequireAuthenticationChanged: (BuildContext context, bool value) async {
         bool authenticated = false;
@@ -174,6 +193,8 @@ class DeviceSettingsVM {
   final Function(BuildContext) onRefreshTap;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
+  final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
+  final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
   final Function(BuildContext, String) onAccentColorChanged;
   final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;

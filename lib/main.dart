@@ -79,7 +79,7 @@ void main({bool isTesting = false}) async {
     accentColor =
         prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
     longPressSelectionIsDefault =
-        prefs.getBool(kSharedPrefLongPressSelectionIsDefault) ?? false;
+        prefs.getBool(kSharedPrefLongPressSelection) ?? false;
     requireAuthentication =
         prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
   }

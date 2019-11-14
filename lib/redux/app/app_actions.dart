@@ -72,6 +72,8 @@ class UserSettingsChanged implements PersistUI {
     this.longPressSelectionIsDefault,
     this.addDocumentsToInvoice,
     this.accentColor,
+    this.menuMode,
+    this.historyMode,
   });
 
   final bool enableDarkMode;
@@ -81,6 +83,8 @@ class UserSettingsChanged implements PersistUI {
   final bool autoStartTasks;
   final bool addDocumentsToInvoice;
   final String accentColor;
+  final AppSidebarMode menuMode;
+  final AppSidebarMode historyMode;
 }
 
 class LoadAccountSuccess {

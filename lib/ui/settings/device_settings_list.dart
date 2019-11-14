@@ -30,7 +30,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final uiState = viewModel.state.uiState;
+    final state = viewModel.state;
+    final uiState = state.uiState;
 
     return WillPopScope(
       onWillPop: () async {
@@ -64,6 +65,44 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         value: AppLayout.mobile,
                       ),
                     ],
+                  ),
+                  AppDropdownButton<AppSidebarMode>(
+                    labelText: localization.menuSidebar,
+                    value: state.uiState.menuSidebarMode,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.showOrHide),
+                        value: AppSidebarMode.hide,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.float),
+                        value: AppSidebarMode.float,
+                      ),
+                      /* TODO implement
+                      DropdownMenuItem(
+                        child: Text(localization.collapse),
+                        value: AppSidebarMode.collapse,
+                      ),
+                       */
+                    ],
+                    onChanged: (dynamic value) =>
+                        viewModel.onMenuModeChanged(context, value),
+                  ),
+                  AppDropdownButton<AppSidebarMode>(
+                    labelText: localization.historySidebar,
+                    value: state.uiState.historySidebarMode,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.showOrHide),
+                        value: AppSidebarMode.hide,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.float),
+                        value: AppSidebarMode.float,
+                      ),
+                    ],
+                    onChanged: (dynamic value) =>
+                        viewModel.onHistoryModeChanged(context, value),
                   ),
                   FormColorPicker(
                     labelText: localization.accentColor,
