@@ -37,7 +37,8 @@ UIState uiReducer(UIState state, dynamic action) {
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..layout = layoutReducer(state.layout, action)
     ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
-    ..historySidebarMode = historySidebarReducer(state.menuSidebarMode, action)
+    ..historySidebarMode =
+        historySidebarReducer(state.historySidebarMode, action)
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..previousRoute = state.currentRoute == currentRoute
@@ -82,11 +83,17 @@ Reducer<bool> menuVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateSidebar>((value, action) {
     return action.sidebar == AppSidebar.menu ? !value : value;
   }),
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.menuMode == AppSidebarMode.visible ? true : value;
+  }),
 ]);
 
 Reducer<bool> historyVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateSidebar>((value, action) {
     return action.sidebar == AppSidebar.history ? !value : value;
+  }),
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.historyMode == AppSidebarMode.visible ? true : value;
   }),
 ]);
 
