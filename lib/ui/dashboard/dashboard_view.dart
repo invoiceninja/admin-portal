@@ -53,19 +53,22 @@ class _DashboardViewState extends State<DashboardView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
-        drawer: isMobile(context) ? MenuDrawerBuilder() : null,
+        drawer: isMobile(context) || state.uiState.isMenuFloated
+            ? MenuDrawerBuilder()
+            : null,
         appBar: AppBar(
-          leading: !isMobile(context)
-              ? IconButton(
+          leading: isMobile(context) || state.uiState.isMenuFloated
+              ? null
+              : IconButton(
                   icon: Icon(Icons.menu),
                   onPressed: () =>
                       store.dispatch(UpdateSidebar(AppSidebar.menu)),
-                )
-              : null,
+                ),
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
             onFilterChanged: (value) {

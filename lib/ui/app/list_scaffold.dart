@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'menu_drawer_vm.dart';
@@ -37,6 +38,38 @@ class ListScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    Widget leadingWidget;
+    if (showCheckbox) {
+      leadingWidget = Checkbox(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          onChanged: onCheckboxChanged,
+          activeColor: Theme.of(context).accentColor,
+          value: isChecked);
+    } else if (isSettings) {
+      leadingWidget = isMobile(context)
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            )
+          : null;
+    } else {
+      leadingWidget = Builder(
+          builder: (context) => GestureDetector(
+                onLongPress: onHamburgerLongPress,
+                child: IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    if (isMobile(context) || state.uiState.isMenuFloated) {
+                      Scaffold.of(context).openDrawer();
+                    } else {
+                      store.dispatch(UpdateSidebar(AppSidebar.menu));
+                    }
+                  },
+                ),
+              ));
+    }
 
     return WillPopScope(
         onWillPop: () async {
@@ -44,38 +77,15 @@ class ListScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          drawer: isMobile(context) ? MenuDrawerBuilder() : null,
-          //endDrawer: isMobile(context),
+          drawer: isMobile(context) || state.uiState.isMenuFloated
+              ? MenuDrawerBuilder()
+              : null,
+          endDrawer: isMobile(context) || state.uiState.isHistoryFloated
+              ? HistoryDrawerBuilder()
+              : null,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            leading: showCheckbox
-                ? Checkbox(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: onCheckboxChanged,
-                    activeColor: Theme.of(context).accentColor,
-                    value: isChecked)
-                : isSettings
-                    ? (isMobile(context)
-                        ? IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: () => Navigator.pop(context),
-                          )
-                        : null)
-                    : Builder(
-                        builder: (context) => GestureDetector(
-                              onLongPress: onHamburgerLongPress,
-                              child: IconButton(
-                                icon: Icon(Icons.menu),
-                                onPressed: () {
-                                  if (isMobile(context)) {
-                                    Scaffold.of(context).openDrawer();
-                                  } else {
-                                    store.dispatch(
-                                        UpdateSidebar(AppSidebar.menu));
-                                  }
-                                },
-                              ),
-                            )),
+            leading: leadingWidget,
             title: appBarTitle,
             actions: [
               ...appBarActions,
