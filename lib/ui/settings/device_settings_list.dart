@@ -72,7 +72,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.showOrHide),
-                        value: AppSidebarMode.hide,
+                        value: AppSidebarMode.visible,
                       ),
                       DropdownMenuItem(
                         child: Text(localization.float),
@@ -94,7 +94,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.showOrHide),
-                        value: AppSidebarMode.hide,
+                        value: AppSidebarMode.visible,
                       ),
                       DropdownMenuItem(
                         child: Text(localization.float),

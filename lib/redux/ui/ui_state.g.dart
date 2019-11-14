@@ -50,15 +50,15 @@ final BuiltSet<AppSidebar> _$valuesSidebar =
 ]);
 
 const AppSidebarMode _$float = const AppSidebarMode._('float');
-const AppSidebarMode _$hide = const AppSidebarMode._('hide');
+const AppSidebarMode _$visible = const AppSidebarMode._('visible');
 const AppSidebarMode _$collapse = const AppSidebarMode._('collapse');
 
 AppSidebarMode _$valueOfSidebarMode(String name) {
   switch (name) {
     case 'float':
       return _$float;
-    case 'hide':
-      return _$hide;
+    case 'visible':
+      return _$visible;
     case 'collapse':
       return _$collapse;
     default:
@@ -69,7 +69,7 @@ AppSidebarMode _$valueOfSidebarMode(String name) {
 final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
     new BuiltSet<AppSidebarMode>(const <AppSidebarMode>[
   _$float,
-  _$hide,
+  _$visible,
   _$collapse,
 ]);
 

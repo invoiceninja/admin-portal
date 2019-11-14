@@ -43,7 +43,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       //layout: layout ?? AppLayout.mobile,
       layout: layout ?? AppLayout.tablet,
       historySidebarMode: (layout ?? AppLayout.tablet) == AppLayout.tablet
-          ? AppSidebarMode.hide
+          ? AppSidebarMode.visible
           : AppSidebarMode.float,
       menuSidebarMode: AppSidebarMode.float,
       isTesting: isTesting ?? false,
@@ -211,7 +211,7 @@ class AppSidebarMode extends EnumClass {
       _$appSidebarModeSerializer;
 
   static const AppSidebarMode float = _$float;
-  static const AppSidebarMode hide = _$hide;
+  static const AppSidebarMode visible = _$visible;
   static const AppSidebarMode collapse = _$collapse;
 
   static BuiltSet<AppSidebarMode> get values => _$valuesSidebarMode;

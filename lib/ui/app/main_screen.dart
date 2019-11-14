@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -108,7 +109,8 @@ class MainScreen extends StatelessWidget {
           }
 
           return Row(children: <Widget>[
-            if (uiState.isMenuVisible) ...[
+            if (uiState.isMenuVisible &&
+                uiState.menuSidebarMode == AppSidebarMode.visible) ...[
               MenuDrawerBuilder(),
               _CustomDivider(),
               Container(
@@ -118,7 +120,8 @@ class MainScreen extends StatelessWidget {
               ),
             ],
             Expanded(child: screen),
-            if (uiState.isHistoryVisible) ...[
+            if (uiState.isHistoryVisible &&
+                uiState.historySidebarMode == AppSidebarMode.visible) ...[
               _CustomDivider(),
               HistoryDrawerBuilder(),
             ],
