@@ -51,13 +51,7 @@ part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
-    String appVersion,
-    bool enableDarkMode,
-    String accentColor,
-    bool requireAuthentication,
-    bool longPressSelectionIsDefault,
-    AppLayout layout,
-    bool isTesting,
+    UIState uiState,
   }) {
     return _$AppState._(
       isLoading: false,
@@ -76,15 +70,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState8: UserCompanyState(),
       companyState9: UserCompanyState(),
       companyState10: UserCompanyState(),
-      uiState: UIState(
-        CompanyEntity(),
-        enableDarkMode: enableDarkMode,
-        accentColor: accentColor,
-        longPressSelectionIsDefault: longPressSelectionIsDefault,
-        requireAuthentication: requireAuthentication,
-        layout: layout ?? AppLayout.mobile,
-        isTesting: isTesting,
-      ),
+      uiState: uiState ?? UIState(CompanyEntity()),
     );
   }
 

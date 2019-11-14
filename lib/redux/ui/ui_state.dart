@@ -1,7 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -19,11 +18,8 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 
 part 'ui_state.g.dart';
@@ -31,21 +27,24 @@ part 'ui_state.g.dart';
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState(
     CompanyEntity company, {
-    @required bool enableDarkMode,
-    @required String accentColor,
-    @required bool requireAuthentication,
-    @required bool longPressSelectionIsDefault,
-    @required AppLayout layout,
-    @required bool isTesting,
+    bool isTesting,
+    bool enableDarkMode,
+    String accentColor,
+    bool requireAuthentication,
+    bool longPressSelectionIsDefault,
+    AppLayout layout,
+    AppSidebarMode historySidebarMode,
+    AppSidebarMode menuSidebarMode,
   }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
       //layout: layout ?? AppLayout.mobile,
       layout: layout ?? AppLayout.tablet,
-      historySidebarMode: (layout ?? AppLayout.tablet) == AppLayout.tablet
-          ? AppSidebarMode.visible
-          : AppSidebarMode.float,
-      menuSidebarMode: AppSidebarMode.float,
+      historySidebarMode: historySidebarMode ??
+          ((layout ?? AppLayout.tablet) == AppLayout.tablet
+              ? AppSidebarMode.visible
+              : AppSidebarMode.float),
+      menuSidebarMode: menuSidebarMode ?? AppSidebarMode.float,
       isTesting: isTesting ?? false,
       isMenuVisible: true,
       isHistoryVisible: false,

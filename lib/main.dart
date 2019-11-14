@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -68,31 +69,8 @@ void main({bool isTesting = false}) async {
             environment: Config.PLATFORM,
           ));
 
-  bool enableDarkMode = true;
-  bool longPressSelectionIsDefault;
-  bool requireAuthentication;
-  String accentColor = kDefaultAccentColor;
-
-  if (!kIsWeb) {
-    final prefs = await SharedPreferences.getInstance();
-    enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? true;
-    accentColor =
-        prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor;
-    longPressSelectionIsDefault =
-        prefs.getBool(kSharedPrefLongPressSelection) ?? false;
-    requireAuthentication =
-        prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
-  }
-
   final store = Store<AppState>(appReducer,
-      initialState: AppState(
-        enableDarkMode: enableDarkMode || isTesting,
-        accentColor: accentColor,
-        longPressSelectionIsDefault: longPressSelectionIsDefault,
-        requireAuthentication: requireAuthentication,
-        layout: AppLayout.tablet,
-        isTesting: isTesting,
-      ),
+      initialState: await _initialState(isTesting),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDocumentsMiddleware())
@@ -123,7 +101,7 @@ void main({bool isTesting = false}) async {
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     print('Caught error: $error');
-    if (isInDebugMode) {
+    if (_isInDebugMode) {
       print(stackTrace);
       return;
     } else {
@@ -147,7 +125,7 @@ void main({bool isTesting = false}) async {
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode || !store.state.reportErrors) {
+    if (_isInDebugMode || !store.state.reportErrors) {
       FlutterError.dumpErrorToConsole(details);
     } else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
@@ -155,10 +133,36 @@ void main({bool isTesting = false}) async {
   };
 }
 
-bool get isInDebugMode {
+bool get _isInDebugMode {
   bool inDebugMode = false;
   assert(inDebugMode = true);
   return inDebugMode;
+}
+
+Future<AppState> _initialState(bool isTesting) async {
+  final prefs = kIsWeb ? null : await SharedPreferences.getInstance();
+  final layout = prefs?.getString(kSharedPrefLayout) ?? '$AppLayout.tablet';
+  final menuMode =
+      prefs?.getString(kSharedPrefMenuMode) ?? '${AppSidebarMode.visible}';
+  final historyMode =
+      prefs?.getString(kSharedPrefMenuMode) ?? '${AppSidebarMode.float}';
+
+  return AppState(
+    uiState: UIState(
+      CompanyEntity(),
+      isTesting: isTesting,
+      enableDarkMode: prefs?.getBool(kSharedPrefEnableDarkMode) ?? true,
+      accentColor:
+          prefs?.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor,
+      longPressSelectionIsDefault:
+          prefs?.getBool(kSharedPrefLongPressSelection) ?? false,
+      requireAuthentication:
+          prefs?.getBool(kSharedPrefRequireAuthentication) ?? false,
+      layout: AppLayout.valueOf(layout),
+      menuSidebarMode: AppSidebarMode.valueOf(menuMode),
+      historySidebarMode: AppSidebarMode.valueOf(historyMode),
+    ),
+  );
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
