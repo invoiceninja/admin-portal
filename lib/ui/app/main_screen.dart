@@ -113,18 +113,8 @@ class MainScreen extends StatelessWidget {
                 uiState.menuSidebarMode == AppSidebarMode.visible) ...[
               MenuDrawerBuilder(),
               _CustomDivider(),
-              Container(
-                width: 1,
-                height: double.infinity,
-                color: Colors.black,
-              ),
             ],
             Expanded(child: screen),
-            if (uiState.isHistoryVisible &&
-                uiState.historySidebarMode == AppSidebarMode.visible) ...[
-              _CustomDivider(),
-              HistoryDrawerBuilder(),
-            ],
           ]);
 
           /*
@@ -344,7 +334,15 @@ class SettingsScreens extends StatelessWidget {
       Expanded(
         flex: 3,
         child: screen,
-      )
+      ),
+      if (uiState.isHistoryVisible &&
+          uiState.historySidebarMode == AppSidebarMode.visible) ...[
+        _CustomDivider(),
+        Expanded(
+          child: HistoryDrawerBuilder(),
+          flex: 2,
+        )
+      ],
     ]);
   }
 }
@@ -389,6 +387,14 @@ class EntityScreens extends StatelessWidget {
             ],
           ),
         ),
+        if (uiState.isHistoryVisible &&
+            uiState.historySidebarMode == AppSidebarMode.visible) ...[
+          _CustomDivider(),
+          Expanded(
+            child: HistoryDrawerBuilder(),
+            flex: 2,
+          )
+        ],
       ],
     );
   }

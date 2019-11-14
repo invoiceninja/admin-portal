@@ -20,6 +20,16 @@ class HistoryDrawer extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text(localization.history),
+          actions: <Widget>[
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            )
+          ],
         ),
       ),
     );
