@@ -322,21 +322,21 @@ class MenuDrawer extends StatelessWidget {
                                 context: context));
                           },
                         ),
-                        // STARTER: menu - do not remove comment
-                        DrawerTile(
-                          company: company,
-                          icon: kIsWeb ? Icons.settings : FontAwesomeIcons.cog,
-                          title: localization.settings,
-                          onTap: () {
-                            if (isMobile(context)) {
-                              navigator.pop();
-                            }
-                            store.dispatch(ViewSettings(
-                                context: context,
-                                userCompany: state.userCompany));
-                          },
-                        ),
-                      ]
+                      ],
+                      // STARTER: menu - do not remove comment
+                      DrawerTile(
+                        company: company,
+                        icon: kIsWeb ? Icons.settings : FontAwesomeIcons.cog,
+                        title: localization.settings,
+                        onTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(ViewSettings(
+                              context: context,
+                              userCompany: state.userCompany));
+                        },
+                      ),
                     ],
                   )),
             Align(

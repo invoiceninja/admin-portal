@@ -79,8 +79,7 @@ class ListScaffold extends StatelessWidget {
             title: appBarTitle,
             actions: [
               ...appBarActions,
-              /*
-              if (!showCheckbox)
+              if (!showCheckbox && !isSettings)
                 Builder(
                   builder: (context) => IconButton(
                     icon: Icon(Icons.menu),
@@ -93,7 +92,6 @@ class ListScaffold extends StatelessWidget {
                     },
                   ),
                 )
-               */
             ],
           ),
           body: body,
