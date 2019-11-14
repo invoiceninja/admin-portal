@@ -177,9 +177,11 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get isEditing => currentRoute.endsWith('edit');
 
-  bool get isMenuFloated => menuSidebarMode == AppSidebarMode.float;
+  bool get isMenuFloated =>
+      layout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
 
-  bool get isHistoryFloated => historySidebarMode == AppSidebarMode.float;
+  bool get isHistoryFloated =>
+      layout == AppLayout.mobile || historySidebarMode == AppSidebarMode.float;
 }
 
 class AppLayout extends EnumClass {

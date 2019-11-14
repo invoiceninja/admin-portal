@@ -66,44 +66,46 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       ),
                     ],
                   ),
-                  AppDropdownButton<AppSidebarMode>(
-                    labelText: localization.menuSidebar,
-                    value: state.uiState.menuSidebarMode,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.showOrHide),
-                        value: AppSidebarMode.visible,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.float),
-                        value: AppSidebarMode.float,
-                      ),
-                      /* TODO implement
+                  if (state.uiState.layout == AppLayout.tablet) ...[
+                    AppDropdownButton<AppSidebarMode>(
+                      labelText: localization.menuSidebar,
+                      value: state.uiState.menuSidebarMode,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.showOrHide),
+                          value: AppSidebarMode.visible,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.float),
+                          value: AppSidebarMode.float,
+                        ),
+                        /* TODO implement
                       DropdownMenuItem(
                         child: Text(localization.collapse),
                         value: AppSidebarMode.collapse,
                       ),
                        */
-                    ],
-                    onChanged: (dynamic value) =>
-                        viewModel.onMenuModeChanged(context, value),
-                  ),
-                  AppDropdownButton<AppSidebarMode>(
-                    labelText: localization.historySidebar,
-                    value: state.uiState.historySidebarMode,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.showOrHide),
-                        value: AppSidebarMode.visible,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.float),
-                        value: AppSidebarMode.float,
-                      ),
-                    ],
-                    onChanged: (dynamic value) =>
-                        viewModel.onHistoryModeChanged(context, value),
-                  ),
+                      ],
+                      onChanged: (dynamic value) =>
+                          viewModel.onMenuModeChanged(context, value),
+                    ),
+                    AppDropdownButton<AppSidebarMode>(
+                      labelText: localization.historySidebar,
+                      value: state.uiState.historySidebarMode,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.showOrHide),
+                          value: AppSidebarMode.visible,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.float),
+                          value: AppSidebarMode.float,
+                        ),
+                      ],
+                      onChanged: (dynamic value) =>
+                          viewModel.onHistoryModeChanged(context, value),
+                    ),
+                  ],
                   FormColorPicker(
                     labelText: localization.accentColor,
                     initialValue: uiState.accentColor,
