@@ -203,7 +203,7 @@ class RestoreStubFailure implements StopSaving {
 
 
 
-class FilterStubs {
+class FilterStubs implements PersistUI {
   FilterStubs(this.filter);
 
   final String filter;

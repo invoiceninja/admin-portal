@@ -159,7 +159,7 @@ class RestoreProductFailure implements StopSaving {
   final List<ProductEntity> products;
 }
 
-class FilterProducts {
+class FilterProducts implements PersistUI {
   FilterProducts(this.filter);
 
   final String filter;

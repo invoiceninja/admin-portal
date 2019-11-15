@@ -231,7 +231,7 @@ class RestoreClientFailure implements StopSaving {
   final List<ClientEntity> clients;
 }
 
-class FilterClients {
+class FilterClients implements PersistUI {
   FilterClients(this.filter);
 
   final String filter;

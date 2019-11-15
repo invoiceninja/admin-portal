@@ -100,7 +100,7 @@ class SaveUserFailure implements StopSaving {
   final Object error;
 }
 
-class FilterSettings {
+class FilterSettings implements PersistUI {
   FilterSettings(this.filter);
 
   final String filter;

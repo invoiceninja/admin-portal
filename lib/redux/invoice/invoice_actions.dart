@@ -289,7 +289,7 @@ class RestoreInvoiceFailure implements StopSaving {
   final List<InvoiceEntity> invoices;
 }
 
-class FilterInvoices {
+class FilterInvoices implements PersistUI {
   FilterInvoices(this.filter);
 
   final String filter;

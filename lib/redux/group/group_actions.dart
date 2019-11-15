@@ -203,7 +203,7 @@ class RestoreGroupFailure implements StopSaving {
   final List<GroupEntity> groups;
 }
 
-class FilterGroups {
+class FilterGroups implements PersistUI {
   FilterGroups(this.filter);
 
   final String filter;

@@ -193,7 +193,7 @@ class RestoreDocumentFailure implements StopSaving {
   final List<DocumentEntity> documents;
 }
 
-class FilterDocuments {
+class FilterDocuments implements PersistUI {
   FilterDocuments(this.filter);
 
   final String filter;

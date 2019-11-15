@@ -205,7 +205,7 @@ class RestoreProjectFailure implements StopSaving {
   final List<ProjectEntity> projects;
 }
 
-class FilterProjects {
+class FilterProjects implements PersistUI {
   FilterProjects(this.filter);
 
   final String filter;

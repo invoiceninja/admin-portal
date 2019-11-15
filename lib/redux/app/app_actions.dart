@@ -108,7 +108,7 @@ class ClearLastError {}
 
 class DiscardChanges {}
 
-class FilterCompany {
+class FilterCompany implements PersistUI {
   FilterCompany(this.filter);
 
   final String filter;

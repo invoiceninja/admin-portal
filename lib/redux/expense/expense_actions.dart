@@ -202,7 +202,7 @@ class RestoreExpenseFailure implements StopSaving {
   final List<ExpenseEntity> expenses;
 }
 
-class FilterExpenses {
+class FilterExpenses implements PersistUI {
   FilterExpenses(this.filter);
 
   final String filter;

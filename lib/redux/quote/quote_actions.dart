@@ -292,7 +292,7 @@ class RestoreQuoteFailure implements StopSaving {
   final List<InvoiceEntity> quotes;
 }
 
-class FilterQuotes {
+class FilterQuotes implements PersistUI {
   FilterQuotes(this.filter);
 
   final String filter;

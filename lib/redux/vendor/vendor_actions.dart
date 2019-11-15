@@ -229,7 +229,7 @@ class DeleteVendorContact implements PersistUI {
   final int index;
 }
 
-class FilterVendors {
+class FilterVendors implements PersistUI {
   FilterVendors(this.filter);
 
   final String filter;

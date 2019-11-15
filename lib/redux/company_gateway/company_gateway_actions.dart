@@ -201,7 +201,7 @@ class RestoreCompanyGatewayFailure implements StopSaving {
   final List<CompanyGatewayEntity> companyGateways;
 }
 
-class FilterCompanyGateways {
+class FilterCompanyGateways implements PersistUI {
   FilterCompanyGateways(this.filter);
 
   final String filter;

@@ -214,7 +214,7 @@ class EmailPaymentFailure implements StopSaving {
   final dynamic error;
 }
 
-class FilterPayments {
+class FilterPayments implements PersistUI {
   FilterPayments(this.filter);
 
   final String filter;

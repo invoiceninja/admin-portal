@@ -233,7 +233,7 @@ class RestoreTaskFailure implements StopSaving {
   final List<TaskEntity> tasks;
 }
 
-class FilterTasks {
+class FilterTasks implements PersistUI {
   FilterTasks(this.filter);
 
   final String filter;

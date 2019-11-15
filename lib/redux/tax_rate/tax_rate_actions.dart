@@ -199,7 +199,7 @@ class RestoreTaxRateFailure implements StopSaving {
   final List<TaxRateEntity> taxRates;
 }
 
-class FilterTaxRates {
+class FilterTaxRates implements PersistUI {
   FilterTaxRates(this.filter);
 
   final String filter;
