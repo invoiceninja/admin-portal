@@ -5,15 +5,23 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
@@ -92,6 +100,37 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewInvoice>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.invoiceId, entityType: EntityType.invoice))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewPayment>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.paymentId, entityType: EntityType.payment))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewQuote>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.quoteId, entityType: EntityType.quote))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewTask>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.taskId, entityType: EntityType.task))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewProject>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.projectId, entityType: EntityType.project))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewVendor>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.vendorId, entityType: EntityType.vendor))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewExpense>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.expenseId, entityType: EntityType.expense))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewCompanyGateway>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.companyGatewayId,
+              entityType: EntityType.companyGateway))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewUser>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.userId, entityType: EntityType.user))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewGroup>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.groupId, entityType: EntityType.group))),
+  // TODO add to starter.sh
 ]);
 
 BuiltList<HistoryRecord> _addToHistory(
@@ -254,7 +293,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
           ..isChanged = true);
     }
   }),
-  TypedReducer<SettingsUIState, UpdateUser>((state, action) {
+  TypedReducer<SettingsUIState, UpdateSettingsUser>((state, action) {
     return state.rebuild((b) => b
       ..userCompany.user.replace(action.user)
       ..isChanged = true);

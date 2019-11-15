@@ -42,8 +42,8 @@ class UpdateSettings implements PersistUI {
   final SettingsEntity settings;
 }
 
-class UpdateUser implements PersistUI {
-  UpdateUser({@required this.user});
+class UpdateSettingsUser implements PersistUI {
+  UpdateSettingsUser({@required this.user});
 
   final UserEntity user;
 }
