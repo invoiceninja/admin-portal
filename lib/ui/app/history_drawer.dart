@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -21,8 +19,26 @@ class HistoryDrawer extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final history = state.uiState.historyList
-        .sublist(0, min(state.uiState.historyList.length, 50));
+
+    final widgets = <Widget>[];
+    for (var history in state.uiState.historyList) {
+      if (widgets.length > 50) {
+        break;
+      }
+
+      final entity = state.getEntityMap(history.entityType)[history.id];
+
+      if (entity == null) {
+        continue;
+      }
+
+      widgets.add(ListTile(
+        key: ValueKey('__${history.id}_${history.entityType}__'),
+        leading: Icon(getEntityIcon(history.entityType)),
+        title: Text(entity.listDisplayName),
+        subtitle: Text(localization.lookup('${history.entityType}')),
+      ));
+    }
 
     return Drawer(
       child: Scaffold(
@@ -42,14 +58,7 @@ class HistoryDrawer extends StatelessWidget {
           ],
         ),
         body: ListView(
-          children: history.map((history) {
-            final entity = state.getEntityMap(history.entityType)[history.id];
-            return ListTile(
-              leading: Icon(getEntityIcon(history.entityType)),
-              title: Text(entity.listDisplayName),
-              subtitle: Text(localization.lookup('${history.entityType}')),
-            );
-          }).toList(),
+          children: widgets,
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -85,6 +86,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewProduct>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.productId, entityType: EntityType.product))),
   TypedReducer<BuiltList<HistoryRecord>, ViewInvoice>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.invoiceId, entityType: EntityType.invoice))),

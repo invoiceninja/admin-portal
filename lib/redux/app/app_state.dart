@@ -162,7 +162,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:
-        return projectState.map;
+        return productState.map;
       case EntityType.client:
         return clientState.map;
       case EntityType.invoice:
