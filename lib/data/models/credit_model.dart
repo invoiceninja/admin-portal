@@ -71,7 +71,7 @@ abstract class CreditEntity extends Object
 
   CreditEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..isChanged = true
+    ..isChanged = false
     ..isDeleted = false);
 
   @override

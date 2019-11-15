@@ -152,7 +152,7 @@ abstract class TaskEntity extends Object
 
   TaskEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..isChanged = true
+    ..isChanged = false
     ..isDeleted = false
     ..invoiceId = null
     ..isRunning = false

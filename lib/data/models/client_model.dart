@@ -104,7 +104,7 @@ abstract class ClientEntity extends Object
 
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..isChanged = true
+    ..isChanged = false
     ..isDeleted = false);
 
   @nullable

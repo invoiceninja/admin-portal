@@ -124,7 +124,7 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
-    ..isChanged = true
+    ..isChanged = false
     ..isDeleted = false
     ..statusId = kInvoiceStatusDraft
     ..quoteInvoiceId = null
