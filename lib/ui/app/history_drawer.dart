@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -44,14 +45,17 @@ class HistoryDrawer extends StatelessWidget {
         title: Text(entity.listDisplayName),
         subtitle: Text(localization.lookup('${history.entityType}')),
         // TODO this needs to be localized
-        trailing: Text(timeago.format(history.dateTime, locale: 'en_short')),
+        trailing: LiveText(
+          () => timeago.format(history.dateTime, locale: 'en_short'),
+          duration: Duration(minutes: 1),
+        ),
         onTap: () => viewEntityById(
             context: context,
             entityId: history.id,
             entityType: history.entityType),
         onLongPress: () => showEntityActionsDialog(
-            context: context,
-            entities: [entity],
+          context: context,
+          entities: [entity],
         ),
       ));
     }
