@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HistoryDrawer extends StatelessWidget {
@@ -35,6 +36,15 @@ class HistoryDrawer extends StatelessWidget {
                 ),
               )
           ],
+        ),
+        body: ListView(
+          children: state.uiState.historyList.map((history) {
+            final entity = state.getEntityMap(history.entityType)[history.id];
+            return ListTile(
+              leading: Icon(getEntityIcon(history.entityType)),
+              title: Text(entity.listDisplayName),
+            );
+          }).toList(),
         ),
       ),
     );
