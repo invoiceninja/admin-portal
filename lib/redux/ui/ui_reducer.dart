@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -142,7 +144,9 @@ BuiltList<HistoryRecord> _addToHistory(
       ..remove(old)
       ..insert(0, record));
   } else {
-    return list.rebuild((b) => b..insert(0, record));
+    return list.rebuild((b) => b
+      ..insert(0, record)
+      ..sublist(0, min(200, list.length)));
   }
 }
 
