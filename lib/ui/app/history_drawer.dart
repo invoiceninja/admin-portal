@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -66,6 +67,13 @@ class HistoryDrawer extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+              )
+            else
+              FlatButton(
+                child: Text(localization.close),
+                onPressed: () {
+                  store.dispatch(UpdateSidebar(AppSidebar.history));
+                },
               )
           ],
         ),

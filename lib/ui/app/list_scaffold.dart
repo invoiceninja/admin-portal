@@ -90,7 +90,9 @@ class ListScaffold extends StatelessWidget {
             title: appBarTitle,
             actions: [
               ...appBarActions,
-              if (!showCheckbox && !isSettings)
+              if (!showCheckbox &&
+                  !isSettings &&
+                  !state.uiState.isHistoryVisible)
                 Builder(
                   builder: (context) => IconButton(
                     icon: Icon(Icons.menu),
