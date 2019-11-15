@@ -420,7 +420,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Layout: ${uiState.layout}, menu: ${uiState.menuSidebarMode}, history: ${uiState.historySidebarMode}';
     //return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
-    return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    //return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
   }
 }
 

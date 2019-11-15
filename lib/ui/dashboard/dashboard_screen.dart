@@ -17,13 +17,13 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class DashboardView extends StatefulWidget {
-  const DashboardView({
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
@@ -31,10 +31,10 @@ class DashboardView extends StatefulWidget {
   final DashboardVM viewModel;
 
   @override
-  _DashboardViewState createState() => new _DashboardViewState();
+  _DashboardScreenState createState() => new _DashboardScreenState();
 }
 
-class _DashboardViewState extends State<DashboardView>
+class _DashboardScreenState extends State<DashboardScreen>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
@@ -75,28 +75,32 @@ class _DashboardViewState extends State<DashboardView>
                 ),
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
+            key: ValueKey(state.uiState.filterClearedAt),
+            filter: state.uiState.filter,
             onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
             },
           ),
           actions: [
             ListFilterButton(
+              filter: state.uiState.filter,
               onFilterPressed: (String value) {
                 store.dispatch(FilterCompany(value));
               },
             ),
-            Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  if (isMobile(context) || state.uiState.isHistoryFloated) {
-                    Scaffold.of(context).openEndDrawer();
-                  } else {
-                    store.dispatch(UpdateSidebar(AppSidebar.history));
-                  }
-                },
+            if (!state.uiState.isHistoryVisible)
+              Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    if (isMobile(context) || state.uiState.isHistoryFloated) {
+                      Scaffold.of(context).openEndDrawer();
+                    } else {
+                      store.dispatch(UpdateSidebar(AppSidebar.history));
+                    }
+                  },
+                ),
               ),
-            ),
           ],
           bottom: store.state.uiState.filter != null
               ? null

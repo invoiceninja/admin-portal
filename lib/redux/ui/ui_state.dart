@@ -40,6 +40,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
+      filterClearedAt: 0,
       //layout: layout ?? AppLayout.mobile,
       layout: layout ?? AppLayout.tablet,
       historySidebarMode: historySidebarMode ??
@@ -116,6 +117,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   @nullable
   String get filter;
+
+  int get filterClearedAt;
 
   DashboardUIState get dashboardUIState;
 

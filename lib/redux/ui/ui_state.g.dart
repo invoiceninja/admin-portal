@@ -136,6 +136,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'addDocumentsToInvoice',
       serializers.serialize(object.addDocumentsToInvoice,
           specifiedType: const FullType(bool)),
+      'filterClearedAt',
+      serializers.serialize(object.filterClearedAt,
+          specifiedType: const FullType(int)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -282,6 +285,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'filter':
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterClearedAt':
+          result.filterClearedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
@@ -506,6 +513,8 @@ class _$UIState extends UIState {
   @override
   final String filter;
   @override
+  final int filterClearedAt;
+  @override
   final DashboardUIState dashboardUIState;
   @override
   final ProductUIState productUIState;
@@ -561,6 +570,7 @@ class _$UIState extends UIState {
       this.autoStartTasks,
       this.addDocumentsToInvoice,
       this.filter,
+      this.filterClearedAt,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
@@ -624,6 +634,9 @@ class _$UIState extends UIState {
     }
     if (addDocumentsToInvoice == null) {
       throw new BuiltValueNullFieldError('UIState', 'addDocumentsToInvoice');
+    }
+    if (filterClearedAt == null) {
+      throw new BuiltValueNullFieldError('UIState', 'filterClearedAt');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -706,6 +719,7 @@ class _$UIState extends UIState {
         autoStartTasks == other.autoStartTasks &&
         addDocumentsToInvoice == other.addDocumentsToInvoice &&
         filter == other.filter &&
+        filterClearedAt == other.filterClearedAt &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
@@ -745,9 +759,9 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode), autoStartTasks.hashCode),
-                                                                                addDocumentsToInvoice.hashCode),
-                                                                            filter.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode), autoStartTasks.hashCode), addDocumentsToInvoice.hashCode),
+                                                                                filter.hashCode),
+                                                                            filterClearedAt.hashCode),
                                                                         dashboardUIState.hashCode),
                                                                     productUIState.hashCode),
                                                                 clientUIState.hashCode),
@@ -787,6 +801,7 @@ class _$UIState extends UIState {
           ..add('autoStartTasks', autoStartTasks)
           ..add('addDocumentsToInvoice', addDocumentsToInvoice)
           ..add('filter', filter)
+          ..add('filterClearedAt', filterClearedAt)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
@@ -889,6 +904,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String _filter;
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
+
+  int _filterClearedAt;
+  int get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int filterClearedAt) =>
+      _$this._filterClearedAt = filterClearedAt;
 
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
@@ -1014,6 +1034,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _autoStartTasks = _$v.autoStartTasks;
       _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
       _filter = _$v.filter;
+      _filterClearedAt = _$v.filterClearedAt;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
@@ -1072,6 +1093,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               autoStartTasks: autoStartTasks,
               addDocumentsToInvoice: addDocumentsToInvoice,
               filter: filter,
+              filterClearedAt: filterClearedAt,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),

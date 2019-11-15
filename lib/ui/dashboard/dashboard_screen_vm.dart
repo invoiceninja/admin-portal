@@ -10,24 +10,24 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_view.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key key}) : super(key: key);
+class DashboardScreenBuilder extends StatelessWidget {
+  const DashboardScreenBuilder({Key key}) : super(key: key);
   static const String route = '/dashboard';
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DashboardVM>(
-      distinct: true,
+      //distinct: true,
       converter: DashboardVM.fromStore,
       builder: (context, viewModel) {
-        return DashboardView(viewModel: viewModel);
+        return DashboardScreen(viewModel: viewModel);
       },
     );
   }
@@ -98,6 +98,7 @@ class DashboardVM {
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 
+  /*
   @override
   bool operator ==(dynamic other) =>
       dashboardState == other.dashboardState &&
@@ -115,4 +116,5 @@ class DashboardVM {
       isLoading.hashCode ^
       filter.hashCode ^
       filteredList.hashCode;
+   */
 }

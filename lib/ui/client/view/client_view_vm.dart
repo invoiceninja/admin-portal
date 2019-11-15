@@ -29,7 +29,7 @@ class ClientViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientViewVM>(
-      distinct: true,
+      //distinct: true,
       converter: (Store<AppState> store) {
         return ClientViewVM.fromStore(store);
       },

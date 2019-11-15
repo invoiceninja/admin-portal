@@ -303,7 +303,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           routes: {
             LoginScreen.route: (context) => LoginScreen(),
             MainScreen.route: (context) => MainScreen(),
-            DashboardScreen.route: (context) => DashboardScreen(),
+            DashboardScreenBuilder.route: (context) => DashboardScreenBuilder(),
             ProductScreen.route: (context) => ProductScreenBuilder(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),

@@ -21,7 +21,7 @@ class ProductViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductViewVM>(
-      distinct: true,
+      //distinct: true,
       converter: (Store<AppState> store) {
         return ProductViewVM.fromStore(store);
       },

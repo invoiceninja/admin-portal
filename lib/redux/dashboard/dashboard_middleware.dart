@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -34,11 +34,11 @@ Middleware<AppState> _createViewDashboard() {
       store.dispatch(LoadDashboard());
     }
 
-    store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+    store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
 
     if (isMobile(action.context)) {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
-          DashboardScreen.route, (Route<dynamic> route) => false);
+          DashboardScreenBuilder.route, (Route<dynamic> route) => false);
     }
 
     next(action);

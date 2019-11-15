@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 
 class DashboardActivity extends StatelessWidget {
   const DashboardActivity({

@@ -27,7 +27,7 @@ class QuoteViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteViewVM>(
-      distinct: true,
+      //distinct: true,
       converter: (Store<AppState> store) {
         return QuoteViewVM.fromStore(store);
       },

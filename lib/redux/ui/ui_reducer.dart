@@ -46,6 +46,7 @@ UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
+    ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..layout = layoutReducer(state.layout, action)
@@ -146,7 +147,7 @@ BuiltList<HistoryRecord> _addToHistory(
   } else {
     return list.rebuild((b) => b
       ..insert(0, record)
-      ..sublist(0, min(200, list.length)));
+      ..sublist(0, min(200, list.length + 1)));
   }
 }
 
@@ -155,7 +156,9 @@ Reducer<bool> menuVisibleReducer = combineReducers([
     return action.sidebar == AppSidebar.menu ? !value : value;
   }),
   TypedReducer<bool, UserSettingsChanged>((value, action) {
-    return action.menuMode == AppSidebarMode.visible ? true : value;
+    return action.menuMode == AppSidebarMode.visible
+        ? true
+        : action.menuMode == AppSidebarMode.float ? false : value;
   }),
 ]);
 
@@ -164,13 +167,23 @@ Reducer<bool> historyVisibleReducer = combineReducers([
     return action.sidebar == AppSidebar.history ? !value : value;
   }),
   TypedReducer<bool, UserSettingsChanged>((value, action) {
-    return action.historyMode == AppSidebarMode.visible ? true : value;
+    return action.historyMode == AppSidebarMode.visible
+        ? true
+        : action.historyMode == AppSidebarMode.float ? false : value;
   }),
 ]);
 
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
+  }),
+]);
+
+Reducer<int> filterClearedAtReducer = combineReducers([
+  TypedReducer<int, FilterCompany>((filterClearedAt, action) {
+    return action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : filterClearedAt;
   }),
 ]);
 

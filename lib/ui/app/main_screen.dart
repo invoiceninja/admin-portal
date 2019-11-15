@@ -28,8 +28,23 @@ class MainScreen extends StatelessWidget {
           Widget screen = BlankScreen();
 
           switch (mainRoute) {
-            case DashboardScreen.route:
-              screen = DashboardScreen();
+            case DashboardScreenBuilder.route:
+              screen = Row(
+                children: <Widget>[
+                  Expanded(
+                    child: DashboardScreenBuilder(),
+                    flex: 5,
+                  ),
+                  if (uiState.isHistoryVisible &&
+                      uiState.historySidebarMode == AppSidebarMode.visible) ...[
+                    _CustomDivider(),
+                    Expanded(
+                      child: HistoryDrawerBuilder(),
+                      flex: 2,
+                    )
+                  ],
+                ],
+              );
               break;
             case ClientScreen.route:
               screen = EntityScreens(
