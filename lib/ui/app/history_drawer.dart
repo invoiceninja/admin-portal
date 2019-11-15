@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -19,6 +21,8 @@ class HistoryDrawer extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final history = state.uiState.historyList
+        .sublist(0, min(state.uiState.historyList.length, 50));
 
     return Drawer(
       child: Scaffold(
@@ -38,11 +42,12 @@ class HistoryDrawer extends StatelessWidget {
           ],
         ),
         body: ListView(
-          children: state.uiState.historyList.map((history) {
+          children: history.map((history) {
             final entity = state.getEntityMap(history.entityType)[history.id];
             return ListTile(
               leading: Icon(getEntityIcon(history.entityType)),
               title: Text(entity.listDisplayName),
+              subtitle: Text(localization.lookup('${history.entityType}')),
             );
           }).toList(),
         ),
