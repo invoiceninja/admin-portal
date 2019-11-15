@@ -170,3 +170,61 @@ void viewEntityById(
     // TODO Add to starter
   }
 }
+
+void editEntityById(
+    {BuildContext context, String entityId, EntityType entityType}) {
+  final store = StoreProvider.of<AppState>(context);
+  final map = store.state.getEntityMap(entityType);
+  switch (entityType) {
+    case EntityType.client:
+      store.dispatch(EditClient(client: map[entityId], context: context));
+      break;
+    case EntityType.user:
+      store.dispatch(EditUser(user: map[entityId], context: context));
+      break;
+    case EntityType.project:
+      store.dispatch(EditProject(project: map[entityId], context: context));
+      break;
+    case EntityType.taxRate:
+      store.dispatch(EditTaxRate(taxRate: map[entityId], context: context));
+      break;
+    case EntityType.companyGateway:
+      store.dispatch(
+          EditCompanyGateway(companyGateway: map[entityId], context: context));
+      break;
+    case EntityType.invoice:
+      store.dispatch(EditInvoice(invoice: map[entityId], context: context));
+      break;
+    //case EntityType.recurringInvoice:
+    //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], context: context));
+    //break;
+    case EntityType.quote:
+      store.dispatch(EditQuote(quote: map[entityId], context: context));
+      break;
+    case EntityType.vendor:
+      store.dispatch(EditVendor(vendor: map[entityId], context: context));
+      break;
+    case EntityType.product:
+      store.dispatch(EditProduct(product: map[entityId], context: context));
+      break;
+    case EntityType.task:
+      store.dispatch(EditTask(task: map[entityId], context: context));
+      break;
+    case EntityType.expense:
+      store.dispatch(EditExpense(expense: map[entityId], context: context));
+      break;
+    //case EntityType.expenseCategory:
+    //store.dispatch(EditExpenseCategory(taxRate: map[entityId], context: context));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(EditCredit(credit: map[entityId], context: context));
+    //break;
+    case EntityType.payment:
+      store.dispatch(EditPayment(payment: map[entityId], context: context));
+      break;
+    case EntityType.group:
+      store.dispatch(EditGroup(group: map[entityId], context: context));
+      break;
+    // TODO Add to starter
+  }
+}

@@ -60,6 +60,7 @@ IconData getEntityIcon(EntityType entityType) {
       case EntityType.invoice:
         return Icons.book;
       case EntityType.payment:
+      case EntityType.companyGateway:
         return Icons.payment;
       case EntityType.credit:
         return Icons.book;
@@ -73,6 +74,8 @@ IconData getEntityIcon(EntityType entityType) {
         return Icons.timer;
       case EntityType.group:
         return Icons.layers;
+      case EntityType.user:
+        return Icons.person;
       default:
         return null;
     }
@@ -89,6 +92,7 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.invoice:
       return FontAwesomeIcons.fileInvoice;
     case EntityType.payment:
+    case EntityType.companyGateway:
       return FontAwesomeIcons.creditCard;
     case EntityType.credit:
       return FontAwesomeIcons.creditCard;
@@ -102,6 +106,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.clock;
     case EntityType.group:
       return FontAwesomeIcons.layerGroup;
+    case EntityType.user:
+      return FontAwesomeIcons.user;
     default:
       return null;
   }

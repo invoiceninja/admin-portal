@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -37,6 +39,16 @@ class HistoryDrawer extends StatelessWidget {
         leading: Icon(getEntityIcon(history.entityType)),
         title: Text(entity.listDisplayName),
         subtitle: Text(localization.lookup('${history.entityType}')),
+        // TODO this needs to be localized
+        trailing: Text(timeago.format(history.dateTime, locale: 'en_short')),
+        onTap: () => viewEntityById(
+            context: context,
+            entityId: history.id,
+            entityType: history.entityType),
+        onLongPress: () => editEntityById(
+            context: context,
+            entityId: history.id,
+            entityType: history.entityType),
       ));
     }
 

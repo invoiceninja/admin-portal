@@ -250,6 +250,8 @@ abstract class HistoryRecord
 
   int get timestamp;
 
+  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(timestamp);
+
   bool matchesRecord(HistoryRecord record) =>
       record.id == id && record.entityType == entityType;
 

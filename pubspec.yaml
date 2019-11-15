@@ -39,6 +39,7 @@ dependencies:
   flutter_colorpicker: any
   flutter_json_widget: ^1.0.2
   webview_flutter: ^0.3.15+1
+  timeago: ^2.0.22
   #native_pdf_renderer: any
   #quick_actions: ^0.2.1
 
