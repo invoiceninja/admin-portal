@@ -25,7 +25,6 @@ class HistoryDrawer extends StatelessWidget {
 
     final widgets = <Widget>[];
     for (var history in state.uiState.historyList) {
-      print('## HISTORY');
       if (widgets.length > 50) {
         break;
       }

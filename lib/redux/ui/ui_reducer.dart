@@ -97,42 +97,91 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),
+  TypedReducer<BuiltList<HistoryRecord>, EditClient>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.client.id, entityType: EntityType.client))),
   TypedReducer<BuiltList<HistoryRecord>, ViewProduct>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.productId, entityType: EntityType.product))),
+  TypedReducer<BuiltList<HistoryRecord>, EditProduct>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.product.id, entityType: EntityType.product))),
   TypedReducer<BuiltList<HistoryRecord>, ViewInvoice>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.invoiceId, entityType: EntityType.invoice))),
+  TypedReducer<BuiltList<HistoryRecord>, EditInvoice>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.invoice.id, entityType: EntityType.invoice))),
   TypedReducer<BuiltList<HistoryRecord>, ViewPayment>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.paymentId, entityType: EntityType.payment))),
+  TypedReducer<BuiltList<HistoryRecord>, EditPayment>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.payment.id, entityType: EntityType.payment))),
   TypedReducer<BuiltList<HistoryRecord>, ViewQuote>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.quoteId, entityType: EntityType.quote))),
+  TypedReducer<BuiltList<HistoryRecord>, EditQuote>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.quote.id, entityType: EntityType.quote))),
   TypedReducer<BuiltList<HistoryRecord>, ViewTask>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.taskId, entityType: EntityType.task))),
+  TypedReducer<BuiltList<HistoryRecord>, EditTask>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.task.id, entityType: EntityType.task))),
   TypedReducer<BuiltList<HistoryRecord>, ViewProject>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.projectId, entityType: EntityType.project))),
+  TypedReducer<BuiltList<HistoryRecord>, EditProject>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.project.id, entityType: EntityType.project))),
   TypedReducer<BuiltList<HistoryRecord>, ViewVendor>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.vendorId, entityType: EntityType.vendor))),
+  TypedReducer<BuiltList<HistoryRecord>, EditVendor>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.vendor.id, entityType: EntityType.vendor))),
   TypedReducer<BuiltList<HistoryRecord>, ViewExpense>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.expenseId, entityType: EntityType.expense))),
+  TypedReducer<BuiltList<HistoryRecord>, EditExpense>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.expense.id, entityType: EntityType.expense))),
   TypedReducer<BuiltList<HistoryRecord>, ViewCompanyGateway>(
       (historyList, action) => _addToHistory(
           historyList,
           HistoryRecord(
               id: action.companyGatewayId,
               entityType: EntityType.companyGateway))),
+  TypedReducer<BuiltList<HistoryRecord>, EditCompanyGateway>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.companyGateway.id,
+              entityType: EntityType.companyGateway))),
   TypedReducer<BuiltList<HistoryRecord>, ViewUser>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.userId, entityType: EntityType.user))),
+  TypedReducer<BuiltList<HistoryRecord>, EditUser>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.user.id, entityType: EntityType.user))),
   TypedReducer<BuiltList<HistoryRecord>, ViewGroup>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.groupId, entityType: EntityType.group))),
+  TypedReducer<BuiltList<HistoryRecord>, EditGroup>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // TODO add to starter.sh
 ]);
 
