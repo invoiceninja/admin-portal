@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -34,14 +33,12 @@ class GroupScreenVM {
     @required this.isInMultiselect,
     @required this.groupList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.groupMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> groupList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, GroupEntity> groupMap;
 
   static GroupScreenVM fromStore(Store<AppState> store) {
@@ -53,9 +50,6 @@ class GroupScreenVM {
           state.groupState.map, state.groupState.list, state.groupListState),
       userCompany: state.userCompany,
       isInMultiselect: state.groupListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> groups,
-              EntityAction action) =>
-          handleGroupAction(context, groups, action),
     );
   }
 }

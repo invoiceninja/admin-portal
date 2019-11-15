@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -62,11 +63,10 @@ class ExpenseList extends StatelessWidget {
                             viewModel.state.vendorState.map[expense.vendorId];
 
                         void showDialog() => showEntityActionsDialog(
-                            entities: [expense],
-                            context: context,
-                            userCompany: state.userCompany,
-                            client: client,
-                            onEntityAction: viewModel.onEntityAction);
+                              entities: [expense],
+                              context: context,
+                              client: client,
+                            );
 
                         return ExpenseListItem(
                           userCompany: viewModel.state.userCompany,
@@ -80,8 +80,7 @@ class ExpenseList extends StatelessWidget {
                             if (action == EntityAction.more) {
                               showDialog();
                             } else {
-                              viewModel.onEntityAction(
-                                  context, [expense], action);
+                              handleExpenseAction(context, [expense], action);
                             }
                           },
                           onLongPress: () async {
@@ -89,7 +88,7 @@ class ExpenseList extends StatelessWidget {
                                     .longPressSelectionIsDefault ??
                                 true;
                             if (longPressIsSelection && !isInMultiselect) {
-                              viewModel.onEntityAction(context, [expense],
+                              handleExpenseAction(context, [expense],
                                   EntityAction.toggleMultiselect);
                             } else {
                               showDialog();

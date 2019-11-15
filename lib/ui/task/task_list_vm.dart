@@ -45,7 +45,6 @@ class TaskListVM {
     @required this.onTaskTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -86,9 +85,6 @@ class TaskListVM {
       onTaskTap: (context, task) {
         store.dispatch(ViewTask(taskId: task.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> tasks, EntityAction action) =>
-              handleTaskAction(context, tasks, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -104,7 +100,6 @@ class TaskListVM {
   final bool isLoaded;
   final Function(BuildContext, TaskEntity) onTaskTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<TaskEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

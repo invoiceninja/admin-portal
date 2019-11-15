@@ -30,7 +30,6 @@ class GroupSettingsScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
-    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.groupUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -47,8 +46,7 @@ class GroupSettingsScreen extends StatelessWidget {
             .where((group) => value != listUIState.isSelected(group.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, groups, EntityAction.toggleMultiselect);
+        handleGroupAction(context, groups, EntityAction.toggleMultiselect);
       },
       isSettings: true,
       appBarTitle: ListFilter(
@@ -96,9 +94,7 @@ class GroupSettingsScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: groups,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearGroupMultiselect(context: context));
                   },

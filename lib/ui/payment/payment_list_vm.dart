@@ -43,7 +43,6 @@ class PaymentListVM {
     @required this.isLoaded,
     @required this.onPaymentTap,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
     @required this.listState,
@@ -79,9 +78,6 @@ class PaymentListVM {
       onPaymentTap: (context, payment) {
         store.dispatch(ViewPayment(paymentId: payment.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> payments,
-              EntityAction action) =>
-          handlePaymentAction(context, payments, action),
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -104,6 +100,4 @@ class PaymentListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-  final Function(BuildContext, List<PaymentEntity>, EntityAction)
-      onEntityAction;
 }

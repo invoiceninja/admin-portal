@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +32,12 @@ class ClientScreenVM {
     @required this.isInMultiselect,
     @required this.clientList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.clientMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> clientList;
-  final Function(BuildContext, List<ClientEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, ClientEntity> clientMap;
 
   static ClientScreenVM fromStore(Store<AppState> store) {
@@ -52,9 +49,6 @@ class ClientScreenVM {
           state.clientState.list, state.groupState.map, state.clientListState),
       userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> clients,
-              EntityAction action) =>
-          handleClientAction(context, clients, action),
     );
   }
 }

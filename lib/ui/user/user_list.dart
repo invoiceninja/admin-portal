@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -46,13 +47,11 @@ class UserList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final userId = viewModel.userList[index];
                             final user = viewModel.userMap[userId];
-                            final userCompany = viewModel.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
-                                userCompany: userCompany,
-                                entities: [user],
-                                context: context,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [user],
+                                  context: context,
+                                );
 
                             return UserListItem(
                               user: user,
@@ -62,8 +61,7 @@ class UserList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
-                                      context, [user], action);
+                                  handleUserAction(context, [user], action);
                                 }
                               },
                               onLongPress: () => showDialog(),

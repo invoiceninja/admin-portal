@@ -28,7 +28,6 @@ class CompanyGatewayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -47,7 +46,7 @@ class CompanyGatewayScreen extends StatelessWidget {
                 value != listUIState.isSelected(companyGateway.id))
             .toList();
 
-        viewModel.onEntityAction(
+        handleCompanyGatewayAction(
             context, companyGateways, EntityAction.toggleMultiselect);
       },
       isSettings: true,
@@ -66,9 +65,7 @@ class CompanyGatewayScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: companyGateways,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
 
                     store.dispatch(
@@ -96,22 +93,21 @@ class CompanyGatewayScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-              heroTag: 'company_gateway_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                if (state.settingsUIState.isFiltered) {
-
-                } else {
-                  store.dispatch(EditCompanyGateway(
-                      companyGateway: CompanyGatewayEntity(), context: context));
-                }
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newCompanyGateway,
-            ),
+        heroTag: 'company_gateway_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          if (state.settingsUIState.isFiltered) {
+          } else {
+            store.dispatch(EditCompanyGateway(
+                companyGateway: CompanyGatewayEntity(), context: context));
+          }
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        tooltip: localization.newCompanyGateway,
+      ),
     );
   }
 }

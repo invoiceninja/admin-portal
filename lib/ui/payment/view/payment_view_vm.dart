@@ -66,13 +66,7 @@ class PaymentViewVM {
       },
       onClientPressed: (context, [bool longPress = false]) {
         if (longPress) {
-          showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [client],
-              onEntityAction: (BuildContext context, List<BaseEntity> clients,
-                      EntityAction action) =>
-                  handleClientAction(context, clients, action));
+          showEntityActionsDialog(context: context, entities: [client]);
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -80,13 +74,10 @@ class PaymentViewVM {
       onInvoicePressed: (context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [invoice],
-              client: client,
-              onEntityAction: (BuildContext context, List<BaseEntity> invoice,
-                      EntityAction action) =>
-                  handleInvoiceAction(context, invoice, action));
+            context: context,
+            entities: [invoice],
+            client: client,
+          );
         } else {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         }

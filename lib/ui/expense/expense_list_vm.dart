@@ -43,7 +43,6 @@ class ExpenseListVM {
     @required this.onExpenseTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -84,9 +83,6 @@ class ExpenseListVM {
       onExpenseTap: (context, expense) {
         store.dispatch(ViewExpense(expenseId: expense.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> expenses,
-              EntityAction action) =>
-          handleExpenseAction(context, expenses, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -101,8 +97,6 @@ class ExpenseListVM {
   final bool isLoaded;
   final Function(BuildContext, ExpenseEntity) onExpenseTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<ExpenseEntity>, EntityAction)
-      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

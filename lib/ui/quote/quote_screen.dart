@@ -46,8 +46,7 @@ class QuoteScreen extends StatelessWidget {
             .where((quote) => value != listUIState.isSelected(quote.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, quotes, EntityAction.toggleMultiselect);
+        handleQuoteAction(context, quotes, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.quotes,
@@ -93,11 +92,7 @@ class QuoteScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: quotes,
-                        userCompany: userCompany,
-                        context: context,
-                        onEntityAction: viewModel.onEntityAction,
-                        multiselect: true);
+                        entities: quotes, context: context, multiselect: true);
                     store.dispatch(ClearQuoteMultiselect(context: context));
                   },
           ),

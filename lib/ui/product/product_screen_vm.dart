@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +32,12 @@ class ProductScreenVM {
     @required this.isInMultiselect,
     @required this.productList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.productMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> productList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, ProductEntity> productMap;
 
   static ProductScreenVM fromStore(Store<AppState> store) {
@@ -52,9 +49,6 @@ class ProductScreenVM {
           state.productState.list, state.productListState),
       userCompany: state.userCompany,
       isInMultiselect: state.productListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> products,
-              EntityAction action) =>
-          handleProductAction(context, products, action),
     );
   }
 }

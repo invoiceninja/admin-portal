@@ -28,7 +28,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
-    final userCompany = state.userCompany;
     final listUIState = state.uiState.taxRateUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
@@ -45,8 +44,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
             .where((taxRate) => value != listUIState.isSelected(taxRate.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, taxRates, EntityAction.toggleMultiselect);
+        handleTaxRateAction(context, taxRates, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.taxRates,
@@ -91,9 +89,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: taxRates,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearTaxRateMultiselect(context: context));
                   },

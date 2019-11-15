@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -24,14 +25,12 @@ class CompanyGatewayList extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final listUIState = store.state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final userCompany = viewModel.userCompany;
 
     void showDialog(CompanyGatewayEntity companyGateway) =>
         showEntityActionsDialog(
-            userCompany: userCompany,
-            entities: [companyGateway],
-            context: context,
-            onEntityAction: viewModel.onEntityAction);
+          entities: [companyGateway],
+          context: context,
+        );
 
     return Column(
       children: <Widget>[
@@ -71,13 +70,14 @@ class CompanyGatewayList extends StatelessWidget {
                                     context, companyGateway),
                                 onRemovePressed:
                                     viewModel.state.settingsUIState.isFiltered
-                                        ? () => viewModel.onRemovePressed(companyGatewayId)
+                                        ? () => viewModel
+                                            .onRemovePressed(companyGatewayId)
                                         : null,
                                 onEntityAction: (EntityAction action) {
                                   if (action == EntityAction.more) {
                                     showDialog(companyGateway);
                                   } else {
-                                    viewModel.onEntityAction(
+                                    handleCompanyGatewayAction(
                                         context, [companyGateway], action);
                                   }
                                 },

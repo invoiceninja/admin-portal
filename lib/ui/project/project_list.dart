@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -54,11 +55,10 @@ class ProjectList extends StatelessWidget {
                                     ClientEntity(id: project.clientId);
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [project],
-                                context: context,
-                                userCompany: viewModel.state.userCompany,
-                                client: client,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [project],
+                                  context: context,
+                                  client: client,
+                                );
 
                             return ProjectListItem(
                               userCompany: viewModel.state.userCompany,
@@ -72,7 +72,7 @@ class ProjectList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
+                                  handleProjectAction(
                                       context, [project], action);
                                 }
                               },
@@ -81,7 +81,7 @@ class ProjectList extends StatelessWidget {
                                         .longPressSelectionIsDefault ??
                                     true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [project],
+                                  handleProjectAction(context, [project],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

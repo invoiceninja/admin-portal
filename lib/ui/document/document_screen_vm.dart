@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +32,12 @@ class DocumentScreenVM {
     @required this.isInMultiselect,
     @required this.documentList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.documentMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> documentList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, DocumentEntity> documentMap;
 
   static DocumentScreenVM fromStore(Store<AppState> store) {
@@ -52,9 +49,6 @@ class DocumentScreenVM {
           state.documentState.list, state.documentListState),
       userCompany: state.userCompany,
       isInMultiselect: state.documentListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> documents,
-              EntityAction action) =>
-          handleDocumentAction(context, documents, action),
     );
   }
 }

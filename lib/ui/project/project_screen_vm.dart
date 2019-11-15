@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +32,12 @@ class ProjectScreenVM {
     @required this.isInMultiselect,
     @required this.projectList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.projectMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> projectList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, ProjectEntity> projectMap;
 
   static ProjectScreenVM fromStore(Store<AppState> store) {
@@ -55,9 +52,6 @@ class ProjectScreenVM {
           state.clientState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.projectListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> projects,
-              EntityAction action) =>
-          handleProjectAction(context, projects, action),
     );
   }
 }

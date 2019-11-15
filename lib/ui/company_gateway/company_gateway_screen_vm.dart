@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -39,7 +38,6 @@ class CompanyGatewayScreenVM {
     @required this.isInMultiselect,
     @required this.companyGatewayList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.companyGatewayMap,
     @required this.onSavePressed,
     @required this.onCancelPressed,
@@ -48,7 +46,6 @@ class CompanyGatewayScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> companyGatewayList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, CompanyGatewayEntity> companyGatewayMap;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
@@ -67,9 +64,6 @@ class CompanyGatewayScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.companyGatewayListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> companyGateways,
-              EntityAction action) =>
-          handleCompanyGatewayAction(context, companyGateways, action),
       onCancelPressed: (context) => store.dispatch(ResetSettings()),
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;

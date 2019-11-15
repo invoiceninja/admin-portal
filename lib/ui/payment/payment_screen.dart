@@ -42,8 +42,7 @@ class PaymentScreen extends StatelessWidget {
             .where((payment) => value != listUIState.isSelected(payment.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, payments, EntityAction.toggleMultiselect);
+        handlePaymentAction(context, payments, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.payments,
@@ -90,9 +89,7 @@ class PaymentScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: payments,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearPaymentMultiselect(context: context));
                   },

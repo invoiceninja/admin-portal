@@ -42,7 +42,6 @@ class VendorListVM {
     @required this.onVendorTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -77,9 +76,6 @@ class VendorListVM {
       onVendorTap: (context, vendor) {
         store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> vendors,
-              EntityAction action) =>
-          handleVendorAction(context, vendors, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -93,7 +89,6 @@ class VendorListVM {
   final bool isLoaded;
   final Function(BuildContext, VendorEntity) onVendorTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<VendorEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

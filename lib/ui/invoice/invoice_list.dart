@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -56,11 +57,10 @@ class InvoiceList extends StatelessWidget {
                                     ClientEntity();
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [invoice],
-                                context: context,
-                                userCompany: state.userCompany,
-                                client: client,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [invoice],
+                                  context: context,
+                                  client: client,
+                                );
 
                             return InvoiceListItem(
                               user: viewModel.user,
@@ -75,7 +75,7 @@ class InvoiceList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
+                                  handleInvoiceAction(
                                       context, [invoice], action);
                                 }
                               },
@@ -84,7 +84,7 @@ class InvoiceList extends StatelessWidget {
                                     state.uiState.longPressSelectionIsDefault ??
                                         true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [invoice],
+                                  handleInvoiceAction(context, [invoice],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

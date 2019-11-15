@@ -95,9 +95,7 @@ class UserScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: users,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearUserMultiselect(context: context));
                   },

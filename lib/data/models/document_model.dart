@@ -92,6 +92,7 @@ abstract class DocumentEntity extends Object
 
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..isChanged = true
     ..isDeleted = false);
 
   @override

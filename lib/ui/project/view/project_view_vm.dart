@@ -81,12 +81,8 @@ class ProjectViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
               context: context,
-              entities: [client],
-              onEntityAction: (BuildContext context, List<BaseEntity> clients,
-                      EntityAction action) =>
-                  handleClientAction(context, clients, action));
+              entities: [client],);
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }

@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -35,7 +34,6 @@ class TaxRateScreenVM {
     @required this.isInMultiselect,
     @required this.taxRateList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.onBackPressed,
     @required this.taxRateMap,
   });
@@ -43,7 +41,6 @@ class TaxRateScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> taxRateList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function(BuildContext) onBackPressed;
   final BuiltMap<String, TaxRateEntity> taxRateMap;
 
@@ -56,9 +53,6 @@ class TaxRateScreenVM {
           state.taxRateState.list, state.taxRateListState),
       userCompany: state.userCompany,
       isInMultiselect: state.taxRateListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> taxRates,
-              EntityAction action) =>
-          handleTaxRateAction(context, taxRates, action),
       onBackPressed: (context) {
         if (isMobile(context)) {
           Navigator.pop(context);

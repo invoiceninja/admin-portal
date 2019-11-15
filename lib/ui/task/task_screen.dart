@@ -45,8 +45,7 @@ class TaskScreen extends StatelessWidget {
             .where((task) => value != listUIState.isSelected(task.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, tasks, EntityAction.toggleMultiselect);
+        handleTaskAction(context, tasks, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.tasks,
@@ -92,9 +91,7 @@ class TaskScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: tasks,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearTaskMultiselect(context: context));
                   },

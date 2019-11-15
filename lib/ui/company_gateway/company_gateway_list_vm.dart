@@ -45,7 +45,6 @@ class CompanyGatewayListVM {
     @required this.onCompanyGatewayTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
     @required this.onSortChanged,
@@ -92,9 +91,6 @@ class CompanyGatewayListVM {
         store.dispatch(ViewCompanyGateway(
             companyGatewayId: companyGateway.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> companyGateway,
-              EntityAction action) =>
-          handleCompanyGatewayAction(context, companyGateway, action),
       onRefreshed: (context) => _handleRefresh(context),
       onRemovePressed: (gatewayId) {
         gatewayIds.remove(gatewayId);
@@ -124,7 +120,6 @@ class CompanyGatewayListVM {
   final bool isLoaded;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final Function(int, int) onSortChanged;

@@ -48,7 +48,6 @@ class EntityListVM {
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
-    @required this.onEntityAction,
   });
 
   final AppState state;
@@ -64,8 +63,6 @@ class EntityListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-  final Function(BuildContext, List<InvoiceEntity>, EntityAction)
-      onEntityAction;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -98,7 +95,6 @@ class InvoiceListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
-          onEntityAction: onEntityAction,
         );
 
   static InvoiceListVM fromStore(Store<AppState> store) {

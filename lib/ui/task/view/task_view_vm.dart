@@ -110,12 +110,9 @@ class TaskViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [client],
-              onEntityAction: (BuildContext context, List<BaseEntity> clients,
-                      EntityAction action) =>
-                  handleClientAction(context, clients, action));
+            context: context,
+            entities: [client],
+          );
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -123,13 +120,10 @@ class TaskViewVM {
       onProjectPressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [project],
-              client: client,
-              onEntityAction: (BuildContext context, List<BaseEntity> projects,
-                      EntityAction action) =>
-                  handleProjectAction(context, projects, action));
+            context: context,
+            entities: [project],
+            client: client,
+          );
         } else {
           store.dispatch(ViewProject(projectId: project.id, context: context));
         }
@@ -137,13 +131,10 @@ class TaskViewVM {
       onInvoicePressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [invoice],
-              client: client,
-              onEntityAction: (BuildContext context, List<BaseEntity> invoices,
-                      EntityAction action) =>
-                  handleInvoiceAction(context, invoices, action));
+            context: context,
+            entities: [invoice],
+            client: client,
+          );
         } else {
           store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
         }

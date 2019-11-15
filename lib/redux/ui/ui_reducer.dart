@@ -187,6 +187,11 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
 
 BuiltList<HistoryRecord> _addToHistory(
     BuiltList<HistoryRecord> list, HistoryRecord record) {
+  // don't track new records
+  if (record.id.startsWith('-')) {
+    return list;
+  }
+
   final old =
       list.firstWhere((item) => item.matchesRecord(record), orElse: () => null);
   if (old != null) {

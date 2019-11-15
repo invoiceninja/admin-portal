@@ -64,7 +64,6 @@ class QuoteListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
-          onEntityAction: onEntityAction,
         );
 
   static QuoteListVM fromStore(Store<AppState> store) {

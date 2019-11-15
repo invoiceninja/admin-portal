@@ -44,8 +44,7 @@ class VendorScreen extends StatelessWidget {
             .where((vendor) => value != listUIState.isSelected(vendor.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, vendors, EntityAction.toggleMultiselect);
+        handleVendorAction(context, vendors, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.vendors,
@@ -91,11 +90,7 @@ class VendorScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: vendors,
-                        userCompany: userCompany,
-                        context: context,
-                        onEntityAction: viewModel.onEntityAction,
-                        multiselect: true);
+                        entities: vendors, context: context, multiselect: true);
                     store.dispatch(ClearVendorMultiselect(context: context));
                   },
           ),

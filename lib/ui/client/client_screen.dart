@@ -45,8 +45,7 @@ class ClientScreen extends StatelessWidget {
             .where((client) => value != listUIState.isSelected(client.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, clients, EntityAction.toggleMultiselect);
+        handleClientAction(context, clients, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.clients,
@@ -92,9 +91,7 @@ class ClientScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: clients,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearClientMultiselect(context: context));
                   },

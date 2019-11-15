@@ -44,7 +44,6 @@ class ProjectListVM {
     @required this.isLoaded,
     @required this.onProjectTap,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -84,9 +83,6 @@ class ProjectListVM {
       onProjectTap: (context, project) {
         store.dispatch(ViewProject(projectId: project.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> projects,
-              EntityAction action) =>
-          handleProjectAction(context, projects, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -101,8 +97,6 @@ class ProjectListVM {
   final bool isLoaded;
   final Function(BuildContext, ProjectEntity) onProjectTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<ProjectEntity>, EntityAction)
-      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

@@ -157,12 +157,9 @@ class InvoiceViewVM extends EntityViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              entities: [client],
-              onEntityAction: (BuildContext context, List<BaseEntity> clients,
-                      EntityAction action) =>
-                  handleClientAction(context, clients, action));
+            context: context,
+            entities: [client],
+          );
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -171,13 +168,10 @@ class InvoiceViewVM extends EntityViewVM {
           [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              userCompany: state.userCompany,
-              context: context,
-              client: client,
-              entities: [payment],
-              onEntityAction: (BuildContext context, List<BaseEntity> payments,
-                      EntityAction action) =>
-                  handlePaymentAction(context, payments, action));
+            context: context,
+            client: client,
+            entities: [payment],
+          );
         } else {
           store.dispatch(ViewPayment(paymentId: payment.id, context: context));
         }

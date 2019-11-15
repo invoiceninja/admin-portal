@@ -120,6 +120,7 @@ abstract class QuoteEntity extends Object
 
   QuoteEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..isChanged = true
     ..isDeleted = false
     ..quoteInvoiceId = null
     ..invoiceNumber = ''

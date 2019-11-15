@@ -46,8 +46,7 @@ class ExpenseScreen extends StatelessWidget {
             .where((expense) => value != listUIState.isSelected(expense.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, expenses, EntityAction.toggleMultiselect);
+        handleExpenseAction(context, expenses, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.expenses,
@@ -94,9 +93,7 @@ class ExpenseScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: expenses,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearExpenseMultiselect(context: context));
                   },

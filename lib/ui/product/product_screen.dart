@@ -44,8 +44,7 @@ class ProductScreen extends StatelessWidget {
             .where((product) => value != listUIState.isSelected(product.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, products, EntityAction.toggleMultiselect);
+        handleProductAction(context, products, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.products,
@@ -92,9 +91,7 @@ class ProductScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: products,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearProductMultiselect(context: context));
                   },

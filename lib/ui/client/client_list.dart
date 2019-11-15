@@ -53,13 +53,11 @@ class ClientList extends StatelessWidget {
 
                             final isInMultiselect =
                                 state.clientListState.isInMultiselect();
-                            final userCompany = viewModel.state.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [client],
-                                context: context,
-                                userCompany: userCompany,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [client],
+                                  context: context,
+                                );
 
                             return ClientListItem(
                               user: viewModel.state.user,

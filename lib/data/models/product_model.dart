@@ -74,6 +74,7 @@ abstract class ProductEntity extends Object
 
   ProductEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..isChanged = true
     ..isDeleted = false);
 
   @override

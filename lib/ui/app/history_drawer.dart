@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -29,9 +31,10 @@ class HistoryDrawer extends StatelessWidget {
         break;
       }
 
-      final entity = state.getEntityMap(history.entityType)[history.id];
+      final entity =
+          state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
-      if (entity == null) {
+      if (entity == null || entity.isDeleted) {
         continue;
       }
 
@@ -46,10 +49,10 @@ class HistoryDrawer extends StatelessWidget {
             context: context,
             entityId: history.id,
             entityType: history.entityType),
-        onLongPress: () => editEntityById(
+        onLongPress: () => showEntityActionsDialog(
             context: context,
-            entityId: history.id,
-            entityType: history.entityType),
+            entities: [entity],
+        ),
       ));
     }
 

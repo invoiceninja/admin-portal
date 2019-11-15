@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +32,12 @@ class ExpenseScreenVM {
     @required this.isInMultiselect,
     @required this.expenseList,
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.expenseMap,
   });
 
   final bool isInMultiselect;
   final UserCompanyEntity userCompany;
   final List<String> expenseList;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, ExpenseEntity> expenseMap;
 
   static ExpenseScreenVM fromStore(Store<AppState> store) {
@@ -56,9 +53,6 @@ class ExpenseScreenVM {
           state.expenseListState),
       userCompany: state.userCompany,
       isInMultiselect: state.expenseListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> expenses,
-              EntityAction action) =>
-          handleExpenseAction(context, expenses, action),
     );
   }
 }

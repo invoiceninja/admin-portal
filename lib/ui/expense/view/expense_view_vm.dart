@@ -59,7 +59,6 @@ class ExpenseViewVM {
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final userCompany = state.userCompany;
     final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
         ExpenseEntity(id: state.expenseUIState.selectedId);
     final vendor = state.vendorState.map[expense.vendorId];
@@ -103,12 +102,9 @@ class ExpenseViewVM {
             case EntityType.vendor:
               if (longPress) {
                 showEntityActionsDialog(
-                    userCompany: userCompany,
-                    context: context,
-                    entities: [vendor],
-                    onEntityAction: (BuildContext context,
-                            List<BaseEntity> vendors, EntityAction action) =>
-                        handleVendorAction(context, vendors, action));
+                  context: context,
+                  entities: [vendor],
+                );
               } else {
                 store.dispatch(
                     ViewVendor(vendorId: vendor.id, context: context));
@@ -116,13 +112,7 @@ class ExpenseViewVM {
               break;
             case EntityType.client:
               if (longPress) {
-                showEntityActionsDialog(
-                    userCompany: userCompany,
-                    context: context,
-                    entities: [client],
-                    onEntityAction: (BuildContext context,
-                            List<BaseEntity> clients, EntityAction action) =>
-                        handleClientAction(context, clients, action));
+                showEntityActionsDialog(context: context, entities: [client]);
               } else {
                 store.dispatch(
                     ViewClient(clientId: client.id, context: context));
@@ -131,13 +121,7 @@ class ExpenseViewVM {
             case EntityType.invoice:
               if (longPress) {
                 showEntityActionsDialog(
-                    userCompany: userCompany,
-                    context: context,
-                    entities: [invoice],
-                    client: client,
-                    onEntityAction: (BuildContext context,
-                            List<BaseEntity> invoices, EntityAction action) =>
-                        handleInvoiceAction(context, invoices, action));
+                    context: context, entities: [invoice], client: client);
               } else {
                 store.dispatch(
                     ViewInvoice(invoiceId: invoice.id, context: context));

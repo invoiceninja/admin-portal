@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -48,13 +49,11 @@ class GroupList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final groupId = viewModel.groupList[index];
                             final group = viewModel.groupMap[groupId];
-                            final userCompany = viewModel.userCompany;
 
                             void showDialog() => showEntityActionsDialog(
-                                userCompany: userCompany,
-                                entities: [group],
-                                context: context,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [group],
+                                  context: context,
+                                );
 
                             return GroupListItem(
                               user: viewModel.userCompany.user,
@@ -65,8 +64,7 @@ class GroupList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
-                                      context, [group], action);
+                                  handleGroupAction(context, [group], action);
                                 }
                               },
                               onLongPress: () async {
@@ -74,7 +72,7 @@ class GroupList extends StatelessWidget {
                                         .longPressSelectionIsDefault ??
                                     true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [group],
+                                  handleGroupAction(context, [group],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

@@ -52,10 +52,9 @@ class DocumentList extends StatelessWidget {
                             final document = viewModel.documentMap[documentId];
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [document],
-                                context: context,
-                                userCompany: userCompany,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [document],
+                                  context: context,
+                                );
 
                             return DocumentListItem(
                               userCompany: userCompany,

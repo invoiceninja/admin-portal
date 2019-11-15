@@ -44,7 +44,6 @@ class GroupListVM {
     @required this.onGroupTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -79,9 +78,6 @@ class GroupListVM {
       onGroupTap: (context, group) {
         store.dispatch(ViewGroup(groupId: group.id, context: context));
       },
-      onEntityAction: (BuildContext context, List<BaseEntity> groups,
-              EntityAction action) =>
-          handleGroupAction(context, groups, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -95,7 +91,6 @@ class GroupListVM {
   final bool isLoaded;
   final Function(BuildContext, GroupEntity) onGroupTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

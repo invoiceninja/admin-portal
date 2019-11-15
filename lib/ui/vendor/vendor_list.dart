@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -39,15 +40,13 @@ class VendorList extends StatelessWidget {
                           separatorBuilder: (context, index) => ListDivider(),
                           itemCount: viewModel.vendorList.length,
                           itemBuilder: (BuildContext context, index) {
-                            final userCompany = viewModel.state.userCompany;
                             final vendorId = viewModel.vendorList[index];
                             final vendor = viewModel.vendorMap[vendorId];
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [vendor],
-                                context: context,
-                                userCompany: userCompany,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [vendor],
+                                  context: context,
+                                );
 
                             return VendorListItem(
                               userCompany: viewModel.state.userCompany,
@@ -59,8 +58,7 @@ class VendorList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
-                                      context, [vendor], action);
+                                  handleVendorAction(context, [vendor], action);
                                 }
                               },
                               onLongPress: () async {
@@ -68,7 +66,7 @@ class VendorList extends StatelessWidget {
                                         .longPressSelectionIsDefault ??
                                     true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [vendor],
+                                  handleVendorAction(context, [vendor],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

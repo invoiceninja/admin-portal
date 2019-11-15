@@ -45,7 +45,7 @@ class DocumentScreen extends StatelessWidget {
             .where((document) => value != listUIState.isSelected(document.id))
             .toList();
 
-        viewModel.onEntityAction(
+        handleDocumentAction(
             context, documents, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
@@ -93,9 +93,7 @@ class DocumentScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: documents,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearDocumentMultiselect(context: context));
                   },

@@ -73,6 +73,7 @@ abstract class ProjectEntity extends Object
 
   ProjectEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..isChanged = true
     ..isDeleted = false);
 
   @override

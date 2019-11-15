@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -55,11 +56,10 @@ class PaymentList extends StatelessWidget {
                                 paymentClientSelector(paymentId, state);
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [payment],
-                                context: context,
-                                userCompany: state.userCompany,
-                                client: client,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [payment],
+                                  context: context,
+                                  client: client,
+                                );
 
                             return PaymentListItem(
                               user: viewModel.user,
@@ -71,7 +71,7 @@ class PaymentList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
+                                  handlePaymentAction(
                                       context, [payment], action);
                                 }
                               },
@@ -80,7 +80,7 @@ class PaymentList extends StatelessWidget {
                                     state.uiState.longPressSelectionIsDefault ??
                                         true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [payment],
+                                  handlePaymentAction(context, [payment],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

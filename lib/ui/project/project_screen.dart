@@ -44,8 +44,7 @@ class ProjectScreen extends StatelessWidget {
             .where((project) => value != listUIState.isSelected(project.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, projects, EntityAction.toggleMultiselect);
+        handleProjectAction(context, projects, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.projects,
@@ -92,9 +91,7 @@ class ProjectScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: projects,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearProjectMultiselect(context: context));
                   },

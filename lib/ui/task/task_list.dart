@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -52,11 +53,10 @@ class TaskList extends StatelessWidget {
                                 ClientEntity();
 
                             void showDialog() => showEntityActionsDialog(
-                                entities: [task],
-                                context: context,
-                                userCompany: state.userCompany,
-                                client: client,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [task],
+                                  context: context,
+                                  client: client,
+                                );
 
                             return TaskListItem(
                               userCompany: state.userCompany,
@@ -71,8 +71,7 @@ class TaskList extends StatelessWidget {
                                 if (action == EntityAction.more) {
                                   showDialog();
                                 } else {
-                                  viewModel.onEntityAction(
-                                      context, [task], action);
+                                  handleTaskAction(context, [task], action);
                                 }
                               },
                               onLongPress: () async {
@@ -80,7 +79,7 @@ class TaskList extends StatelessWidget {
                                     state.uiState.longPressSelectionIsDefault ??
                                         true;
                                 if (longPressIsSelection && !isInMultiselect) {
-                                  viewModel.onEntityAction(context, [task],
+                                  handleTaskAction(context, [task],
                                       EntityAction.toggleMultiselect);
                                 } else {
                                   showDialog();

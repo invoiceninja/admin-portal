@@ -46,8 +46,7 @@ class InvoiceScreen extends StatelessWidget {
             .where((invoice) => value != listUIState.isSelected(invoice.id))
             .toList();
 
-        viewModel.onEntityAction(
-            context, invoices, EntityAction.toggleMultiselect);
+        handleInvoiceAction(context, invoices, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
         title: localization.invoices,
@@ -94,9 +93,7 @@ class InvoiceScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: invoices,
-                        userCompany: userCompany,
                         context: context,
-                        onEntityAction: viewModel.onEntityAction,
                         multiselect: true);
                     store.dispatch(ClearInvoiceMultiselect(context: context));
                   },

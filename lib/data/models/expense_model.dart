@@ -114,6 +114,7 @@ abstract class ExpenseEntity extends Object
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
+    ..isChanged = true
     ..isDeleted = false
     ..invoiceId = null
     ..expenseDate = convertDateTimeToSqlDate()

@@ -43,7 +43,6 @@ class UserListVM {
     @required this.onUserTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -78,9 +77,6 @@ class UserListVM {
       onUserTap: (context, user) {
         store.dispatch(ViewUser(userId: user.id, context: context));
       },
-      onEntityAction:
-          (BuildContext context, List<BaseEntity> users, EntityAction action) =>
-              handleUserAction(context, users, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
@@ -94,7 +90,6 @@ class UserListVM {
   final bool isLoaded;
   final Function(BuildContext, UserEntity) onUserTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }
