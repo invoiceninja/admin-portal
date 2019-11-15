@@ -127,6 +127,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_convert_quote_help':
           'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
+      'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
       'freq_two_weeks': 'Two Weeks',
       'freq_four_weeks': 'Four Weeks',
@@ -15382,6 +15383,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get surchargeField => _localizedValues[localeCode]['surcharge_field'];
 
   String get never => _localizedValues[localeCode]['never'];
+
+  String get freqDaily => _localizedValues[localeCode]['freq_daily'];
 
   String get freqWeekly => _localizedValues[localeCode]['freq_weekly'];
 
