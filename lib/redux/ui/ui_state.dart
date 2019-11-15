@@ -1,7 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -27,12 +29,12 @@ part 'ui_state.g.dart';
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState(
     CompanyEntity company, {
+    AppLayout layout,
     bool isTesting,
     bool enableDarkMode,
     String accentColor,
     bool requireAuthentication,
     bool longPressSelectionIsDefault,
-    AppLayout layout,
     AppSidebarMode historySidebarMode,
     AppSidebarMode menuSidebarMode,
   }) {
@@ -73,6 +75,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       paymentUIState: PaymentUIState(),
       quoteUIState: QuoteUIState(),
       settingsUIState: SettingsUIState(),
+      historyList: BuiltList<HistoryRecord>(),
     );
   }
 
@@ -146,6 +149,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   QuoteUIState get quoteUIState;
 
   SettingsUIState get settingsUIState;
+
+  BuiltList<HistoryRecord> get historyList;
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 
@@ -222,4 +227,31 @@ class AppSidebarMode extends EnumClass {
   static BuiltSet<AppSidebarMode> get values => _$valuesSidebarMode;
 
   static AppSidebarMode valueOf(String name) => _$valueOfSidebarMode(name);
+}
+
+abstract class HistoryRecord
+    implements Built<HistoryRecord, HistoryRecordBuilder> {
+  factory HistoryRecord({
+    @required String id,
+    @required EntityType entityType,
+  }) {
+    return _$HistoryRecord._(
+      id: id,
+      entityType: entityType,
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+    );
+  }
+
+  HistoryRecord._();
+
+  String get id;
+
+  EntityType get entityType;
+
+  int get timestamp;
+
+  bool matchesRecord(HistoryRecord record) =>
+      record.id == id && record.entityType == entityType;
+
+  static Serializer<HistoryRecord> get serializer => _$historyRecordSerializer;
 }

@@ -78,6 +78,8 @@ Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
 Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
 Serializer<AppSidebarMode> _$appSidebarModeSerializer =
     new _$AppSidebarModeSerializer();
+Serializer<HistoryRecord> _$historyRecordSerializer =
+    new _$HistoryRecordSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -182,6 +184,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'settingsUIState',
       serializers.serialize(object.settingsUIState,
           specifiedType: const FullType(SettingsUIState)),
+      'historyList',
+      serializers.serialize(object.historyList,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(HistoryRecord)])),
     ];
     if (object.accentColor != null) {
       result
@@ -345,6 +351,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
                   specifiedType: const FullType(SettingsUIState))
               as SettingsUIState);
           break;
+        case 'historyList':
+          result.historyList.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(HistoryRecord)]))
+              as BuiltList<dynamic>);
+          break;
       }
     }
 
@@ -402,6 +414,60 @@ class _$AppSidebarModeSerializer
   AppSidebarMode deserialize(Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       AppSidebarMode.valueOf(serialized as String);
+}
+
+class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
+  @override
+  final Iterable<Type> types = const [HistoryRecord, _$HistoryRecord];
+  @override
+  final String wireName = 'HistoryRecord';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, HistoryRecord object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'entityType',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(EntityType)),
+      'timestamp',
+      serializers.serialize(object.timestamp,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  HistoryRecord deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new HistoryRecordBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entityType':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'timestamp':
+          result.timestamp = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
 }
 
 class _$UIState extends UIState {
@@ -471,6 +537,8 @@ class _$UIState extends UIState {
   final QuoteUIState quoteUIState;
   @override
   final SettingsUIState settingsUIState;
+  @override
+  final BuiltList<HistoryRecord> historyList;
 
   factory _$UIState([void Function(UIStateBuilder) updates]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -508,7 +576,8 @@ class _$UIState extends UIState {
       this.projectUIState,
       this.paymentUIState,
       this.quoteUIState,
-      this.settingsUIState})
+      this.settingsUIState,
+      this.historyList})
       : super._() {
     if (layout == null) {
       throw new BuiltValueNullFieldError('UIState', 'layout');
@@ -604,6 +673,9 @@ class _$UIState extends UIState {
     if (settingsUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'settingsUIState');
     }
+    if (historyList == null) {
+      throw new BuiltValueNullFieldError('UIState', 'historyList');
+    }
   }
 
   @override
@@ -649,7 +721,8 @@ class _$UIState extends UIState {
         projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
         quoteUIState == other.quoteUIState &&
-        settingsUIState == other.settingsUIState;
+        settingsUIState == other.settingsUIState &&
+        historyList == other.historyList;
   }
 
   @override
@@ -672,26 +745,26 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode),
-                                                                                autoStartTasks.hashCode),
-                                                                            addDocumentsToInvoice.hashCode),
-                                                                        filter.hashCode),
-                                                                    dashboardUIState.hashCode),
-                                                                productUIState.hashCode),
-                                                            clientUIState.hashCode),
-                                                        invoiceUIState.hashCode),
-                                                    userUIState.hashCode),
-                                                taxRateUIState.hashCode),
-                                            companyGatewayUIState.hashCode),
-                                        groupUIState.hashCode),
-                                    documentUIState.hashCode),
-                                expenseUIState.hashCode),
-                            vendorUIState.hashCode),
-                        taskUIState.hashCode),
-                    projectUIState.hashCode),
-                paymentUIState.hashCode),
-            quoteUIState.hashCode),
-        settingsUIState.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, layout.hashCode), menuSidebarMode.hashCode), historySidebarMode.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), enableDarkMode.hashCode), accentColor.hashCode), longPressSelectionIsDefault.hashCode), requireAuthentication.hashCode), emailPayment.hashCode), autoStartTasks.hashCode),
+                                                                                addDocumentsToInvoice.hashCode),
+                                                                            filter.hashCode),
+                                                                        dashboardUIState.hashCode),
+                                                                    productUIState.hashCode),
+                                                                clientUIState.hashCode),
+                                                            invoiceUIState.hashCode),
+                                                        userUIState.hashCode),
+                                                    taxRateUIState.hashCode),
+                                                companyGatewayUIState.hashCode),
+                                            groupUIState.hashCode),
+                                        documentUIState.hashCode),
+                                    expenseUIState.hashCode),
+                                vendorUIState.hashCode),
+                            taskUIState.hashCode),
+                        projectUIState.hashCode),
+                    paymentUIState.hashCode),
+                quoteUIState.hashCode),
+            settingsUIState.hashCode),
+        historyList.hashCode));
   }
 
   @override
@@ -729,7 +802,8 @@ class _$UIState extends UIState {
           ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
           ..add('quoteUIState', quoteUIState)
-          ..add('settingsUIState', settingsUIState))
+          ..add('settingsUIState', settingsUIState)
+          ..add('historyList', historyList))
         .toString();
   }
 }
@@ -913,6 +987,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
       _$this._settingsUIState = settingsUIState;
 
+  ListBuilder<HistoryRecord> _historyList;
+  ListBuilder<HistoryRecord> get historyList =>
+      _$this._historyList ??= new ListBuilder<HistoryRecord>();
+  set historyList(ListBuilder<HistoryRecord> historyList) =>
+      _$this._historyList = historyList;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -950,6 +1030,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _paymentUIState = _$v.paymentUIState?.toBuilder();
       _quoteUIState = _$v.quoteUIState?.toBuilder();
       _settingsUIState = _$v.settingsUIState?.toBuilder();
+      _historyList = _$v.historyList?.toBuilder();
       _$v = null;
     }
     return this;
@@ -1006,7 +1087,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
               quoteUIState: quoteUIState.build(),
-              settingsUIState: settingsUIState.build());
+              settingsUIState: settingsUIState.build(),
+              historyList: historyList.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -1042,12 +1124,120 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         quoteUIState.build();
         _$failedField = 'settingsUIState';
         settingsUIState.build();
+        _$failedField = 'historyList';
+        historyList.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$HistoryRecord extends HistoryRecord {
+  @override
+  final String id;
+  @override
+  final EntityType entityType;
+  @override
+  final int timestamp;
+
+  factory _$HistoryRecord([void Function(HistoryRecordBuilder) updates]) =>
+      (new HistoryRecordBuilder()..update(updates)).build();
+
+  _$HistoryRecord._({this.id, this.entityType, this.timestamp}) : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('HistoryRecord', 'id');
+    }
+    if (entityType == null) {
+      throw new BuiltValueNullFieldError('HistoryRecord', 'entityType');
+    }
+    if (timestamp == null) {
+      throw new BuiltValueNullFieldError('HistoryRecord', 'timestamp');
+    }
+  }
+
+  @override
+  HistoryRecord rebuild(void Function(HistoryRecordBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  HistoryRecordBuilder toBuilder() => new HistoryRecordBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is HistoryRecord &&
+        id == other.id &&
+        entityType == other.entityType &&
+        timestamp == other.timestamp;
+  }
+
+  @override
+  int get hashCode {
+    return $jf(
+        $jc($jc($jc(0, id.hashCode), entityType.hashCode), timestamp.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('HistoryRecord')
+          ..add('id', id)
+          ..add('entityType', entityType)
+          ..add('timestamp', timestamp))
+        .toString();
+  }
+}
+
+class HistoryRecordBuilder
+    implements Builder<HistoryRecord, HistoryRecordBuilder> {
+  _$HistoryRecord _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
+
+  int _timestamp;
+  int get timestamp => _$this._timestamp;
+  set timestamp(int timestamp) => _$this._timestamp = timestamp;
+
+  HistoryRecordBuilder();
+
+  HistoryRecordBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _entityType = _$v.entityType;
+      _timestamp = _$v.timestamp;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(HistoryRecord other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$HistoryRecord;
+  }
+
+  @override
+  void update(void Function(HistoryRecordBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$HistoryRecord build() {
+    final _$result = _$v ??
+        new _$HistoryRecord._(
+            id: id, entityType: entityType, timestamp: timestamp);
     replace(_$result);
     return _$result;
   }

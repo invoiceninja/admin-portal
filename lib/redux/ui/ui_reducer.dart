@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -6,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -75,8 +77,30 @@ UIState uiReducer(UIState state, dynamic action) {
     ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
-    ..settingsUIState
-        .replace(settingsUIReducer(state.settingsUIState, action)));
+    ..settingsUIState.replace(settingsUIReducer(state.settingsUIState, action))
+    ..historyList.replace(historyReducer(state.historyList, action)));
+}
+
+Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
+  TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.clientId, entityType: EntityType.client))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewInvoice>((historyList, action) =>
+      _addToHistory(historyList,
+          HistoryRecord(id: action.invoiceId, entityType: EntityType.invoice))),
+]);
+
+BuiltList<HistoryRecord> _addToHistory(
+    BuiltList<HistoryRecord> list, HistoryRecord record) {
+  final old =
+      list.firstWhere((item) => item.matchesRecord(record), orElse: () => null);
+  if (old != null) {
+    return list.rebuild((b) => b
+      ..remove(old)
+      ..insert(0, record));
+  } else {
+    return list.rebuild((b) => b..insert(0, record));
+  }
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([

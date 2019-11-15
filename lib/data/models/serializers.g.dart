@@ -70,6 +70,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GroupListResponse.serializer)
       ..add(GroupState.serializer)
       ..add(GroupUIState.serializer)
+      ..add(HistoryRecord.serializer)
       ..add(IndustryEntity.serializer)
       ..add(IndustryItemResponse.serializer)
       ..add(IndustryListResponse.serializer)
@@ -288,6 +289,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(HistoryRecord)]),
+          () => new ListBuilder<HistoryRecord>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(IndustryEntity)]),
           () => new ListBuilder<IndustryEntity>())
       ..addBuilderFactory(
@@ -321,9 +325,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SizeEntity)]),
           () => new ListBuilder<SizeEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(TaskEntity)]),
-          () => new ListBuilder<TaskEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaskEntity)]), () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaxRateEntity)]), () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TimezoneEntity)]), () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserCompanyEntity)]), () => new ListBuilder<UserCompanyEntity>())
