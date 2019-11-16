@@ -31,7 +31,7 @@ class HistoryDrawer extends StatelessWidget {
       final entity =
           state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
-      if (entity == null || entity.isDeleted) {
+      if (entity == null || (entity.isDeleted ?? false)) {
         continue;
       }
 
