@@ -361,7 +361,6 @@ Middleware<AppState> _createPersistPrefs() {
 
     SharedPreferences.getInstance()
         .then((prefs) => prefs.setString(kSharedPrefs, json.encode(string)));
-    print('### SAVING PREFS: $string');
   };
 }
 
