@@ -8,29 +8,18 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 part 'pref_state.g.dart';
 
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
-  factory PrefState({
-    AppLayout layout,
-    bool enableDarkMode,
-    String accentColor,
-    bool requireAuthentication,
-    bool longPressSelectionIsDefault,
-    AppSidebarMode historySidebarMode,
-    AppSidebarMode menuSidebarMode,
-  }) {
+  factory PrefState() {
     return _$PrefState._(
-      layout: layout ?? AppLayout.tablet,
-      historySidebarMode: historySidebarMode ??
-          ((layout ?? AppLayout.tablet) == AppLayout.tablet
-              ? AppSidebarMode.visible
-              : AppSidebarMode.float),
-      menuSidebarMode: menuSidebarMode ?? AppSidebarMode.float,
+      layout: AppLayout.tablet,
+      menuSidebarMode: AppSidebarMode.visible,
+      historySidebarMode: AppSidebarMode.float,
       isMenuVisible: true,
       isHistoryVisible: false,
-      enableDarkMode: enableDarkMode ?? false,
-      requireAuthentication: requireAuthentication ?? false,
+      enableDarkMode: true,
+      requireAuthentication: false,
       emailPayment: false,
       autoStartTasks: false,
-      longPressSelectionIsDefault: longPressSelectionIsDefault ?? false,
+      longPressSelectionIsDefault: false,
       addDocumentsToInvoice: false,
       companyPrefs: BuiltList(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
