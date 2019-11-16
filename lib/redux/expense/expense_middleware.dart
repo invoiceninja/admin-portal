@@ -267,7 +267,7 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.selectedCompany.isEnterprisePlan) {
+      if (state.company.isEnterprisePlan) {
         if (state.documentState.isStale) {
           store.dispatch(LoadDocuments());
         }

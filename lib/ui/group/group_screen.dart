@@ -29,7 +29,7 @@ class GroupSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.selectedCompany;
+    final company = state.company;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.groupUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();

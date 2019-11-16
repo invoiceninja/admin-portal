@@ -59,7 +59,7 @@ class TaskEditDetailsVM {
       task: task,
       taskTime: state.taskUIState.editingTime,
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (TaskEntity task) {
         store.dispatch(UpdateTask(task));
       },

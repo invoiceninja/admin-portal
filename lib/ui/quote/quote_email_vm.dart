@@ -65,7 +65,7 @@ class EmailQuoteVM extends EmailEntityVM {
     return EmailQuoteVM(
         isLoading: state.isLoading,
         isSaving: state.isSaving,
-        company: state.selectedCompany,
+        company: state.company,
         invoice: quote,
         client: state.clientState.map[quote.clientId],
         onSendPressed: (context, template, subject, body) =>

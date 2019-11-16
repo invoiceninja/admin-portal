@@ -62,7 +62,7 @@ class UserEditVM {
       origUser: state.userState.map[user.id],
       user: user,
       userCompany: state.userCompany,
-      company: state.selectedCompany,
+      company: state.company,
       onUserChanged: (UserEntity user) {
         store.dispatch(UpdateUser(user));
       },

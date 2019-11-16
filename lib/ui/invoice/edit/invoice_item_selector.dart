@@ -60,12 +60,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   void _onItemsSelected(BuildContext context) {
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.selectedCompany;
+    final company = state.company;
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
         final product = entity as ProductEntity;
-        if (state.selectedCompany.fillProducts ?? true) {
+        if (state.company.fillProducts ?? true) {
           items.add(
               convertProductToInvoiceItem(product: product, context: context));
         } else {
@@ -119,7 +119,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.selectedCompany;
+    final company = state.company;
     final showTabBar = company.isModuleEnabled(EntityType.task) ||
         company.isModuleEnabled(EntityType.expense);
 

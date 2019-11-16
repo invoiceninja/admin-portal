@@ -356,7 +356,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
   final invoiceIds = invoices.map((invoice) => invoice.id).toList();

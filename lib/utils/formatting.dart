@@ -63,9 +63,9 @@ String formatNumber(
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final ClientEntity client =
-      state.selectedCompanyState.clientState.map[clientId];
+      state.userCompanyState.clientState.map[clientId];
 
   String countryId;
 
@@ -239,7 +239,7 @@ String formatDate(String value, BuildContext context,
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
 
   if (state.staticState.dateFormatMap.isEmpty) {
     return '';

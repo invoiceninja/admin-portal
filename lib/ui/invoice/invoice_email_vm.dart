@@ -83,7 +83,7 @@ class EmailInvoiceVM extends EmailEntityVM {
     return EmailInvoiceVM(
         isLoading: state.isLoading,
         isSaving: state.isSaving,
-        company: state.selectedCompany,
+        company: state.company,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId] ??
             ClientEntity(id: invoice.clientId),

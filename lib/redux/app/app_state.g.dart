@@ -40,7 +40,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
       'companyStates',
-      serializers.serialize(object.companyStates,
+      serializers.serialize(object.userCompanyStates,
           specifiedType:
               const FullType(List, const [const FullType(UserCompanyState)])),
     ];
@@ -116,7 +116,7 @@ class _$AppState extends AppState {
   @override
   final UIState uiState;
   @override
-  final List<UserCompanyState> companyStates;
+  final List<UserCompanyState> userCompanyStates;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -129,7 +129,7 @@ class _$AppState extends AppState {
       this.authState,
       this.staticState,
       this.uiState,
-      this.companyStates})
+      this.userCompanyStates})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
@@ -152,7 +152,7 @@ class _$AppState extends AppState {
     if (uiState == null) {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
     }
-    if (companyStates == null) {
+    if (userCompanyStates == null) {
       throw new BuiltValueNullFieldError('AppState', 'companyStates');
     }
   }
@@ -175,7 +175,7 @@ class _$AppState extends AppState {
         authState == other.authState &&
         staticState == other.staticState &&
         uiState == other.uiState &&
-        companyStates == other.companyStates;
+        userCompanyStates == other.userCompanyStates;
   }
 
   @override
@@ -191,7 +191,7 @@ class _$AppState extends AppState {
                     authState.hashCode),
                 staticState.hashCode),
             uiState.hashCode),
-        companyStates.hashCode));
+        userCompanyStates.hashCode));
   }
 }
 
@@ -246,7 +246,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
-      _companyStates = _$v.companyStates;
+      _companyStates = _$v.userCompanyStates;
       _$v = null;
     }
     return this;
@@ -278,7 +278,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               authState: authState.build(),
               staticState: staticState.build(),
               uiState: uiState.build(),
-              companyStates: companyStates);
+              userCompanyStates: companyStates);
     } catch (_) {
       String _$failedField;
       try {

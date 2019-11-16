@@ -51,11 +51,8 @@ abstract class UserCompanyState
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
       userState: UserState(),
-
       taxRateState: TaxRateState(),
-
       companyGatewayState: CompanyGatewayState(),
-
       groupState: GroupState(),
     );
   }

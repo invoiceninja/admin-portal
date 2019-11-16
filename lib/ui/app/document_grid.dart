@@ -28,7 +28,7 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.selectedCompany;
+    final company = state.company;
 
     return ListView(
       children: [

@@ -60,7 +60,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
-      companyStates: List<int>.generate(10, (i) => i + 1)
+      userCompanyStates: List<int>.generate(10, (i) => i + 1)
           .map((index) => UserCompanyState())
           .toList(),
       uiState: uiState ?? UIState(),
@@ -83,13 +83,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UIState get uiState;
 
-  List<UserCompanyState> get companyStates;
+  List<UserCompanyState> get userCompanyStates;
 
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
-  UserCompanyState get selectedCompanyState =>
-      companyStates[uiState.selectedCompanyIndex];
+  UserCompanyState get userCompanyState =>
+      userCompanyStates[uiState.selectedCompanyIndex];
 
   bool get isLoaded {
     return dashboardState.isLoaded &&
@@ -97,18 +97,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         clientState.isLoaded;
   }
 
-  CompanyEntity get selectedCompany => selectedCompanyState.company;
+  CompanyEntity get company => userCompanyState.company;
 
-  DashboardState get dashboardState => selectedCompanyState.dashboardState;
+  DashboardState get dashboardState => userCompanyState.dashboardState;
 
   DashboardUIState get dashboardUIState => uiState.dashboardUIState;
 
-  UserEntity get user => selectedCompanyState.user;
+  UserEntity get user => userCompanyState.user;
 
-  UserCompanyEntity get userCompany => selectedCompanyState.userCompany;
+  UserCompanyEntity get userCompany => userCompanyState.userCompany;
 
   Credentials get credentials =>
-      Credentials(token: selectedCompanyState.token.token, url: authState.url);
+      Credentials(token: userCompanyState.token.token, url: authState.url);
 
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
@@ -143,7 +143,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return quoteState.map;
       case EntityType.expenseCategory:
         // TODO move to expenseCategoryState.map
-        return selectedCompany.expenseCategoryMap;
+        return company.expenseCategoryMap;
       case EntityType.paymentType:
         return staticState.paymentTypeMap;
       case EntityType.currency:
@@ -207,39 +207,39 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return getUIState(type).listUIState;
   }
 
-  ProductState get productState => selectedCompanyState.productState;
+  ProductState get productState => userCompanyState.productState;
 
   ProductUIState get productUIState => uiState.productUIState;
 
   ListUIState get productListState => uiState.productUIState.listUIState;
 
-  ClientState get clientState => selectedCompanyState.clientState;
+  ClientState get clientState => userCompanyState.clientState;
 
   ClientUIState get clientUIState => uiState.clientUIState;
 
   ListUIState get clientListState => uiState.clientUIState.listUIState;
 
-  InvoiceState get invoiceState => selectedCompanyState.invoiceState;
+  InvoiceState get invoiceState => userCompanyState.invoiceState;
 
   InvoiceUIState get invoiceUIState => uiState.invoiceUIState;
 
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
-  UserState get userState => selectedCompanyState.userState;
+  UserState get userState => userCompanyState.userState;
 
   ListUIState get userListState => uiState.userUIState.listUIState;
 
   UserUIState get userUIState => uiState.userUIState;
 
-  TaxRateState get taxRateState => selectedCompanyState.taxRateState;
+  TaxRateState get taxRateState => userCompanyState.taxRateState;
 
   ListUIState get taxRateListState => uiState.taxRateUIState.listUIState;
 
   TaxRateUIState get taxRateUIState => uiState.taxRateUIState;
 
   CompanyGatewayState get companyGatewayState =>
-      selectedCompanyState.companyGatewayState;
+      userCompanyState.companyGatewayState;
 
   ListUIState get companyGatewayListState =>
       uiState.companyGatewayUIState.listUIState;
@@ -247,49 +247,49 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   CompanyGatewayUIState get companyGatewayUIState =>
       uiState.companyGatewayUIState;
 
-  GroupState get groupState => selectedCompanyState.groupState;
+  GroupState get groupState => userCompanyState.groupState;
 
   ListUIState get groupListState => uiState.groupUIState.listUIState;
 
   GroupUIState get groupUIState => uiState.groupUIState;
 
-  DocumentState get documentState => selectedCompanyState.documentState;
+  DocumentState get documentState => userCompanyState.documentState;
 
   ListUIState get documentListState => uiState.documentUIState.listUIState;
 
   DocumentUIState get documentUIState => uiState.documentUIState;
 
-  ExpenseState get expenseState => selectedCompanyState.expenseState;
+  ExpenseState get expenseState => userCompanyState.expenseState;
 
   ListUIState get expenseListState => uiState.expenseUIState.listUIState;
 
   ExpenseUIState get expenseUIState => uiState.expenseUIState;
 
-  VendorState get vendorState => selectedCompanyState.vendorState;
+  VendorState get vendorState => userCompanyState.vendorState;
 
   ListUIState get vendorListState => uiState.vendorUIState.listUIState;
 
   VendorUIState get vendorUIState => uiState.vendorUIState;
 
-  TaskState get taskState => selectedCompanyState.taskState;
+  TaskState get taskState => userCompanyState.taskState;
 
   ListUIState get taskListState => uiState.taskUIState.listUIState;
 
   TaskUIState get taskUIState => uiState.taskUIState;
 
-  ProjectState get projectState => selectedCompanyState.projectState;
+  ProjectState get projectState => userCompanyState.projectState;
 
   ListUIState get projectListState => uiState.projectUIState.listUIState;
 
   ProjectUIState get projectUIState => uiState.projectUIState;
 
-  PaymentState get paymentState => selectedCompanyState.paymentState;
+  PaymentState get paymentState => userCompanyState.paymentState;
 
   ListUIState get paymentListState => uiState.paymentUIState.listUIState;
 
   PaymentUIState get paymentUIState => uiState.paymentUIState;
 
-  QuoteState get quoteState => selectedCompanyState.quoteState;
+  QuoteState get quoteState => userCompanyState.quoteState;
 
   ListUIState get quoteListState => uiState.quoteUIState.listUIState;
 

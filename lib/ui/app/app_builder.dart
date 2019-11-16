@@ -51,7 +51,7 @@ class AppBuilderState extends State<AppBuilder> {
   void runCommand(BuildContext context) {
     print('### RUN COMMAND: $_command ###');
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final company = store.state.company;
     const force = true;
     dynamic action;
 

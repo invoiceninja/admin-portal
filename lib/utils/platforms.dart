@@ -52,7 +52,7 @@ bool isHosted(BuildContext context) =>
     StoreProvider.of<AppState>(context).state.isHosted;
 
 bool isPaidAccount(BuildContext context) {
-  final company = StoreProvider.of<AppState>(context).state.selectedCompany;
+  final company = StoreProvider.of<AppState>(context).state.company;
 
   return isSelfHosted(context) || company.isProPlan || company.isEnterprisePlan;
 }

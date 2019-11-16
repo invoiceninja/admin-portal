@@ -67,7 +67,7 @@ class QuoteEditVM extends EntityEditVM {
     final quote = state.quoteUIState.editing;
 
     return QuoteEditVM(
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       invoice: quote,
       invoiceItemIndex: state.quoteUIState.editingItemIndex,

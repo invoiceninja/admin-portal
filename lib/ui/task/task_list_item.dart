@@ -42,7 +42,7 @@ class TaskListItem extends StatelessWidget {
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
 
-    final CompanyEntity company = state.selectedCompany;
+    final CompanyEntity company = state.company;
     final taskStatus = company.taskStatusMap[task.taskStatusId];
 
     final localization = AppLocalization.of(context);

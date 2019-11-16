@@ -152,7 +152,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   void upgrade(BuildContext context, ProductDetails productDetails) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final company = store.state.company;
 
     InAppPurchaseConnection.instance.buyNonConsumable(
         purchaseParam: PurchaseParam(

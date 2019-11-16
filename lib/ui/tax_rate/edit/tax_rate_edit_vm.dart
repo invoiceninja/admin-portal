@@ -59,7 +59,7 @@ class TaxRateEditVM {
       isSaving: state.isSaving,
       origTaxRate: state.taxRateState.map[taxRate.id],
       taxRate: taxRate,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (TaxRateEntity taxRate) {
         store.dispatch(UpdateTaxRate(taxRate));
       },

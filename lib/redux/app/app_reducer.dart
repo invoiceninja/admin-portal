@@ -40,7 +40,7 @@ AppState appReducer(AppState state, dynamic action) {
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
     ..companyStates[state.uiState.selectedCompanyIndex] = companyReducer(
-        state.companyStates[state.uiState.selectedCompanyIndex], action)
+        state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
     ..uiState.replace(uiReducer(state.uiState, action)));
 }
 

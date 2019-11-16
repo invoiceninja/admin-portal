@@ -57,7 +57,7 @@ class ClientEditVM {
 
     return ClientEditVM(
         state: state,
-        company: state.selectedCompany,
+        company: state.company,
         client: client,
         origClient: state.clientState.map[client.id],
         staticState: state.staticState,

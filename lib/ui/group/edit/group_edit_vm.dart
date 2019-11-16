@@ -59,7 +59,7 @@ class GroupEditVM {
       isSaving: state.isSaving,
       origGroup: state.groupState.map[group.id],
       group: group,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (GroupEntity group) {
         store.dispatch(UpdateGroup(group));
       },

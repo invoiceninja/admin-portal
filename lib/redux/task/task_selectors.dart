@@ -28,7 +28,7 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..taskId = task.id
     ..notes = notes
     ..cost = taskRateSelector(
-        company: state.selectedCompany, project: project, client: client)
+        company: state.company, project: project, client: client)
     ..quantity = round(task.duration / 3600, 3));
 }
 

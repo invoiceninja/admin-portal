@@ -67,7 +67,7 @@ class ExpenseEditVM {
       isSaving: state.isSaving,
       origExpense: state.expenseState.map[expense.id],
       expense: expense,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (ExpenseEntity expense) {
         store.dispatch(UpdateExpense(expense));
       },

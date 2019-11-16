@@ -41,7 +41,7 @@ class VendorEditContactsVM {
     final vendor = state.vendorUIState.editing;
 
     return VendorEditContactsVM(
-        company: state.selectedCompany,
+        company: state.company,
         vendor: vendor,
         contact: state.vendorUIState.editingContact,
         onAddContactPressed: () {

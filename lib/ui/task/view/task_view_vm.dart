@@ -99,7 +99,7 @@ class TaskViewVM {
 
     return TaskViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: task.isNew,

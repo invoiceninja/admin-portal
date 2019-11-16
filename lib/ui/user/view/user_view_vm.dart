@@ -69,7 +69,7 @@ class UserViewVM {
 
     return UserViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: user.isNew,
@@ -98,7 +98,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               store.dispatch(EditInvoice(
                   context: context,
-                  invoice: InvoiceEntity(company: state.selectedCompany)));
+                  invoice: InvoiceEntity(company: state.company)));
             } else {
               store.dispatch(FilterInvoicesByEntity(
                   entityId: user.id, entityType: EntityType.user));
@@ -110,7 +110,7 @@ class UserViewVM {
               store.dispatch(EditQuote(
                   context: context,
                   quote: InvoiceEntity(
-                      company: state.selectedCompany, isQuote: true)));
+                      company: state.company, isQuote: true)));
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: user.id, entityType: EntityType.user));
@@ -121,7 +121,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               store.dispatch(EditPayment(
                   context: context,
-                  payment: PaymentEntity(company: state.selectedCompany)));
+                  payment: PaymentEntity(company: state.company)));
             } else {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: user.id, entityType: EntityType.user));
@@ -154,7 +154,7 @@ class UserViewVM {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(
-                      company: state.selectedCompany, uiState: state.uiState)));
+                      company: state.company, uiState: state.uiState)));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: user.id, entityType: EntityType.user));

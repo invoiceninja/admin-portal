@@ -59,7 +59,7 @@ class CompanyGatewayEditVM {
       isSaving: state.isSaving,
       origCompanyGateway: state.companyGatewayState.map[companyGateway.id],
       companyGateway: companyGateway,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (CompanyGatewayEntity companyGateway) {
         store.dispatch(UpdateCompanyGateway(companyGateway));
       },

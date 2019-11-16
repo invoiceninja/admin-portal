@@ -321,8 +321,8 @@ Middleware<AppState> _createUserLoggedIn(
       authRepository.saveAuthState(state.authState);
       uiRepository.saveUIState(state.uiState);
       staticRepository.saveStaticState(state.staticState);
-      for (var i = 0; i < state.companyStates.length; i++) {
-        companyRepositories[i].saveCompanyState(state.companyStates[i]);
+      for (var i = 0; i < state.userCompanyStates.length; i++) {
+        companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
       }
     }
   };
@@ -402,7 +402,7 @@ Middleware<AppState> _createPersistData(
     final AppState state = store.state;
     final index = state.uiState.selectedCompanyIndex;
 
-    companyRepositories[index].saveCompanyState(state.companyStates[index]);
+    companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
   };
 }
 

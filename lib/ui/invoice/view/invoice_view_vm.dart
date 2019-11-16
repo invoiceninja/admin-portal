@@ -128,7 +128,7 @@ class InvoiceViewVM extends EntityViewVM {
 
     return InvoiceViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: invoice.isNew,
       invoice: invoice,

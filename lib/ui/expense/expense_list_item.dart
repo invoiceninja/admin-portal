@@ -49,7 +49,7 @@ class ExpenseListItem extends StatelessWidget {
         ? expense.matchesFilterValue(filter)
         : null;
 
-    final company = state.selectedCompany;
+    final company = state.company;
     final category = company.expenseCategoryMap[expense.categoryId];
 
     String subtitle = '';

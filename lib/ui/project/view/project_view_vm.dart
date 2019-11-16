@@ -68,7 +68,7 @@ class ProjectViewVM {
 
     return ProjectViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: project.isNew,

@@ -35,7 +35,7 @@ class DashboardPanels extends StatelessWidget {
   Widget _header(BuildContext context) {
     final uiState = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final company = state.selectedCompany;
+    final company = state.company;
     final clientMap = state.clientState.map;
 
     // Add "All" if more than one currency
@@ -176,7 +176,7 @@ class DashboardPanels extends StatelessWidget {
       title: title,
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
-          : state.selectedCompany.currencyId,
+          : state.company.currencyId,
     );
   }
 
@@ -186,7 +186,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final currentData = memoizedChartInvoices(
         state.staticState.currencyMap,
-        state.selectedCompany,
+        state.company,
         settings,
         state.invoiceState.map,
         state.clientState.map);
@@ -195,7 +195,7 @@ class DashboardPanels extends StatelessWidget {
     if (settings.enableComparison) {
       previousData = memoizedChartInvoices(
           state.staticState.currencyMap,
-          state.selectedCompany,
+          state.company,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
           state.clientState.map);
@@ -215,7 +215,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final currentData = memoizedChartPayments(
         state.staticState.currencyMap,
-        state.selectedCompany,
+        state.company,
         settings,
         state.invoiceState.map,
         state.clientState.map,
@@ -225,7 +225,7 @@ class DashboardPanels extends StatelessWidget {
     if (settings.enableComparison) {
       previousData = memoizedChartPayments(
           state.staticState.currencyMap,
-          state.selectedCompany,
+          state.company,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
           state.clientState.map,
@@ -246,7 +246,7 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = state.quoteState.isLoaded;
     final currentData = memoizedChartQuotes(
         state.staticState.currencyMap,
-        state.selectedCompany,
+        state.company,
         settings,
         state.quoteState.map,
         state.clientState.map);
@@ -255,7 +255,7 @@ class DashboardPanels extends StatelessWidget {
     if (settings.enableComparison) {
       previousData = memoizedChartQuotes(
           state.staticState.currencyMap,
-          state.selectedCompany,
+          state.company,
           settings.rebuild((b) => b..offset += 1),
           state.quoteState.map,
           state.clientState.map);
@@ -276,7 +276,7 @@ class DashboardPanels extends StatelessWidget {
 
     final currentData = memoizedChartTasks(
         state.staticState.currencyMap,
-        state.selectedCompany,
+        state.company,
         settings,
         state.taskState.map,
         state.invoiceState.map,
@@ -287,7 +287,7 @@ class DashboardPanels extends StatelessWidget {
     if (settings.enableComparison) {
       previousData = memoizedChartTasks(
           state.staticState.currencyMap,
-          state.selectedCompany,
+          state.company,
           settings.rebuild((b) => b..offset += 1),
           state.taskState.map,
           state.invoiceState.map,
@@ -309,7 +309,7 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = state.expenseState.isLoaded;
     final currentData = memoizedChartExpenses(
         state.staticState.currencyMap,
-        state.selectedCompany,
+        state.company,
         settings,
         state.invoiceState.map,
         state.expenseState.map);
@@ -318,7 +318,7 @@ class DashboardPanels extends StatelessWidget {
     if (settings.enableComparison) {
       previousData = memoizedChartExpenses(
           state.staticState.currencyMap,
-          state.selectedCompany,
+          state.company,
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
           state.expenseState.map);
@@ -335,7 +335,7 @@ class DashboardPanels extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
-    final company = state.selectedCompany;
+    final company = state.company;
 
     if (!state.staticState.isLoaded) {
       return LoadingIndicator();

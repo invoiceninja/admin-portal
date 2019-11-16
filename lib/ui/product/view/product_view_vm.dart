@@ -71,7 +71,7 @@ class ProductViewVM {
       isLoading: state.isLoading,
       isDirty: product.isNew,
       product: product,
-      company: state.selectedCompany,
+      company: state.company,
       onEditPressed: (BuildContext context) {
         final Completer<ProductEntity> completer = Completer<ProductEntity>();
         store.dispatch(EditProduct(

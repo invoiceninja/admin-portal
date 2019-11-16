@@ -107,7 +107,7 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final state = store.state;
     final settingsState = state.uiState.settingsUIState;
     final entityId = action.type == EntityType.company
-        ? state.selectedCompany.id
+        ? state.company.id
         : action.type == EntityType.group
             ? settingsState.group.id
             : settingsState.client.id;

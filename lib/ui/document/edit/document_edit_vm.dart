@@ -56,7 +56,7 @@ class DocumentEditVM {
       isSaving: state.isSaving,
       origDocument: state.documentState.map[document.id],
       document: document,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (DocumentEntity document) {
         store.dispatch(UpdateDocument(document));
       },

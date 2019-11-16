@@ -41,7 +41,7 @@ class AppDrawerVM {
       isLoading: state.isLoading,
       companies: companiesSelector(state),
       user: state.user,
-      selectedCompany: state.selectedCompany,
+      selectedCompany: state.company,
     );
   }
 }

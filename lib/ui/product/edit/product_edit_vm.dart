@@ -56,7 +56,7 @@ class ProductEditVM {
 
     return ProductEditVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: product.isNew,
       product: product,

@@ -61,7 +61,7 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditContactsVM(
-      company: state.selectedCompany,
+      company: state.company,
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
       onAddContact: (ContactEntity contact) {

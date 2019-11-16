@@ -62,7 +62,7 @@ class ProjectEditVM {
     return ProjectEditVM(
       isLoading: state.isLoading,
       isSaving: state.isSaving,
-      company: state.selectedCompany,
+      company: state.company,
       project: project,
       state: state,
       origProject: state.projectState.map[project.id],

@@ -103,7 +103,7 @@ List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
 List<CompanyEntity> companiesSelector(AppState state) {
   final List<CompanyEntity> list = [];
 
-  for (var companyState in state.companyStates) {
+  for (var companyState in state.userCompanyStates) {
     if (companyState.company != null) {
       list.add(companyState.company);
     }
@@ -116,7 +116,7 @@ List<CompanyEntity> companiesSelector(AppState state) {
 
 String localeSelector(AppState state) {
   final locale = state.staticState
-          ?.languageMap[state.selectedCompany?.settings?.languageId]?.locale ??
+          ?.languageMap[state.company?.settings?.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090

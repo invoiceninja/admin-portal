@@ -42,7 +42,7 @@ class QuoteEditNotesVM extends EntityEditNotesVM {
     final quote = state.quoteUIState.editing;
 
     return QuoteEditNotesVM(
-      company: state.selectedCompany,
+      company: state.company,
       invoice: quote,
       onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
     );

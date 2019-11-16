@@ -59,7 +59,7 @@ class VendorEditVM {
       isSaving: state.isSaving,
       origVendor: state.vendorState.map[vendor.id],
       vendor: vendor,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (VendorEntity vendor) {
         store.dispatch(UpdateVendor(vendor));
       },

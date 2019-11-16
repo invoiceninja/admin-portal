@@ -65,7 +65,7 @@ class GroupViewVM {
 
     return GroupViewVM(
         state: state,
-        company: state.selectedCompany,
+        company: state.company,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
         isDirty: group.isNew,

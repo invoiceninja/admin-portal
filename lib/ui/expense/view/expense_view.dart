@@ -44,7 +44,7 @@ class _ExpenseViewState extends State<ExpenseView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.state.company;
 
     return WillPopScope(
       onWillPop: () async {

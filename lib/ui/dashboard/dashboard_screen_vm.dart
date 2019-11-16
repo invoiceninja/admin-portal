@@ -70,7 +70,7 @@ class DashboardVM {
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
       isNextEnabled:
-          DateTime.parse(state.dashboardUIState.endDate(state.selectedCompany))
+          DateTime.parse(state.dashboardUIState.endDate(state.company))
               .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
@@ -81,7 +81,7 @@ class DashboardVM {
           store.dispatch(UpdateDashboardSettings(currencyId: currencyId)),
       filter: filter,
       filteredList:
-          memoizedFilteredSelector(filter, state.selectedCompanyState),
+          memoizedFilteredSelector(filter, state.userCompanyState),
     );
   }
 

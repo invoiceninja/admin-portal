@@ -260,7 +260,7 @@ void handleProjectAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
 

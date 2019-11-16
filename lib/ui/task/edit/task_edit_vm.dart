@@ -60,7 +60,7 @@ class TaskEditVM {
       task: task,
       taskTime: state.taskUIState.editingTime,
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(TaskScreen.route)) {
           store.dispatch(UpdateCurrentRoute(TaskScreen.route));

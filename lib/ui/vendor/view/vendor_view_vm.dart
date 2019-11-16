@@ -53,7 +53,7 @@ class VendorViewVM {
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final company = state.selectedCompany;
+    final company = state.company;
     final vendor = state.vendorState.map[state.vendorUIState.selectedId] ??
         VendorEntity(id: state.vendorUIState.selectedId);
 
@@ -66,7 +66,7 @@ class VendorViewVM {
 
     return VendorViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: vendor.isNew,
@@ -96,7 +96,7 @@ class VendorViewVM {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(
-                      company: state.selectedCompany, vendor: vendor)));
+                      company: state.company, vendor: vendor)));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: vendor.id, entityType: EntityType.vendor));

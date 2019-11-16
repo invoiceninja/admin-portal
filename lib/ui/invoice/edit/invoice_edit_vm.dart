@@ -93,7 +93,7 @@ class InvoiceEditVM extends EntityEditVM {
 
     return InvoiceEditVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,

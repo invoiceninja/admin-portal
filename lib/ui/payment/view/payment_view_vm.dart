@@ -56,7 +56,7 @@ class PaymentViewVM {
 
     return PaymentViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: payment.isNew,
       isLoading: state.isLoading,

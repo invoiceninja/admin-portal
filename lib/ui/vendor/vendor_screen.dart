@@ -26,7 +26,7 @@ class VendorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.selectedCompany;
+    final company = state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.vendorUIState.listUIState;

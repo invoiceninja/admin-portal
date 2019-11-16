@@ -93,7 +93,7 @@ class QuoteViewVM extends EntityViewVM {
 
     return QuoteViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: quote.isNew,
       invoice: quote,

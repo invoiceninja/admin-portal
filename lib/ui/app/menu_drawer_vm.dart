@@ -47,7 +47,7 @@ class MenuDrawerVM {
       isLoading: state.isLoading,
       companies: companiesSelector(state),
       user: state.user,
-      selectedCompany: state.selectedCompany,
+      selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {

@@ -65,7 +65,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
-        company: state.selectedCompany,
+        company: state.company,
         invoice: invoice,
         invoiceItemIndex: state.invoiceUIState.editingItemIndex,
         onRemoveInvoiceItemPressed: (index) =>

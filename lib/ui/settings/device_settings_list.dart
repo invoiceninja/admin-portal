@@ -158,7 +158,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       }
                     },
                   ),
-                  viewModel.state.selectedCompany
+                  viewModel.state.company
                           .isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
                           title:

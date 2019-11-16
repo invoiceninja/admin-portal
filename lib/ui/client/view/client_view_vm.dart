@@ -79,7 +79,7 @@ class  ClientViewVM {
       isLoading: state.isLoading,
       isDirty: client.isNew,
       client: client,
-      company: state.selectedCompany,
+      company: state.company,
       onEditPressed: (BuildContext context) {
         final Completer<ClientEntity> completer = Completer<ClientEntity>();
         store.dispatch(
@@ -98,7 +98,7 @@ class  ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditInvoice(
                   context: context,
-                  invoice: InvoiceEntity(company: state.selectedCompany)));
+                  invoice: InvoiceEntity(company: state.company)));
               store.dispatch(UpdateInvoiceClient(client: client));
             } else {
               store.dispatch(FilterInvoicesByEntity(
@@ -111,7 +111,7 @@ class  ClientViewVM {
               store.dispatch(EditQuote(
                   context: context,
                   quote: InvoiceEntity(
-                      company: state.selectedCompany, isQuote: true)));
+                      company: state.company, isQuote: true)));
               store.dispatch(UpdateQuoteClient(client: client));
             } else {
               store.dispatch(FilterQuotesByEntity(
@@ -123,7 +123,7 @@ class  ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditPayment(
                   context: context,
-                  payment: PaymentEntity(company: state.selectedCompany)
+                  payment: PaymentEntity(company: state.company)
                       .rebuild((b) => b..clientId = client.id)));
             } else {
               store.dispatch(FilterPaymentsByEntity(
@@ -160,7 +160,7 @@ class  ClientViewVM {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(
-                      company: state.selectedCompany,
+                      company: state.company,
                       client: client,
                       uiState: state.uiState)));
             } else {

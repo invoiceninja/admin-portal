@@ -60,7 +60,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     final quote = state.quoteUIState.editing;
 
     return QuoteEditDetailsVM(
-      company: state.selectedCompany,
+      company: state.company,
       invoice: quote,
       onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
       clientMap: state.clientState.map,

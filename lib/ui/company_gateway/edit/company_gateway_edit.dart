@@ -675,7 +675,7 @@ class _FeesEditorState extends State<FeesEditor> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
-    final company = viewModel.state.selectedCompany;
+    final company = viewModel.state.company;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 

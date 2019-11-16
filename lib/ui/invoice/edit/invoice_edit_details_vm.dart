@@ -80,7 +80,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditDetailsVM(
-      company: state.selectedCompany,
+      company: state.company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),

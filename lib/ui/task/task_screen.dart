@@ -27,7 +27,7 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = store.state.selectedCompany;
+    final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.taskUIState.listUIState;

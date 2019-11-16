@@ -167,7 +167,7 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveDocumentRequest;
-    if (store.state.selectedCompany.isEnterprisePlan) {
+    if (store.state.company.isEnterprisePlan) {
       repository
           .saveData(store.state.credentials, action.document)
           .then((DocumentEntity document) {

@@ -259,7 +259,7 @@ void handleExpenseAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
   final expenseIds = expenses.map((expense) => expense.id).toList();
