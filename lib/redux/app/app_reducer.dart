@@ -39,7 +39,7 @@ AppState appReducer(AppState state, dynamic action) {
     ..serverVersion = serverVersionReducer(state.serverVersion, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
-    ..companyStates[state.uiState.selectedCompanyIndex] = companyReducer(
+    ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
         state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
     ..uiState.replace(uiReducer(state.uiState, action)));
 }

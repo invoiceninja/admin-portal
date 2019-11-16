@@ -79,7 +79,7 @@ abstract class ExpenseEntity extends Object
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
-      invoiceDocuments: uiState?.addDocumentsToInvoice ?? false,
+      invoiceDocuments: uiState?.prefState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: '',

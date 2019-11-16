@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -79,7 +79,7 @@ class HistoryDrawer extends StatelessWidget {
               FlatButton(
                 child: Text(localization.close),
                 onPressed: () {
-                  store.dispatch(UpdateSidebar(AppSidebar.history));
+                  store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));
                 },
               )
           ],

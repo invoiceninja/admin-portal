@@ -57,17 +57,6 @@ void _loadAuthLocal(Store<AppState> store) async {
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
 
   store.dispatch(UserLoginLoaded(email, url, secret));
-
-  store.dispatch(UserSettingsChanged(
-    enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? true,
-    accentColor: prefs.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor,
-    emailPayment: prefs.getBool(kSharedPrefEmailPayment) ?? false,
-    requireAuthentication:
-        prefs.getBool(kSharedPrefRequireAuthentication) ?? false,
-    autoStartTasks: prefs.getBool(kSharedPrefAutoStartTasks) ?? false,
-    addDocumentsToInvoice:
-        prefs.getBool(kSharedPrefAddDocumentsToInvoice) ?? false,
-  ));
 }
 
 Middleware<AppState> _createUserLogout() {

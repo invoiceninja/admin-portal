@@ -90,7 +90,7 @@ class LoginVM {
     );
 
     void _handleLogin(BuildContext context) {
-      store.dispatch(UpdateLayout(calculateLayout(context)));
+      store.dispatch(UserSettingsChanged(layout: calculateLayout(context)));
       AppBuilder.of(context).rebuild();
 
       if (isMobile(context)) {

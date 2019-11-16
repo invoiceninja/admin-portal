@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -64,7 +64,7 @@ class ListScaffold extends StatelessWidget {
               if (isMobile(context) || state.uiState.isMenuFloated) {
                 Scaffold.of(context).openDrawer();
               } else {
-                store.dispatch(UpdateSidebar(AppSidebar.menu));
+                store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
               }
             },
           ),
@@ -100,7 +100,7 @@ class ListScaffold extends StatelessWidget {
                       if (isMobile(context) || state.uiState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
-                        store.dispatch(UpdateSidebar(AppSidebar.history));
+                        store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));
                       }
                     },
                   ),

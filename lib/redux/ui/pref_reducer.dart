@@ -1,14 +1,11 @@
 import 'dart:math';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -18,66 +15,31 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_reducer.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
-import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
-import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
 
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
-
-import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
-
-UIState uiReducer(UIState state, dynamic action) {
-  final currentRoute = currentRouteReducer(state.currentRoute, action);
+PrefState prefReducer(PrefState state, dynamic action) {
   return state.rebuild((b) => b
-    ..prefState.replace(prefReducer(state.prefState, action))
-    ..filter = filterReducer(state.filter, action)
-    ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
-    ..selectedCompanyIndex =
-        selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
-    ..previousRoute = state.currentRoute == currentRoute
-        ? state.previousRoute
-        : state.currentRoute.endsWith('edit')
-            ? state.previousRoute
-            : state.currentRoute
-    ..currentRoute = currentRoute
-    ..productUIState.replace(productUIReducer(state.productUIState, action))
-    ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
-    ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
-    ..dashboardUIState
-        .replace(dashboardUIReducer(state.dashboardUIState, action))
-    // STARTER: reducer - do not remove comment
-    ..userUIState.replace(userUIReducer(state.userUIState, action))
-    ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action))
-    ..companyGatewayUIState
-        .replace(companyGatewayUIReducer(state.companyGatewayUIState, action))
-    ..groupUIState.replace(groupUIReducer(state.groupUIState, action))
-    ..documentUIState.replace(documentUIReducer(state.documentUIState, action))
-    ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action))
-    ..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action))
-    ..taskUIState.replace(taskUIReducer(state.taskUIState, action))
-    ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
-    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
-    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
-    ..settingsUIState.replace(settingsUIReducer(state.settingsUIState, action))
-  );
+    ..layout = layoutReducer(state.layout, action)
+    ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
+    ..historySidebarMode =
+        historySidebarReducer(state.historySidebarMode, action)
+    ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
+    ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
+    ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    //..accentColor = accentColorReducer(state.accentColor, action)
+    //..historyList.replace(historyReducer(state.historyList, action))
+    ..longPressSelectionIsDefault =
+        longPressReducer(state.longPressSelectionIsDefault, action)
+    ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
+    ..requireAuthentication =
+        requireAuthenticationReducer(state.requireAuthentication, action)
+    ..emailPayment = emailPaymentReducer(state.emailPayment, action)
+    ..addDocumentsToInvoice =
+        addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action));
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
@@ -192,6 +154,28 @@ BuiltList<HistoryRecord> _addToHistory(
   }
 }
 
+Reducer<bool> menuVisibleReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.sidebar == AppSidebar.menu ? !value : value;
+  }),
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.menuMode == AppSidebarMode.visible
+        ? true
+        : action.menuMode == AppSidebarMode.float ? false : value;
+  }),
+]);
+
+Reducer<bool> historyVisibleReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.sidebar == AppSidebar.history ? !value : value;
+  }),
+  TypedReducer<bool, UserSettingsChanged>((value, action) {
+    return action.historyMode == AppSidebarMode.visible
+        ? true
+        : action.historyMode == AppSidebarMode.float ? false : value;
+  }),
+]);
+
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
@@ -203,6 +187,67 @@ Reducer<int> filterClearedAtReducer = combineReducers([
     return action.filter == null
         ? DateTime.now().millisecondsSinceEpoch
         : filterClearedAt;
+  }),
+]);
+
+Reducer<AppLayout> layoutReducer = combineReducers([
+  TypedReducer<AppLayout, UserSettingsChanged>((layout, action) {
+    return action.layout ?? layout;
+  }),
+]);
+
+Reducer<AppSidebarMode> manuSidebarReducer = combineReducers([
+  TypedReducer<AppSidebarMode, UserSettingsChanged>((mode, action) {
+    return action.menuMode ?? mode;
+  }),
+]);
+
+Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
+  TypedReducer<AppSidebarMode, UserSettingsChanged>((mode, action) {
+    return action.historyMode ?? mode;
+  }),
+]);
+
+Reducer<bool> emailPaymentReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((emailPayment, action) {
+    return action.emailPayment ?? emailPayment;
+  }),
+]);
+
+Reducer<bool> darkModeReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((enableDarkMode, action) {
+    return action.enableDarkMode ?? enableDarkMode;
+  }),
+]);
+
+Reducer<String> accentColorReducer = combineReducers([
+  TypedReducer<String, UserSettingsChanged>((accentColor, action) {
+    return action.accentColor ?? accentColor;
+  }),
+]);
+
+Reducer<bool> longPressReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>(
+      (longPressSelectionIsDefault, action) {
+    return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
+  }),
+]);
+
+Reducer<bool> autoStartTasksReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((autoStartTasks, action) {
+    return action.autoStartTasks ?? autoStartTasks;
+  }),
+]);
+
+Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((addDocumentsToInvoice, action) {
+    return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
+  }),
+]);
+
+Reducer<bool> requireAuthenticationReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((requireAuthentication, action) {
+    return action.requireAuthentication ?? requireAuthentication;
   }),
 ]);
 

@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';

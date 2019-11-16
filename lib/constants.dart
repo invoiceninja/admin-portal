@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.2';
+const String kAppVersion = '2.0.1';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://admin.invoiceninja.com';
 //const String kAppUrl = 'https://staging.invoicing.co';
@@ -17,18 +17,13 @@ const String kAppleStoreUrl =
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
 
+const String kSharedPrefs = 'shared_prefs';
+const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
 const String kSharedPrefSecret = 'secret';
 const String kSharedPrefToken = 'api_token';
-const String kSharedPrefEnableDarkMode = 'enable_dark_mode';
-const String kSharedPrefAccentColor = 'accent_color';
-const String kSharedPrefLongPressSelection = 'long_press_multiselect';
-const String kSharedPrefAppVersion = 'app_version';
-const String kSharedPrefRequireAuthentication = 'require_authentication';
-const String kSharedPrefLayout = 'layout';
-const String kSharedPrefMenuMode = 'menu_mode';
-const String kSharedPrefHistoryMode = 'history_mode';
+
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';

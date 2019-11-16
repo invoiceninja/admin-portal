@@ -1,13 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
@@ -26,36 +25,16 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState({
-    AppLayout layout,
     bool isTesting,
-    bool enableDarkMode,
-    String accentColor,
-    bool requireAuthentication,
-    bool longPressSelectionIsDefault,
-    AppSidebarMode historySidebarMode,
-    AppSidebarMode menuSidebarMode,
+    PrefState prefState,
   }) {
     return _$UIState._(
+      prefState: prefState ?? PrefState(),
       selectedCompanyIndex: 0,
       filterClearedAt: 0,
-      //layout: layout ?? AppLayout.mobile,
-      layout: layout ?? AppLayout.tablet,
-      historySidebarMode: historySidebarMode ??
-          ((layout ?? AppLayout.tablet) == AppLayout.tablet
-              ? AppSidebarMode.visible
-              : AppSidebarMode.float),
-      menuSidebarMode: menuSidebarMode ?? AppSidebarMode.float,
       isTesting: isTesting ?? false,
-      isMenuVisible: true,
-      isHistoryVisible: false,
       currentRoute: LoginScreen.route,
       previousRoute: '',
-      enableDarkMode: enableDarkMode ?? false,
-      requireAuthentication: requireAuthentication ?? false,
-      emailPayment: false,
-      autoStartTasks: false,
-      longPressSelectionIsDefault: longPressSelectionIsDefault ?? false,
-      addDocumentsToInvoice: false,
       dashboardUIState: DashboardUIState(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
@@ -73,44 +52,20 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       paymentUIState: PaymentUIState(),
       quoteUIState: QuoteUIState(),
       settingsUIState: SettingsUIState(),
-      historyList: BuiltList<HistoryRecord>(),
     );
   }
 
   UIState._();
 
-  AppLayout get layout;
-
-  AppSidebarMode get menuSidebarMode;
-
-  AppSidebarMode get historySidebarMode;
+  PrefState get prefState;
 
   bool get isTesting;
-
-  bool get isMenuVisible;
-
-  bool get isHistoryVisible;
 
   int get selectedCompanyIndex;
 
   String get currentRoute;
 
   String get previousRoute;
-
-  bool get enableDarkMode;
-
-  @nullable
-  String get accentColor;
-
-  bool get longPressSelectionIsDefault;
-
-  bool get requireAuthentication;
-
-  bool get emailPayment;
-
-  bool get autoStartTasks;
-
-  bool get addDocumentsToInvoice;
 
   @nullable
   String get filter;
@@ -150,8 +105,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   SettingsUIState get settingsUIState;
 
-  BuiltList<HistoryRecord> get historyList;
-
   static Serializer<UIState> get serializer => _$uIStateSerializer;
 
   bool containsRoute(String route) {
@@ -181,79 +134,39 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   bool get isEditing => currentRoute.endsWith('edit');
 
+  AppLayout get layout => prefState.layout;
+
+  AppSidebarMode get historySidebarMode => prefState.historySidebarMode;
+
+  AppSidebarMode get menuSidebarMode => prefState.menuSidebarMode;
+
+  bool get isMenuVisible => prefState.isMenuVisible;
+
+  bool get isHistoryVisible => prefState.isHistoryVisible;
+
+  bool get enableDarkMode => prefState.enableDarkMode;
+
+  bool get longPressSelectionIsDefault => prefState.longPressSelectionIsDefault;
+
+  bool get requireAuthentication => prefState.requireAuthentication;
+
+  bool get emailPayment => prefState.emailPayment;
+
+  bool get autoStartTasks => prefState.autoStartTasks;
+
+  bool get addDocumentsToInvoice => prefState.addDocumentsToInvoice;
+
+  CompanyPrefState get companyPrefState => prefState.companyPrefs[selectedCompanyIndex];
+
+  String get accentColor => companyPrefState.accentColor;
+
+  BuiltList<HistoryRecord> get historyList => companyPrefState.historyList;
+
   bool get isMenuFloated =>
-      layout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
+      layout == AppLayout.mobile || prefState.menuSidebarMode == AppSidebarMode.float;
 
   bool get isHistoryFloated =>
-      layout == AppLayout.mobile || historySidebarMode == AppSidebarMode.float;
+      layout == AppLayout.mobile || prefState.historySidebarMode == AppSidebarMode.float;
+
 }
 
-class AppLayout extends EnumClass {
-  const AppLayout._(String name) : super(name);
-
-  static Serializer<AppLayout> get serializer => _$appLayoutSerializer;
-
-  static const AppLayout mobile = _$mobile;
-  static const AppLayout tablet = _$tablet;
-  static const AppLayout desktop = _$desktop;
-
-  static BuiltSet<AppLayout> get values => _$values;
-
-  static AppLayout valueOf(String name) => _$valueOf(name);
-}
-
-class AppSidebar extends EnumClass {
-  const AppSidebar._(String name) : super(name);
-
-  static Serializer<AppSidebar> get serializer => _$appSidebarSerializer;
-  static const AppSidebar menu = _$menu;
-  static const AppSidebar history = _$history;
-
-  static BuiltSet<AppSidebar> get values => _$valuesSidebar;
-
-  static AppSidebar valueOf(String name) => _$valueOfSidebar(name);
-}
-
-class AppSidebarMode extends EnumClass {
-  const AppSidebarMode._(String name) : super(name);
-
-  static Serializer<AppSidebarMode> get serializer =>
-      _$appSidebarModeSerializer;
-
-  static const AppSidebarMode float = _$float;
-  static const AppSidebarMode visible = _$visible;
-  static const AppSidebarMode collapse = _$collapse;
-
-  static BuiltSet<AppSidebarMode> get values => _$valuesSidebarMode;
-
-  static AppSidebarMode valueOf(String name) => _$valueOfSidebarMode(name);
-}
-
-abstract class HistoryRecord
-    implements Built<HistoryRecord, HistoryRecordBuilder> {
-  factory HistoryRecord({
-    @required String id,
-    @required EntityType entityType,
-  }) {
-    return _$HistoryRecord._(
-      id: id,
-      entityType: entityType,
-      timestamp: DateTime.now().millisecondsSinceEpoch,
-    );
-  }
-
-  HistoryRecord._();
-
-  String get id;
-
-  EntityType get entityType;
-
-  int get timestamp;
-
-  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(timestamp);
-
-  bool matchesRecord(HistoryRecord record) =>
-      record.id == id && record.entityType == entityType;
-
-  static Serializer<HistoryRecord> get serializer => _$historyRecordSerializer;
-}

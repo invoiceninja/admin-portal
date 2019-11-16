@@ -60,9 +60,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
-      userCompanyStates: List<int>.generate(10, (i) => i + 1)
+      userCompanyStates: BuiltList(List<int>.generate(10, (i) => i + 1)
           .map((index) => UserCompanyState())
-          .toList(),
+          .toList()),
       uiState: uiState ?? UIState(),
     );
   }
@@ -83,7 +83,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UIState get uiState;
 
-  List<UserCompanyState> get userCompanyStates;
+  BuiltList<UserCompanyState> get userCompanyStates;
 
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;

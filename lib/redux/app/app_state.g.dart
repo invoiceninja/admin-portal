@@ -39,10 +39,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
-      'companyStates',
+      'userCompanyStates',
       serializers.serialize(object.userCompanyStates,
-          specifiedType:
-              const FullType(List, const [const FullType(UserCompanyState)])),
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(UserCompanyState)])),
     ];
 
     return result;
@@ -87,11 +87,11 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.uiState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UIState)) as UIState);
           break;
-        case 'companyStates':
-          result.companyStates = serializers.deserialize(value,
+        case 'userCompanyStates':
+          result.userCompanyStates.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      List, const [const FullType(UserCompanyState)]))
-              as List<UserCompanyState>;
+                      BuiltList, const [const FullType(UserCompanyState)]))
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -116,7 +116,7 @@ class _$AppState extends AppState {
   @override
   final UIState uiState;
   @override
-  final List<UserCompanyState> userCompanyStates;
+  final BuiltList<UserCompanyState> userCompanyStates;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -153,7 +153,7 @@ class _$AppState extends AppState {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
     }
     if (userCompanyStates == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyStates');
+      throw new BuiltValueNullFieldError('AppState', 'userCompanyStates');
     }
   }
 
@@ -230,10 +230,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
 
-  List<UserCompanyState> _companyStates;
-  List<UserCompanyState> get companyStates => _$this._companyStates;
-  set companyStates(List<UserCompanyState> companyStates) =>
-      _$this._companyStates = companyStates;
+  ListBuilder<UserCompanyState> _userCompanyStates;
+  ListBuilder<UserCompanyState> get userCompanyStates =>
+      _$this._userCompanyStates ??= new ListBuilder<UserCompanyState>();
+  set userCompanyStates(ListBuilder<UserCompanyState> userCompanyStates) =>
+      _$this._userCompanyStates = userCompanyStates;
 
   AppStateBuilder();
 
@@ -246,7 +247,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
-      _companyStates = _$v.userCompanyStates;
+      _userCompanyStates = _$v.userCompanyStates?.toBuilder();
       _$v = null;
     }
     return this;
@@ -278,7 +279,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               authState: authState.build(),
               staticState: staticState.build(),
               uiState: uiState.build(),
-              userCompanyStates: companyStates);
+              userCompanyStates: userCompanyStates.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -288,6 +289,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         staticState.build();
         _$failedField = 'uiState';
         uiState.build();
+        _$failedField = 'userCompanyStates';
+        userCompanyStates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

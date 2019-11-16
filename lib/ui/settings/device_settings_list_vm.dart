@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DeviceSettingsScreen extends StatelessWidget {
   const DeviceSettingsScreen({Key key}) : super(key: key);
@@ -96,58 +95,28 @@ class DeviceSettingsVM {
       onLogoutTap: (BuildContext context) => _confirmLogout(context),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefEnableDarkMode, value);
-        }
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
       onAccentColorChanged: (BuildContext context, String value) async {
         value ??= kDefaultAccentColor;
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefAccentColor, value);
-        }
         store.dispatch(UserSettingsChanged(accentColor: value));
         AppBuilder.of(context).rebuild();
       },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefAutoStartTasks, value);
-        }
         store.dispatch(UserSettingsChanged(autoStartTasks: value));
-        AppBuilder.of(context).rebuild();
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefLongPressSelection, value);
-        }
         store.dispatch(UserSettingsChanged(longPressSelectionIsDefault: value));
-        AppBuilder.of(context).rebuild();
       },
       onMenuModeChanged: (context, value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefMenuMode, '$value');
-        }
         store.dispatch(UserSettingsChanged(menuMode: value));
       },
       onHistoryModeChanged: (context, value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefHistoryMode, '$value');
-        }
         store.dispatch(UserSettingsChanged(historyMode: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
-        if (!kIsWeb) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefLayout, '$value');
-        }
-        store.dispatch(UpdateLayout(value));
+        store.dispatch(UserSettingsChanged(layout: value));
         AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {
           store.dispatch(ViewDashboard(context: context));
@@ -168,8 +137,6 @@ class DeviceSettingsVM {
           print(e);
         }
         if (authenticated) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setBool(kSharedPrefRequireAuthentication, value);
           store.dispatch(UserSettingsChanged(requireAuthentication: value));
         } else {}
       },

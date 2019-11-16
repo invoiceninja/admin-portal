@@ -15,11 +15,13 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 class PersistUI {}
+
+class PersistPrefs {}
 
 class PersistData {}
 
@@ -29,18 +31,6 @@ class RefreshClient {
   RefreshClient(this.clientId);
 
   final String clientId;
-}
-
-class UpdateSidebar implements PersistUI {
-  UpdateSidebar(this.sidebar);
-
-  final AppSidebar sidebar;
-}
-
-class UpdateLayout implements PersistUI {
-  UpdateLayout(this.layout);
-
-  final AppLayout layout;
 }
 
 class ViewMainScreen {
@@ -63,8 +53,10 @@ class LoadStaticSuccess implements PersistStatic {
   final StaticDataEntity data;
 }
 
-class UserSettingsChanged implements PersistUI {
+class UserSettingsChanged implements PersistUI, PersistPrefs {
   UserSettingsChanged({
+    this.layout,
+    this.sidebar,
     this.enableDarkMode,
     this.emailPayment,
     this.requireAuthentication,
@@ -76,6 +68,10 @@ class UserSettingsChanged implements PersistUI {
     this.historyMode,
   });
 
+  final AppLayout layout;
+  final AppSidebar sidebar;
+  final AppSidebarMode menuMode;
+  final AppSidebarMode historyMode;
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
   final bool emailPayment;
@@ -83,8 +79,6 @@ class UserSettingsChanged implements PersistUI {
   final bool autoStartTasks;
   final bool addDocumentsToInvoice;
   final String accentColor;
-  final AppSidebarMode menuMode;
-  final AppSidebarMode historyMode;
 }
 
 class LoadAccountSuccess {

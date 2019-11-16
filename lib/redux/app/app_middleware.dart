@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -16,6 +18,7 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -28,7 +31,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -136,6 +138,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
 
   final persistUI = _createPersistUI(uiRepository);
 
+  final persistPrefs = _createPersistPrefs();
+
   final deleteState = _createDeleteState(
     authRepository,
     uiRepository,
@@ -153,6 +157,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
+    TypedMiddleware<AppState, PersistPrefs>(persistPrefs),
     TypedMiddleware<AppState, ViewMainScreen>(viewMainScreen),
   ];
 }
@@ -195,7 +200,7 @@ Middleware<AppState> _createLoadState(
         ..authState.replace(authState)
         ..uiState.replace(uiState)
         ..staticState.replace(staticState)
-        ..companyStates = companyStates);
+        ..userCompanyStates.replace(companyStates));
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
@@ -246,7 +251,7 @@ Middleware<AppState> _createLoadState(
           final layout = calculateLayout(action.context);
           if (store.state.uiState.layout == AppLayout.tablet &&
               layout == AppLayout.mobile) {
-            store.dispatch(UpdateLayout(layout));
+            store.dispatch(UserSettingsChanged(layout: layout));
             store.dispatch(ViewDashboard(context: action.context));
           } else {
             store.dispatch(ViewMainScreen(action.context));
@@ -277,7 +282,6 @@ List<String> _getRoutes(AppState state) {
       .split('/')
       .where((part) => part.isNotEmpty)
       .forEach((part) {
-
     if (part == 'edit') {
       // Only restore new unsaved entities to prevent conflicts
       final bool isNew = state.getUIState(entityType).isCreatingNew;
@@ -339,6 +343,25 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
     }
 
     uiRepository.saveUIState(store.state.uiState);
+  };
+}
+
+Middleware<AppState> _createPersistPrefs() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistUI;
+
+    next(action);
+
+    if (kIsWeb) {
+      return;
+    }
+
+    final string = serializers.serializeWith(
+        PrefState.serializer, store.state.uiState.prefState);
+
+    SharedPreferences.getInstance()
+        .then((prefs) => prefs.setString(kSharedPrefs, json.encode(string)));
+    print('### SAVING PREFS: $string');
   };
 }
 

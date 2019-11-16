@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -24,6 +26,7 @@ import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -140,25 +143,22 @@ bool get _isInDebugMode {
 
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = kIsWeb ? null : await SharedPreferences.getInstance();
-  final layout = prefs?.getString(kSharedPrefLayout) ?? '${AppLayout.tablet}';
-  final menuMode =
-      prefs?.getString(kSharedPrefMenuMode) ?? '${AppSidebarMode.visible}';
-  final historyMode =
-      prefs?.getString(kSharedPrefMenuMode) ?? '${AppSidebarMode.float}';
+  final prefString = prefs?.getString(kSharedPrefs);
+
+  var prefState = PrefState();
+  if (prefString != null) {
+    try {
+      prefState = serializers.deserializeWith(
+          PrefState.serializer, json.decode(prefString));
+    } catch (e) {
+      print('Failed to load prefs: $e');
+    }
+  }
 
   return AppState(
     uiState: UIState(
       isTesting: isTesting,
-      enableDarkMode: prefs?.getBool(kSharedPrefEnableDarkMode) ?? true,
-      accentColor:
-          prefs?.getString(kSharedPrefAccentColor) ?? kDefaultAccentColor,
-      longPressSelectionIsDefault:
-          prefs?.getBool(kSharedPrefLongPressSelection) ?? false,
-      requireAuthentication:
-          prefs?.getBool(kSharedPrefRequireAuthentication) ?? false,
-      layout: AppLayout.valueOf(layout),
-      menuSidebarMode: AppSidebarMode.valueOf(menuMode),
-      historySidebarMode: AppSidebarMode.valueOf(historyMode),
+      prefState: prefState,
     ),
   );
 }

@@ -24,6 +24,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CompanyGatewayState.serializer)
       ..add(CompanyGatewayUIState.serializer)
       ..add(CompanyItemResponse.serializer)
+      ..add(CompanyPrefState.serializer)
       ..add(ContactEntity.serializer)
       ..add(CountryEntity.serializer)
       ..add(CountryItemResponse.serializer)
@@ -99,6 +100,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PaymentTypeItemResponse.serializer)
       ..add(PaymentTypeListResponse.serializer)
       ..add(PaymentUIState.serializer)
+      ..add(PrefState.serializer)
       ..add(ProductEntity.serializer)
       ..add(ProductItemResponse.serializer)
       ..add(ProductListResponse.serializer)
@@ -159,6 +161,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(CompanyGatewayEntity)]),
           () => new ListBuilder<CompanyGatewayEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CompanyPrefState)]),
+          () => new ListBuilder<CompanyPrefState>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ContactEntity)]),
           () => new ListBuilder<ContactEntity>())
@@ -329,6 +334,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaxRateEntity)]), () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TimezoneEntity)]), () => new ListBuilder<TimezoneEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserCompanyEntity)]), () => new ListBuilder<UserCompanyEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserCompanyState)]), () => new ListBuilder<UserCompanyState>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserEntity)]), () => new ListBuilder<UserEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(VendorContactEntity)]), () => new ListBuilder<VendorContactEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(VendorEntity)]), () => new ListBuilder<VendorEntity>())

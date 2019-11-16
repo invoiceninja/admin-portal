@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -71,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               : IconButton(
                   icon: Icon(Icons.menu),
                   onPressed: () =>
-                      store.dispatch(UpdateSidebar(AppSidebar.menu)),
+                      store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
                 ),
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
@@ -96,7 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     if (isMobile(context) || state.uiState.isHistoryFloated) {
                       Scaffold.of(context).openEndDrawer();
                     } else {
-                      store.dispatch(UpdateSidebar(AppSidebar.history));
+                      store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));
                     }
                   },
                 ),
