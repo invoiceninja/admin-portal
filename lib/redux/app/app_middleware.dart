@@ -52,61 +52,61 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
   List<PersistenceRepository> companyRepositories = const [
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company1_state',
+        'company_state_0',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company2_state',
+        'company_state_1',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company3_state',
+        'company_state_2',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company4_state',
+        'company_state_3',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company5_state',
+        'company_state_4',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company6_state',
+        'company_state_5',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company7_state',
+        'company_state_6',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company8_state',
+        'company_state_7',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company9_state',
+        'company_state_8',
         getApplicationDocumentsDirectory,
       ),
     ),
     const PersistenceRepository(
       fileStorage: const FileStorage(
-        'company10_state',
+        'company_state_9',
         getApplicationDocumentsDirectory,
       ),
     ),
