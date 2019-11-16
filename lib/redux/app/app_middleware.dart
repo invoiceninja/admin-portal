@@ -277,6 +277,7 @@ List<String> _getRoutes(AppState state) {
       .split('/')
       .where((part) => part.isNotEmpty)
       .forEach((part) {
+
     if (part == 'edit') {
       // Only restore new unsaved entities to prevent conflicts
       final bool isNew = state.getUIState(entityType).isCreatingNew;
@@ -288,7 +289,11 @@ List<String> _getRoutes(AppState state) {
     } else {
       if (![kMain, kDashboard, kSettings].contains(part) &&
           entityType == null) {
-        entityType = EntityType.valueOf(part);
+        try {
+          entityType = EntityType.valueOf(part);
+        } catch (e) {
+          // do nothing
+        }
       }
 
       route += '/' + part;
