@@ -100,11 +100,8 @@ class _FormColorPickerState extends State<FormColorPicker> {
             FlatButton(
               child: Text(localization.done.toUpperCase()),
               onPressed: () {
-                widget.onSelected(_pendingColor);
+                _selectColor(_pendingColor);
                 _textController.text = _pendingColor;
-                setState(() {
-                  _selectedColor = _pendingColor;
-                });
                 Navigator.of(context).pop();
               },
             ),

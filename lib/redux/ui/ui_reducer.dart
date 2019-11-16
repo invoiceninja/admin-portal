@@ -47,7 +47,8 @@ import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
-    ..prefState.replace(prefReducer(state.prefState, action))
+    ..prefState.replace(
+        prefReducer(state.prefState, action, state.selectedCompanyIndex))
     ..filter = filterReducer(state.filter, action)
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
     ..selectedCompanyIndex =
@@ -76,8 +77,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
     ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
-    ..settingsUIState.replace(settingsUIReducer(state.settingsUIState, action))
-  );
+    ..settingsUIState
+        .replace(settingsUIReducer(state.settingsUIState, action)));
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([

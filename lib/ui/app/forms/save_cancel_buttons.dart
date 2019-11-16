@@ -26,6 +26,7 @@ class SaveCancelButtons extends StatelessWidget {
             return FlatButton(
               child: Text(
                 localization.cancel,
+                style: TextStyle(color: Colors.white),
               ),
               onPressed: () => onCancelPressed(context),
             );
