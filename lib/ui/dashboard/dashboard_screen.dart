@@ -59,14 +59,14 @@ class _DashboardScreenState extends State<DashboardScreen>
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
-        drawer: isMobile(context) || state.uiState.isMenuFloated
+        drawer: isMobile(context) || state.prefState.isMenuFloated
             ? MenuDrawerBuilder()
             : null,
-        endDrawer: isMobile(context) || state.uiState.isHistoryFloated
+        endDrawer: isMobile(context) || state.prefState.isHistoryFloated
             ? HistoryDrawerBuilder()
             : null,
         appBar: AppBar(
-          leading: isMobile(context) || state.uiState.isMenuFloated
+          leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : IconButton(
                   icon: Icon(Icons.menu),
@@ -88,12 +88,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                 store.dispatch(FilterCompany(value));
               },
             ),
-            if (!state.uiState.isHistoryVisible)
+            if (!state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
                   icon: Icon(Icons.menu),
                   onPressed: () {
-                    if (isMobile(context) || state.uiState.isHistoryFloated) {
+                    if (isMobile(context) || state.prefState.isHistoryFloated) {
                       Scaffold.of(context).openEndDrawer();
                     } else {
                       store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));

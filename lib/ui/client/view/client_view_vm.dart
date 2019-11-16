@@ -147,7 +147,7 @@ class  ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditTask(
                   context: context,
-                  task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+                  task: TaskEntity(isRunning: state.prefState.autoStartTasks)
                       .rebuild((b) => b..clientId = client.id)));
             } else {
               store.dispatch(FilterTasksByEntity(
@@ -162,7 +162,7 @@ class  ClientViewVM {
                   expense: ExpenseEntity(
                       company: state.company,
                       client: client,
-                      uiState: state.uiState)));
+                      prefState: state.prefState)));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: client.id, entityType: EntityType.client));

@@ -58,7 +58,7 @@ class _DashboardChartState extends State<DashboardChart> {
     final theme = Theme.of(context);
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final color = state.uiState.enableDarkMode
+    final color = state.prefState.enableDarkMode
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 

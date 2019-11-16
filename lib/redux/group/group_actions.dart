@@ -20,7 +20,7 @@ class ViewGroupList implements PersistUI {
   final bool force;
 }
 
-class ViewGroup implements PersistUI {
+class ViewGroup implements PersistUI, PersistPrefs {
   ViewGroup({
     @required this.groupId,
     @required this.context,
@@ -32,7 +32,7 @@ class ViewGroup implements PersistUI {
   final bool force;
 }
 
-class EditGroup implements PersistUI {
+class EditGroup implements PersistUI, PersistPrefs {
   EditGroup(
       {@required this.group,
       @required this.context,

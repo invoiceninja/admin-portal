@@ -16,7 +16,7 @@ class ViewStubList implements PersistUI {
   final bool force;
 }
 
-class ViewStub implements PersistUI {
+class ViewStub implements PersistUI, PersistPrefs {
   ViewStub({
               @required this.stubId,
               @required this.context,
@@ -28,7 +28,7 @@ class ViewStub implements PersistUI {
   final bool force;
 }
 
-class EditStub implements PersistUI {
+class EditStub implements PersistUI, PersistPrefs {
   EditStub(
                 {@required this.stub,
                 @required this.context,

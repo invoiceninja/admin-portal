@@ -18,7 +18,7 @@ class ViewProductList implements PersistUI {
   final bool force;
 }
 
-class ViewProduct implements PersistUI {
+class ViewProduct implements PersistUI, PersistPrefs {
   ViewProduct(
       {@required this.productId, @required this.context, this.force = false});
 
@@ -27,7 +27,7 @@ class ViewProduct implements PersistUI {
   final bool force;
 }
 
-class EditProduct implements PersistUI {
+class EditProduct implements PersistUI, PersistPrefs {
   EditProduct(
       {@required this.product,
       @required this.context,

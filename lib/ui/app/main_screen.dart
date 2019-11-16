@@ -24,6 +24,7 @@ class MainScreen extends StatelessWidget {
         onInit: (Store<AppState> store) => store.dispatch(LoadDashboard()),
         builder: (BuildContext context, Store<AppState> store) {
           final uiState = store.state.uiState;
+          final prefState = store.state.prefState;
           final mainRoute = '/' + uiState.mainRoute;
           Widget screen = BlankScreen();
 
@@ -35,8 +36,8 @@ class MainScreen extends StatelessWidget {
                     child: DashboardScreenBuilder(),
                     flex: 5,
                   ),
-                  if (uiState.isHistoryVisible &&
-                      uiState.historySidebarMode == AppSidebarMode.visible) ...[
+                  if (prefState.isHistoryVisible &&
+                      prefState.historySidebarMode == AppSidebarMode.visible) ...[
                     _CustomDivider(),
                     Expanded(
                       child: HistoryDrawerBuilder(),
@@ -124,8 +125,8 @@ class MainScreen extends StatelessWidget {
           }
 
           return Row(children: <Widget>[
-            if (uiState.isMenuVisible &&
-                uiState.menuSidebarMode == AppSidebarMode.visible) ...[
+            if (prefState.isMenuVisible &&
+                prefState.menuSidebarMode == AppSidebarMode.visible) ...[
               MenuDrawerBuilder(),
               _CustomDivider(),
             ],
@@ -244,6 +245,7 @@ class SettingsScreens extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
+    final prefState = state.prefState;
 
     Widget screen = BlankScreen();
 
@@ -350,8 +352,8 @@ class SettingsScreens extends StatelessWidget {
         flex: 3,
         child: screen,
       ),
-      if (uiState.isHistoryVisible &&
-          uiState.historySidebarMode == AppSidebarMode.visible) ...[
+      if (prefState.isHistoryVisible &&
+          prefState.historySidebarMode == AppSidebarMode.visible) ...[
         _CustomDivider(),
         Expanded(
           child: HistoryDrawerBuilder(),
@@ -380,6 +382,7 @@ class EntityScreens extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
+    final prefState = state.prefState;
     final subRoute = uiState.subRoute;
     final entityUIState = state.getUIState(entityType);
 
@@ -402,8 +405,8 @@ class EntityScreens extends StatelessWidget {
             ],
           ),
         ),
-        if (uiState.isHistoryVisible &&
-            uiState.historySidebarMode == AppSidebarMode.visible) ...[
+        if (prefState.isHistoryVisible &&
+            prefState.historySidebarMode == AppSidebarMode.visible) ...[
           _CustomDivider(),
           Expanded(
             child: HistoryDrawerBuilder(),

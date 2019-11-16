@@ -61,7 +61,7 @@ class ListScaffold extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              if (isMobile(context) || state.uiState.isMenuFloated) {
+              if (isMobile(context) || state.prefState.isMenuFloated) {
                 Scaffold.of(context).openDrawer();
               } else {
                 store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
@@ -78,10 +78,10 @@ class ListScaffold extends StatelessWidget {
           return false;
         },
         child: Scaffold(
-          drawer: isMobile(context) || state.uiState.isMenuFloated
+          drawer: isMobile(context) || state.prefState.isMenuFloated
               ? MenuDrawerBuilder()
               : null,
-          endDrawer: isMobile(context) || state.uiState.isHistoryFloated
+          endDrawer: isMobile(context) || state.prefState.isHistoryFloated
               ? HistoryDrawerBuilder()
               : null,
           appBar: AppBar(
@@ -92,12 +92,12 @@ class ListScaffold extends StatelessWidget {
               ...appBarActions,
               if (!showCheckbox &&
                   !isSettings &&
-                  !state.uiState.isHistoryVisible)
+                  !state.prefState.isHistoryVisible)
                 Builder(
                   builder: (context) => IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () {
-                      if (isMobile(context) || state.uiState.isHistoryFloated) {
+                      if (isMobile(context) || state.prefState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
                         store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));

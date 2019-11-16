@@ -9,8 +9,8 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
@@ -50,7 +50,7 @@ class PaymentEditVM {
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onEmailChanged,
-    @required this.uiState,
+    @required this.prefState,
     @required this.invoiceMap,
     @required this.invoiceList,
     @required this.clientMap,
@@ -71,7 +71,7 @@ class PaymentEditVM {
       isDirty: payment.isNew,
       origPayment: state.paymentState.map[payment.id],
       payment: payment,
-      uiState: state.uiState,
+      prefState: state.prefState,
       staticState: state.staticState,
       invoiceMap: state.invoiceState.map,
       invoiceList: state.invoiceState.list,
@@ -134,7 +134,7 @@ class PaymentEditVM {
   final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
-  final UIState uiState;
+  final PrefState prefState;
   final BuiltList<String> invoiceList;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;

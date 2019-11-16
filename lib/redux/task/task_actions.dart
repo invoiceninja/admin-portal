@@ -21,7 +21,7 @@ class ViewTaskList implements PersistUI {
   final bool force;
 }
 
-class ViewTask implements PersistUI {
+class ViewTask implements PersistUI, PersistPrefs {
   ViewTask({
     @required this.taskId,
     @required this.context,
@@ -33,7 +33,7 @@ class ViewTask implements PersistUI {
   final bool force;
 }
 
-class EditTask implements PersistUI {
+class EditTask implements PersistUI, PersistPrefs {
   EditTask(
       {this.task,
       this.taskTime,

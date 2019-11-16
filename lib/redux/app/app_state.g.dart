@@ -24,6 +24,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isSaving',
       serializers.serialize(object.isSaving,
           specifiedType: const FullType(bool)),
+      'isTesting',
+      serializers.serialize(object.isTesting,
+          specifiedType: const FullType(bool)),
       'lastError',
       serializers.serialize(object.lastError,
           specifiedType: const FullType(String)),
@@ -36,6 +39,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'staticState',
       serializers.serialize(object.staticState,
           specifiedType: const FullType(StaticState)),
+      'prefState',
+      serializers.serialize(object.prefState,
+          specifiedType: const FullType(PrefState)),
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
@@ -67,6 +73,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.isSaving = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'isTesting':
+          result.isTesting = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'lastError':
           result.lastError = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -82,6 +92,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
         case 'staticState':
           result.staticState.replace(serializers.deserialize(value,
               specifiedType: const FullType(StaticState)) as StaticState);
+          break;
+        case 'prefState':
+          result.prefState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(PrefState)) as PrefState);
           break;
         case 'uiState':
           result.uiState.replace(serializers.deserialize(value,
@@ -106,6 +120,8 @@ class _$AppState extends AppState {
   @override
   final bool isSaving;
   @override
+  final bool isTesting;
+  @override
   final String lastError;
   @override
   final String serverVersion;
@@ -113,6 +129,8 @@ class _$AppState extends AppState {
   final AuthState authState;
   @override
   final StaticState staticState;
+  @override
+  final PrefState prefState;
   @override
   final UIState uiState;
   @override
@@ -124,10 +142,12 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.isLoading,
       this.isSaving,
+      this.isTesting,
       this.lastError,
       this.serverVersion,
       this.authState,
       this.staticState,
+      this.prefState,
       this.uiState,
       this.userCompanyStates})
       : super._() {
@@ -136,6 +156,9 @@ class _$AppState extends AppState {
     }
     if (isSaving == null) {
       throw new BuiltValueNullFieldError('AppState', 'isSaving');
+    }
+    if (isTesting == null) {
+      throw new BuiltValueNullFieldError('AppState', 'isTesting');
     }
     if (lastError == null) {
       throw new BuiltValueNullFieldError('AppState', 'lastError');
@@ -148,6 +171,9 @@ class _$AppState extends AppState {
     }
     if (staticState == null) {
       throw new BuiltValueNullFieldError('AppState', 'staticState');
+    }
+    if (prefState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'prefState');
     }
     if (uiState == null) {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
@@ -170,10 +196,12 @@ class _$AppState extends AppState {
     return other is AppState &&
         isLoading == other.isLoading &&
         isSaving == other.isSaving &&
+        isTesting == other.isTesting &&
         lastError == other.lastError &&
         serverVersion == other.serverVersion &&
         authState == other.authState &&
         staticState == other.staticState &&
+        prefState == other.prefState &&
         uiState == other.uiState &&
         userCompanyStates == other.userCompanyStates;
   }
@@ -185,11 +213,17 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, isLoading.hashCode), isSaving.hashCode),
-                            lastError.hashCode),
-                        serverVersion.hashCode),
-                    authState.hashCode),
-                staticState.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, isLoading.hashCode),
+                                        isSaving.hashCode),
+                                    isTesting.hashCode),
+                                lastError.hashCode),
+                            serverVersion.hashCode),
+                        authState.hashCode),
+                    staticState.hashCode),
+                prefState.hashCode),
             uiState.hashCode),
         userCompanyStates.hashCode));
   }
@@ -205,6 +239,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _isSaving;
   bool get isSaving => _$this._isSaving;
   set isSaving(bool isSaving) => _$this._isSaving = isSaving;
+
+  bool _isTesting;
+  bool get isTesting => _$this._isTesting;
+  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
 
   String _lastError;
   String get lastError => _$this._lastError;
@@ -226,6 +264,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set staticState(StaticStateBuilder staticState) =>
       _$this._staticState = staticState;
 
+  PrefStateBuilder _prefState;
+  PrefStateBuilder get prefState =>
+      _$this._prefState ??= new PrefStateBuilder();
+  set prefState(PrefStateBuilder prefState) => _$this._prefState = prefState;
+
   UIStateBuilder _uiState;
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
@@ -242,10 +285,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _isSaving = _$v.isSaving;
+      _isTesting = _$v.isTesting;
       _lastError = _$v.lastError;
       _serverVersion = _$v.serverVersion;
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
+      _prefState = _$v.prefState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
       _userCompanyStates = _$v.userCompanyStates?.toBuilder();
       _$v = null;
@@ -274,10 +319,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               isLoading: isLoading,
               isSaving: isSaving,
+              isTesting: isTesting,
               lastError: lastError,
               serverVersion: serverVersion,
               authState: authState.build(),
               staticState: staticState.build(),
+              prefState: prefState.build(),
               uiState: uiState.build(),
               userCompanyStates: userCompanyStates.build());
     } catch (_) {
@@ -287,6 +334,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         authState.build();
         _$failedField = 'staticState';
         staticState.build();
+        _$failedField = 'prefState';
+        prefState.build();
         _$failedField = 'uiState';
         uiState.build();
         _$failedField = 'userCompanyStates';

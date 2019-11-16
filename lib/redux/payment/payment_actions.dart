@@ -16,7 +16,7 @@ class ViewPaymentList implements PersistUI {
   final bool force;
 }
 
-class ViewPayment implements PersistUI {
+class ViewPayment implements PersistUI, PersistPrefs {
   ViewPayment({
     @required this.paymentId,
     @required this.context,
@@ -28,7 +28,7 @@ class ViewPayment implements PersistUI {
   final bool force;
 }
 
-class EditPayment implements PersistUI {
+class EditPayment implements PersistUI, PersistPrefs {
   EditPayment(
       {@required this.payment,
       @required this.context,

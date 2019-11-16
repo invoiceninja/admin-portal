@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
@@ -6,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
@@ -24,15 +22,10 @@ import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState({
-    bool isTesting,
-    PrefState prefState,
-  }) {
+  factory UIState() {
     return _$UIState._(
-      prefState: prefState ?? PrefState(),
       selectedCompanyIndex: 0,
       filterClearedAt: 0,
-      isTesting: isTesting ?? false,
       currentRoute: LoginScreen.route,
       previousRoute: '',
       dashboardUIState: DashboardUIState(),
@@ -56,10 +49,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   UIState._();
-
-  PrefState get prefState;
-
-  bool get isTesting;
 
   int get selectedCompanyIndex;
 
@@ -133,40 +122,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing => currentRoute.endsWith('edit');
-
-  AppLayout get layout => prefState.layout;
-
-  AppSidebarMode get historySidebarMode => prefState.historySidebarMode;
-
-  AppSidebarMode get menuSidebarMode => prefState.menuSidebarMode;
-
-  bool get isMenuVisible => prefState.isMenuVisible;
-
-  bool get isHistoryVisible => prefState.isHistoryVisible;
-
-  bool get enableDarkMode => prefState.enableDarkMode;
-
-  bool get longPressSelectionIsDefault => prefState.longPressSelectionIsDefault;
-
-  bool get requireAuthentication => prefState.requireAuthentication;
-
-  bool get emailPayment => prefState.emailPayment;
-
-  bool get autoStartTasks => prefState.autoStartTasks;
-
-  bool get addDocumentsToInvoice => prefState.addDocumentsToInvoice;
-
-  CompanyPrefState get companyPrefState => prefState.companyPrefs[selectedCompanyIndex];
-
-  String get accentColor => companyPrefState.accentColor;
-
-  BuiltList<HistoryRecord> get historyList => companyPrefState.historyList;
-
-  bool get isMenuFloated =>
-      layout == AppLayout.mobile || prefState.menuSidebarMode == AppSidebarMode.float;
-
-  bool get isHistoryFloated =>
-      layout == AppLayout.mobile || prefState.historySidebarMode == AppSidebarMode.float;
 
 }
 

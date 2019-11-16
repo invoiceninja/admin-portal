@@ -4,7 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'expense_model.g.dart';
@@ -70,7 +70,7 @@ abstract class ExpenseEntity extends Object
   factory ExpenseEntity(
       {String id,
       CompanyEntity company,
-      UIState uiState,
+      PrefState prefState,
       VendorEntity vendor,
       ClientEntity client}) {
     return _$ExpenseEntity._(
@@ -79,7 +79,7 @@ abstract class ExpenseEntity extends Object
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
-      invoiceDocuments: uiState?.prefState?.addDocumentsToInvoice ?? false,
+      invoiceDocuments: prefState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: '',

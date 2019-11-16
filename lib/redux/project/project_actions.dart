@@ -20,7 +20,7 @@ class ViewProjectList implements PersistUI {
   final bool force;
 }
 
-class ViewProject implements PersistUI {
+class ViewProject implements PersistUI, PersistPrefs {
   ViewProject({
     @required this.projectId,
     @required this.context,
@@ -32,7 +32,7 @@ class ViewProject implements PersistUI {
   final bool force;
 }
 
-class EditProject implements PersistUI {
+class EditProject implements PersistUI, PersistPrefs {
   EditProject(
       {@required this.project,
       @required this.context,
@@ -270,7 +270,7 @@ void handleProjectAction(
       break;
     case EntityAction.newTask:
       store.dispatch(EditTask(
-          task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+          task: TaskEntity(isRunning: state.prefState.autoStartTasks)
               .rebuild((b) => b
                 ..projectId = project.id
                 ..clientId = project.clientId),

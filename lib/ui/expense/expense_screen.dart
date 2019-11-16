@@ -145,7 +145,7 @@ class ExpenseScreen extends StatelessWidget {
               onPressed: () {
                 store.dispatch(EditExpense(
                     expense: ExpenseEntity(
-                        company: company, uiState: store.state.uiState),
+                        company: company, prefState: store.state.prefState),
                     context: context));
               },
               child: Icon(

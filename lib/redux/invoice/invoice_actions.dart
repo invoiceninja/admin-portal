@@ -20,7 +20,7 @@ class ViewInvoiceList implements PersistUI {
   final bool force;
 }
 
-class ViewInvoice implements PersistUI {
+class ViewInvoice implements PersistUI, PersistPrefs {
   ViewInvoice({this.invoiceId, this.context, this.force = false});
 
   final String invoiceId;
@@ -28,7 +28,7 @@ class ViewInvoice implements PersistUI {
   final bool force;
 }
 
-class EditInvoice implements PersistUI {
+class EditInvoice implements PersistUI, PersistPrefs {
   EditInvoice(
       {this.invoice,
       this.context,

@@ -27,11 +27,7 @@ class HistoryDrawer extends StatelessWidget {
     final state = store.state;
 
     final widgets = <Widget>[];
-    for (var history in state.uiState.historyList) {
-      if (widgets.length > 50) {
-        break;
-      }
-
+    for (var history in state.historyList) {
       final entity =
           state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
@@ -66,7 +62,7 @@ class HistoryDrawer extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: Text(localization.history),
           actions: <Widget>[
-            if (state.uiState.isHistoryFloated)
+            if (state.prefState.isHistoryFloated)
               Builder(
                 builder: (context) => IconButton(
                   icon: Icon(Icons.menu),

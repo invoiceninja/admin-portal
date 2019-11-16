@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -28,6 +29,7 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
@@ -51,19 +53,22 @@ part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
-    UIState uiState,
+    PrefState prefState,
   }) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
+      isTesting: false,
       serverVersion: '',
       lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
-      userCompanyStates: BuiltList(List<int>.generate(10, (i) => i + 1)
-          .map((index) => UserCompanyState())
-          .toList()),
-      uiState: uiState ?? UIState(),
+      userCompanyStates: BuiltList(
+          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
+              .map((index) => UserCompanyState())
+              .toList()),
+      uiState: UIState(),
+      prefState: prefState ?? PrefState(),
     );
   }
 
@@ -73,6 +78,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSaving;
 
+  bool get isTesting;
+
   String get lastError;
 
   String get serverVersion;
@@ -80,6 +87,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   AuthState get authState;
 
   StaticState get staticState;
+
+  PrefState get prefState;
 
   UIState get uiState;
 
@@ -109,6 +118,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   Credentials get credentials =>
       Credentials(token: userCompanyState.token.token, url: authState.url);
+
+  String get accentColor =>
+      prefState.companyPrefs[uiState.selectedCompanyIndex].accentColor;
+
+  BuiltList<HistoryRecord> get historyList =>
+      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList;
 
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {

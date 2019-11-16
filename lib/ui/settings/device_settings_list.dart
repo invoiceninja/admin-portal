@@ -31,7 +31,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final uiState = state.uiState;
+    final prefState = state.prefState;
 
     return WillPopScope(
       onWillPop: () async {
@@ -52,7 +52,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 children: <Widget>[
                   AppDropdownButton<AppLayout>(
                     labelText: localization.layout,
-                    value: viewModel.state.uiState.layout,
+                    value: viewModel.state.prefState.layout,
                     onChanged: (dynamic value) =>
                         viewModel.onLayoutChanged(context, value),
                     items: [
@@ -66,10 +66,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       ),
                     ],
                   ),
-                  if (state.uiState.layout == AppLayout.tablet) ...[
+                  if (state.prefState.layout == AppLayout.tablet) ...[
                     AppDropdownButton<AppSidebarMode>(
                       labelText: localization.menuSidebar,
-                      value: state.uiState.menuSidebarMode,
+                      value: state.prefState.menuSidebarMode,
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.showOrHide),
@@ -91,7 +91,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     ),
                     AppDropdownButton<AppSidebarMode>(
                       labelText: localization.historySidebar,
-                      value: state.uiState.historySidebarMode,
+                      value: state.prefState.historySidebarMode,
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.showOrHide),
@@ -108,7 +108,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   ],
                   FormColorPicker(
                     labelText: localization.accentColor,
-                    initialValue: uiState.accentColor,
+                    initialValue: state.accentColor,
                     showClear: false,
                     onSelected: (value) =>
                         viewModel.onAccentColorChanged(context, value),
@@ -119,7 +119,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 children: <Widget>[
                   SwitchListTile(
                     title: Text(AppLocalization.of(context).darkMode),
-                    value: uiState.enableDarkMode,
+                    value: prefState.enableDarkMode,
                     onChanged: (value) =>
                         viewModel.onDarkModeChanged(context, value),
                     secondary: Icon(kIsWeb
@@ -130,12 +130,12 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   SwitchListTile(
                     title: Text(AppLocalization.of(context)
                         .longPressSelectionIsDefault),
-                    value: uiState.longPressSelectionIsDefault,
+                    value: prefState.longPressSelectionIsDefault,
                     onChanged: (value) =>
                         viewModel.onLongPressSelectionIsDefault(context, value),
                     secondary: Icon(kIsWeb
                         ? Icons.check_box
-                        : FontAwesomeIcons.checkSquare),
+                        : FontAwesomeIcons.solidCheckSquare),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   FutureBuilder(
@@ -145,10 +145,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         return SwitchListTile(
                           title: Text(AppLocalization.of(context)
                               .biometricAuthentication),
-                          value: uiState.requireAuthentication,
+                          value: prefState.requireAuthentication,
                           onChanged: (value) => viewModel
                               .onRequireAuthenticationChanged(context, value),
-                          secondary: Icon(uiState.requireAuthentication
+                          secondary: Icon(prefState.requireAuthentication
                               ? FontAwesomeIcons.lock
                               : FontAwesomeIcons.unlockAlt),
                           activeColor: Theme.of(context).accentColor,
@@ -163,7 +163,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       ? SwitchListTile(
                           title:
                               Text(AppLocalization.of(context).autoStartTasks),
-                          value: uiState.autoStartTasks,
+                          value: prefState.autoStartTasks,
                           onChanged: (value) =>
                               viewModel.onAutoStartTasksChanged(context, value),
                           secondary: Icon(

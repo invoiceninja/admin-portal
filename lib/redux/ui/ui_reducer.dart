@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_reducer.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -47,8 +46,6 @@ import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
-    ..prefState.replace(
-        prefReducer(state.prefState, action, state.selectedCompanyIndex))
     ..filter = filterReducer(state.filter, action)
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
     ..selectedCompanyIndex =

@@ -45,7 +45,7 @@ class _ListFilterState extends State<ListFilter> {
     return StoreConnector<AppState, AppState>(
       converter: (Store<AppState> store) => store.state,
       builder: (BuildContext context, state) {
-        final bool enableDarkMode = state.uiState.enableDarkMode;
+        final bool enableDarkMode = state.prefState.enableDarkMode;
         return widget.filter == null
             ? Text('${widget.title ?? ''}')
             : Container(

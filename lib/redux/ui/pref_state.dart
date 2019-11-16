@@ -32,9 +32,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       autoStartTasks: false,
       longPressSelectionIsDefault: longPressSelectionIsDefault ?? false,
       addDocumentsToInvoice: false,
-      companyPrefs: BuiltList(List<int>.generate(10, (i) => i + 1)
-          .map((index) => CompanyPrefState())
-          .toList()),
+      companyPrefs: BuiltList(
+          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
+              .map((index) => CompanyPrefState())
+              .toList()),
     );
   }
 
@@ -63,6 +64,12 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get addDocumentsToInvoice;
 
   BuiltList<CompanyPrefState> get companyPrefs;
+
+  bool get isMenuFloated =>
+      layout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
+
+  bool get isHistoryFloated =>
+      layout == AppLayout.mobile || historySidebarMode == AppSidebarMode.float;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

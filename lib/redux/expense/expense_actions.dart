@@ -19,7 +19,7 @@ class ViewExpenseList implements PersistUI {
   final bool force;
 }
 
-class ViewExpense implements PersistUI {
+class ViewExpense implements PersistUI, PersistPrefs {
   ViewExpense({
     @required this.expenseId,
     @required this.context,
@@ -31,7 +31,7 @@ class ViewExpense implements PersistUI {
   final bool force;
 }
 
-class EditExpense implements PersistUI {
+class EditExpense implements PersistUI, PersistPrefs {
   EditExpense(
       {@required this.expense,
       @required this.context,

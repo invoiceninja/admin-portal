@@ -17,7 +17,7 @@ class ViewCompanyGatewayList implements PersistUI {
   final bool force;
 }
 
-class ViewCompanyGateway implements PersistUI {
+class ViewCompanyGateway implements PersistUI, PersistPrefs {
   ViewCompanyGateway({
     @required this.companyGatewayId,
     @required this.context,
@@ -29,7 +29,7 @@ class ViewCompanyGateway implements PersistUI {
   final bool force;
 }
 
-class EditCompanyGateway implements PersistUI {
+class EditCompanyGateway implements PersistUI, PersistPrefs {
   EditCompanyGateway(
       {@required this.companyGateway,
       @required this.context,

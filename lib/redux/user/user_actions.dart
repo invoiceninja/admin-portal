@@ -16,7 +16,7 @@ class ViewUserList implements PersistUI {
   final bool force;
 }
 
-class ViewUser implements PersistUI {
+class ViewUser implements PersistUI, PersistPrefs {
   ViewUser({
     @required this.userId,
     @required this.context,
@@ -28,7 +28,7 @@ class ViewUser implements PersistUI {
   final bool force;
 }
 
-class EditUser implements PersistUI {
+class EditUser implements PersistUI, PersistPrefs {
   EditUser(
       {@required this.user,
       @required this.context,

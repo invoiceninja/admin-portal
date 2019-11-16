@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.0';
+const String kAppVersion = '2.0.1';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://admin.invoiceninja.com';
 //const String kAppUrl = 'https://staging.invoicing.co';
@@ -71,6 +71,8 @@ const int kMinMajorAppVersion = 0;
 const int kMinMinorAppVersion = 0;
 const int kMinPatchAppVersion = 0;
 
+const int kMaxNumberOfCompanies = 10;
+const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day

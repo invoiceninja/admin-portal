@@ -237,7 +237,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         SwitchListTile(
                           activeColor: Theme.of(context).accentColor,
                           title: Text(localization.sendEmail),
-                          value: viewModel.uiState.emailPayment,
+                          value: viewModel.prefState.emailPayment,
                           subtitle: Text(localization.emailReceipt),
                           onChanged: (value) => viewModel.onEmailChanged(value),
                         ),

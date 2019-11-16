@@ -19,7 +19,7 @@ class ViewClientList implements PersistUI {
   final bool force;
 }
 
-class ViewClient implements PersistUI {
+class ViewClient implements PersistUI, PersistPrefs {
   ViewClient({
     @required this.clientId,
     @required this.context,
@@ -31,7 +31,7 @@ class ViewClient implements PersistUI {
   final bool force;
 }
 
-class EditClient implements PersistUI {
+class EditClient implements PersistUI, PersistPrefs {
   EditClient(
       {@required this.client,
       @required this.context,
@@ -303,7 +303,7 @@ void handleClientAction(
     case EntityAction.newExpense:
       store.dispatch(EditExpense(
           expense: ExpenseEntity(
-              company: company, client: client, uiState: state.uiState),
+              company: company, client: client, prefState: state.prefState),
           context: context));
       break;
     case EntityAction.enterPayment:

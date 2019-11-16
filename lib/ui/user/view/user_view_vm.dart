@@ -142,7 +142,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               store.dispatch(EditTask(
                   context: context,
-                  task: TaskEntity(isRunning: state.uiState.autoStartTasks)));
+                  task: TaskEntity(isRunning: state.prefState.autoStartTasks)));
             } else {
               store.dispatch(FilterTasksByEntity(
                   entityId: user.id, entityType: EntityType.user));
@@ -154,7 +154,7 @@ class UserViewVM {
               store.dispatch(EditExpense(
                   context: context,
                   expense: ExpenseEntity(
-                      company: state.company, uiState: state.uiState)));
+                      company: state.company, prefState: state.prefState)));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: user.id, entityType: EntityType.user));

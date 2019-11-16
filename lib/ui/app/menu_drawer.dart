@@ -141,7 +141,7 @@ class MenuDrawer extends StatelessWidget {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final NavigatorState navigator = Navigator.of(context);
     final state = store.state;
-    final enableDarkMode = state.uiState.enableDarkMode;
+    final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
 
     return Drawer(
@@ -286,7 +286,7 @@ class MenuDrawer extends StatelessWidget {
                             }
                             store.dispatch(EditTask(
                                 task: TaskEntity(
-                                    isRunning: state.uiState.autoStartTasks),
+                                    isRunning: state.prefState.autoStartTasks),
                                 context: context));
                           },
                         ),
@@ -318,7 +318,7 @@ class MenuDrawer extends StatelessWidget {
                             }
                             store.dispatch(EditExpense(
                                 expense: ExpenseEntity(
-                                    company: company, uiState: state.uiState),
+                                    company: company, prefState: state.prefState),
                                 context: context));
                           },
                         ),

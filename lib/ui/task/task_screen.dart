@@ -143,7 +143,7 @@ class TaskScreen extends StatelessWidget {
               onPressed: () {
                 store.dispatch(EditTask(
                     task: TaskEntity(
-                            isRunning: store.state.uiState.autoStartTasks)
+                            isRunning: store.state.prefState.autoStartTasks)
                         .rebuild((b) => b
                           ..clientId =
                               store.state.taskListState.filterEntityId),

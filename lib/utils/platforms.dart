@@ -33,7 +33,7 @@ AppLayout calculateLayout(BuildContext context) {
 }
 
 AppLayout getLayout(BuildContext context) =>
-    StoreProvider.of<AppState>(context).state.uiState.layout ??
+    StoreProvider.of<AppState>(context).state.prefState.layout ??
     AppLayout.mobile;
 
 bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
@@ -43,7 +43,7 @@ bool isTablet(BuildContext context) => getLayout(context) == AppLayout.tablet;
 bool isDesktop(BuildContext context) => getLayout(context) == AppLayout.desktop;
 
 bool isDarkMode(BuildContext context) =>
-    StoreProvider.of<AppState>(context).state.uiState.enableDarkMode;
+    StoreProvider.of<AppState>(context).state.prefState.enableDarkMode;
 
 bool isSelfHosted(BuildContext context) =>
     StoreProvider.of<AppState>(context).state.isSelfHosted;

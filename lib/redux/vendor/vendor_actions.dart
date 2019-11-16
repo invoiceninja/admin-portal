@@ -17,7 +17,7 @@ class ViewVendorList implements PersistUI {
   final bool force;
 }
 
-class ViewVendor implements PersistUI {
+class ViewVendor implements PersistUI, PersistPrefs {
   ViewVendor({
     @required this.vendorId,
     @required this.context,
@@ -29,7 +29,7 @@ class ViewVendor implements PersistUI {
   final bool force;
 }
 
-class EditVendor implements PersistUI {
+class EditVendor implements PersistUI, PersistPrefs {
   EditVendor(
       {@required this.vendor,
       @required this.context,

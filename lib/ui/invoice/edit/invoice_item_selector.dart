@@ -318,7 +318,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           _headerRow(),
           showTabBar
               ? TabBar(
-                  labelColor: state.uiState.enableDarkMode
+                  labelColor: state.prefState.enableDarkMode
                       ? Colors.white
                       : Colors.black,
                   indicatorColor: Theme.of(context).accentColor,

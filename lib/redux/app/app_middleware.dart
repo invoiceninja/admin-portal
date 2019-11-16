@@ -196,11 +196,12 @@ Middleware<AppState> _createLoadState(
         companyStates.add(await companyRepositories[i].loadCompanyState(i));
       }
 
-      final AppState appState = AppState().rebuild((b) => b
-        ..authState.replace(authState)
-        ..uiState.replace(uiState)
-        ..staticState.replace(staticState)
-        ..userCompanyStates.replace(companyStates));
+      final AppState appState = AppState(prefState: store.state.prefState)
+          .rebuild((b) => b
+            ..authState.replace(authState)
+            ..uiState.replace(uiState)
+            ..staticState.replace(staticState)
+            ..userCompanyStates.replace(companyStates));
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
@@ -216,7 +217,7 @@ Middleware<AppState> _createLoadState(
           uiState.currentRoute.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
         final routes = _getRoutes(appState);
-        if (uiState.layout == AppLayout.mobile) {
+        if (appState.prefState.layout == AppLayout.mobile) {
           bool isFirst = true;
           routes.forEach((route) {
             if (isFirst) {
@@ -249,7 +250,7 @@ Middleware<AppState> _createLoadState(
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
-          if (store.state.uiState.layout == AppLayout.tablet &&
+          if (store.state.prefState.layout == AppLayout.tablet &&
               layout == AppLayout.mobile) {
             store.dispatch(UserSettingsChanged(layout: layout));
             store.dispatch(ViewDashboard(context: action.context));
@@ -356,8 +357,8 @@ Middleware<AppState> _createPersistPrefs() {
       return;
     }
 
-    final string = serializers.serializeWith(
-        PrefState.serializer, store.state.uiState.prefState);
+    final string =
+        serializers.serializeWith(PrefState.serializer, store.state.prefState);
 
     SharedPreferences.getInstance()
         .then((prefs) => prefs.setString(kSharedPrefs, json.encode(string)));

@@ -44,7 +44,7 @@ class ActionFlatButton extends StatelessWidget {
         tooltip,
         style: TextStyle(
             color: isDirty
-                ? (state.uiState.enableDarkMode
+                ? (state.prefState.enableDarkMode
                     ? Theme.of(context).accentColor
                     : Colors.yellowAccent)
                 : Colors.white),

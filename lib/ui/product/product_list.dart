@@ -64,7 +64,7 @@ class ProductList extends StatelessWidget {
               onTap: () => viewModel.onProductTap(context, product),
               onLongPress: () async {
                 final longPressIsSelection =
-                    store.state.uiState.longPressSelectionIsDefault ?? true;
+                    store.state.prefState.longPressSelectionIsDefault ?? true;
                 if (longPressIsSelection && !isInMultiselect) {
                   handleProductAction(
                       context, [product], EntityAction.toggleMultiselect);

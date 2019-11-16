@@ -147,7 +147,7 @@ class _ClientViewState extends State<ClientView>
                           store.dispatch(EditTask(
                               task: TaskEntity(
                                       isRunning:
-                                          store.state.uiState.autoStartTasks)
+                                          store.state.prefState.autoStartTasks)
                                   .rebuild((b) => b.clientId = client.id),
                               context: context));
                         },
@@ -165,7 +165,7 @@ class _ClientViewState extends State<ClientView>
                               expense: ExpenseEntity(
                                   company: company,
                                   client: client,
-                                  uiState: store.state.uiState),
+                                  prefState: store.state.prefState),
                               context: context));
                         },
                       )

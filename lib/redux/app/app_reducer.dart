@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_reducer.dart';
@@ -24,8 +25,8 @@ AppState appReducer(AppState state, dynamic action) {
     return AppState().rebuild((b) => b
       ..authState
           .replace(state.authState.rebuild((b) => b..isAuthenticated = false))
-      //..uiState.enableDarkMode = state.uiState.enableDarkMode
-      ..uiState.isTesting = state.uiState.isTesting);
+      ..prefState.replace(state.prefState)
+      ..isTesting = state.isTesting);
   } else if (action is LoadStateSuccess) {
     return action.state.rebuild((b) => b
       ..isLoading = false
@@ -41,7 +42,9 @@ AppState appReducer(AppState state, dynamic action) {
     ..staticState.replace(staticReducer(state.staticState, action))
     ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
         state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
-    ..uiState.replace(uiReducer(state.uiState, action)));
+    ..uiState.replace(uiReducer(state.uiState, action))
+    ..prefState.replace(prefReducer(
+        state.prefState, action, state.uiState.selectedCompanyIndex)));
 }
 
 final serverVersionReducer = combineReducers<String>([

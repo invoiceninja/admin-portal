@@ -27,7 +27,6 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
@@ -156,10 +155,7 @@ Future<AppState> _initialState(bool isTesting) async {
   }
 
   return AppState(
-    uiState: UIState(
-      isTesting: isTesting,
-      prefState: prefState,
-    ),
+    prefState: prefState,
   );
 }
 
@@ -216,7 +212,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   @override
   void didChangeDependencies() {
     final state = widget.store.state;
-    if (state.uiState.requireAuthentication && !_authenticated) {
+    if (state.prefState.requireAuthentication && !_authenticated) {
       _authenticate();
     }
     super.didChangeDependencies();
@@ -231,7 +227,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         Intl.defaultLocale = localeSelector(state);
         final localization = AppLocalization(Locale(Intl.defaultLocale));
         final accentColor =
-            convertHexStringToColor(state.uiState.accentColor) ??
+            convertHexStringToColor(state.accentColor) ??
                 Colors.lightBlueAccent;
         return MaterialApp(
           supportedLocales: kLanguages
@@ -245,7 +241,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalMaterialLocalizations.delegate
           ],
-          home: state.uiState.requireAuthentication && !_authenticated
+          home: state.prefState.requireAuthentication && !_authenticated
               ? Material(
                   color: Colors.grey,
                   child: Column(
@@ -280,7 +276,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 )
               : InitScreen(),
           locale: AppLocalization.createLocale(localeSelector(state)),
-          theme: state.uiState.enableDarkMode
+          theme: state.prefState.enableDarkMode
               ? ThemeData(
                   brightness: Brightness.dark,
                   accentColor: accentColor,

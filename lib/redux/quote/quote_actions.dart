@@ -20,7 +20,7 @@ class ViewQuoteList implements PersistUI {
   final bool force;
 }
 
-class ViewQuote implements PersistUI {
+class ViewQuote implements PersistUI, PersistPrefs {
   ViewQuote({this.quoteId, this.context, this.force = false});
 
   final String quoteId;
@@ -28,7 +28,7 @@ class ViewQuote implements PersistUI {
   final bool force;
 }
 
-class EditQuote implements PersistUI {
+class EditQuote implements PersistUI, PersistPrefs {
   EditQuote(
       {this.quote,
       this.context,

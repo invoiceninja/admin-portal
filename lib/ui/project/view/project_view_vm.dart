@@ -90,7 +90,7 @@ class ProjectViewVM {
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
         if (longPress && project.isActive && client.isActive) {
           store.dispatch(EditTask(
-              task: TaskEntity(isRunning: state.uiState.autoStartTasks)
+              task: TaskEntity(isRunning: state.prefState.autoStartTasks)
                   .rebuild((b) => b
                     ..projectId = project.id
                     ..clientId = project.clientId),
@@ -104,7 +104,7 @@ class ProjectViewVM {
       onAddTaskPressed: (context) => store.dispatch(EditTask(
         context: context,
         task:
-            TaskEntity(isRunning: state.uiState.autoStartTasks).rebuild((b) => b
+            TaskEntity(isRunning: state.prefState.autoStartTasks).rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId),
         force: true,

@@ -18,12 +18,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   Iterable<Object> serialize(Serializers serializers, UIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'prefState',
-      serializers.serialize(object.prefState,
-          specifiedType: const FullType(PrefState)),
-      'isTesting',
-      serializers.serialize(object.isTesting,
-          specifiedType: const FullType(bool)),
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
@@ -105,14 +99,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'prefState':
-          result.prefState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PrefState)) as PrefState);
-          break;
-        case 'isTesting':
-          result.isTesting = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -210,10 +196,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
 
 class _$UIState extends UIState {
   @override
-  final PrefState prefState;
-  @override
-  final bool isTesting;
-  @override
   final int selectedCompanyIndex;
   @override
   final String currentRoute;
@@ -260,9 +242,7 @@ class _$UIState extends UIState {
       (new UIStateBuilder()..update(updates)).build();
 
   _$UIState._(
-      {this.prefState,
-      this.isTesting,
-      this.selectedCompanyIndex,
+      {this.selectedCompanyIndex,
       this.currentRoute,
       this.previousRoute,
       this.filter,
@@ -284,12 +264,6 @@ class _$UIState extends UIState {
       this.quoteUIState,
       this.settingsUIState})
       : super._() {
-    if (prefState == null) {
-      throw new BuiltValueNullFieldError('UIState', 'prefState');
-    }
-    if (isTesting == null) {
-      throw new BuiltValueNullFieldError('UIState', 'isTesting');
-    }
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
     }
@@ -363,8 +337,6 @@ class _$UIState extends UIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UIState &&
-        prefState == other.prefState &&
-        isTesting == other.isTesting &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
@@ -408,7 +380,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, prefState.hashCode), isTesting.hashCode), selectedCompanyIndex.hashCode), currentRoute.hashCode),
+                                                                            $jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode),
                                                                                 previousRoute.hashCode),
                                                                             filter.hashCode),
                                                                         filterClearedAt.hashCode),
@@ -433,8 +405,6 @@ class _$UIState extends UIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
-          ..add('prefState', prefState)
-          ..add('isTesting', isTesting)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
@@ -462,15 +432,6 @@ class _$UIState extends UIState {
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
-
-  PrefStateBuilder _prefState;
-  PrefStateBuilder get prefState =>
-      _$this._prefState ??= new PrefStateBuilder();
-  set prefState(PrefStateBuilder prefState) => _$this._prefState = prefState;
-
-  bool _isTesting;
-  bool get isTesting => _$this._isTesting;
-  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
 
   int _selectedCompanyIndex;
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
@@ -596,8 +557,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   UIStateBuilder get _$this {
     if (_$v != null) {
-      _prefState = _$v.prefState?.toBuilder();
-      _isTesting = _$v.isTesting;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
@@ -643,8 +602,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
-              prefState: prefState.build(),
-              isTesting: isTesting,
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               previousRoute: previousRoute,
@@ -669,9 +626,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'prefState';
-        prefState.build();
-
         _$failedField = 'dashboardUIState';
         dashboardUIState.build();
         _$failedField = 'productUIState';

@@ -193,7 +193,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     final action = dynamicAction as SavePaymentRequest;
     final PaymentEntity payment = action.payment;
     final bool sendEmail =
-        payment.isNew ? store.state.uiState.emailPayment : false;
+        payment.isNew ? store.state.prefState.emailPayment : false;
     repository
         .saveData(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
