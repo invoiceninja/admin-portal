@@ -103,20 +103,10 @@ List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
 List<CompanyEntity> companiesSelector(AppState state) {
   final List<CompanyEntity> list = [];
 
-  if (state.companyState1.company != null) {
-    list.add(state.companyState1.company);
-  }
-  if (state.companyState2.company != null) {
-    list.add(state.companyState2.company);
-  }
-  if (state.companyState3.company != null) {
-    list.add(state.companyState3.company);
-  }
-  if (state.companyState4.company != null) {
-    list.add(state.companyState4.company);
-  }
-  if (state.companyState5.company != null) {
-    list.add(state.companyState5.company);
+  for (var companyState in state.companyStates) {
+    if (companyState.company != null) {
+      list.add(companyState.company);
+    }
   }
 
   return list

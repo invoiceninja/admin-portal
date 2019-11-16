@@ -39,36 +39,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
-      'companyState1',
-      serializers.serialize(object.companyState1,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState2',
-      serializers.serialize(object.companyState2,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState3',
-      serializers.serialize(object.companyState3,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState4',
-      serializers.serialize(object.companyState4,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState5',
-      serializers.serialize(object.companyState5,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState6',
-      serializers.serialize(object.companyState6,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState7',
-      serializers.serialize(object.companyState7,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState8',
-      serializers.serialize(object.companyState8,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState9',
-      serializers.serialize(object.companyState9,
-          specifiedType: const FullType(UserCompanyState)),
-      'companyState10',
-      serializers.serialize(object.companyState10,
-          specifiedType: const FullType(UserCompanyState)),
+      'companyStates',
+      serializers.serialize(object.companyStates,
+          specifiedType:
+              const FullType(List, const [const FullType(UserCompanyState)])),
     ];
 
     return result;
@@ -113,55 +87,11 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.uiState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UIState)) as UIState);
           break;
-        case 'companyState1':
-          result.companyState1.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState2':
-          result.companyState2.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState3':
-          result.companyState3.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState4':
-          result.companyState4.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState5':
-          result.companyState5.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState6':
-          result.companyState6.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState7':
-          result.companyState7.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState8':
-          result.companyState8.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState9':
-          result.companyState9.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
-          break;
-        case 'companyState10':
-          result.companyState10.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyState))
-              as UserCompanyState);
+        case 'companyStates':
+          result.companyStates = serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      List, const [const FullType(UserCompanyState)]))
+              as List<UserCompanyState>;
           break;
       }
     }
@@ -186,25 +116,7 @@ class _$AppState extends AppState {
   @override
   final UIState uiState;
   @override
-  final UserCompanyState companyState1;
-  @override
-  final UserCompanyState companyState2;
-  @override
-  final UserCompanyState companyState3;
-  @override
-  final UserCompanyState companyState4;
-  @override
-  final UserCompanyState companyState5;
-  @override
-  final UserCompanyState companyState6;
-  @override
-  final UserCompanyState companyState7;
-  @override
-  final UserCompanyState companyState8;
-  @override
-  final UserCompanyState companyState9;
-  @override
-  final UserCompanyState companyState10;
+  final List<UserCompanyState> companyStates;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -217,16 +129,7 @@ class _$AppState extends AppState {
       this.authState,
       this.staticState,
       this.uiState,
-      this.companyState1,
-      this.companyState2,
-      this.companyState3,
-      this.companyState4,
-      this.companyState5,
-      this.companyState6,
-      this.companyState7,
-      this.companyState8,
-      this.companyState9,
-      this.companyState10})
+      this.companyStates})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
@@ -249,35 +152,8 @@ class _$AppState extends AppState {
     if (uiState == null) {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
     }
-    if (companyState1 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState1');
-    }
-    if (companyState2 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState2');
-    }
-    if (companyState3 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState3');
-    }
-    if (companyState4 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState4');
-    }
-    if (companyState5 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState5');
-    }
-    if (companyState6 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState6');
-    }
-    if (companyState7 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState7');
-    }
-    if (companyState8 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState8');
-    }
-    if (companyState9 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState9');
-    }
-    if (companyState10 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState10');
+    if (companyStates == null) {
+      throw new BuiltValueNullFieldError('AppState', 'companyStates');
     }
   }
 
@@ -299,16 +175,7 @@ class _$AppState extends AppState {
         authState == other.authState &&
         staticState == other.staticState &&
         uiState == other.uiState &&
-        companyState1 == other.companyState1 &&
-        companyState2 == other.companyState2 &&
-        companyState3 == other.companyState3 &&
-        companyState4 == other.companyState4 &&
-        companyState5 == other.companyState5 &&
-        companyState6 == other.companyState6 &&
-        companyState7 == other.companyState7 &&
-        companyState8 == other.companyState8 &&
-        companyState9 == other.companyState9 &&
-        companyState10 == other.companyState10;
+        companyStates == other.companyStates;
   }
 
   @override
@@ -318,40 +185,13 @@ class _$AppState extends AppState {
             $jc(
                 $jc(
                     $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        0,
-                                                                        isLoading
-                                                                            .hashCode),
-                                                                    isSaving
-                                                                        .hashCode),
-                                                                lastError
-                                                                    .hashCode),
-                                                            serverVersion
-                                                                .hashCode),
-                                                        authState.hashCode),
-                                                    staticState.hashCode),
-                                                uiState.hashCode),
-                                            companyState1.hashCode),
-                                        companyState2.hashCode),
-                                    companyState3.hashCode),
-                                companyState4.hashCode),
-                            companyState5.hashCode),
-                        companyState6.hashCode),
-                    companyState7.hashCode),
-                companyState8.hashCode),
-            companyState9.hashCode),
-        companyState10.hashCode));
+                        $jc($jc($jc(0, isLoading.hashCode), isSaving.hashCode),
+                            lastError.hashCode),
+                        serverVersion.hashCode),
+                    authState.hashCode),
+                staticState.hashCode),
+            uiState.hashCode),
+        companyStates.hashCode));
   }
 }
 
@@ -390,65 +230,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
 
-  UserCompanyStateBuilder _companyState1;
-  UserCompanyStateBuilder get companyState1 =>
-      _$this._companyState1 ??= new UserCompanyStateBuilder();
-  set companyState1(UserCompanyStateBuilder companyState1) =>
-      _$this._companyState1 = companyState1;
-
-  UserCompanyStateBuilder _companyState2;
-  UserCompanyStateBuilder get companyState2 =>
-      _$this._companyState2 ??= new UserCompanyStateBuilder();
-  set companyState2(UserCompanyStateBuilder companyState2) =>
-      _$this._companyState2 = companyState2;
-
-  UserCompanyStateBuilder _companyState3;
-  UserCompanyStateBuilder get companyState3 =>
-      _$this._companyState3 ??= new UserCompanyStateBuilder();
-  set companyState3(UserCompanyStateBuilder companyState3) =>
-      _$this._companyState3 = companyState3;
-
-  UserCompanyStateBuilder _companyState4;
-  UserCompanyStateBuilder get companyState4 =>
-      _$this._companyState4 ??= new UserCompanyStateBuilder();
-  set companyState4(UserCompanyStateBuilder companyState4) =>
-      _$this._companyState4 = companyState4;
-
-  UserCompanyStateBuilder _companyState5;
-  UserCompanyStateBuilder get companyState5 =>
-      _$this._companyState5 ??= new UserCompanyStateBuilder();
-  set companyState5(UserCompanyStateBuilder companyState5) =>
-      _$this._companyState5 = companyState5;
-
-  UserCompanyStateBuilder _companyState6;
-  UserCompanyStateBuilder get companyState6 =>
-      _$this._companyState6 ??= new UserCompanyStateBuilder();
-  set companyState6(UserCompanyStateBuilder companyState6) =>
-      _$this._companyState6 = companyState6;
-
-  UserCompanyStateBuilder _companyState7;
-  UserCompanyStateBuilder get companyState7 =>
-      _$this._companyState7 ??= new UserCompanyStateBuilder();
-  set companyState7(UserCompanyStateBuilder companyState7) =>
-      _$this._companyState7 = companyState7;
-
-  UserCompanyStateBuilder _companyState8;
-  UserCompanyStateBuilder get companyState8 =>
-      _$this._companyState8 ??= new UserCompanyStateBuilder();
-  set companyState8(UserCompanyStateBuilder companyState8) =>
-      _$this._companyState8 = companyState8;
-
-  UserCompanyStateBuilder _companyState9;
-  UserCompanyStateBuilder get companyState9 =>
-      _$this._companyState9 ??= new UserCompanyStateBuilder();
-  set companyState9(UserCompanyStateBuilder companyState9) =>
-      _$this._companyState9 = companyState9;
-
-  UserCompanyStateBuilder _companyState10;
-  UserCompanyStateBuilder get companyState10 =>
-      _$this._companyState10 ??= new UserCompanyStateBuilder();
-  set companyState10(UserCompanyStateBuilder companyState10) =>
-      _$this._companyState10 = companyState10;
+  List<UserCompanyState> _companyStates;
+  List<UserCompanyState> get companyStates => _$this._companyStates;
+  set companyStates(List<UserCompanyState> companyStates) =>
+      _$this._companyStates = companyStates;
 
   AppStateBuilder();
 
@@ -461,16 +246,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
-      _companyState1 = _$v.companyState1?.toBuilder();
-      _companyState2 = _$v.companyState2?.toBuilder();
-      _companyState3 = _$v.companyState3?.toBuilder();
-      _companyState4 = _$v.companyState4?.toBuilder();
-      _companyState5 = _$v.companyState5?.toBuilder();
-      _companyState6 = _$v.companyState6?.toBuilder();
-      _companyState7 = _$v.companyState7?.toBuilder();
-      _companyState8 = _$v.companyState8?.toBuilder();
-      _companyState9 = _$v.companyState9?.toBuilder();
-      _companyState10 = _$v.companyState10?.toBuilder();
+      _companyStates = _$v.companyStates;
       _$v = null;
     }
     return this;
@@ -502,16 +278,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               authState: authState.build(),
               staticState: staticState.build(),
               uiState: uiState.build(),
-              companyState1: companyState1.build(),
-              companyState2: companyState2.build(),
-              companyState3: companyState3.build(),
-              companyState4: companyState4.build(),
-              companyState5: companyState5.build(),
-              companyState6: companyState6.build(),
-              companyState7: companyState7.build(),
-              companyState8: companyState8.build(),
-              companyState9: companyState9.build(),
-              companyState10: companyState10.build());
+              companyStates: companyStates);
     } catch (_) {
       String _$failedField;
       try {
@@ -521,26 +288,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         staticState.build();
         _$failedField = 'uiState';
         uiState.build();
-        _$failedField = 'companyState1';
-        companyState1.build();
-        _$failedField = 'companyState2';
-        companyState2.build();
-        _$failedField = 'companyState3';
-        companyState3.build();
-        _$failedField = 'companyState4';
-        companyState4.build();
-        _$failedField = 'companyState5';
-        companyState5.build();
-        _$failedField = 'companyState6';
-        companyState6.build();
-        _$failedField = 'companyState7';
-        companyState7.build();
-        _$failedField = 'companyState8';
-        companyState8.build();
-        _$failedField = 'companyState9';
-        companyState9.build();
-        _$failedField = 'companyState10';
-        companyState10.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

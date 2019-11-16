@@ -97,7 +97,7 @@ class MenuDrawer extends StatelessWidget {
       value: viewModel.selectedCompanyIndex,
       items: viewModel.companies
           .map((CompanyEntity company) => DropdownMenuItem<String>(
-                value: (viewModel.companies.indexOf(company) + 1).toString(),
+                value: (viewModel.companies.indexOf(company)).toString(),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,

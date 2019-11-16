@@ -140,7 +140,7 @@ bool get _isInDebugMode {
 
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = kIsWeb ? null : await SharedPreferences.getInstance();
-  final layout = prefs?.getString(kSharedPrefLayout) ?? '$AppLayout.tablet';
+  final layout = prefs?.getString(kSharedPrefLayout) ?? '${AppLayout.tablet}';
   final menuMode =
       prefs?.getString(kSharedPrefMenuMode) ?? '${AppSidebarMode.visible}';
   final historyMode =

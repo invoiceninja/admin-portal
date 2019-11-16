@@ -60,16 +60,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
-      companyState1: UserCompanyState(),
-      companyState2: UserCompanyState(),
-      companyState3: UserCompanyState(),
-      companyState4: UserCompanyState(),
-      companyState5: UserCompanyState(),
-      companyState6: UserCompanyState(),
-      companyState7: UserCompanyState(),
-      companyState8: UserCompanyState(),
-      companyState9: UserCompanyState(),
-      companyState10: UserCompanyState(),
+      companyStates: List<int>.generate(10, (i) => i + 1)
+          .map((index) => UserCompanyState())
+          .toList(),
       uiState: uiState ?? UIState(),
     );
   }
@@ -90,55 +83,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UIState get uiState;
 
-  UserCompanyState get companyState1;
-
-  UserCompanyState get companyState2;
-
-  UserCompanyState get companyState3;
-
-  UserCompanyState get companyState4;
-
-  UserCompanyState get companyState5;
-
-  UserCompanyState get companyState6;
-
-  UserCompanyState get companyState7;
-
-  UserCompanyState get companyState8;
-
-  UserCompanyState get companyState9;
-
-  UserCompanyState get companyState10;
+  List<UserCompanyState> get companyStates;
 
   //factory AppState([void updates(AppStateBuilder b)]) = _$AppState;
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
-  UserCompanyState get selectedCompanyState {
-    switch (uiState.selectedCompanyIndex) {
-      case 1:
-        return companyState1;
-      case 2:
-        return companyState2;
-      case 3:
-        return companyState3;
-      case 4:
-        return companyState4;
-      case 5:
-        return companyState5;
-      case 6:
-        return companyState6;
-      case 7:
-        return companyState7;
-      case 8:
-        return companyState8;
-      case 9:
-        return companyState9;
-      case 10:
-        return companyState10;
-    }
-
-    return companyState1;
-  }
+  UserCompanyState get selectedCompanyState =>
+      companyStates[uiState.selectedCompanyIndex];
 
   bool get isLoaded {
     return dashboardState.isLoaded &&
@@ -421,7 +372,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
     //return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
-    return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
+    //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
+    return 'Index ${uiState.selectedCompanyIndex}';
   }
 }
 
