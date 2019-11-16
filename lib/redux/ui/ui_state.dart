@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -27,8 +26,7 @@ import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
-  factory UIState(
-    CompanyEntity company, {
+  factory UIState({
     AppLayout layout,
     bool isTesting,
     bool enableDarkMode,

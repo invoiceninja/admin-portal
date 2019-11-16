@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -149,7 +148,6 @@ Future<AppState> _initialState(bool isTesting) async {
 
   return AppState(
     uiState: UIState(
-      CompanyEntity(),
       isTesting: isTesting,
       enableDarkMode: prefs?.getBool(kSharedPrefEnableDarkMode) ?? true,
       accentColor:

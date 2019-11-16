@@ -70,7 +70,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       companyState8: UserCompanyState(),
       companyState9: UserCompanyState(),
       companyState10: UserCompanyState(),
-      uiState: uiState ?? UIState(CompanyEntity()),
+      uiState: uiState ?? UIState(),
     );
   }
 
