@@ -34,13 +34,17 @@ class EditInvoice implements PersistUI, PersistPrefs {
       this.context,
       this.completer,
       this.invoiceItemIndex,
-      this.force = false});
+      this.force = false,
+      @required this.navigator,
+      @required this.localization});
 
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
   final BuildContext context;
   final Completer completer;
   final bool force;
+  final NavigatorState navigator;
+  final AppLocalization localization;
 }
 
 class ShowEmailInvoice {

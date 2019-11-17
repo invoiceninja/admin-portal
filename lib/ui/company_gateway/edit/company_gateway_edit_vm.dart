@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -88,10 +89,11 @@ class CompanyGatewayEditVM {
               Navigator.of(context).pop(savedCompanyGateway);
             }
           } else {
-            store.dispatch(ViewCompanyGateway(
+            viewEntityById(
                 context: context,
-                companyGatewayId: savedCompanyGateway.id,
-                force: true));
+                entityId: savedCompanyGateway.id,
+                entityType: EntityType.companyGateway,
+                force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -88,7 +88,7 @@ class ClientEditVM {
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
           store.dispatch(EditClient(
-              client: ClientEntity(), context: context, force: true));
+              client: ClientEntity(), force: true));
           if (state.clientUIState.cancelCompleter != null) {
             state.clientUIState.cancelCompleter.complete();
           } else {
@@ -119,7 +119,7 @@ class ClientEditVM {
               }
             } else {
               store.dispatch(ViewClient(
-                  context: context, clientId: savedClient.id, force: true));
+                  clientId: savedClient.id, force: true));
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

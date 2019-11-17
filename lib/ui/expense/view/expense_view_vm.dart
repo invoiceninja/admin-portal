@@ -115,7 +115,7 @@ class ExpenseViewVM {
                 showEntityActionsDialog(context: context, entities: [client]);
               } else {
                 store.dispatch(
-                    ViewClient(clientId: client.id, context: context));
+                    ViewClient(clientId: client.id));
               }
               break;
             case EntityType.invoice:

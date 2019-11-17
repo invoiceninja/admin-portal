@@ -12,29 +12,35 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewClientList implements PersistUI {
-  ViewClientList({@required this.context, this.force = false});
+class ViewClientList extends AbstractEntityAction implements PersistUI {
+  ViewClientList({
+    @required NavigatorState navigator,
+    @required AppLocalization localization,
+    this.force = false,
+  }) : super(navigator: navigator, localization: localization);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewClient implements PersistUI, PersistPrefs {
+class ViewClient extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewClient({
+    @required NavigatorState navigator,
+    @required AppLocalization localization,
     @required this.clientId,
-    @required this.context,
     this.force = false,
-  });
+  }) : super(navigator: navigator, localization: localization);
 
   final String clientId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditClient implements PersistUI, PersistPrefs {
+class EditClient extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditClient(
       {@required this.client,
-      @required this.context,
+      @required NavigatorState navigator,
+      @required AppLocalization localization,
       this.contact,
       this.completer,
       this.cancelCompleter,
@@ -42,7 +48,6 @@ class EditClient implements PersistUI, PersistPrefs {
 
   final ClientEntity client;
   final ContactEntity contact;
-  final BuildContext context;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -288,28 +293,26 @@ void handleClientAction(
   final state = store.state;
   final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
+  final navigator = Navigator.of(context);
   final clientIds = clients.map((client) => client.id).toList();
   final client = clients[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditClient(context: context, client: client));
+      editEntity(context: context, entity: client);
       break;
     case EntityAction.newInvoice:
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company, client: client), context: context));
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(company: company, client: client));
       break;
     case EntityAction.newExpense:
-      store.dispatch(EditExpense(
-          expense: ExpenseEntity(
-              company: company, client: client, prefState: state.prefState),
-          context: context));
+      createEntity(context: context, entity: ExpenseEntity(
+          company: company, client: client, prefState: state.prefState));
       break;
     case EntityAction.newPayment:
-      store.dispatch(EditPayment(
-          payment: PaymentEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
-          context: context));
+      createEntity(context: context, entity: PaymentEntity(company: company)
+          .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreClientRequest(

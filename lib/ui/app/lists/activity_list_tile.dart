@@ -58,7 +58,7 @@ class ActivityListTile extends StatelessWidget {
                 case EntityType.client:
                   if (state.clientState.map.containsKey(activity.clientId)) {
                     return store.dispatch(ViewClient(
-                        clientId: activity.clientId, context: context));
+                        clientId: activity.clientId));
                   }
                   break;
                 case EntityType.invoice:

@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -97,8 +98,8 @@ class CompanyGatewayScreen extends StatelessWidget {
         onPressed: () {
           if (state.settingsUIState.isFiltered) {
           } else {
-            store.dispatch(EditCompanyGateway(
-                companyGateway: CompanyGatewayEntity(), context: context));
+            createEntityByType(
+                context: context, entityType: EntityType.companyGateway);
           }
         },
         child: Icon(

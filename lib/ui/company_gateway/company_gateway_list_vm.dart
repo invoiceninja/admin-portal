@@ -88,8 +88,10 @@ class CompanyGatewayListVM {
           entityId: state.companyGatewayListState.filterEntityId,
           entityType: state.companyGatewayListState.filterEntityType),
       onCompanyGatewayTap: (context, companyGateway) {
-        store.dispatch(ViewCompanyGateway(
-            companyGatewayId: companyGateway.id, context: context));
+        viewEntityById(
+            context: context,
+            entityId: companyGateway.id,
+            entityType: EntityType.companyGateway);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onRemovePressed: (gatewayId) {

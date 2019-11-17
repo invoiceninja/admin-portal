@@ -87,7 +87,6 @@ class ProjectEditVM {
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
           client: ClientEntity(),
-          context: context,
           completer: completer,
           cancelCompleter: Completer<Null>()
             ..future.then((_) {

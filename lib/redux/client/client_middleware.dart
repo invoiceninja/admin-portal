@@ -45,7 +45,10 @@ Middleware<AppState> _editClient() {
     final action = dynamicAction as EditClient;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        hasChanges(
+            store: store,
+            context: action.context,
+            action: action)) {
       return;
     }
 
@@ -53,8 +56,8 @@ Middleware<AppState> _editClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+    if (store.state.prefState.isMobile) {
+      action.navigator.pushNamed(ClientEditScreen.route);
     }
   };
 }
@@ -73,8 +76,8 @@ Middleware<AppState> _viewClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+    if (store.state.prefState.isMobile) {
+      action.navigator.pushNamed(ClientViewScreen.route);
     }
   };
 }
@@ -96,8 +99,8 @@ Middleware<AppState> _viewClientList() {
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+    if (store.state.prefState.isMobile) {
+      action.navigator.pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
   };

@@ -93,7 +93,7 @@ class GroupViewVM {
           } else {
             store.dispatch(FilterClientsByEntity(
                 entityId: group.id, entityType: EntityType.group));
-            store.dispatch(ViewClientList(context: context));
+            store.dispatch(ViewClientList());
           }
         });
   }

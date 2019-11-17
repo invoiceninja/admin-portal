@@ -261,7 +261,6 @@ void handleGroupAction(
       break;
     case EntityAction.newClient:
       store.dispatch(EditClient(
-          context: context,
           client: ClientEntity().rebuild((b) => b..groupId = group.id)));
       break;
     case EntityAction.restore:

@@ -71,7 +71,6 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
           client: ClientEntity(),
-          context: context,
           completer: completer,
           cancelCompleter: Completer<Null>()
             ..future.then((_) {

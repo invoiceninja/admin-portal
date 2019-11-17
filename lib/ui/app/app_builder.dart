@@ -60,11 +60,11 @@ class AppBuilderState extends State<AppBuilder> {
         action = ViewDashboard(context: context, force: force);
         break;
       case 'lc':
-        action = ViewClientList(context: context, force: force);
+        action = ViewClientList(force: force);
         break;
       case 'nc':
         action =
-            EditClient(context: context, client: ClientEntity(), force: force);
+            EditClient(client: ClientEntity(), force: force);
         break;
       case 'lr':
         action = ViewProductList(context: context, force: force);

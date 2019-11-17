@@ -10,34 +10,40 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewCompanyGatewayList implements PersistUI {
-  ViewCompanyGatewayList({@required this.context, this.force = false});
+class ViewCompanyGatewayList extends AbstractEntityAction implements PersistUI {
+  ViewCompanyGatewayList(
+      {@required NavigatorState navigator,
+      @required AppLocalization localization,
+      this.force = false})
+      : super(navigator: navigator, localization: localization);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewCompanyGateway implements PersistUI, PersistPrefs {
+class ViewCompanyGateway extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewCompanyGateway({
     @required this.companyGatewayId,
-    @required this.context,
+    @required NavigatorState navigator,
+    @required AppLocalization localization,
     this.force = false,
-  });
+  }) : super(navigator: navigator, localization: localization);
 
   final String companyGatewayId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditCompanyGateway implements PersistUI, PersistPrefs {
+class EditCompanyGateway extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditCompanyGateway(
       {@required this.companyGateway,
-      @required this.context,
+      @required NavigatorState navigator,
+      @required AppLocalization localization,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator, localization: localization);
 
   final CompanyGatewayEntity companyGateway;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -262,8 +268,7 @@ void handleCompanyGatewayAction(BuildContext context,
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(
-          EditCompanyGateway(context: context, companyGateway: companyGateway));
+      editEntity(context: context, entity: companyGateway);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreCompanyGatewayRequest(

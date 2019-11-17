@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -70,18 +71,7 @@ class CompanyGatewayViewVM {
       isDirty: companyGateway.isNew,
       companyGateway: companyGateway,
       onEditPressed: (BuildContext context) {
-        final Completer<CompanyGatewayEntity> completer =
-            Completer<CompanyGatewayEntity>();
-        store.dispatch(EditCompanyGateway(
-            companyGateway: companyGateway,
-            context: context,
-            completer: completer));
-        completer.future.then((companyGateway) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedCompanyGateway,
-          )));
-        });
+        editEntity(context: context, entity: companyGateway);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

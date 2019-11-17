@@ -123,7 +123,7 @@ class ClientScreen extends StatelessWidget {
               heroTag: 'client_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () => store.dispatch(
-                  EditClient(client: ClientEntity(), context: context)),
+                  EditClient(client: ClientEntity())),
               child: Icon(
                 Icons.add,
                 color: Colors.white,

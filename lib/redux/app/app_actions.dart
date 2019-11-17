@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PersistUI {}
 
@@ -111,11 +112,26 @@ class FilterCompany implements PersistUI {
   final String filter;
 }
 
+abstract class AbstractEntityAction {
+  AbstractEntityAction({this.localization, this.navigator});
+
+  final AppLocalization localization;
+  final NavigatorState navigator;
+
+  BuildContext get context => navigator.overlay.context;
+}
+
 void viewEntitiesByType({BuildContext context, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
+  final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
+
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(ViewClientList(context: context));
+      store.dispatch(ViewClientList(
+        navigator: navigator,
+        localization: localization,
+      ));
       break;
     case EntityType.user:
       store.dispatch(ViewUserList(context: context));
@@ -127,7 +143,10 @@ void viewEntitiesByType({BuildContext context, EntityType entityType}) {
       store.dispatch(ViewTaxRateList(context: context));
       break;
     case EntityType.companyGateway:
-      store.dispatch(ViewCompanyGatewayList(context: context));
+      store.dispatch(ViewCompanyGatewayList(
+        navigator: navigator,
+        localization: localization,
+      ));
       break;
     case EntityType.invoice:
       store.dispatch(ViewInvoiceList(context: context));
@@ -167,11 +186,22 @@ void viewEntitiesByType({BuildContext context, EntityType entityType}) {
 }
 
 void viewEntityById(
-    {BuildContext context, String entityId, EntityType entityType}) {
+    {BuildContext context,
+    String entityId,
+    EntityType entityType,
+    bool force = false}) {
   final store = StoreProvider.of<AppState>(context);
+  final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
+
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(ViewClient(clientId: entityId, context: context));
+      store.dispatch(ViewClient(
+        clientId: entityId,
+        navigator: navigator,
+        localization: localization,
+        force: force,
+      ));
       break;
     case EntityType.user:
       store.dispatch(ViewUser(userId: entityId, context: context));
@@ -183,8 +213,12 @@ void viewEntityById(
       store.dispatch(ViewTaxRate(taxRateId: entityId, context: context));
       break;
     case EntityType.companyGateway:
-      store.dispatch(
-          ViewCompanyGateway(companyGatewayId: entityId, context: context));
+      store.dispatch(ViewCompanyGateway(
+        companyGatewayId: entityId,
+        navigator: navigator,
+        localization: localization,
+        force: force,
+      ));
       break;
     case EntityType.invoice:
       store.dispatch(ViewInvoice(invoiceId: entityId, context: context));
@@ -230,9 +264,15 @@ void createEntityByType({BuildContext context, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final company = state.company;
+  final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
+
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(EditClient(context: context, client: ClientEntity()));
+      store.dispatch(EditClient(
+          client: ClientEntity(),
+          navigator: navigator,
+          localization: localization));
       break;
     case EntityType.user:
       store.dispatch(EditUser(context: context, user: UserEntity()));
@@ -245,11 +285,16 @@ void createEntityByType({BuildContext context, EntityType entityType}) {
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
-          context: context, companyGateway: CompanyGatewayEntity()));
+          navigator: navigator,
+          localization: localization,
+          companyGateway: CompanyGatewayEntity()));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
-          context: context, invoice: InvoiceEntity(company: company)));
+          context: context,
+          invoice: InvoiceEntity(company: company),
+          localization: localization,
+          navigator: navigator));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
@@ -292,13 +337,87 @@ void createEntityByType({BuildContext context, EntityType entityType}) {
   }
 }
 
+void createEntity({BuildContext context, BaseEntity entity}) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final company = state.company;
+  final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
+
+  switch (entity.entityType) {
+    case EntityType.client:
+      store.dispatch(EditClient(
+          client: entity, navigator: navigator, localization: localization));
+      break;
+    case EntityType.user:
+      store.dispatch(EditUser(context: context, user: entity));
+      break;
+    case EntityType.project:
+      store.dispatch(EditProject(context: context, project: entity));
+      break;
+    case EntityType.taxRate:
+      store.dispatch(EditTaxRate(context: context, taxRate: entity));
+      break;
+    case EntityType.companyGateway:
+      store.dispatch(EditCompanyGateway(
+          navigator: navigator,
+          localization: localization,
+          companyGateway: entity));
+      break;
+    case EntityType.invoice:
+      store.dispatch(EditInvoice(
+          context: context,
+          invoice: entity,
+          localization: localization,
+          navigator: navigator));
+      break;
+    //case EntityType.recurringInvoice:
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //break;
+    case EntityType.quote:
+      store.dispatch(EditQuote(context: context, quote: entity));
+      break;
+    case EntityType.vendor:
+      store.dispatch(EditVendor(context: context, vendor: entity));
+      break;
+    case EntityType.product:
+      store.dispatch(EditProduct(context: context, product: entity));
+      break;
+    case EntityType.task:
+      store.dispatch(EditTask(context: context, task: entity));
+      break;
+    case EntityType.expense:
+      store.dispatch(EditExpense(context: context, expense: entity));
+      break;
+    //case EntityType.expenseCategory:
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //break;
+    case EntityType.payment:
+      store.dispatch(EditPayment(context: context, payment: entity));
+      break;
+    case EntityType.group:
+      store.dispatch(EditGroup(context: context, group: entity));
+      break;
+    // TODO Add to starter
+  }
+}
+
 void editEntityById(
     {BuildContext context, String entityId, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
+  final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
   final map = store.state.getEntityMap(entityType);
+
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(EditClient(client: map[entityId], context: context));
+      store.dispatch(EditClient(
+          client: map[entityId],
+          navigator: navigator,
+          localization: localization));
       break;
     case EntityType.user:
       store.dispatch(EditUser(user: map[entityId], context: context));
@@ -310,11 +429,18 @@ void editEntityById(
       store.dispatch(EditTaxRate(taxRate: map[entityId], context: context));
       break;
     case EntityType.companyGateway:
-      store.dispatch(
-          EditCompanyGateway(companyGateway: map[entityId], context: context));
+      store.dispatch(EditCompanyGateway(
+        companyGateway: map[entityId],
+        navigator: navigator,
+        localization: localization,
+      ));
       break;
     case EntityType.invoice:
-      store.dispatch(EditInvoice(invoice: map[entityId], context: context));
+      store.dispatch(EditInvoice(
+          invoice: map[entityId],
+          context: context,
+          navigator: navigator,
+          localization: localization));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], context: context));
@@ -349,3 +475,6 @@ void editEntityById(
     // TODO Add to starter
   }
 }
+
+void editEntity({BuildContext context, BaseEntity entity}) => editEntityById(
+    context: context, entityId: entity.id, entityType: entity.entityType);

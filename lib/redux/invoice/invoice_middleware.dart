@@ -107,9 +107,9 @@ Middleware<AppState> _editInvoice() {
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
 
-    if (isMobile(action.context)) {
+    if (store.state.prefState.isMobile) {
       final invoice =
-          await Navigator.of(action.context).pushNamed(InvoiceEditScreen.route);
+          await action.navigator.pushNamed(InvoiceEditScreen.route);
 
       if (action.completer != null && invoice != null) {
         action.completer.complete(invoice);

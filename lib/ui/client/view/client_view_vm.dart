@@ -83,7 +83,7 @@ class ClientViewVM {
       onEditPressed: (BuildContext context) {
         final Completer<ClientEntity> completer = Completer<ClientEntity>();
         store.dispatch(
-            EditClient(client: client, context: context, completer: completer));
+            EditClient(client: client, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

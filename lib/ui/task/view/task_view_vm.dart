@@ -114,7 +114,7 @@ class TaskViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          store.dispatch(ViewClient(clientId: client.id));
         }
       },
       onProjectPressed: (context, [longPress = false]) {

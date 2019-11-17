@@ -126,7 +126,7 @@ class QuoteViewVM extends EntityViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          store.dispatch(ViewClient(clientId: client.id));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>

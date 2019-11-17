@@ -85,7 +85,7 @@ class ProjectViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          store.dispatch(ViewClient(clientId: client.id));
         }
       },
       onTasksPressed: (BuildContext context, {bool longPress = false}) {

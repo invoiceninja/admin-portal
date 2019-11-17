@@ -68,7 +68,7 @@ class PaymentViewVM {
         if (longPress) {
           showEntityActionsDialog(context: context, entities: [client]);
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          store.dispatch(ViewClient(clientId: client.id));
         }
       },
       onInvoicePressed: (context, [bool longPress = false]) {
