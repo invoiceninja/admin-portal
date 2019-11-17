@@ -51,7 +51,7 @@ class MenuDrawer extends StatelessWidget {
                 height: 30,
                 url: company.settings.companyLogo,
               )
-            : Image.asset('assets/images/logo.png', width: 38, height: 38);
+            : Image.asset('assets/images/logo.png', width: 37, height: 37);
 
     Widget _companyListItem(CompanyEntity company) => Row(
           mainAxisSize: MainAxisSize.max,
@@ -80,7 +80,7 @@ class MenuDrawer extends StatelessWidget {
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
       child: SizedBox(
-        height: 50,
+        height: 48,
         width: double.infinity,
         child: _companyLogo(viewModel.selectedCompany),
       ),
