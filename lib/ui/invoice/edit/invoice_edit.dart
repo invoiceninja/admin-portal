@@ -46,6 +46,15 @@ class _InvoiceEditState extends State<InvoiceEdit>
   }
 
   @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.viewModel.invoiceItemIndex != null) {
+      _controller.animateTo(kItemScreen);
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();

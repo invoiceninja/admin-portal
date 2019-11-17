@@ -49,6 +49,15 @@ class _TaskEditState extends State<TaskEdit>
   }
 
   @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.viewModel.taskTime != null) {
+      _controller.animateTo(kTimesScreen);
+    }
+  }
+
+  @override
   void dispose() {
     _timer.cancel();
     _timer = null;
