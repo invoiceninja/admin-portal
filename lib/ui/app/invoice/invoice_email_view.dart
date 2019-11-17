@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/templates.dart';
 
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:html/parser.dart';
@@ -115,10 +114,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   }
 
   void updateTemplate() {
-    final viewModel = widget.viewModel;
-
-    emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
-    emailBody = processTemplate(emailBody, viewModel.invoice, context);
+    // TODO implement server-side solution
+    //final viewModel = widget.viewModel;
+    //emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
+    //emailBody = processTemplate(emailBody, viewModel.invoice, context);
   }
 
   Widget _buildPreview(BuildContext context) {

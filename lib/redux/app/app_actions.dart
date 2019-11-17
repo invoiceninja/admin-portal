@@ -56,7 +56,7 @@ class LoadStaticSuccess implements PersistStatic {
   final StaticDataEntity data;
 }
 
-class UserSettingsChanged implements PersistUI, PersistPrefs {
+class UserSettingsChanged implements PersistPrefs {
   UserSettingsChanged({
     this.layout,
     this.sidebar,
