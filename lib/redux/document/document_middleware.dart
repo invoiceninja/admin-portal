@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -45,10 +46,13 @@ Middleware<AppState> _editDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
-    final document = await action.navigator.pushNamed(DocumentEditScreen.route);
 
-    if (action.completer != null && document != null) {
-      action.completer.complete(document);
+    if (isMobile(action.context)) {
+      final document = await action.navigator.pushNamed(DocumentEditScreen.route);
+
+      if (action.completer != null && document != null) {
+        action.completer.complete(document);
+      }
     }
   };
 }

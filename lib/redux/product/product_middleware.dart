@@ -51,7 +51,11 @@ Middleware<AppState> _editProduct() {
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
     if (isMobile(action.context)) {
-      action.navigator.pushNamed(ProductEditScreen.route);
+      final product = await action.navigator.pushNamed(ProductEditScreen.route);
+
+      if (action.completer != null && product != null) {
+        action.completer.complete(product);
+      }
     }
   };
 }

@@ -54,7 +54,11 @@ Middleware<AppState> _editClient() {
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
     if (isMobile(action.context)) {
-      action.navigator.pushNamed(ClientEditScreen.route);
+      final client = await action.navigator.pushNamed(ClientEditScreen.route);
+
+      if (action.completer != null && client != null) {
+        action.completer.complete(client);
+      }
     }
   };
 }
