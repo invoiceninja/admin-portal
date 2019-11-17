@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
@@ -55,7 +56,7 @@ Middleware<AppState> _editClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
-    if (store.state.prefState.isMobile) {
+    if (isMobile(action.context)) {
       action.navigator.pushNamed(ClientEditScreen.route);
     }
   };
@@ -75,7 +76,7 @@ Middleware<AppState> _viewClient() {
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
-    if (store.state.prefState.isMobile) {
+    if (isMobile(action.context)) {
       action.navigator.pushNamed(ClientViewScreen.route);
     }
   };
@@ -98,7 +99,7 @@ Middleware<AppState> _viewClientList() {
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
-    if (store.state.prefState.isMobile) {
+    if (isMobile(action.context)) {
       action.navigator.pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
