@@ -82,25 +82,18 @@ class ProjectEditVM {
         }
       },
       onAddClientPressed: (context, completer) {
-        createEntity(context: context, entity: ClientEntity(), force: true);
-        /*
-        store.dispatch(EditClient(
-          client: ClientEntity(),
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
-            }),
-          force: true,
-        ));
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
-         */
       },
       onSavePressed: (BuildContext context) {
         final Completer<ProjectEntity> completer =

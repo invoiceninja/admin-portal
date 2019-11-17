@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -59,51 +60,33 @@ class TaskEditDetailsVM {
         store.dispatch(UpdateTask(task));
       },
       onAddClientPressed: (context, completer) {
-        createEntity(context: context, entity: ClientEntity());
-        /*
-        store.dispatch(EditClient(
-          client: ClientEntity(),
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-            }),
-          force: true,
-        ));
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
+              }));
         completer.future.then((SelectableEntity client) {
-          store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
+          store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
         });
-         */
       },
       onAddProjectPressed: (context, completer) {
         createEntity(
             context: context,
             entity: ProjectEntity()
-                .rebuild((b) => b..clientId = task.clientId ?? 0));
-        /*
-        store.dispatch(EditProject(
-          project:
-              ProjectEntity().rebuild((b) => b..clientId = task.clientId ?? 0),
-          context: context,
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-            }),
-          force: true,
-        ));
+                .rebuild((b) => b..clientId = task.clientId ?? 0),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
+              }));
         completer.future.then((SelectableEntity client) {
-          store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdProject,
-          )));
-        });        
-         */
+          store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
+        });
       },
     );
   }

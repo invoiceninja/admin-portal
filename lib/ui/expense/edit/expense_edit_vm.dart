@@ -79,47 +79,32 @@ class ExpenseEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
-        createEntity(context: context, entity: ClientEntity(), force: true);
-        /*
-        store.dispatch(EditClient(
-          client: ClientEntity(),
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-            }),
-          force: true,
-        ));
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
-         */
       },
       onAddVendorPressed: (context, completer) {
-        createEntity(context: context, entity: VendorEntity());
-        /*
-        store.dispatch(EditVendor(
-          vendor: VendorEntity(),
-          context: context,
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-            }),
-          force: true,
-        ));
-        completer.future.then((SelectableEntity client) {
+        createEntity(
+            context: context,
+            entity: VendorEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+              }));
+        completer.future.then((SelectableEntity expense) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
-         */
       },
       onSavePressed: (BuildContext context) {
         final Completer<ExpenseEntity> completer =

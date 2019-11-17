@@ -83,9 +83,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
           return EntityDropdownDialog(
             entityMap: _entityMap,
             entityList: widget.entityList ?? _entityMap.keys.toList(),
-            onSelected: (entity) {
-              _textController.text = entity.listDisplayName;
+            onSelected: (entity, [update = true]) {
               widget.onSelected(entity);
+
+              if (update) {
+                _textController.text = entity.listDisplayName;
+              }
+
               if (widget.onFieldSubmitted != null) {
                 widget.onFieldSubmitted(entity.listDisplayName);
               }
@@ -147,7 +151,9 @@ class EntityDropdownDialog extends StatefulWidget {
 
   final BuiltMap<String, SelectableEntity> entityMap;
   final List<String> entityList;
-  final Function(SelectableEntity) onSelected;
+  final Function(SelectableEntity, [bool]) onSelected
+
+  ;
   final Function(BuildContext context, Completer completer) onAddPressed;
 
   @override
@@ -212,7 +218,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
                         Completer<SelectableEntity>();
                     widget.onAddPressed(context, completer);
                     completer.future.then((entity) {
-                      widget.onSelected(entity);
+                      widget.onSelected(entity, false);
                     });
                   },
                 )

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -85,24 +87,18 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
         store.dispatch(UpdateInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {
-        createEntity(context: context, entity: ClientEntity(), force: true);
-        /*
-        store.dispatch(EditClient(
-            client: ClientEntity(),
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
               ..future.then((_) {
                 store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-              }),
-            force: true));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
-         */
       },
     );
   }
