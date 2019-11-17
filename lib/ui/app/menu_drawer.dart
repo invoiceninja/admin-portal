@@ -272,7 +272,10 @@ class DrawerTile extends StatelessWidget {
       isSelected: uiState.currentRoute.startsWith('/$route'),
       child: ListTile(
         dense: true,
-        leading: Icon(icon, size: 22),
+        leading: Tooltip(
+          child: Icon(icon, size: 22),
+          message: title,
+        ),
         title: state.prefState.isMenuCollapsed ? null : Text(title),
         onTap: () => entityType != null
             ? viewEntitiesByType(context: context, entityType: entityType)
