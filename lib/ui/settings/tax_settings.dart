@@ -36,7 +36,6 @@ class _TaxSettingsState extends State<TaxSettings> {
     return SettingsScaffold(
       title: localization.taxSettings,
       onSavePressed: viewModel.onSavePressed,
-      onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
         formKey: _formKey,
         children: <Widget>[
