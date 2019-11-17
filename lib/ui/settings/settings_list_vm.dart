@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list.dart';
@@ -45,10 +44,12 @@ class SettingsListVM {
         },
         onClearSettingsFilterPressed: () =>
             store.dispatch(ClearSettingsFilter()),
-        onViewClientPressed: (context) => store.dispatch(
-            ViewClient(clientId: settingsUIState.client.id)),
-        onViewGroupPressed: (context) => store.dispatch(
-            ViewGroup(context: context, groupId: settingsUIState.group.id)));
+        onViewClientPressed: (context) {
+          viewEntity(context: context, entity: settingsUIState.client);
+        },
+        onViewGroupPressed: (context) {
+          viewEntity(context: context, entity: settingsUIState.group);
+        });
   }
 
   final AppState state;

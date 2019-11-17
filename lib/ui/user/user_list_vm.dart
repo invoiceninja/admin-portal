@@ -75,7 +75,7 @@ class UserListVM {
           entityId: state.userListState.filterEntityId,
           entityType: state.userListState.filterEntityType),
       onUserTap: (context, user) {
-        store.dispatch(ViewUser(userId: user.id, context: context));
+        viewEntity(context: context, entity: user);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

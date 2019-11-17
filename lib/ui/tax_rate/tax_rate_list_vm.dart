@@ -76,7 +76,7 @@ class TaxRateListVM {
           entityId: state.taxRateListState.filterEntityId,
           entityType: state.taxRateListState.filterEntityType),
       onTaxRateTap: (context, taxRate) {
-        store.dispatch(ViewTaxRate(taxRateId: taxRate.id, context: context));
+        viewEntity(context: context, entity: taxRate);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

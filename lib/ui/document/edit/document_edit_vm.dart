@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -82,8 +83,11 @@ class DocumentEditVM {
               Navigator.of(context).pop(savedDocument);
             }
           } else {
-            store.dispatch(ViewDocument(
-                context: context, documentId: savedDocument.id, force: true));
+            viewEntityById(
+                context: context,
+                entityId: savedDocument.id,
+                entityType: EntityType.document,
+                force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

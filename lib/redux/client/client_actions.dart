@@ -1,23 +1,18 @@
 import 'dart:async';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewClientList extends AbstractEntityAction implements PersistUI {
   ViewClientList({
     @required NavigatorState navigator,
-    @required AppLocalization localization,
     this.force = false,
-  }) : super(navigator: navigator, localization: localization);
+  }) : super(navigator: navigator);
 
   final bool force;
 }
@@ -26,10 +21,9 @@ class ViewClient extends AbstractEntityAction
     implements PersistUI, PersistPrefs {
   ViewClient({
     @required NavigatorState navigator,
-    @required AppLocalization localization,
     @required this.clientId,
     this.force = false,
-  }) : super(navigator: navigator, localization: localization);
+  }) : super(navigator: navigator);
 
   final String clientId;
   final bool force;
@@ -40,7 +34,6 @@ class EditClient extends AbstractEntityAction
   EditClient(
       {@required this.client,
       @required NavigatorState navigator,
-      @required AppLocalization localization,
       this.contact,
       this.completer,
       this.cancelCompleter,
@@ -293,7 +286,6 @@ void handleClientAction(
   final state = store.state;
   final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
-  final navigator = Navigator.of(context);
   final clientIds = clients.map((client) => client.id).toList();
   final client = clients[0];
 

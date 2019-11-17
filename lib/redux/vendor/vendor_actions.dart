@@ -6,41 +6,41 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewVendorList implements PersistUI {
-  ViewVendorList({@required this.context, this.force = false});
+class ViewVendorList extends AbstractEntityAction implements PersistUI {
+  ViewVendorList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewVendor implements PersistUI, PersistPrefs {
+class ViewVendor extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewVendor({
     @required this.vendorId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String vendorId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditVendor implements PersistUI, PersistPrefs {
+class EditVendor extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditVendor(
       {@required this.vendor,
-      @required this.context,
+      @required NavigatorState navigator,
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final VendorEntity vendor;
   final VendorContactEntity contact;
-  final BuildContext context;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -291,12 +291,12 @@ void handleVendorAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditVendor(context: context, vendor: vendor));
+      editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
-      store.dispatch(EditExpense(
-          expense: ExpenseEntity(company: company, vendor: vendor),
-          context: context));
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(company: company, vendor: vendor));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(

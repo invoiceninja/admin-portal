@@ -7,41 +7,40 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProjectList implements PersistUI {
-  ViewProjectList({@required this.context, this.force = false});
+class ViewProjectList extends AbstractEntityAction implements PersistUI {
+  ViewProjectList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewProject implements PersistUI, PersistPrefs {
+class ViewProject extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewProject({
     @required this.projectId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String projectId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditProject implements PersistUI, PersistPrefs {
+class EditProject extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditProject(
       {@required this.project,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final ProjectEntity project;
-  final BuildContext context;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -266,28 +265,28 @@ void handleProjectAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditProject(context: context, project: project));
+      editEntity(context: context, entity: project);
       break;
     case EntityAction.newTask:
-      store.dispatch(EditTask(
-          task: TaskEntity(isRunning: state.prefState.autoStartTasks)
+      createEntity(
+          context: context,
+          entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
               .rebuild((b) => b
                 ..projectId = project.id
-                ..clientId = project.clientId),
-          context: context));
+                ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company).rebuild((b) => b
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
             ..clientId = project.clientId
-            ..lineItems.addAll(items)),
-          context: context));
+            ..lineItems.addAll(items)));
       break;
     case EntityAction.clone:
-      store.dispatch(EditProject(context: context, project: project.clone));
+      createEntity(context: context, entity: project.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProjectRequest(

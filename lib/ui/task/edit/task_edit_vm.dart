@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
@@ -67,8 +68,7 @@ class TaskEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditTask(task: TaskEntity(), context: context, force: true));
+        createEntity(context: context, entity: TaskEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onFabPressed: () {
@@ -101,8 +101,7 @@ class TaskEditVM {
               Navigator.of(context).pop(savedTask);
             }
           } else {
-            store.dispatch(
-                ViewTask(context: context, taskId: savedTask.id, force: true));
+            viewEntity(context: context, entity: savedTask, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

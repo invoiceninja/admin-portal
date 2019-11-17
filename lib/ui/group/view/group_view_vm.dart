@@ -6,11 +6,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -71,6 +71,8 @@ class GroupViewVM {
         isDirty: group.isNew,
         group: group,
         onEditPressed: (BuildContext context) {
+          editEntity(context: context, entity: group);
+          /*
           final Completer<GroupEntity> completer = Completer<GroupEntity>();
           store.dispatch(
               EditGroup(group: group, context: context, completer: completer));
@@ -80,6 +82,7 @@ class GroupViewVM {
               message: AppLocalization.of(context).updatedGroup,
             )));
           });
+           */
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
@@ -93,7 +96,7 @@ class GroupViewVM {
           } else {
             store.dispatch(FilterClientsByEntity(
                 entityId: group.id, entityType: EntityType.group));
-            store.dispatch(ViewClientList());
+            viewEntitiesByType(context: context, entityType: EntityType.client);
           }
         });
   }

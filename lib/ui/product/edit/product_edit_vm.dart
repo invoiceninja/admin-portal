@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -70,8 +71,7 @@ class ProductEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditProduct(
-            product: ProductEntity(), context: context, force: true));
+        createEntity(context: context, entity: ProductEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -89,8 +89,7 @@ class ProductEditVM {
               Navigator.of(context).pop(savedProduct);
             }
           } else {
-            store.dispatch(ViewProduct(
-                context: context, productId: savedProduct.id, force: true));
+            viewEntity(context: context, entity: savedProduct, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

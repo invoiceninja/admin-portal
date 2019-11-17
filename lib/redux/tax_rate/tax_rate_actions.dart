@@ -9,34 +9,31 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewTaxRateList implements PersistUI {
-  ViewTaxRateList({@required this.context, this.force = false});
+class ViewTaxRateList extends AbstractEntityAction implements PersistUI {
+  ViewTaxRateList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewTaxRate implements PersistUI {
+class ViewTaxRate extends AbstractEntityAction implements PersistUI {
   ViewTaxRate({
     @required this.taxRateId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String taxRateId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditTaxRate implements PersistUI {
-  EditTaxRate(
-      {@required this.taxRate,
-      @required this.context,
-      this.completer,
-      this.force = false});
+class EditTaxRate extends AbstractEntityAction implements PersistUI {
+  EditTaxRate({@required this.taxRate,
+    @required NavigatorState navigator,
+    this.completer,
+    this.force = false}) : super(navigator: navigator);
 
   final TaxRateEntity taxRate;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -236,17 +233,17 @@ class FilterTaxRatesByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-void handleTaxRateAction(
-    BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
+void handleTaxRateAction(BuildContext context, List<BaseEntity> taxRates,
+    EntityAction action) {
   assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          taxRates.length == 1,
-      'Cannot perform this action on more than one tax rate');
+  [
+    EntityAction.restore,
+    EntityAction.archive,
+    EntityAction.delete,
+    EntityAction.toggleMultiselect
+  ].contains(action) ||
+      taxRates.length == 1,
+  'Cannot perform this action on more than one tax rate');
 
   if (taxRates.isEmpty) {
     return;
@@ -259,7 +256,7 @@ void handleTaxRateAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditTaxRate(context: context, taxRate: taxRate));
+      editEntity(context: context, entity: taxRate);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaxRateRequest(

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -53,7 +53,6 @@ class VendorViewVM {
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final company = state.company;
     final vendor = state.vendorState.map[state.vendorUIState.selectedId] ??
         VendorEntity(id: state.vendorUIState.selectedId);
 
@@ -72,6 +71,8 @@ class VendorViewVM {
       isDirty: vendor.isNew,
       vendor: vendor,
       onEditPressed: (BuildContext context) {
+        editEntity(context: context, entity: vendor);
+        /*
         final Completer<VendorEntity> completer = Completer<VendorEntity>();
         store.dispatch(
             EditVendor(vendor: vendor, context: context, completer: completer));
@@ -81,6 +82,7 @@ class VendorViewVM {
             message: AppLocalization.of(context).updatedVendor,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
@@ -93,21 +95,24 @@ class VendorViewVM {
         switch (entityType) {
           case EntityType.expense:
             if (longPress && vendor.isActive) {
-              store.dispatch(EditExpense(
+              createEntity(
                   context: context,
-                  expense:
-                      ExpenseEntity(company: state.company, vendor: vendor)));
+                  entity:
+                      ExpenseEntity(company: state.company, vendor: vendor));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: vendor.id, entityType: EntityType.vendor));
-              store.dispatch(ViewExpenseList(context: context));
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.expense);
             }
             break;
         }
       },
-      onAddExpensePressed: (context) => store.dispatch(EditExpense(
-          expense: ExpenseEntity(company: company, vendor: vendor),
-          context: context)),
+      onAddExpensePressed: (context) {
+        createEntity(
+            context: context,
+            entity: ExpenseEntity(company: state.company, vendor: vendor));
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleVendorAction(context, [vendor], action),
     );

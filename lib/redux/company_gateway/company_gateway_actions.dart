@@ -13,9 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ViewCompanyGatewayList extends AbstractEntityAction implements PersistUI {
   ViewCompanyGatewayList(
       {@required NavigatorState navigator,
-      @required AppLocalization localization,
       this.force = false})
-      : super(navigator: navigator, localization: localization);
+      : super(navigator: navigator);
 
   final bool force;
 }
@@ -25,9 +24,8 @@ class ViewCompanyGateway extends AbstractEntityAction
   ViewCompanyGateway({
     @required this.companyGatewayId,
     @required NavigatorState navigator,
-    @required AppLocalization localization,
     this.force = false,
-  }) : super(navigator: navigator, localization: localization);
+  }) : super(navigator: navigator);
 
   final String companyGatewayId;
   final bool force;
@@ -38,10 +36,9 @@ class EditCompanyGateway extends AbstractEntityAction
   EditCompanyGateway(
       {@required this.companyGateway,
       @required NavigatorState navigator,
-      @required AppLocalization localization,
       this.completer,
       this.force = false})
-      : super(navigator: navigator, localization: localization);
+      : super(navigator: navigator);
 
   final CompanyGatewayEntity companyGateway;
   final Completer completer;

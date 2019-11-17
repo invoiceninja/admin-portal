@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -64,8 +65,7 @@ class TaxRateEditVM {
         store.dispatch(UpdateTaxRate(taxRate));
       },
       onCancelPressed: (context) {
-        store.dispatch(EditTaxRate(
-            taxRate: TaxRateEntity(), context: context, force: true));
+        createEntity(context: context, entity: TaxRateEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onBackPressed: () {
@@ -90,8 +90,7 @@ class TaxRateEditVM {
               Navigator.of(context).pop(savedTaxRate);
             }
           } else {
-            store.dispatch(ViewTaxRate(
-                context: context, taxRateId: savedTaxRate.id, force: true));
+            viewEntity(context: context, entity: savedTaxRate, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

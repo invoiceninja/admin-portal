@@ -7,38 +7,42 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewQuoteList implements PersistUI {
-  ViewQuoteList({this.context, this.force = false});
+class ViewQuoteList extends AbstractEntityAction implements PersistUI {
+  ViewQuoteList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewQuote implements PersistUI, PersistPrefs {
-  ViewQuote({this.quoteId, this.context, this.force = false});
+class ViewQuote extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
+  ViewQuote({
+    this.quoteId,
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
 
   final String quoteId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditQuote implements PersistUI, PersistPrefs {
+class EditQuote extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditQuote(
       {this.quote,
-      this.context,
-      this.completer,
+      @required NavigatorState navigator,
       this.quoteItemIndex,
-      this.force = false});
+      this.completer,
+      this.force = false})
+      : super(navigator: navigator);
 
   final InvoiceEntity quote;
   final int quoteItemIndex;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -380,7 +384,7 @@ Future handleQuoteAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditQuote(context: context, quote: quote));
+      editEntity(context: context, entity: quote);
       break;
     case EntityAction.pdf:
       viewPdf(quote, context);
@@ -392,14 +396,19 @@ Future handleQuoteAction(
       }
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(
-          ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+      viewEntityById(
+          context: context,
+          entityId: quote.quoteInvoiceId,
+          entityType: EntityType.invoice);
       break;
     case EntityAction.convert:
       final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
       store.dispatch(ConvertQuote(completer, quote.id));
       completer.future.then((InvoiceEntity invoice) {
-        store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+        viewEntityById(
+            context: context,
+            entityType: EntityType.invoice,
+            entityId: invoice.id);
       });
       break;
     case EntityAction.markSent:
@@ -415,11 +424,10 @@ Future handleQuoteAction(
           context: context));
       break;
     case EntityAction.cloneToInvoice:
-      store.dispatch(EditInvoice(context: context, invoice: quote.clone));
+      createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(
-          EditQuote(context: context, quote: quote.clone)); // TODO fix this
+      createEntity(context: context, entity: quote.clone); createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(

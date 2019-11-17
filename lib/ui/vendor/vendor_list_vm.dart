@@ -74,7 +74,7 @@ class VendorListVM {
           entityId: state.vendorListState.filterEntityId,
           entityType: state.vendorListState.filterEntityType),
       onVendorTap: (context, vendor) {
-        store.dispatch(ViewVendor(vendorId: vendor.id, context: context));
+        viewEntity(context: context, entity: vendor);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

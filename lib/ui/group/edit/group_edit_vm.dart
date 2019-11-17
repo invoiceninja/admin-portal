@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -70,8 +71,7 @@ class GroupEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditGroup(group: GroupEntity(), context: context, force: true));
+        createEntity(context: context, entity: GroupEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -86,8 +86,7 @@ class GroupEditVM {
               Navigator.of(context).pop(savedGroup);
             }
           } else {
-            store.dispatch(ViewGroup(
-                context: context, groupId: savedGroup.id, force: true));
+            viewEntity(context: context, entity: group, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

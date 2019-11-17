@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -139,13 +140,8 @@ class TaskScreen extends StatelessWidget {
               heroTag: 'task_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditTask(
-                    task: TaskEntity(
-                            isRunning: store.state.prefState.autoStartTasks)
-                        .rebuild((b) => b
-                          ..clientId =
-                              store.state.taskListState.filterEntityId),
-                    context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.task);
               },
               child: Icon(
                 Icons.add,

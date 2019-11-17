@@ -81,7 +81,7 @@ class ProjectListVM {
           entityId: state.projectListState.filterEntityId,
           entityType: state.projectListState.filterEntityType),
       onProjectTap: (context, project) {
-        store.dispatch(ViewProject(projectId: project.id, context: context));
+        viewEntity(context: context, entity: project);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

@@ -4,10 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -134,6 +133,8 @@ class InvoiceViewVM extends EntityViewVM {
       invoice: invoice,
       client: client,
       onEditPressed: (BuildContext context, [invoiceItemIndex]) {
+        editEntity(context: context, entity: invoice);
+        /*
         final Completer<InvoiceEntity> completer =
             new Completer<InvoiceEntity>();
         store.dispatch(EditInvoice(
@@ -147,6 +148,7 @@ class InvoiceViewVM extends EntityViewVM {
             message: AppLocalization.of(context).updatedInvoice,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
@@ -161,7 +163,7 @@ class InvoiceViewVM extends EntityViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id));
+          viewEntity(context: context, entity: client);
         }
       },
       onPaymentPressed: (BuildContext context, payment,
@@ -173,13 +175,13 @@ class InvoiceViewVM extends EntityViewVM {
             entities: [payment],
           );
         } else {
-          store.dispatch(ViewPayment(paymentId: payment.id, context: context));
+          viewEntity(context: context, entity: payment);
         }
       },
       onPaymentsPressed: (BuildContext context) {
         store.dispatch(FilterPaymentsByEntity(
             entityId: invoice.id, entityType: EntityType.invoice));
-        store.dispatch(ViewPaymentList(context: context));
+        viewEntitiesByType(context: context, entityType: EntityType.payment);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleInvoiceAction(context, [invoice], action),
@@ -210,8 +212,10 @@ class InvoiceViewVM extends EntityViewVM {
             [document.id]));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
-        store.dispatch(
-            ViewExpense(expenseId: document.expenseId, context: context));
+        viewEntityById(
+            context: context,
+            entityId: document.expenseId,
+            entityType: EntityType.expense);
       },
     );
   }

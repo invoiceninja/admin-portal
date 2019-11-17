@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -122,8 +123,8 @@ class GroupSettingsScreen extends StatelessWidget {
               heroTag: 'group_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(
-                    EditGroup(group: GroupEntity(), context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.group);
               },
               child: Icon(
                 Icons.add,

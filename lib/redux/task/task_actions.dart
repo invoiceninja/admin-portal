@@ -7,45 +7,43 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList implements PersistUI {
-  ViewTaskList({@required this.context, this.force = false});
+class ViewTaskList extends AbstractEntityAction implements PersistUI {
+  ViewTaskList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewTask implements PersistUI, PersistPrefs {
+class ViewTask extends AbstractEntityAction implements PersistUI, PersistPrefs {
   ViewTask({
     @required this.taskId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String taskId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditTask implements PersistUI, PersistPrefs {
+class EditTask extends AbstractEntityAction implements PersistUI, PersistPrefs {
   EditTask(
       {this.task,
       this.taskTime,
-      this.context,
+      @required NavigatorState navigator,
       this.completer,
       this.force = false,
-      this.taskTimeIndex});
+      this.taskTimeIndex})
+      : super(navigator: navigator);
 
   final int taskTimeIndex;
   final TaskEntity task;
   final TaskTime taskTime;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -301,7 +299,7 @@ void handleTaskAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditTask(context: context, task: task));
+      editEntity(context: context, entity: task);
       break;
     case EntityAction.start:
     case EntityAction.stop:
@@ -330,18 +328,21 @@ void handleTaskAction(
       break;
     case EntityAction.newInvoice:
       final item = convertTaskToInvoiceItem(task: task, context: context);
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company).rebuild((b) => b
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(company: company).rebuild((b) => b
             ..hasTasks = true
             ..clientId = task.clientId
-            ..lineItems.add(item)),
-          context: context));
+            ..lineItems.add(item)));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(ViewInvoice(invoiceId: task.invoiceId, context: context));
+      viewEntityById(
+          context: context,
+          entityType: EntityType.invoice,
+          entityId: task.invoiceId);
       break;
     case EntityAction.clone:
-      store.dispatch(EditTask(context: context, task: task.clone));
+      createEntity(context: context, entity: task.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(

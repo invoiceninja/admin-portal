@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -114,7 +112,7 @@ class TaskViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id));
+          viewEntity(context: context, entity: client);
         }
       },
       onProjectPressed: (context, [longPress = false]) {
@@ -125,7 +123,7 @@ class TaskViewVM {
             client: client,
           );
         } else {
-          store.dispatch(ViewProject(projectId: project.id, context: context));
+          viewEntity(context: context, entity: project);
         }
       },
       onInvoicePressed: (context, [longPress = false]) {
@@ -136,10 +134,12 @@ class TaskViewVM {
             client: client,
           );
         } else {
-          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+          viewEntity(context: context, entity: invoice);
         }
       },
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
+        editEntity(context: context, entity: task);
+        /*
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(EditTask(
           task: task,
@@ -153,6 +153,7 @@ class TaskViewVM {
             message: AppLocalization.of(context).updatedTask,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

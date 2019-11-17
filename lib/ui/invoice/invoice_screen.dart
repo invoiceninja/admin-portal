@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -163,10 +164,8 @@ class InvoiceScreen extends StatelessWidget {
               heroTag: 'invoice_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditInvoice(
-                    invoice: InvoiceEntity(company: company).rebuild((b) => b
-                      ..clientId = store.state.invoiceListState.filterEntityId),
-                    context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.invoice);
               },
               child: Icon(Icons.add, color: Colors.white),
               tooltip: localization.newInvoice,

@@ -9,29 +9,30 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDocumentList implements PersistUI {
-  ViewDocumentList(this.context);
+class ViewDocumentList extends AbstractEntityAction implements PersistUI {
+  ViewDocumentList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
-}
-
-class ViewDocument implements PersistUI {
-  ViewDocument({this.documentId, this.context, this.force});
-
-  final String documentId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditDocument implements PersistUI {
+class ViewDocument extends AbstractEntityAction implements PersistUI {
+  ViewDocument(
+      {@required NavigatorState navigator, this.documentId, this.force})
+      : super(navigator: navigator);
+
+  final String documentId;
+  final bool force;
+}
+
+class EditDocument extends AbstractEntityAction implements PersistUI {
   EditDocument({
+    @required NavigatorState navigator,
     this.document,
-    this.context,
     this.completer,
-  });
+  }) : super(navigator: navigator);
 
   final DocumentEntity document;
-  final BuildContext context;
   final Completer completer;
 }
 
@@ -253,7 +254,7 @@ void handleDocumentAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditDocument(context: context, document: document));
+      editEntity(context: context, entity: document);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreDocumentRequest(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
@@ -118,8 +119,7 @@ class InvoiceEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedInvoice);
             }
           } else {
-            store.dispatch(ViewInvoice(
-                context: context, invoiceId: savedInvoice.id, force: true));
+            viewEntity(context: context, entity: savedInvoice, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
@@ -141,8 +141,7 @@ class InvoiceEditVM extends EntityEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditInvoice(
-            invoice: InvoiceEntity(), context: context, force: true));
+        createEntity(context: context, entity: InvoiceEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );

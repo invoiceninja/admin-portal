@@ -76,7 +76,7 @@ class GroupListVM {
           entityId: state.groupListState.filterEntityId,
           entityType: state.groupListState.filterEntityType),
       onGroupTap: (context, group) {
-        store.dispatch(ViewGroup(groupId: group.id, context: context));
+        viewEntity(context: context, entity: group);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

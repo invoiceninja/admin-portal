@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -70,15 +70,7 @@ class DocumentViewVM {
       isDirty: document.isNew,
       document: document,
       onEditPressed: (BuildContext context) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        store.dispatch(EditDocument(
-            document: document, context: context, completer: completer));
-        completer.future.then((document) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedDocument,
-          )));
-        });
+        editEntity(context: context, entity: document);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

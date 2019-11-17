@@ -83,7 +83,7 @@ class TaskListVM {
           entityId: state.taskListState.filterEntityId,
           entityType: state.taskListState.filterEntityType),
       onTaskTap: (context, task) {
-        store.dispatch(ViewTask(taskId: task.id, context: context));
+        viewEntity(context: context, entity: task);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

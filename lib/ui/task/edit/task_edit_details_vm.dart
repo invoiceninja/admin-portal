@@ -3,13 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
@@ -64,6 +59,8 @@ class TaskEditDetailsVM {
         store.dispatch(UpdateTask(task));
       },
       onAddClientPressed: (context, completer) {
+        createEntity(context: context, entity: ClientEntity());
+        /*
         store.dispatch(EditClient(
           client: ClientEntity(),
           completer: completer,
@@ -80,8 +77,14 @@ class TaskEditDetailsVM {
             message: AppLocalization.of(context).createdClient,
           )));
         });
+         */
       },
       onAddProjectPressed: (context, completer) {
+        createEntity(
+            context: context,
+            entity: ProjectEntity()
+                .rebuild((b) => b..clientId = task.clientId ?? 0));
+        /*
         store.dispatch(EditProject(
           project:
               ProjectEntity().rebuild((b) => b..clientId = task.clientId ?? 0),
@@ -99,7 +102,8 @@ class TaskEditDetailsVM {
               content: SnackBarRow(
             message: AppLocalization.of(context).createdProject,
           )));
-        });
+        });        
+         */
       },
     );
   }

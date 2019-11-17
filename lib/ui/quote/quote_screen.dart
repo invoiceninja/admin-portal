@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -154,12 +155,8 @@ class QuoteScreen extends StatelessWidget {
               heroTag: 'quote_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditQuote(
-                    quote: InvoiceEntity(company: company, isQuote: true)
-                        .rebuild((b) => b
-                          ..clientId =
-                              store.state.quoteListState.filterEntityId),
-                    context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.quote);
               },
               child: Icon(
                 Icons.add,

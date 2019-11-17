@@ -76,9 +76,10 @@ class DocumentListVM {
           context: context,
           entityId: state.documentListState.filterEntityId,
           entityType: state.documentListState.filterEntityType),
-      onDocumentTap: (context, document) {
-        store.dispatch(ViewDocument(documentId: document.id, context: context));
-      },
+      onDocumentTap: (context, document) => viewEntityById(
+          context: context,
+          entityId: document.id,
+          entityType: EntityType.document),
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
               EntityAction action) =>
           handleDocumentAction(context, documents, action),

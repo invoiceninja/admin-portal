@@ -89,9 +89,7 @@ class PaymentEditVM {
         store.dispatch(UserSettingsChanged(emailPayment: value));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditPayment(
-            payment: PaymentEntity(), context: context, force: true));
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        createEntity(context: context, entity: PaymentEntity(), force: true);
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(PaymentScreen.route)) {
@@ -113,8 +111,7 @@ class PaymentEditVM {
               Navigator.of(context).pop(savedPayment);
             }
           } else {
-            store.dispatch(ViewPayment(
-                context: context, paymentId: savedPayment.id, force: true));
+            viewEntity(context: context, entity: savedPayment, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

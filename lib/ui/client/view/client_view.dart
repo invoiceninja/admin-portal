@@ -2,13 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -85,9 +80,10 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.invoice),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditInvoice(
-                              invoice: InvoiceEntity(company: company, client: client),
-                              context: context));
+                          createEntity(
+                              context: context,
+                              entity: InvoiceEntity(
+                                  company: company, client: client));
                         },
                       )
                     : Container(),
@@ -98,10 +94,10 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.payment),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditPayment(
-                              payment: PaymentEntity(company: company)
-                                  .rebuild((b) => b.clientId = client.id),
-                              context: context));
+                          createEntity(
+                              context: context,
+                              entity: PaymentEntity(company: company)
+                                  .rebuild((b) => b.clientId = client.id));
                         },
                       )
                     : Container(),
@@ -113,9 +109,12 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.quote),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditQuote(
-                              quote: InvoiceEntity(company: company, client: client, isQuote: true),
-                              context: context));
+                          createEntity(
+                              context: context,
+                              entity: InvoiceEntity(
+                                  company: company,
+                                  client: client,
+                                  isQuote: true));
                         },
                       )
                     : Container(),
@@ -127,10 +126,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.project),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditProject(
-                              project: ProjectEntity()
-                                  .rebuild((b) => b.clientId = client.id),
-                              context: context));
+                          createEntity(context: context, entity: ProjectEntity()
+                              .rebuild((b) => b.clientId = client.id));
                         },
                       )
                     : Container(),
@@ -142,12 +139,10 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.task),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditTask(
-                              task: TaskEntity(
-                                      isRunning:
-                                          store.state.prefState.autoStartTasks)
-                                  .rebuild((b) => b.clientId = client.id),
-                              context: context));
+                          createEntity(context: context, entity: TaskEntity(
+                              isRunning:
+                              store.state.prefState.autoStartTasks)
+                              .rebuild((b) => b.clientId = client.id));
                         },
                       )
                     : Container(),
@@ -159,12 +154,12 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.expense),
                         onTap: () {
                           Navigator.of(context).pop();
-                          store.dispatch(EditExpense(
-                              expense: ExpenseEntity(
+                          createEntity(
+                              context: context,
+                              entity: ExpenseEntity(
                                   company: company,
                                   client: client,
-                                  prefState: store.state.prefState),
-                              context: context));
+                                  prefState: store.state.prefState));
                         },
                       )
                     : Container(),

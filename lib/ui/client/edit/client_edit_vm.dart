@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -87,8 +88,7 @@ class ClientEditVM {
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
-          store.dispatch(EditClient(
-              client: ClientEntity(), force: true));
+          createEntity(context: context, entity: ClientEntity(), force: true);
           if (state.clientUIState.cancelCompleter != null) {
             state.clientUIState.cancelCompleter.complete();
           } else {
@@ -118,8 +118,7 @@ class ClientEditVM {
                 Navigator.of(context).pop(savedClient);
               }
             } else {
-              store.dispatch(ViewClient(
-                  clientId: savedClient.id, force: true));
+              viewEntity(context: context, entity: savedClient, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

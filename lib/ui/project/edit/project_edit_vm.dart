@@ -5,13 +5,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
@@ -76,8 +74,7 @@ class ProjectEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditProject(
-            project: ProjectEntity(), context: context, force: true));
+        createEntity(context: context, entity: ProjectEntity(), force: true);
         if (state.projectUIState.cancelCompleter != null) {
           state.projectUIState.cancelCompleter.complete();
         } else {
@@ -85,6 +82,8 @@ class ProjectEditVM {
         }
       },
       onAddClientPressed: (context, completer) {
+        createEntity(context: context, entity: ClientEntity(), force: true);
+        /*
         store.dispatch(EditClient(
           client: ClientEntity(),
           completer: completer,
@@ -101,6 +100,7 @@ class ProjectEditVM {
             message: AppLocalization.of(context).createdClient,
           )));
         });
+         */
       },
       onSavePressed: (BuildContext context) {
         final Completer<ProjectEntity> completer =
@@ -117,8 +117,7 @@ class ProjectEditVM {
               Navigator.of(context).pop(savedProject);
             }
           } else {
-            store.dispatch(ViewProject(
-                context: context, projectId: savedProject.id, force: true));
+            viewEntity(context: context, entity: savedProject);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

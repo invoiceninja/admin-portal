@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -68,6 +68,8 @@ class TaxRateViewVM {
       isDirty: taxRate.isNew,
       taxRate: taxRate,
       onEditPressed: (BuildContext context) {
+        editEntity(context: context, entity: taxRate);
+        /*
         final Completer<TaxRateEntity> completer = Completer<TaxRateEntity>();
         store.dispatch(EditTaxRate(
             taxRate: taxRate, context: context, completer: completer));
@@ -77,6 +79,7 @@ class TaxRateViewVM {
             message: AppLocalization.of(context).updatedTaxRate,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

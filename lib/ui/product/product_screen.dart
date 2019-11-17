@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -123,8 +124,7 @@ class ProductScreen extends StatelessWidget {
               heroTag: 'product_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(
-                    EditProduct(product: ProductEntity(), context: context));
+                createEntityByType(context: context, entityType: EntityType.product);
               },
               child: Icon(
                 Icons.add,

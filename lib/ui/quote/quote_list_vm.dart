@@ -91,7 +91,7 @@ class QuoteListVM extends EntityListVM {
       isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
-        store.dispatch(ViewQuote(quoteId: quote.id, context: context));
+        viewEntity(context: context, entity: quote);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(FilterQuotesByEntity()),

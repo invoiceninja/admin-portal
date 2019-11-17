@@ -6,45 +6,42 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewInvoiceList implements PersistUI {
-  ViewInvoiceList({this.context, this.force = false});
+class ViewInvoiceList extends AbstractEntityAction implements PersistUI {
+  ViewInvoiceList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewInvoice implements PersistUI, PersistPrefs {
-  ViewInvoice({this.invoiceId, this.context, this.force = false});
+class ViewInvoice extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
+  ViewInvoice(
+      {this.invoiceId, @required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
   final String invoiceId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditInvoice implements PersistUI, PersistPrefs {
-  EditInvoice(
-      {this.invoice,
-      this.context,
-      this.completer,
-      this.invoiceItemIndex,
-      this.force = false,
-      @required this.navigator,
-      @required this.localization});
+class EditInvoice extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
+  EditInvoice({
+    this.invoice,
+    @required NavigatorState navigator,
+    this.completer,
+    this.invoiceItemIndex,
+    this.force = false,
+  }) : super(navigator: navigator);
 
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
-  final BuildContext context;
   final Completer completer;
   final bool force;
-  final NavigatorState navigator;
-  final AppLocalization localization;
 }
 
 class ShowEmailInvoice {
@@ -367,7 +364,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditInvoice(context: context, invoice: invoice));
+      editEntity(context: context, entity: invoice);
       break;
     case EntityAction.pdf:
       viewPdf(invoice, context);
@@ -391,15 +388,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           context: context));
       break;
     case EntityAction.cloneToInvoice:
-      store.dispatch(EditInvoice(context: context, invoice: invoice.clone));
+      createEntity(context: context, entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(
-          EditQuote(context: context, quote: invoice.clone)); // TODO fix this
+      createEntity(context: context, entity: invoice.clone); // TODO fix this
       break;
     case EntityAction.newPayment:
-      store.dispatch(EditPayment(
-          context: context, payment: invoice.createPayment(company)));
+      createEntity(context: context, entity: invoice.createPayment(company));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -111,8 +112,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
               heroTag: 'tax_rate_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(
-                    EditTaxRate(taxRate: TaxRateEntity(), context: context));
+                createEntityByType(context: context, entityType: EntityType.taxRate);
               },
               child: Icon(
                 Icons.add,

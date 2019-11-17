@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
@@ -70,8 +71,7 @@ class VendorEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditVendor(vendor: VendorEntity(), context: context, force: true));
+        createEntity(context: context, entity: VendorEntity(), force: true);
         if (state.vendorUIState.cancelCompleter != null) {
           state.vendorUIState.cancelCompleter.complete();
         } else {
@@ -100,8 +100,7 @@ class VendorEditVM {
               Navigator.of(context).pop(savedVendor);
             }
           } else {
-            store.dispatch(ViewVendor(
-                context: context, vendorId: savedVendor.id, force: true));
+            viewEntity(context: context, entity: savedVendor, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

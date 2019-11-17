@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -76,8 +77,7 @@ class UserEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditUser(user: UserEntity(), context: context, force: true));
+        createEntity(context: context, entity: UserEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -92,8 +92,7 @@ class UserEditVM {
               Navigator.of(context).pop(savedUser);
             }
           } else {
-            store.dispatch(
-                ViewUser(context: context, userId: savedUser.id, force: true));
+            viewEntity(context: context, entity: savedUser, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

@@ -1,19 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 class AppBuilder extends StatefulWidget {
   const AppBuilder({Key key, this.builder}) : super(key: key);
@@ -50,6 +36,7 @@ class AppBuilderState extends State<AppBuilder> {
 
   void runCommand(BuildContext context) {
     print('### RUN COMMAND: $_command ###');
+    /*
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
     const force = true;
@@ -113,7 +100,7 @@ class AppBuilderState extends State<AppBuilder> {
             EditVendor(context: context, vendor: VendorEntity(), force: force);
         break;
       case 'le':
-        action = ViewExpenseList(context: context);
+        viewEntitiesByType(context: context, entityType: EntityType.expense);
         break;
       case 'ne':
         action = EditExpense(
@@ -127,6 +114,7 @@ class AppBuilderState extends State<AppBuilder> {
       store.dispatch(action);
       SystemChannels.textInput.invokeMethod<String>('TextInput.hide');
     }
+     */
   }
 
   @override

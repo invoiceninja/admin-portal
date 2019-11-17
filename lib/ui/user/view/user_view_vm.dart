@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -75,6 +75,8 @@ class UserViewVM {
       isDirty: user.isNew,
       user: user,
       onEditPressed: (BuildContext context) {
+        editEntity(context: context, entity: user);
+        /*
         final Completer<UserEntity> completer = Completer<UserEntity>();
         store.dispatch(
             EditUser(user: user, context: context, completer: completer));
@@ -83,7 +85,8 @@ class UserViewVM {
               content: SnackBarRow(
             message: AppLocalization.of(context).updatedUser,
           )));
-        });
+        });        
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
@@ -96,68 +99,66 @@ class UserViewVM {
         switch (entityType) {
           case EntityType.invoice:
             if (longPress && user.isActive) {
-              store.dispatch(EditInvoice(
+              createEntity(
                   context: context,
-                  invoice: InvoiceEntity(company: state.company)));
+                  entity: InvoiceEntity(company: state.company));
             } else {
               store.dispatch(FilterInvoicesByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewInvoiceList(context: context));
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.invoice);
             }
             break;
           case EntityType.quote:
             if (longPress && user.isActive) {
-              store.dispatch(EditQuote(
+              createEntity(
                   context: context,
-                  quote: InvoiceEntity(company: state.company, isQuote: true)));
+                  entity: InvoiceEntity(company: state.company, isQuote: true));
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewQuoteList(context: context));
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.quote);
             }
             break;
           case EntityType.payment:
             if (longPress && user.isActive) {
-              store.dispatch(EditPayment(
+              createEntity(
                   context: context,
-                  payment: PaymentEntity(company: state.company)));
+                  entity: PaymentEntity(company: state.company));
             } else {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewPaymentList(context: context));
+              viewEntitiesByType(context: context, entityType: EntityType.payment);
             }
             break;
           case EntityType.project:
             if (longPress && user.isActive) {
-              store.dispatch(
-                  EditProject(context: context, project: ProjectEntity()));
+              createEntity(context: context, entity: ProjectEntity());
             } else {
               store.dispatch(FilterProjectsByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewProjectList(context: context));
+              viewEntitiesByType(context: context, entityType: EntityType.project);
             }
             break;
           case EntityType.task:
             if (longPress && user.isActive) {
-              store.dispatch(EditTask(
-                  context: context,
-                  task: TaskEntity(isRunning: state.prefState.autoStartTasks)));
+              createEntity(context: context, entity: TaskEntity(isRunning: state.prefState.autoStartTasks));
             } else {
               store.dispatch(FilterTasksByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewTaskList(context: context));
+              viewEntitiesByType(context: context, entityType: EntityType.task);
             }
             break;
           case EntityType.expense:
             if (longPress && user.isActive) {
-              store.dispatch(EditExpense(
-                  context: context,
-                  expense: ExpenseEntity(
-                      company: state.company, prefState: state.prefState)));
+              createEntityByType(
+                  context: context, entityType: EntityType.expense);
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              store.dispatch(ViewExpenseList(context: context));
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.expense);
             }
             break;
         }

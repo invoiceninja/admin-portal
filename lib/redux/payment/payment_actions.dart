@@ -9,34 +9,35 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewPaymentList implements PersistUI {
-  ViewPaymentList({@required this.context, this.force = false});
+class ViewPaymentList extends AbstractEntityAction implements PersistUI {
+  ViewPaymentList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewPayment implements PersistUI, PersistPrefs {
+class ViewPayment extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewPayment({
     @required this.paymentId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String paymentId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditPayment implements PersistUI, PersistPrefs {
+class EditPayment extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditPayment(
       {@required this.payment,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final PaymentEntity payment;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -274,7 +275,7 @@ void handlePaymentAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditPayment(context: context, payment: payment));
+      editEntity(context: context, entity: payment);
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(

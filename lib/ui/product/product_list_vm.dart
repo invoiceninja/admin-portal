@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
@@ -64,7 +65,7 @@ class ProductListVM {
       isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
-        store.dispatch(ViewProduct(productId: product.id, context: context));
+        viewEntity(context: context, entity: product);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

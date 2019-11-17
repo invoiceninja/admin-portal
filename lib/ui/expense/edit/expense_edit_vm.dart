@@ -4,12 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -78,11 +74,13 @@ class ExpenseEditVM {
         }
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditExpense(
-            expense: ExpenseEntity(), context: context, force: true));
+        createEntityByType(
+            context: context, entityType: EntityType.expense, force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
+        createEntity(context: context, entity: ClientEntity(), force: true);
+        /*
         store.dispatch(EditClient(
           client: ClientEntity(),
           completer: completer,
@@ -99,8 +97,11 @@ class ExpenseEditVM {
             message: AppLocalization.of(context).createdClient,
           )));
         });
+         */
       },
       onAddVendorPressed: (context, completer) {
+        createEntity(context: context, entity: VendorEntity());
+        /*
         store.dispatch(EditVendor(
           vendor: VendorEntity(),
           context: context,
@@ -118,6 +119,7 @@ class ExpenseEditVM {
             message: AppLocalization.of(context).createdClient,
           )));
         });
+         */
       },
       onSavePressed: (BuildContext context) {
         final Completer<ExpenseEntity> completer =
@@ -134,8 +136,11 @@ class ExpenseEditVM {
               Navigator.of(context).pop(savedExpense);
             }
           } else {
-            store.dispatch(ViewExpense(
-                context: context, expenseId: savedExpense.id, force: true));
+            viewEntityById(
+                context: context,
+                entityType: EntityType.expense,
+                entityId: savedExpense.id,
+                force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

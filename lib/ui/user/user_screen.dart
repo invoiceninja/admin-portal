@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -121,7 +122,8 @@ class UserScreen extends StatelessWidget {
               heroTag: 'user_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditUser(user: UserEntity(), context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.user);
               },
               child: Icon(
                 Icons.add,

@@ -8,38 +8,38 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewExpenseList implements PersistUI {
-  ViewExpenseList({@required this.context, this.force = false});
+class ViewExpenseList extends AbstractEntityAction implements PersistUI {
+  ViewExpenseList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewExpense implements PersistUI, PersistPrefs {
+class ViewExpense extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewExpense({
     @required this.expenseId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String expenseId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditExpense implements PersistUI, PersistPrefs {
+class EditExpense extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditExpense(
       {@required this.expense,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final ExpenseEntity expense;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -266,24 +266,26 @@ void handleExpenseAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditExpense(context: context, expense: expense));
+      editEntity(context: context, entity: expense);
       break;
     case EntityAction.clone:
-      store.dispatch(EditExpense(context: context, expense: expense.clone));
+      createEntity(context: context, entity: expense.clone);
       break;
     case EntityAction.newInvoice:
       final item = convertExpenseToInvoiceItem(
           expense: expense, categoryMap: company.expenseCategoryMap);
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company).rebuild((b) => b
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(company: company).rebuild((b) => b
             ..hasExpenses = true
             ..clientId = expense.clientId
-            ..lineItems.add(item)),
-          context: context));
+            ..lineItems.add(item)));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(
-          ViewInvoice(invoiceId: expense.invoiceId, context: context));
+      viewEntityById(
+          context: context,
+          entityType: EntityType.invoice,
+          entityId: expense.invoiceId);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreExpenseRequest(

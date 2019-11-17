@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -24,7 +25,6 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.paymentUIState.listUIState;
@@ -117,10 +117,8 @@ class PaymentScreen extends StatelessWidget {
               heroTag: 'payment_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(EditPayment(
-                    payment: PaymentEntity(company: company).rebuild((b) => b
-                      ..clientId = store.state.paymentListState.filterEntityId),
-                    context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.payment);
               },
               child: Icon(
                 Icons.add,

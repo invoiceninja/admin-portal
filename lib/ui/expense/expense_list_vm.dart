@@ -81,7 +81,10 @@ class ExpenseListVM {
           entityId: state.expenseListState.filterEntityId,
           entityType: state.expenseListState.filterEntityType),
       onExpenseTap: (context, expense) {
-        store.dispatch(ViewExpense(expenseId: expense.id, context: context));
+        viewEntityById(
+            context: context,
+            entityId: expense.id,
+            entityType: EntityType.expense);
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

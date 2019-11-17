@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -90,8 +91,7 @@ class QuoteEditVM extends EntityEditVM {
               Navigator.of(context).pop(savedQuote);
             }
           } else {
-            store.dispatch(ViewQuote(
-                context: context, quoteId: savedQuote.id, force: true));
+            viewEntity(context: context, entity: savedQuote, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
@@ -108,8 +108,7 @@ class QuoteEditVM extends EntityEditVM {
         store.dispatch(AddQuoteItems(items));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditQuote(quote: InvoiceEntity(), context: context, force: true));
+        createEntity(context: context, entity: InvoiceEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );

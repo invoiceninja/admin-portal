@@ -125,7 +125,7 @@ class InvoiceListVM extends EntityListVM {
       isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
       filter: state.invoiceListState.filter,
       onInvoiceTap: (context, invoice) {
-        store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+        viewEntity(context: context, entity: invoice);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () =>

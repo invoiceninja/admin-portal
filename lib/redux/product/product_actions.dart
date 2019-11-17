@@ -6,36 +6,39 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProductList implements PersistUI {
-  ViewProductList({@required this.context, this.force = false});
+class ViewProductList extends AbstractEntityAction implements PersistUI {
+  ViewProductList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewProduct implements PersistUI, PersistPrefs {
+class ViewProduct extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewProduct(
-      {@required this.productId, @required this.context, this.force = false});
+      {@required this.productId,
+      @required NavigatorState navigator,
+      this.force = false})
+      : super(navigator: navigator);
 
   final String productId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditProduct implements PersistUI, PersistPrefs {
+class EditProduct extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditProduct(
       {@required this.product,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final ProductEntity product;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -221,17 +224,16 @@ void handleProductAction(
     case EntityAction.newInvoice:
       final item =
           convertProductToInvoiceItem(context: context, product: product);
-      store.dispatch(EditInvoice(
+      createEntity(
           context: context,
-          invoice: InvoiceEntity(company: state.company)
-              .rebuild((b) => b..lineItems.add(item))));
+          entity: InvoiceEntity(company: state.company)
+              .rebuild((b) => b..lineItems.add(item)));
       break;
     case EntityAction.edit:
-      store.dispatch(EditProduct(context: context, product: product));
+      editEntity(context: context, entity: product);
       break;
     case EntityAction.clone:
-      store.dispatch(EditProduct(
-          context: context, product: (product as ProductEntity).clone));
+      createEntity(context: context, entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreProductRequest(

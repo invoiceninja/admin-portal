@@ -8,39 +8,39 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewGroupList implements PersistUI {
-  ViewGroupList({@required this.context, this.force = false});
+class ViewGroupList extends AbstractEntityAction implements PersistUI {
+  ViewGroupList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewGroup implements PersistUI, PersistPrefs {
+class ViewGroup extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   ViewGroup({
     @required this.groupId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String groupId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditGroup implements PersistUI, PersistPrefs {
+class EditGroup extends AbstractEntityAction
+    implements PersistUI, PersistPrefs {
   EditGroup(
       {@required this.group,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final GroupEntity group;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -253,15 +253,16 @@ void handleGroupAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditGroup(context: context, group: group));
+      editEntity(context: context, entity: group);
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
           context: context, group: group, section: kSettingsCompanyDetails));
       break;
     case EntityAction.newClient:
-      store.dispatch(EditClient(
-          client: ClientEntity().rebuild((b) => b..groupId = group.id)));
+      createEntity(
+          context: context,
+          entity: ClientEntity().rebuild((b) => b..groupId = group.id));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreGroupRequest(

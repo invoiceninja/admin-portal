@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PersistUI {}
 
@@ -113,9 +112,8 @@ class FilterCompany implements PersistUI {
 }
 
 abstract class AbstractEntityAction {
-  AbstractEntityAction({this.localization, this.navigator});
+  AbstractEntityAction({this.navigator});
 
-  final AppLocalization localization;
   final NavigatorState navigator;
 
   BuildContext get context => navigator.overlay.context;
@@ -124,62 +122,57 @@ abstract class AbstractEntityAction {
 void viewEntitiesByType({BuildContext context, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
-  final localization = AppLocalization.of(context);
 
   switch (entityType) {
     case EntityType.client:
       store.dispatch(ViewClientList(
         navigator: navigator,
-        localization: localization,
       ));
       break;
     case EntityType.user:
-      store.dispatch(ViewUserList(context: context));
+      store.dispatch(ViewUserList(navigator: navigator));
       break;
     case EntityType.project:
-      store.dispatch(ViewProjectList(context: context));
+      store.dispatch(ViewProjectList(navigator: navigator));
       break;
     case EntityType.taxRate:
-      store.dispatch(ViewTaxRateList(context: context));
+      store.dispatch(ViewTaxRateList(navigator: navigator));
       break;
     case EntityType.companyGateway:
-      store.dispatch(ViewCompanyGatewayList(
-        navigator: navigator,
-        localization: localization,
-      ));
+      store.dispatch(ViewCompanyGatewayList(navigator: navigator));
       break;
     case EntityType.invoice:
-      store.dispatch(ViewInvoiceList(context: context));
+      store.dispatch(ViewInvoiceList(navigator: navigator));
       break;
     //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(ViewQuoteList(context: context));
+      store.dispatch(ViewQuoteList(navigator: navigator));
       break;
     case EntityType.vendor:
-      store.dispatch(ViewVendorList(context: context));
+      store.dispatch(ViewVendorList(navigator: navigator));
       break;
     case EntityType.product:
-      store.dispatch(ViewProductList(context: context));
+      store.dispatch(ViewProductList(navigator: navigator));
       break;
     case EntityType.task:
-      store.dispatch(ViewTaskList(context: context));
+      store.dispatch(ViewTaskList(navigator: navigator));
       break;
     case EntityType.expense:
-      store.dispatch(ViewExpenseList(context: context));
+      store.dispatch(ViewExpenseList(navigator: navigator));
       break;
     //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
     //break;
     //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(ViewPaymentList(context: context));
+      store.dispatch(ViewPaymentList(navigator: navigator));
       break;
     case EntityType.group:
-      store.dispatch(ViewGroupList(context: context));
+      store.dispatch(ViewGroupList(navigator: navigator));
       break;
     // TODO Add to starter
   }
@@ -192,214 +185,240 @@ void viewEntityById(
     bool force = false}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
-  final localization = AppLocalization.of(context);
+
+  if (!store.state.getEntityMap(entityType).containsKey(entityId)) {
+    return;
+  }
 
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(ViewClient(
-        clientId: entityId,
-        navigator: navigator,
-        localization: localization,
-        force: force,
-      ));
+      store.dispatch(
+          ViewClient(clientId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.user:
-      store.dispatch(ViewUser(userId: entityId, context: context));
+      store.dispatch(
+          ViewUser(userId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.project:
-      store.dispatch(ViewProject(projectId: entityId, context: context));
+      store.dispatch(
+          ViewProject(projectId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.taxRate:
-      store.dispatch(ViewTaxRate(taxRateId: entityId, context: context));
+      store.dispatch(
+          ViewTaxRate(taxRateId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.companyGateway:
       store.dispatch(ViewCompanyGateway(
-        companyGatewayId: entityId,
-        navigator: navigator,
-        localization: localization,
-        force: force,
-      ));
+          companyGatewayId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.invoice:
-      store.dispatch(ViewInvoice(invoiceId: entityId, context: context));
+      store.dispatch(
+          ViewInvoice(invoiceId: entityId, navigator: navigator, force: force));
       break;
     //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(ViewQuote(quoteId: entityId, context: context));
+      store.dispatch(
+          ViewQuote(quoteId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.vendor:
-      store.dispatch(ViewVendor(vendorId: entityId, context: context));
+      store.dispatch(
+          ViewVendor(vendorId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.product:
-      store.dispatch(ViewProduct(productId: entityId, context: context));
+      store.dispatch(
+          ViewProduct(productId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.task:
-      store.dispatch(ViewTask(taskId: entityId, context: context));
+      store.dispatch(
+          ViewTask(taskId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.expense:
-      store.dispatch(ViewExpense(expenseId: entityId, context: context));
+      store.dispatch(
+          ViewExpense(expenseId: entityId, navigator: navigator, force: force));
       break;
     //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
     //break;
     //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(ViewPayment(paymentId: entityId, context: context));
+      store.dispatch(
+          ViewPayment(paymentId: entityId, navigator: navigator, force: force));
       break;
     case EntityType.group:
-      store.dispatch(ViewGroup(groupId: entityId, context: context));
+      store.dispatch(
+          ViewGroup(groupId: entityId, navigator: navigator, force: force));
       break;
     // TODO Add to starter
   }
 }
 
-void viewEntity({BuildContext context, BaseEntity entity}) => viewEntityById(
-    context: context, entityId: entity.id, entityType: entity.entityType);
+void viewEntity(
+        {BuildContext context, BaseEntity entity, bool force = false}) =>
+    viewEntityById(
+        context: context,
+        entityId: entity.id,
+        entityType: entity.entityType,
+        force: force);
 
-void createEntityByType({BuildContext context, EntityType entityType}) {
+void createEntityByType(
+    {BuildContext context, EntityType entityType, bool force = false}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final company = state.company;
   final navigator = Navigator.of(context);
-  final localization = AppLocalization.of(context);
 
   switch (entityType) {
     case EntityType.client:
       store.dispatch(EditClient(
-          client: ClientEntity(),
-          navigator: navigator,
-          localization: localization));
+        client: ClientEntity(),
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.user:
-      store.dispatch(EditUser(context: context, user: UserEntity()));
+      store.dispatch(
+          EditUser(navigator: navigator, force: force, user: UserEntity()));
       break;
     case EntityType.project:
-      store.dispatch(EditProject(context: context, project: ProjectEntity()));
+      store.dispatch(EditProject(
+          navigator: navigator, force: force, project: ProjectEntity()));
       break;
     case EntityType.taxRate:
-      store.dispatch(EditTaxRate(context: context, taxRate: TaxRateEntity()));
+      store.dispatch(EditTaxRate(
+          navigator: navigator, force: force, taxRate: TaxRateEntity()));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
           navigator: navigator,
-          localization: localization,
+          force: force,
           companyGateway: CompanyGatewayEntity()));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
-          context: context,
-          invoice: InvoiceEntity(company: company),
-          localization: localization,
-          navigator: navigator));
+        navigator: navigator,
+        force: force,
+        invoice: InvoiceEntity(company: company),
+      ));
       break;
     //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
       store.dispatch(EditQuote(
-          context: context,
+          navigator: navigator,
+          force: force,
           quote: InvoiceEntity(company: company, isQuote: true)));
       break;
     case EntityType.vendor:
-      store.dispatch(EditVendor(context: context, vendor: VendorEntity()));
+      store.dispatch(EditVendor(
+          navigator: navigator, force: force, vendor: VendorEntity()));
       break;
     case EntityType.product:
-      store.dispatch(EditProduct(context: context, product: ProductEntity()));
+      store.dispatch(EditProduct(
+          navigator: navigator, force: force, product: ProductEntity()));
       break;
     case EntityType.task:
       store.dispatch(EditTask(
-          context: context,
+          navigator: navigator,
+          force: force,
           task: TaskEntity(isRunning: state.prefState.autoStartTasks)));
       break;
     case EntityType.expense:
       store.dispatch(EditExpense(
-          context: context,
+          navigator: navigator,
+          force: force,
           expense: ExpenseEntity(prefState: state.prefState)));
       break;
     //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
     //break;
     //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
       store.dispatch(EditPayment(
-          context: context, payment: PaymentEntity(company: company)));
+          navigator: navigator,
+          force: force,
+          payment: PaymentEntity(company: company)));
       break;
     case EntityType.group:
-      store.dispatch(EditGroup(context: context, group: GroupEntity()));
+      store.dispatch(
+          EditGroup(navigator: navigator, force: force, group: GroupEntity()));
       break;
     // TODO Add to starter
   }
 }
 
-void createEntity({BuildContext context, BaseEntity entity}) {
+void createEntity(
+    {BuildContext context, BaseEntity entity, bool force = false}) {
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final company = state.company;
   final navigator = Navigator.of(context);
-  final localization = AppLocalization.of(context);
 
   switch (entity.entityType) {
     case EntityType.client:
-      store.dispatch(EditClient(
-          client: entity, navigator: navigator, localization: localization));
+      store.dispatch(
+          EditClient(client: entity, navigator: navigator, force: force));
       break;
     case EntityType.user:
-      store.dispatch(EditUser(context: context, user: entity));
+      store
+          .dispatch(EditUser(navigator: navigator, user: entity, force: force));
       break;
     case EntityType.project:
-      store.dispatch(EditProject(context: context, project: entity));
+      store.dispatch(
+          EditProject(navigator: navigator, project: entity, force: force));
       break;
     case EntityType.taxRate:
-      store.dispatch(EditTaxRate(context: context, taxRate: entity));
+      store.dispatch(
+          EditTaxRate(navigator: navigator, taxRate: entity, force: force));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
-          navigator: navigator,
-          localization: localization,
-          companyGateway: entity));
+          navigator: navigator, companyGateway: entity, force: force));
       break;
     case EntityType.invoice:
-      store.dispatch(EditInvoice(
-          context: context,
-          invoice: entity,
-          localization: localization,
-          navigator: navigator));
+      store.dispatch(
+          EditInvoice(navigator: navigator, invoice: entity, force: force));
       break;
     //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(EditQuote(context: context, quote: entity));
+      store.dispatch(
+          EditQuote(navigator: navigator, quote: entity, force: force));
       break;
     case EntityType.vendor:
-      store.dispatch(EditVendor(context: context, vendor: entity));
+      store.dispatch(
+          EditVendor(navigator: navigator, vendor: entity, force: force));
       break;
     case EntityType.product:
-      store.dispatch(EditProduct(context: context, product: entity));
+      store.dispatch(
+          EditProduct(navigator: navigator, product: entity, force: force));
       break;
     case EntityType.task:
-      store.dispatch(EditTask(context: context, task: entity));
+      store
+          .dispatch(EditTask(navigator: navigator, task: entity, force: force));
       break;
     case EntityType.expense:
-      store.dispatch(EditExpense(context: context, expense: entity));
+      store.dispatch(
+          EditExpense(navigator: navigator, expense: entity, force: force));
       break;
     //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
     //break;
     //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(EditPayment(context: context, payment: entity));
+      store.dispatch(
+          EditPayment(navigator: navigator, payment: entity, force: force));
       break;
     case EntityType.group:
-      store.dispatch(EditGroup(context: context, group: entity));
+      store.dispatch(
+          EditGroup(navigator: navigator, group: entity, force: force));
       break;
     // TODO Add to starter
   }
@@ -409,68 +428,65 @@ void editEntityById(
     {BuildContext context, String entityId, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
-  final localization = AppLocalization.of(context);
   final map = store.state.getEntityMap(entityType);
 
   switch (entityType) {
     case EntityType.client:
       store.dispatch(EditClient(
-          client: map[entityId],
-          navigator: navigator,
-          localization: localization));
+        client: map[entityId],
+        navigator: navigator,
+      ));
       break;
     case EntityType.user:
-      store.dispatch(EditUser(user: map[entityId], context: context));
+      store.dispatch(EditUser(user: map[entityId], navigator: navigator));
       break;
     case EntityType.project:
-      store.dispatch(EditProject(project: map[entityId], context: context));
+      store.dispatch(EditProject(project: map[entityId], navigator: navigator));
       break;
     case EntityType.taxRate:
-      store.dispatch(EditTaxRate(taxRate: map[entityId], context: context));
+      store.dispatch(EditTaxRate(taxRate: map[entityId], navigator: navigator));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
         companyGateway: map[entityId],
         navigator: navigator,
-        localization: localization,
       ));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
-          invoice: map[entityId],
-          context: context,
-          navigator: navigator,
-          localization: localization));
+        invoice: map[entityId],
+        navigator: navigator,
+      ));
       break;
     //case EntityType.recurringInvoice:
-    //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], context: context));
+    //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(EditQuote(quote: map[entityId], context: context));
+      store.dispatch(EditQuote(quote: map[entityId], navigator: navigator));
       break;
     case EntityType.vendor:
-      store.dispatch(EditVendor(vendor: map[entityId], context: context));
+      store.dispatch(EditVendor(vendor: map[entityId], navigator: navigator));
       break;
     case EntityType.product:
-      store.dispatch(EditProduct(product: map[entityId], context: context));
+      store.dispatch(EditProduct(product: map[entityId], navigator: navigator));
       break;
     case EntityType.task:
-      store.dispatch(EditTask(task: map[entityId], context: context));
+      store.dispatch(EditTask(task: map[entityId], navigator: navigator));
       break;
     case EntityType.expense:
-      store.dispatch(EditExpense(expense: map[entityId], context: context));
+      store.dispatch(EditExpense(expense: map[entityId], navigator: navigator));
       break;
     //case EntityType.expenseCategory:
-    //store.dispatch(EditExpenseCategory(taxRate: map[entityId], context: context));
+    //store.dispatch(EditExpenseCategory(taxRate: map[entityId], navigator: navigator));
     //break;
     //case EntityType.credit:
-    //store.dispatch(EditCredit(credit: map[entityId], context: context));
+    //store.dispatch(EditCredit(credit: map[entityId], navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(EditPayment(payment: map[entityId], context: context));
+      store.dispatch(EditPayment(payment: map[entityId], navigator: navigator));
       break;
     case EntityType.group:
-      store.dispatch(EditGroup(group: map[entityId], context: context));
+      store.dispatch(EditGroup(group: map[entityId], navigator: navigator));
       break;
     // TODO Add to starter
   }

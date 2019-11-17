@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -75,7 +75,7 @@ class ProjectViewVM {
       project: project,
       client: client,
       onEditPressed: (BuildContext context) {
-        store.dispatch(EditProject(project: project, context: context));
+        viewEntity(context: context, entity: project);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
@@ -85,31 +85,29 @@ class ProjectViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id));
+          viewEntity(context: context, entity: client);
         }
       },
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
         if (longPress && project.isActive && client.isActive) {
-          store.dispatch(EditTask(
-              task: TaskEntity(isRunning: state.prefState.autoStartTasks)
+          createEntity(
+              context: context,
+              entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
                   .rebuild((b) => b
                     ..projectId = project.id
-                    ..clientId = project.clientId),
-              context: context));
+                    ..clientId = project.clientId));
         } else {
           store.dispatch(FilterTasksByEntity(
               entityId: project.id, entityType: EntityType.project));
-          store.dispatch(ViewTaskList(context: context));
+          viewEntitiesByType(context: context, entityType: EntityType.task);
         }
       },
-      onAddTaskPressed: (context) => store.dispatch(EditTask(
-        context: context,
-        task: TaskEntity(isRunning: state.prefState.autoStartTasks)
+      onAddTaskPressed: (context) {
+        createEntity(context: context, entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
             .rebuild((b) => b
-              ..projectId = project.id
-              ..clientId = project.clientId),
-        force: true,
-      )),
+          ..projectId = project.id
+          ..clientId = project.clientId), force: true);
+      },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
           store.dispatch(UpdateCurrentRoute(ProjectScreen.route));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -119,8 +120,8 @@ class DocumentScreen extends StatelessWidget {
               heroTag: 'document_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(
-                    EditDocument(document: DocumentEntity(), context: context));
+                createEntityByType(
+                    context: context, entityType: EntityType.document);
               },
               child: Icon(
                 Icons.add,

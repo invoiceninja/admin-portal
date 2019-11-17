@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -99,6 +99,8 @@ class QuoteViewVM extends EntityViewVM {
       invoice: quote,
       client: client,
       onEditPressed: (BuildContext context, [int index]) {
+        editEntity(context: context, entity: quote);
+        /*
         final Completer<InvoiceEntity> completer =
             new Completer<InvoiceEntity>();
         store.dispatch(EditQuote(
@@ -112,6 +114,7 @@ class QuoteViewVM extends EntityViewVM {
             message: AppLocalization.of(context).updatedQuote,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
@@ -126,7 +129,7 @@ class QuoteViewVM extends EntityViewVM {
             entities: [client],
           );
         } else {
-          store.dispatch(ViewClient(clientId: client.id));
+          viewEntity(context: context, entity: client);
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>

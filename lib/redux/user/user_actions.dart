@@ -9,34 +9,31 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList implements PersistUI {
-  ViewUserList({@required this.context, this.force = false});
+class ViewUserList extends AbstractEntityAction implements PersistUI {
+  ViewUserList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewUser implements PersistUI, PersistPrefs {
+class ViewUser extends AbstractEntityAction implements PersistUI, PersistPrefs {
   ViewUser({
     @required this.userId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
   final String userId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditUser implements PersistUI, PersistPrefs {
-  EditUser(
-      {@required this.user,
-      @required this.context,
-      this.completer,
-      this.force = false});
+class EditUser extends AbstractEntityAction implements PersistUI, PersistPrefs {
+  EditUser({@required this.user,
+    @required NavigatorState navigator,
+    this.completer,
+    this.force = false}) : super(navigator: navigator);
 
   final UserEntity user;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -242,8 +239,8 @@ class FilterUsersByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-void handleUserAction(
-    BuildContext context, List<BaseEntity> users, EntityAction action) {
+void handleUserAction(BuildContext context, List<BaseEntity> users,
+    EntityAction action) {
   if (users.isEmpty) {
     return;
   }
@@ -256,7 +253,7 @@ void handleUserAction(
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditUser(context: context, user: user));
+      editEntity(context: context, entity: user);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreUserRequest(

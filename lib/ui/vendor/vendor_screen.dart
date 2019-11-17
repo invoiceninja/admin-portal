@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -120,8 +121,7 @@ class VendorScreen extends StatelessWidget {
               heroTag: 'vendor_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                store.dispatch(
-                    EditVendor(vendor: VendorEntity(), context: context));
+                createEntityByType(context: context, entityType: EntityType.vendor);
               },
               child: Icon(
                 Icons.add,
