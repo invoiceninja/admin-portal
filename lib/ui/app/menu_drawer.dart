@@ -43,50 +43,67 @@ class MenuDrawer extends StatelessWidget {
       return Container();
     }
 
-    final _companySelector = DropdownButtonHideUnderline(
+    Widget _companyLogo(CompanyEntity company) =>
+        company.settings.companyLogo != null &&
+                company.settings.companyLogo.isNotEmpty
+            ? CachedImage(
+                width: double.infinity,
+                height: 30,
+                url: company.settings.companyLogo,
+              )
+            : Image.asset('assets/images/logo.png', width: 38, height: 38);
+
+    Widget _companyListItem(CompanyEntity company) => Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            _companyLogo(company),
+            SizedBox(width: 28),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    company.displayName,
+                    style: Theme.of(context).textTheme.subhead,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(viewModel.user.email,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.caption)
+                ],
+              ),
+            ),
+          ],
+        );
+
+    final _collapsedCompanySelector = PopupMenuButton<String>(
+      child: SizedBox(
+        height: 50,
+        width: double.infinity,
+        child: _companyLogo(viewModel.selectedCompany),
+      ),
+      itemBuilder: (BuildContext context) => viewModel.companies
+          .map((company) => PopupMenuItem<String>(
+                child: _companyListItem(company),
+                value: company.id,
+              ))
+          .toList(),
+      onSelected: (String companyId) {
+        print('>> Selected: $companyId');
+      },
+    );
+
+    final _expandedCompanySelector = DropdownButtonHideUnderline(
         child: DropdownButton<String>(
       isExpanded: true,
-      icon: state.prefState.isMenuCollapsed
-          ? SizedBox()
-          : Icon(Icons.arrow_drop_down),
+      icon: Icon(Icons.arrow_drop_down),
       value: viewModel.selectedCompanyIndex,
       items: viewModel.companies
           .map((CompanyEntity company) => DropdownMenuItem<String>(
                 value: (viewModel.companies.indexOf(company)).toString(),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    company.settings.companyLogo != null &&
-                            company.settings.companyLogo.isNotEmpty
-                        ? CachedImage(
-                            width: 32,
-                            height: 30,
-                            url: company.settings.companyLogo,
-                          )
-                        : Image.asset('assets/images/logo.png',
-                            width: 32, height: 30),
-                    if (!state.prefState.isMenuCollapsed) ...[
-                      SizedBox(width: 28),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              company.displayName,
-                              style: Theme.of(context).textTheme.subhead,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(viewModel.user.email,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.caption)
-                          ],
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+                child: _companyListItem(company),
               ))
           .toList(),
       onChanged: (value) {
@@ -113,7 +130,9 @@ class MenuDrawer extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 14, vertical: 3),
                       color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-                      child: _companySelector),
+                      child: state.prefState.isMenuCollapsed
+                          ? _collapsedCompanySelector
+                          : _expandedCompanySelector),
               state.credentials.token.isEmpty
                   ? SizedBox()
                   : Expanded(
