@@ -314,12 +314,59 @@ void viewEntity(
         entityType: entity.entityType,
         force: force);
 
-void createEntityByType(
-    {BuildContext context, EntityType entityType, bool force = false}) {
+BaseEntity createDefaultEntity({BuildContext context, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final company = state.company;
+
+  switch (entityType) {
+    case EntityType.client:
+      return ClientEntity();
+      break;
+    case EntityType.user:
+      return UserEntity();
+    case EntityType.project:
+      return ProjectEntity();
+    case EntityType.taxRate:
+      return TaxRateEntity();
+    case EntityType.companyGateway:
+      return CompanyGatewayEntity();
+    case EntityType.invoice:
+      return InvoiceEntity(company: company);
+    //case EntityType.recurringInvoice:
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
+    //break;
+    case EntityType.quote:
+      return InvoiceEntity(company: company, isQuote: true);
+    case EntityType.vendor:
+      return VendorEntity();
+    case EntityType.product:
+      return ProductEntity();
+    case EntityType.task:
+      return TaskEntity(isRunning: state.prefState.autoStartTasks);
+    case EntityType.expense:
+      return ExpenseEntity(prefState: state.prefState);
+    //case EntityType.expenseCategory:
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
+    //break;
+    case EntityType.payment:
+      return PaymentEntity(company: company);
+    case EntityType.group:
+      return GroupEntity();
+    // TODO Add to starter
+    default:
+      return null;
+  }
+}
+
+void createEntityByType(
+    {BuildContext context, EntityType entityType, bool force = false}) {
+  final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
+  final entity = createDefaultEntity(context: context, entityType: entityType);
 
   switch (entityType) {
     case EntityType.client:
@@ -330,58 +377,50 @@ void createEntityByType(
       ));
       break;
     case EntityType.user:
-      store.dispatch(
-          EditUser(navigator: navigator, force: force, user: UserEntity()));
+      store
+          .dispatch(EditUser(navigator: navigator, force: force, user: entity));
       break;
     case EntityType.project:
-      store.dispatch(EditProject(
-          navigator: navigator, force: force, project: ProjectEntity()));
+      store.dispatch(
+          EditProject(navigator: navigator, force: force, project: entity));
       break;
     case EntityType.taxRate:
-      store.dispatch(EditTaxRate(
-          navigator: navigator, force: force, taxRate: TaxRateEntity()));
+      store.dispatch(
+          EditTaxRate(navigator: navigator, force: force, taxRate: entity));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
-          navigator: navigator,
-          force: force,
-          companyGateway: CompanyGatewayEntity()));
+          navigator: navigator, force: force, companyGateway: entity));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
         navigator: navigator,
         force: force,
-        invoice: InvoiceEntity(company: company),
+        invoice: entity,
       ));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(EditQuote(
-          navigator: navigator,
-          force: force,
-          quote: InvoiceEntity(company: company, isQuote: true)));
+      store.dispatch(
+          EditQuote(navigator: navigator, force: force, quote: entity));
       break;
     case EntityType.vendor:
-      store.dispatch(EditVendor(
-          navigator: navigator, force: force, vendor: VendorEntity()));
+      store.dispatch(
+          EditVendor(navigator: navigator, force: force, vendor: entity));
       break;
     case EntityType.product:
-      store.dispatch(EditProduct(
-          navigator: navigator, force: force, product: ProductEntity()));
+      store.dispatch(
+          EditProduct(navigator: navigator, force: force, product: entity));
       break;
     case EntityType.task:
-      store.dispatch(EditTask(
-          navigator: navigator,
-          force: force,
-          task: TaskEntity(isRunning: state.prefState.autoStartTasks)));
+      store
+          .dispatch(EditTask(navigator: navigator, force: force, task: entity));
       break;
     case EntityType.expense:
-      store.dispatch(EditExpense(
-          navigator: navigator,
-          force: force,
-          expense: ExpenseEntity(prefState: state.prefState)));
+      store.dispatch(
+          EditExpense(navigator: navigator, force: force, expense: entity));
       break;
     //case EntityType.expenseCategory:
     //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
@@ -390,14 +429,12 @@ void createEntityByType(
     //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(EditPayment(
-          navigator: navigator,
-          force: force,
-          payment: PaymentEntity(company: company)));
+      store.dispatch(
+          EditPayment(navigator: navigator, force: force, payment: entity));
       break;
     case EntityType.group:
       store.dispatch(
-          EditGroup(navigator: navigator, force: force, group: GroupEntity()));
+          EditGroup(navigator: navigator, force: force, group: entity));
       break;
     // TODO Add to starter
   }
