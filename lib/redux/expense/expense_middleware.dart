@@ -42,7 +42,7 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 
 Middleware<AppState> _editExpense() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditExpense;
 
     if (!action.force &&
@@ -55,11 +55,7 @@ Middleware<AppState> _editExpense() {
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
 
     if (isMobile(action.context)) {
-      final expense = await action.navigator.pushNamed(ExpenseEditScreen.route);
-
-      if (action.completer != null && expense != null) {
-        action.completer.complete(expense);
-      }
+      action.navigator.pushNamed(ExpenseEditScreen.route);
     }
   };
 }

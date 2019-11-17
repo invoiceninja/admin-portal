@@ -42,7 +42,7 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
 
 Middleware<AppState> _editVendor() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditVendor;
 
     if (!action.force &&
@@ -55,11 +55,7 @@ Middleware<AppState> _editVendor() {
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
 
     if (isMobile(action.context)) {
-      final vendor = await action.navigator.pushNamed(VendorEditScreen.route);
-
-      if (action.completer != null && vendor != null) {
-        action.completer.complete(vendor);
-      }
+      action.navigator.pushNamed(VendorEditScreen.route);
     }
   };
 }

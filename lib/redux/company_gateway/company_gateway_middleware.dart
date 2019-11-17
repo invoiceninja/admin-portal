@@ -44,7 +44,7 @@ List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
 
 Middleware<AppState> _editCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditCompanyGateway;
 
     if (!action.force &&
@@ -57,12 +57,7 @@ Middleware<AppState> _editCompanyGateway() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
 
     if (isMobile(action.context)) {
-      final companyGateway =
-          await action.navigator.pushNamed(CompanyGatewayEditScreen.route);
-
-      if (action.completer != null && companyGateway != null) {
-        action.completer.complete(companyGateway);
-      }
+      action.navigator.pushNamed(CompanyGatewayEditScreen.route);
     }
   };
 }

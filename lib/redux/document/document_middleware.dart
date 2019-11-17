@@ -40,7 +40,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 
 Middleware<AppState> _editDocument() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditDocument;
 
     next(action);
@@ -48,11 +48,7 @@ Middleware<AppState> _editDocument() {
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
 
     if (isMobile(action.context)) {
-      final document = await action.navigator.pushNamed(DocumentEditScreen.route);
-
-      if (action.completer != null && document != null) {
-        action.completer.complete(document);
-      }
+      action.navigator.pushNamed(DocumentEditScreen.route);
     }
   };
 }

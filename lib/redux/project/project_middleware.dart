@@ -42,7 +42,7 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 
 Middleware<AppState> _editProject() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditProject;
 
     if (!action.force &&
@@ -55,11 +55,7 @@ Middleware<AppState> _editProject() {
     store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
 
     if (isMobile(action.context)) {
-      final project = await action.navigator.pushNamed(ProjectEditScreen.route);
-
-      if (action.completer != null && project != null) {
-        action.completer.complete(project);
-      }
+      action.navigator.pushNamed(ProjectEditScreen.route);
     }
   };
 }

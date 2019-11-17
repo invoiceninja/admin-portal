@@ -41,7 +41,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 
 Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditClient;
 
     if (!action.force &&
@@ -54,11 +54,7 @@ Middleware<AppState> _editClient() {
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
     if (isMobile(action.context)) {
-      final client = await action.navigator.pushNamed(ClientEditScreen.route);
-
-      if (action.completer != null && client != null) {
-        action.completer.complete(client);
-      }
+      action.navigator.pushNamed(ClientEditScreen.route);
     }
   };
 }

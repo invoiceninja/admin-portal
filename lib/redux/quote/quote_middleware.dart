@@ -95,7 +95,7 @@ Middleware<AppState> _viewQuoteList() {
 
 Middleware<AppState> _editQuote() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditQuote;
 
     if (!action.force &&
@@ -108,11 +108,7 @@ Middleware<AppState> _editQuote() {
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
 
     if (isMobile(action.context)) {
-      final quote = await action.navigator.pushNamed(QuoteEditScreen.route);
-
-      if (action.completer != null && quote != null) {
-        action.completer.complete(quote);
-      }
+      action.navigator.pushNamed(QuoteEditScreen.route);
     }
   };
 }

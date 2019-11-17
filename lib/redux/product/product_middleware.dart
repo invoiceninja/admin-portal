@@ -38,7 +38,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditProduct;
 
     if (!action.force &&
@@ -51,11 +51,7 @@ Middleware<AppState> _editProduct() {
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
     if (isMobile(action.context)) {
-      final product = await action.navigator.pushNamed(ProductEditScreen.route);
-
-      if (action.completer != null && product != null) {
-        action.completer.complete(product);
-      }
+      action.navigator.pushNamed(ProductEditScreen.route);
     }
   };
 }

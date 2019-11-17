@@ -95,7 +95,7 @@ Middleware<AppState> _viewInvoice() {
 
 Middleware<AppState> _editInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditInvoice;
 
     if (!action.force &&
@@ -108,11 +108,7 @@ Middleware<AppState> _editInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
 
     if (isMobile(action.context)) {
-      final invoice = await action.navigator.pushNamed(InvoiceEditScreen.route);
-
-      if (action.completer != null && invoice != null) {
-        action.completer.complete(invoice);
-      }
+      action.navigator.pushNamed(InvoiceEditScreen.route);
     }
   };
 }

@@ -40,7 +40,7 @@ List<Middleware<AppState>> createStoreTaxRatesMiddleware([
 
 Middleware<AppState> _editTaxRate() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditTaxRate;
 
     if (!action.force &&
@@ -53,11 +53,7 @@ Middleware<AppState> _editTaxRate() {
     store.dispatch(UpdateCurrentRoute(TaxRateEditScreen.route));
 
     if (isMobile(action.context)) {
-      final taxRate = await action.navigator.pushNamed(TaxRateEditScreen.route);
-
-      if (action.completer != null && taxRate != null) {
-        action.completer.complete(taxRate);
-      }
+      action.navigator.pushNamed(TaxRateEditScreen.route);
     }
   };
 }

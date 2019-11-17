@@ -40,7 +40,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
 
 Middleware<AppState> _editUser() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditUser;
 
     if (!action.force &&
@@ -53,11 +53,7 @@ Middleware<AppState> _editUser() {
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
 
     if (isMobile(action.context)) {
-      final user = await action.navigator.pushNamed(UserEditScreen.route);
-
-      if (action.completer != null && user != null) {
-        action.completer.complete(user);
-      }
+      action.navigator.pushNamed(UserEditScreen.route);
     }
   };
 }

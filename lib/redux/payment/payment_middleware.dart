@@ -44,7 +44,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
 
 Middleware<AppState> _editPayment() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditPayment;
 
     if (!action.force &&
@@ -57,11 +57,7 @@ Middleware<AppState> _editPayment() {
     store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
     if (isMobile(action.context)) {
-      final payment = await action.navigator.pushNamed(PaymentEditScreen.route);
-
-      if (action.completer != null && payment != null) {
-        action.completer.complete(null);
-      }
+      action.navigator.pushNamed(PaymentEditScreen.route);
     }
   };
 }

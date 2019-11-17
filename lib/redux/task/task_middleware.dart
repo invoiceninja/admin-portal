@@ -41,7 +41,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 
 Middleware<AppState> _editTask() {
   return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+      NextDispatcher next) {
     final action = dynamicAction as EditTask;
 
     if (!action.force &&
@@ -54,11 +54,7 @@ Middleware<AppState> _editTask() {
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
 
     if (isMobile(action.context)) {
-      final task = await action.navigator.pushNamed(TaskEditScreen.route);
-
-      if (action.completer != null && task != null) {
-        action.completer.complete(task);
-      }
+      action.navigator.pushNamed(TaskEditScreen.route);
     }
   };
 }
