@@ -36,6 +36,8 @@ class RefreshClient {
   final String clientId;
 }
 
+class SwitchListTableLayout implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen(this.context);
 

@@ -29,6 +29,26 @@ final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
   _$desktop,
 ]);
 
+const ModuleLayout _$list = const ModuleLayout._('list');
+const ModuleLayout _$table = const ModuleLayout._('table');
+
+ModuleLayout _$moduleLayoutValueOf(String name) {
+  switch (name) {
+    case 'list':
+      return _$list;
+    case 'table':
+      return _$table;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<ModuleLayout> _$moduleLayoutValues =
+    new BuiltSet<ModuleLayout>(const <ModuleLayout>[
+  _$list,
+  _$table,
+]);
+
 const AppSidebar _$menu = const AppSidebar._('menu');
 const AppSidebar _$history = const AppSidebar._('history');
 
@@ -77,6 +97,8 @@ Serializer<PrefState> _$prefStateSerializer = new _$PrefStateSerializer();
 Serializer<CompanyPrefState> _$companyPrefStateSerializer =
     new _$CompanyPrefStateSerializer();
 Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
+Serializer<ModuleLayout> _$moduleLayoutSerializer =
+    new _$ModuleLayoutSerializer();
 Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
 Serializer<AppSidebarMode> _$appSidebarModeSerializer =
     new _$AppSidebarModeSerializer();
@@ -93,9 +115,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   Iterable<Object> serialize(Serializers serializers, PrefState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'layout',
-      serializers.serialize(object.layout,
+      'appLayout',
+      serializers.serialize(object.appLayout,
           specifiedType: const FullType(AppLayout)),
+      'moduleLayout',
+      serializers.serialize(object.moduleLayout,
+          specifiedType: const FullType(ModuleLayout)),
       'menuSidebarMode',
       serializers.serialize(object.menuSidebarMode,
           specifiedType: const FullType(AppSidebarMode)),
@@ -146,9 +171,13 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'layout':
-          result.layout = serializers.deserialize(value,
+        case 'appLayout':
+          result.appLayout = serializers.deserialize(value,
               specifiedType: const FullType(AppLayout)) as AppLayout;
+          break;
+        case 'moduleLayout':
+          result.moduleLayout = serializers.deserialize(value,
+              specifiedType: const FullType(ModuleLayout)) as ModuleLayout;
           break;
         case 'menuSidebarMode':
           result.menuSidebarMode = serializers.deserialize(value,
@@ -272,6 +301,23 @@ class _$AppLayoutSerializer implements PrimitiveSerializer<AppLayout> {
       AppLayout.valueOf(serialized as String);
 }
 
+class _$ModuleLayoutSerializer implements PrimitiveSerializer<ModuleLayout> {
+  @override
+  final Iterable<Type> types = const <Type>[ModuleLayout];
+  @override
+  final String wireName = 'ModuleLayout';
+
+  @override
+  Object serialize(Serializers serializers, ModuleLayout object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  ModuleLayout deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      ModuleLayout.valueOf(serialized as String);
+}
+
 class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
   @override
   final Iterable<Type> types = const <Type>[AppSidebar];
@@ -363,7 +409,9 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
 
 class _$PrefState extends PrefState {
   @override
-  final AppLayout layout;
+  final AppLayout appLayout;
+  @override
+  final ModuleLayout moduleLayout;
   @override
   final AppSidebarMode menuSidebarMode;
   @override
@@ -391,7 +439,8 @@ class _$PrefState extends PrefState {
       (new PrefStateBuilder()..update(updates)).build();
 
   _$PrefState._(
-      {this.layout,
+      {this.appLayout,
+      this.moduleLayout,
       this.menuSidebarMode,
       this.historySidebarMode,
       this.isMenuVisible,
@@ -404,8 +453,11 @@ class _$PrefState extends PrefState {
       this.addDocumentsToInvoice,
       this.companyPrefs})
       : super._() {
-    if (layout == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'layout');
+    if (appLayout == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'appLayout');
+    }
+    if (moduleLayout == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'moduleLayout');
     }
     if (menuSidebarMode == null) {
       throw new BuiltValueNullFieldError('PrefState', 'menuSidebarMode');
@@ -454,7 +506,8 @@ class _$PrefState extends PrefState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is PrefState &&
-        layout == other.layout &&
+        appLayout == other.appLayout &&
+        moduleLayout == other.moduleLayout &&
         menuSidebarMode == other.menuSidebarMode &&
         historySidebarMode == other.historySidebarMode &&
         isMenuVisible == other.isMenuVisible &&
@@ -480,7 +533,9 @@ class _$PrefState extends PrefState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, layout.hashCode),
+                                            $jc(
+                                                $jc($jc(0, appLayout.hashCode),
+                                                    moduleLayout.hashCode),
                                                 menuSidebarMode.hashCode),
                                             historySidebarMode.hashCode),
                                         isMenuVisible.hashCode),
@@ -497,7 +552,8 @@ class _$PrefState extends PrefState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PrefState')
-          ..add('layout', layout)
+          ..add('appLayout', appLayout)
+          ..add('moduleLayout', moduleLayout)
           ..add('menuSidebarMode', menuSidebarMode)
           ..add('historySidebarMode', historySidebarMode)
           ..add('isMenuVisible', isMenuVisible)
@@ -516,9 +572,14 @@ class _$PrefState extends PrefState {
 class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   _$PrefState _$v;
 
-  AppLayout _layout;
-  AppLayout get layout => _$this._layout;
-  set layout(AppLayout layout) => _$this._layout = layout;
+  AppLayout _appLayout;
+  AppLayout get appLayout => _$this._appLayout;
+  set appLayout(AppLayout appLayout) => _$this._appLayout = appLayout;
+
+  ModuleLayout _moduleLayout;
+  ModuleLayout get moduleLayout => _$this._moduleLayout;
+  set moduleLayout(ModuleLayout moduleLayout) =>
+      _$this._moduleLayout = moduleLayout;
 
   AppSidebarMode _menuSidebarMode;
   AppSidebarMode get menuSidebarMode => _$this._menuSidebarMode;
@@ -579,7 +640,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
   PrefStateBuilder get _$this {
     if (_$v != null) {
-      _layout = _$v.layout;
+      _appLayout = _$v.appLayout;
+      _moduleLayout = _$v.moduleLayout;
       _menuSidebarMode = _$v.menuSidebarMode;
       _historySidebarMode = _$v.historySidebarMode;
       _isMenuVisible = _$v.isMenuVisible;
@@ -615,7 +677,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
     try {
       _$result = _$v ??
           new _$PrefState._(
-              layout: layout,
+              appLayout: appLayout,
+              moduleLayout: moduleLayout,
               menuSidebarMode: menuSidebarMode,
               historySidebarMode: historySidebarMode,
               isMenuVisible: isMenuVisible,

@@ -814,7 +814,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'default_tax_rate_3': 'Default Tax Rate 3',
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
-      'email_subject_payment': 'Email Payment Subject'
+      'email_subject_payment': 'Email Payment Subject',
+      'switch_list_table': 'Switch List Table'
     },
     'sq': {
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -15765,6 +15766,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selectCompany => _localizedValues[localeCode]['select_company'];
 
   String get newPayment => _localizedValues[localeCode]['new_payment'];
+
+  String get switchListTable => _localizedValues[localeCode]['switch_list_table'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

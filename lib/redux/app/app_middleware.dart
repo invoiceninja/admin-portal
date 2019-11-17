@@ -217,7 +217,7 @@ Middleware<AppState> _createLoadState(
           uiState.currentRoute.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
         final routes = _getRoutes(appState);
-        if (appState.prefState.layout == AppLayout.mobile) {
+        if (appState.prefState.appLayout == AppLayout.mobile) {
           bool isFirst = true;
           routes.forEach((route) {
             if (isFirst) {
@@ -250,7 +250,7 @@ Middleware<AppState> _createLoadState(
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
-          if (store.state.prefState.layout == AppLayout.tablet &&
+          if (store.state.prefState.appLayout == AppLayout.tablet &&
               layout == AppLayout.mobile) {
             store.dispatch(UserSettingsChanged(layout: layout));
             store.dispatch(

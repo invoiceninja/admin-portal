@@ -27,7 +27,8 @@ PrefState prefReducer(
   return state.rebuild((b) => b
     ..companyPrefs[selectedCompanyIndex] =
         companyPrefReducer(state.companyPrefs[selectedCompanyIndex], action)
-    ..layout = layoutReducer(state.layout, action)
+    ..appLayout = layoutReducer(state.appLayout, action)
+    ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
     ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
     ..historySidebarMode =
         historySidebarReducer(state.historySidebarMode, action)
@@ -89,6 +90,16 @@ Reducer<int> filterClearedAtReducer = combineReducers([
 Reducer<AppLayout> layoutReducer = combineReducers([
   TypedReducer<AppLayout, UserSettingsChanged>((layout, action) {
     return action.layout ?? layout;
+  }),
+]);
+
+Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
+  TypedReducer<ModuleLayout, SwitchListTableLayout>((moduleLayout, action) {
+    if (moduleLayout == ModuleLayout.list) {
+      return ModuleLayout.table;
+    } else {
+      return ModuleLayout.list;
+    }
   }),
 ]);
 

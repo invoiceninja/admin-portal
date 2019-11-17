@@ -33,7 +33,7 @@ AppLayout calculateLayout(BuildContext context) {
 }
 
 AppLayout getLayout(BuildContext context) =>
-    StoreProvider.of<AppState>(context).state.prefState.layout ??
+    StoreProvider.of<AppState>(context).state.prefState.appLayout ??
     AppLayout.mobile;
 
 bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
