@@ -22,7 +22,7 @@ class TaxRateEdit extends StatefulWidget {
 }
 
 class _TaxRateEditState extends State<TaxRateEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_taxRateEdit');
 
   bool autoValidate = false;
 

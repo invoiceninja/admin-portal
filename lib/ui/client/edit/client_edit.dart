@@ -26,7 +26,7 @@ class ClientEdit extends StatefulWidget {
 class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_clientEdit');
 
   @override
   void initState() {

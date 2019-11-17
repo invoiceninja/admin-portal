@@ -28,7 +28,7 @@ class ClientPortal extends StatefulWidget {
 
 class _ClientPortalState extends State<ClientPortal>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_clientPortal');
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
 

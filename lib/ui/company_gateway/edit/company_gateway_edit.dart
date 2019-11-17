@@ -33,7 +33,7 @@ class CompanyGatewayEdit extends StatefulWidget {
 
 class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_companyGatewayEdit');
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;

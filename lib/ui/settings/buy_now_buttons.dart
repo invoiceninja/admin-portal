@@ -19,7 +19,7 @@ class BuyNowButtons extends StatefulWidget {
 }
 
 class _BuyNowButtonsState extends State<BuyNowButtons> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_buyNowButtons');
 
   bool autoValidate = false;
 

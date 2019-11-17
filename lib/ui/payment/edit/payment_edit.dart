@@ -28,7 +28,7 @@ class PaymentEdit extends StatefulWidget {
 }
 
 class _PaymentEditState extends State<PaymentEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_paymentEdit');
 
   final _amountController = TextEditingController();
   final _transactionReferenceController = TextEditingController();

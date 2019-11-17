@@ -23,7 +23,7 @@ class GroupEdit extends StatefulWidget {
 }
 
 class _GroupEditState extends State<GroupEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_groupEdit');
 
   final _nameController = TextEditingController();
   final _custom1Controller = TextEditingController();

@@ -18,7 +18,7 @@ class InvoiceEditScreen extends StatelessWidget {
 
   static const String route = '/invoice/edit';
 
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_invoiceEdit');
 
   @override
   Widget build(BuildContext context) {

@@ -26,7 +26,7 @@ class ProductEdit extends StatefulWidget {
 }
 
 class _ProductEditState extends State<ProductEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_productEdit');
 
   bool autoValidate = false;
 

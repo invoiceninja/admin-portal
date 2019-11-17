@@ -29,7 +29,7 @@ class InvoiceDesign extends StatefulWidget {
 
 class _InvoiceDesignState extends State<InvoiceDesign>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_invoiceDesign');
 
   TabController _controller;
   FocusScopeNode _focusNode;

@@ -25,7 +25,7 @@ class EmailSettings extends StatefulWidget {
 
 class _EmailSettingsState extends State<EmailSettings>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_emailSettings');
 
   TabController _tabController;
   FocusScopeNode _focusNode;

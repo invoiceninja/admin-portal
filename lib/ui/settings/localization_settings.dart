@@ -27,7 +27,7 @@ class LocalizationSettings extends StatefulWidget {
 }
 
 class _LocalizationSettingsState extends State<LocalizationSettings> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_localizationSettings');
 
   bool autoValidate = false;
 

@@ -30,7 +30,7 @@ class TemplatesAndReminders extends StatefulWidget {
 
 class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
   final _debouncer = Debouncer();
 
   String _template = kEmailTemplateInvoice;

@@ -19,7 +19,7 @@ class QuoteEditScreen extends StatelessWidget {
 
   static const String route = '/quote/edit';
 
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_quotesEdit');
 
   @override
   Widget build(BuildContext context) {

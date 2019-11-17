@@ -20,7 +20,7 @@ class DocumentEdit extends StatefulWidget {
 }
 
 class _DocumentEditState extends State<DocumentEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_documentEdit');
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment

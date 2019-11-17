@@ -23,7 +23,7 @@ class ExpenseEdit extends StatefulWidget {
 class _ExpenseEditState extends State<ExpenseEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_expenseEdit');
 
   @override
   void initState() {

@@ -17,7 +17,7 @@ class NotificationSettings extends StatefulWidget {
 }
 
 class _NotificationSettingsState extends State<NotificationSettings> {
-  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_notifications');
 
   bool autoValidate = false;
 
