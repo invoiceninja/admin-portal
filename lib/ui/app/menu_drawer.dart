@@ -33,6 +33,10 @@ class MenuDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final enableDarkMode = state.prefState.enableDarkMode;
+    final localization = AppLocalization.of(context);
     final company = viewModel.selectedCompany;
 
     if (company == null) {
@@ -42,6 +46,9 @@ class MenuDrawer extends StatelessWidget {
     final _companySelector = DropdownButtonHideUnderline(
         child: DropdownButton<String>(
       isExpanded: true,
+      icon: state.prefState.isMenuCollapsed
+          ? SizedBox()
+          : Icon(Icons.arrow_drop_down),
       value: viewModel.selectedCompanyIndex,
       items: viewModel.companies
           .map((CompanyEntity company) => DropdownMenuItem<String>(
@@ -59,23 +66,25 @@ class MenuDrawer extends StatelessWidget {
                           )
                         : Image.asset('assets/images/logo.png',
                             width: 32, height: 30),
-                    SizedBox(width: 28),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            company.displayName,
-                            style: Theme.of(context).textTheme.subhead,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(viewModel.user.email,
+                    if (!state.prefState.isMenuCollapsed) ...[
+                      SizedBox(width: 28),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              company.displayName,
+                              style: Theme.of(context).textTheme.subhead,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.caption)
-                        ],
+                            ),
+                            Text(viewModel.user.email,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.caption)
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ))
@@ -85,11 +94,6 @@ class MenuDrawer extends StatelessWidget {
             context, value, viewModel.companies[int.parse(value)]);
       },
     ));
-
-    final Store<AppState> store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-    final enableDarkMode = state.prefState.enableDarkMode;
-    final localization = AppLocalization.of(context);
 
     return SizedBox(
       width: state.prefState.isMenuCollapsed ? 65 : null,
@@ -109,7 +113,7 @@ class MenuDrawer extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 14, vertical: 3),
                       color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-                      child:_companySelector),
+                      child: _companySelector),
               state.credentials.token.isEmpty
                   ? SizedBox()
                   : Expanded(
