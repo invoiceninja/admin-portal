@@ -57,7 +57,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltList<CompanyPrefState> get companyPrefs;
 
-  bool get isTablet => layout != AppLayout.mobile;
+  bool get isTablet => appLayout != AppLayout.mobile;
 
   bool get isMobile => layout == AppLayout.mobile;
 
