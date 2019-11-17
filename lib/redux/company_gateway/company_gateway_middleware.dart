@@ -57,7 +57,7 @@ Middleware<AppState> _editCompanyGateway() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
 
     if (isMobile(action.context)) {
-      final companyGateway = await Navigator.of(action.context)
+      final companyGateway = await action.navigator
           .pushNamed(CompanyGatewayEditScreen.route);
 
       if (action.completer != null && companyGateway != null) {
@@ -82,7 +82,7 @@ Middleware<AppState> _viewCompanyGateway() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(CompanyGatewayViewScreen.route);
+      action.navigator.pushNamed(CompanyGatewayViewScreen.route);
     }
   };
 }
@@ -105,7 +105,7 @@ Middleware<AppState> _viewCompanyGatewayList() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           CompanyGatewayScreen.route, (Route<dynamic> route) => false);
     }
   };

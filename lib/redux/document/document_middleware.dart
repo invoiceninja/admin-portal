@@ -46,7 +46,7 @@ Middleware<AppState> _editDocument() {
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
     final document =
-        await Navigator.of(action.context).pushNamed(DocumentEditScreen.route);
+        await action.navigator.pushNamed(DocumentEditScreen.route);
 
     if (action.completer != null && document != null) {
       action.completer.complete(document);
@@ -62,7 +62,7 @@ Middleware<AppState> _viewDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-    Navigator.of(action.context).pushNamed(DocumentViewScreen.route);
+    action.navigator.pushNamed(DocumentViewScreen.route);
   };
 }
 
@@ -78,7 +78,7 @@ Middleware<AppState> _viewDocumentList() {
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
+    action.navigator.pushNamedAndRemoveUntil(
         DocumentScreen.route, (Route<dynamic> route) => false);
   };
 }

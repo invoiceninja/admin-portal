@@ -64,7 +64,7 @@ Middleware<AppState> _viewQuote() {
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
 
     if (isMobile(action.context)) {
-      await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+      await action.navigator.pushNamed(QuoteViewScreen.route);
     }
   };
 }
@@ -87,7 +87,7 @@ Middleware<AppState> _viewQuoteList() {
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -109,7 +109,7 @@ Middleware<AppState> _editQuote() {
 
     if (isMobile(action.context)) {
       final quote =
-          await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
+          await action.navigator.pushNamed(QuoteEditScreen.route);
 
       if (action.completer != null && quote != null) {
         action.completer.complete(quote);

@@ -55,7 +55,7 @@ Middleware<AppState> _editTask() {
 
     if (isMobile(action.context)) {
       final task =
-          await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
+          await action.navigator.pushNamed(TaskEditScreen.route);
 
       if (action.completer != null && task != null) {
         action.completer.complete(task);
@@ -79,7 +79,7 @@ Middleware<AppState> _viewTask() {
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+      action.navigator.pushNamed(TaskViewScreen.route);
     }
   };
 }
@@ -102,7 +102,7 @@ Middleware<AppState> _viewTaskList() {
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           TaskScreen.route, (Route<dynamic> route) => false);
     }
   };

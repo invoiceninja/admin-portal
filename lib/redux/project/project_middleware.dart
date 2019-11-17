@@ -56,7 +56,7 @@ Middleware<AppState> _editProject() {
 
     if (isMobile(action.context)) {
       final project =
-          await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
+          await action.navigator.pushNamed(ProjectEditScreen.route);
 
       if (action.completer != null && project != null) {
         action.completer.complete(project);
@@ -80,7 +80,7 @@ Middleware<AppState> _viewProject() {
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+      action.navigator.pushNamed(ProjectViewScreen.route);
     }
   };
 }
@@ -103,7 +103,7 @@ Middleware<AppState> _viewProjectList() {
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ProjectScreen.route, (Route<dynamic> route) => false);
     }
   };

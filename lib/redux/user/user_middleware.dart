@@ -54,7 +54,7 @@ Middleware<AppState> _editUser() {
 
     if (isMobile(action.context)) {
       final user =
-          await Navigator.of(action.context).pushNamed(UserEditScreen.route);
+          await action.navigator.pushNamed(UserEditScreen.route);
 
       if (action.completer != null && user != null) {
         action.completer.complete(user);
@@ -78,7 +78,7 @@ Middleware<AppState> _viewUser() {
     store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(UserViewScreen.route);
+      action.navigator.pushNamed(UserViewScreen.route);
     }
   };
 }
@@ -101,7 +101,7 @@ Middleware<AppState> _viewUserList() {
     store.dispatch(UpdateCurrentRoute(UserScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           UserScreen.route, (Route<dynamic> route) => false);
     }
   };

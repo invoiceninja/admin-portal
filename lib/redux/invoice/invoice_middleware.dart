@@ -67,7 +67,7 @@ Middleware<AppState> _viewInvoiceList() {
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           InvoiceScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -88,7 +88,7 @@ Middleware<AppState> _viewInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
 
     if (isMobile(action.context)) {
-      await Navigator.of(action.context).pushNamed(InvoiceViewScreen.route);
+      await action.navigator.pushNamed(InvoiceViewScreen.route);
     }
   };
 }

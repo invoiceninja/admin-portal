@@ -56,7 +56,7 @@ Middleware<AppState> _editVendor() {
 
     if (isMobile(action.context)) {
       final vendor =
-          await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
+          await action.navigator.pushNamed(VendorEditScreen.route);
 
       if (action.completer != null && vendor != null) {
         action.completer.complete(vendor);
@@ -80,7 +80,7 @@ Middleware<AppState> _viewVendor() {
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+      action.navigator.pushNamed(VendorViewScreen.route);
     }
   };
 }
@@ -103,7 +103,7 @@ Middleware<AppState> _viewVendorList() {
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           VendorScreen.route, (Route<dynamic> route) => false);
     }
   };

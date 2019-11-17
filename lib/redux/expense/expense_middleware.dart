@@ -56,7 +56,7 @@ Middleware<AppState> _editExpense() {
 
     if (isMobile(action.context)) {
       final expense =
-          await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
+          await action.navigator.pushNamed(ExpenseEditScreen.route);
 
       if (action.completer != null && expense != null) {
         action.completer.complete(expense);
@@ -80,7 +80,7 @@ Middleware<AppState> _viewExpense() {
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ExpenseViewScreen.route);
+      action.navigator.pushNamed(ExpenseViewScreen.route);
     }
   };
 }
@@ -103,7 +103,7 @@ Middleware<AppState> _viewExpenseList() {
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ExpenseScreen.route, (Route<dynamic> route) => false);
     }
   };

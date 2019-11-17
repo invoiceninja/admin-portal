@@ -51,7 +51,7 @@ Middleware<AppState> _editProduct() {
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+      action.navigator.pushNamed(ProductEditScreen.route);
     }
   };
 }
@@ -71,7 +71,7 @@ Middleware<AppState> _viewProduct() {
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+      action.navigator.pushNamed(ProductViewScreen.route);
     }
   };
 }
@@ -94,7 +94,7 @@ Middleware<AppState> _viewProductList() {
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ProductScreen.route, (Route<dynamic> route) => false);
     }
   };

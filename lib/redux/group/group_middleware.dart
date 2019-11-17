@@ -55,7 +55,7 @@ Middleware<AppState> _editGroup() {
 
     if (isMobile(action.context)) {
       final group =
-          await Navigator.of(action.context).pushNamed(GroupEditScreen.route);
+          await action.navigator.pushNamed(GroupEditScreen.route);
 
       if (action.completer != null && group != null) {
         action.completer.complete(group);
@@ -79,7 +79,7 @@ Middleware<AppState> _viewGroup() {
     store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(GroupViewScreen.route);
+      action.navigator.pushNamed(GroupViewScreen.route);
     }
   };
 }
@@ -102,7 +102,7 @@ Middleware<AppState> _viewGroupList() {
     store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           GroupSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };

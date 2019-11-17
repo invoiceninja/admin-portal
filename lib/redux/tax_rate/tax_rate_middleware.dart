@@ -54,7 +54,7 @@ Middleware<AppState> _editTaxRate() {
 
     if (isMobile(action.context)) {
       final taxRate =
-          await Navigator.of(action.context).pushNamed(TaxRateEditScreen.route);
+          await action.navigator.pushNamed(TaxRateEditScreen.route);
 
       if (action.completer != null && taxRate != null) {
         action.completer.complete(taxRate);
@@ -78,7 +78,7 @@ Middleware<AppState> _viewTaxRate() {
     store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(TaxRateViewScreen.route);
+      action.navigator.pushNamed(TaxRateViewScreen.route);
     }
   };
 }
@@ -101,7 +101,7 @@ Middleware<AppState> _viewTaxRateList() {
     store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           TaxRateSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };

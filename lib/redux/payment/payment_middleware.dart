@@ -58,7 +58,7 @@ Middleware<AppState> _editPayment() {
 
     if (isMobile(action.context)) {
       final payment =
-          await Navigator.of(action.context).pushNamed(PaymentEditScreen.route);
+          await action.navigator.pushNamed(PaymentEditScreen.route);
 
       if (action.completer != null && payment != null) {
         action.completer.complete(null);
@@ -79,7 +79,7 @@ Middleware<AppState> _viewPayment() {
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(PaymentViewScreen.route);
+      action.navigator.pushNamed(PaymentViewScreen.route);
     }
   };
 }
@@ -102,7 +102,7 @@ Middleware<AppState> _viewPaymentList() {
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           PaymentScreen.route, (Route<dynamic> route) => false);
     }
   };
