@@ -61,11 +61,12 @@ class TaxSettingsVM {
         },
         onConfigureRatesPressed: (context) {
           if (state.taxRateState.list.isEmpty) {
-            store.dispatch(
-                ViewSettings(context: context, section: kSettingsTaxRatesEdit));
+            store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsTaxRatesEdit));
           } else {
-            store.dispatch(
-                ViewSettings(context: context, section: kSettingsTaxRates));
+            store.dispatch(ViewSettings(
+                navigator: Navigator.of(context), section: kSettingsTaxRates));
           }
         });
   }

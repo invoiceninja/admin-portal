@@ -24,7 +24,8 @@ class VendorEdit extends StatefulWidget {
 class _VendorEditState extends State<VendorEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_vendorEdit');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_vendorEdit');
 
   @override
   void initState() {

@@ -53,8 +53,7 @@ Middleware<AppState> _editUser() {
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
 
     if (isMobile(action.context)) {
-      final user =
-          await action.navigator.pushNamed(UserEditScreen.route);
+      final user = await action.navigator.pushNamed(UserEditScreen.route);
 
       if (action.completer != null && user != null) {
         action.completer.complete(user);

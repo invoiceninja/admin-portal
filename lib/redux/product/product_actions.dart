@@ -10,14 +10,14 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProductList extends AbstractEntityAction implements PersistUI {
+class ViewProductList extends AbstractNavigatorAction implements PersistUI {
   ViewProductList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewProduct extends AbstractEntityAction
+class ViewProduct extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewProduct(
       {@required this.productId,
@@ -29,7 +29,7 @@ class ViewProduct extends AbstractEntityAction
   final bool force;
 }
 
-class EditProduct extends AbstractEntityAction
+class EditProduct extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditProduct(
       {@required this.product,

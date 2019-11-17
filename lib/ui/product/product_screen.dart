@@ -124,7 +124,8 @@ class ProductScreen extends StatelessWidget {
               heroTag: 'product_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                createEntityByType(context: context, entityType: EntityType.product);
+                createEntityByType(
+                    context: context, entityType: EntityType.product);
               },
               child: Icon(
                 Icons.add,

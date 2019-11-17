@@ -11,14 +11,14 @@ import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProjectList extends AbstractEntityAction implements PersistUI {
+class ViewProjectList extends AbstractNavigatorAction implements PersistUI {
   ViewProjectList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewProject extends AbstractEntityAction
+class ViewProject extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewProject({
     @required this.projectId,
@@ -30,7 +30,7 @@ class ViewProject extends AbstractEntityAction
   final bool force;
 }
 
-class EditProject extends AbstractEntityAction
+class EditProject extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditProject(
       {@required this.project,

@@ -31,7 +31,8 @@ class CompanyDetails extends StatefulWidget {
 
 class _CompanyDetailsState extends State<CompanyDetails>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_companyDetails');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_companyDetails');
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;

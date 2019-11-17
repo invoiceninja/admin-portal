@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewClientList extends AbstractEntityAction implements PersistUI {
+class ViewClientList extends AbstractNavigatorAction implements PersistUI {
   ViewClientList({
     @required NavigatorState navigator,
     this.force = false,
@@ -17,7 +17,7 @@ class ViewClientList extends AbstractEntityAction implements PersistUI {
   final bool force;
 }
 
-class ViewClient extends AbstractEntityAction
+class ViewClient extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewClient({
     @required NavigatorState navigator,
@@ -29,7 +29,7 @@ class ViewClient extends AbstractEntityAction
   final bool force;
 }
 
-class EditClient extends AbstractEntityAction
+class EditClient extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditClient(
       {@required this.client,
@@ -299,12 +299,16 @@ void handleClientAction(
           entity: InvoiceEntity(company: company, client: client));
       break;
     case EntityAction.newExpense:
-      createEntity(context: context, entity: ExpenseEntity(
-          company: company, client: client, prefState: state.prefState));
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(
+              company: company, client: client, prefState: state.prefState));
       break;
     case EntityAction.newPayment:
-      createEntity(context: context, entity: PaymentEntity(company: company)
-          .rebuild((b) => b.clientId = client.id));
+      createEntity(
+          context: context,
+          entity: PaymentEntity(company: company)
+              .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreClientRequest(

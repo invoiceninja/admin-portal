@@ -122,7 +122,7 @@ class DeviceSettingsVM {
         store.dispatch(UserSettingsChanged(layout: value));
         AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {
-          store.dispatch(ViewDashboard(context: context));
+          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
         } else {
           store.dispatch(ViewMainScreen(context));
         }

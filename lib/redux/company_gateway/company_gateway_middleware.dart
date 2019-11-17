@@ -57,8 +57,8 @@ Middleware<AppState> _editCompanyGateway() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
 
     if (isMobile(action.context)) {
-      final companyGateway = await action.navigator
-          .pushNamed(CompanyGatewayEditScreen.route);
+      final companyGateway =
+          await action.navigator.pushNamed(CompanyGatewayEditScreen.route);
 
       if (action.completer != null && companyGateway != null) {
         action.completer.complete(companyGateway);

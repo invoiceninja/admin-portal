@@ -111,8 +111,8 @@ class FilterCompany implements PersistUI {
   final String filter;
 }
 
-abstract class AbstractEntityAction {
-  AbstractEntityAction({this.navigator});
+abstract class AbstractNavigatorAction {
+  AbstractNavigatorAction({this.navigator});
 
   final NavigatorState navigator;
 

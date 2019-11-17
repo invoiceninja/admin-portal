@@ -45,8 +45,7 @@ Middleware<AppState> _editDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
-    final document =
-        await action.navigator.pushNamed(DocumentEditScreen.route);
+    final document = await action.navigator.pushNamed(DocumentEditScreen.route);
 
     if (action.completer != null && document != null) {
       action.completer.complete(document);

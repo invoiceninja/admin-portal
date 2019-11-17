@@ -11,14 +11,14 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewExpenseList extends AbstractEntityAction implements PersistUI {
+class ViewExpenseList extends AbstractNavigatorAction implements PersistUI {
   ViewExpenseList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewExpense extends AbstractEntityAction
+class ViewExpense extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewExpense({
     @required this.expenseId,
@@ -30,7 +30,7 @@ class ViewExpense extends AbstractEntityAction
   final bool force;
 }
 
-class EditExpense extends AbstractEntityAction
+class EditExpense extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditExpense(
       {@required this.expense,

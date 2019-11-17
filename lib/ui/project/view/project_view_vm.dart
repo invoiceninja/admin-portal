@@ -103,10 +103,13 @@ class ProjectViewVM {
         }
       },
       onAddTaskPressed: (context) {
-        createEntity(context: context, entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
-            .rebuild((b) => b
-          ..projectId = project.id
-          ..clientId = project.clientId), force: true);
+        createEntity(
+            context: context,
+            entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
+                .rebuild((b) => b
+                  ..projectId = project.id
+                  ..clientId = project.clientId),
+            force: true);
       },
       onBackPressed: () {
         if (state.uiState.currentRoute.contains(ProjectScreen.route)) {

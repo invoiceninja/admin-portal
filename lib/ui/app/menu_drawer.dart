@@ -146,8 +146,8 @@ class MenuDrawer extends StatelessWidget {
                               ? Icons.dashboard
                               : FontAwesomeIcons.tachometerAlt,
                           title: localization.dashboard,
-                          onTap: () =>
-                              store.dispatch(ViewDashboard(context: context)),
+                          onTap: () => store.dispatch(
+                              ViewDashboard(navigator: Navigator.of(context))),
                         ),
                         DrawerTile(
                           company: company,
@@ -212,7 +212,7 @@ class MenuDrawer extends StatelessWidget {
                           title: localization.settings,
                           onTap: () {
                             store.dispatch(ViewSettings(
-                                context: context,
+                                navigator: Navigator.of(context),
                                 userCompany: state.userCompany));
                           },
                         ),

@@ -9,14 +9,15 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList extends AbstractEntityAction implements PersistUI {
+class ViewUserList extends AbstractNavigatorAction implements PersistUI {
   ViewUserList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewUser extends AbstractEntityAction implements PersistUI, PersistPrefs {
+class ViewUser extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewUser({
     @required this.userId,
     @required NavigatorState navigator,
@@ -27,11 +28,14 @@ class ViewUser extends AbstractEntityAction implements PersistUI, PersistPrefs {
   final bool force;
 }
 
-class EditUser extends AbstractEntityAction implements PersistUI, PersistPrefs {
-  EditUser({@required this.user,
-    @required NavigatorState navigator,
-    this.completer,
-    this.force = false}) : super(navigator: navigator);
+class EditUser extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  EditUser(
+      {@required this.user,
+      @required NavigatorState navigator,
+      this.completer,
+      this.force = false})
+      : super(navigator: navigator);
 
   final UserEntity user;
   final Completer completer;
@@ -239,8 +243,8 @@ class FilterUsersByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-void handleUserAction(BuildContext context, List<BaseEntity> users,
-    EntityAction action) {
+void handleUserAction(
+    BuildContext context, List<BaseEntity> users, EntityAction action) {
   if (users.isEmpty) {
     return;
   }

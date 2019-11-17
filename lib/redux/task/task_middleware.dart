@@ -54,8 +54,7 @@ Middleware<AppState> _editTask() {
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
 
     if (isMobile(action.context)) {
-      final task =
-          await action.navigator.pushNamed(TaskEditScreen.route);
+      final task = await action.navigator.pushNamed(TaskEditScreen.route);
 
       if (action.completer != null && task != null) {
         action.completer.complete(task);

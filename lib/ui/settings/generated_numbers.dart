@@ -27,7 +27,8 @@ class GeneratedNumbers extends StatefulWidget {
 
 class _GeneratedNumbersState extends State<GeneratedNumbers>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_generatedNumbers');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_generatedNumbers');
 
   FocusScopeNode _focusNode;
   TabController _controller;

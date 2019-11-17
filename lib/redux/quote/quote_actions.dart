@@ -12,14 +12,14 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewQuoteList extends AbstractEntityAction implements PersistUI {
+class ViewQuoteList extends AbstractNavigatorAction implements PersistUI {
   ViewQuoteList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewQuote extends AbstractEntityAction
+class ViewQuote extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewQuote({
     this.quoteId,
@@ -31,7 +31,7 @@ class ViewQuote extends AbstractEntityAction
   final bool force;
 }
 
-class EditQuote extends AbstractEntityAction
+class EditQuote extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditQuote(
       {this.quote,
@@ -427,7 +427,8 @@ Future handleQuoteAction(
       createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.cloneToQuote:
-      createEntity(context: context, entity: quote.clone); createEntity(context: context, entity: quote.clone);
+      createEntity(context: context, entity: quote.clone);
+      createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(

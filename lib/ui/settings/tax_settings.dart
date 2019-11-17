@@ -24,7 +24,8 @@ class TaxSettings extends StatefulWidget {
 }
 
 class _TaxSettingsState extends State<TaxSettings> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_taxSettings');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_taxSettings');
 
   @override
   Widget build(BuildContext context) {

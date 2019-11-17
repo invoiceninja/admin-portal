@@ -13,14 +13,15 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList extends AbstractEntityAction implements PersistUI {
+class ViewTaskList extends AbstractNavigatorAction implements PersistUI {
   ViewTaskList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewTask extends AbstractEntityAction implements PersistUI, PersistPrefs {
+class ViewTask extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewTask({
     @required this.taskId,
     @required NavigatorState navigator,
@@ -31,7 +32,8 @@ class ViewTask extends AbstractEntityAction implements PersistUI, PersistPrefs {
   final bool force;
 }
 
-class EditTask extends AbstractEntityAction implements PersistUI, PersistPrefs {
+class EditTask extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditTask(
       {this.task,
       this.taskTime,

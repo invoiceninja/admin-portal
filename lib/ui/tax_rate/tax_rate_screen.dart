@@ -112,7 +112,8 @@ class TaxRateSettingsScreen extends StatelessWidget {
               heroTag: 'tax_rate_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                createEntityByType(context: context, entityType: EntityType.taxRate);
+                createEntityByType(
+                    context: context, entityType: EntityType.taxRate);
               },
               child: Icon(
                 Icons.add,

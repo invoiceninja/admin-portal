@@ -9,14 +9,14 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewTaxRateList extends AbstractEntityAction implements PersistUI {
+class ViewTaxRateList extends AbstractNavigatorAction implements PersistUI {
   ViewTaxRateList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewTaxRate extends AbstractEntityAction implements PersistUI {
+class ViewTaxRate extends AbstractNavigatorAction implements PersistUI {
   ViewTaxRate({
     @required this.taxRateId,
     @required NavigatorState navigator,
@@ -27,11 +27,13 @@ class ViewTaxRate extends AbstractEntityAction implements PersistUI {
   final bool force;
 }
 
-class EditTaxRate extends AbstractEntityAction implements PersistUI {
-  EditTaxRate({@required this.taxRate,
-    @required NavigatorState navigator,
-    this.completer,
-    this.force = false}) : super(navigator: navigator);
+class EditTaxRate extends AbstractNavigatorAction implements PersistUI {
+  EditTaxRate(
+      {@required this.taxRate,
+      @required NavigatorState navigator,
+      this.completer,
+      this.force = false})
+      : super(navigator: navigator);
 
   final TaxRateEntity taxRate;
   final Completer completer;
@@ -233,17 +235,17 @@ class FilterTaxRatesByEntity implements PersistUI {
   final EntityType entityType;
 }
 
-void handleTaxRateAction(BuildContext context, List<BaseEntity> taxRates,
-    EntityAction action) {
+void handleTaxRateAction(
+    BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
   assert(
-  [
-    EntityAction.restore,
-    EntityAction.archive,
-    EntityAction.delete,
-    EntityAction.toggleMultiselect
-  ].contains(action) ||
-      taxRates.length == 1,
-  'Cannot perform this action on more than one tax rate');
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          taxRates.length == 1,
+      'Cannot perform this action on more than one tax rate');
 
   if (taxRates.isEmpty) {
     return;

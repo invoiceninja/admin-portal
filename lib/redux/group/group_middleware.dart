@@ -54,8 +54,7 @@ Middleware<AppState> _editGroup() {
     store.dispatch(UpdateCurrentRoute(GroupEditScreen.route));
 
     if (isMobile(action.context)) {
-      final group =
-          await action.navigator.pushNamed(GroupEditScreen.route);
+      final group = await action.navigator.pushNamed(GroupEditScreen.route);
 
       if (action.completer != null && group != null) {
         action.completer.complete(group);

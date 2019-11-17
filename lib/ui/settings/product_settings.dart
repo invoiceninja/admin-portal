@@ -19,7 +19,8 @@ class ProductSettings extends StatefulWidget {
 }
 
 class _ProductSettingsState extends State<ProductSettings> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_productSettings');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_productSettings');
 
   @override
   Widget build(BuildContext context) {

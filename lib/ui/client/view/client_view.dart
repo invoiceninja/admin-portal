@@ -126,8 +126,10 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.project),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(context: context, entity: ProjectEntity()
-                              .rebuild((b) => b.clientId = client.id));
+                          createEntity(
+                              context: context,
+                              entity: ProjectEntity()
+                                  .rebuild((b) => b.clientId = client.id));
                         },
                       )
                     : Container(),
@@ -139,10 +141,12 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.task),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(context: context, entity: TaskEntity(
-                              isRunning:
-                              store.state.prefState.autoStartTasks)
-                              .rebuild((b) => b.clientId = client.id));
+                          createEntity(
+                              context: context,
+                              entity: TaskEntity(
+                                      isRunning:
+                                          store.state.prefState.autoStartTasks)
+                                  .rebuild((b) => b.clientId = client.id));
                         },
                       )
                     : Container(),

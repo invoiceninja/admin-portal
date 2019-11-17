@@ -53,8 +53,7 @@ Middleware<AppState> _editTaxRate() {
     store.dispatch(UpdateCurrentRoute(TaxRateEditScreen.route));
 
     if (isMobile(action.context)) {
-      final taxRate =
-          await action.navigator.pushNamed(TaxRateEditScreen.route);
+      final taxRate = await action.navigator.pushNamed(TaxRateEditScreen.route);
 
       if (action.completer != null && taxRate != null) {
         action.completer.complete(taxRate);

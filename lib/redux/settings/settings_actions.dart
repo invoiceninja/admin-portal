@@ -8,20 +8,19 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-class ViewSettings implements PersistUI {
+class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   ViewSettings({
-    @required this.context,
+    @required NavigatorState navigator,
     this.userCompany,
     this.group,
     this.client,
     this.force = false,
     this.section,
-  });
+  }) : super(navigator: navigator);
 
   final UserCompanyEntity userCompany;
   final GroupEntity group;
   final ClientEntity client;
-  final BuildContext context;
   final bool force;
   final String section;
 }

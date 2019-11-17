@@ -121,7 +121,8 @@ class VendorScreen extends StatelessWidget {
               heroTag: 'vendor_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                createEntityByType(context: context, entityType: EntityType.vendor);
+                createEntityByType(
+                    context: context, entityType: EntityType.vendor);
               },
               child: Icon(
                 Icons.add,

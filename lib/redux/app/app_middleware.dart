@@ -253,7 +253,8 @@ Middleware<AppState> _createLoadState(
           if (store.state.prefState.layout == AppLayout.tablet &&
               layout == AppLayout.mobile) {
             store.dispatch(UserSettingsChanged(layout: layout));
-            store.dispatch(ViewDashboard(context: action.context));
+            store.dispatch(
+                ViewDashboard(navigator: Navigator.of(action.context)));
           } else {
             store.dispatch(ViewMainScreen(action.context));
           }

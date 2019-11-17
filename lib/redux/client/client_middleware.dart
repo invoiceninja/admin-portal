@@ -45,10 +45,7 @@ Middleware<AppState> _editClient() {
     final action = dynamicAction as EditClient;
 
     if (!action.force &&
-        hasChanges(
-            store: store,
-            context: action.context,
-            action: action)) {
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 

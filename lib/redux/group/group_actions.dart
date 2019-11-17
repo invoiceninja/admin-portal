@@ -12,14 +12,14 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewGroupList extends AbstractEntityAction implements PersistUI {
+class ViewGroupList extends AbstractNavigatorAction implements PersistUI {
   ViewGroupList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewGroup extends AbstractEntityAction
+class ViewGroup extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewGroup({
     @required this.groupId,
@@ -31,7 +31,7 @@ class ViewGroup extends AbstractEntityAction
   final bool force;
 }
 
-class EditGroup extends AbstractEntityAction
+class EditGroup extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditGroup(
       {@required this.group,
@@ -257,7 +257,10 @@ void handleGroupAction(
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
-          context: context, group: group, section: kSettingsCompanyDetails));
+        navigator: Navigator.of(context),
+        group: group,
+        section: kSettingsCompanyDetails,
+      ));
       break;
     case EntityAction.newClient:
       createEntity(

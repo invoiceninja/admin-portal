@@ -74,7 +74,7 @@ class ListScaffold extends StatelessWidget {
 
     return WillPopScope(
         onWillPop: () async {
-          store.dispatch(ViewDashboard(context: context));
+          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
           return false;
         },
         child: Scaffold(

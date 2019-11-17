@@ -5,10 +5,12 @@ import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-class ViewDashboard implements PersistUI {
-  ViewDashboard({@required this.context, this.force = false});
+class ViewDashboard extends AbstractNavigatorAction implements PersistUI {
+  ViewDashboard({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 

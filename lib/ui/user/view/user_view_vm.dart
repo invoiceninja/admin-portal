@@ -129,7 +129,8 @@ class UserViewVM {
             } else {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              viewEntitiesByType(context: context, entityType: EntityType.payment);
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.payment);
             }
             break;
           case EntityType.project:
@@ -138,12 +139,16 @@ class UserViewVM {
             } else {
               store.dispatch(FilterProjectsByEntity(
                   entityId: user.id, entityType: EntityType.user));
-              viewEntitiesByType(context: context, entityType: EntityType.project);
+              viewEntitiesByType(
+                  context: context, entityType: EntityType.project);
             }
             break;
           case EntityType.task:
             if (longPress && user.isActive) {
-              createEntity(context: context, entity: TaskEntity(isRunning: state.prefState.autoStartTasks));
+              createEntity(
+                  context: context,
+                  entity:
+                      TaskEntity(isRunning: state.prefState.autoStartTasks));
             } else {
               store.dispatch(FilterTasksByEntity(
                   entityId: user.id, entityType: EntityType.user));

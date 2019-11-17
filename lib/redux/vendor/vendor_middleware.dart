@@ -55,8 +55,7 @@ Middleware<AppState> _editVendor() {
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
 
     if (isMobile(action.context)) {
-      final vendor =
-          await action.navigator.pushNamed(VendorEditScreen.route);
+      final vendor = await action.navigator.pushNamed(VendorEditScreen.route);
 
       if (action.completer != null && vendor != null) {
         action.completer.complete(vendor);

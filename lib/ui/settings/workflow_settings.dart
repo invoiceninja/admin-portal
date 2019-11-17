@@ -22,7 +22,8 @@ class WorkflowSettings extends StatefulWidget {
 
 class _WorkflowSettingsState extends State<WorkflowSettings>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_workflowSettings');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_workflowSettings');
 
   FocusScopeNode _focusNode;
   TabController _controller;

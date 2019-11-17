@@ -26,7 +26,8 @@ class _TaskEditState extends State<TaskEdit>
   Timer _timer;
   TabController _controller;
 
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_taskEdit');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_taskEdit');
 
   static const kDetailsScreen = 0;
   static const kTimesScreen = 1;

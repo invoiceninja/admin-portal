@@ -55,8 +55,7 @@ Middleware<AppState> _editExpense() {
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
 
     if (isMobile(action.context)) {
-      final expense =
-          await action.navigator.pushNamed(ExpenseEditScreen.route);
+      final expense = await action.navigator.pushNamed(ExpenseEditScreen.route);
 
       if (action.completer != null && expense != null) {
         action.completer.complete(expense);

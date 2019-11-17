@@ -57,8 +57,7 @@ Middleware<AppState> _editPayment() {
     store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
     if (isMobile(action.context)) {
-      final payment =
-          await action.navigator.pushNamed(PaymentEditScreen.route);
+      final payment = await action.navigator.pushNamed(PaymentEditScreen.route);
 
       if (action.completer != null && payment != null) {
         action.completer.complete(null);

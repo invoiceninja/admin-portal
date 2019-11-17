@@ -108,8 +108,7 @@ Middleware<AppState> _editQuote() {
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
 
     if (isMobile(action.context)) {
-      final quote =
-          await action.navigator.pushNamed(QuoteEditScreen.route);
+      final quote = await action.navigator.pushNamed(QuoteEditScreen.route);
 
       if (action.completer != null && quote != null) {
         action.completer.complete(quote);

@@ -10,16 +10,16 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewCompanyGatewayList extends AbstractEntityAction implements PersistUI {
+class ViewCompanyGatewayList extends AbstractNavigatorAction
+    implements PersistUI {
   ViewCompanyGatewayList(
-      {@required NavigatorState navigator,
-      this.force = false})
+      {@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewCompanyGateway extends AbstractEntityAction
+class ViewCompanyGateway extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewCompanyGateway({
     @required this.companyGatewayId,
@@ -31,7 +31,7 @@ class ViewCompanyGateway extends AbstractEntityAction
   final bool force;
 }
 
-class EditCompanyGateway extends AbstractEntityAction
+class EditCompanyGateway extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditCompanyGateway(
       {@required this.companyGateway,

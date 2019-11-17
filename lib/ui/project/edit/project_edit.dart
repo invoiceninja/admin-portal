@@ -27,7 +27,8 @@ class ProjectEdit extends StatefulWidget {
 }
 
 class _ProjectEditState extends State<ProjectEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_projectEdit');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_projectEdit');
   final _debouncer = Debouncer();
 
   bool autoValidate = false;

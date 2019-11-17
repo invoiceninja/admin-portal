@@ -9,14 +9,14 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewVendorList extends AbstractEntityAction implements PersistUI {
+class ViewVendorList extends AbstractNavigatorAction implements PersistUI {
   ViewVendorList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
   final bool force;
 }
 
-class ViewVendor extends AbstractEntityAction
+class ViewVendor extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewVendor({
     @required this.vendorId,
@@ -28,7 +28,7 @@ class ViewVendor extends AbstractEntityAction
   final bool force;
 }
 
-class EditVendor extends AbstractEntityAction
+class EditVendor extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditVendor(
       {@required this.vendor,

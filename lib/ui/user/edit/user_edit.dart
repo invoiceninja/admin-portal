@@ -26,7 +26,8 @@ class UserEdit extends StatefulWidget {
 }
 
 class _UserEditState extends State<UserEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_userEdit');
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_userEdit');
   final _debouncer = Debouncer();
 
   bool autoValidate = false;
