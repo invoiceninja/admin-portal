@@ -98,8 +98,7 @@ class ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditInvoice(
                   context: context,
-                  invoice: InvoiceEntity(company: state.company)));
-              store.dispatch(UpdateInvoiceClient(client: client));
+                  invoice: InvoiceEntity(company: state.company, client: client)));
             } else {
               store.dispatch(FilterInvoicesByEntity(
                   entityId: client.id, entityType: EntityType.client));
@@ -110,8 +109,7 @@ class ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditQuote(
                   context: context,
-                  quote: InvoiceEntity(company: state.company, isQuote: true)));
-              store.dispatch(UpdateQuoteClient(client: client));
+                  quote: InvoiceEntity(company: state.company, client: client, isQuote: true)));
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: client.id, entityType: EntityType.client));

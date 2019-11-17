@@ -474,8 +474,6 @@ bool hasChanges({
   @required BuildContext context,
   @required dynamic action,
 }) {
-  final localization = AppLocalization.of(context);
-
   if (context == null) {
     print('WARNING: context is null in hasChanges');
     return false;
@@ -485,6 +483,8 @@ bool hasChanges({
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext dialogContext) {
+          final localization = AppLocalization.of(context);
+
           return MessageDialog(localization.errorUnsavedChanges,
               dismissLabel: localization.continueEditing, onDiscard: () {
             store.dispatch(DiscardChanges());

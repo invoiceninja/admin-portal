@@ -68,13 +68,16 @@ abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity(
-      {String id, bool isQuote = false, CompanyEntity company}) {
+      {String id,
+      bool isQuote = false,
+      CompanyEntity company,
+      ClientEntity client}) {
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       amount: 0.0,
       balance: 0.0,
-      clientId: '',
+      clientId: client?.id ?? '',
       statusId: '',
       invoiceNumber: '',
       discount: 0.0,
@@ -113,7 +116,12 @@ abstract class InvoiceEntity extends Object
       customSurcharge4: 0,
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
-      invitations: BuiltList<InvitationEntity>(),
+      invitations: client == null
+          ? BuiltList<InvitationEntity>()
+          : BuiltList(client.contacts
+              .where((contact) => contact.sendInvoice)
+              .map((contact) => InvitationEntity(contactId: contact.id))
+              .toList()),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
