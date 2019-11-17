@@ -83,8 +83,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 AppDropdownButton(
                   labelText: localization.invoiceDesign,
                   value: settings.defaultInvoiceDesignId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..defaultInvoiceDesignId = value)),
+                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings
+                          .rebuild((b) => b..defaultInvoiceDesignId = value)),
                   items: designs
                       .map((designId) => DropdownMenuItem<String>(
                             value: designId,

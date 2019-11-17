@@ -109,8 +109,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               store.dispatch(EditQuote(
                   context: context,
-                  quote: InvoiceEntity(
-                      company: state.company, isQuote: true)));
+                  quote: InvoiceEntity(company: state.company, isQuote: true)));
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: user.id, entityType: EntityType.user));

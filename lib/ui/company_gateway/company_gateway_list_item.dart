@@ -59,10 +59,12 @@ class CompanyGatewayListItem extends StatelessWidget {
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
         onLongPress: onLongPress,
-        trailing: onRemovePressed == null ? null : FlatButton(
-          child: Text(AppLocalization.of(context).remove),
-          onPressed: onRemovePressed,
-        ),
+        trailing: onRemovePressed == null
+            ? null
+            : FlatButton(
+                child: Text(AppLocalization.of(context).remove),
+                onPressed: onRemovePressed,
+              ),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

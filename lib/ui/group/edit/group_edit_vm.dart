@@ -86,8 +86,8 @@ class GroupEditVM {
               Navigator.of(context).pop(savedGroup);
             }
           } else {
-            store.dispatch(
-                ViewGroup(context: context, groupId: savedGroup.id, force: true));
+            store.dispatch(ViewGroup(
+                context: context, groupId: savedGroup.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

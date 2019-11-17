@@ -244,7 +244,6 @@ class FilterUsersByEntity implements PersistUI {
 
 void handleUserAction(
     BuildContext context, List<BaseEntity> users, EntityAction action) {
-
   if (users.isEmpty) {
     return;
   }
@@ -261,11 +260,13 @@ void handleUserAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreUserRequest(
-          snackBarCompleter<Null>(context, localization.restoredUser), userIds));
+          snackBarCompleter<Null>(context, localization.restoredUser),
+          userIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveUserRequest(
-          snackBarCompleter<Null>(context, localization.archivedUser), userIds));
+          snackBarCompleter<Null>(context, localization.archivedUser),
+          userIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteUserRequest(

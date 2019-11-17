@@ -32,9 +32,7 @@ class ClientOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final client = viewModel.client;
     final company = viewModel.company;
-    final state = StoreProvider
-        .of<AppState>(context)
-        .state;
+    final state = StoreProvider.of<AppState>(context).state;
     final statics = state.staticState;
     final fields = <String, String>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
@@ -73,9 +71,7 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         if (client.hasGroup) ...[
           Material(
-            color: Theme
-                .of(context)
-                .canvasColor,
+            color: Theme.of(context).canvasColor,
             child: ListTile(
               title: EntityStateTitle(entity: group),
               leading: Icon(getEntityIcon(EntityType.group), size: 18.0),
@@ -100,8 +96,8 @@ class ClientOverview extends StatelessWidget {
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.invoice, true),
           subtitle:
-          memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
-              .present(localization.active, localization.archived),
+              memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
+                  .present(localization.active, localization.archived),
         ),
         EntityListTile(
           bottomPadding: 1,
@@ -111,7 +107,7 @@ class ClientOverview extends StatelessWidget {
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.payment, true),
           subtitle: memoizedPaymentStatsForClient(
-              client.id, state.paymentState.map, state.invoiceState.map)
+                  client.id, state.paymentState.map, state.invoiceState.map)
               .present(localization.active, localization.archived),
         ),
         if (company.isModuleEnabled(EntityType.quote))
@@ -123,8 +119,8 @@ class ClientOverview extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.quote, true),
             subtitle:
-            memoizedQuoteStatsForClient(client.id, state.quoteState.map)
-                .present(localization.active, localization.archived),
+                memoizedQuoteStatsForClient(client.id, state.quoteState.map)
+                    .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.project))
           EntityListTile(
@@ -135,8 +131,8 @@ class ClientOverview extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.project, true),
             subtitle:
-            memoizedProjectStatsForClient(client.id, state.projectState.map)
-                .present(localization.active, localization.archived),
+                memoizedProjectStatsForClient(client.id, state.projectState.map)
+                    .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.task))
           EntityListTile(
@@ -158,8 +154,8 @@ class ClientOverview extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.expense, true),
             subtitle:
-            memoizedExpenseStatsForClient(client.id, state.expenseState.map)
-                .present(localization.active, localization.archived),
+                memoizedExpenseStatsForClient(client.id, state.expenseState.map)
+                    .present(localization.active, localization.archived),
           ),
       ],
     );
@@ -167,12 +163,13 @@ class ClientOverview extends StatelessWidget {
 }
 
 class EntityListTile extends StatelessWidget {
-  const EntityListTile({this.icon,
-    this.onTap,
-    this.onLongPress,
-    this.title,
-    this.subtitle,
-    this.bottomPadding = 12});
+  const EntityListTile(
+      {this.icon,
+      this.onTap,
+      this.onLongPress,
+      this.title,
+      this.subtitle,
+      this.bottomPadding = 12});
 
   final Function onTap;
   final Function onLongPress;
@@ -186,9 +183,7 @@ class EntityListTile extends StatelessWidget {
     return Column(
       children: <Widget>[
         Material(
-          color: Theme
-              .of(context)
-              .canvasColor,
+          color: Theme.of(context).canvasColor,
           child: ListTile(
             title: Text(title),
             subtitle: Text(subtitle),

@@ -30,8 +30,7 @@ class PaymentRepository {
     if (Config.DEMO_MODE) {
       response = json.decode(kMockPayments);
     } else {
-      response =
-      await webClient.get(url, credentials.token);
+      response = await webClient.get(url, credentials.token);
     }
 
     final PaymentListResponse paymentResponse =

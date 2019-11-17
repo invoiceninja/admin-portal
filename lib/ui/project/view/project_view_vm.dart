@@ -81,8 +81,9 @@ class ProjectViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              context: context,
-              entities: [client],);
+            context: context,
+            entities: [client],
+          );
         } else {
           store.dispatch(ViewClient(clientId: client.id, context: context));
         }
@@ -103,8 +104,8 @@ class ProjectViewVM {
       },
       onAddTaskPressed: (context) => store.dispatch(EditTask(
         context: context,
-        task:
-            TaskEntity(isRunning: state.prefState.autoStartTasks).rebuild((b) => b
+        task: TaskEntity(isRunning: state.prefState.autoStartTasks)
+            .rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId),
         force: true,

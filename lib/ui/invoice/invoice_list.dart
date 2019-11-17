@@ -80,9 +80,9 @@ class InvoiceList extends StatelessWidget {
                                 }
                               },
                               onLongPress: () async {
-                                final longPressIsSelection =
-                                    state.prefState.longPressSelectionIsDefault ??
-                                        true;
+                                final longPressIsSelection = state.prefState
+                                        .longPressSelectionIsDefault ??
+                                    true;
                                 if (longPressIsSelection && !isInMultiselect) {
                                   handleInvoiceAction(context, [invoice],
                                       EntityAction.toggleMultiselect);

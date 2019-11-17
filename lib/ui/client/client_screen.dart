@@ -90,9 +90,7 @@ class ClientScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: clients,
-                        context: context,
-                        multiselect: true);
+                        entities: clients, context: context, multiselect: true);
                     store.dispatch(ClearClientMultiselect(context: context));
                   },
           ),

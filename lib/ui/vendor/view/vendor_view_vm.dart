@@ -95,8 +95,8 @@ class VendorViewVM {
             if (longPress && vendor.isActive) {
               store.dispatch(EditExpense(
                   context: context,
-                  expense: ExpenseEntity(
-                      company: state.company, vendor: vendor)));
+                  expense:
+                      ExpenseEntity(company: state.company, vendor: vendor)));
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: vendor.id, entityType: EntityType.vendor));

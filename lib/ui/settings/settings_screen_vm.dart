@@ -25,9 +25,7 @@ class SettingsScreenBuilder extends StatelessWidget {
 }
 
 class SettingsScreenVM {
-  SettingsScreenVM({
-    @required this.state
-  });
+  SettingsScreenVM({@required this.state});
 
   final AppState state;
   static SettingsScreenVM fromStore(Store<AppState> store) {

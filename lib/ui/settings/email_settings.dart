@@ -140,7 +140,8 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.enableMarkup,
                     helpLabel: localization.enableMarkupHelp,
                     value: settings.enableEmailMarkup,
-                    iconData: kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                    iconData:
+                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enableEmailMarkup = value)),
                   ),

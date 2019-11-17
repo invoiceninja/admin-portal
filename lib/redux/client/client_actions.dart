@@ -314,15 +314,18 @@ void handleClientAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreClientRequest(
-          snackBarCompleter<Null>(context, localization.restoredClient), clientIds));
+          snackBarCompleter<Null>(context, localization.restoredClient),
+          clientIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveClientRequest(
-          snackBarCompleter<Null>(context, localization.archivedClient), clientIds));
+          snackBarCompleter<Null>(context, localization.archivedClient),
+          clientIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteClientRequest(
-          snackBarCompleter<Null>(context, localization.deletedClient), clientIds));
+          snackBarCompleter<Null>(context, localization.deletedClient),
+          clientIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {

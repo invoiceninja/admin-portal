@@ -70,8 +70,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               ? null
               : IconButton(
                   icon: Icon(Icons.menu),
-                  onPressed: () =>
-                      store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
+                  onPressed: () => store
+                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
                 ),
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
@@ -96,7 +96,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     if (isMobile(context) || state.prefState.isHistoryFloated) {
                       Scaffold.of(context).openEndDrawer();
                     } else {
-                      store.dispatch(UserSettingsChanged(sidebar: AppSidebar.history));
+                      store.dispatch(
+                          UserSettingsChanged(sidebar: AppSidebar.history));
                     }
                   },
                 ),

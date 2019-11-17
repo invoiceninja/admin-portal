@@ -278,7 +278,8 @@ void handlePaymentAction(
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter<Null>(context, localization.emailedPayment), payment));
+          snackBarCompleter<Null>(context, localization.emailedPayment),
+          payment));
       break;
     case EntityAction.restore:
       store.dispatch(RestorePaymentRequest(
@@ -292,7 +293,8 @@ void handlePaymentAction(
       break;
     case EntityAction.delete:
       store.dispatch(DeletePaymentRequest(
-          snackBarCompleter<Null>(context, localization.deletedPayment), paymentIds));
+          snackBarCompleter<Null>(context, localization.deletedPayment),
+          paymentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {

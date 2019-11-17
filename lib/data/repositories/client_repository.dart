@@ -46,8 +46,7 @@ class ClientRepository {
     if (Config.DEMO_MODE) {
       response = json.decode(kMockClients);
     } else {
-      response =
-      await webClient.get(url, credentials.token);
+      response = await webClient.get(url, credentials.token);
     }
 
     final ClientListResponse clientResponse =

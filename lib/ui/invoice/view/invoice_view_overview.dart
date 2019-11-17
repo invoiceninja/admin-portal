@@ -160,7 +160,8 @@ class InvoiceOverview extends StatelessWidget {
                 invoice: invoice,
                 invoiceItem: invoiceItem,
                 onTap: () => userCompany.canEditEntity(invoice)
-                    ? viewModel.onEditPressed(context, invoice.lineItems.indexOf(invoiceItem))
+                    ? viewModel.onEditPressed(
+                        context, invoice.lineItems.indexOf(invoiceItem))
                     : null,
               );
             },

@@ -126,9 +126,9 @@ class _ClientPortalState extends State<ClientPortal>
                     AppDropdownButton(
                       labelText: localization.portalMode,
                       value: viewModel.company.portalMode,
-                      onChanged: (dynamic value) => viewModel.onCompanyChanged(viewModel
-                          .company
-                          .rebuild((b) => b..portalMode = value)),
+                      onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                          viewModel.company
+                              .rebuild((b) => b..portalMode = value)),
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.subdomain),

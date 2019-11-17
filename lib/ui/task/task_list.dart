@@ -75,9 +75,9 @@ class TaskList extends StatelessWidget {
                                 }
                               },
                               onLongPress: () async {
-                                final longPressIsSelection =
-                                    state.prefState.longPressSelectionIsDefault ??
-                                        true;
+                                final longPressIsSelection = state.prefState
+                                        .longPressSelectionIsDefault ??
+                                    true;
                                 if (longPressIsSelection && !isInMultiselect) {
                                   handleTaskAction(context, [task],
                                       EntityAction.toggleMultiselect);

@@ -80,8 +80,7 @@ class DashboardVM {
       onCurrencyChanged: (currencyId) =>
           store.dispatch(UpdateDashboardSettings(currencyId: currencyId)),
       filter: filter,
-      filteredList:
-          memoizedFilteredSelector(filter, state.userCompanyState),
+      filteredList: memoizedFilteredSelector(filter, state.userCompanyState),
     );
   }
 

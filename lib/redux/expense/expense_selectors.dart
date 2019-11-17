@@ -111,13 +111,12 @@ List<String> filteredExpensesSelector(
   return list;
 }
 
-var memoizedExpenseStatsForVendor = memo2((String vendorId,
-    BuiltMap<String, ExpenseEntity> expenseMap) =>
-    expenseStatsForVendor(vendorId, expenseMap));
+var memoizedExpenseStatsForVendor = memo2(
+    (String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        expenseStatsForVendor(vendorId, expenseMap));
 
 EntityStats expenseStatsForVendor(
-    String vendorId,
-    BuiltMap<String, ExpenseEntity> expenseMap) {
+    String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -133,13 +132,12 @@ EntityStats expenseStatsForVendor(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedExpenseStatsForClient = memo2((String clientId,
-        BuiltMap<String, ExpenseEntity> expenseMap) =>
-    expenseStatsForClient(clientId, expenseMap));
+var memoizedExpenseStatsForClient = memo2(
+    (String clientId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+        expenseStatsForClient(clientId, expenseMap));
 
 EntityStats expenseStatsForClient(
-    String clientId,
-    BuiltMap<String, ExpenseEntity> expenseMap) {
+    String clientId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {

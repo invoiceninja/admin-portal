@@ -297,7 +297,8 @@ void handleExpenseAction(
       break;
     case EntityAction.delete:
       store.dispatch(DeleteExpenseRequest(
-          snackBarCompleter<Null>(context, localization.deletedExpense), expenseIds));
+          snackBarCompleter<Null>(context, localization.deletedExpense),
+          expenseIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {

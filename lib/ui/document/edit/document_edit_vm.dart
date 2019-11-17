@@ -82,7 +82,8 @@ class DocumentEditVM {
               Navigator.of(context).pop(savedDocument);
             }
           } else {
-            store.dispatch(ViewDocument(context: context, documentId: savedDocument.id, force: true));
+            store.dispatch(ViewDocument(
+                context: context, documentId: savedDocument.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

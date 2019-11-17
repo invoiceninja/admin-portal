@@ -67,8 +67,8 @@ var memoizedClientStatsForGroup = memo2(
     (BuiltMap<String, ClientEntity> clientMap, String groupId) =>
         clientStatsForGroup(clientMap, groupId));
 
-EntityStats clientStatsForGroup(BuiltMap<String, ClientEntity> clientMap,
-    String groupId) {
+EntityStats clientStatsForGroup(
+    BuiltMap<String, ClientEntity> clientMap, String groupId) {
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {

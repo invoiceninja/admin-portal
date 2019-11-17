@@ -381,7 +381,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailInvoice(
-          completer: snackBarCompleter<Null>(context, localization.emailedInvoice),
+          completer:
+              snackBarCompleter<Null>(context, localization.emailedInvoice),
           invoice: invoice,
           context: context));
       break;
@@ -408,7 +409,8 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.delete:
       store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter<Null>(context, localization.deletedInvoice), invoiceIds));
+          snackBarCompleter<Null>(context, localization.deletedInvoice),
+          invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {

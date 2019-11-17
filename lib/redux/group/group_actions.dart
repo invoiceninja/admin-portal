@@ -242,7 +242,6 @@ class FilterGroupsByEntity implements PersistUI {
 
 void handleGroupAction(
     BuildContext context, List<BaseEntity> groups, EntityAction action) {
-
   if (groups.isEmpty) {
     return;
   }
@@ -267,15 +266,18 @@ void handleGroupAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreGroupRequest(
-          snackBarCompleter<Null>(context, localization.restoredGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.restoredGroup),
+          groupIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter<Null>(context, localization.archivedGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.archivedGroup),
+          groupIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteGroupRequest(
-          snackBarCompleter<Null>(context, localization.deletedGroup), groupIds));
+          snackBarCompleter<Null>(context, localization.deletedGroup),
+          groupIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {

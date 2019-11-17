@@ -245,7 +245,8 @@ void handleProductAction(
       break;
     case EntityAction.delete:
       store.dispatch(DeleteProductRequest(
-          snackBarCompleter<Null>(context, localization.deletedProduct), productIds));
+          snackBarCompleter<Null>(context, localization.deletedProduct),
+          productIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {

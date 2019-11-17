@@ -90,9 +90,7 @@ class TaskScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: tasks,
-                        context: context,
-                        multiselect: true);
+                        entities: tasks, context: context, multiselect: true);
                     store.dispatch(ClearTaskMultiselect(context: context));
                   },
           ),

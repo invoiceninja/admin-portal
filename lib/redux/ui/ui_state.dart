@@ -122,6 +122,4 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing => currentRoute.endsWith('edit');
-
 }
-

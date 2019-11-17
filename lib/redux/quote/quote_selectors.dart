@@ -24,7 +24,6 @@ List<String> filteredQuotesSelector(
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
-
     if (quoteListState.filterEntityType == EntityType.client) {
       if (!quoteListState.entityMatchesFilter(client)) {
         return false;
@@ -70,13 +69,12 @@ List<String> filteredQuotesSelector(
   return list;
 }
 
-var memoizedQuoteStatsForClient = memo2((String clientId,
-        BuiltMap<String, InvoiceEntity> quoteMap) =>
-    quoteStatsForClient(clientId, quoteMap));
+var memoizedQuoteStatsForClient = memo2(
+    (String clientId, BuiltMap<String, InvoiceEntity> quoteMap) =>
+        quoteStatsForClient(clientId, quoteMap));
 
 EntityStats quoteStatsForClient(
-    String clientId,
-    BuiltMap<String, InvoiceEntity> quoteMap) {
+    String clientId, BuiltMap<String, InvoiceEntity> quoteMap) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
@@ -92,13 +90,14 @@ EntityStats quoteStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedQuoteStatsForUser = memo2((String userId,
-        BuiltMap<String, InvoiceEntity> quoteMap) =>
-    quoteStatsForUser(userId, quoteMap));
+var memoizedQuoteStatsForUser = memo2(
+    (String userId, BuiltMap<String, InvoiceEntity> quoteMap) =>
+        quoteStatsForUser(userId, quoteMap));
 
 EntityStats quoteStatsForUser(
-    String userId,
-    BuiltMap<String, InvoiceEntity> quoteMap,) {
+  String userId,
+  BuiltMap<String, InvoiceEntity> quoteMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {

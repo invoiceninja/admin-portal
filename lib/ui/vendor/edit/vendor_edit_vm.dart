@@ -100,8 +100,8 @@ class VendorEditVM {
               Navigator.of(context).pop(savedVendor);
             }
           } else {
-            store.dispatch(
-                ViewVendor(context: context, vendorId: savedVendor.id, force: true));
+            store.dispatch(ViewVendor(
+                context: context, vendorId: savedVendor.id, force: true));
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

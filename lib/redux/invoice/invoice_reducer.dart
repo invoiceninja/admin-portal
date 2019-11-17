@@ -19,7 +19,8 @@ EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
 
 final editingItemIndexReducer = combineReducers<int>([
   TypedReducer<int, EditInvoice>((index, action) => action.invoiceItemIndex),
-  TypedReducer<int, EditInvoiceItem>((index, action) => action.invoiceItemIndex),
+  TypedReducer<int, EditInvoiceItem>(
+      (index, action) => action.invoiceItemIndex),
 ]);
 
 Reducer<String> dropdownFilterReducer = combineReducers([

@@ -166,8 +166,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   ),
             UserPicker(
               userId: invoice.assignedUserId,
-              onChanged: (userId) => viewModel
-                  .onChanged(invoice.rebuild((b) => b..assignedUserId = userId)),
+              onChanged: (userId) => viewModel.onChanged(
+                  invoice.rebuild((b) => b..assignedUserId = userId)),
             ),
             DatePicker(
               validator: (String val) => val.trim().isEmpty

@@ -315,8 +315,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     AppDropdownButton(
                         labelText: localization.frequency,
                         value: settings.endlessReminderFrequencyId,
-                        onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
+                        onChanged: (dynamic value) =>
+                            viewModel.onSettingsChanged(settings.rebuild(
                                 (b) => b..endlessReminderFrequencyId = value)),
                         items: kFrequencies
                             .map((id, frequency) =>

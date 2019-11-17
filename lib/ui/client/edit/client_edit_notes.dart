@@ -103,10 +103,10 @@ class ClientEditNotesState extends State<ClientEditNotes> {
               labelText: localization.size,
               items: memoizedSizeList(state.staticState.sizeMap)
                   .map((sizeId) => DropdownMenuItem(
-                child: Text(
-                    state.staticState.sizeMap[sizeId].name),
-                value: sizeId,
-              )).toList(),
+                        child: Text(state.staticState.sizeMap[sizeId].name),
+                        value: sizeId,
+                      ))
+                  .toList(),
               onChanged: (dynamic sizeId) => viewModel.onChanged(
                 client.rebuild((b) => b..sizeId = sizeId),
               ),

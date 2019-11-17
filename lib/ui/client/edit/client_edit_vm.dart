@@ -118,8 +118,8 @@ class ClientEditVM {
                 Navigator.of(context).pop(savedClient);
               }
             } else {
-              store.dispatch(
-                  ViewClient(context: context, clientId: savedClient.id, force: true));
+              store.dispatch(ViewClient(
+                  context: context, clientId: savedClient.id, force: true));
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

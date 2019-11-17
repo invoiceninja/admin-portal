@@ -292,7 +292,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                                 child: Text(
                                     state.staticState.sizeMap[sizeId].name),
                                 value: sizeId,
-                              )).toList(),
+                              ))
+                          .toList(),
                       onChanged: (dynamic sizeId) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..sizeId = sizeId),
                       ),

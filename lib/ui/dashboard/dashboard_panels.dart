@@ -184,12 +184,8 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = viewModel.state.invoiceState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final currentData = memoizedChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.clientState.map);
+    final currentData = memoizedChartInvoices(state.staticState.currencyMap,
+        state.company, settings, state.invoiceState.map, state.clientState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
@@ -244,12 +240,8 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.quoteState.isLoaded;
-    final currentData = memoizedChartQuotes(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.quoteState.map,
-        state.clientState.map);
+    final currentData = memoizedChartQuotes(state.staticState.currencyMap,
+        state.company, settings, state.quoteState.map, state.clientState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {

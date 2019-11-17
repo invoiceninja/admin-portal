@@ -72,7 +72,6 @@ List<String> filteredInvoicesSelector(
       }
     }
 
-
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
     }
@@ -102,13 +101,12 @@ List<String> filteredInvoicesSelector(
   return list;
 }
 
-var memoizedInvoiceStatsForClient = memo2((String clientId,
-        BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    invoiceStatsForClient(clientId, invoiceMap));
+var memoizedInvoiceStatsForClient = memo2(
+    (String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        invoiceStatsForClient(clientId, invoiceMap));
 
 EntityStats invoiceStatsForClient(
-    String clientId,
-    BuiltMap<String, InvoiceEntity> invoiceMap) {
+    String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
@@ -124,13 +122,12 @@ EntityStats invoiceStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedInvoiceStatsForUser = memo2((String userId,
-        BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    invoiceStatsForUser(userId, invoiceMap));
+var memoizedInvoiceStatsForUser = memo2(
+    (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        invoiceStatsForUser(userId, invoiceMap));
 
 EntityStats invoiceStatsForUser(
-    String userId,
-    BuiltMap<String, InvoiceEntity> invoiceMap) {
+    String userId, BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {

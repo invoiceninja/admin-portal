@@ -80,8 +80,7 @@ IconData getEntityIcon(EntityType entityType) {
         return null;
     }
   }
-  
-  
+
   switch (entityType) {
     case EntityType.product:
       return FontAwesomeIcons.cube;
@@ -185,7 +184,7 @@ IconData getSettingIcon(String section) {
         return null;
     }
   }
-  
+
   switch (section) {
     case kSettingsCompanyDetails:
       return FontAwesomeIcons.building;

@@ -93,9 +93,7 @@ class GroupSettingsScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: groups,
-                        context: context,
-                        multiselect: true);
+                        entities: groups, context: context, multiselect: true);
                     store.dispatch(ClearGroupMultiselect(context: context));
                   },
           ),

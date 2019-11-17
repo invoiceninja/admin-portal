@@ -64,8 +64,7 @@ String formatNumber(
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
-  final ClientEntity client =
-      state.userCompanyState.clientState.map[clientId];
+  final ClientEntity client = state.userCompanyState.clientState.map[clientId];
 
   String countryId;
 

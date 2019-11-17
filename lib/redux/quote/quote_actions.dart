@@ -409,7 +409,8 @@ Future handleQuoteAction(
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailQuote(
-          completer: snackBarCompleter<Null>(context, localization.emailedQuote),
+          completer:
+              snackBarCompleter<Null>(context, localization.emailedQuote),
           quote: quote,
           context: context));
       break;
@@ -422,15 +423,18 @@ Future handleQuoteAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuoteRequest(
-          snackBarCompleter<Null>(context, localization.restoredQuote), quoteIds));
+          snackBarCompleter<Null>(context, localization.restoredQuote),
+          quoteIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveQuoteRequest(
-          snackBarCompleter<Null>(context, localization.archivedQuote), quoteIds));
+          snackBarCompleter<Null>(context, localization.archivedQuote),
+          quoteIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteQuoteRequest(
-          snackBarCompleter<Null>(context, localization.deletedQuote), quoteIds));
+          snackBarCompleter<Null>(context, localization.deletedQuote),
+          quoteIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.quoteListState.isInMultiselect()) {

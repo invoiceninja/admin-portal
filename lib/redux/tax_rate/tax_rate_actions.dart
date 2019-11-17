@@ -273,7 +273,8 @@ void handleTaxRateAction(
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaxRateRequest(
-          snackBarCompleter<Null>(context, localization.deletedTaxRate), taxRateIds));
+          snackBarCompleter<Null>(context, localization.deletedTaxRate),
+          taxRateIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {

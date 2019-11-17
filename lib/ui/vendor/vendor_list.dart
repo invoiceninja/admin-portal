@@ -62,7 +62,9 @@ class VendorList extends StatelessWidget {
                                 }
                               },
                               onLongPress: () async {
-                                final longPressIsSelection = store.state.prefState
+                                final longPressIsSelection = store
+                                        .state
+                                        .prefState
                                         .longPressSelectionIsDefault ??
                                     true;
                                 if (longPressIsSelection && !isInMultiselect) {

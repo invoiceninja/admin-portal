@@ -42,7 +42,7 @@ class ClientViewScreen extends StatelessWidget {
   }
 }
 
-class  ClientViewVM {
+class ClientViewVM {
   ClientViewVM({
     @required this.state,
     @required this.client,
@@ -110,8 +110,7 @@ class  ClientViewVM {
             if (longPress && client.isActive) {
               store.dispatch(EditQuote(
                   context: context,
-                  quote: InvoiceEntity(
-                      company: state.company, isQuote: true)));
+                  quote: InvoiceEntity(company: state.company, isQuote: true)));
               store.dispatch(UpdateQuoteClient(client: client));
             } else {
               store.dispatch(FilterQuotesByEntity(

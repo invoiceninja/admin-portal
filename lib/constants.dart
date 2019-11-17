@@ -424,4 +424,3 @@ const kPageSizes = [
   'Letter',
   'Tabloid',
 ];
-

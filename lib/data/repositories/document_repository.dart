@@ -41,8 +41,7 @@ class DocumentRepository {
     if (Config.DEMO_MODE) {
       response = json.decode(kMockDocuments);
     } else {
-      response =
-      await webClient.get(url, credentials.token);
+      response = await webClient.get(url, credentials.token);
     }
 
     final DocumentListResponse documentResponse =

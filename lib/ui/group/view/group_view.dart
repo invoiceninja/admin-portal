@@ -281,10 +281,8 @@ class SettingsViewer extends StatelessWidget {
           settings.requireInvoiceSignature?.toString(),
       localization.requireQuoteSignature:
           settings.requireQuoteSignature?.toString(),
-      localization.allPagesHeader:
-          settings.allPagesHeader?.toString(),
-      localization.allPagesFooter:
-          settings.allPagesFooter?.toString(),
+      localization.allPagesHeader: settings.allPagesHeader?.toString(),
+      localization.allPagesFooter: settings.allPagesFooter?.toString(),
       //localization.enableReminder1: settings.enableReminder1,
       //localization.enableReminder2: settings.enableReminder2,
       //localization.enableReminder3: settings.enableReminder3,

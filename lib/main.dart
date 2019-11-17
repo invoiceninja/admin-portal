@@ -226,9 +226,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = widget.store.state;
         Intl.defaultLocale = localeSelector(state);
         final localization = AppLocalization(Locale(Intl.defaultLocale));
-        final accentColor =
-            convertHexStringToColor(state.accentColor) ??
-                Colors.lightBlueAccent;
+        final accentColor = convertHexStringToColor(state.accentColor) ??
+            Colors.lightBlueAccent;
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))

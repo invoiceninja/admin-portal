@@ -74,7 +74,9 @@ class ClientList extends StatelessWidget {
                               onTap: () =>
                                   viewModel.onClientTap(context, client),
                               onLongPress: () async {
-                                final longPressIsSelection = store.state.prefState
+                                final longPressIsSelection = store
+                                        .state
+                                        .prefState
                                         .longPressSelectionIsDefault ??
                                     true;
                                 if (longPressIsSelection && !isInMultiselect) {
