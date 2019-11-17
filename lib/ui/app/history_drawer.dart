@@ -45,14 +45,24 @@ class HistoryDrawer extends StatelessWidget {
           () => timeago.format(history.dateTime, locale: 'en_short'),
           duration: Duration(minutes: 1),
         ),
-        onTap: () => viewEntityById(
+        onTap: () {
+          if (state.prefState.isHistoryFloated) {
+            Navigator.pop(context);
+          }
+          viewEntityById(
+              context: context,
+              entityId: history.id,
+              entityType: history.entityType);
+        },
+        onLongPress: () {
+          if (state.prefState.isHistoryFloated) {
+            Navigator.pop(context);
+          }
+          showEntityActionsDialog(
             context: context,
-            entityId: history.id,
-            entityType: history.entityType),
-        onLongPress: () => showEntityActionsDialog(
-          context: context,
-          entities: [entity],
-        ),
+            entities: [entity],
+          );
+        },
       ));
     }
 
