@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'payment_model.g.dart';
@@ -54,16 +55,16 @@ class PaymentFields {
 abstract class PaymentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<PaymentEntity, PaymentEntityBuilder> {
-  factory PaymentEntity({String id, CompanyEntity company}) {
+  factory PaymentEntity({String id, AppState state}) {
     return _$PaymentEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       amount: 0.0,
       transactionReference: '',
       paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId: company != null &&
-              (company.settings.defaultPaymentTypeId ?? '').isNotEmpty
-          ? company.settings.defaultPaymentTypeId
+      paymentTypeId: state?.company != null &&
+              (state.company.settings.defaultPaymentTypeId ?? '').isNotEmpty
+          ? state.company.settings.defaultPaymentTypeId
           : '',
       invoiceId: '',
       clientId: '',

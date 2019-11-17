@@ -226,7 +226,7 @@ void handleProductAction(
           convertProductToInvoiceItem(context: context, product: product);
       createEntity(
           context: context,
-          entity: InvoiceEntity(company: state.company)
+          entity: InvoiceEntity(state: state)
               .rebuild((b) => b..lineItems.add(item)));
       break;
     case EntityAction.edit:

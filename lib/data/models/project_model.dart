@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'project_model.g.dart';
@@ -51,7 +52,7 @@ class ProjectFields {
 abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity({String id}) {
+  factory ProjectEntity({String id, AppState state}) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

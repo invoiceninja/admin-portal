@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'client_model.g.dart';
@@ -55,7 +56,7 @@ class ClientFields {
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({String id}) {
+  factory ClientEntity({String id, AppState state}) {
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

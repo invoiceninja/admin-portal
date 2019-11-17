@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'product_model.g.dart';
@@ -47,7 +48,7 @@ class ProductFields {
 abstract class ProductEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ProductEntity, ProductEntityBuilder> {
-  factory ProductEntity({String id}) {
+  factory ProductEntity({String id, AppState state}) {
     return _$ProductEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

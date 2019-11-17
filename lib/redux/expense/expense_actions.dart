@@ -276,7 +276,7 @@ void handleExpenseAction(
           expense: expense, categoryMap: company.expenseCategoryMap);
       createEntity(
           context: context,
-          entity: InvoiceEntity(company: company).rebuild((b) => b
+          entity: InvoiceEntity(state: state).rebuild((b) => b
             ..hasExpenses = true
             ..clientId = expense.clientId
             ..lineItems.add(item)));

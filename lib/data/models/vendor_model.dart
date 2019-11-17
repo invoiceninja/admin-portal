@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'vendor_model.g.dart';
@@ -61,7 +62,7 @@ class VendorFields {
 abstract class VendorEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<VendorEntity, VendorEntityBuilder> {
-  factory VendorEntity({String id}) {
+  factory VendorEntity({String id, AppState state}) {
     return _$VendorEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

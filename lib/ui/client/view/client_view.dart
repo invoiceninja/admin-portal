@@ -83,7 +83,7 @@ class _ClientViewState extends State<ClientView>
                           createEntity(
                               context: context,
                               entity: InvoiceEntity(
-                                  company: company, client: client));
+                                  state: viewModel.state, client: client));
                         },
                       )
                     : Container(),
@@ -96,7 +96,7 @@ class _ClientViewState extends State<ClientView>
                           Navigator.of(context).pop();
                           createEntity(
                               context: context,
-                              entity: PaymentEntity(company: company)
+                              entity: PaymentEntity(state: store.state)
                                   .rebuild((b) => b.clientId = client.id));
                         },
                       )
@@ -112,7 +112,7 @@ class _ClientViewState extends State<ClientView>
                           createEntity(
                               context: context,
                               entity: InvoiceEntity(
-                                  company: company,
+                                  state: viewModel.state,
                                   client: client,
                                   isQuote: true));
                         },
@@ -143,9 +143,7 @@ class _ClientViewState extends State<ClientView>
                           Navigator.of(context).pop();
                           createEntity(
                               context: context,
-                              entity: TaskEntity(
-                                      isRunning:
-                                          store.state.prefState.autoStartTasks)
+                              entity: TaskEntity(state: viewModel.state)
                                   .rebuild((b) => b.clientId = client.id));
                         },
                       )
@@ -161,9 +159,8 @@ class _ClientViewState extends State<ClientView>
                           createEntity(
                               context: context,
                               entity: ExpenseEntity(
-                                  company: company,
-                                  client: client,
-                                  prefState: store.state.prefState));
+                                  state: store.state,
+                                  client: client,));
                         },
                       )
                     : Container(),

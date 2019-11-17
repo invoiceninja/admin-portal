@@ -90,7 +90,7 @@ class VendorViewVM {
               createEntity(
                   context: context,
                   entity:
-                      ExpenseEntity(company: state.company, vendor: vendor));
+                      ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
                   context: context, entityType: EntityType.expense, filterEntity: vendor);
@@ -101,7 +101,7 @@ class VendorViewVM {
       onAddExpensePressed: (context) {
         createEntity(
             context: context,
-            entity: ExpenseEntity(company: state.company, vendor: vendor));
+            entity: ExpenseEntity(state: state, vendor: vendor));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleVendorAction(context, [vendor], action),

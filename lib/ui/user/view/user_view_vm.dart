@@ -88,7 +88,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               createEntity(
                   context: context,
-                  entity: InvoiceEntity(company: state.company));
+                  entity: InvoiceEntity(state: state));
             } else {
               viewEntitiesByType(
                   context: context,
@@ -100,7 +100,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               createEntity(
                   context: context,
-                  entity: InvoiceEntity(company: state.company, isQuote: true));
+                  entity: InvoiceEntity(state: state, isQuote: true));
             } else {
               viewEntitiesByType(
                   context: context,
@@ -112,7 +112,7 @@ class UserViewVM {
             if (longPress && user.isActive) {
               createEntity(
                   context: context,
-                  entity: PaymentEntity(company: state.company));
+                  entity: PaymentEntity(state: state));
             } else {
               viewEntitiesByType(
                   context: context,
@@ -135,7 +135,7 @@ class UserViewVM {
               createEntity(
                   context: context,
                   entity:
-                      TaskEntity(isRunning: state.prefState.autoStartTasks));
+                      TaskEntity(state: state));
             } else {
               viewEntitiesByType(
                   context: context,

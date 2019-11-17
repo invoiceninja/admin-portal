@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -70,8 +71,9 @@ abstract class InvoiceEntity extends Object
   factory InvoiceEntity(
       {String id,
       bool isQuote = false,
-      CompanyEntity company,
+      AppState state,
       ClientEntity client}) {
+    final company = state?.company;
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -520,8 +522,8 @@ abstract class InvoiceEntity extends Object
   String get invitationDownloadLink =>
       invitations.isEmpty ? '' : invitations.first.downloadLink;
 
-  PaymentEntity createPayment(CompanyEntity company) {
-    return PaymentEntity(company: company).rebuild((b) => b
+  PaymentEntity createPayment(AppState state) {
+    return PaymentEntity(state: state).rebuild((b) => b
       ..invoiceId = id
       ..clientId = clientId
       ..amount = balance);

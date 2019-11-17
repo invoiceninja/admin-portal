@@ -259,7 +259,6 @@ void handleProjectAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.company;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
 
@@ -270,7 +269,7 @@ void handleProjectAction(
     case EntityAction.newTask:
       createEntity(
           context: context,
-          entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
+          entity: TaskEntity(state: state)
               .rebuild((b) => b
                 ..projectId = project.id
                 ..clientId = project.clientId));
@@ -280,7 +279,7 @@ void handleProjectAction(
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
           context: context,
-          entity: InvoiceEntity(company: company).rebuild((b) => b
+          entity: InvoiceEntity(state: state).rebuild((b) => b
             ..hasTasks = true
             ..clientId = project.clientId
             ..lineItems.addAll(items)));

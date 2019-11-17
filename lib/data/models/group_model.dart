@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'group_model.g.dart';
@@ -43,7 +44,7 @@ class GroupFields {
 abstract class GroupEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<GroupEntity, GroupEntityBuilder> {
-  factory GroupEntity({String id}) {
+  factory GroupEntity({String id, AppState state}) {
     return _$GroupEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

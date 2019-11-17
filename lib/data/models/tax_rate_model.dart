@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'tax_rate_model.g.dart';
@@ -44,7 +45,7 @@ class TaxRateFields {
 abstract class TaxRateEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  factory TaxRateEntity({String id, String name, double rate}) {
+  factory TaxRateEntity({String id, String name, double rate, AppState state}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
       isChanged: false,

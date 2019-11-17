@@ -285,7 +285,6 @@ void handleClientAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final clientIds = clients.map((client) => client.id).toList();
   final client = clients[0];
@@ -297,18 +296,17 @@ void handleClientAction(
     case EntityAction.newInvoice:
       createEntity(
           context: context,
-          entity: InvoiceEntity(company: company, client: client));
+          entity: InvoiceEntity(state: state, client: client));
       break;
     case EntityAction.newExpense:
       createEntity(
           context: context,
-          entity: ExpenseEntity(
-              company: company, client: client, prefState: state.prefState));
+          entity: ExpenseEntity(state: state, client: client));
       break;
     case EntityAction.newPayment:
       createEntity(
           context: context,
-          entity: PaymentEntity(company: company)
+          entity: PaymentEntity(state: state)
               .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:

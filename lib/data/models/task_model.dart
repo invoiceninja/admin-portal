@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'task_model.g.dart';
@@ -127,7 +128,8 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity({String id, bool isRunning = false}) {
+  factory TaskEntity({String id, AppState state}) {
+    final isRunning = state?.prefState?.autoStartTasks ?? false;
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

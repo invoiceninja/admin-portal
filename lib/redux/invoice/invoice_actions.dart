@@ -357,7 +357,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
   final invoiceIds = invoices.map((invoice) => invoice.id).toList();
@@ -394,7 +393,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(context: context, entity: invoice.clone); // TODO fix this
       break;
     case EntityAction.newPayment:
-      createEntity(context: context, entity: invoice.createPayment(company));
+      createEntity(context: context, entity: invoice.createPayment(state));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(

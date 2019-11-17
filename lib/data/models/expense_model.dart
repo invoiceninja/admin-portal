@@ -4,7 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'expense_model.g.dart';
@@ -69,8 +69,7 @@ abstract class ExpenseEntity extends Object
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
       {String id,
-      CompanyEntity company,
-      PrefState prefState,
+      AppState state,
       VendorEntity vendor,
       ClientEntity client}) {
     return _$ExpenseEntity._(
@@ -79,7 +78,7 @@ abstract class ExpenseEntity extends Object
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
-      invoiceDocuments: prefState?.addDocumentsToInvoice ?? false,
+      invoiceDocuments: state?.prefState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: '',
@@ -90,10 +89,10 @@ abstract class ExpenseEntity extends Object
       exchangeRate: 1,
       expenseCurrencyId: (vendor != null && vendor.hasCurrency)
           ? vendor.currencyId
-          : (company?.currencyId ?? kDefaultCurrencyId),
+          : (state?.company?.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId: (client != null && client.hasCurrency)
           ? client.currencyId
-          : (company?.currencyId ?? kDefaultCurrencyId),
+          : (state?.company?.currencyId ?? kDefaultCurrencyId),
       taxName1: '',
       taxName2: '',
       taxRate1: 0,

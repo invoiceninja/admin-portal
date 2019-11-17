@@ -284,7 +284,6 @@ void handleVendorAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final vendor = vendors.first as VendorEntity;
   final vendorIds = vendors.map((vendor) => vendor.id).toList();
@@ -296,7 +295,7 @@ void handleVendorAction(
     case EntityAction.newExpense:
       createEntity(
           context: context,
-          entity: ExpenseEntity(company: company, vendor: vendor));
+          entity: ExpenseEntity(state: state, vendor: vendor));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(

@@ -95,7 +95,7 @@ class ProjectViewVM {
         if (longPress && project.isActive && client.isActive) {
           createEntity(
               context: context,
-              entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
+              entity: TaskEntity(state: state)
                   .rebuild((b) => b
                     ..projectId = project.id
                     ..clientId = project.clientId));
@@ -109,7 +109,7 @@ class ProjectViewVM {
       onAddTaskPressed: (context) {
         createEntity(
             context: context,
-            entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
+            entity: TaskEntity(state: state)
                 .rebuild((b) => b
                   ..projectId = project.id
                   ..clientId = project.clientId),

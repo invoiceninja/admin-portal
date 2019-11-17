@@ -4,6 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'user_model.g.dart';
@@ -45,7 +46,7 @@ class UserFields {
 abstract class UserEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity({String id}) {
+  factory UserEntity({String id, AppState state}) {
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

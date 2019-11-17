@@ -88,7 +88,7 @@ class ClientViewVM {
               createEntity(
                   context: context,
                   entity:
-                      InvoiceEntity(company: state.company, client: client));
+                      InvoiceEntity(state: state, client: client));
             } else {
               viewEntitiesByType(
                   context: context,
@@ -101,7 +101,7 @@ class ClientViewVM {
               createEntity(
                   context: context,
                   entity: InvoiceEntity(
-                      company: state.company, client: client, isQuote: true));
+                      state: state, client: client, isQuote: true));
             } else {
               viewEntitiesByType(
                   context: context,
@@ -113,7 +113,7 @@ class ClientViewVM {
             if (longPress && client.isActive) {
               createEntity(
                   context: context,
-                  entity: PaymentEntity(company: state.company)
+                  entity: PaymentEntity(state: state)
                       .rebuild((b) => b..clientId = client.id));
             } else {
               viewEntitiesByType(
@@ -139,7 +139,7 @@ class ClientViewVM {
             if (longPress && client.isActive) {
               createEntity(
                   context: context,
-                  entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
+                  entity: TaskEntity(state: state)
                       .rebuild((b) => b..clientId = client.id));
             } else {
               viewEntitiesByType(
@@ -153,9 +153,8 @@ class ClientViewVM {
               createEntity(
                   context: context,
                   entity: ExpenseEntity(
-                      company: state.company,
-                      client: client,
-                      prefState: state.prefState));
+                      state: state,
+                      client: client,));
             } else {
               viewEntitiesByType(
                   context: context,
