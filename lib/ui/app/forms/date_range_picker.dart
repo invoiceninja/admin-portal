@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -41,8 +42,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    return Padding(
-        padding: EdgeInsets.all(14.0),
+    return ResponsivePadding(
         child: Column(children: <Widget>[
           Material(
             child: Column(
