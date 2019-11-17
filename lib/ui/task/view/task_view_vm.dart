@@ -138,6 +138,7 @@ class TaskViewVM {
         }
       },
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
+        // TODO change from time to index
         editEntity(context: context, entity: task);
         /*
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();

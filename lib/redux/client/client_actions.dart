@@ -37,7 +37,8 @@ class EditClient extends AbstractNavigatorAction
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false}) : super(navigator: navigator);
+      this.force = false})
+      : super(navigator: navigator);
 
   final ClientEntity client;
   final ContactEntity contact;

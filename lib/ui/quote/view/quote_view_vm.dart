@@ -99,22 +99,12 @@ class QuoteViewVM extends EntityViewVM {
       invoice: quote,
       client: client,
       onEditPressed: (BuildContext context, [int index]) {
-        editEntity(context: context, entity: quote);
-        /*
-        final Completer<InvoiceEntity> completer =
-            new Completer<InvoiceEntity>();
-        store.dispatch(EditQuote(
-            quote: quote,
+        editEntity(
             context: context,
-            completer: completer,
-            quoteItemIndex: index));
-        completer.future.then((invoice) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedQuote,
-          )));
-        });
-         */
+            entity: quote,
+            subIndex: index,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

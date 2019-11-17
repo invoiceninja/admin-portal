@@ -74,7 +74,11 @@ class ProjectViewVM {
       project: project,
       client: client,
       onEditPressed: (BuildContext context) {
-        viewEntity(context: context, entity: project);
+        editEntity(
+            context: context,
+            entity: project,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedProject));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {

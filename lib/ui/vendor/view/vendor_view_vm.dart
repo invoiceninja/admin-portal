@@ -70,18 +70,11 @@ class VendorViewVM {
       isDirty: vendor.isNew,
       vendor: vendor,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: vendor);
-        /*
-        final Completer<VendorEntity> completer = Completer<VendorEntity>();
-        store.dispatch(
-            EditVendor(vendor: vendor, context: context, completer: completer));
-        completer.future.then((client) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedVendor,
-          )));
-        });
-         */
+        editEntity(
+            context: context,
+            entity: vendor,
+            completer: snackBarCompleter<ProjectEntity>(
+                context, AppLocalization.of(context).updatedVendor));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

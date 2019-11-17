@@ -478,6 +478,7 @@ void editEntityById(
     {@required BuildContext context,
     @required String entityId,
     @required EntityType entityType,
+    int subIndex,
     Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
@@ -524,6 +525,7 @@ void editEntityById(
         invoice: map[entityId],
         navigator: navigator,
         completer: completer,
+        invoiceItemIndex: subIndex,
       ));
       break;
     //case EntityType.recurringInvoice:
@@ -534,6 +536,7 @@ void editEntityById(
         quote: map[entityId],
         navigator: navigator,
         completer: completer,
+        quoteItemIndex: subIndex,
       ));
       break;
     case EntityType.vendor:
@@ -591,9 +594,11 @@ void editEntityById(
 void editEntity(
         {@required BuildContext context,
         @required BaseEntity entity,
+          int subIndex,
         Completer completer}) =>
     editEntityById(
         context: context,
         entityId: entity.id,
         entityType: entity.entityType,
+        subIndex: subIndex,
         completer: completer);

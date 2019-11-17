@@ -70,18 +70,11 @@ class GroupViewVM {
         isDirty: group.isNew,
         group: group,
         onEditPressed: (BuildContext context) {
-          editEntity(context: context, entity: group);
-          /*
-          final Completer<GroupEntity> completer = Completer<GroupEntity>();
-          store.dispatch(
-              EditGroup(group: group, context: context, completer: completer));
-          completer.future.then((group) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-              message: AppLocalization.of(context).updatedGroup,
-            )));
-          });
-           */
+          editEntity(
+              context: context,
+              entity: group,
+              completer: snackBarCompleter<ProjectEntity>(
+                  context, AppLocalization.of(context).updatedGroup));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {

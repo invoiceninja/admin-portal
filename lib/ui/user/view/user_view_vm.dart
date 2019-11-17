@@ -69,18 +69,11 @@ class UserViewVM {
       isDirty: user.isNew,
       user: user,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: user);
-        /*
-        final Completer<UserEntity> completer = Completer<UserEntity>();
-        store.dispatch(
-            EditUser(user: user, context: context, completer: completer));
-        completer.future.then((user) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedUser,
-          )));
-        });        
-         */
+        editEntity(
+            context: context,
+            entity: user,
+            completer: snackBarCompleter<ProjectEntity>(
+                context, AppLocalization.of(context).updatedUser));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

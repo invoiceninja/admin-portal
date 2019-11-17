@@ -70,7 +70,11 @@ class CompanyGatewayViewVM {
       isDirty: companyGateway.isNew,
       companyGateway: companyGateway,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: companyGateway);
+        editEntity(
+            context: context,
+            entity: companyGateway,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedCompanyGateway));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

@@ -67,7 +67,7 @@ class EntityActionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-
+    
     return ListTile(
       leading: Icon(getEntityActionIcon(action)),
       title: Text(localization.lookup(action.toString())),
@@ -76,43 +76,43 @@ class EntityActionListTile extends StatelessWidget {
         final first = entities.first;
         switch (first.entityType) {
           case EntityType.client:
-            handleClientAction(context, entities, action);
+            handleClientAction(mainContext, entities, action);
             break;
           case EntityType.product:
-            handleProductAction(context, entities, action);
+            handleProductAction(mainContext, entities, action);
             break;
           case EntityType.invoice:
-            handleInvoiceAction(context, entities, action);
+            handleInvoiceAction(mainContext, entities, action);
             break;
           case EntityType.payment:
-            handlePaymentAction(context, entities, action);
+            handlePaymentAction(mainContext, entities, action);
             break;
           case EntityType.quote:
-            handleQuoteAction(context, entities, action);
+            handleQuoteAction(mainContext, entities, action);
             break;
           case EntityType.task:
-            handleTaskAction(context, entities, action);
+            handleTaskAction(mainContext, entities, action);
             break;
           case EntityType.project:
-            handleProjectAction(context, entities, action);
+            handleProjectAction(mainContext, entities, action);
             break;
           case EntityType.vendor:
-            handleVendorAction(context, entities, action);
+            handleVendorAction(mainContext, entities, action);
             break;
           case EntityType.expense:
-            handleExpenseAction(context, entities, action);
+            handleExpenseAction(mainContext, entities, action);
             break;
           case EntityType.companyGateway:
-            handleCompanyGatewayAction(context, entities, action);
+            handleCompanyGatewayAction(mainContext, entities, action);
             break;
           case EntityType.group:
-            handleGroupAction(context, entities, action);
+            handleGroupAction(mainContext, entities, action);
             break;
           case EntityType.taxRate:
-            handleTaxRateAction(context, entities, action);
+            handleTaxRateAction(mainContext, entities, action);
             break;
           case EntityType.user:
-            handleUserAction(context, entities, action);
+            handleUserAction(mainContext, entities, action);
             break;
         }
       },

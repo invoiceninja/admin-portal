@@ -68,18 +68,11 @@ class TaxRateViewVM {
       isDirty: taxRate.isNew,
       taxRate: taxRate,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: taxRate);
-        /*
-        final Completer<TaxRateEntity> completer = Completer<TaxRateEntity>();
-        store.dispatch(EditTaxRate(
-            taxRate: taxRate, context: context, completer: completer));
-        completer.future.then((taxRate) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedTaxRate,
-          )));
-        });
-         */
+        editEntity(
+            context: context,
+            entity: taxRate,
+            completer: snackBarCompleter<ProjectEntity>(
+                context, AppLocalization.of(context).updatedTaxRate));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

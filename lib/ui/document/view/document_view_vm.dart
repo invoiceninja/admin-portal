@@ -70,7 +70,11 @@ class DocumentViewVM {
       isDirty: document.isNew,
       document: document,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: document);
+        editEntity(
+            context: context,
+            entity: document,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedDocument));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

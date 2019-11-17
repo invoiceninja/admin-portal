@@ -131,23 +131,13 @@ class InvoiceViewVM extends EntityViewVM {
       isDirty: invoice.isNew,
       invoice: invoice,
       client: client,
-      onEditPressed: (BuildContext context, [invoiceItemIndex]) {
-        editEntity(context: context, entity: invoice);
-        /*
-        final Completer<InvoiceEntity> completer =
-            new Completer<InvoiceEntity>();
-        store.dispatch(EditInvoice(
-            invoice: invoice,
+      onEditPressed: (BuildContext context, [int index]) {
+        editEntity(
             context: context,
-            completer: completer,
-            invoiceItemIndex: invoiceItemIndex));
-        completer.future.then((invoice) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedInvoice,
-          )));
-        });
-         */
+            entity: invoice,
+            subIndex: index,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {

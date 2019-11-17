@@ -9,6 +9,8 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
@@ -61,7 +63,11 @@ class PaymentViewVM {
       isLoading: state.isLoading,
       payment: payment,
       onEditPressed: (BuildContext context) {
-        viewEntity(context: context, entity: payment);
+        editEntity(
+            context: context,
+            entity: payment,
+            completer: snackBarCompleter<PaymentEntity>(
+                context, AppLocalization.of(context).updatedProduct));
       },
       onClientPressed: (context, [bool longPress = false]) {
         if (longPress) {

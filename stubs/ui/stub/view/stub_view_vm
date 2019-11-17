@@ -68,15 +68,11 @@ class StubViewVM {
         isDirty: stub.isNew,
         stub: stub,
         onEditPressed: (BuildContext context) {
-          final Completer<StubEntity> completer = Completer<StubEntity>();
-          store.dispatch(EditStub(
-              stub: stub, context: context, completer: completer));
-          completer.future.then((stub) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedStub,
-                )));
-          });
+        editEntity(
+            context: context,
+            entity: stub,
+            completer: snackBarCompleter<ProjectEntity>(
+                context, AppLocalization.of(context).updatedStub));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {

@@ -78,7 +78,11 @@ class ExpenseViewVM {
         isDirty: expense.isNew,
         expense: expense,
         onEditPressed: (BuildContext context) {
-          editEntity(context: context, entity: expense);
+          editEntity(
+              context: context,
+              entity: expense,
+              completer: snackBarCompleter<ProjectEntity>(
+                  context, AppLocalization.of(context).updatedExpense));
         },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
