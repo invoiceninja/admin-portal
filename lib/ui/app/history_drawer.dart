@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -66,36 +67,39 @@ class HistoryDrawer extends StatelessWidget {
       ));
     }
 
-    return Drawer(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text(localization.history),
-          actions: <Widget>[
-            if (state.prefState.isHistoryFloated)
-              Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(Icons.menu),
+    return SizedBox(
+      width: kDrawerWidth,
+      child: Drawer(
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(localization.history),
+            actions: <Widget>[
+              if (state.prefState.isHistoryFloated)
+                Builder(
+                  builder: (context) => IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )
+              else
+                FlatButton(
+                  child: Text(
+                    localization.close,
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    store.dispatch(
+                        UserSettingsChanged(sidebar: AppSidebar.history));
                   },
-                ),
-              )
-            else
-              FlatButton(
-                child: Text(
-                  localization.close,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  store.dispatch(
-                      UserSettingsChanged(sidebar: AppSidebar.history));
-                },
-              )
-          ],
-        ),
-        body: ListView(
-          children: widgets,
+                )
+            ],
+          ),
+          body: ListView(
+            children: widgets,
+          ),
         ),
       ),
     );

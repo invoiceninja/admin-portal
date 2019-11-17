@@ -114,7 +114,7 @@ class MenuDrawer extends StatelessWidget {
     ));
 
     return SizedBox(
-      width: state.prefState.isMenuCollapsed ? 65 : null,
+      width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
       child: Drawer(
         child: SafeArea(
           child: Column(

@@ -37,10 +37,7 @@ class MainScreen extends StatelessWidget {
                   ),
                   if (prefState.showHistory) ...[
                     _CustomDivider(),
-                    Expanded(
-                      child: HistoryDrawerBuilder(),
-                      flex: 2,
-                    )
+                    HistoryDrawerBuilder(),
                   ],
                 ],
               );
@@ -351,10 +348,7 @@ class SettingsScreens extends StatelessWidget {
       ),
       if (prefState.showHistory) ...[
         _CustomDivider(),
-        Expanded(
-          child: HistoryDrawerBuilder(),
-          flex: 2,
-        )
+        HistoryDrawerBuilder(),
       ],
     ]);
   }
@@ -403,10 +397,7 @@ class EntityScreens extends StatelessWidget {
         ),
         if (prefState.showHistory) ...[
           _CustomDivider(),
-          Expanded(
-            child: HistoryDrawerBuilder(),
-            flex: 2,
-          )
+          HistoryDrawerBuilder(),
         ],
       ],
     );
