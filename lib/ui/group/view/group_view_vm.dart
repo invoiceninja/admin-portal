@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
@@ -94,9 +93,10 @@ class GroupViewVM {
           if (longPress) {
             handleGroupAction(context, [group], EntityAction.newClient);
           } else {
-            store.dispatch(FilterClientsByEntity(
-                entityId: group.id, entityType: EntityType.group));
-            viewEntitiesByType(context: context, entityType: EntityType.client);
+            viewEntitiesByType(
+                context: context,
+                entityType: EntityType.client,
+                filterEntity: group);
           }
         });
   }

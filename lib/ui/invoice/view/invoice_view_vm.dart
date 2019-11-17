@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -179,9 +178,10 @@ class InvoiceViewVM extends EntityViewVM {
         }
       },
       onPaymentsPressed: (BuildContext context) {
-        store.dispatch(FilterPaymentsByEntity(
-            entityId: invoice.id, entityType: EntityType.invoice));
-        viewEntitiesByType(context: context, entityType: EntityType.payment);
+        viewEntitiesByType(
+            context: context,
+            entityType: EntityType.payment,
+            filterEntity: invoice);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleInvoiceAction(context, [invoice], action),

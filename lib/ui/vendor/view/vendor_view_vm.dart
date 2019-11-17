@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen.dart';
@@ -100,10 +99,8 @@ class VendorViewVM {
                   entity:
                       ExpenseEntity(company: state.company, vendor: vendor));
             } else {
-              store.dispatch(FilterExpensesByEntity(
-                  entityId: vendor.id, entityType: EntityType.vendor));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.expense);
+                  context: context, entityType: EntityType.expense, filterEntity: vendor);
             }
             break;
         }

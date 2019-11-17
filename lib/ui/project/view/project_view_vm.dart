@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
@@ -97,9 +96,10 @@ class ProjectViewVM {
                     ..projectId = project.id
                     ..clientId = project.clientId));
         } else {
-          store.dispatch(FilterTasksByEntity(
-              entityId: project.id, entityType: EntityType.project));
-          viewEntitiesByType(context: context, entityType: EntityType.task);
+          viewEntitiesByType(
+              context: context,
+              entityType: EntityType.task,
+              filterEntity: project);
         }
       },
       onAddTaskPressed: (context) {

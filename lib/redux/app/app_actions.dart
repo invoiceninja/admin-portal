@@ -119,47 +119,89 @@ abstract class AbstractNavigatorAction {
   BuildContext get context => navigator.overlay.context;
 }
 
-void viewEntitiesByType({BuildContext context, EntityType entityType}) {
+void viewEntitiesByType({
+  BuildContext context,
+  EntityType entityType,
+  BaseEntity filterEntity,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
 
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(ViewClientList(
-        navigator: navigator,
-      ));
+      if (filterEntity != null) {
+        store.dispatch(FilterClientsByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
+      store.dispatch(ViewClientList(navigator: navigator));
       break;
     case EntityType.user:
+      if (filterEntity != null) {
+        store.dispatch(FilterUsersByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewUserList(navigator: navigator));
       break;
     case EntityType.project:
+      if (filterEntity != null) {
+        store.dispatch(FilterProjectsByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewProjectList(navigator: navigator));
       break;
     case EntityType.taxRate:
+      if (filterEntity != null) {
+        store.dispatch(FilterTaxRatesByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewTaxRateList(navigator: navigator));
       break;
     case EntityType.companyGateway:
+      if (filterEntity != null) {
+        store.dispatch(FilterCompanyGatewaysByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewCompanyGatewayList(navigator: navigator));
       break;
     case EntityType.invoice:
+      if (filterEntity != null) {
+        store.dispatch(FilterInvoicesByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewInvoiceList(navigator: navigator));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
+      if (filterEntity != null) {
+        store.dispatch(FilterQuotesByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewQuoteList(navigator: navigator));
       break;
     case EntityType.vendor:
+      if (filterEntity != null) {
+        store.dispatch(FilterVendorsByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewVendorList(navigator: navigator));
       break;
     case EntityType.product:
       store.dispatch(ViewProductList(navigator: navigator));
       break;
     case EntityType.task:
+      if (filterEntity != null) {
+        store.dispatch(FilterTasksByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewTaskList(navigator: navigator));
       break;
     case EntityType.expense:
+      if (filterEntity != null) {
+        store.dispatch(FilterExpensesByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewExpenseList(navigator: navigator));
       break;
     //case EntityType.expenseCategory:
@@ -169,9 +211,17 @@ void viewEntitiesByType({BuildContext context, EntityType entityType}) {
     //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
+      if (filterEntity != null) {
+        store.dispatch(FilterPaymentsByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewPaymentList(navigator: navigator));
       break;
     case EntityType.group:
+      if (filterEntity != null) {
+        store.dispatch(FilterGroupsByEntity(
+            entityId: filterEntity.id, entityType: filterEntity.entityType));
+      }
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
     // TODO Add to starter

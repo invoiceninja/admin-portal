@@ -1,12 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -103,10 +97,10 @@ class UserViewVM {
                   context: context,
                   entity: InvoiceEntity(company: state.company));
             } else {
-              store.dispatch(FilterInvoicesByEntity(
-                  entityId: user.id, entityType: EntityType.user));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.invoice);
+                  context: context,
+                  entityType: EntityType.invoice,
+                  filterEntity: user);
             }
             break;
           case EntityType.quote:
@@ -115,10 +109,10 @@ class UserViewVM {
                   context: context,
                   entity: InvoiceEntity(company: state.company, isQuote: true));
             } else {
-              store.dispatch(FilterQuotesByEntity(
-                  entityId: user.id, entityType: EntityType.user));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.quote);
+                  context: context,
+                  entityType: EntityType.quote,
+                  filterEntity: user);
             }
             break;
           case EntityType.payment:
@@ -127,20 +121,20 @@ class UserViewVM {
                   context: context,
                   entity: PaymentEntity(company: state.company));
             } else {
-              store.dispatch(FilterPaymentsByEntity(
-                  entityId: user.id, entityType: EntityType.user));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.payment);
+                  context: context,
+                  entityType: EntityType.payment,
+                  filterEntity: user);
             }
             break;
           case EntityType.project:
             if (longPress && user.isActive) {
               createEntity(context: context, entity: ProjectEntity());
             } else {
-              store.dispatch(FilterProjectsByEntity(
-                  entityId: user.id, entityType: EntityType.user));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.project);
+                  context: context,
+                  entityType: EntityType.project,
+                  filterEntity: user);
             }
             break;
           case EntityType.task:
@@ -150,9 +144,10 @@ class UserViewVM {
                   entity:
                       TaskEntity(isRunning: state.prefState.autoStartTasks));
             } else {
-              store.dispatch(FilterTasksByEntity(
-                  entityId: user.id, entityType: EntityType.user));
-              viewEntitiesByType(context: context, entityType: EntityType.task);
+              viewEntitiesByType(
+                  context: context,
+                  entityType: EntityType.task,
+                  filterEntity: user);
             }
             break;
           case EntityType.expense:
@@ -160,10 +155,10 @@ class UserViewVM {
               createEntityByType(
                   context: context, entityType: EntityType.expense);
             } else {
-              store.dispatch(FilterExpensesByEntity(
-                  entityId: user.id, entityType: EntityType.user));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.expense);
+                  context: context,
+                  entityType: EntityType.expense,
+                  filterEntity: user);
             }
             break;
         }

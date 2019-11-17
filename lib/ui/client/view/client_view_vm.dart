@@ -7,12 +7,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
@@ -102,10 +96,10 @@ class ClientViewVM {
                   entity:
                       InvoiceEntity(company: state.company, client: client));
             } else {
-              store.dispatch(FilterInvoicesByEntity(
-                  entityId: client.id, entityType: EntityType.client));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.invoice);
+                  context: context,
+                  entityType: EntityType.invoice,
+                  filterEntity: client);
             }
             break;
           case EntityType.quote:
@@ -115,10 +109,10 @@ class ClientViewVM {
                   entity: InvoiceEntity(
                       company: state.company, client: client, isQuote: true));
             } else {
-              store.dispatch(FilterQuotesByEntity(
-                  entityId: client.id, entityType: EntityType.client));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.quote);
+                  context: context,
+                  entityType: EntityType.quote,
+                  filterEntity: client);
             }
             break;
           case EntityType.payment:
@@ -128,10 +122,10 @@ class ClientViewVM {
                   entity: PaymentEntity(company: state.company)
                       .rebuild((b) => b..clientId = client.id));
             } else {
-              store.dispatch(FilterPaymentsByEntity(
-                  entityId: client.id, entityType: EntityType.client));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.payment);
+                  context: context,
+                  entityType: EntityType.payment,
+                  filterEntity: client);
             }
             break;
           case EntityType.project:
@@ -141,10 +135,10 @@ class ClientViewVM {
                   entity:
                       ProjectEntity().rebuild((b) => b..clientId = client.id));
             } else {
-              store.dispatch(FilterProjectsByEntity(
-                  entityId: client.id, entityType: EntityType.client));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.project);
+                  context: context,
+                  entityType: EntityType.project,
+                  filterEntity: client);
             }
             break;
           case EntityType.task:
@@ -154,9 +148,10 @@ class ClientViewVM {
                   entity: TaskEntity(isRunning: state.prefState.autoStartTasks)
                       .rebuild((b) => b..clientId = client.id));
             } else {
-              store.dispatch(FilterTasksByEntity(
-                  entityId: client.id, entityType: EntityType.client));
-              viewEntitiesByType(context: context, entityType: EntityType.task);
+              viewEntitiesByType(
+                  context: context,
+                  entityType: EntityType.task,
+                  filterEntity: client);
             }
             break;
           case EntityType.expense:
@@ -168,10 +163,10 @@ class ClientViewVM {
                       client: client,
                       prefState: state.prefState));
             } else {
-              store.dispatch(FilterExpensesByEntity(
-                  entityId: client.id, entityType: EntityType.client));
               viewEntitiesByType(
-                  context: context, entityType: EntityType.expense);
+                  context: context,
+                  entityType: EntityType.expense,
+                  filterEntity: client);
             }
             break;
         }
