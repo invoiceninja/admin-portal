@@ -484,7 +484,7 @@ bool hasChanges({
   if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
         context: context,
-        builder: (BuildContext context) {
+        builder: (BuildContext dialogContext) {
           return MessageDialog(localization.errorUnsavedChanges,
               dismissLabel: localization.continueEditing, onDiscard: () {
             store.dispatch(DiscardChanges());

@@ -306,7 +306,7 @@ void handleClientAction(
               company: company, client: client, prefState: state.prefState),
           context: context));
       break;
-    case EntityAction.enterPayment:
+    case EntityAction.newPayment:
       store.dispatch(EditPayment(
           payment: PaymentEntity(company: company)
               .rebuild((b) => b.clientId = client.id),

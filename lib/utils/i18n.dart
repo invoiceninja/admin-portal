@@ -699,6 +699,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_type': 'Payment Type',
       'transaction_reference': 'Transaction Reference',
       'enter_payment': 'Enter Payment',
+      'new_payment': 'Enter Payment',
       'created_payment': 'Successfully created payment',
       'updated_payment': 'Successfully updated payment',
       'archived_payment': 'Successfully archived payment',
@@ -15762,6 +15763,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get historySidebar => _localizedValues[localeCode]['history_sidebar'];
 
   String get selectCompany => _localizedValues[localeCode]['select_company'];
+
+  String get newPayment => _localizedValues[localeCode]['new_payment'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

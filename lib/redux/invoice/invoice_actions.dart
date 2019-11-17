@@ -393,7 +393,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       store.dispatch(
           EditQuote(context: context, quote: invoice.clone)); // TODO fix this
       break;
-    case EntityAction.enterPayment:
+    case EntityAction.newPayment:
       store.dispatch(EditPayment(
           context: context, payment: invoice.createPayment(company)));
       break;

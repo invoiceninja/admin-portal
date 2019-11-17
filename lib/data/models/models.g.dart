@@ -24,7 +24,7 @@ const EntityAction _$newTask = const EntityAction._('newTask');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
 const EntityAction _$viewQuote = const EntityAction._('viewQuote');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
-const EntityAction _$enterPayment = const EntityAction._('enterPayment');
+const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
@@ -72,8 +72,8 @@ EntityAction _$valueOf(String name) {
       return _$viewQuote;
     case 'clientPortal':
       return _$clientPortal;
-    case 'enterPayment':
-      return _$enterPayment;
+    case 'newPayment':
+      return _$newPayment;
     case 'settings':
       return _$settings;
     case 'pdf':
@@ -113,7 +113,7 @@ final BuiltSet<EntityAction> _$values =
   _$viewInvoice,
   _$viewQuote,
   _$clientPortal,
-  _$enterPayment,
+  _$newPayment,
   _$settings,
   _$pdf,
   _$more,

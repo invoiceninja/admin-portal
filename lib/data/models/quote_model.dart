@@ -403,7 +403,7 @@ abstract class QuoteEntity extends Object
 
       if (userCompany.canEditEntity(this) &&
           userCompany.canCreate(EntityType.payment)) {
-        actions.add(EntityAction.enterPayment);
+        actions.add(EntityAction.newPayment);
       }
 
       if ((quoteInvoiceId ?? '').isNotEmpty) {

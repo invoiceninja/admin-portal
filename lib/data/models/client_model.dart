@@ -389,7 +389,7 @@ abstract class ClientEntity extends Object
       }
 
       if (userCompany.canCreate(EntityType.payment)) {
-        actions.add(EntityAction.enterPayment);
+        actions.add(EntityAction.newPayment);
       }
     }
 
