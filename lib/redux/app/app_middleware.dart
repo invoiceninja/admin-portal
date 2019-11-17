@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
