@@ -38,6 +38,8 @@ class ProductFields {
   static const String productKey = 'productKey';
   static const String notes = 'notes';
   static const String cost = 'cost';
+  static const String price = 'price';
+  static const String quantity = 'quantity';
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';

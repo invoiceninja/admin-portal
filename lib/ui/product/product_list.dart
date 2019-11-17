@@ -77,6 +77,8 @@ class ProductList extends StatelessWidget {
           );
         });
 
+    final sortFn = (String field) => store.dispatch(SortProducts(field));
+
     final dataTableView = SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SingleChildScrollView(
@@ -84,13 +86,26 @@ class ProductList extends StatelessWidget {
             child: DataTable(
               columns: [
                 DataColumn(
-                  label: Text(localization.name),
-                ),
-                DataColumn(label: Text(localization.price), numeric: true),
-                DataColumn(label: Text(localization.cost), numeric: true),
-                DataColumn(label: Text(localization.quantity), numeric: true),
+                    label: Text(localization.name),
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.productKey)),
+                DataColumn(
+                    label: Text(localization.price),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.price)),
+                DataColumn(
+                    label: Text(localization.cost),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.cost)),
+                DataColumn(
+                    label: Text(localization.quantity),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.quantity)),
               ],
-              rows: getDataTableRows(viewModel),
+              rows: getDataTableRows(context, viewModel),
             )));
 
     return RefreshIndicator(
@@ -99,20 +114,22 @@ class ProductList extends StatelessWidget {
     );
   }
 
-  List<DataRow> getDataTableRows(ProductListVM viewModel) {
+  List<DataRow> getDataTableRows(
+      BuildContext context, ProductListVM viewModel) {
     final products = viewModel.productList
         .map((productId) => viewModel.productMap[productId])
         .toList();
 
     return products.map((product) {
-      return DataRow(
-        cells: [
-          DataCell(Text(product.productKey)),
-          DataCell(Text(product.price.toString())),
-          DataCell(Text(product.cost.toString())),
-          DataCell(Text(product.quantity.toString())),
-        ]
-      );
+      // TODO: Re-implement
+      final onTap = () => viewModel.onProductTap(context, product);
+
+      return DataRow(cells: [
+        DataCell(Text(product.productKey), onTap: onTap),
+        DataCell(Text(product.price.toString()), onTap: onTap),
+        DataCell(Text(product.cost.toString()), onTap: onTap),
+        DataCell(Text(product.quantity.toString()), onTap: onTap),
+      ]);
     }).toList();
   }
 }
