@@ -350,7 +350,7 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
 Middleware<AppState> _createPersistPrefs() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistUI;
+    final action = dynamicAction as PersistPrefs;
 
     next(action);
 

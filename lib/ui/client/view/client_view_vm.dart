@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -74,17 +75,14 @@ class ClientViewVM {
       client: client,
       company: state.company,
       onEditPressed: (BuildContext context) {
-        editEntity(context: context, entity: client);
-        /*
         final Completer<ClientEntity> completer = Completer<ClientEntity>();
-        store.dispatch(EditClient(client: client, completer: completer));
+        editEntity(context: context, entity: client, completer: completer);
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-            message: AppLocalization.of(context).updatedClient,
-          )));
+                message: AppLocalization.of(context).updatedClient,
+              )));
         });
-         */
       },
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {

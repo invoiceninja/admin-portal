@@ -116,7 +116,7 @@ abstract class AbstractNavigatorAction {
 
   final NavigatorState navigator;
 
-  BuildContext get context => navigator.overlay.context;
+  BuildContext get context => navigator.overlay.context ?? navigator.context;
 }
 
 void viewEntitiesByType({
@@ -475,7 +475,10 @@ void createEntity(
 }
 
 void editEntityById(
-    {BuildContext context, String entityId, EntityType entityType}) {
+    {@required BuildContext context,
+    @required String entityId,
+    @required EntityType entityType,
+    Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
   final map = store.state.getEntityMap(entityType);
@@ -485,46 +488,81 @@ void editEntityById(
       store.dispatch(EditClient(
         client: map[entityId],
         navigator: navigator,
+        completer: completer,
       ));
       break;
     case EntityType.user:
-      store.dispatch(EditUser(user: map[entityId], navigator: navigator));
+      store.dispatch(EditUser(
+        user: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.project:
-      store.dispatch(EditProject(project: map[entityId], navigator: navigator));
+      store.dispatch(EditProject(
+        project: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.taxRate:
-      store.dispatch(EditTaxRate(taxRate: map[entityId], navigator: navigator));
+      store.dispatch(EditTaxRate(
+        taxRate: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
         companyGateway: map[entityId],
         navigator: navigator,
+        completer: completer,
       ));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
         invoice: map[entityId],
         navigator: navigator,
+        completer: completer,
       ));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(EditQuote(quote: map[entityId], navigator: navigator));
+      store.dispatch(EditQuote(
+        quote: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.vendor:
-      store.dispatch(EditVendor(vendor: map[entityId], navigator: navigator));
+      store.dispatch(EditVendor(
+        vendor: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.product:
-      store.dispatch(EditProduct(product: map[entityId], navigator: navigator));
+      store.dispatch(EditProduct(
+        product: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.task:
-      store.dispatch(EditTask(task: map[entityId], navigator: navigator));
+      store.dispatch(EditTask(
+        task: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.expense:
-      store.dispatch(EditExpense(expense: map[entityId], navigator: navigator));
+      store.dispatch(EditExpense(
+        expense: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     //case EntityType.expenseCategory:
     //store.dispatch(EditExpenseCategory(taxRate: map[entityId], navigator: navigator));
@@ -533,14 +571,29 @@ void editEntityById(
     //store.dispatch(EditCredit(credit: map[entityId], navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(EditPayment(payment: map[entityId], navigator: navigator));
+      store.dispatch(EditPayment(
+        payment: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     case EntityType.group:
-      store.dispatch(EditGroup(group: map[entityId], navigator: navigator));
+      store.dispatch(EditGroup(
+        group: map[entityId],
+        navigator: navigator,
+        completer: completer,
+      ));
       break;
     // TODO Add to starter
   }
 }
 
-void editEntity({BuildContext context, BaseEntity entity}) => editEntityById(
-    context: context, entityId: entity.id, entityType: entity.entityType);
+void editEntity(
+        {@required BuildContext context,
+        @required BaseEntity entity,
+        Completer completer}) =>
+    editEntityById(
+        context: context,
+        entityId: entity.id,
+        entityType: entity.entityType,
+        completer: completer);
