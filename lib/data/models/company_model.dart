@@ -258,7 +258,6 @@ abstract class CompanyEntity extends Object
       }
     }
 
-
     // TODO remove this
     if ([
       EntityType.recurringInvoice,
@@ -437,10 +436,18 @@ abstract class UserCompanyEntity
 
   String get permissions;
 
-  bool can(UserPermission permission, EntityType entityType) =>
-      (isAdmin ?? false) ||
-      permissions.contains('${permission}_all') ||
-      permissions.contains('${permission}_$entityType');
+  bool can(UserPermission permission, EntityType entityType) {
+    if (entityType == null) {
+      return false;
+    }
+
+    if (isAdmin ?? false) {
+      return true;
+    }
+
+    return permissions.contains('${permission}_all') ||
+        permissions.contains('${permission}_$entityType');
+  }
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 
@@ -1478,7 +1485,6 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
 
-
   // Added
   @nullable
   @BuiltValueField(wireName: 'enable_client_portal')
@@ -1495,7 +1501,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'client_manual_payment_notification')
   bool get clientManualPaymentNotification;
-
 
   // TODO remove this field
   @nullable

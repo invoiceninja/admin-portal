@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
@@ -14,10 +11,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
@@ -25,8 +19,6 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // STARTER: import - do not remove comment
@@ -139,7 +131,6 @@ class MenuDrawer extends StatelessWidget {
     ));
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
-    final NavigatorState navigator = Navigator.of(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
@@ -183,79 +174,30 @@ class MenuDrawer extends StatelessWidget {
                         entityType: EntityType.client,
                         icon: getEntityIcon(EntityType.client),
                         title: localization.clients,
-                        onTap: () =>
-                            store.dispatch(ViewClientList(context: context)),
-                        onCreateTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
-                          store.dispatch(EditClient(
-                              client: ClientEntity(), context: context));
-                        },
                       ),
                       DrawerTile(
                         company: company,
                         entityType: EntityType.product,
                         icon: getEntityIcon(EntityType.product),
                         title: localization.products,
-                        onTap: () {
-                          store.dispatch(ViewProductList(context: context));
-                        },
-                        onCreateTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
-                          store.dispatch(EditProduct(
-                              product: ProductEntity(), context: context));
-                        },
                       ),
                       DrawerTile(
                         company: company,
                         entityType: EntityType.invoice,
                         icon: getEntityIcon(EntityType.invoice),
                         title: localization.invoices,
-                        onTap: () =>
-                            store.dispatch(ViewInvoiceList(context: context)),
-                        onCreateTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
-                          store.dispatch(EditInvoice(
-                              invoice: InvoiceEntity(company: company),
-                              context: context));
-                        },
                       ),
                       DrawerTile(
                         company: company,
                         entityType: EntityType.payment,
                         icon: getEntityIcon(EntityType.payment),
                         title: localization.payments,
-                        onTap: () =>
-                            store.dispatch(ViewPaymentList(context: context)),
-                        onCreateTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
-                          store.dispatch(EditPayment(
-                              payment: PaymentEntity(company: company),
-                              context: context));
-                        },
                       ),
                       DrawerTile(
                         company: company,
                         entityType: EntityType.quote,
                         icon: getEntityIcon(EntityType.quote),
                         title: localization.quotes,
-                        onTap: () =>
-                            store.dispatch(ViewQuoteList(context: context)),
-                        onCreateTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
-                          store.dispatch(EditQuote(
-                              quote: InvoiceEntity(isQuote: true),
-                              context: context));
-                        },
                       ),
                       if (Config.DEMO_MODE) ...[
                         DrawerTile(
@@ -263,64 +205,24 @@ class MenuDrawer extends StatelessWidget {
                           entityType: EntityType.project,
                           icon: getEntityIcon(EntityType.project),
                           title: localization.projects,
-                          onTap: () =>
-                              store.dispatch(ViewProjectList(context: context)),
-                          onCreateTap: () {
-                            if (isMobile(context)) {
-                              navigator.pop();
-                            }
-                            store.dispatch(EditProject(
-                                project: ProjectEntity(), context: context));
-                          },
                         ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.task,
                           icon: getEntityIcon(EntityType.task),
                           title: localization.tasks,
-                          onTap: () =>
-                              store.dispatch(ViewTaskList(context: context)),
-                          onCreateTap: () {
-                            if (isMobile(context)) {
-                              navigator.pop();
-                            }
-                            store.dispatch(EditTask(
-                                task: TaskEntity(
-                                    isRunning: state.prefState.autoStartTasks),
-                                context: context));
-                          },
                         ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.vendor,
                           icon: getEntityIcon(EntityType.vendor),
                           title: localization.vendors,
-                          onTap: () =>
-                              store.dispatch(ViewVendorList(context: context)),
-                          onCreateTap: () {
-                            if (isMobile(context)) {
-                              navigator.pop();
-                            }
-                            store.dispatch(EditVendor(
-                                vendor: VendorEntity(), context: context));
-                          },
                         ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.expense,
                           icon: getEntityIcon(EntityType.expense),
                           title: localization.expenses,
-                          onTap: () =>
-                              store.dispatch(ViewExpenseList(context: context)),
-                          onCreateTap: () {
-                            if (isMobile(context)) {
-                              navigator.pop();
-                            }
-                            store.dispatch(EditExpense(
-                                expense: ExpenseEntity(
-                                    company: company, prefState: state.prefState),
-                                context: context));
-                          },
                         ),
                       ],
                       // STARTER: menu - do not remove comment
@@ -329,9 +231,6 @@ class MenuDrawer extends StatelessWidget {
                         icon: kIsWeb ? Icons.settings : FontAwesomeIcons.cog,
                         title: localization.settings,
                         onTap: () {
-                          if (isMobile(context)) {
-                            navigator.pop();
-                          }
                           store.dispatch(ViewSettings(
                               context: context,
                               userCompany: state.userCompany));
@@ -355,9 +254,10 @@ class DrawerTile extends StatelessWidget {
     @required this.company,
     @required this.icon,
     @required this.title,
-    @required this.onTap,
-    this.onCreateTap,
+    this.onTap,
     this.entityType,
+    this.onLongPress,
+    this.onCreateTap,
   });
 
   final CompanyEntity company;
@@ -365,6 +265,7 @@ class DrawerTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final Function onTap;
+  final Function onLongPress;
   final Function onCreateTap;
 
   @override
@@ -372,6 +273,7 @@ class DrawerTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final userCompany = store.state.userCompany;
+    final NavigatorState navigator = Navigator.of(context);
 
     if (entityType != null && !userCompany.canViewOrCreate(entityType)) {
       return Container();
@@ -389,13 +291,23 @@ class DrawerTile extends StatelessWidget {
       child: ListTile(
         dense: true,
         leading: Icon(icon, size: 22),
-        title: Tooltip(message: title, child: Text(title)),
-        onTap: onTap,
-        trailing: onCreateTap == null || !userCompany.canCreate(entityType)
+        title: Text(title),
+        onTap: () => entityType != null
+            ? viewEntitiesByType(context: context, entityType: entityType)
+            : onTap(),
+        onLongPress: () => entityType != null
+            ? createEntityByType(context: context, entityType: entityType)
+            : null,
+        trailing: !userCompany.canCreate(entityType)
             ? null
             : IconButton(
                 icon: Icon(Icons.add_circle_outline),
-                onPressed: onCreateTap,
+                onPressed: () {
+                  if (isMobile(context)) {
+                    navigator.pop();
+                  }
+                  createEntityByType(context: context, entityType: entityType);
+                },
               ),
       ),
     );

@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -108,6 +111,61 @@ class FilterCompany implements PersistUI {
   final String filter;
 }
 
+void viewEntitiesByType({BuildContext context, EntityType entityType}) {
+  final store = StoreProvider.of<AppState>(context);
+  switch (entityType) {
+    case EntityType.client:
+      store.dispatch(ViewClientList(context: context));
+      break;
+    case EntityType.user:
+      store.dispatch(ViewUserList(context: context));
+      break;
+    case EntityType.project:
+      store.dispatch(ViewProjectList(context: context));
+      break;
+    case EntityType.taxRate:
+      store.dispatch(ViewTaxRateList(context: context));
+      break;
+    case EntityType.companyGateway:
+      store.dispatch(ViewCompanyGatewayList(context: context));
+      break;
+    case EntityType.invoice:
+      store.dispatch(ViewInvoiceList(context: context));
+      break;
+    //case EntityType.recurringInvoice:
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //break;
+    case EntityType.quote:
+      store.dispatch(ViewQuoteList(context: context));
+      break;
+    case EntityType.vendor:
+      store.dispatch(ViewVendorList(context: context));
+      break;
+    case EntityType.product:
+      store.dispatch(ViewProductList(context: context));
+      break;
+    case EntityType.task:
+      store.dispatch(ViewTaskList(context: context));
+      break;
+    case EntityType.expense:
+      store.dispatch(ViewExpenseList(context: context));
+      break;
+    //case EntityType.expenseCategory:
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //break;
+    case EntityType.payment:
+      store.dispatch(ViewPaymentList(context: context));
+      break;
+    case EntityType.group:
+      store.dispatch(ViewGroupList(context: context));
+      break;
+    // TODO Add to starter
+  }
+}
+
 void viewEntityById(
     {BuildContext context, String entityId, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
@@ -160,6 +218,72 @@ void viewEntityById(
       break;
     case EntityType.group:
       store.dispatch(ViewGroup(groupId: entityId, context: context));
+      break;
+    // TODO Add to starter
+  }
+}
+
+void createEntityByType({BuildContext context, EntityType entityType}) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final company = state.company;
+  switch (entityType) {
+    case EntityType.client:
+      store.dispatch(EditClient(context: context, client: ClientEntity()));
+      break;
+    case EntityType.user:
+      store.dispatch(EditUser(context: context, user: UserEntity()));
+      break;
+    case EntityType.project:
+      store.dispatch(EditProject(context: context, project: ProjectEntity()));
+      break;
+    case EntityType.taxRate:
+      store.dispatch(EditTaxRate(context: context, taxRate: TaxRateEntity()));
+      break;
+    case EntityType.companyGateway:
+      store.dispatch(EditCompanyGateway(
+          context: context, companyGateway: CompanyGatewayEntity()));
+      break;
+    case EntityType.invoice:
+      store.dispatch(EditInvoice(
+          context: context, invoice: InvoiceEntity(company: company)));
+      break;
+    //case EntityType.recurringInvoice:
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, context: context));
+    //break;
+    case EntityType.quote:
+      store.dispatch(EditQuote(
+          context: context,
+          quote: InvoiceEntity(company: company, isQuote: true)));
+      break;
+    case EntityType.vendor:
+      store.dispatch(EditVendor(context: context, vendor: VendorEntity()));
+      break;
+    case EntityType.product:
+      store.dispatch(EditProduct(context: context, product: ProductEntity()));
+      break;
+    case EntityType.task:
+      store.dispatch(EditTask(
+          context: context,
+          task: TaskEntity(isRunning: state.prefState.autoStartTasks)));
+      break;
+    case EntityType.expense:
+      store.dispatch(EditExpense(
+          context: context,
+          expense: ExpenseEntity(prefState: state.prefState)));
+      break;
+    //case EntityType.expenseCategory:
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, context: context));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(ViewCredit(creditId: entityId, context: context));
+    //break;
+    case EntityType.payment:
+      store.dispatch(EditPayment(
+          context: context, payment: PaymentEntity(company: company)));
+      break;
+    case EntityType.group:
+      store.dispatch(EditGroup(context: context, group: GroupEntity()));
       break;
     // TODO Add to starter
   }
