@@ -131,42 +131,54 @@ void viewEntitiesByType({
     case EntityType.client:
       if (filterEntity != null) {
         store.dispatch(FilterClientsByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewClientList(navigator: navigator));
       break;
     case EntityType.user:
       if (filterEntity != null) {
         store.dispatch(FilterUsersByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewUserList(navigator: navigator));
       break;
     case EntityType.project:
       if (filterEntity != null) {
         store.dispatch(FilterProjectsByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewProjectList(navigator: navigator));
       break;
     case EntityType.taxRate:
       if (filterEntity != null) {
         store.dispatch(FilterTaxRatesByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewTaxRateList(navigator: navigator));
       break;
     case EntityType.companyGateway:
       if (filterEntity != null) {
         store.dispatch(FilterCompanyGatewaysByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewCompanyGatewayList(navigator: navigator));
       break;
     case EntityType.invoice:
       if (filterEntity != null) {
         store.dispatch(FilterInvoicesByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewInvoiceList(navigator: navigator));
       break;
@@ -176,14 +188,18 @@ void viewEntitiesByType({
     case EntityType.quote:
       if (filterEntity != null) {
         store.dispatch(FilterQuotesByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewQuoteList(navigator: navigator));
       break;
     case EntityType.vendor:
       if (filterEntity != null) {
         store.dispatch(FilterVendorsByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewVendorList(navigator: navigator));
       break;
@@ -193,14 +209,18 @@ void viewEntitiesByType({
     case EntityType.task:
       if (filterEntity != null) {
         store.dispatch(FilterTasksByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewTaskList(navigator: navigator));
       break;
     case EntityType.expense:
       if (filterEntity != null) {
         store.dispatch(FilterExpensesByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewExpenseList(navigator: navigator));
       break;
@@ -213,14 +233,18 @@ void viewEntitiesByType({
     case EntityType.payment:
       if (filterEntity != null) {
         store.dispatch(FilterPaymentsByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewPaymentList(navigator: navigator));
       break;
     case EntityType.group:
       if (filterEntity != null) {
         store.dispatch(FilterGroupsByEntity(
-            entityId: filterEntity.id, entityType: filterEntity.entityType));
+          entityId: filterEntity.id,
+          entityType: filterEntity.entityType,
+        ));
       }
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
@@ -242,51 +266,84 @@ void viewEntityById(
 
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(
-          ViewClient(clientId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewClient(
+        clientId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.user:
-      store.dispatch(
-          ViewUser(userId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewUser(
+        userId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.project:
-      store.dispatch(
-          ViewProject(projectId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewProject(
+        projectId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.taxRate:
-      store.dispatch(
-          ViewTaxRate(taxRateId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewTaxRate(
+        taxRateId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.companyGateway:
       store.dispatch(ViewCompanyGateway(
-          companyGatewayId: entityId, navigator: navigator, force: force));
+        companyGatewayId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.invoice:
-      store.dispatch(
-          ViewInvoice(invoiceId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewInvoice(
+        invoiceId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      store.dispatch(
-          ViewQuote(quoteId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewQuote(
+        quoteId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.vendor:
-      store.dispatch(
-          ViewVendor(vendorId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewVendor(
+        vendorId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.product:
-      store.dispatch(
-          ViewProduct(productId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewProduct(
+        productId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.task:
-      store.dispatch(
-          ViewTask(taskId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewTask(
+        taskId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.expense:
-      store.dispatch(
-          ViewExpense(expenseId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewExpense(
+        expenseId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     //case EntityType.expenseCategory:
     //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
@@ -295,12 +352,18 @@ void viewEntityById(
     //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      store.dispatch(
-          ViewPayment(paymentId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewPayment(
+        paymentId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.group:
-      store.dispatch(
-          ViewGroup(groupId: entityId, navigator: navigator, force: force));
+      store.dispatch(ViewGroup(
+        groupId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     // TODO Add to starter
   }
@@ -350,7 +413,7 @@ void createEntityByType(
       store.dispatch(EditCompanyGateway(
           navigator: navigator,
           force: force,
-          companyGateway: CompanyGatewayEntity()));
+          companyGateway: CompanyGatewayEntity(state: state)));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
@@ -385,7 +448,10 @@ void createEntityByType(
       break;
     case EntityType.task:
       store.dispatch(EditTask(
-          navigator: navigator, force: force, task: TaskEntity(state: state)));
+        navigator: navigator,
+        force: force,
+        task: TaskEntity(state: state),
+      ));
       break;
     case EntityType.expense:
       store.dispatch(EditExpense(
