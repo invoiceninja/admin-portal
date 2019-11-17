@@ -72,16 +72,12 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       value: state.prefState.menuSidebarMode,
                       items: [
                         DropdownMenuItem(
-                          child: Text(localization.showOrHide),
-                          value: AppSidebarMode.visible,
+                          child: Text(localization.collapse),
+                          value: AppSidebarMode.collapse,
                         ),
                         DropdownMenuItem(
                           child: Text(localization.float),
                           value: AppSidebarMode.float,
-                        ),
-                        DropdownMenuItem(
-                          child: Text(localization.collapse),
-                          value: AppSidebarMode.collapse,
                         ),
                       ],
                       onChanged: (dynamic value) =>

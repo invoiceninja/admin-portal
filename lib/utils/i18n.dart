@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'select_company': 'Select Company',
       'float': 'Float',
       'collapse': 'Collapse',
       'show_or_hide': 'Show/hide',
@@ -15759,6 +15760,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get menuSidebar => _localizedValues[localeCode]['menu_sidebar'];
 
   String get historySidebar => _localizedValues[localeCode]['history_sidebar'];
+
+  String get selectCompany => _localizedValues[localeCode]['select_company'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

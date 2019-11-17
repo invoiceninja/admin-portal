@@ -223,6 +223,9 @@ void viewEntityById(
   }
 }
 
+void viewEntity({BuildContext context, BaseEntity entity}) => viewEntityById(
+    context: context, entityId: entity.id, entityType: entity.entityType);
+
 void createEntityByType({BuildContext context, EntityType entityType}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;

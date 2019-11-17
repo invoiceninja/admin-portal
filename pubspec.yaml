@@ -23,8 +23,8 @@ dependencies:
   built_value: ^6.7.1
   built_collection: ^4.2.2
   memoize: ^2.0.0
-  #cached_network_image: ^2.0.0-rc.1
-  cached_network_image: any
+  cached_network_image: ^2.0.0-rc.1
+  #cached_network_image: any
   url_launcher: ^5.1.2
   share: ^0.6.2+1
   intl: any

@@ -11,10 +11,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   factory PrefState() {
     return _$PrefState._(
       layout: AppLayout.tablet,
-      menuSidebarMode: AppSidebarMode.visible,
-      historySidebarMode: AppSidebarMode.float,
-      isMenuVisible: true,
-      isHistoryVisible: false,
+      menuSidebarMode: AppSidebarMode.collapse,
+      historySidebarMode: AppSidebarMode.visible,
+      isMenuVisible: false,
+      isHistoryVisible: true,
       enableDarkMode: true,
       requireAuthentication: false,
       emailPayment: false,
