@@ -49,9 +49,15 @@ Reducer<bool> menuVisibleReducer = combineReducers([
     return action.sidebar == AppSidebar.menu ? !value : value;
   }),
   TypedReducer<bool, UserSettingsChanged>((value, action) {
-    return action.menuMode == AppSidebarMode.visible
-        ? true
-        : action.menuMode == AppSidebarMode.float ? false : value;
+    switch (action.menuMode) {
+      case AppSidebarMode.visible:
+        return true;
+      case AppSidebarMode.collapse:
+      case AppSidebarMode.float:
+        return false;
+      default:
+        return value;
+    }
   }),
 ]);
 
