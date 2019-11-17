@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -36,8 +35,7 @@ class MainScreen extends StatelessWidget {
                     child: DashboardScreenBuilder(),
                     flex: 5,
                   ),
-                  if (prefState.isHistoryVisible &&
-                      prefState.historySidebarMode == AppSidebarMode.visible) ...[
+                  if (prefState.showHistory) ...[
                     _CustomDivider(),
                     Expanded(
                       child: HistoryDrawerBuilder(),
@@ -125,8 +123,7 @@ class MainScreen extends StatelessWidget {
           }
 
           return Row(children: <Widget>[
-            if (prefState.isMenuVisible &&
-                prefState.menuSidebarMode == AppSidebarMode.visible) ...[
+            if (prefState.showMenu) ...[
               MenuDrawerBuilder(),
               _CustomDivider(),
             ],
@@ -352,8 +349,7 @@ class SettingsScreens extends StatelessWidget {
         flex: 3,
         child: screen,
       ),
-      if (prefState.isHistoryVisible &&
-          prefState.historySidebarMode == AppSidebarMode.visible) ...[
+      if (prefState.showHistory) ...[
         _CustomDivider(),
         Expanded(
           child: HistoryDrawerBuilder(),
@@ -405,8 +401,7 @@ class EntityScreens extends StatelessWidget {
             ],
           ),
         ),
-        if (prefState.isHistoryVisible &&
-            prefState.historySidebarMode == AppSidebarMode.visible) ...[
+        if (prefState.showHistory) ...[
           _CustomDivider(),
           Expanded(
             child: HistoryDrawerBuilder(),

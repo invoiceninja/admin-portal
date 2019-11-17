@@ -79,12 +79,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           child: Text(localization.float),
                           value: AppSidebarMode.float,
                         ),
-                        /* TODO implement
-                      DropdownMenuItem(
-                        child: Text(localization.collapse),
-                        value: AppSidebarMode.collapse,
-                      ),
-                       */
+                        DropdownMenuItem(
+                          child: Text(localization.collapse),
+                          value: AppSidebarMode.collapse,
+                        ),
                       ],
                       onChanged: (dynamic value) =>
                           viewModel.onMenuModeChanged(context, value),
@@ -158,8 +156,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       }
                     },
                   ),
-                  viewModel.state.company
-                          .isModuleEnabled(EntityType.task)
+                  viewModel.state.company.isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
                           title:
                               Text(AppLocalization.of(context).autoStartTasks),
