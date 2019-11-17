@@ -116,6 +116,9 @@ class DeviceSettingsVM {
         store.dispatch(UserSettingsChanged(historyMode: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
+        if (store.state.prefState.layout == value) {
+          return;
+        }
         store.dispatch(UserSettingsChanged(layout: value));
         AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {

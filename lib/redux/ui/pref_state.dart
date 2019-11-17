@@ -54,6 +54,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltList<CompanyPrefState> get companyPrefs;
 
+  bool get isTablet => layout != AppLayout.mobile;
+
   bool get isMenuFloated =>
       layout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
 
@@ -68,7 +70,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible && historySidebarMode == AppSidebarMode.visible;
 
   bool get isMenuCollapsed =>
-      menuSidebarMode == AppSidebarMode.collapse && !isMenuVisible;
+      isTablet && menuSidebarMode == AppSidebarMode.collapse && !isMenuVisible;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }
