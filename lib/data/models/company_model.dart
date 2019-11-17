@@ -441,6 +441,16 @@ abstract class UserCompanyEntity
       return false;
     }
 
+    // TODO remove this once task/expenses are supported
+    if ([
+      EntityType.vendor,
+      EntityType.expense,
+      EntityType.task,
+      EntityType.project,
+    ].contains(entityType)) {
+      return false;
+    }
+
     if (isAdmin ?? false) {
       return true;
     }
