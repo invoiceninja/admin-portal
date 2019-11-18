@@ -53,7 +53,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 children: <Widget>[
                   AppDropdownButton<AppLayout>(
                     labelText: localization.layout,
-                    value: viewModel.state.prefState.layout,
+                    value: viewModel.state.prefState.appLayout,
                     onChanged: (dynamic value) =>
                         viewModel.onLayoutChanged(context, value),
                     items: [
@@ -67,7 +67,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       ),
                     ],
                   ),
-                  if (state.prefState.layout == AppLayout.tablet) ...[
+                  if (state.prefState.appLayout == AppLayout.tablet) ...[
                     AppDropdownButton<AppSidebarMode>(
                       labelText: localization.menuSidebar,
                       value: state.prefState.menuSidebarMode,

@@ -1,8 +1,11 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:redux/redux.dart';
@@ -260,11 +263,20 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
+      final prefState = store.state.prefState;
+      final isList = prefState.moduleLayout == ModuleLayout.list;
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: Row(
           children: <Widget>[
+            IconButton(
+              tooltip: AppLocalization.of(context).switchListTable,
+              icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+              onPressed: () {
+                store.dispatch(SwitchListTableLayout());
+              },
+            ),
             if (widget.sortFields.isNotEmpty)
               IconButton(
                 tooltip: AppLocalization.of(context).sort,

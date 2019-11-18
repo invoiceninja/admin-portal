@@ -10,7 +10,8 @@ part 'pref_state.g.dart';
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   factory PrefState() {
     return _$PrefState._(
-      layout: AppLayout.tablet,
+      appLayout: AppLayout.tablet,
+      moduleLayout: ModuleLayout.list,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.visible,
       isMenuVisible: false,
@@ -30,7 +31,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   PrefState._();
 
-  AppLayout get layout;
+  AppLayout get appLayout;
+
+  ModuleLayout get moduleLayout;
 
   AppSidebarMode get menuSidebarMode;
 
@@ -54,15 +57,15 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   BuiltList<CompanyPrefState> get companyPrefs;
 
-  bool get isTablet => layout != AppLayout.mobile;
+  bool get isTablet => appLayout != AppLayout.mobile;
 
-  bool get isMobile => layout == AppLayout.mobile;
+  bool get isMobile => appLayout == AppLayout.mobile;
 
   bool get isMenuFloated =>
-      layout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
+      appLayout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
 
   bool get isHistoryFloated =>
-      layout == AppLayout.mobile || historySidebarMode == AppSidebarMode.float;
+      appLayout == AppLayout.mobile || historySidebarMode == AppSidebarMode.float;
 
   bool get showMenu =>
       (isMenuVisible && menuSidebarMode == AppSidebarMode.visible) ||
@@ -110,6 +113,19 @@ class AppLayout extends EnumClass {
   static BuiltSet<AppLayout> get values => _$values;
 
   static AppLayout valueOf(String name) => _$valueOf(name);
+}
+
+class ModuleLayout extends EnumClass {
+  const ModuleLayout._(String name) : super(name);
+
+  static Serializer<ModuleLayout> get serializer => _$moduleLayoutSerializer;
+
+  static const ModuleLayout list = _$list;
+  static const ModuleLayout table = _$table;
+
+  static BuiltSet<ModuleLayout> get values => _$moduleLayoutValues;
+
+  static ModuleLayout valueOf(String name) => _$moduleLayoutValueOf(name);
 }
 
 class AppSidebar extends EnumClass {
