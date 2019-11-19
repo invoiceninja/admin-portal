@@ -76,7 +76,9 @@ String formatNumber(
     countryId = company.settings.countryId;
   }
 
-  if (currencyId != null && currencyId.isNotEmpty) {
+  if (currencyId == kCurrencyAll) {
+    currencyId = company.currencyId;
+  } else if (currencyId != null && currencyId.isNotEmpty) {
     // do nothing
   } else if (client != null && client.hasCurrency) {
     currencyId = client.currencyId;
