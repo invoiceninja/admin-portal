@@ -91,7 +91,7 @@ abstract class ExpenseEntity extends Object
           ? vendor.currencyId
           : (state?.company?.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId: (client != null && client.hasCurrency)
-          ? client.currencyId
+          ? client.settings.currencyId // TODO handle group currency
           : (state?.company?.currencyId ?? kDefaultCurrencyId),
       taxName1: '',
       taxName2: '',

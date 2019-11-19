@@ -122,8 +122,9 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     entityList: memoizedDropdownClientList(
                         clientState.map, clientState.list),
                     onSelected: (client) {
-                      final currencyId = (client as ClientEntity)?.currencyId ??
-                          company.currencyId;
+                      final currencyId =
+                          (client as ClientEntity)?.settings?.currencyId ??
+                              company.currencyId;
                       viewModel.onChanged(expense.rebuild((b) => b
                         ..clientId = client?.id
                         ..invoiceCurrencyId = currencyId));

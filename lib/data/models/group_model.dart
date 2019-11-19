@@ -84,6 +84,16 @@ abstract class GroupEntity extends Object
     return name;
   }
 
+  bool get hasCurrency =>
+      settings.currencyId != null && settings.currencyId.isNotEmpty;
+
+  String get currencyId => settings.currencyId;
+
+  bool get hasLanguage =>
+      settings.languageId != null && settings.languageId.isNotEmpty;
+
+  String get languageId => settings.languageId;
+
   int compareTo(GroupEntity group, String sortField, bool sortAscending) {
     const int response = 0;
     final GroupEntity groupA = sortAscending ? this : group;

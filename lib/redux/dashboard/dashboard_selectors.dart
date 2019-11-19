@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:charts_common/common.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
@@ -26,16 +27,20 @@ class ChartMoneyData {
   final double amount;
 }
 
-var memoizedChartInvoices = memo5((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity company,
-        DashboardUIState settings,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ClientEntity> clientMap) =>
+var memoizedChartInvoices = memo6((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUIState settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) =>
     chartInvoices(
         currencyMap: currencyMap,
         company: company,
         settings: settings,
         invoiceMap: invoiceMap,
+        groupMap: groupMap,
         clientMap: clientMap));
 
 List<ChartDataGroup> chartInvoices({
@@ -44,6 +49,7 @@ List<ChartDataGroup> chartInvoices({
   DashboardUIState settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
@@ -61,8 +67,8 @@ List<ChartDataGroup> chartInvoices({
   invoiceMap.forEach((int, invoice) {
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    final currencyId =
-        client.hasCurrency ? client.currencyId : company.currencyId;
+    final group = groupMap[client.groupId] ?? GroupEntity();
+    final currencyId = client.getCurrencyId(company: company, group: group);
 
     if (!invoice.isSent || invoice.isDeleted || client.isDeleted) {
       // skip it
@@ -135,17 +141,22 @@ List<ChartDataGroup> chartInvoices({
   return data;
 }
 
-var memoizedChartQuotes = memo5((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity company,
-        DashboardUIState settings,
-        BuiltMap<String, InvoiceEntity> quoteMap,
-        BuiltMap<String, ClientEntity> clientMap) =>
+var memoizedChartQuotes = memo6((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUIState settings,
+  BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) =>
     chartQuotes(
-        currencyMap: currencyMap,
-        company: company,
-        settings: settings,
-        quoteMap: quoteMap,
-        clientMap: clientMap));
+      currencyMap: currencyMap,
+      company: company,
+      settings: settings,
+      quoteMap: quoteMap,
+      clientMap: clientMap,
+      groupMap: groupMap,
+    ));
 
 List<ChartDataGroup> chartQuotes({
   BuiltMap<String, CurrencyEntity> currencyMap,
@@ -153,6 +164,7 @@ List<ChartDataGroup> chartQuotes({
   DashboardUIState settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
@@ -173,8 +185,8 @@ List<ChartDataGroup> chartQuotes({
   quoteMap.forEach((int, quote) {
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
-    final currencyId =
-        client.hasCurrency ? client.currencyId : company.currencyId;
+    final group = groupMap[client.groupId] ?? GroupEntity();
+    final currencyId = client.getCurrencyId(company: company, group: group);
 
     if (!quote.isSent || quote.isDeleted || client.isDeleted) {
       // skip it
@@ -255,22 +267,27 @@ List<ChartDataGroup> chartQuotes({
   return data;
 }
 
-var memoizedChartPayments = memo6((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity company,
-        DashboardUIState settings,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, PaymentEntity> paymentMap) =>
-    chartPayments(
-        currencyMap, company, settings, invoiceMap, clientMap, paymentMap));
+var memoizedChartPayments = memo7((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUIState settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+) =>
+    chartPayments(currencyMap, company, settings, invoiceMap, clientMap,
+        groupMap, paymentMap));
 
 List<ChartDataGroup> chartPayments(
-    BuiltMap<String, CurrencyEntity> currencyMap,
-    CompanyEntity company,
-    DashboardUIState settings,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, PaymentEntity> paymentMap) {
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUIState settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+) {
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
@@ -289,8 +306,8 @@ List<ChartDataGroup> chartPayments(
         invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-    final currencyId =
-        client.hasCurrency ? client.currencyId : company.currencyId;
+    final group = groupMap[client.groupId] ?? GroupEntity();
+    final currencyId = client.getCurrencyId(company: company, group: group);
 
     if (payment.isDeleted || invoice.isDeleted || client.isDeleted) {
       // skip it
@@ -363,6 +380,19 @@ List<ChartDataGroup> chartPayments(
   return data;
 }
 
+var memoizedChartTasks = memo8((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUIState settings,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    chartTasks(currencyMap, company, settings, taskMap, invoiceMap, projectMap,
+        groupMap, clientMap));
+
 List<ChartDataGroup> chartTasks(
     BuiltMap<String, CurrencyEntity> currencyMap,
     CompanyEntity company,
@@ -370,6 +400,7 @@ List<ChartDataGroup> chartTasks(
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, GroupEntity> groupMap,
     BuiltMap<String, ClientEntity> clientMap) {
   const STATUS_LOGGED = 'logged';
   const STATUS_INVOICED = 'invoiced';
@@ -391,8 +422,8 @@ List<ChartDataGroup> chartTasks(
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
-    final currencyId =
-        client.hasCurrency ? client.currencyId : company.currencyId;
+    final group = groupMap[client.groupId] ?? GroupEntity();
+    final currencyId = client.getCurrencyId(company: company, group: group);
 
     if (task.isDeleted || client.isDeleted || project.isDeleted) {
       // skip it
@@ -480,16 +511,6 @@ List<ChartDataGroup> chartTasks(
 
   return data;
 }
-
-var memoizedChartTasks = memo7((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity company,
-        DashboardUIState settings,
-        BuiltMap<String, TaskEntity> taskMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ProjectEntity> projectMap,
-        BuiltMap<String, ClientEntity> clientMap) =>
-    chartTasks(currencyMap, company, settings, taskMap, invoiceMap, projectMap,
-        clientMap));
 
 List<ChartDataGroup> chartExpenses(
     BuiltMap<String, CurrencyEntity> currencyMap,

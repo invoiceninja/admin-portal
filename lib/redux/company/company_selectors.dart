@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
@@ -26,29 +27,43 @@ List<String> dropdownExpenseCategoriesSelector(
   return list;
 }
 
-var memoizedHasMultipleCurrencies = memo2(
-    (CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
-        hasMultipleCurrencies(company, clientMap));
+var memoizedHasMultipleCurrencies = memo3((CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    hasMultipleCurrencies(company, clientMap, groupMap));
 
 bool hasMultipleCurrencies(
-        CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
-    memoizedGetCurrencyIds(company, clientMap).length > 1;
+        CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
 
-var memoizedGetCurrencyIds = memo2(
-    (CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) =>
-        getCurrencyIds(company, clientMap));
+var memoizedGetCurrencyIds = memo3((CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    getCurrencyIds(company, clientMap, groupMap));
 
 List<String> getCurrencyIds(
-    CompanyEntity company, BuiltMap<String, ClientEntity> clientMap) {
+    CompanyEntity company,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap) {
   final currencyIds = <String>[];
-  currencyIds.add(company.currencyId);
   clientMap.forEach((clientId, client) {
-    if (client.hasCurrency &&
-        !client.isDeleted &&
-        !currencyIds.contains(client.currencyId)) {
-      currencyIds.add(client.currencyId);
+    final group = groupMap[client.groupId];
+    if (!client.isDeleted) {
+      String currencyId;
+      if (client.hasCurrency) {
+        currencyId = client.currencyId;
+      } else if (group != null && group.hasCurrency) {
+        currencyId = group.currencyId;
+      }
+      if (currencyId != null &&
+          !currencyIds.contains(client.currencyId)) {
+        currencyIds.add(currencyId);
+      }
     }
   });
+  print('currencyIds: $currencyIds');
   return currencyIds;
 }
 

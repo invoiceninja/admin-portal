@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
@@ -64,7 +65,8 @@ String formatNumber(
 
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
-  final ClientEntity client = state.userCompanyState.clientState.map[clientId];
+  final ClientEntity client = state.clientState.map[clientId];
+  final GroupEntity group = state.groupState.map[client?.groupId];
 
   String countryId;
 
@@ -78,12 +80,15 @@ String formatNumber(
     // do nothing
   } else if (client != null && client.hasCurrency) {
     currencyId = client.currencyId;
+  } else if (group != null && group.hasCurrency) {
+    currencyId = group.currencyId;
   } else {
     currencyId = company.currencyId;
   }
 
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
-  final CountryEntity country = state.staticState.countryMap[countryId];
+  final CountryEntity country =
+      state.staticState.countryMap[countryId] ?? CountryEntity();
 
   if (currency == null) {
     return '';

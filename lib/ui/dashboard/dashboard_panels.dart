@@ -37,9 +37,10 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
     final company = state.company;
     final clientMap = state.clientState.map;
+    final groupMap = state.groupState.map;
 
     // Add "All" if more than one currency
-    final currencies = memoizedGetCurrencyIds(company, clientMap);
+    final currencies = memoizedGetCurrencyIds(company, clientMap, groupMap);
     if (currencies.length > 1 && !currencies.contains(kCurrencyAll)) {
       currencies.insert(0, kCurrencyAll);
     }
@@ -87,29 +88,27 @@ class DashboardPanels extends StatelessWidget {
                 : null,
           ),
           SizedBox(width: 8.0),
-          memoizedHasMultipleCurrencies(company, clientMap)
-              ? Row(
-                  children: <Widget>[
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        items: memoizedGetCurrencyIds(company, clientMap)
-                            .map((currencyId) => DropdownMenuItem<String>(
-                                  child: Text(currencyId == kCurrencyAll
-                                      ? localization.all
-                                      : viewModel
-                                          .currencyMap[currencyId]?.code),
-                                  value: currencyId,
-                                ))
-                            .toList(),
-                        onChanged: (currencyId) =>
-                            viewModel.onCurrencyChanged(currencyId),
-                        value: state.dashboardUIState.currencyId,
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-                  ],
-                )
-              : Container(),
+          if (memoizedHasMultipleCurrencies(company, clientMap, groupMap))
+            Row(
+              children: <Widget>[
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                        .map((currencyId) => DropdownMenuItem<String>(
+                              child: Text(currencyId == kCurrencyAll
+                                  ? localization.all
+                                  : viewModel.currencyMap[currencyId]?.code),
+                              value: currencyId,
+                            ))
+                        .toList(),
+                    onChanged: (currencyId) =>
+                        viewModel.onCurrencyChanged(currencyId),
+                    value: state.dashboardUIState.currencyId,
+                  ),
+                ),
+                SizedBox(width: 16.0),
+              ],
+            ),
         ],
       ),
     );
@@ -184,17 +183,24 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = viewModel.state.invoiceState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final currentData = memoizedChartInvoices(state.staticState.currencyMap,
-        state.company, settings, state.invoiceState.map, state.clientState.map);
+    final currentData = memoizedChartInvoices(
+        state.staticState.currencyMap,
+        state.company,
+        settings,
+        state.invoiceState.map,
+        state.clientState.map,
+        state.groupState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartInvoices(
-          state.staticState.currencyMap,
-          state.company,
-          settings.rebuild((b) => b..offset += 1),
-          state.invoiceState.map,
-          state.clientState.map);
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.invoiceState.map,
+        state.clientState.map,
+        state.groupState.map,
+      );
     }
 
     return _buildChart(
@@ -215,7 +221,8 @@ class DashboardPanels extends StatelessWidget {
         settings,
         state.invoiceState.map,
         state.clientState.map,
-        viewModel.state.paymentState.map);
+        state.groupState.map,
+        state.paymentState.map);
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
@@ -225,7 +232,8 @@ class DashboardPanels extends StatelessWidget {
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
           state.clientState.map,
-          viewModel.state.paymentState.map);
+          state.groupState.map,
+          state.paymentState.map);
     }
 
     return _buildChart(
@@ -240,17 +248,25 @@ class DashboardPanels extends StatelessWidget {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.quoteState.isLoaded;
-    final currentData = memoizedChartQuotes(state.staticState.currencyMap,
-        state.company, settings, state.quoteState.map, state.clientState.map);
+    final currentData = memoizedChartQuotes(
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.quoteState.map,
+      state.clientState.map,
+      state.groupState.map,
+    );
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartQuotes(
-          state.staticState.currencyMap,
-          state.company,
-          settings.rebuild((b) => b..offset += 1),
-          state.quoteState.map,
-          state.clientState.map);
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.quoteState.map,
+        state.clientState.map,
+        state.groupState.map,
+      );
     }
 
     return _buildChart(
@@ -267,24 +283,28 @@ class DashboardPanels extends StatelessWidget {
     final isLoaded = state.taskState.isLoaded;
 
     final currentData = memoizedChartTasks(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.taskState.map,
-        state.invoiceState.map,
-        state.projectState.map,
-        state.clientState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.taskState.map,
+      state.invoiceState.map,
+      state.projectState.map,
+      state.groupState.map,
+      state.clientState.map,
+    );
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
       previousData = memoizedChartTasks(
-          state.staticState.currencyMap,
-          state.company,
-          settings.rebuild((b) => b..offset += 1),
-          state.taskState.map,
-          state.invoiceState.map,
-          state.projectState.map,
-          state.clientState.map);
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.taskState.map,
+        state.invoiceState.map,
+        state.projectState.map,
+        state.groupState.map,
+        state.clientState.map,
+      );
     }
 
     return _buildChart(

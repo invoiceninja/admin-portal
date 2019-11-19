@@ -1,10 +1,12 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -79,8 +81,6 @@ abstract class ClientEntity extends Object
       sizeId: '',
       vatNumber: '',
       idNumber: '',
-      languageId: '',
-      currencyId: '',
       shippingAddress1: '',
       shippingAddress2: '',
       shippingCity: '',
@@ -186,14 +186,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
-  @nullable
-  @BuiltValueField(wireName: 'language_id')
-  String get languageId;
-
-  @nullable
-  @BuiltValueField(wireName: 'currency_id')
-  String get currencyId;
-
   @BuiltValueField(wireName: 'shipping_address1')
   String get shippingAddress1;
 
@@ -213,8 +205,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'shipping_country_id')
   String get shippingCountryId;
 
-  // TODO remove this line of code
-  @BuiltValueField(serialize: false)
   SettingsEntity get settings;
 
   @BuiltValueField(wireName: 'custom_value1')
@@ -236,6 +226,17 @@ abstract class ClientEntity extends Object
   @override
   String get listDisplayName {
     return displayName;
+  }
+
+  String getCurrencyId(
+      {@required CompanyEntity company, @required GroupEntity group}) {
+    if (hasCurrency) {
+      return settings.currencyId;
+    } else if (group.hasCurrency) {
+      return group.currencyId;
+    } else {
+      return company.currencyId;
+    }
   }
 
   Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
@@ -279,7 +280,8 @@ abstract class ClientEntity extends Object
 
   bool get hasGroup => groupId != null && groupId.isNotEmpty;
 
-  bool get hasLanguage => languageId != null && languageId.isNotEmpty;
+  bool get hasLanguage =>
+      settings.languageId != null && settings.languageId.isNotEmpty;
 
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
@@ -433,7 +435,12 @@ abstract class ClientEntity extends Object
 
   bool get hasCountry => countryId != null && countryId.isNotEmpty;
 
-  bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
+  String get currencyId => settings.currencyId;
+
+  bool get hasCurrency =>
+      settings.currencyId != null && settings.currencyId.isNotEmpty;
+
+  String get languageId => settings.languageId;
 
   bool get hasNameSet {
     if (contacts.isEmpty) {

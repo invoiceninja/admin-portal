@@ -164,6 +164,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'shipping_postal_code',
       serializers.serialize(object.shippingPostalCode,
           specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -223,18 +226,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       result
         ..add('size_id')
         ..add(serializers.serialize(object.sizeId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.languageId != null) {
-      result
-        ..add('language_id')
-        ..add(serializers.serialize(object.languageId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.currencyId != null) {
-      result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
             specifiedType: const FullType(String)));
     }
     if (object.shippingCountryId != null) {
@@ -385,14 +376,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.idNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'shipping_address1':
           result.shippingAddress1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -416,6 +399,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'shipping_country_id':
           result.shippingCountryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -899,10 +886,6 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String idNumber;
   @override
-  final String languageId;
-  @override
-  final String currencyId;
-  @override
   final String shippingAddress1;
   @override
   final String shippingAddress2;
@@ -967,8 +950,6 @@ class _$ClientEntity extends ClientEntity {
       this.sizeId,
       this.vatNumber,
       this.idNumber,
-      this.languageId,
-      this.currencyId,
       this.shippingAddress1,
       this.shippingAddress2,
       this.shippingCity,
@@ -1095,8 +1076,6 @@ class _$ClientEntity extends ClientEntity {
         sizeId == other.sizeId &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
-        languageId == other.languageId &&
-        currencyId == other.currencyId &&
         shippingAddress1 == other.shippingAddress1 &&
         shippingAddress2 == other.shippingAddress2 &&
         shippingCity == other.shippingCity &&
@@ -1139,7 +1118,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), shippingAddress1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode),
                                                                                 shippingAddress2.hashCode),
                                                                             shippingCity.hashCode),
                                                                         shippingState.hashCode),
@@ -1184,8 +1163,6 @@ class _$ClientEntity extends ClientEntity {
           ..add('sizeId', sizeId)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
-          ..add('languageId', languageId)
-          ..add('currencyId', currencyId)
           ..add('shippingAddress1', shippingAddress1)
           ..add('shippingAddress2', shippingAddress2)
           ..add('shippingCity', shippingCity)
@@ -1294,14 +1271,6 @@ class ClientEntityBuilder
   String _idNumber;
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
-
-  String _languageId;
-  String get languageId => _$this._languageId;
-  set languageId(String languageId) => _$this._languageId = languageId;
-
-  String _currencyId;
-  String get currencyId => _$this._currencyId;
-  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _shippingAddress1;
   String get shippingAddress1 => _$this._shippingAddress1;
@@ -1421,8 +1390,6 @@ class ClientEntityBuilder
       _sizeId = _$v.sizeId;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
-      _languageId = _$v.languageId;
-      _currencyId = _$v.currencyId;
       _shippingAddress1 = _$v.shippingAddress1;
       _shippingAddress2 = _$v.shippingAddress2;
       _shippingCity = _$v.shippingCity;
@@ -1487,8 +1454,6 @@ class ClientEntityBuilder
               sizeId: sizeId,
               vatNumber: vatNumber,
               idNumber: idNumber,
-              languageId: languageId,
-              currencyId: currencyId,
               shippingAddress1: shippingAddress1,
               shippingAddress2: shippingAddress2,
               shippingCity: shippingCity,

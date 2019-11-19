@@ -92,8 +92,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
               entityId: client.currencyId,
+              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  client.rebuild((b) => b..currencyId = currency.id)),
+                  client.rebuild((b) => b..settings.currencyId = currency?.id)),
             ),
             EntityDropdown(
               key: ValueKey('__language_${client.languageId}__'),
@@ -104,7 +105,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               labelText: localization.language,
               entityId: client.languageId,
               onSelected: (SelectableEntity language) => viewModel.onChanged(
-                  client.rebuild((b) => b..languageId = language?.id)),
+                  client.rebuild((b) => b..settings.languageId = language?.id)),
             ),
             PopupMenuButton<PaymentTermEntity>(
               padding: EdgeInsets.zero,
