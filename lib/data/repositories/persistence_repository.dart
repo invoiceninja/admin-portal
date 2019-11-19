@@ -81,10 +81,10 @@ class PersistenceRepository {
     return serializers.deserializeWith(UIState.serializer, json.decode(data));
   }
 
-  Future<FileSystemEntity> delete() async {
-    return await fileStorage
-        .exists()
-        .then((exists) => exists ? fileStorage.delete() : null);
+  void delete() async {
+    if (await fileStorage.exists()) {
+      fileStorage.delete();
+    }
   }
 
   Future<bool> exists() async {

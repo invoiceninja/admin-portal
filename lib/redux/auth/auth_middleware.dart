@@ -179,8 +179,6 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
 
-    next(action);
-
     _loadAuthLocal(store);
 
     String url;
@@ -206,6 +204,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       }
       store.dispatch(UserLoginFailure(error));
     });
+
+    next(action);
   };
 }
 

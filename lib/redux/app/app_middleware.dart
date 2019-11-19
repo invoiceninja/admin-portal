@@ -370,7 +370,9 @@ Middleware<AppState> _createAccountLoaded() {
       NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
+
     store.dispatch(LoadStaticSuccess(data: response.static));
+
     if (action.loadCompanies) {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
@@ -440,7 +442,6 @@ Middleware<AppState> _createDeleteState(
       next(action);
       return;
     }
-
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
