@@ -17,7 +17,7 @@ class UserRepository {
 
   Future<UserEntity> loadItem(Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/users/$entityId', credentials.token);
+        '${credentials.url}/users/$entityId?include=company_user', credentials.token);
 
     final UserItemResponse userResponse =
         serializers.deserializeWith(UserItemResponse.serializer, response);
@@ -27,7 +27,7 @@ class UserRepository {
 
   Future<BuiltList<UserEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/users?';
+    String url = credentials.url + '/users?include=company_user';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -49,7 +49,7 @@ class UserRepository {
       case EntityAction.restore:
       case EntityAction.archive:
       case EntityAction.delete:
-        var url = credentials.url + '/users/bulk?include=activities';
+        var url = credentials.url + '/users/bulk?include=company_user';
         if (action != null) {
           url += '&action=' + action.toString();
         }
@@ -74,10 +74,10 @@ class UserRepository {
 
     if (user.isNew) {
       response = await webClient.post(
-          credentials.url + '/users', credentials.token,
+          credentials.url + '/users?include=company_user', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/users/' + user.id.toString();
+      var url = credentials.url + '/users/${user.id}?include=company_user';
       if (action != null) {
         url += '?action=' + action.toString();
       }

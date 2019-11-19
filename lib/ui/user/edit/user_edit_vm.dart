@@ -61,7 +61,7 @@ class UserEditVM {
       isLoading: state.isLoading,
       isSaving: state.isSaving,
       origUser: state.userState.map[user.id],
-      user: state.userUIState.editing,
+      user: user,
       userCompany: state.userCompany,
       company: state.company,
       onUserChanged: (UserEntity user) {

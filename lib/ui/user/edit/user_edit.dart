@@ -86,7 +86,8 @@ class _UserEditState extends State<UserEdit> {
 
   void _togglePermission(String permission) {
     final user = widget.viewModel.user;
-    final userCompany = widget.viewModel.userCompany;
+    final userCompany = user.userCompany;
+
     final permissions = (userCompany.permissions ?? '').split(',');
     if (permissions.contains(permission)) {
       permissions.remove(permission);
