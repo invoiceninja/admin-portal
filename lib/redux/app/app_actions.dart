@@ -121,109 +121,150 @@ abstract class AbstractNavigatorAction {
   BuildContext get context => navigator.overlay.context ?? navigator.context;
 }
 
+void filterEntitiesByType({
+  @required BuildContext context,
+  @required EntityType entityType,
+  @required BaseEntity filterEntity,
+}) {
+  final store = StoreProvider.of<AppState>(context);
+
+  switch (entityType) {
+    case EntityType.client:
+      store.dispatch(FilterClientsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.user:
+      store.dispatch(FilterUsersByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.project:
+      store.dispatch(FilterProjectsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.taxRate:
+      store.dispatch(FilterTaxRatesByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.companyGateway:
+      store.dispatch(FilterCompanyGatewaysByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.invoice:
+      store.dispatch(FilterInvoicesByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    //case EntityType.recurringInvoice:
+    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
+    //break;
+    case EntityType.quote:
+      store.dispatch(FilterQuotesByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.vendor:
+      store.dispatch(FilterVendorsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.task:
+      store.dispatch(FilterTasksByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.expense:
+      store.dispatch(FilterExpensesByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    //case EntityType.expenseCategory:
+    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
+    //break;
+    //case EntityType.credit:
+    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
+    //break;
+    case EntityType.payment:
+      store.dispatch(FilterPaymentsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    case EntityType.group:
+      store.dispatch(FilterGroupsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+    // TODO Add to starter
+  }
+}
+
 void viewEntitiesByType({
-  BuildContext context,
-  EntityType entityType,
+  @required BuildContext context,
+  @required EntityType entityType,
   BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
 
+  if (filterEntity != null) {
+    filterEntitiesByType(
+      context: context,
+      entityType: entityType,
+      filterEntity: filterEntity,
+    );
+  }
+
   switch (entityType) {
     case EntityType.client:
-      if (filterEntity != null) {
-        store.dispatch(FilterClientsByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewClientList(navigator: navigator));
       break;
     case EntityType.user:
-      if (filterEntity != null) {
-        store.dispatch(FilterUsersByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewUserList(navigator: navigator));
       break;
     case EntityType.project:
-      if (filterEntity != null) {
-        store.dispatch(FilterProjectsByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewProjectList(navigator: navigator));
       break;
     case EntityType.taxRate:
-      if (filterEntity != null) {
-        store.dispatch(FilterTaxRatesByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewTaxRateList(navigator: navigator));
       break;
     case EntityType.companyGateway:
-      if (filterEntity != null) {
-        store.dispatch(FilterCompanyGatewaysByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewCompanyGatewayList(navigator: navigator));
       break;
     case EntityType.invoice:
-      if (filterEntity != null) {
-        store.dispatch(FilterInvoicesByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewInvoiceList(navigator: navigator));
       break;
     //case EntityType.recurringInvoice:
     //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
     //break;
     case EntityType.quote:
-      if (filterEntity != null) {
-        store.dispatch(FilterQuotesByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewQuoteList(navigator: navigator));
       break;
     case EntityType.vendor:
-      if (filterEntity != null) {
-        store.dispatch(FilterVendorsByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewVendorList(navigator: navigator));
       break;
     case EntityType.product:
       store.dispatch(ViewProductList(navigator: navigator));
       break;
     case EntityType.task:
-      if (filterEntity != null) {
-        store.dispatch(FilterTasksByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewTaskList(navigator: navigator));
       break;
     case EntityType.expense:
-      if (filterEntity != null) {
-        store.dispatch(FilterExpensesByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewExpenseList(navigator: navigator));
       break;
     //case EntityType.expenseCategory:
@@ -233,21 +274,9 @@ void viewEntitiesByType({
     //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
-      if (filterEntity != null) {
-        store.dispatch(FilterPaymentsByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewPaymentList(navigator: navigator));
       break;
     case EntityType.group:
-      if (filterEntity != null) {
-        store.dispatch(FilterGroupsByEntity(
-          entityId: filterEntity.id,
-          entityType: filterEntity.entityType,
-        ));
-      }
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
     // TODO Add to starter

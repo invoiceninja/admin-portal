@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -39,7 +40,10 @@ class HistoryDrawer extends StatelessWidget {
       widgets.add(ListTile(
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
-        title: Text(entity.listDisplayName),
+        title: Text(entity.listDisplayName.isEmpty
+            ? formatNumber(entity.listDisplayAmount, context,
+                formatNumberType: entity.listDisplayAmountType)
+            : entity.listDisplayName),
         subtitle: Text(localization.lookup('${history.entityType}')),
         // TODO this needs to be localized
         trailing: LiveText(

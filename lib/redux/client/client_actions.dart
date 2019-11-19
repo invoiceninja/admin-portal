@@ -294,16 +294,28 @@ void handleClientAction(
       editEntity(context: context, entity: client);
       break;
     case EntityAction.newInvoice:
+      filterEntitiesByType(
+          context: context,
+          entityType: EntityType.invoice,
+          filterEntity: client);
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state, client: client));
       break;
     case EntityAction.newExpense:
+      filterEntitiesByType(
+          context: context,
+          entityType: EntityType.expense,
+          filterEntity: client);
       createEntity(
           context: context,
           entity: ExpenseEntity(state: state, client: client));
       break;
     case EntityAction.newPayment:
+      filterEntitiesByType(
+          context: context,
+          entityType: EntityType.payment,
+          filterEntity: client);
       createEntity(
           context: context,
           entity: PaymentEntity(state: state)

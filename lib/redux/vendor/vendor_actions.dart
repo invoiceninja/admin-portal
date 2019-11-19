@@ -293,6 +293,10 @@ void handleVendorAction(
       editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
+      filterEntitiesByType(
+          context: context,
+          entityType: EntityType.expense,
+          filterEntity: vendor);
       createEntity(
           context: context,
           entity: ExpenseEntity(state: state, vendor: vendor));
