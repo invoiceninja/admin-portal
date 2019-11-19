@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -40,13 +40,13 @@ class InvoiceOverview extends StatelessWidget {
         ? Colors.red
         : InvoiceStatusColors.colors[invoice.statusId];
     final widgets = <Widget>[
-      TwoValueHeader(
+      EntityHeader(
         backgroundColor: color,
-        label1: localization.totalAmount,
-        value1:
+        label: localization.totalAmount,
+        value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
-        label2: localization.balanceDue,
-        value2:
+        secondLabel: localization.balanceDue,
+        secondValue:
             formatNumber(invoice.balance, context, clientId: invoice.clientId),
       ),
     ];

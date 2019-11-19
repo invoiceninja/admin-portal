@@ -196,18 +196,20 @@ class _ProductEditState extends State<ProductEdit> {
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),
-                  DecoratedFormField(
-                    label: localization.quantity,
-                    controller: _quantityController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  ),
-                  DecoratedFormField(
-                    label: localization.cost,
-                    controller: _costController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  ),
+                  if (company.enableProductQuantity)
+                    DecoratedFormField(
+                      label: localization.quantity,
+                      controller: _quantityController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  if (company.enableProductCost)
+                    DecoratedFormField(
+                      label: localization.cost,
+                      controller: _costController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                    ),
                   if (company.settings.enableFirstItemTaxRate)
                     TaxRateDropdown(
                       onSelected: (taxRate) =>

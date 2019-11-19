@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -85,12 +85,12 @@ class _ProjectViewState extends State<ProjectView> {
           builder: (BuildContext context) {
             List<Widget> _buildView() {
               final widgets = <Widget>[
-                TwoValueHeader(
-                  label1: localization.total,
-                  value1: formatDuration(taskDurationForProject(
+                EntityHeader(
+                  label: localization.total,
+                  value: formatDuration(taskDurationForProject(
                       project, viewModel.state.taskState.map)),
-                  label2: localization.budgeted,
-                  value2: formatDuration(
+                  secondLabel: localization.budgeted,
+                  secondValue: formatDuration(
                       Duration(hours: project.budgetedHours.toInt()),
                       showSeconds: false),
                 ),

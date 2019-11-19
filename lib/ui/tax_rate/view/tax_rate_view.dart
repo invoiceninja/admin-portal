@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -54,11 +54,11 @@ class _TaxRateViewState extends State<TaxRateView> {
         ],
       ),
       body: ListView(children: [
-        TwoValueHeader(
-          label1: localization.name,
-          value1: taxRate.name,
-          label2: localization.rate,
-          value2: formatNumber(taxRate.rate, context,
+        EntityHeader(
+          label: localization.name,
+          value: taxRate.name,
+          secondLabel: localization.rate,
+          secondValue: formatNumber(taxRate.rate, context,
               formatNumberType: FormatNumberType.percent),
         ),
       ]),

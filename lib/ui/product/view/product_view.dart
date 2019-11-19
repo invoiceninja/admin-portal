@@ -5,7 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -86,9 +86,13 @@ class _ProductViewState extends State<ProductView>
         ),
         body: ListView(
           children: <Widget>[
-            OneValueHeader(
+            EntityHeader(
               label: localization.price,
               value: formatNumber(product.price, context),
+              secondLabel: localization.cost,
+              secondValue: company.enableProductCost
+                  ? formatNumber(product.cost, context)
+                  : null,
             ),
             FieldGrid(fields),
             Divider(

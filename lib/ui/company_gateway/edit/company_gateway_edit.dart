@@ -405,6 +405,7 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         decoration: InputDecoration(
           labelText: label,
         ),
+        maxLines: widget.field == 'text' ? 6 : 1,
         onChanged: (value) => _onChanged(),
         obscureText: _obscureText(widget.field),
       );

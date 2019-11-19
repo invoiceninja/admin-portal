@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -87,14 +87,14 @@ class _TaskViewState extends State<TaskView> {
 
             List<Widget> _buildView() {
               final widgets = <Widget>[
-                TwoValueHeader(
+                EntityHeader(
                   backgroundColor: task.isInvoiced
                       ? Colors.green
                       : task.isRunning ? Colors.blue : null,
-                  label1: localization.duration,
-                  value1: formatDuration(task.calculateDuration),
-                  label2: localization.amount,
-                  value2: formatNumber(
+                  label: localization.duration,
+                  value: formatDuration(task.calculateDuration),
+                  secondLabel: localization.amount,
+                  secondValue: formatNumber(
                       task.calculateAmount(taskRateSelector(
                           company: company, project: project, client: client)),
                       context,

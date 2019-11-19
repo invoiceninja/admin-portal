@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -60,11 +60,11 @@ class ClientOverview extends StatelessWidget {
 
     return ListView(
       children: <Widget>[
-        TwoValueHeader(
-          label1: localization.paidToDate,
-          value1: formatNumber(client.paidToDate, context, clientId: client.id),
-          label2: localization.balanceDue,
-          value2: formatNumber(client.balance, context, clientId: client.id),
+        EntityHeader(
+          label: localization.paidToDate,
+          value: formatNumber(client.paidToDate, context, clientId: client.id),
+          secondLabel: localization.balanceDue,
+          secondValue: formatNumber(client.balance, context, clientId: client.id),
         ),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)

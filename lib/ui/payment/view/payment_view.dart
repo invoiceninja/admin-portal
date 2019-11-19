@@ -11,8 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -89,17 +88,17 @@ class _PaymentViewState extends State<PaymentView> {
             return ListView(
               children: <Widget>[
                 payment.refunded > 0
-                    ? TwoValueHeader(
+                    ? EntityHeader(
                         backgroundColor:
                             PaymentStatusColors.colors[payment.paymentStatusId],
-                        label1: localization.amount,
-                        value1: formatNumber(payment.amount, context,
+                        label: localization.amount,
+                        value: formatNumber(payment.amount, context,
                             clientId: client.id),
-                        label2: localization.refunded,
-                        value2: formatNumber(payment.refunded, context,
+                        secondLabel: localization.refunded,
+                        secondValue: formatNumber(payment.refunded, context,
                             clientId: client.id),
                       )
-                    : OneValueHeader(
+                    : EntityHeader(
                         backgroundColor:
                             PaymentStatusColors.colors[payment.paymentStatusId],
                         label: localization.amount,

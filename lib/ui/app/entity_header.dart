@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TwoValueHeader extends StatelessWidget {
-  const TwoValueHeader({
+class EntityHeader extends StatelessWidget {
+  const EntityHeader({
+    @required this.label,
+    @required this.value,
+    this.secondLabel,
+    this.secondValue,
     this.backgroundColor,
-    this.label1,
-    this.label2,
-    this.value1,
-    this.value2,
   });
 
   final MaterialColor backgroundColor;
-  final String label1;
-  final String label2;
-  final String value1;
-  final String value2;
+  final String label;
+  final String value;
+  final String secondLabel;
+  final String secondValue;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TwoValueHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(label1,
+          Text(label,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w300,
@@ -31,7 +31,7 @@ class TwoValueHeader extends StatelessWidget {
             height: 6.0,
           ),
           Text(
-            value1 ?? '',
+            value ?? '',
             style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class TwoValueHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(label2,
+          Text(secondLabel,
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w300,
@@ -55,7 +55,7 @@ class TwoValueHeader extends StatelessWidget {
             height: 6.0,
           ),
           Text(
-            value2 ?? '',
+            secondValue ?? '',
             style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
@@ -86,13 +86,13 @@ class TwoValueHeader extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Flex(
-                direction: value1.length > 12 || value2.length > 12
+                direction: value.length > 12 || secondValue.length > 12
                     ? Axis.vertical
                     : Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   _value1(),
-                  _value2(),
+                  if (secondValue != null) _value2(),
                 ],
               )
               //child: _headerRow(),
