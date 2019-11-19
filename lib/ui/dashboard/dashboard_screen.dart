@@ -80,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 store.dispatch(FilterCompany(value));
               },
             ),
-            if (!state.prefState.isHistoryVisible)
+            if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
                   icon: Icon(Icons.menu),

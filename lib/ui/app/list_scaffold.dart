@@ -92,7 +92,7 @@ class ListScaffold extends StatelessWidget {
               ...appBarActions,
               if (!showCheckbox &&
                   !isSettings &&
-                  !state.prefState.isHistoryVisible)
+                  (isMobile(context) || !state.prefState.isHistoryVisible))
                 Builder(
                   builder: (context) => IconButton(
                     icon: Icon(Icons.menu),

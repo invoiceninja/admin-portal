@@ -48,6 +48,7 @@ class UpdateUser implements PersistUI {
   final UserEntity user;
 }
 
+// TODO remove this action and related code/update with user
 class UpdateUserCompany implements PersistUI {
   UpdateUserCompany(this.userCompany);
 
