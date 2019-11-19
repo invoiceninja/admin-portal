@@ -52,8 +52,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     super.dispose();
   }
 
-  void _addBlankItem() {
-    widget.onItemsSelected([InvoiceItemEntity(quantity: 1)]);
+  void _addBlankItem(CompanyEntity company) {
+    widget.onItemsSelected(
+        [InvoiceItemEntity(quantity: company.defaultQuantity ? 1 : null)]);
     Navigator.pop(context);
   }
 
@@ -67,10 +68,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         final product = entity as ProductEntity;
         if (state.company.fillProducts ?? true) {
           items.add(
-              convertProductToInvoiceItem(product: product, context: context));
+              convertProductToInvoiceItem(product: product, company: company));
         } else {
-          items.add(
-              InvoiceItemEntity(productKey: product.productKey, quantity: 1));
+          items.add(InvoiceItemEntity(
+              productKey: product.productKey,
+              quantity: company.defaultQuantity ? 1 : null));
         }
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;
@@ -78,7 +80,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       } else if (entity.entityType == EntityType.expense) {
         final expense = entity as ExpenseEntity;
         items.add(convertExpenseToInvoiceItem(
-            expense: expense, categoryMap: company.expenseCategoryMap));
+            expense: expense,
+            categoryMap: company.expenseCategoryMap,
+            company: company));
       }
     });
 
@@ -172,7 +176,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                   : IconButton(
                       icon: Icon(Icons.add_circle_outline),
                       tooltip: localization.createNew,
-                      onPressed: () => _addBlankItem(),
+                      onPressed: () => _addBlankItem(company),
                     ),
             ],
           )

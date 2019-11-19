@@ -223,7 +223,7 @@ void handleProductAction(
   switch (action) {
     case EntityAction.newInvoice:
       final item =
-          convertProductToInvoiceItem(context: context, product: product);
+          convertProductToInvoiceItem(company: state.company, product: product);
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)

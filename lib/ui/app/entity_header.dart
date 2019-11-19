@@ -86,7 +86,7 @@ class EntityHeader extends StatelessWidget {
           child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Flex(
-                direction: value.length > 12 || secondValue.length > 12
+                direction: value.length > 12 || (secondValue ?? '').length > 12
                     ? Axis.vertical
                     : Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

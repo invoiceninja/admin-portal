@@ -4,13 +4,17 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-InvoiceItemEntity convertProductToInvoiceItem(
-    {BuildContext context, ProductEntity product}) {
+InvoiceItemEntity convertProductToInvoiceItem({
+  @required ProductEntity product,
+  @required CompanyEntity company,
+}) {
   return InvoiceItemEntity().rebuild((b) => b
     ..productKey = product.productKey
     ..notes = product.notes
     ..cost = product.price
-    ..quantity = product.quantity
+    ..quantity = company.enableProductQuantity
+        ? product.quantity
+        : company.defaultQuantity ? 1 : null
     ..customValue1 = product.customValue1
     ..customValue2 = product.customValue2
     ..taxName1 = product.taxName1
