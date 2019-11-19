@@ -51,29 +51,26 @@ class DashboardPanels extends StatelessWidget {
       elevation: 6.0,
       child: Row(
         children: <Widget>[
-          Expanded(
-            child: InkWell(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  children: <Widget>[
-                    Flexible(
-                      child: Text(
-                        formatDateRange(uiState.startDate(company),
-                            uiState.endDate(company), context),
-                        style: Theme.of(context)
-                            .textTheme
-                            .title
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                    SizedBox(width: 6.0),
-                    Icon(Icons.arrow_drop_down),
-                  ],
+          SizedBox(width: 18),
+          InkWell(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    formatDateRange(uiState.startDate(company),
+                        uiState.endDate(company), context),
+                    style: Theme.of(context)
+                        .textTheme
+                        .title
+                        .copyWith(fontSize: 18),
+                  ),
                 ),
-              ),
-              onTap: () => _showDateOptions(context),
+                SizedBox(width: 6.0),
+                Icon(Icons.arrow_drop_down),
+              ],
             ),
+            onTap: () => _showDateOptions(context),
           ),
           SizedBox(width: 8.0),
           IconButton(
@@ -88,6 +85,7 @@ class DashboardPanels extends StatelessWidget {
                 : null,
           ),
           SizedBox(width: 8.0),
+          Spacer(),
           if (memoizedHasMultipleCurrencies(company, clientMap, groupMap))
             Row(
               children: <Widget>[
