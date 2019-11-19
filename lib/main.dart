@@ -59,8 +59,6 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 void main({bool isTesting = false}) async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
