@@ -52,6 +52,7 @@ class _LoginState extends State<LoginView> {
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
+  bool _isPasswordObscured = true;
 
   @override
   void didChangeDependencies() {
@@ -324,12 +325,28 @@ class _LoginState extends State<LoginView> {
                             autocorrect: false,
                             autovalidate: _autoValidate,
                             decoration: InputDecoration(
-                                labelText: localization.password),
+                              labelText: 'Password',
+                              hintText: 'Enter your password',
+                              // Here is key idea
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isPasswordObscured
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  //color: Theme.of(context).primaryColorDark,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isPasswordObscured = !_isPasswordObscured;
+                                  });
+                                },
+                              ),
+                            ),
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourPassword
                                     : null,
-                            obscureText: true,
+                            obscureText: _isPasswordObscured,
                             onFieldSubmitted: (value) =>
                                 _createAccount && !_isSelfHosted
                                     ? FocusScope.of(context).nextFocus()
