@@ -29,12 +29,6 @@ class ClearSettingsFilter {}
 
 class ResetSettings {}
 
-class UpdateCompany implements PersistUI {
-  UpdateCompany({@required this.company});
-
-  final CompanyEntity company;
-}
-
 class UpdateSettings implements PersistUI {
   UpdateSettings({@required this.settings});
 
@@ -45,25 +39,6 @@ class UpdateSettingsUser implements PersistUI {
   UpdateSettingsUser({@required this.user});
 
   final UserEntity user;
-}
-
-class SaveCompanyRequest implements StartSaving {
-  SaveCompanyRequest({this.completer, this.company});
-
-  final Completer completer;
-  final CompanyEntity company;
-}
-
-class SaveCompanySuccess implements StopSaving, PersistData, PersistUI {
-  SaveCompanySuccess(this.company);
-
-  final CompanyEntity company;
-}
-
-class SaveCompanyFailure implements StopSaving {
-  SaveCompanyFailure(this.error);
-
-  final Object error;
 }
 
 class UploadLogoRequest implements StartSaving {
