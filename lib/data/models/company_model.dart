@@ -442,12 +442,13 @@ abstract class UserCompanyEntity
     }
 
     // TODO remove this once task/expenses are supported
-    if ([
-      EntityType.vendor,
-      EntityType.expense,
-      EntityType.task,
-      EntityType.project,
-    ].contains(entityType)) {
+    if (!Config.DEMO_MODE &&
+        [
+          EntityType.vendor,
+          EntityType.expense,
+          EntityType.task,
+          EntityType.project,
+        ].contains(entityType)) {
       return false;
     }
 
