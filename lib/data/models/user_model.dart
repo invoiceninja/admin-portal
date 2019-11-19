@@ -77,6 +77,10 @@ abstract class UserEntity extends Object
 
   String get phone;
 
+  @nullable
+  @BuiltValueField(wireName: 'company_user')
+  UserCompanyEntity get userCompany;
+
   String get fullName => (firstName + ' ' + lastName).trim();
 
   bool canEdit(BaseEntity entity) =>

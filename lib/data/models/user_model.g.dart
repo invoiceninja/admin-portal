@@ -122,6 +122,12 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.userCompany != null) {
+      result
+        ..add('company_user')
+        ..add(serializers.serialize(object.userCompany,
+            specifiedType: const FullType(UserCompanyEntity)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -199,6 +205,11 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'phone':
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'company_user':
+          result.userCompany.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyEntity))
+              as UserCompanyEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -434,6 +445,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String phone;
   @override
+  final UserCompanyEntity userCompany;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -458,6 +471,7 @@ class _$UserEntity extends UserEntity {
       this.lastName,
       this.email,
       this.phone,
+      this.userCompany,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -496,6 +510,7 @@ class _$UserEntity extends UserEntity {
         lastName == other.lastName &&
         email == other.email &&
         phone == other.phone &&
+        userCompany == other.userCompany &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -518,10 +533,12 @@ class _$UserEntity extends UserEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, firstName.hashCode),
-                                                lastName.hashCode),
-                                            email.hashCode),
-                                        phone.hashCode),
+                                            $jc(
+                                                $jc($jc(0, firstName.hashCode),
+                                                    lastName.hashCode),
+                                                email.hashCode),
+                                            phone.hashCode),
+                                        userCompany.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -539,6 +556,7 @@ class _$UserEntity extends UserEntity {
           ..add('lastName', lastName)
           ..add('email', email)
           ..add('phone', phone)
+          ..add('userCompany', userCompany)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -569,6 +587,12 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String _phone;
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
+
+  UserCompanyEntityBuilder _userCompany;
+  UserCompanyEntityBuilder get userCompany =>
+      _$this._userCompany ??= new UserCompanyEntityBuilder();
+  set userCompany(UserCompanyEntityBuilder userCompany) =>
+      _$this._userCompany = userCompany;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -612,6 +636,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _lastName = _$v.lastName;
       _email = _$v.email;
       _phone = _$v.phone;
+      _userCompany = _$v.userCompany?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -640,20 +665,34 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   _$UserEntity build() {
-    final _$result = _$v ??
-        new _$UserEntity._(
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$UserEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$UserEntity._(
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              phone: phone,
+              userCompany: _userCompany?.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'userCompany';
+        _userCompany?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

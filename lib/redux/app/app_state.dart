@@ -389,7 +389,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
     //return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
-    return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
+    //return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
     return 'Index ${uiState.selectedCompanyIndex}';
   }
 }

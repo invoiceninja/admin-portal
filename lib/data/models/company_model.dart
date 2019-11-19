@@ -428,13 +428,16 @@ abstract class UserCompanyEntity
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
 
+  String get permissions;
+
+  @nullable
   CompanyEntity get company;
 
+  @nullable
   UserEntity get user;
 
+  @nullable
   TokenEntity get token;
-
-  String get permissions;
 
   bool can(UserPermission permission, EntityType entityType) {
     if (entityType == null) {

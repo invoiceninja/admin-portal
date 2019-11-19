@@ -585,20 +585,28 @@ class _$UserCompanyEntitySerializer
       'is_admin',
       serializers.serialize(object.isAdmin,
           specifiedType: const FullType(bool)),
-      'company',
-      serializers.serialize(object.company,
-          specifiedType: const FullType(CompanyEntity)),
-      'user',
-      serializers.serialize(object.user,
-          specifiedType: const FullType(UserEntity)),
-      'token',
-      serializers.serialize(object.token,
-          specifiedType: const FullType(TokenEntity)),
       'permissions',
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
     ];
-
+    if (object.company != null) {
+      result
+        ..add('company')
+        ..add(serializers.serialize(object.company,
+            specifiedType: const FullType(CompanyEntity)));
+    }
+    if (object.user != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(object.user,
+            specifiedType: const FullType(UserEntity)));
+    }
+    if (object.token != null) {
+      result
+        ..add('token')
+        ..add(serializers.serialize(object.token,
+            specifiedType: const FullType(TokenEntity)));
+    }
     return result;
   }
 
@@ -618,6 +626,10 @@ class _$UserCompanyEntitySerializer
           result.isAdmin = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'permissions':
+          result.permissions = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
@@ -629,10 +641,6 @@ class _$UserCompanyEntitySerializer
         case 'token':
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
-          break;
-        case 'permissions':
-          result.permissions = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -3145,32 +3153,23 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final bool isAdmin;
   @override
+  final String permissions;
+  @override
   final CompanyEntity company;
   @override
   final UserEntity user;
   @override
   final TokenEntity token;
-  @override
-  final String permissions;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
       (new UserCompanyEntityBuilder()..update(updates)).build();
 
   _$UserCompanyEntity._(
-      {this.isAdmin, this.company, this.user, this.token, this.permissions})
+      {this.isAdmin, this.permissions, this.company, this.user, this.token})
       : super._() {
     if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
-    }
-    if (company == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'company');
-    }
-    if (user == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'user');
-    }
-    if (token == null) {
-      throw new BuiltValueNullFieldError('UserCompanyEntity', 'token');
     }
     if (permissions == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'permissions');
@@ -3190,28 +3189,30 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     if (identical(other, this)) return true;
     return other is UserCompanyEntity &&
         isAdmin == other.isAdmin &&
+        permissions == other.permissions &&
         company == other.company &&
         user == other.user &&
-        token == other.token &&
-        permissions == other.permissions;
+        token == other.token;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, isAdmin.hashCode), company.hashCode), user.hashCode),
-            token.hashCode),
-        permissions.hashCode));
+        $jc(
+            $jc($jc($jc(0, isAdmin.hashCode), permissions.hashCode),
+                company.hashCode),
+            user.hashCode),
+        token.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyEntity')
           ..add('isAdmin', isAdmin)
+          ..add('permissions', permissions)
           ..add('company', company)
           ..add('user', user)
-          ..add('token', token)
-          ..add('permissions', permissions))
+          ..add('token', token))
         .toString();
   }
 }
@@ -3223,6 +3224,10 @@ class UserCompanyEntityBuilder
   bool _isAdmin;
   bool get isAdmin => _$this._isAdmin;
   set isAdmin(bool isAdmin) => _$this._isAdmin = isAdmin;
+
+  String _permissions;
+  String get permissions => _$this._permissions;
+  set permissions(String permissions) => _$this._permissions = permissions;
 
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
@@ -3237,19 +3242,15 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
 
-  String _permissions;
-  String get permissions => _$this._permissions;
-  set permissions(String permissions) => _$this._permissions = permissions;
-
   UserCompanyEntityBuilder();
 
   UserCompanyEntityBuilder get _$this {
     if (_$v != null) {
       _isAdmin = _$v.isAdmin;
+      _permissions = _$v.permissions;
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
-      _permissions = _$v.permissions;
       _$v = null;
     }
     return this;
@@ -3275,19 +3276,19 @@ class UserCompanyEntityBuilder
       _$result = _$v ??
           new _$UserCompanyEntity._(
               isAdmin: isAdmin,
-              company: company.build(),
-              user: user.build(),
-              token: token.build(),
-              permissions: permissions);
+              permissions: permissions,
+              company: _company?.build(),
+              user: _user?.build(),
+              token: _token?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'company';
-        company.build();
+        _company?.build();
         _$failedField = 'user';
-        user.build();
+        _user?.build();
         _$failedField = 'token';
-        token.build();
+        _token?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyEntity', _$failedField, e.toString());

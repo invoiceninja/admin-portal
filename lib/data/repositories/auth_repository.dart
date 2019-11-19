@@ -88,7 +88,7 @@ class AuthRepository {
       'account',
       'user',
       'token',
-      'company.users',
+      'company.users.company_user',
       'company.tax_rates',
       'company.groups',
       'company.company_gateways.gateway',
