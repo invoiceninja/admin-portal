@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewClientList extends AbstractNavigatorAction implements PersistUI {
   ViewClientList({
@@ -294,31 +295,60 @@ void handleClientAction(
       editEntity(context: context, entity: client);
       break;
     case EntityAction.newInvoice:
-      filterEntitiesByType(
-          context: context,
-          entityType: EntityType.invoice,
-          filterEntity: client);
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.invoice,
+            filterEntity: client);
+      }
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state, client: client));
       break;
-    case EntityAction.newExpense:
-      filterEntitiesByType(
+    case EntityAction.newQuote:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.quote,
+            filterEntity: client);
+      }
+      createEntity(
           context: context,
-          entityType: EntityType.expense,
-          filterEntity: client);
+          entity: InvoiceEntity(state: state, client: client, isQuote: true));
+      break;
+    case EntityAction.newExpense:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.expense,
+            filterEntity: client);
+      }
       createEntity(
           context: context,
           entity: ExpenseEntity(state: state, client: client));
       break;
     case EntityAction.newPayment:
-      filterEntitiesByType(
-          context: context,
-          entityType: EntityType.payment,
-          filterEntity: client);
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.payment,
+            filterEntity: client);
+      }
       createEntity(
           context: context,
           entity: PaymentEntity(state: state)
+              .rebuild((b) => b.clientId = client.id));
+      break;
+    case EntityAction.newProject:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.project,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: ProjectEntity(state: state)
               .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:

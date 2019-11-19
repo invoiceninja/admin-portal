@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -80,10 +81,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.invoice),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(
-                              context: context,
-                              entity: InvoiceEntity(
-                                  state: viewModel.state, client: client));
+                          handleClientAction(
+                              context, [client], EntityAction.newInvoice);
                         },
                       )
                     : Container(),
@@ -94,10 +93,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.payment),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(
-                              context: context,
-                              entity: PaymentEntity(state: store.state)
-                                  .rebuild((b) => b.clientId = client.id));
+                          handleClientAction(
+                              context, [client], EntityAction.newPayment);
                         },
                       )
                     : Container(),
@@ -109,12 +106,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.quote),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(
-                              context: context,
-                              entity: InvoiceEntity(
-                                  state: viewModel.state,
-                                  client: client,
-                                  isQuote: true));
+                          handleClientAction(
+                              context, [client], EntityAction.newQuote);
                         },
                       )
                     : Container(),
@@ -126,10 +119,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.project),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(
-                              context: context,
-                              entity: ProjectEntity()
-                                  .rebuild((b) => b.clientId = client.id));
+                          handleClientAction(
+                              context, [client], EntityAction.newProject);
                         },
                       )
                     : Container(),
@@ -141,10 +132,8 @@ class _ClientViewState extends State<ClientView>
                         title: Text(localization.task),
                         onTap: () {
                           Navigator.of(context).pop();
-                          createEntity(
-                              context: context,
-                              entity: TaskEntity(state: viewModel.state)
-                                  .rebuild((b) => b.clientId = client.id));
+                          handleClientAction(
+                              context, [client], EntityAction.newTask);
                         },
                       )
                     : Container(),
@@ -159,8 +148,9 @@ class _ClientViewState extends State<ClientView>
                           createEntity(
                               context: context,
                               entity: ExpenseEntity(
-                                  state: store.state,
-                                  client: client,));
+                                state: store.state,
+                                client: client,
+                              ));
                         },
                       )
                     : Container(),

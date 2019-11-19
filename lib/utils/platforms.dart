@@ -38,6 +38,8 @@ AppLayout getLayout(BuildContext context) =>
 
 bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
 
+bool isNotMobile(BuildContext context) => !isMobile(context);
+
 bool isTablet(BuildContext context) => getLayout(context) == AppLayout.tablet;
 
 bool isDesktop(BuildContext context) => getLayout(context) == AppLayout.desktop;

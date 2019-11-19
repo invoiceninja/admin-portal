@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewVendorList extends AbstractNavigatorAction implements PersistUI {
   ViewVendorList({@required NavigatorState navigator, this.force = false})
@@ -293,10 +294,12 @@ void handleVendorAction(
       editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
-      filterEntitiesByType(
-          context: context,
-          entityType: EntityType.expense,
-          filterEntity: vendor);
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.expense,
+            filterEntity: vendor);
+      }
       createEntity(
           context: context,
           entity: ExpenseEntity(state: state, vendor: vendor));

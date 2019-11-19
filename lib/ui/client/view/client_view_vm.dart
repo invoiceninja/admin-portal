@@ -85,10 +85,7 @@ class ClientViewVM {
         switch (entityType) {
           case EntityType.invoice:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity:
-                      InvoiceEntity(state: state, client: client));
+              handleClientAction(context, [client], EntityAction.newInvoice);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -98,10 +95,7 @@ class ClientViewVM {
             break;
           case EntityType.quote:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity: InvoiceEntity(
-                      state: state, client: client, isQuote: true));
+              handleClientAction(context, [client], EntityAction.newQuote);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -111,10 +105,7 @@ class ClientViewVM {
             break;
           case EntityType.payment:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity: PaymentEntity(state: state)
-                      .rebuild((b) => b..clientId = client.id));
+              handleClientAction(context, [client], EntityAction.newPayment);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -124,10 +115,7 @@ class ClientViewVM {
             break;
           case EntityType.project:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity:
-                      ProjectEntity().rebuild((b) => b..clientId = client.id));
+              handleClientAction(context, [client], EntityAction.newProject);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -137,10 +125,7 @@ class ClientViewVM {
             break;
           case EntityType.task:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity: TaskEntity(state: state)
-                      .rebuild((b) => b..clientId = client.id));
+              handleClientAction(context, [client], EntityAction.newTask);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -150,11 +135,7 @@ class ClientViewVM {
             break;
           case EntityType.expense:
             if (longPress && client.isActive) {
-              createEntity(
-                  context: context,
-                  entity: ExpenseEntity(
-                      state: state,
-                      client: client,));
+              handleClientAction(context, [client], EntityAction.newExpense);
             } else {
               viewEntitiesByType(
                   context: context,
