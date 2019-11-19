@@ -22,6 +22,7 @@ class AuthRepository {
     String email,
     String password,
     String platform,
+    String secret,
   }) async {
     final credentials = {
       'email': email,
@@ -29,13 +30,13 @@ class AuthRepository {
       'first_name': firstName,
       'last_name': lastName,
       'terms_of_service': true,
-      'privacy_policy': true
-      //'token_name': 'invoice-ninja-$platform-app',
+      'privacy_policy': true,
+      'token_name': 'invoice-ninja-$platform-app',
     };
 
     final url = formatApiUrl(kAppUrl) + '/signup';
 
-    return sendRequest(url: url, data: credentials);
+    return sendRequest(url: url, data: credentials, secret: secret);
   }
 
   Future<LoginResponse> login(
@@ -46,8 +47,6 @@ class AuthRepository {
       String platform,
       String oneTimePassword}) async {
     final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'email': email,
       'password': password,
       'one_time_password': oneTimePassword,
@@ -55,20 +54,18 @@ class AuthRepository {
 
     url = formatApiUrl(url) + '/login';
 
-    return sendRequest(url: url, data: credentials);
+    return sendRequest(url: url, data: credentials, secret: secret);
   }
 
   Future<LoginResponse> oauthLogin(
       {String token, String url, String secret, String platform}) async {
     final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'token': token,
       'provider': 'google',
     };
     url = formatApiUrl(url) + '/oauth_login';
 
-    return sendRequest(url: url, data: credentials);
+    return sendRequest(url: url, data: credentials, secret: secret);
   }
 
   Future<LoginResponse> refresh(
@@ -82,8 +79,18 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, token: token);
   }
 
+  Future<LoginResponse> recoverPassword(
+      {String email, String url, String secret, String platform}) async {
+    final credentials = {
+      'email': email,
+    };
+    url = formatApiUrl(url) + '/reset_password';
+
+    return sendRequest(url: url, data: credentials);
+  }
+
   Future<LoginResponse> sendRequest(
-      {String url, dynamic data, String token}) async {
+      {String url, dynamic data, String token, String secret}) async {
     final includes = [
       'account',
       'user',
@@ -100,21 +107,10 @@ class AuthRepository {
     if (Config.DEMO_MODE) {
       response = json.decode(kMockLogin);
     } else {
-      response =
-          await webClient.post(url, token ?? '', data: json.encode(data));
+      response = await webClient.post(url, token ?? '',
+          secret: secret, data: json.encode(data));
     }
 
     return serializers.deserializeWith(LoginResponse.serializer, response);
-  }
-
-  Future<LoginResponse> recoverPassword(
-      {String email, String url, String secret, String platform}) async {
-    final credentials = {
-      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
-      'email': email,
-    };
-    url = formatApiUrl(url) + '/reset_password';
-
-    return sendRequest(url: url, data: credentials);
   }
 }

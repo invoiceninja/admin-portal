@@ -124,6 +124,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       platform: action.platform,
       firstName: action.firstName,
       lastName: action.lastName,
+      secret: action.secret,
     )
         .then((data) {
       _saveAuthLocal(email: action.email, secret: '', url: '');

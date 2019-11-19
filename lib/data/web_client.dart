@@ -36,8 +36,14 @@ class WebClient {
     return jsonResponse;
   }
 
-  Future<dynamic> post(String url, String token,
-      {dynamic data, String filePath, String fileIndex}) async {
+  Future<dynamic> post(
+    String url,
+    String token, {
+    dynamic data,
+    String filePath,
+    String fileIndex,
+    String secret,
+  }) async {
     url = _checkUrl(url);
     print('POST: $url');
     debugPrint('Data: $data', wrapWidth: 1000);
@@ -48,7 +54,7 @@ class WebClient {
           fileIndex: fileIndex, data: data);
     } else {
       response = await http.Client()
-          .post(url, body: data, headers: _getHeaders(token))
+          .post(url, body: data, headers: _getHeaders(token, secret))
           .timeout(const Duration(seconds: 30));
     }
 
@@ -112,8 +118,8 @@ String _checkUrl(String url) {
   return url;
 }
 
-Map<String, String> _getHeaders(String token) => {
-      'X-API-Secret': Config.API_SECRET,
+Map<String, String> _getHeaders(String token, [String secret]) => {
+      'X-API-Secret': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
       'X-API-Token': token,
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/json',
