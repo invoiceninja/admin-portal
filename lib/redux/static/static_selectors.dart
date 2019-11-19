@@ -130,8 +130,9 @@ List<String> paymentTypeList(
     BuiltMap<String, PaymentTypeEntity> paymentTypeMap) {
   final list = paymentTypeMap.keys.toList();
 
-  list.sort(
-      (idA, idB) => paymentTypeMap[idA].id.compareTo(paymentTypeMap[idB].id));
+  list.sort((idA, idB) => paymentTypeMap[idA]
+      .listDisplayName
+      .compareTo(paymentTypeMap[idB].listDisplayName));
 
   return list;
 }
