@@ -67,10 +67,10 @@ Middleware<AppState> _createUserLogout() {
 
     _loadAuthLocal(store);
 
-    store.dispatch(UpdateCurrentRoute(LoginScreen.route));
-
     Navigator.of(action.context).pushNamedAndRemoveUntil(
         LoginScreen.route, (Route<dynamic> route) => false);
+
+    store.dispatch(UpdateCurrentRoute(LoginScreen.route));
   };
 }
 
@@ -99,15 +99,14 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       var message = error.toString();
       if (message.toLowerCase().contains('no host specified')) {
         message = 'Please check the URL is correct';
-      } else if (message.toLowerCase().contains('credentials')) {
-        message += ', please confirm your credentials in the web app';
       } else if (message.contains('404')) {
         message += ', you may need to add /public to the URL';
       }
-      store.dispatch(UserLoginFailure(message));
+      print('Login error: $message');
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer.completeError(message);
       }
+      store.dispatch(UserLoginFailure(message));
     });
 
     next(action);
@@ -132,11 +131,11 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print(error);
-      store.dispatch(UserLoginFailure(error));
+      print('Signup error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+      store.dispatch(UserLoginFailure(error));
     });
 
     next(action);
@@ -163,11 +162,11 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      print('Oauth login error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+      store.dispatch(UserLoginFailure(error));
     });
 
     next(action);
@@ -200,11 +199,11 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
           loginResponse: data,
           loadCompanies: action.loadCompanies));
     }).catchError((Object error) {
-      print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      print('Refresh data error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+      store.dispatch(UserLoginFailure(error));
     });
   };
 }

@@ -169,6 +169,7 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
+
     completer.future.then((_) {
       setState(() {
         _loginError = '';
@@ -325,15 +326,12 @@ class _LoginState extends State<LoginView> {
                             autocorrect: false,
                             autovalidate: _autoValidate,
                             decoration: InputDecoration(
-                              labelText: 'Password',
-                              hintText: 'Enter your password',
-                              // Here is key idea
+                              labelText: localization.password,
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   _isPasswordObscured
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  //color: Theme.of(context).primaryColorDark,
                                 ),
                                 onPressed: () {
                                   setState(() {

@@ -236,7 +236,7 @@ Middleware<AppState> _createLoadState(
         throw 'Unknown page';
       }
     } catch (error) {
-      print(error);
+      print('Load state error: $error');
 
       String token;
       if (kIsWeb) {
@@ -259,7 +259,6 @@ Middleware<AppState> _createLoadState(
             store.dispatch(ViewMainScreen(action.context));
           }
         }).catchError((Object error) {
-          print('Error: $error');
           store.dispatch(UserLogout(action.context));
         });
         store.dispatch(RefreshData(
