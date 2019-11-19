@@ -58,7 +58,7 @@ List<String> filteredCompanyGatewaysSelector(
     return true;
   }).toList();
 
-  final List<String> gatewaysIds = companyGatewayIds
+  final List<String> gatewaysIds = (companyGatewayIds ?? '')
       .split(',')
       .where((id) => id.isNotEmpty && companyGatewayMap.containsKey(id))
       .toList();
