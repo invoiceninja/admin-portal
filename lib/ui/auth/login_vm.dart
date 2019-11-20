@@ -96,7 +96,7 @@ class LoginVM {
       if (isMobile(context)) {
         store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
       } else {
-        store.dispatch(ViewMainScreen(context));
+        store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
       }
     }
 

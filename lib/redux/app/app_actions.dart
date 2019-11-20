@@ -39,9 +39,13 @@ class RefreshClient {
 class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 
 class ViewMainScreen {
-  ViewMainScreen(this.context);
+  ViewMainScreen({this.navigator, this.addDelay = false});
 
-  BuildContext context;
+  NavigatorState navigator;
+
+  // This is needed to workaround around a "Duplicate GlobalKey detected
+  // in widget tree." error when changing layouts in the settings
+  bool addDelay;
 }
 
 class StartLoading {}

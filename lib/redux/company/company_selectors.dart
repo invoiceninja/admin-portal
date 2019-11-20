@@ -57,13 +57,12 @@ List<String> getCurrencyIds(
       } else if (group != null && group.hasCurrency) {
         currencyId = group.currencyId;
       }
-      if (currencyId != null &&
-          !currencyIds.contains(client.currencyId)) {
+      if (currencyId != null && !currencyIds.contains(client.currencyId)) {
         currencyIds.add(currencyId);
       }
     }
   });
-  print('currencyIds: $currencyIds');
+
   return currencyIds;
 }
 

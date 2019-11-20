@@ -42,23 +42,41 @@ class _LoginState extends State<LoginView> {
   final _secretController = TextEditingController();
   final _oneTimePasswordController = TextEditingController();
 
+  List<TextEditingController> _controllers;
+
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
   String _loginError = '';
   bool _emailLogin = false;
   bool _createAccount = false;
-  bool _recovePassword = false;
+  bool _recoverPassword = false;
   bool _isSelfHosted = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
   bool _isPasswordObscured = true;
+  bool _isFormComplete = false;
 
   @override
   void didChangeDependencies() {
     final state = widget.viewModel.authState;
 
+    _controllers = [
+      _firstNameController,
+      _lastNameController,
+      _emailController,
+      _passwordController,
+      _urlController,
+      _secretController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
     _passwordController.text = '';
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     if (kReleaseMode) {
       _emailController.text = state.email;
@@ -91,6 +109,42 @@ class _LoginState extends State<LoginView> {
     _secretController.dispose();
 
     super.dispose();
+  }
+
+  void _onChanged() {
+    if (_isFormComplete) {
+      return;
+    }
+
+    final hasEmail = _emailController.text.isNotEmpty;
+    final hasPassword = _passwordController.text.isNotEmpty;
+    final hasUrl = _urlController.text.isNotEmpty;
+    final hasSecret = _secretController.text.isNotEmpty;
+
+    bool isComplete;
+    if (_isSelfHosted) {
+      isComplete = hasEmail && hasPassword && hasUrl && hasSecret;
+    } else {
+      isComplete = hasEmail && hasPassword;
+    }
+
+    if (isComplete) {
+      setState(() {
+        _isFormComplete = true;
+      });
+    }
+  }
+
+  void _submitForm() {
+    if (_isFormComplete) {
+      if (_createAccount) {
+        _submitSignUpForm();
+      } else {
+        _submitLoginForm();
+      }
+    } else {
+      FocusScope.of(context).nextFocus();
+    }
   }
 
   void _submitSignUpForm() {
@@ -173,8 +227,8 @@ class _LoginState extends State<LoginView> {
     completer.future.then((_) {
       setState(() {
         _loginError = '';
-        if (_recovePassword) {
-          _recovePassword = false;
+        if (_recoverPassword) {
+          _recoverPassword = false;
           showDialog<MessageDialog>(
               context: context,
               builder: (BuildContext context) {
@@ -190,7 +244,7 @@ class _LoginState extends State<LoginView> {
     });
 
     if (_emailLogin) {
-      if (_recovePassword) {
+      if (_recoverPassword) {
         viewModel.onRecoverPressed(
           context,
           completer,
@@ -277,9 +331,10 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
+                            onFieldSubmitted: (String value) => _submitForm(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -290,9 +345,10 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
+                            onFieldSubmitted: (String value) => _submitForm(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -304,7 +360,9 @@ class _LoginState extends State<LoginView> {
                             controller: _emailController,
                             key: ValueKey(localization.email),
                             autocorrect: false,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
                             decoration:
                                 InputDecoration(labelText: localization.email),
                             keyboardType: TextInputType.emailAddress,
@@ -313,16 +371,15 @@ class _LoginState extends State<LoginView> {
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourEmail
                                     : null,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
+                            onFieldSubmitted: (String value) => _submitForm(),
                           ),
-                        if (_emailLogin && !_recovePassword)
+                        if (_emailLogin && !_recoverPassword)
                           TextFormField(
                             controller: _passwordController,
                             key: ValueKey(localization.password),
-                            textInputAction: _createAccount && !_isSelfHosted
-                                ? TextInputAction.next
-                                : TextInputAction.done,
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
                             autocorrect: false,
                             autovalidate: _autoValidate,
                             decoration: InputDecoration(
@@ -345,10 +402,7 @@ class _LoginState extends State<LoginView> {
                                     ? localization.pleaseEnterYourPassword
                                     : null,
                             obscureText: _isPasswordObscured,
-                            onFieldSubmitted: (value) =>
-                                _createAccount && !_isSelfHosted
-                                    ? FocusScope.of(context).nextFocus()
-                                    : _submitLoginForm(),
+                            onFieldSubmitted: (String value) => _submitForm(),
                           ),
                         if (_isSelfHosted)
                           TextFormField(
@@ -356,26 +410,28 @@ class _LoginState extends State<LoginView> {
                             key: ValueKey(localization.url),
                             autocorrect: false,
                             autovalidate: _autoValidate,
-                            textInputAction: TextInputAction.next,
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
                             decoration:
                                 InputDecoration(labelText: localization.url),
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourUrl
                                     : null,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
+                            onFieldSubmitted: (String value) => _submitForm(),
                             keyboardType: TextInputType.url,
                           ),
                         if (_isSelfHosted)
                           TextFormField(
                             controller: _secretController,
                             key: ValueKey(localization.secret),
+                            textInputAction: TextInputAction.done,
                             autocorrect: false,
                             decoration:
                                 InputDecoration(labelText: localization.secret),
                             obscureText: true,
-                            onFieldSubmitted: (value) => _submitLoginForm(),
+                            onFieldSubmitted: (String value) => _submitForm(),
                           ),
                         if (_createAccount)
                           Padding(
@@ -466,7 +522,7 @@ class _LoginState extends State<LoginView> {
                                 : ElevatedButton(
                                     width: 280,
                                     label: (_emailLogin
-                                            ? (_recovePassword
+                                            ? (_recoverPassword
                                                 ? localization.submit
                                                 : localization.login)
                                             : localization.googleLogin)
@@ -480,7 +536,7 @@ class _LoginState extends State<LoginView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        if (!_recovePassword)
+                        if (!_recoverPassword)
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Row(
@@ -509,7 +565,7 @@ class _LoginState extends State<LoginView> {
                               ],
                             ),
                           ),
-                        if (!_recovePassword)
+                        if (!_recoverPassword)
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Row(
@@ -537,7 +593,7 @@ class _LoginState extends State<LoginView> {
                               ],
                             ),
                           ),
-                        if (!_createAccount && !_recovePassword)
+                        if (!_createAccount && !_recoverPassword)
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Row(
@@ -572,15 +628,15 @@ class _LoginState extends State<LoginView> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  if (!_recovePassword)
+                                  if (!_recoverPassword)
                                     Icon(FontAwesomeIcons.lock, size: 16),
                                   FlatButton(
-                                      child: Text(_recovePassword
+                                      child: Text(_recoverPassword
                                           ? localization.cancel
                                           : localization.recoverPassword),
                                       onPressed: () {
                                         setState(() {
-                                          _recovePassword = !_recovePassword;
+                                          _recoverPassword = !_recoverPassword;
                                         });
                                       }),
                                 ]),

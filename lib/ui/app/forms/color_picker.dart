@@ -23,7 +23,7 @@ class FormColorPicker extends StatefulWidget {
 
 class _FormColorPickerState extends State<FormColorPicker> {
   final _textController = TextEditingController();
-  final _focusNode = FocusNode();
+
   String _pendingColor;
   String _selectedColor;
 
@@ -57,6 +57,10 @@ class _FormColorPickerState extends State<FormColorPicker> {
   }
 
   void _selectColor(String color) {
+    if (color != null && color.length != 7) {
+      return;
+    }
+
     setState(() {
       _selectedColor = color;
       widget.onSelected(color);
@@ -66,7 +70,6 @@ class _FormColorPickerState extends State<FormColorPicker> {
   @override
   void dispose() {
     _textController.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -117,7 +120,6 @@ class _FormColorPickerState extends State<FormColorPicker> {
       alignment: Alignment.centerRight,
       children: <Widget>[
         TextFormField(
-          focusNode: _focusNode,
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,

@@ -230,7 +230,8 @@ Middleware<AppState> _createLoadState(
         } else {
           store.dispatch(
               UpdateCurrentRoute(routes.isEmpty ? '/dashboard' : routes.last));
-          store.dispatch(ViewMainScreen(action.context));
+          store.dispatch(
+              ViewMainScreen(navigator: Navigator.of(action.context)));
         }
       } else {
         throw 'Unknown page';
@@ -256,7 +257,8 @@ Middleware<AppState> _createLoadState(
             store.dispatch(
                 ViewDashboard(navigator: Navigator.of(action.context)));
           } else {
-            store.dispatch(ViewMainScreen(action.context));
+            store.dispatch(
+                ViewMainScreen(navigator: Navigator.of(action.context)));
           }
         }).catchError((Object error) {
           store.dispatch(UserLogout(action.context));
@@ -465,8 +467,17 @@ Middleware<AppState> _createViewMainScreen() {
       store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
     }
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        MainScreen.route, (Route<dynamic> route) => false);
+    if (action.addDelay) {
+      while (action.navigator.canPop()) {
+        action.navigator.pop();
+      }
+      Timer(Duration(seconds: 1), () {
+        action.navigator.pushNamed(MainScreen.route);
+      });
+    } else {
+      action.navigator.pushNamedAndRemoveUntil(
+          MainScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 

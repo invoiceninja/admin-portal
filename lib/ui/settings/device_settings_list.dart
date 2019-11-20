@@ -105,8 +105,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     labelText: localization.accentColor,
                     initialValue: state.accentColor,
                     showClear: false,
-                    onSelected: (value) =>
-                        viewModel.onAccentColorChanged(context, value),
+                    onSelected: (value) {
+                      print('onSelected..');
+                      viewModel.onAccentColorChanged(context, value);
+                    },
                   ),
                 ],
               ),

@@ -120,11 +120,10 @@ class DeviceSettingsVM {
           return;
         }
         store.dispatch(UserSettingsChanged(layout: value));
-        AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {
           store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
         } else {
-          store.dispatch(ViewMainScreen(context));
+          store.dispatch(ViewMainScreen(navigator: Navigator.of(context), addDelay: true));
         }
       },
       onRequireAuthenticationChanged: (BuildContext context, bool value) async {
