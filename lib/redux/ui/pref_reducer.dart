@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart' as prefix0;
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -179,6 +180,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origGroup.replace(action.group ?? state.origGroup)
       ..client.replace(action.client ?? state.client)
       ..origClient.replace(action.client ?? state.origClient)
+      ..user.replace(action.user ?? state.user)
+      ..origUser.replace(action.user ?? state.origUser)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..section = action.section ?? state.section
       ..isChanged = false
@@ -217,22 +220,32 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..company.replace(state.origCompany)
       ..group.replace(state.origGroup)
       ..client.replace(state.origClient)
+      ..user.replace(state.origUser)
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
   TypedReducer<SettingsUIState, SaveCompanySuccess>((state, action) {
     return state.rebuild((b) => b
       ..company.replace(action.company)
+      ..origCompany.replace(action.company)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveGroupSuccess>((state, action) {
     return state.rebuild((b) => b
       ..group.replace(action.group)
+      ..origGroup.replace(action.group)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveClientSuccess>((state, action) {
     return state.rebuild((b) => b
       ..client.replace(action.client)
+      ..origClient.replace(action.client)
+      ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, prefix0.SaveUserSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..user.replace(action.user)
+      ..origUser.replace(action.user)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, FilterSettings>((state, action) {
