@@ -110,7 +110,7 @@ class ProjectEditVM {
               Navigator.of(context).pop(savedProject);
             }
           } else {
-            viewEntity(context: context, entity: savedProject);
+            viewEntity(context: context, entity: savedProject, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

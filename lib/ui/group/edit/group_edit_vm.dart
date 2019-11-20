@@ -86,7 +86,7 @@ class GroupEditVM {
               Navigator.of(context).pop(savedGroup);
             }
           } else {
-            viewEntity(context: context, entity: group, force: true);
+            viewEntity(context: context, entity: savedGroup, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
