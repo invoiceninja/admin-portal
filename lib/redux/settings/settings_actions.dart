@@ -37,8 +37,8 @@ class UpdateSettings implements PersistUI {
   final SettingsEntity settings;
 }
 
-class UpdateSettingsUser implements PersistUI {
-  UpdateSettingsUser({@required this.user});
+class UpdateUserSettings implements PersistUI {
+  UpdateUserSettings({@required this.user});
 
   final UserEntity user;
 }
@@ -57,21 +57,21 @@ class UploadLogoFailure implements StopSaving {
   final Object error;
 }
 
-class SaveUserRequest implements StartSaving {
-  SaveUserRequest({this.completer, this.user});
+class SaveUserSettingsRequest implements StartSaving {
+  SaveUserSettingsRequest({this.completer, this.user});
 
   final Completer completer;
   final UserEntity user;
 }
 
-class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
-  SaveUserSuccess(this.user);
+class SaveUserSettingsSuccess implements StopSaving, PersistData, PersistUI {
+  SaveUserSettingsSuccess(this.user);
 
   final UserEntity user;
 }
 
-class SaveUserFailure implements StopSaving {
-  SaveUserFailure(this.error);
+class SaveUserSettingsFailure implements StopSaving {
+  SaveUserSettingsFailure(this.error);
 
   final Object error;
 }

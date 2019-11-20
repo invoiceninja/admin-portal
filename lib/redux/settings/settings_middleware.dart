@@ -27,7 +27,7 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
-    TypedMiddleware<AppState, SaveUserRequest>(saveUser),
+    TypedMiddleware<AppState, SaveUserSettingsRequest>(saveUser),
     TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
   ];
 }
@@ -85,16 +85,16 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
 
 Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveUserRequest;
+    final action = dynamicAction as SaveUserSettingsRequest;
 
     settingsRepository
         .saveUser(store.state.credentials, action.user)
         .then((user) {
-      store.dispatch(SaveUserSuccess(user));
+      store.dispatch(SaveUserSettingsSuccess(user));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SaveUserFailure(error));
+      store.dispatch(SaveUserSettingsFailure(error));
       action.completer.completeError(error);
     });
 

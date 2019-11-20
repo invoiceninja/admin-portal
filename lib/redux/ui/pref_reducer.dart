@@ -210,7 +210,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
           ..isChanged = true);
     }
   }),
-  TypedReducer<SettingsUIState, UpdateSettingsUser>((state, action) {
+  TypedReducer<SettingsUIState, UpdateUserSettings>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..isChanged = true);
@@ -242,7 +242,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origClient.replace(action.client)
       ..isChanged = false);
   }),
-  TypedReducer<SettingsUIState, prefix0.SaveUserSuccess>((state, action) {
+  TypedReducer<SettingsUIState, prefix0.SaveUserSettingsSuccess>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..origUser.replace(action.user)

@@ -223,13 +223,6 @@ Reducer<int> selectedCompanyIndexReducer = combineReducers([
 ]);
 
 Reducer<SettingsUIState> settingsUIReducer = combineReducers([
-  TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
-    return state.rebuild((b) => b
-      ..updatedAt = DateTime.now().millisecondsSinceEpoch
-      ..company.replace(state.origCompany)
-      ..entityType = EntityType.company
-      ..isChanged = false);
-  }),
   TypedReducer<SettingsUIState, ViewSettings>((state, action) {
     return state.rebuild((b) => b
       ..company.replace(action.company ?? state.company)
@@ -238,6 +231,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origGroup.replace(action.group ?? state.origGroup)
       ..client.replace(action.client ?? state.client)
       ..origClient.replace(action.client ?? state.origClient)
+      ..user.replace(action.user ?? state.user)
+      ..origUser.replace(action.user ?? state.origUser)
       ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..section = action.section ?? state.section
       ..isChanged = false
@@ -266,7 +261,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
           ..isChanged = true);
     }
   }),
-  TypedReducer<SettingsUIState, UpdateSettingsUser>((state, action) {
+  TypedReducer<SettingsUIState, UpdateUserSettings>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..isChanged = true);
@@ -276,22 +271,32 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..company.replace(state.origCompany)
       ..group.replace(state.origGroup)
       ..client.replace(state.origClient)
+      ..user.replace(state.origUser)
       ..isChanged = false
       ..updatedAt = DateTime.now().millisecondsSinceEpoch);
   }),
   TypedReducer<SettingsUIState, SaveCompanySuccess>((state, action) {
     return state.rebuild((b) => b
       ..company.replace(action.company)
+      ..origCompany.replace(action.company)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveGroupSuccess>((state, action) {
     return state.rebuild((b) => b
       ..group.replace(action.group)
+      ..origGroup.replace(action.group)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveClientSuccess>((state, action) {
     return state.rebuild((b) => b
       ..client.replace(action.client)
+      ..origClient.replace(action.client)
+      ..isChanged = false);
+  }),
+  TypedReducer<SettingsUIState, SaveUserSettingsSuccess>((state, action) {
+    return state.rebuild((b) => b
+      ..user.replace(action.user)
+      ..origUser.replace(action.user)
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, FilterSettings>((state, action) {
@@ -300,5 +305,12 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..filterClearedAt = action.filter == null
           ? DateTime.now().millisecondsSinceEpoch
           : state.filterClearedAt);
+  }),
+  TypedReducer<SettingsUIState, ClearSettingsFilter>((state, action) {
+    return state.rebuild((b) => b
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
+      ..company.replace(state.origCompany)
+      ..entityType = EntityType.company
+      ..isChanged = false);
   }),
 ]);
