@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -39,6 +40,8 @@ class TaxRateSettingsScreen extends StatelessWidget {
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
           store.dispatch(StartTaxRateMultiselect(context: context)),
+      onBackPressed: () => store.dispatch(ViewSettings(
+          navigator: Navigator.of(context), section: kSettingsTaxSettings)),
       onCheckboxChanged: (value) {
         final taxRates = viewModel.taxRateList
             .map<TaxRateEntity>((taxRateId) => viewModel.taxRateMap[taxRateId])
