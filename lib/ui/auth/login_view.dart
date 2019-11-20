@@ -136,7 +136,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitForm() {
-    if (_isFormComplete) {
+    if (_isFormComplete && !_createAccount) {
       if (_createAccount) {
         _submitSignUpForm();
       } else {
