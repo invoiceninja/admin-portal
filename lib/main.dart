@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -32,6 +31,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
+import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
@@ -170,6 +170,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   Future<Null> _authenticate() async {
     bool authenticated = false;
+
     try {
       authenticated = await LocalAuthentication().authenticateWithBiometrics(
           localizedReason: 'Please authenticate to access the app',
@@ -178,10 +179,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     } catch (e) {
       print(e);
     }
-    if (mounted) {
-      setState(() {
-        _authenticated = authenticated;
-      });
+
+    if (authenticated) {
+      setState(() => _authenticated = true);
     }
   }
 
@@ -222,10 +222,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       store: widget.store,
       child: AppBuilder(builder: (context) {
         final state = widget.store.state;
-        Intl.defaultLocale = localeSelector(state);
-        final localization = AppLocalization(Locale(Intl.defaultLocale));
         final accentColor = convertHexStringToColor(state.accentColor) ??
             Colors.lightBlueAccent;
+        final fontFamily = kIsWeb ? 'Roboto' : null;
+        Intl.defaultLocale = localeSelector(state);
+
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))
@@ -239,38 +240,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GlobalMaterialLocalizations.delegate
           ],
           home: state.prefState.requireAuthentication && !_authenticated
-              ? Material(
-                  color: Colors.grey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.lock,
-                            size: 24.0,
-                            color: Colors.grey[400],
-                          ),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Text(
-                            localization.locked,
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                      RaisedButton(
-                        onPressed: () => _authenticate(),
-                        child: Text(localization.authenticate),
-                      )
-                    ],
-                  ),
-                )
+              ? LockScreen(onAuthenticatePressed: _authenticate)
               : InitScreen(),
           locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.prefState.enableDarkMode
@@ -278,9 +248,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   brightness: Brightness.dark,
                   accentColor: accentColor,
                   textSelectionHandleColor: accentColor,
-                  fontFamily: 'Roboto',
+                  fontFamily: fontFamily,
                 )
-              : ThemeData(fontFamily: 'Roboto').copyWith(
+              : ThemeData(fontFamily: fontFamily).copyWith(
                   accentColor: accentColor,
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
