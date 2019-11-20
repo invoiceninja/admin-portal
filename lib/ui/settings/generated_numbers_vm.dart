@@ -49,7 +49,7 @@ class GeneratedNumbersVM {
 
     return GeneratedNumbersVM(
         state: state,
-        company: state.uiState.settingsUIState.userCompany.company,
+        company: state.uiState.settingsUIState.company,
         settings: state.uiState.settingsUIState.settings,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
@@ -64,7 +64,7 @@ class GeneratedNumbersVM {
                   context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer,
-                  company: settingsUIState.userCompany.company));
+                  company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(

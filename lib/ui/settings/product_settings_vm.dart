@@ -41,7 +41,7 @@ class ProductSettingsVM {
 
     return ProductSettingsVM(
         state: state,
-        company: state.uiState.settingsUIState.userCompany.company,
+        company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
@@ -50,7 +50,7 @@ class ProductSettingsVM {
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer,
-              company: settingsUIState.userCompany.company));
+              company: settingsUIState.company));
         });
   }
 

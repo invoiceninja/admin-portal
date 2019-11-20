@@ -46,7 +46,7 @@ class TaxSettingsVM {
     return TaxSettingsVM(
         state: state,
         settings: state.uiState.settingsUIState.settings,
-        company: state.uiState.settingsUIState.userCompany.company,
+        company: state.uiState.settingsUIState.company,
         onSettingsChanged: (settings) {
           store.dispatch(UpdateSettings(settings: settings));
         },
@@ -58,7 +58,7 @@ class TaxSettingsVM {
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer,
-              company: settingsUIState.userCompany.company));
+              company: settingsUIState.company));
         },
         onConfigureRatesPressed: (context) {
           if (state.taxRateState.list.isEmpty) {

@@ -173,12 +173,12 @@ class _$SettingsUIStateSerializer
   Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'userCompany',
-      serializers.serialize(object.userCompany,
-          specifiedType: const FullType(UserCompanyEntity)),
-      'origUserCompany',
-      serializers.serialize(object.origUserCompany,
-          specifiedType: const FullType(UserCompanyEntity)),
+      'company',
+      serializers.serialize(object.company,
+          specifiedType: const FullType(CompanyEntity)),
+      'origCompany',
+      serializers.serialize(object.origCompany,
+          specifiedType: const FullType(CompanyEntity)),
       'client',
       serializers.serialize(object.client,
           specifiedType: const FullType(ClientEntity)),
@@ -191,6 +191,12 @@ class _$SettingsUIStateSerializer
       'origGroup',
       serializers.serialize(object.origGroup,
           specifiedType: const FullType(GroupEntity)),
+      'user',
+      serializers.serialize(object.user,
+          specifiedType: const FullType(UserEntity)),
+      'origUser',
+      serializers.serialize(object.origUser,
+          specifiedType: const FullType(UserEntity)),
       'entityType',
       serializers.serialize(object.entityType,
           specifiedType: const FullType(EntityType)),
@@ -228,15 +234,13 @@ class _$SettingsUIStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'userCompany':
-          result.userCompany.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))
-              as UserCompanyEntity);
+        case 'company':
+          result.company.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
           break;
-        case 'origUserCompany':
-          result.origUserCompany.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))
-              as UserCompanyEntity);
+        case 'origCompany':
+          result.origCompany.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
           break;
         case 'client':
           result.client.replace(serializers.deserialize(value,
@@ -253,6 +257,14 @@ class _$SettingsUIStateSerializer
         case 'origGroup':
           result.origGroup.replace(serializers.deserialize(value,
               specifiedType: const FullType(GroupEntity)) as GroupEntity);
+          break;
+        case 'user':
+          result.user.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+        case 'origUser':
+          result.origUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
           break;
         case 'entityType':
           result.entityType = serializers.deserialize(value,
@@ -688,9 +700,9 @@ class UserCompanyStateBuilder
 
 class _$SettingsUIState extends SettingsUIState {
   @override
-  final UserCompanyEntity userCompany;
+  final CompanyEntity company;
   @override
-  final UserCompanyEntity origUserCompany;
+  final CompanyEntity origCompany;
   @override
   final ClientEntity client;
   @override
@@ -699,6 +711,10 @@ class _$SettingsUIState extends SettingsUIState {
   final GroupEntity group;
   @override
   final GroupEntity origGroup;
+  @override
+  final UserEntity user;
+  @override
+  final UserEntity origUser;
   @override
   final EntityType entityType;
   @override
@@ -716,12 +732,14 @@ class _$SettingsUIState extends SettingsUIState {
       (new SettingsUIStateBuilder()..update(updates)).build();
 
   _$SettingsUIState._(
-      {this.userCompany,
-      this.origUserCompany,
+      {this.company,
+      this.origCompany,
       this.client,
       this.origClient,
       this.group,
       this.origGroup,
+      this.user,
+      this.origUser,
       this.entityType,
       this.isChanged,
       this.updatedAt,
@@ -729,11 +747,11 @@ class _$SettingsUIState extends SettingsUIState {
       this.filter,
       this.filterClearedAt})
       : super._() {
-    if (userCompany == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'userCompany');
+    if (company == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'company');
     }
-    if (origUserCompany == null) {
-      throw new BuiltValueNullFieldError('SettingsUIState', 'origUserCompany');
+    if (origCompany == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origCompany');
     }
     if (client == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'client');
@@ -746,6 +764,12 @@ class _$SettingsUIState extends SettingsUIState {
     }
     if (origGroup == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'origGroup');
+    }
+    if (user == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'user');
+    }
+    if (origUser == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origUser');
     }
     if (entityType == null) {
       throw new BuiltValueNullFieldError('SettingsUIState', 'entityType');
@@ -776,12 +800,14 @@ class _$SettingsUIState extends SettingsUIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SettingsUIState &&
-        userCompany == other.userCompany &&
-        origUserCompany == other.origUserCompany &&
+        company == other.company &&
+        origCompany == other.origCompany &&
         client == other.client &&
         origClient == other.origClient &&
         group == other.group &&
         origGroup == other.origGroup &&
+        user == other.user &&
+        origUser == other.origUser &&
         entityType == other.entityType &&
         isChanged == other.isChanged &&
         updatedAt == other.updatedAt &&
@@ -802,12 +828,18 @@ class _$SettingsUIState extends SettingsUIState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, userCompany.hashCode),
-                                                origUserCompany.hashCode),
-                                            client.hashCode),
-                                        origClient.hashCode),
-                                    group.hashCode),
-                                origGroup.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            company.hashCode),
+                                                        origCompany.hashCode),
+                                                    client.hashCode),
+                                                origClient.hashCode),
+                                            group.hashCode),
+                                        origGroup.hashCode),
+                                    user.hashCode),
+                                origUser.hashCode),
                             entityType.hashCode),
                         isChanged.hashCode),
                     updatedAt.hashCode),
@@ -819,12 +851,14 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SettingsUIState')
-          ..add('userCompany', userCompany)
-          ..add('origUserCompany', origUserCompany)
+          ..add('company', company)
+          ..add('origCompany', origCompany)
           ..add('client', client)
           ..add('origClient', origClient)
           ..add('group', group)
           ..add('origGroup', origGroup)
+          ..add('user', user)
+          ..add('origUser', origUser)
           ..add('entityType', entityType)
           ..add('isChanged', isChanged)
           ..add('updatedAt', updatedAt)
@@ -839,17 +873,16 @@ class SettingsUIStateBuilder
     implements Builder<SettingsUIState, SettingsUIStateBuilder> {
   _$SettingsUIState _$v;
 
-  UserCompanyEntityBuilder _userCompany;
-  UserCompanyEntityBuilder get userCompany =>
-      _$this._userCompany ??= new UserCompanyEntityBuilder();
-  set userCompany(UserCompanyEntityBuilder userCompany) =>
-      _$this._userCompany = userCompany;
+  CompanyEntityBuilder _company;
+  CompanyEntityBuilder get company =>
+      _$this._company ??= new CompanyEntityBuilder();
+  set company(CompanyEntityBuilder company) => _$this._company = company;
 
-  UserCompanyEntityBuilder _origUserCompany;
-  UserCompanyEntityBuilder get origUserCompany =>
-      _$this._origUserCompany ??= new UserCompanyEntityBuilder();
-  set origUserCompany(UserCompanyEntityBuilder origUserCompany) =>
-      _$this._origUserCompany = origUserCompany;
+  CompanyEntityBuilder _origCompany;
+  CompanyEntityBuilder get origCompany =>
+      _$this._origCompany ??= new CompanyEntityBuilder();
+  set origCompany(CompanyEntityBuilder origCompany) =>
+      _$this._origCompany = origCompany;
 
   ClientEntityBuilder _client;
   ClientEntityBuilder get client =>
@@ -870,6 +903,15 @@ class SettingsUIStateBuilder
   GroupEntityBuilder get origGroup =>
       _$this._origGroup ??= new GroupEntityBuilder();
   set origGroup(GroupEntityBuilder origGroup) => _$this._origGroup = origGroup;
+
+  UserEntityBuilder _user;
+  UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+  set user(UserEntityBuilder user) => _$this._user = user;
+
+  UserEntityBuilder _origUser;
+  UserEntityBuilder get origUser =>
+      _$this._origUser ??= new UserEntityBuilder();
+  set origUser(UserEntityBuilder origUser) => _$this._origUser = origUser;
 
   EntityType _entityType;
   EntityType get entityType => _$this._entityType;
@@ -900,12 +942,14 @@ class SettingsUIStateBuilder
 
   SettingsUIStateBuilder get _$this {
     if (_$v != null) {
-      _userCompany = _$v.userCompany?.toBuilder();
-      _origUserCompany = _$v.origUserCompany?.toBuilder();
+      _company = _$v.company?.toBuilder();
+      _origCompany = _$v.origCompany?.toBuilder();
       _client = _$v.client?.toBuilder();
       _origClient = _$v.origClient?.toBuilder();
       _group = _$v.group?.toBuilder();
       _origGroup = _$v.origGroup?.toBuilder();
+      _user = _$v.user?.toBuilder();
+      _origUser = _$v.origUser?.toBuilder();
       _entityType = _$v.entityType;
       _isChanged = _$v.isChanged;
       _updatedAt = _$v.updatedAt;
@@ -936,12 +980,14 @@ class SettingsUIStateBuilder
     try {
       _$result = _$v ??
           new _$SettingsUIState._(
-              userCompany: userCompany.build(),
-              origUserCompany: origUserCompany.build(),
+              company: company.build(),
+              origCompany: origCompany.build(),
               client: client.build(),
               origClient: origClient.build(),
               group: group.build(),
               origGroup: origGroup.build(),
+              user: user.build(),
+              origUser: origUser.build(),
               entityType: entityType,
               isChanged: isChanged,
               updatedAt: updatedAt,
@@ -951,10 +997,10 @@ class SettingsUIStateBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'userCompany';
-        userCompany.build();
-        _$failedField = 'origUserCompany';
-        origUserCompany.build();
+        _$failedField = 'company';
+        company.build();
+        _$failedField = 'origCompany';
+        origCompany.build();
         _$failedField = 'client';
         client.build();
         _$failedField = 'origClient';
@@ -963,6 +1009,10 @@ class SettingsUIStateBuilder
         group.build();
         _$failedField = 'origGroup';
         origGroup.build();
+        _$failedField = 'user';
+        user.build();
+        _$failedField = 'origUser';
+        origUser.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'SettingsUIState', _$failedField, e.toString());

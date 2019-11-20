@@ -46,7 +46,7 @@ class CustomFieldsVM {
 
     return CustomFieldsVM(
         state: state,
-        company: state.uiState.settingsUIState.userCompany.company,
+        company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onSavePressed: (context) {
@@ -57,7 +57,7 @@ class CustomFieldsVM {
                   context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer,
-                  company: settingsUIState.userCompany.company));
+                  company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(

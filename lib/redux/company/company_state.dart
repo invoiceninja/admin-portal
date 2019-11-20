@@ -107,23 +107,27 @@ abstract class UserCompanyState
 abstract class SettingsUIState extends Object
     implements Built<SettingsUIState, SettingsUIStateBuilder> {
   factory SettingsUIState(
-      {UserCompanyEntity userCompany,
+      {CompanyEntity company,
       ClientEntity client,
       GroupEntity group,
-      UserCompanyEntity origUserCompany,
+      UserEntity user,
+      CompanyEntity origCompany,
       ClientEntity origClient,
       GroupEntity origGroup,
+      UserEntity origUser,
       String section}) {
     return _$SettingsUIState._(
-      userCompany: userCompany ?? UserCompanyEntity(),
+      company: company ?? CompanyEntity(),
       client: client ?? ClientEntity(),
       group: group ?? GroupEntity(),
+      user: user ?? UserEntity(),
       entityType: client != null
           ? EntityType.client
           : group != null ? EntityType.group : EntityType.company,
       origClient: origClient ?? ClientEntity(),
       origGroup: origGroup ?? GroupEntity(),
-      origUserCompany: origUserCompany ?? UserCompanyEntity(),
+      origCompany: origCompany ?? CompanyEntity(),
+      origUser: origUser ?? UserEntity(),
       isChanged: false,
       updatedAt: 0,
       filterClearedAt: 0,
@@ -133,9 +137,9 @@ abstract class SettingsUIState extends Object
 
   SettingsUIState._();
 
-  UserCompanyEntity get userCompany;
+  CompanyEntity get company;
 
-  UserCompanyEntity get origUserCompany;
+  CompanyEntity get origCompany;
 
   ClientEntity get client;
 
@@ -144,6 +148,10 @@ abstract class SettingsUIState extends Object
   GroupEntity get group;
 
   GroupEntity get origGroup;
+
+  UserEntity get user;
+
+  UserEntity get origUser;
 
   EntityType get entityType;
 
@@ -162,12 +170,11 @@ abstract class SettingsUIState extends Object
 
   SettingsEntity get settings {
     if (entityType == EntityType.client && client != null) {
-      return userCompany
-          .company.settings; // TODO fix this, change to client.settings
+      return company.settings; // TODO fix this, change to client.settings
     } else if (entityType == EntityType.group && group != null) {
       return group.settings;
     } else {
-      return userCompany.company.settings;
+      return company.settings;
     }
   }
 

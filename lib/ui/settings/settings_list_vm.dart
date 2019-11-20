@@ -40,7 +40,7 @@ class SettingsListVM {
           store.dispatch(ViewSettings(
               navigator: Navigator.of(context),
               section: section,
-              userCompany: state.userCompany));
+              company: state.company));
         },
         onClearSettingsFilterPressed: () =>
             store.dispatch(ClearSettingsFilter()),

@@ -11,16 +11,18 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   ViewSettings({
     @required NavigatorState navigator,
-    this.userCompany,
+    this.company,
     this.group,
     this.client,
+    this.user,
     this.force = false,
     this.section,
   }) : super(navigator: navigator);
 
-  final UserCompanyEntity userCompany;
+  final CompanyEntity company;
   final GroupEntity group;
   final ClientEntity client;
+  final UserEntity user;
   final bool force;
   final String section;
 }

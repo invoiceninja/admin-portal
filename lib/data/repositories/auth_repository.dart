@@ -93,7 +93,7 @@ class AuthRepository {
       {String url, dynamic data, String token, String secret}) async {
     final includes = [
       'account',
-      'user',
+      'user.company_user',
       'token',
       'company.users.company_user',
       'company.tax_rates',

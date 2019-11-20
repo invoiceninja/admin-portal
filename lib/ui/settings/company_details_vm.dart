@@ -50,7 +50,7 @@ class CompanyDetailsVM {
     return CompanyDetailsVM(
       state: state,
       settings: state.uiState.settingsUIState.settings,
-      company: state.uiState.settingsUIState.userCompany.company,
+      company: state.uiState.settingsUIState.company,
       onSettingsChanged: (settings) =>
           store.dispatch(UpdateSettings(settings: settings)),
       onCompanyChanged: (company) =>
@@ -63,7 +63,7 @@ class CompanyDetailsVM {
                 context, AppLocalization.of(context).savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer,
-                company: settingsUIState.userCompany.company));
+                company: settingsUIState.company));
             break;
           case EntityType.group:
             final completer = snackBarCompleter<GroupEntity>(

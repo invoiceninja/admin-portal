@@ -382,7 +382,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    //return 'Custom fields [UI]: ${uiState.settingsUIState.userCompany.company.customFields}, [DB] ${selectedCompany.customFields}';
+    //return 'Custom fields [UI]: ${uiState.settingsUIState.company.customFields}, [DB] ${selectedCompany.customFields}';
     //return 'Permissions: ${uiState.userUIState.editing.userCompany.permissions}';
     //return 'Layout: ${uiState.layout}, menu: ${uiState.menuSidebarMode}, history: ${uiState.historySidebarMode}';
     //return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';

@@ -59,7 +59,7 @@ class EmailSettingsVM {
                   context, AppLocalization.of(context).savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer,
-                  company: settingsUIState.userCompany.company));
+                  company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(

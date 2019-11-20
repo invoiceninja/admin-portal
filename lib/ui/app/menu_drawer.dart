@@ -213,7 +213,7 @@ class MenuDrawer extends StatelessWidget {
                           onTap: () {
                             store.dispatch(ViewSettings(
                                 navigator: Navigator.of(context),
-                                userCompany: state.userCompany));
+                                company: state.company));
                           },
                         ),
                       ],
