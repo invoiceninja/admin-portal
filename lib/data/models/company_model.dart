@@ -673,10 +673,10 @@ abstract class SettingsEntity
       creditNumberCounter: clientSettings?.creditNumberCounter ??
           groupSettings?.creditNumberCounter ??
           companySettings?.creditNumberCounter,
-      recurringInvoiceNumberPrefix:
-          clientSettings?.recurringInvoiceNumberPrefix ??
-              groupSettings?.recurringInvoiceNumberPrefix ??
-              companySettings?.recurringInvoiceNumberPrefix,
+      recurringNumberPrefix:
+          clientSettings?.recurringNumberPrefix ??
+              groupSettings?.recurringNumberPrefix ??
+              companySettings?.recurringNumberPrefix,
       resetCounterFrequencyId: clientSettings?.resetCounterFrequencyId ??
           groupSettings?.resetCounterFrequencyId ??
           companySettings?.resetCounterFrequencyId,
@@ -1139,8 +1139,8 @@ abstract class SettingsEntity
   int get creditNumberCounter;
 
   @nullable
-  @BuiltValueField(wireName: 'recurring_invoice_number_prefix')
-  String get recurringInvoiceNumberPrefix;
+  @BuiltValueField(wireName: 'recurring_number_prefix')
+  String get recurringNumberPrefix;
 
   @nullable
   @BuiltValueField(wireName: 'reset_counter_frequency_id')

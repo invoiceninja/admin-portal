@@ -131,8 +131,8 @@ const String kClientPortalModeSubdomain = 'subdomain';
 const String kClientPortalModeDomain = 'domain';
 const String kClientPortalModeIFrame = 'iframe';
 
-const String kNumberGeneratedWhenSaved = 'saved';
-const String kNumberGeneratedWhenSent = 'sent';
+const String kGenerateNumberWhenSaved = 'when_saved';
+const String kGenerateNumberWhenSent = 'when_sent';
 //const String kNumberGeneratedWhenPaid = 'paid';
 
 const String kEmailDesignPlain = 'plain';

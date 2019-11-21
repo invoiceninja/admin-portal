@@ -68,7 +68,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    _recurringPrefixController.text = settings.recurringInvoiceNumberPrefix;
+    _recurringPrefixController.text = settings.recurringNumberPrefix;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -79,7 +79,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   void _onChanged() {
     _debouncer.run(() {
       final settings = widget.viewModel.settings.rebuild((b) => b
-        ..recurringInvoiceNumberPrefix =
+        ..recurringNumberPrefix =
             _recurringPrefixController.text.trim());
 
       if (settings != widget.viewModel.settings) {
@@ -151,6 +151,23 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                             .toList(),
                       ),
                     ),
+                  ),
+                  AppDropdownButton<String>(
+                    labelText: localization.generateNumber,
+                    value: settings.counterNumberApplied,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..counterNumberApplied = value)),
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.whenSaved),
+                        value: kGenerateNumberWhenSaved,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.whenSent),
+                        value: kGenerateNumberWhenSent,
+                      ),
+                    ],
                   ),
                   DecoratedFormField(
                     label: localization.recurringPrefix,
