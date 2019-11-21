@@ -17,7 +17,6 @@ class GroupScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, GroupScreenVM>(
-      //rebuildOnChange: true,
       converter: GroupScreenVM.fromStore,
       builder: (context, vm) {
         return GroupSettingsScreen(

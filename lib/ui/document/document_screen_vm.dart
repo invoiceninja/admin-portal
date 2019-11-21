@@ -16,7 +16,6 @@ class DocumentScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DocumentScreenVM>(
-      //rebuildOnChange: true,
       converter: DocumentScreenVM.fromStore,
       builder: (context, vm) {
         return DocumentScreen(

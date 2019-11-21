@@ -16,7 +16,6 @@ class ClientScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientScreenVM>(
-      //rebuildOnChange: true,
       converter: ClientScreenVM.fromStore,
       builder: (context, vm) {
         return ClientScreen(

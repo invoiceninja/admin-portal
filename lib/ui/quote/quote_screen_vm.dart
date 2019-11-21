@@ -16,7 +16,6 @@ class QuoteScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteScreenVM>(
-      //rebuildOnChange: true,
       converter: QuoteScreenVM.fromStore,
       builder: (context, vm) {
         return QuoteScreen(

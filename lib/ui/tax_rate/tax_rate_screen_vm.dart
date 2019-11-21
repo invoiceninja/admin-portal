@@ -18,7 +18,6 @@ class TaxRateScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TaxRateScreenVM>(
-      //rebuildOnChange: true,
       converter: TaxRateScreenVM.fromStore,
       builder: (context, vm) {
         return TaxRateSettingsScreen(

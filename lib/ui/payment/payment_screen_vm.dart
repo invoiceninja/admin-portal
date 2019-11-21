@@ -16,7 +16,6 @@ class PaymentScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PaymentScreenVM>(
-      //rebuildOnChange: true,
       converter: PaymentScreenVM.fromStore,
       builder: (context, vm) {
         return PaymentScreen(

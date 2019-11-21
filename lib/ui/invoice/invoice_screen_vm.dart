@@ -16,7 +16,6 @@ class InvoiceScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceScreenVM>(
-      //rebuildOnChange: true,
       converter: InvoiceScreenVM.fromStore,
       builder: (context, vm) {
         return InvoiceScreen(

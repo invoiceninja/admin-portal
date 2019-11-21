@@ -16,7 +16,6 @@ class TaskScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TaskScreenVM>(
-      //rebuildOnChange: true,
       converter: TaskScreenVM.fromStore,
       builder: (context, vm) {
         return TaskScreen(

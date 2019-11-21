@@ -16,7 +16,6 @@ class ExpenseScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ExpenseScreenVM>(
-      //rebuildOnChange: true,
       converter: ExpenseScreenVM.fromStore,
       builder: (context, vm) {
         return ExpenseScreen(

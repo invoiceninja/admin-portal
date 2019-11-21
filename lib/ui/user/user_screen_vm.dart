@@ -16,7 +16,6 @@ class UserScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, UserScreenVM>(
-      //rebuildOnChange: true,
       converter: UserScreenVM.fromStore,
       builder: (context, vm) {
         return UserScreen(

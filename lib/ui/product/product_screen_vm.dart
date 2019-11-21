@@ -16,7 +16,6 @@ class ProductScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductScreenVM>(
-      //rebuildOnChange: true,
       converter: ProductScreenVM.fromStore,
       builder: (context, vm) {
         return ProductScreen(
