@@ -32,9 +32,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_cost': 'Show Cost',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
-      'show_quantity': 'Show Quantity',
-      'show_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'show_product_quantity': 'Show Product Quantity',
+      'show_product_quantity_help':
+      'Display a product quantity field, otherwise default to one',
+      'show_invoice_quantity': 'Show Invoice Quantity',
+      'show_invoice_quantity_help':
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
           'Automatically set the line item quantity to one',
@@ -15724,10 +15727,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
 
-  String get showQuantity => _localizedValues[localeCode]['show_quantity'];
+  String get showInvoiceQuantity => _localizedValues[localeCode]['show_invoice_quantity'];
 
-  String get showQuantityHelp =>
-      _localizedValues[localeCode]['show_quantity_help'];
+  String get showProductQuantityHelp =>
+      _localizedValues[localeCode]['show_product_quantity_help'];
+
+  String get showProductQuantity => _localizedValues[localeCode]['show_product_quantity'];
+
+  String get showInvoiceQuantityHelp =>
+      _localizedValues[localeCode]['show_invoice_quantity_help'];
 
   String get defaultQuantity =>
       _localizedValues[localeCode]['default_quantity'];

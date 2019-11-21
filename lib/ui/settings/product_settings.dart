@@ -46,9 +46,9 @@ class _ProductSettingsState extends State<ProductSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
-                title: Text(localization.showQuantity),
+                title: Text(localization.showProductQuantity),
                 value: company.enableProductQuantity ?? false,
-                subtitle: Text(localization.showQuantityHelp),
+                subtitle: Text(localization.showProductQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableProductQuantity = value)),
               ),
@@ -59,6 +59,14 @@ class _ProductSettingsState extends State<ProductSettings> {
                 subtitle: Text(localization.defaultQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..defaultQuantity = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showInvoiceQuantity),
+                value: company.enableProductQuantity ?? false,
+                subtitle: Text(localization.showInvoiceQuantity),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..enableInvoiceQuantity = value)),
               ),
             ],
           ),

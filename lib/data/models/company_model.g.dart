@@ -108,6 +108,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.fillProducts,
             specifiedType: const FullType(bool)));
     }
+    if (object.enableInvoiceQuantity != null) {
+      result
+        ..add('enable_invoice_quantity')
+        ..add(serializers.serialize(object.enableInvoiceQuantity,
+            specifiedType: const FullType(bool)));
+    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -298,6 +304,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'enable_product_quantity':
           result.enableProductQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_invoice_quantity':
+          result.enableInvoiceQuantity = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'default_quantity':
@@ -1583,6 +1593,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.clientManualPaymentNotification,
             specifiedType: const FullType(bool)));
     }
+    if (object.counterNumberApplied != null) {
+      result
+        ..add('counter_number_applied')
+        ..add(serializers.serialize(object.counterNumberApplied,
+            specifiedType: const FullType(String)));
+    }
     if (object.customPaymentTerms != null) {
       result
         ..add('custom_payment_terms')
@@ -2210,6 +2226,10 @@ class _$SettingsEntitySerializer
           result.clientManualPaymentNotification = serializers
               .deserialize(value, specifiedType: const FullType(bool)) as bool;
           break;
+        case 'counter_number_applied':
+          result.counterNumberApplied = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'custom_payment_terms':
           result.customPaymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -2307,6 +2327,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableProductQuantity;
   @override
+  final bool enableInvoiceQuantity;
+  @override
   final bool defaultQuantity;
   @override
   final String plan;
@@ -2375,6 +2397,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.fillProducts,
       this.enableProductCost,
       this.enableProductQuantity,
+      this.enableInvoiceQuantity,
       this.defaultQuantity,
       this.plan,
       this.companyKey,
@@ -2468,6 +2491,7 @@ class _$CompanyEntity extends CompanyEntity {
         fillProducts == other.fillProducts &&
         enableProductCost == other.enableProductCost &&
         enableProductQuantity == other.enableProductQuantity &&
+        enableInvoiceQuantity == other.enableInvoiceQuantity &&
         defaultQuantity == other.defaultQuantity &&
         plan == other.plan &&
         companyKey == other.companyKey &&
@@ -2516,7 +2540,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
                                                                                 taxRates.hashCode),
                                                                             taskStatuses.hashCode),
                                                                         taskStatusMap.hashCode),
@@ -2553,6 +2577,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('fillProducts', fillProducts)
           ..add('enableProductCost', enableProductCost)
           ..add('enableProductQuantity', enableProductQuantity)
+          ..add('enableInvoiceQuantity', enableInvoiceQuantity)
           ..add('defaultQuantity', defaultQuantity)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
@@ -2642,6 +2667,11 @@ class CompanyEntityBuilder
   bool get enableProductQuantity => _$this._enableProductQuantity;
   set enableProductQuantity(bool enableProductQuantity) =>
       _$this._enableProductQuantity = enableProductQuantity;
+
+  bool _enableInvoiceQuantity;
+  bool get enableInvoiceQuantity => _$this._enableInvoiceQuantity;
+  set enableInvoiceQuantity(bool enableInvoiceQuantity) =>
+      _$this._enableInvoiceQuantity = enableInvoiceQuantity;
 
   bool _defaultQuantity;
   bool get defaultQuantity => _$this._defaultQuantity;
@@ -2790,6 +2820,7 @@ class CompanyEntityBuilder
       _fillProducts = _$v.fillProducts;
       _enableProductCost = _$v.enableProductCost;
       _enableProductQuantity = _$v.enableProductQuantity;
+      _enableInvoiceQuantity = _$v.enableInvoiceQuantity;
       _defaultQuantity = _$v.defaultQuantity;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
@@ -2852,6 +2883,7 @@ class CompanyEntityBuilder
               fillProducts: fillProducts,
               enableProductCost: enableProductCost,
               enableProductQuantity: enableProductQuantity,
+              enableInvoiceQuantity: enableInvoiceQuantity,
               defaultQuantity: defaultQuantity,
               plan: plan,
               companyKey: companyKey,
@@ -3682,6 +3714,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool clientManualPaymentNotification;
   @override
+  final String counterNumberApplied;
+  @override
   final BuiltList<PaymentTermEntity> customPaymentTerms;
   @override
   final bool hasCustomDesign1;
@@ -3840,6 +3874,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.enableClientPortalDashboard,
       this.clientOnlinePaymentNotification,
       this.clientManualPaymentNotification,
+      this.counterNumberApplied,
       this.customPaymentTerms,
       this.hasCustomDesign1,
       this.hasCustomDesign2,
@@ -4006,6 +4041,7 @@ class _$SettingsEntity extends SettingsEntity {
             other.clientOnlinePaymentNotification &&
         clientManualPaymentNotification ==
             other.clientManualPaymentNotification &&
+        counterNumberApplied == other.counterNumberApplied &&
         customPaymentTerms == other.customPaymentTerms &&
         hasCustomDesign1 == other.hasCustomDesign1 &&
         hasCustomDesign2 == other.hasCustomDesign2 &&
@@ -4032,22 +4068,22 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode),
-                                                                                scheduleReminder2.hashCode),
-                                                                            scheduleReminder3.hashCode),
-                                                                        endlessReminderFrequencyId.hashCode),
-                                                                    lateFeeAmount1.hashCode),
-                                                                lateFeeAmount2.hashCode),
-                                                            lateFeeAmount3.hashCode),
-                                                        lateFeePercent1.hashCode),
-                                                    lateFeePercent2.hashCode),
-                                                lateFeePercent3.hashCode),
-                                            emailSubjectReminder4.hashCode),
-                                        emailBodyReminder4.hashCode),
-                                    enableClientPortal.hashCode),
-                                enableClientPortalDashboard.hashCode),
-                            clientOnlinePaymentNotification.hashCode),
-                        clientManualPaymentNotification.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringInvoiceNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
+                                                                                scheduleReminder3.hashCode),
+                                                                            endlessReminderFrequencyId.hashCode),
+                                                                        lateFeeAmount1.hashCode),
+                                                                    lateFeeAmount2.hashCode),
+                                                                lateFeeAmount3.hashCode),
+                                                            lateFeePercent1.hashCode),
+                                                        lateFeePercent2.hashCode),
+                                                    lateFeePercent3.hashCode),
+                                                emailSubjectReminder4.hashCode),
+                                            emailBodyReminder4.hashCode),
+                                        enableClientPortal.hashCode),
+                                    enableClientPortalDashboard.hashCode),
+                                clientOnlinePaymentNotification.hashCode),
+                            clientManualPaymentNotification.hashCode),
+                        counterNumberApplied.hashCode),
                     customPaymentTerms.hashCode),
                 hasCustomDesign1.hashCode),
             hasCustomDesign2.hashCode),
@@ -4205,6 +4241,7 @@ class _$SettingsEntity extends SettingsEntity {
               clientOnlinePaymentNotification)
           ..add('clientManualPaymentNotification',
               clientManualPaymentNotification)
+          ..add('counterNumberApplied', counterNumberApplied)
           ..add('customPaymentTerms', customPaymentTerms)
           ..add('hasCustomDesign1', hasCustomDesign1)
           ..add('hasCustomDesign2', hasCustomDesign2)
@@ -4923,6 +4960,11 @@ class SettingsEntityBuilder
   set clientManualPaymentNotification(bool clientManualPaymentNotification) =>
       _$this._clientManualPaymentNotification = clientManualPaymentNotification;
 
+  String _counterNumberApplied;
+  String get counterNumberApplied => _$this._counterNumberApplied;
+  set counterNumberApplied(String counterNumberApplied) =>
+      _$this._counterNumberApplied = counterNumberApplied;
+
   ListBuilder<PaymentTermEntity> _customPaymentTerms;
   ListBuilder<PaymentTermEntity> get customPaymentTerms =>
       _$this._customPaymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -5094,6 +5136,7 @@ class SettingsEntityBuilder
       _enableClientPortalDashboard = _$v.enableClientPortalDashboard;
       _clientOnlinePaymentNotification = _$v.clientOnlinePaymentNotification;
       _clientManualPaymentNotification = _$v.clientManualPaymentNotification;
+      _counterNumberApplied = _$v.counterNumberApplied;
       _customPaymentTerms = _$v.customPaymentTerms?.toBuilder();
       _hasCustomDesign1 = _$v.hasCustomDesign1;
       _hasCustomDesign2 = _$v.hasCustomDesign2;
@@ -5268,6 +5311,7 @@ class SettingsEntityBuilder
               enableClientPortalDashboard: enableClientPortalDashboard,
               clientOnlinePaymentNotification: clientOnlinePaymentNotification,
               clientManualPaymentNotification: clientManualPaymentNotification,
+              counterNumberApplied: counterNumberApplied,
               customPaymentTerms: _customPaymentTerms?.build(),
               hasCustomDesign1: hasCustomDesign1,
               hasCustomDesign2: hasCustomDesign2,

@@ -331,10 +331,9 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
-                            textInputAction: _isFormComplete
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -345,10 +344,9 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
-                            textInputAction: _isFormComplete
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -360,7 +358,7 @@ class _LoginState extends State<LoginView> {
                             controller: _emailController,
                             key: ValueKey(localization.email),
                             autocorrect: false,
-                            textInputAction: _isFormComplete
+                            textInputAction: _isFormComplete && !_createAccount
                                 ? TextInputAction.done
                                 : TextInputAction.next,
                             decoration:
@@ -377,7 +375,7 @@ class _LoginState extends State<LoginView> {
                           TextFormField(
                             controller: _passwordController,
                             key: ValueKey(localization.password),
-                            textInputAction: _isFormComplete
+                            textInputAction: _isFormComplete && !_createAccount
                                 ? TextInputAction.done
                                 : TextInputAction.next,
                             autocorrect: false,

@@ -94,9 +94,11 @@ class _UserEditState extends State<UserEdit> {
     } else {
       permissions.add(permission);
     }
+    final permissionsString =
+        permissions.where((value) => value.isNotEmpty).join(',');
 
-    widget.viewModel.onUserChanged(user
-        .rebuild((b) => b..userCompany.permissions = permissions.join(',')));
+    widget.viewModel.onUserChanged(
+        user.rebuild((b) => b..userCompany.permissions = permissionsString));
   }
 
   @override

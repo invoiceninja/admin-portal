@@ -33,6 +33,7 @@ abstract class CompanyEntity extends Object
       fillProducts: true,
       enableProductCost: false,
       enableProductQuantity: true,
+      enableInvoiceQuantity: true,
       defaultQuantity: true,
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
@@ -95,6 +96,10 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enable_product_quantity')
   bool get enableProductQuantity;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_invoice_quantity')
+  bool get enableInvoiceQuantity;
 
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
@@ -925,15 +930,6 @@ abstract class SettingsEntity
       customPaymentTerms: clientSettings?.customPaymentTerms ??
           groupSettings?.customPaymentTerms ??
           companySettings?.customPaymentTerms,
-      hasCustomDesign1: clientSettings?.hasCustomDesign1 ??
-          groupSettings?.hasCustomDesign1 ??
-          companySettings?.hasCustomDesign1,
-      hasCustomDesign2: clientSettings?.hasCustomDesign2 ??
-          groupSettings?.hasCustomDesign2 ??
-          companySettings?.hasCustomDesign2,
-      hasCustomDesign3: clientSettings?.hasCustomDesign3 ??
-          groupSettings?.hasCustomDesign3 ??
-          companySettings?.hasCustomDesign3,
     );
   }
 
@@ -1499,7 +1495,7 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
 
-  // Added
+  // TODO add to constructor and viewer
   @nullable
   @BuiltValueField(wireName: 'enable_client_portal')
   bool get enableClientPortal;
@@ -1515,6 +1511,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'client_manual_payment_notification')
   bool get clientManualPaymentNotification;
+
+  @nullable
+  @BuiltValueField(wireName: 'counter_number_applied')
+  String get counterNumberApplied;
 
   // TODO remove this field
   @nullable
