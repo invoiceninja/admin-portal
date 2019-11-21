@@ -40,8 +40,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditClient;
 
     if (!action.force &&

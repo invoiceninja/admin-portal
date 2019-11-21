@@ -37,8 +37,7 @@ class ProductScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.productList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartProductMultiselect()),
+      onHamburgerLongPress: () => store.dispatch(StartProductMultiselect()),
       onCheckboxChanged: (value) {
         final products = viewModel.productList
             .map<ProductEntity>((productId) => viewModel.productMap[productId])

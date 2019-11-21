@@ -15767,7 +15767,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newPayment => _localizedValues[localeCode]['new_payment'];
 
-  String get switchListTable => _localizedValues[localeCode]['switch_list_table'];
+  String get switchListTable =>
+      _localizedValues[localeCode]['switch_list_table'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

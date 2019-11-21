@@ -40,8 +40,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 }
 
 Middleware<AppState> _editTask() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditTask;
 
     if (!action.force &&

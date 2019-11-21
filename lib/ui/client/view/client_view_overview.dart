@@ -64,7 +64,8 @@ class ClientOverview extends StatelessWidget {
           label: localization.paidToDate,
           value: formatNumber(client.paidToDate, context, clientId: client.id),
           secondLabel: localization.balanceDue,
-          secondValue: formatNumber(client.balance, context, clientId: client.id),
+          secondValue:
+              formatNumber(client.balance, context, clientId: client.id),
         ),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)

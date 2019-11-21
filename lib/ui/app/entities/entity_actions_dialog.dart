@@ -67,7 +67,7 @@ class EntityActionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    
+
     return ListTile(
       leading: Icon(getEntityActionIcon(action)),
       title: Text(localization.lookup(action.toString())),

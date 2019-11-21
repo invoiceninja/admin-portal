@@ -15,7 +15,8 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart' as prefix0;
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart'
+    as prefix0;
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -242,7 +243,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origClient.replace(action.client)
       ..isChanged = false);
   }),
-  TypedReducer<SettingsUIState, prefix0.SaveUserSettingsSuccess>((state, action) {
+  TypedReducer<SettingsUIState, prefix0.SaveUserSettingsSuccess>(
+      (state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..origUser.replace(action.user)

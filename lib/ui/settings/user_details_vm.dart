@@ -46,8 +46,7 @@ class UserDetailsVM {
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveUserSettingsRequest(
-              completer: completer,
-              user: state.uiState.settingsUIState.user));
+              completer: completer, user: state.uiState.settingsUIState.user));
         });
   }
 

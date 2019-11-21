@@ -94,8 +94,7 @@ Middleware<AppState> _viewQuoteList() {
 }
 
 Middleware<AppState> _editQuote() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditQuote;
 
     if (!action.force &&

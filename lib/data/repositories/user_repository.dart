@@ -17,7 +17,8 @@ class UserRepository {
 
   Future<UserEntity> loadItem(Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/users/$entityId?include=company_user', credentials.token);
+        '${credentials.url}/users/$entityId?include=company_user',
+        credentials.token);
 
     final UserItemResponse userResponse =
         serializers.deserializeWith(UserItemResponse.serializer, response);

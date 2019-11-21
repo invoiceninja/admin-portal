@@ -39,8 +39,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
 }
 
 Middleware<AppState> _editUser() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditUser;
 
     if (!action.force &&

@@ -43,8 +43,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
 }
 
 Middleware<AppState> _editPayment() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditPayment;
 
     if (!action.force &&

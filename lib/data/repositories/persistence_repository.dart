@@ -54,7 +54,8 @@ class PersistenceRepository {
   Future<AuthState> loadAuthState() async {
     if (await fileStorage.exists()) {
       final String data = await fileStorage.load();
-      return serializers.deserializeWith(AuthState.serializer, json.decode(data));
+      return serializers.deserializeWith(
+          AuthState.serializer, json.decode(data));
     } else {
       throw 'State does not exist on file';
     }

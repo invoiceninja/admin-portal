@@ -41,8 +41,7 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 }
 
 Middleware<AppState> _editProject() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProject;
 
     if (!action.force &&

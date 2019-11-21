@@ -69,10 +69,7 @@ abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity(
-      {String id,
-      bool isQuote = false,
-      AppState state,
-      ClientEntity client}) {
+      {String id, bool isQuote = false, AppState state, ClientEntity client}) {
     final company = state?.company;
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,

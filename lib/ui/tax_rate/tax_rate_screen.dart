@@ -38,8 +38,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartTaxRateMultiselect()),
+      onHamburgerLongPress: () => store.dispatch(StartTaxRateMultiselect()),
       onBackPressed: () => store.dispatch(ViewSettings(
           navigator: Navigator.of(context), section: kSettingsTaxSettings)),
       onCheckboxChanged: (value) {

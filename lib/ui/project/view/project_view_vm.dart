@@ -95,10 +95,9 @@ class ProjectViewVM {
         if (longPress && project.isActive && client.isActive) {
           createEntity(
               context: context,
-              entity: TaskEntity(state: state)
-                  .rebuild((b) => b
-                    ..projectId = project.id
-                    ..clientId = project.clientId));
+              entity: TaskEntity(state: state).rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId));
         } else {
           viewEntitiesByType(
               context: context,
@@ -109,10 +108,9 @@ class ProjectViewVM {
       onAddTaskPressed: (context) {
         createEntity(
             context: context,
-            entity: TaskEntity(state: state)
-                .rebuild((b) => b
-                  ..projectId = project.id
-                  ..clientId = project.clientId),
+            entity: TaskEntity(state: state).rebuild((b) => b
+              ..projectId = project.id
+              ..clientId = project.clientId),
             force: true);
       },
       onBackPressed: () {

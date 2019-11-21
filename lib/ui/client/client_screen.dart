@@ -38,8 +38,7 @@ class ClientScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.clientList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartClientMultiselect()),
+      onHamburgerLongPress: () => store.dispatch(StartClientMultiselect()),
       onCheckboxChanged: (value) {
         final clients = viewModel.clientList
             .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
@@ -71,8 +70,7 @@ class ClientScreen extends StatelessWidget {
               localization.cancel,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () =>
-                store.dispatch(ClearClientMultiselect()),
+            onPressed: () => store.dispatch(ClearClientMultiselect()),
           ),
         if (viewModel.isInMultiselect)
           FlatButton(

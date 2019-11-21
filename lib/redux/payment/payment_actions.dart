@@ -308,11 +308,9 @@ void handlePaymentAction(
 
       for (final payment in payments) {
         if (!store.state.paymentListState.isSelected(payment.id)) {
-          store.dispatch(
-              AddToPaymentMultiselect(entity: payment));
+          store.dispatch(AddToPaymentMultiselect(entity: payment));
         } else {
-          store.dispatch(
-              RemoveFromPaymentMultiselect(entity: payment));
+          store.dispatch(RemoveFromPaymentMultiselect(entity: payment));
         }
       }
       break;

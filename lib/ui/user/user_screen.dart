@@ -39,8 +39,7 @@ class UserScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.userList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartUserMultiselect()),
+      onHamburgerLongPress: () => store.dispatch(StartUserMultiselect()),
       onCheckboxChanged: (value) {
         /*
         final users = viewModel.userList

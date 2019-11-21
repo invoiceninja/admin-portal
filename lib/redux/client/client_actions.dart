@@ -377,11 +377,9 @@ void handleClientAction(
 
       for (final client in clients) {
         if (!state.clientListState.isSelected(client.id)) {
-          store.dispatch(
-              AddToClientMultiselect(entity: client));
+          store.dispatch(AddToClientMultiselect(entity: client));
         } else {
-          store.dispatch(
-              RemoveFromClientMultiselect(entity: client));
+          store.dispatch(RemoveFromClientMultiselect(entity: client));
         }
       }
       break;

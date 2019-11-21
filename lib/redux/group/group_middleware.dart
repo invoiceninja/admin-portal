@@ -40,8 +40,7 @@ List<Middleware<AppState>> createStoreGroupsMiddleware([
 }
 
 Middleware<AppState> _editGroup() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditGroup;
 
     if (!action.force &&

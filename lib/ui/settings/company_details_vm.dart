@@ -62,8 +62,7 @@ class CompanyDetailsVM {
             final completer = snackBarCompleter<Null>(
                 context, AppLocalization.of(context).savedSettings);
             store.dispatch(SaveCompanyRequest(
-                completer: completer,
-                company: settingsUIState.company));
+                completer: completer, company: settingsUIState.company));
             break;
           case EntityType.group:
             final completer = snackBarCompleter<GroupEntity>(

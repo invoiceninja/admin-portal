@@ -151,9 +151,7 @@ class EntityDropdownDialog extends StatefulWidget {
 
   final BuiltMap<String, SelectableEntity> entityMap;
   final List<String> entityList;
-  final Function(SelectableEntity, [bool]) onSelected
-
-  ;
+  final Function(SelectableEntity, [bool]) onSelected;
   final Function(BuildContext context, Completer completer) onAddPressed;
 
   @override

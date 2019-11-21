@@ -69,11 +69,10 @@ class CompanyGatewayScreen extends StatelessWidget {
                         context: context,
                         multiselect: true);
 
-                    store.dispatch(
-                        ClearCompanyGatewayMultiselect());
+                    store.dispatch(ClearCompanyGatewayMultiselect());
                   },
-            onCancelPressed: (context) => store
-                .dispatch(ClearCompanyGatewayMultiselect()),
+            onCancelPressed: (context) =>
+                store.dispatch(ClearCompanyGatewayMultiselect()),
           )
         else
           SaveCancelButtons(

@@ -43,8 +43,7 @@ List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
 }
 
 Middleware<AppState> _editCompanyGateway() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditCompanyGateway;
 
     if (!action.force &&

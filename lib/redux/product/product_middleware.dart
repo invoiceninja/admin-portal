@@ -37,8 +37,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProduct;
 
     if (!action.force &&

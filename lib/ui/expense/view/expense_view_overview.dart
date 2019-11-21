@@ -52,7 +52,8 @@ class ExpenseOverview extends StatelessWidget {
                 value: formatNumber(expense.amountWithTax, context,
                     currencyId: expense.expenseCurrencyId),
                 secondLabel: localization.converted,
-                secondValue: formatNumber(expense.convertedAmountWithTax, context,
+                secondValue: formatNumber(
+                    expense.convertedAmountWithTax, context,
                     currencyId: expense.invoiceCurrencyId),
               )
             : EntityHeader(

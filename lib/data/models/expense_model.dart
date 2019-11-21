@@ -68,10 +68,7 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
-      {String id,
-      AppState state,
-      VendorEntity vendor,
-      ClientEntity client}) {
+      {String id, AppState state, VendorEntity vendor, ClientEntity client}) {
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,

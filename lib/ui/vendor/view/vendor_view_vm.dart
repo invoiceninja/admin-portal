@@ -89,11 +89,12 @@ class VendorViewVM {
             if (longPress && vendor.isActive) {
               createEntity(
                   context: context,
-                  entity:
-                      ExpenseEntity(state: state, vendor: vendor));
+                  entity: ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
-                  context: context, entityType: EntityType.expense, filterEntity: vendor);
+                  context: context,
+                  entityType: EntityType.expense,
+                  filterEntity: vendor);
             }
             break;
         }

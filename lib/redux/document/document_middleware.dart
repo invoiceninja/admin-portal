@@ -39,8 +39,7 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 }
 
 Middleware<AppState> _editDocument() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditDocument;
 
     next(action);
