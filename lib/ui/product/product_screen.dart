@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -63,27 +64,11 @@ class ProductScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearProductMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.productListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.productListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final products = viewModel.productList
                         .map<ProductEntity>(
                             (productId) => viewModel.productMap[productId])
@@ -93,8 +78,11 @@ class ProductScreen extends StatelessWidget {
                         entities: products,
                         context: context,
                         multiselect: true);
+
                     store.dispatch(ClearProductMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearProductMultiselect()),
           ),
       ],
       body: ProductListBuilder(),

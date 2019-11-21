@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -63,27 +64,11 @@ class VendorScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearVendorMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.vendorListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.vendorListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final vendors = viewModel.vendorList
                         .map<VendorEntity>(
                             (vendorId) => viewModel.vendorMap[vendorId])
@@ -91,8 +76,11 @@ class VendorScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: vendors, context: context, multiselect: true);
+
                     store.dispatch(ClearVendorMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearVendorMultiselect()),
           ),
       ],
       body: VendorListBuilder(),
