@@ -252,7 +252,7 @@ void handleProductAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
-        store.dispatch(StartProductMultiselect(context: context));
+        store.dispatch(StartProductMultiselect());
       }
 
       if (products.isEmpty) {
@@ -261,39 +261,27 @@ void handleProductAction(
 
       for (final product in products) {
         if (!store.state.productListState.isSelected(product.id)) {
-          store.dispatch(
-              AddToProductMultiselect(context: context, entity: product));
+          store.dispatch(AddToProductMultiselect(entity: product));
         } else {
-          store.dispatch(
-              RemoveFromProductMultiselect(context: context, entity: product));
+          store.dispatch(RemoveFromProductMultiselect(entity: product));
         }
       }
       break;
   }
 }
 
-class StartProductMultiselect {
-  StartProductMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartProductMultiselect {}
 
 class AddToProductMultiselect {
-  AddToProductMultiselect({@required this.context, @required this.entity});
+  AddToProductMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromProductMultiselect {
-  RemoveFromProductMultiselect({@required this.context, @required this.entity});
+  RemoveFromProductMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearProductMultiselect {
-  ClearProductMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearProductMultiselect {}

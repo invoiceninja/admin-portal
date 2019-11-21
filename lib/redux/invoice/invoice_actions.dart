@@ -412,7 +412,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {
-        store.dispatch(StartInvoiceMultiselect(context: context));
+        store.dispatch(StartInvoiceMultiselect());
       }
 
       if (invoices.isEmpty) {
@@ -421,39 +421,27 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
       for (final invoice in invoices) {
         if (!store.state.invoiceListState.isSelected(invoice.id)) {
-          store.dispatch(
-              AddToInvoiceMultiselect(context: context, entity: invoice));
+          store.dispatch(AddToInvoiceMultiselect(entity: invoice));
         } else {
-          store.dispatch(
-              RemoveFromInvoiceMultiselect(context: context, entity: invoice));
+          store.dispatch(RemoveFromInvoiceMultiselect(entity: invoice));
         }
       }
       break;
   }
 }
 
-class StartInvoiceMultiselect {
-  StartInvoiceMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartInvoiceMultiselect {}
 
 class AddToInvoiceMultiselect {
-  AddToInvoiceMultiselect({@required this.context, @required this.entity});
+  AddToInvoiceMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromInvoiceMultiselect {
-  RemoveFromInvoiceMultiselect({@required this.context, @required this.entity});
+  RemoveFromInvoiceMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearInvoiceMultiselect {
-  ClearInvoiceMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearInvoiceMultiselect {}

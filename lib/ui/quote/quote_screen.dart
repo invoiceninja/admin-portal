@@ -40,7 +40,7 @@ class QuoteScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.quoteList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartQuoteMultiselect(context: context)),
+          store.dispatch(StartQuoteMultiselect()),
       onCheckboxChanged: (value) {
         final quotes = viewModel.quoteList
             .map<InvoiceEntity>((quoteId) => viewModel.quoteMap[quoteId])
@@ -73,7 +73,7 @@ class QuoteScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearQuoteMultiselect(context: context));
+              store.dispatch(ClearQuoteMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -94,7 +94,7 @@ class QuoteScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: quotes, context: context, multiselect: true);
-                    store.dispatch(ClearQuoteMultiselect(context: context));
+                    store.dispatch(ClearQuoteMultiselect());
                   },
           ),
       ],

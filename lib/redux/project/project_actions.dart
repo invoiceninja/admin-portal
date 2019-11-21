@@ -269,10 +269,9 @@ void handleProjectAction(
     case EntityAction.newTask:
       createEntity(
           context: context,
-          entity: TaskEntity(state: state)
-              .rebuild((b) => b
-                ..projectId = project.id
-                ..clientId = project.clientId));
+          entity: TaskEntity(state: state).rebuild((b) => b
+            ..projectId = project.id
+            ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
       final items =
@@ -307,7 +306,7 @@ void handleProjectAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {
-        store.dispatch(StartProjectMultiselect(context: context));
+        store.dispatch(StartProjectMultiselect());
       }
 
       if (projects.isEmpty) {
@@ -316,39 +315,27 @@ void handleProjectAction(
 
       for (final project in projects) {
         if (!store.state.projectListState.isSelected(project.id)) {
-          store.dispatch(
-              AddToProjectMultiselect(context: context, entity: project));
+          store.dispatch(AddToProjectMultiselect(entity: project));
         } else {
-          store.dispatch(
-              RemoveFromProjectMultiselect(context: context, entity: project));
+          store.dispatch(RemoveFromProjectMultiselect(entity: project));
         }
       }
       break;
   }
 }
 
-class StartProjectMultiselect {
-  StartProjectMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartProjectMultiselect {}
 
 class AddToProjectMultiselect {
-  AddToProjectMultiselect({@required this.context, @required this.entity});
+  AddToProjectMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromProjectMultiselect {
-  RemoveFromProjectMultiselect({@required this.context, @required this.entity});
+  RemoveFromProjectMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearProjectMultiselect {
-  ClearProjectMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearProjectMultiselect {}

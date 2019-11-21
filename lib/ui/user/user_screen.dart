@@ -40,7 +40,7 @@ class UserScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.userList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartUserMultiselect(context: context)),
+          store.dispatch(StartUserMultiselect()),
       onCheckboxChanged: (value) {
         /*
         final users = viewModel.userList
@@ -76,7 +76,7 @@ class UserScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearUserMultiselect(context: context));
+              store.dispatch(ClearUserMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -96,7 +96,7 @@ class UserScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: users, context: context, multiselect: true);
-                    store.dispatch(ClearUserMultiselect(context: context));
+                    store.dispatch(ClearUserMultiselect());
                   },
           ),
       ],

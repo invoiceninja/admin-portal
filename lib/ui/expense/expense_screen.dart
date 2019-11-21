@@ -39,8 +39,7 @@ class ExpenseScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.expenseList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartExpenseMultiselect(context: context)),
+      onHamburgerLongPress: () => store.dispatch(StartExpenseMultiselect()),
       onCheckboxChanged: (value) {
         final expenses = viewModel.expenseList
             .map<ExpenseEntity>((expenseId) => viewModel.expenseMap[expenseId])
@@ -73,7 +72,7 @@ class ExpenseScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearExpenseMultiselect(context: context));
+              store.dispatch(ClearExpenseMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -96,7 +95,7 @@ class ExpenseScreen extends StatelessWidget {
                         entities: expenses,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearExpenseMultiselect(context: context));
+                    store.dispatch(ClearExpenseMultiselect());
                   },
           ),
       ],

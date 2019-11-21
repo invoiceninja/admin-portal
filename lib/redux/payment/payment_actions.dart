@@ -299,7 +299,7 @@ void handlePaymentAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {
-        store.dispatch(StartPaymentMultiselect(context: context));
+        store.dispatch(StartPaymentMultiselect());
       }
 
       if (payments.isEmpty) {
@@ -309,38 +309,28 @@ void handlePaymentAction(
       for (final payment in payments) {
         if (!store.state.paymentListState.isSelected(payment.id)) {
           store.dispatch(
-              AddToPaymentMultiselect(context: context, entity: payment));
+              AddToPaymentMultiselect(entity: payment));
         } else {
           store.dispatch(
-              RemoveFromPaymentMultiselect(context: context, entity: payment));
+              RemoveFromPaymentMultiselect(entity: payment));
         }
       }
       break;
   }
 }
 
-class StartPaymentMultiselect {
-  StartPaymentMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartPaymentMultiselect {}
 
 class AddToPaymentMultiselect {
-  AddToPaymentMultiselect({@required this.context, @required this.entity});
+  AddToPaymentMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromPaymentMultiselect {
-  RemoveFromPaymentMultiselect({@required this.context, @required this.entity});
+  RemoveFromPaymentMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearPaymentMultiselect {
-  ClearPaymentMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearPaymentMultiselect {}

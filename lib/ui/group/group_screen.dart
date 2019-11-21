@@ -39,8 +39,7 @@ class GroupSettingsScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartGroupMultiselect(context: context)),
+      onHamburgerLongPress: () => store.dispatch(StartGroupMultiselect()),
       onCheckboxChanged: (value) {
         final groups = viewModel.groupList
             .map<GroupEntity>((groupId) => viewModel.groupMap[groupId])
@@ -74,7 +73,7 @@ class GroupSettingsScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearGroupMultiselect(context: context));
+              store.dispatch(ClearGroupMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -95,7 +94,7 @@ class GroupSettingsScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: groups, context: context, multiselect: true);
-                    store.dispatch(ClearGroupMultiselect(context: context));
+                    store.dispatch(ClearGroupMultiselect());
                   },
           ),
       ],

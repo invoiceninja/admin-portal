@@ -40,7 +40,7 @@ class InvoiceScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.invoiceList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartInvoiceMultiselect(context: context)),
+          store.dispatch(StartInvoiceMultiselect()),
       onCheckboxChanged: (value) {
         final invoices = viewModel.invoiceList
             .map<InvoiceEntity>((invoiceId) => viewModel.invoiceMap[invoiceId])
@@ -73,7 +73,7 @@ class InvoiceScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearInvoiceMultiselect(context: context));
+              store.dispatch(ClearInvoiceMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -96,7 +96,7 @@ class InvoiceScreen extends StatelessWidget {
                         entities: invoices,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearInvoiceMultiselect(context: context));
+                    store.dispatch(ClearInvoiceMultiselect());
                   },
           ),
       ],

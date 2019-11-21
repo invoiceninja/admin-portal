@@ -277,7 +277,7 @@ void handleTaxRateAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {
-        store.dispatch(StartTaxRateMultiselect(context: context));
+        store.dispatch(StartTaxRateMultiselect());
       }
 
       if (taxRates.isEmpty) {
@@ -286,39 +286,27 @@ void handleTaxRateAction(
 
       for (final taxRate in taxRates) {
         if (!store.state.taxRateListState.isSelected(taxRate.id)) {
-          store.dispatch(
-              AddToTaxRateMultiselect(context: context, entity: taxRate));
+          store.dispatch(AddToTaxRateMultiselect(entity: taxRate));
         } else {
-          store.dispatch(
-              RemoveFromTaxRateMultiselect(context: context, entity: taxRate));
+          store.dispatch(RemoveFromTaxRateMultiselect(entity: taxRate));
         }
       }
       break;
   }
 }
 
-class StartTaxRateMultiselect {
-  StartTaxRateMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartTaxRateMultiselect {}
 
 class AddToTaxRateMultiselect {
-  AddToTaxRateMultiselect({@required this.context, @required this.entity});
+  AddToTaxRateMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromTaxRateMultiselect {
-  RemoveFromTaxRateMultiselect({@required this.context, @required this.entity});
+  RemoveFromTaxRateMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearTaxRateMultiselect {
-  ClearTaxRateMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearTaxRateMultiselect {}

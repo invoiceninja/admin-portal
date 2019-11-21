@@ -39,7 +39,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartTaxRateMultiselect(context: context)),
+          store.dispatch(StartTaxRateMultiselect()),
       onBackPressed: () => store.dispatch(ViewSettings(
           navigator: Navigator.of(context), section: kSettingsTaxSettings)),
       onCheckboxChanged: (value) {
@@ -73,7 +73,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearTaxRateMultiselect(context: context));
+              store.dispatch(ClearTaxRateMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -95,7 +95,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
                         entities: taxRates,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearTaxRateMultiselect(context: context));
+                    store.dispatch(ClearTaxRateMultiselect());
                   },
           ),
       ],

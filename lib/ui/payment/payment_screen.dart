@@ -35,7 +35,7 @@ class PaymentScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartPaymentMultiselect(context: context)),
+          store.dispatch(StartPaymentMultiselect()),
       onCheckboxChanged: (value) {
         final payments = viewModel.paymentList
             .map<PaymentEntity>((paymentId) => viewModel.paymentMap[paymentId])
@@ -68,7 +68,7 @@ class PaymentScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearPaymentMultiselect(context: context));
+              store.dispatch(ClearPaymentMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -91,7 +91,7 @@ class PaymentScreen extends StatelessWidget {
                         entities: payments,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearPaymentMultiselect(context: context));
+                    store.dispatch(ClearPaymentMultiselect());
                   },
           ),
       ],
