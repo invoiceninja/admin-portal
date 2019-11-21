@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
@@ -13,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentList extends StatelessWidget {
   const PaymentList({
@@ -28,6 +30,16 @@ class PaymentList extends StatelessWidget {
     final listState = viewModel.listState;
     final listUIState = state.uiState.paymentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final paymentList = viewModel.paymentList;
+
+    if (isNotMobile(context) &&
+        paymentList.isNotEmpty &&
+        !paymentList.contains(state.paymentUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.payment,
+          entityId: paymentList.first);
+    }
 
     return Column(
       children: <Widget>[

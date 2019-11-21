@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class StubList extends StatelessWidget {
   const StubList({
@@ -31,6 +33,16 @@ class StubList extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final listUIState = store.state.uiState.stubUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final stubList = viewModel.stubList;
+
+    if (isNotMobile(context) &&
+        stubList.isNotEmpty &&
+        !stubList.contains(state.stubUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.stub,
+          entityId: stubList.first);
+    }
 
     return Column(
       children: <Widget>[

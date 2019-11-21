@@ -19,8 +19,6 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewPayment>((selectedId, action) => action.paymentId),
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
-  TypedReducer<String, FilterPaymentsByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<PaymentEntity>([

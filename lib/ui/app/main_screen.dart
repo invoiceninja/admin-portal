@@ -391,6 +391,7 @@ class EntityScreens extends StatelessWidget {
               (entityUIState.selectedId ?? '').isNotEmpty
                   ? viewWidget
                   : BlankScreen(AppLocalization.of(context).noRecordSelected),
+              viewWidget,
               editWidget,
             ],
           ),

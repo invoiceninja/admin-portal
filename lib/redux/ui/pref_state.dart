@@ -61,6 +61,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isMobile => appLayout == AppLayout.mobile;
 
+  bool get isNotMobile => !isMobile;
+
   bool get isMenuFloated =>
       appLayout == AppLayout.mobile || menuSidebarMode == AppSidebarMode.float;
 

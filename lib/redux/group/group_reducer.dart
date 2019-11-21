@@ -17,11 +17,9 @@ EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewGroup>(
-      (String selectedId, dynamic action) => action.groupId),
+      (String selectedId, action) => action.groupId),
   TypedReducer<String, AddGroupSuccess>(
-      (String selectedId, dynamic action) => action.group.id),
-  TypedReducer<String, FilterGroupsByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : '')
+      (String selectedId, action) => action.group.id),
 ]);
 
 final editingReducer = combineReducers<GroupEntity>([

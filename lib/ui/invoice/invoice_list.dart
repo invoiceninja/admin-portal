@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceList extends StatelessWidget {
   const InvoiceList({
@@ -25,6 +27,16 @@ class InvoiceList extends StatelessWidget {
     final state = viewModel.state;
     final listState = viewModel.listState;
     final isInMultiselect = listState.isInMultiselect();
+    final invoiceList = viewModel.invoiceList;
+
+    if (isNotMobile(context) &&
+        invoiceList.isNotEmpty &&
+        !invoiceList.contains(state.invoiceUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.invoice,
+          entityId: invoiceList.first);
+    }
 
     final documentMap = memoizedEntityDocumentMap(
         EntityType.invoice, state.documentState.map, state.expenseState.map);

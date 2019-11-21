@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientList extends StatelessWidget {
   const ClientList({
@@ -25,6 +27,16 @@ class ClientList extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
     final listState = viewModel.state.clientListState;
+    final clientList = viewModel.clientList;
+
+    if (isNotMobile(context) &&
+        clientList.isNotEmpty &&
+        !clientList.contains(state.clientUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.client,
+          entityId: clientList.first);
+    }
 
     return Column(
       children: <Widget>[

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({
@@ -25,6 +27,16 @@ class TaskList extends StatelessWidget {
     final listState = viewModel.listState;
     final listUIState = state.uiState.taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final taskList = viewModel.taskList;
+
+    if (isNotMobile(context) &&
+        taskList.isNotEmpty &&
+        !taskList.contains(state.taskUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.task,
+          entityId: taskList.first);
+    }
 
     return Column(
       children: <Widget>[

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -10,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_item.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentList extends StatelessWidget {
   const DocumentList({
@@ -22,9 +24,20 @@ class DocumentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final userCompany = viewModel.state.userCompany;
+    final state = store.state;
+    final userCompany = state.userCompany;
     final listUIState = store.state.uiState.documentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final documentList = viewModel.documentList;
+
+    if (isNotMobile(context) &&
+        documentList.isNotEmpty &&
+        !documentList.contains(state.documentUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.document,
+          entityId: documentList.first);
+    }
 
     /*
     final localization = AppLocalization.of(context);

@@ -17,11 +17,9 @@ EntityUIState userUIReducer(UserUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewUser>(
-      (String selectedId, dynamic action) => action.userId),
+      (String selectedId, action) => action.userId),
   TypedReducer<String, AddUserSuccess>(
-      (String selectedId, dynamic action) => action.user.id),
-  TypedReducer<String, FilterUsersByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : '')
+      (String selectedId, action) => action.user.id),
 ]);
 
 final editingReducer = combineReducers<UserEntity>([

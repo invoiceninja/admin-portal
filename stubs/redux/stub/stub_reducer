@@ -21,7 +21,6 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.stubId),
   TypedReducer<String, AddStubSuccess>(
       (String selectedId, dynamic action) => action.stub.id),
-  TypedReducer<String, FilterStubsByEntity>((selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<StubEntity>([

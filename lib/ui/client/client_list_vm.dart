@@ -21,6 +21,7 @@ class ClientListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientListVM>(
+      //rebuildOnChange: true,
       converter: ClientListVM.fromStore,
       builder: (context, vm) {
         return ClientList(

@@ -47,8 +47,6 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewVendor>((selectedId, action) => action.vendorId),
   TypedReducer<String, AddVendorSuccess>(
       (selectedId, action) => action.vendor.id),
-  TypedReducer<String, FilterVendorsByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : '')
 ]);
 
 final editingReducer = combineReducers<VendorEntity>([

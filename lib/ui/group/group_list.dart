@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/group/group_list_item.dart';
 import 'package:invoiceninja_flutter/ui/group/group_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GroupList extends StatelessWidget {
   const GroupList({
@@ -30,8 +32,19 @@ class GroupList extends StatelessWidget {
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     */
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final listUIState = store.state.uiState.groupUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final groupList = viewModel.groupList;
+
+    if (isNotMobile(context) &&
+        groupList.isNotEmpty &&
+        !groupList.contains(state.groupUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.group,
+          entityId: groupList.first);
+    }
 
     return Column(
       children: <Widget>[

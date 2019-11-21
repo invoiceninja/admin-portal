@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -12,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductList extends StatelessWidget {
   const ProductList({
@@ -38,6 +40,17 @@ class ProductList extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final isList = store.state.prefState.moduleLayout == ModuleLayout.list;
     final localization = AppLocalization.of(context);
+    final state = store.state;
+    final productList = viewModel.productList;
+
+    if (isNotMobile(context) &&
+        productList.isNotEmpty &&
+        !productList.contains(state.productUIState.selectedId)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.product,
+          entityId: productList.first);
+    }
 
     final listView = ListView.separated(
         separatorBuilder: (context, index) => ListDivider(),
