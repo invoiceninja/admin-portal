@@ -63,7 +63,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.showInvoiceQuantity),
-                value: company.enableProductQuantity ?? false,
+                value: company.enableInvoiceQuantity ?? false,
                 subtitle: Text(localization.showInvoiceQuantity),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableInvoiceQuantity = value)),

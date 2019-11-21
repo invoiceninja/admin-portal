@@ -179,7 +179,9 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                           .toList()
                     ],
                   ),
-                  if ((settings.resetCounterFrequencyId ?? '').isNotEmpty)
+                  if ((int.tryParse(settings.resetCounterFrequencyId ?? '0') ??
+                          0) >
+                      0)
                     DatePicker(
                       labelText: localization.nextReset,
                       selectedDate: settings.resetCounterDate,
