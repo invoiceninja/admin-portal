@@ -37,3 +37,4 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   static Serializer<AuthState> get serializer => _$authStateSerializer;
 }
+

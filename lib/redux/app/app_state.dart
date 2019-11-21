@@ -385,12 +385,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Custom fields [UI]: ${uiState.settingsUIState.company.customFields}, [DB] ${selectedCompany.customFields}';
     //return 'Permissions: ${uiState.userUIState.editing.userCompany.permissions}';
     //return 'Layout: ${uiState.layout}, menu: ${uiState.menuSidebarMode}, history: ${uiState.historySidebarMode}';
-    //return 'Sidebars - isMenuVisible: ${uiState.isMenuVisible}, isHistoryVisible: ${uiState.isHistoryVisible}';
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
-    //return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
     //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
     //return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
-    return 'User state ${settingsUIState.user.id}, ${user.id}';
+    return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
 
