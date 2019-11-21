@@ -447,7 +447,7 @@ Future handleQuoteAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.quoteListState.isInMultiselect()) {
-        store.dispatch(StartQuoteMultiselect(context: context));
+        store.dispatch(StartQuoteMultiselect());
       }
 
       if (quotes.isEmpty) {
@@ -456,39 +456,27 @@ Future handleQuoteAction(
 
       for (final quote in quotes) {
         if (!store.state.quoteListState.isSelected(quote.id)) {
-          store
-              .dispatch(AddToQuoteMultiselect(context: context, entity: quote));
+          store.dispatch(AddToQuoteMultiselect(entity: quote));
         } else {
-          store.dispatch(
-              RemoveFromQuoteMultiselect(context: context, entity: quote));
+          store.dispatch(RemoveFromQuoteMultiselect(entity: quote));
         }
       }
       break;
   }
 }
 
-class StartQuoteMultiselect {
-  StartQuoteMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartQuoteMultiselect {}
 
 class AddToQuoteMultiselect {
-  AddToQuoteMultiselect({@required this.context, @required this.entity});
+  AddToQuoteMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromQuoteMultiselect {
-  RemoveFromQuoteMultiselect({@required this.context, @required this.entity});
+  RemoveFromQuoteMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearQuoteMultiselect {
-  ClearQuoteMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearQuoteMultiselect {}

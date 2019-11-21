@@ -361,7 +361,7 @@ void handleTaskAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {
-        store.dispatch(StartTaskMultiselect(context: context));
+        store.dispatch(StartTaskMultiselect());
       }
 
       if (tasks.isEmpty) {
@@ -370,38 +370,27 @@ void handleTaskAction(
 
       for (final task in tasks) {
         if (!store.state.taskListState.isSelected(task.id)) {
-          store.dispatch(AddToTaskMultiselect(context: context, entity: task));
+          store.dispatch(AddToTaskMultiselect(entity: task));
         } else {
-          store.dispatch(
-              RemoveFromTaskMultiselect(context: context, entity: task));
+          store.dispatch(RemoveFromTaskMultiselect(entity: task));
         }
       }
       break;
   }
 }
 
-class StartTaskMultiselect {
-  StartTaskMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartTaskMultiselect {}
 
 class AddToTaskMultiselect {
-  AddToTaskMultiselect({@required this.context, @required this.entity});
+  AddToTaskMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromTaskMultiselect {
-  RemoveFromTaskMultiselect({@required this.context, @required this.entity});
+  RemoveFromTaskMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearTaskMultiselect {
-  ClearTaskMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearTaskMultiselect {}

@@ -273,7 +273,7 @@ void handleDocumentAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.documentListState.isInMultiselect()) {
-        store.dispatch(StartDocumentMultiselect(context: context));
+        store.dispatch(StartDocumentMultiselect());
       }
 
       if (documents.isEmpty) {
@@ -282,40 +282,27 @@ void handleDocumentAction(
 
       for (final document in documents) {
         if (!store.state.documentListState.isSelected(document.id)) {
-          store.dispatch(
-              AddToDocumentMultiselect(context: context, entity: document));
+          store.dispatch(AddToDocumentMultiselect(entity: document));
         } else {
-          store.dispatch(RemoveFromDocumentMultiselect(
-              context: context, entity: document));
+          store.dispatch(RemoveFromDocumentMultiselect(entity: document));
         }
       }
       break;
   }
 }
 
-class StartDocumentMultiselect {
-  StartDocumentMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartDocumentMultiselect {}
 
 class AddToDocumentMultiselect {
-  AddToDocumentMultiselect({@required this.context, @required this.entity});
+  AddToDocumentMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromDocumentMultiselect {
-  RemoveFromDocumentMultiselect(
-      {@required this.context, @required this.entity});
+  RemoveFromDocumentMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearDocumentMultiselect {
-  ClearDocumentMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearDocumentMultiselect {}

@@ -306,7 +306,7 @@ void handleExpenseAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {
-        store.dispatch(StartExpenseMultiselect(context: context));
+        store.dispatch(StartExpenseMultiselect());
       }
 
       if (expenses.isEmpty) {
@@ -315,39 +315,27 @@ void handleExpenseAction(
 
       for (final expense in expenses) {
         if (!store.state.expenseListState.isSelected(expense.id)) {
-          store.dispatch(
-              AddToExpenseMultiselect(context: context, entity: expense));
+          store.dispatch(AddToExpenseMultiselect(entity: expense));
         } else {
-          store.dispatch(
-              RemoveFromExpenseMultiselect(context: context, entity: expense));
+          store.dispatch(RemoveFromExpenseMultiselect(entity: expense));
         }
       }
       break;
   }
 }
 
-class StartExpenseMultiselect {
-  StartExpenseMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartExpenseMultiselect {}
 
 class AddToExpenseMultiselect {
-  AddToExpenseMultiselect({@required this.context, @required this.entity});
+  AddToExpenseMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromExpenseMultiselect {
-  RemoveFromExpenseMultiselect({@required this.context, @required this.entity});
+  RemoveFromExpenseMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearExpenseMultiselect {
-  ClearExpenseMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearExpenseMultiselect {}

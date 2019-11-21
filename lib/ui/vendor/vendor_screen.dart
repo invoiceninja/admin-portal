@@ -37,8 +37,7 @@ class VendorScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.vendorList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartVendorMultiselect(context: context)),
+      onHamburgerLongPress: () => store.dispatch(StartVendorMultiselect()),
       onCheckboxChanged: (value) {
         final vendors = viewModel.vendorList
             .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])
@@ -71,7 +70,7 @@ class VendorScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearVendorMultiselect(context: context));
+              store.dispatch(ClearVendorMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -92,7 +91,7 @@ class VendorScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: vendors, context: context, multiselect: true);
-                    store.dispatch(ClearVendorMultiselect(context: context));
+                    store.dispatch(ClearVendorMultiselect());
                   },
           ),
       ],

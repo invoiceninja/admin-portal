@@ -39,7 +39,7 @@ class TaskScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.taskList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartTaskMultiselect(context: context)),
+          store.dispatch(StartTaskMultiselect()),
       onCheckboxChanged: (value) {
         final tasks = viewModel.taskList
             .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
@@ -72,7 +72,7 @@ class TaskScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearTaskMultiselect(context: context));
+              store.dispatch(ClearTaskMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -92,7 +92,7 @@ class TaskScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: tasks, context: context, multiselect: true);
-                    store.dispatch(ClearTaskMultiselect(context: context));
+                    store.dispatch(ClearTaskMultiselect());
                   },
           ),
       ],

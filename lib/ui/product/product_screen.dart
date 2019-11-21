@@ -38,7 +38,7 @@ class ProductScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.productList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartProductMultiselect(context: context)),
+          store.dispatch(StartProductMultiselect()),
       onCheckboxChanged: (value) {
         final products = viewModel.productList
             .map<ProductEntity>((productId) => viewModel.productMap[productId])
@@ -71,7 +71,7 @@ class ProductScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearProductMultiselect(context: context));
+              store.dispatch(ClearProductMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -94,7 +94,7 @@ class ProductScreen extends StatelessWidget {
                         entities: products,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearProductMultiselect(context: context));
+                    store.dispatch(ClearProductMultiselect());
                   },
           ),
       ],

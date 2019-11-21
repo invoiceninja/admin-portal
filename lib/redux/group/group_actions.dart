@@ -284,7 +284,7 @@ void handleGroupAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {
-        store.dispatch(StartGroupMultiselect(context: context));
+        store.dispatch(StartGroupMultiselect());
       }
 
       if (groups.isEmpty) {
@@ -293,39 +293,27 @@ void handleGroupAction(
 
       for (final group in groups) {
         if (!store.state.groupListState.isSelected(group.id)) {
-          store
-              .dispatch(AddToGroupMultiselect(context: context, entity: group));
+          store.dispatch(AddToGroupMultiselect(entity: group));
         } else {
-          store.dispatch(
-              RemoveFromGroupMultiselect(context: context, entity: group));
+          store.dispatch(RemoveFromGroupMultiselect(entity: group));
         }
       }
       break;
   }
 }
 
-class StartGroupMultiselect {
-  StartGroupMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartGroupMultiselect {}
 
 class AddToGroupMultiselect {
-  AddToGroupMultiselect({@required this.context, @required this.entity});
+  AddToGroupMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromGroupMultiselect {
-  RemoveFromGroupMultiselect({@required this.context, @required this.entity});
+  RemoveFromGroupMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearGroupMultiselect {
-  ClearGroupMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearGroupMultiselect {}

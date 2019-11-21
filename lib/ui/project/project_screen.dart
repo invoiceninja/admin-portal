@@ -38,7 +38,7 @@ class ProjectScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.projectList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartProjectMultiselect(context: context)),
+          store.dispatch(StartProjectMultiselect()),
       onCheckboxChanged: (value) {
         final projects = viewModel.projectList
             .map<ProjectEntity>((projectId) => viewModel.projectMap[projectId])
@@ -71,7 +71,7 @@ class ProjectScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearProjectMultiselect(context: context));
+              store.dispatch(ClearProjectMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -94,7 +94,7 @@ class ProjectScreen extends StatelessWidget {
                         entities: projects,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearProjectMultiselect(context: context));
+                    store.dispatch(ClearProjectMultiselect());
                   },
           ),
       ],

@@ -37,8 +37,7 @@ class DocumentScreen extends StatelessWidget {
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.documentList.length,
       showCheckbox: isInMultiselect,
-      onHamburgerLongPress: () =>
-          store.dispatch(StartDocumentMultiselect(context: context)),
+      onHamburgerLongPress: () => store.dispatch(StartDocumentMultiselect()),
       onCheckboxChanged: (value) {
         final documents = viewModel.documentList
             .map<DocumentEntity>(
@@ -73,7 +72,7 @@ class DocumentScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
-              store.dispatch(ClearDocumentMultiselect(context: context));
+              store.dispatch(ClearDocumentMultiselect());
             },
           ),
         if (viewModel.isInMultiselect)
@@ -96,7 +95,7 @@ class DocumentScreen extends StatelessWidget {
                         entities: documents,
                         context: context,
                         multiselect: true);
-                    store.dispatch(ClearDocumentMultiselect(context: context));
+                    store.dispatch(ClearDocumentMultiselect());
                   },
           ),
       ],

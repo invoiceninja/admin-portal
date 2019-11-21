@@ -284,7 +284,7 @@ void handleCompanyGatewayAction(BuildContext context,
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {
-        store.dispatch(StartCompanyGatewayMultiselect(context: context));
+        store.dispatch(StartCompanyGatewayMultiselect());
       }
 
       if (companyGateways.isEmpty) {
@@ -294,41 +294,29 @@ void handleCompanyGatewayAction(BuildContext context,
       for (final companyGateway in companyGateways) {
         if (!store.state.companyGatewayListState
             .isSelected(companyGateway.id)) {
-          store.dispatch(AddToCompanyGatewayMultiselect(
-              context: context, entity: companyGateway));
+          store
+              .dispatch(AddToCompanyGatewayMultiselect(entity: companyGateway));
         } else {
-          store.dispatch(RemoveFromCompanyGatewayMultiselect(
-              context: context, entity: companyGateway));
+          store.dispatch(
+              RemoveFromCompanyGatewayMultiselect(entity: companyGateway));
         }
       }
       break;
   }
 }
 
-class StartCompanyGatewayMultiselect {
-  StartCompanyGatewayMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartCompanyGatewayMultiselect {}
 
 class AddToCompanyGatewayMultiselect {
-  AddToCompanyGatewayMultiselect(
-      {@required this.context, @required this.entity});
+  AddToCompanyGatewayMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromCompanyGatewayMultiselect {
-  RemoveFromCompanyGatewayMultiselect(
-      {@required this.context, @required this.entity});
+  RemoveFromCompanyGatewayMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearCompanyGatewayMultiselect {
-  ClearCompanyGatewayMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearCompanyGatewayMultiselect {}

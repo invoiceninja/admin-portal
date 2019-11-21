@@ -321,7 +321,7 @@ void handleVendorAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {
-        store.dispatch(StartVendorMultiselect(context: context));
+        store.dispatch(StartVendorMultiselect());
       }
 
       if (vendors.isEmpty) {
@@ -330,39 +330,27 @@ void handleVendorAction(
 
       for (final vendor in vendors) {
         if (!store.state.vendorListState.isSelected(vendor.id)) {
-          store.dispatch(
-              AddToVendorMultiselect(context: context, entity: vendor));
+          store.dispatch(AddToVendorMultiselect(entity: vendor));
         } else {
-          store.dispatch(
-              RemoveFromVendorMultiselect(context: context, entity: vendor));
+          store.dispatch(RemoveFromVendorMultiselect(entity: vendor));
         }
       }
       break;
   }
 }
 
-class StartVendorMultiselect {
-  StartVendorMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartVendorMultiselect {}
 
 class AddToVendorMultiselect {
-  AddToVendorMultiselect({@required this.context, @required this.entity});
+  AddToVendorMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromVendorMultiselect {
-  RemoveFromVendorMultiselect({@required this.context, @required this.entity});
+  RemoveFromVendorMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearVendorMultiselect {
-  ClearVendorMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearVendorMultiselect {}

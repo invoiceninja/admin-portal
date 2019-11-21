@@ -38,7 +38,7 @@ class CompanyGatewayScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
-          store.dispatch(StartCompanyGatewayMultiselect(context: context)),
+          store.dispatch(StartCompanyGatewayMultiselect()),
       onCheckboxChanged: (value) {
         final companyGateways = viewModel.companyGatewayList
             .map<CompanyGatewayEntity>((companyGatewayId) =>
@@ -70,10 +70,10 @@ class CompanyGatewayScreen extends StatelessWidget {
                         multiselect: true);
 
                     store.dispatch(
-                        ClearCompanyGatewayMultiselect(context: context));
+                        ClearCompanyGatewayMultiselect());
                   },
             onCancelPressed: (context) => store
-                .dispatch(ClearCompanyGatewayMultiselect(context: context)),
+                .dispatch(ClearCompanyGatewayMultiselect()),
           )
         else
           SaveCancelButtons(

@@ -276,7 +276,7 @@ void handleUserAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {
-        store.dispatch(StartUserMultiselect(context: context));
+        store.dispatch(StartUserMultiselect());
       }
 
       if (users.isEmpty) {
@@ -285,38 +285,27 @@ void handleUserAction(
 
       for (final user in users) {
         if (!store.state.userListState.isSelected(user.id)) {
-          store.dispatch(AddToUserMultiselect(context: context, entity: user));
+          store.dispatch(AddToUserMultiselect(entity: user));
         } else {
-          store.dispatch(
-              RemoveFromUserMultiselect(context: context, entity: user));
+          store.dispatch(RemoveFromUserMultiselect(entity: user));
         }
       }
       break;
   }
 }
 
-class StartUserMultiselect {
-  StartUserMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartUserMultiselect {}
 
 class AddToUserMultiselect {
-  AddToUserMultiselect({@required this.context, @required this.entity});
+  AddToUserMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromUserMultiselect {
-  RemoveFromUserMultiselect({@required this.context, @required this.entity});
+  RemoveFromUserMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearUserMultiselect {
-  ClearUserMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearUserMultiselect {}
