@@ -46,7 +46,8 @@ class CustomField extends StatelessWidget {
       return SizedBox();
     }
 
-    print('## BUILD: $initialValue = $label: $_fieldType $_fieldLabel $_fieldOptions');
+    print(
+        '## BUILD: $initialValue = $label: $_fieldType $_fieldLabel $_fieldOptions');
 
     switch (_fieldType) {
       case kFieldTypeSingleLineText:
@@ -59,6 +60,14 @@ class CustomField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: _fieldLabel,
           ),
+        );
+      case kFieldTypeSwitch:
+        return SwitchListTile(
+          title: Text(_fieldLabel),
+          value: initialValue == kSwitchValueYes,
+          onChanged: (value) =>
+              controller.text = value ? kSwitchValueYes : kSwitchValueNo,
+          activeColor: Theme.of(context).accentColor,
         );
       case kFieldTypeDate:
         return DatePicker(

@@ -150,6 +150,9 @@ const String kFieldTypeDropdown = 'dropdown';
 const String kFieldTypeDate = 'date';
 const String kFieldTypeSwitch = 'switch';
 
+const String kSwitchValueYes = 'yes';
+const String kSwitchValueNo = 'no';
+
 const String kTaskStatusLogged = '-1';
 const String kTaskStatusRunning = '-2';
 const String kTaskStatusInvoiced = '-3';
