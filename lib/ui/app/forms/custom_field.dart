@@ -21,16 +21,17 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (field == null) {
-      return SizedBox();
-    }
-
     final state = StoreProvider.of<AppState>(context).state;
     final CompanyEntity company = state.company;
     final localization = AppLocalization.of(context);
 
-    final fieldType = company.getCustomFieldType(field);
     final fieldLabel = company.getCustomFieldLabel(field);
+
+    if (fieldLabel.isEmpty) {
+      return SizedBox();
+    }
+
+    final fieldType = company.getCustomFieldType(field);
     final fieldOptions = company.getCustomFieldValues(field);
 
     switch (fieldType) {
