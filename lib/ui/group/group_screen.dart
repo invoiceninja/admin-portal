@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -66,27 +67,11 @@ class GroupSettingsScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearGroupMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.groupListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.groupListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final groups = viewModel.groupList
                         .map<GroupEntity>(
                             (groupId) => viewModel.groupMap[groupId])
@@ -94,8 +79,11 @@ class GroupSettingsScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: groups, context: context, multiselect: true);
+
                     store.dispatch(ClearGroupMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearGroupMultiselect()),
           ),
       ],
       body: GroupListBuilder(),

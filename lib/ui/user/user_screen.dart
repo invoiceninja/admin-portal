@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -68,35 +69,22 @@ class UserScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearUserMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.userListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.userListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final users = viewModel.userList
                         .map<UserEntity>((userId) => viewModel.userMap[userId])
                         .toList();
 
                     await showEntityActionsDialog(
                         entities: users, context: context, multiselect: true);
+
                     store.dispatch(ClearUserMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearUserMultiselect()),
           ),
       ],
       body: UserListBuilder(),

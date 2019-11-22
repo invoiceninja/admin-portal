@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -60,27 +61,11 @@ class PaymentScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearPaymentMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.paymentListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.paymentListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final payments = viewModel.paymentList
                         .map<PaymentEntity>(
                             (paymentId) => viewModel.paymentMap[paymentId])
@@ -90,8 +75,11 @@ class PaymentScreen extends StatelessWidget {
                         entities: payments,
                         context: context,
                         multiselect: true);
+
                     store.dispatch(ClearPaymentMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearPaymentMultiselect()),
           ),
       ],
       body: PaymentListBuilder(),
