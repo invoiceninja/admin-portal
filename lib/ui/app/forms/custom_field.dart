@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 
 class CustomField extends StatelessWidget {
   const CustomField({
@@ -45,8 +46,7 @@ class CustomField extends StatelessWidget {
       return SizedBox();
     }
 
-    print('## BUILD: $label: $_fieldType $_fieldLabel $_fieldOptions');
-
+    print('## BUILD: $initialValue = $label: $_fieldType $_fieldLabel $_fieldOptions');
 
     switch (_fieldType) {
       case kFieldTypeSingleLineText:
@@ -59,6 +59,12 @@ class CustomField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: _fieldLabel,
           ),
+        );
+      case kFieldTypeDate:
+        return DatePicker(
+          labelText: _fieldLabel,
+          onSelected: (date) => controller.text = date,
+          selectedDate: initialValue,
         );
       case kFieldTypeDropdown:
         return PopupMenuButton<String>(

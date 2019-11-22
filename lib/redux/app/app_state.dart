@@ -382,14 +382,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    //return 'Custom fields [UI]: ${uiState.settingsUIState.company.customFields}, [DB] ${selectedCompany.customFields}';
     //return 'Permissions: ${uiState.userUIState.editing.userCompany.permissions}';
     //return 'Layout: ${uiState.layout}, menu: ${uiState.menuSidebarMode}, history: ${uiState.historySidebarMode}';
     //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
     //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
     //return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
-    return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
+    //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
+    return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
