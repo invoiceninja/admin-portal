@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -66,25 +67,11 @@ class TaxRateSettingsScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearTaxRateMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.taxRateListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.taxRateListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final taxRates = viewModel.taxRateList
                         .map<TaxRateEntity>(
                             (taxRateId) => viewModel.taxRateMap[taxRateId])
@@ -94,8 +81,11 @@ class TaxRateSettingsScreen extends StatelessWidget {
                         entities: taxRates,
                         context: context,
                         multiselect: true);
+
                     store.dispatch(ClearTaxRateMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearTaxRateMultiselect()),
           ),
       ],
       body: TaxRateListBuilder(),

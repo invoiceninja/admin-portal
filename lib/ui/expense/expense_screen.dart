@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -65,27 +66,11 @@ class ExpenseScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearExpenseMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.expenseListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.expenseListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final expenses = viewModel.expenseList
                         .map<ExpenseEntity>(
                             (expenseId) => viewModel.expenseMap[expenseId])
@@ -95,8 +80,11 @@ class ExpenseScreen extends StatelessWidget {
                         entities: expenses,
                         context: context,
                         multiselect: true);
+
                     store.dispatch(ClearExpenseMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearExpenseMultiselect()),
           ),
       ],
       body: ExpenseListBuilder(),

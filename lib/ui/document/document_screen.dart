@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -65,27 +66,11 @@ class DocumentScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              store.dispatch(ClearDocumentMultiselect());
-            },
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.documentListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.documentListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final documents = viewModel.documentList
                         .map<DocumentEntity>(
                             (documentId) => viewModel.documentMap[documentId])
@@ -95,8 +80,11 @@ class DocumentScreen extends StatelessWidget {
                         entities: documents,
                         context: context,
                         multiselect: true);
+
                     store.dispatch(ClearDocumentMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearDocumentMultiselect()),
           ),
       ],
       body: DocumentListBuilder(),

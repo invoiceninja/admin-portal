@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -64,25 +65,11 @@ class ClientScreen extends StatelessWidget {
             },
           ),
         if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            child: Text(
-              localization.cancel,
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () => store.dispatch(ClearClientMultiselect()),
-          ),
-        if (viewModel.isInMultiselect)
-          FlatButton(
-            key: key,
-            textColor: Colors.white,
-            disabledTextColor: Colors.white54,
-            child: Text(
-              localization.done,
-            ),
-            onPressed: state.clientListState.selectedIds.isEmpty
+          SaveCancelButtons(
+            saveLabel: localization.done,
+            onSavePressed: state.clientListState.selectedIds.isEmpty
                 ? null
-                : () async {
+                : (context) async {
                     final clients = viewModel.clientList
                         .map<ClientEntity>(
                             (clientId) => viewModel.clientMap[clientId])
@@ -90,8 +77,11 @@ class ClientScreen extends StatelessWidget {
 
                     await showEntityActionsDialog(
                         entities: clients, context: context, multiselect: true);
+
                     store.dispatch(ClearClientMultiselect());
                   },
+            onCancelPressed: (context) =>
+                store.dispatch(ClearClientMultiselect()),
           ),
       ],
       body: ClientListBuilder(),
