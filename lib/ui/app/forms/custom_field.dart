@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CustomField extends StatelessWidget {
   const CustomField({
@@ -49,6 +52,8 @@ class CustomField extends StatelessWidget {
     print(
         '## BUILD: $initialValue = $label: $_fieldType $_fieldLabel $_fieldOptions');
 
+    final localization = AppLocalization.of(context);
+
     switch (_fieldType) {
       case kFieldTypeSingleLineText:
       case kFieldTypeMultiLineText:
@@ -62,12 +67,13 @@ class CustomField extends StatelessWidget {
           ),
         );
       case kFieldTypeSwitch:
-        return SwitchListTile(
-          title: Text(_fieldLabel),
-          value: initialValue == kSwitchValueYes,
+        return BoolDropdownButton(
           onChanged: (value) =>
               controller.text = value ? kSwitchValueYes : kSwitchValueNo,
-          activeColor: Theme.of(context).accentColor,
+          value: initialValue == null ? null : initialValue == kSwitchValueYes,
+          label: _fieldLabel,
+          enabledLabel: localization.yes,
+          disabledLabel: localization.no,
         );
       case kFieldTypeDate:
         return DatePicker(
@@ -76,27 +82,16 @@ class CustomField extends StatelessWidget {
           selectedDate: initialValue,
         );
       case kFieldTypeDropdown:
-        return PopupMenuButton<String>(
-          padding: EdgeInsets.zero,
-          initialValue: initialValue,
-          itemBuilder: (BuildContext context) => _fieldOptions
-              .map((option) => PopupMenuItem<String>(
+        return AppDropdownButton<String>(
+          value: initialValue,
+          items: _fieldOptions
+              .map((option) => DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),
                   ))
               .toList(),
-          onSelected: (value) => controller.text = value,
-          child: InkWell(
-            child: IgnorePointer(
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  labelText: _fieldLabel,
-                  suffixIcon: const Icon(Icons.arrow_drop_down),
-                ),
-              ),
-            ),
-          ),
+          onChanged: (dynamic value) => controller.text = value,
+          labelText: _fieldLabel,
         );
       default:
         return SizedBox();

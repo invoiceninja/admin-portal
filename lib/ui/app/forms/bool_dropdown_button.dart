@@ -33,7 +33,8 @@ class BoolDropdownButton extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final _showBlank = showBlank ?? state.settingsUIState.isFiltered;
 
-    if (!_showBlank && enabledLabel == null) {
+    if (!_showBlank &&
+        (enabledLabel == null || enabledLabel == localization.yes)) {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
         child: SwitchListTile(
