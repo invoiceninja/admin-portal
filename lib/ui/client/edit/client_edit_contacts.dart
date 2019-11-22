@@ -344,13 +344,11 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
-              options: company.getCustomFieldValues(CustomFieldType.contact1),
+              label: company.customFields[CustomFieldType.contact1],
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
-              options: company.getCustomFieldValues(CustomFieldType.contact2),
+              label: company.customFields[CustomFieldType.contact2],
             ),
           ],
         ),

@@ -173,13 +173,11 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.expense1),
-              options: company.getCustomFieldValues(CustomFieldType.expense1),
+              label: company.customFields[CustomFieldType.expense1],
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.expense2),
-              options: company.getCustomFieldValues(CustomFieldType.expense2),
+              label: company.customFields[CustomFieldType.expense2],
             ),
           ],
         ),

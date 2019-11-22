@@ -127,13 +127,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.vendor1),
-              options: company.getCustomFieldValues(CustomFieldType.vendor1),
+              label: company.customFields[CustomFieldType.vendor1],
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.vendor2),
-              options: company.getCustomFieldValues(CustomFieldType.vendor2),
+              label: company.customFields[CustomFieldType.vendor2],
             ),
           ],
         ),

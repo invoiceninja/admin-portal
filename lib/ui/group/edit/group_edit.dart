@@ -130,17 +130,11 @@ class _GroupEditState extends State<GroupEdit> {
                       ),
                       CustomField(
                         controller: _custom1Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.group1),
-                        options: company
-                            .getCustomFieldValues(CustomFieldType.group1),
+                        label: company.customFields[CustomFieldType.group1],
                       ),
                       CustomField(
                         controller: _custom2Controller,
-                        labelText:
-                            company.getCustomFieldLabel(CustomFieldType.group2),
-                        options: company
-                            .getCustomFieldValues(CustomFieldType.group2),
+                        label: company.customFields[CustomFieldType.group2],
                       ),
                     ],
                   ),

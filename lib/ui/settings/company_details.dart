@@ -254,31 +254,19 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                   CustomField(
                     controller: _custom1Controller,
-                    labelText:
-                        company.getCustomFieldLabel(CustomFieldType.company1),
-                    options:
-                        company.getCustomFieldValues(CustomFieldType.company1),
+                    label: company.customFields[CustomFieldType.company1],
                   ),
                   CustomField(
                     controller: _custom2Controller,
-                    labelText:
-                        company.getCustomFieldLabel(CustomFieldType.company2),
-                    options:
-                        company.getCustomFieldValues(CustomFieldType.company2),
+                    label: company.customFields[CustomFieldType.company2],
                   ),
                   CustomField(
                     controller: _custom3Controller,
-                    labelText:
-                        company.getCustomFieldLabel(CustomFieldType.company3),
-                    options:
-                        company.getCustomFieldValues(CustomFieldType.company3),
+                    label: company.customFields[CustomFieldType.company3],
                   ),
                   CustomField(
                     controller: _custom4Controller,
-                    labelText:
-                        company.getCustomFieldLabel(CustomFieldType.company4),
-                    options:
-                        company.getCustomFieldValues(CustomFieldType.company4),
+                    label: company.customFields[CustomFieldType.company4],
                   ),
                 ],
               ),

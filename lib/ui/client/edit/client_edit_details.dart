@@ -144,13 +144,11 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.client1),
-              options: company.getCustomFieldValues(CustomFieldType.client1),
+              label: company.customFields[CustomFieldType.client1],
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.client2),
-              options: company.getCustomFieldValues(CustomFieldType.client2),
+              label: company.customFields[CustomFieldType.client2],
             ),
           ],
         ),
