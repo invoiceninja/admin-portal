@@ -162,7 +162,7 @@ abstract class CompanyEntity extends Object
   @nullable
   BuiltMap<String, UserEntity> get userMap;
 
-  @BuiltValueField(wireName: 'custom_fields_HIDDEN')
+  @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
 
   SettingsEntity get settings;
@@ -202,11 +202,6 @@ abstract class CompanyEntity extends Object
   }
 
   String getCustomFieldLabel(String field) {
-    // TODO remove this
-    if (customFields == null) {
-      return '';
-    }
-
     if (customFields.containsKey(field)) {
       return customFields[field].split('|').first;
     } else {
@@ -215,11 +210,6 @@ abstract class CompanyEntity extends Object
   }
 
   List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
-    // TODO remove this
-    if (customFields == null) {
-      return [];
-    }
-
     final values = customFields[field];
 
     if (values == null || !values.contains('|')) {

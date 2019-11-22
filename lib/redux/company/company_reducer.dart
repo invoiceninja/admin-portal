@@ -72,8 +72,7 @@ UserCompanyEntity loadCompanySuccessReducer(
     ..expenseCategories.replace(<ExpenseCategoryEntity>[])
     ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>())
     ..users.replace(<UserEntity>[])
-    ..userMap.replace(BuiltMap<String, UserEntity>())
-    ..customFields.replace(BuiltMap<String, String>()));
+    ..userMap.replace(BuiltMap<String, UserEntity>()));
 
   return userCompany;
 
@@ -117,8 +116,7 @@ UserCompanyEntity saveCompanySuccessReducer(
     ..expenseCategories.replace(userCompany.company.expenseCategories)
     ..expenseCategoryMap.replace(userCompany.company.expenseCategoryMap)
     ..users.replace(userCompany.company.users)
-    ..userMap.replace(userCompany.company.userMap)
-    ..customFields.replace(userCompany.company.customFields));
+    ..userMap.replace(userCompany.company.userMap));
 
   userCompany = userCompany.rebuild((b) => b..company.replace(company));
 

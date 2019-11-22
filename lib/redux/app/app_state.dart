@@ -389,6 +389,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
     //return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
+    return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
