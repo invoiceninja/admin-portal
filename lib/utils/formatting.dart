@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
   final int fac = pow(10, precision);
@@ -286,3 +287,20 @@ String cleanApiUrl(String url) => (url ?? '')
     .trim()
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');
+
+String formatCustomValue({String value, String field, BuildContext context}) {
+  final localization = AppLocalization.of(context);
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.company;
+
+  switch (company.getCustomFieldType(field)) {
+    case kFieldTypeSwitch:
+      return value == 'yes' ? localization.yes : localization.no;
+      break;
+    case kFieldTypeDate:
+      return formatDate(value, context);
+      break;
+    default:
+      return value;
+  }
+}

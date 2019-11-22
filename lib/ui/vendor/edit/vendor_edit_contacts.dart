@@ -328,14 +328,16 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               ),
               keyboardType: TextInputType.phone,
             ),
+            /*
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.contact1],
+              field: CustomFieldType.contact1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.contact2],
+              field: CustomFieldType.contact2,
             ),
+             */
           ],
         ),
       ),

@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -50,12 +51,18 @@ class ClientOverview extends StatelessWidget {
 
     if (client.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.client1);
-      fields[label1] = client.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.client1,
+          value: client.customValue1);
     }
 
     if (client.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.client2);
-      fields[label2] = client.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.client2,
+          value: client.customValue2);
     }
 
     return ListView(

@@ -128,14 +128,6 @@ class _GroupEditState extends State<GroupEdit> {
                         label: localization.name,
                         controller: _nameController,
                       ),
-                      CustomField(
-                        controller: _custom1Controller,
-                        label: company.customFields[CustomFieldType.group1],
-                      ),
-                      CustomField(
-                        controller: _custom2Controller,
-                        label: company.customFields[CustomFieldType.group2],
-                      ),
                     ],
                   ),
                 ],

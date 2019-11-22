@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -8,90 +11,66 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class CustomField extends StatelessWidget {
   const CustomField({
     @required this.controller,
-    @required this.label,
-    this.initialValue,
+    @required this.field,
+    this.value,
   });
 
   final TextEditingController controller;
-  final String label;
-  final String initialValue;
-
-  String get _fieldType {
-    if (label.contains('|')) {
-      final value = label.split('|').last;
-      if ([kFieldTypeSingleLineText, kFieldTypeDate, kFieldTypeSwitch]
-          .contains(value)) {
-        return value;
-      } else {
-        return kFieldTypeDropdown;
-      }
-    } else {
-      return kFieldTypeMultiLineText;
-    }
-  }
-
-  String get _fieldLabel {
-    if (label.contains('|')) {
-      return label.split('|').first;
-    } else {
-      return label;
-    }
-  }
-
-  List<String> get _fieldOptions {
-    final data = label.split('|').last.split(',');
-    return data.where((data) => data.isNotEmpty).toList();
-  }
+  final String field;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
-    if (label == null) {
+    if (field == null) {
       return SizedBox();
     }
 
-    print(
-        '## BUILD: $initialValue = $label: $_fieldType $_fieldLabel $_fieldOptions');
-
+    final state = StoreProvider.of<AppState>(context).state;
+    final CompanyEntity company = state.company;
     final localization = AppLocalization.of(context);
 
-    switch (_fieldType) {
+    final fieldType = company.getCustomFieldType(field);
+    final fieldLabel = company.getCustomFieldLabel(field);
+    final fieldOptions = company.getCustomFieldValues(field);
+
+    switch (fieldType) {
       case kFieldTypeSingleLineText:
       case kFieldTypeMultiLineText:
         return TextFormField(
           autocorrect: false,
           controller: controller,
           keyboardType: TextInputType.text,
-          maxLines: _fieldType == kFieldTypeSingleLineText ? 1 : 3,
+          maxLines: fieldType == kFieldTypeSingleLineText ? 1 : 3,
           decoration: InputDecoration(
-            labelText: _fieldLabel,
+            labelText: fieldLabel,
           ),
         );
       case kFieldTypeSwitch:
         return BoolDropdownButton(
           onChanged: (value) =>
               controller.text = value ? kSwitchValueYes : kSwitchValueNo,
-          value: initialValue == null ? null : initialValue == kSwitchValueYes,
-          label: _fieldLabel,
+          value: value == null ? null : value == kSwitchValueYes,
+          label: fieldLabel,
           enabledLabel: localization.yes,
           disabledLabel: localization.no,
         );
       case kFieldTypeDate:
         return DatePicker(
-          labelText: _fieldLabel,
+          labelText: fieldLabel,
           onSelected: (date) => controller.text = date,
-          selectedDate: initialValue,
+          selectedDate: value,
         );
       case kFieldTypeDropdown:
         return AppDropdownButton<String>(
-          value: initialValue,
-          items: _fieldOptions
+          value: value,
+          items: fieldOptions
               .map((option) => DropdownMenuItem<String>(
                     value: option,
                     child: Text(option),
                   ))
               .toList(),
           onChanged: (dynamic value) => controller.text = value,
-          labelText: _fieldLabel,
+          labelText: fieldLabel,
         );
       default:
         return SizedBox();

@@ -209,6 +209,20 @@ abstract class CompanyEntity extends Object
     }
   }
 
+  String getCustomFieldType(String field) {
+    if ((customFields[field] ?? '').contains('|')) {
+      final value = customFields[field].split('|').last;
+      if ([kFieldTypeSingleLineText, kFieldTypeDate, kFieldTypeSwitch]
+          .contains(value)) {
+        return value;
+      } else {
+        return kFieldTypeDropdown;
+      }
+    } else {
+      return kFieldTypeMultiLineText;
+    }
+  }
+
   List<String> getCustomFieldValues(String field, {bool excludeBlank = false}) {
     final values = customFields[field];
 
@@ -663,10 +677,9 @@ abstract class SettingsEntity
       creditNumberCounter: clientSettings?.creditNumberCounter ??
           groupSettings?.creditNumberCounter ??
           companySettings?.creditNumberCounter,
-      recurringNumberPrefix:
-          clientSettings?.recurringNumberPrefix ??
-              groupSettings?.recurringNumberPrefix ??
-              companySettings?.recurringNumberPrefix,
+      recurringNumberPrefix: clientSettings?.recurringNumberPrefix ??
+          groupSettings?.recurringNumberPrefix ??
+          companySettings?.recurringNumberPrefix,
       resetCounterFrequencyId: clientSettings?.resetCounterFrequencyId ??
           groupSettings?.resetCounterFrequencyId ??
           companySettings?.resetCounterFrequencyId,

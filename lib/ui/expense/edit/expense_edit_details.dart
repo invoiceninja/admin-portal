@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -173,11 +175,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.expense1],
+              field: CustomFieldType.expense1,
+              value: expense.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.expense2],
+              field: CustomFieldType.expense2,
+              value: expense.customValue2,
             ),
           ],
         ),

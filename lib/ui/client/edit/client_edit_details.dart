@@ -97,7 +97,6 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = viewModel.company;
     final client = viewModel.client;
 
     return ListView(
@@ -144,11 +143,13 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.client1],
+              field: CustomFieldType.client1,
+              value: client.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.client2],
+              field: CustomFieldType.client2,
+              value: client.customValue2,
             ),
           ],
         ),

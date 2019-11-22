@@ -240,11 +240,13 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.product1],
+              field: CustomFieldType.product1,
+              value: widget.invoiceItem.customValue1
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.product2],
+              field: CustomFieldType.product2,
+              value: widget.invoiceItem.customValue2,
             ),
             DecoratedFormField(
               label: localization.unitCost,

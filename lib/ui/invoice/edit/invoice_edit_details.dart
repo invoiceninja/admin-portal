@@ -256,11 +256,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.invoice1],
+              field: CustomFieldType.invoice1,
+              value: invoice.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.invoice2],
+              field: CustomFieldType.invoice2,
+              value: invoice.customValue2,
             ),
             company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty
                 ? DecoratedFormField(

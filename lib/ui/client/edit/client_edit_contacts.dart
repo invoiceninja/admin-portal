@@ -344,11 +344,13 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.contact1],
+              field: CustomFieldType.contact1,
+              value: widget.contact.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.contact2],
+              field: CustomFieldType.contact2,
+              value: widget.contact.customValue2,
             ),
           ],
         ),

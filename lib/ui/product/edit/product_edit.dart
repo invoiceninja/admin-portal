@@ -178,11 +178,13 @@ class _ProductEditState extends State<ProductEdit> {
                   ),
                   CustomField(
                     controller: _custom1Controller,
-                    label: company.customFields[CustomFieldType.product1],
+                    field: CustomFieldType.product1,
+                    value: product.customValue1,
                   ),
                   CustomField(
                     controller: _custom2Controller,
-                    label: company.customFields[CustomFieldType.product2],
+                    field: CustomFieldType.product2,
+                    value: product.customValue2,
                   ),
                   DecoratedFormField(
                     label: localization.price,

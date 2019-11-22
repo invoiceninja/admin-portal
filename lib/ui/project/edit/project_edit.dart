@@ -223,11 +223,13 @@ class _ProjectEditState extends State<ProjectEdit> {
                     ),
                     CustomField(
                       controller: _custom1Controller,
-                      label: company.customFields[CustomFieldType.project1],
+                      field: CustomFieldType.project1,
+                      value: project.customValue1,
                     ),
                     CustomField(
                       controller: _custom2Controller,
-                      label: company.customFields[CustomFieldType.project2],
+                      field: CustomFieldType.project2,
+                      value: project.customValue2,
                     ),
                   ],
                 ),

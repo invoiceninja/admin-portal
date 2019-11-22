@@ -152,11 +152,13 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              label: company.customFields[CustomFieldType.task1],
+              field: CustomFieldType.task1,
+              value: task.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              label: company.customFields[CustomFieldType.task2],
+              field: CustomFieldType.task2,
+              value: task.customValue2,
             ),
           ],
         ),
