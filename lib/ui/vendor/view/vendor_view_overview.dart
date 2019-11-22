@@ -38,12 +38,18 @@ class VendorOverview extends StatelessWidget {
 
     if (vendor.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.vendor1);
-      fields[label1] = vendor.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor1,
+          value: vendor.customValue1);
     }
 
     if (vendor.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.vendor2);
-      fields[label2] = vendor.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor2,
+          value: vendor.customValue2);
     }
 
     return ListView(

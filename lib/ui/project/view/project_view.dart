@@ -65,11 +65,17 @@ class _ProjectViewState extends State<ProjectView> {
 
     if (project.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.project1);
-      fields[label1] = project.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project1,
+          value: project.customValue1);
     }
     if (project.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.project2);
-      fields[label2] = project.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project2,
+          value: project.customValue2);
     }
 
     return WillPopScope(

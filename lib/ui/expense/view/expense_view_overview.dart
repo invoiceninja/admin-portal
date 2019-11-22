@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -35,12 +37,18 @@ class ExpenseOverview extends StatelessWidget {
 
     if (expense.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.expense1);
-      fields[label1] = expense.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.expense1,
+          value: expense.customValue1);
     }
 
     if (expense.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.expense2);
-      fields[label2] = expense.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.expense2,
+          value: expense.customValue2);
     }
 
     return ListView(

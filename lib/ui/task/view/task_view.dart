@@ -78,11 +78,17 @@ class _TaskViewState extends State<TaskView> {
 
             if (task.customValue1.isNotEmpty) {
               final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
-              fields[label1] = task.customValue1;
+              fields[label1] = formatCustomValue(
+                  context: context,
+                  field: CustomFieldType.task1,
+                  value: task.customValue1);
             }
             if (task.customValue2.isNotEmpty) {
               final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
-              fields[label2] = task.customValue2;
+              fields[label2] = formatCustomValue(
+                  context: context,
+                  field: CustomFieldType.task2,
+                  value: task.customValue2);
             }
 
             List<Widget> _buildView() {

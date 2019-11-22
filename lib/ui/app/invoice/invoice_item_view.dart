@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -50,10 +51,16 @@ class InvoiceItemListTile extends StatelessWidget {
 
     final List<String> parts = [];
     if (invoiceItem.customValue1.isNotEmpty) {
-      parts.add(invoiceItem.customValue1);
+      parts.add(formatCustomValue(
+          context: context,
+          field: CustomFieldType.product1,
+          value: invoiceItem.customValue1));
     }
     if (invoiceItem.customValue2.isNotEmpty) {
-      parts.add(invoiceItem.customValue2);
+      parts.add(formatCustomValue(
+          context: context,
+          field: CustomFieldType.product2,
+          value: invoiceItem.customValue2));
     }
     if (invoiceItem.notes.isNotEmpty) {
       parts.add(invoiceItem.notes);

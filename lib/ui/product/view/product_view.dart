@@ -67,12 +67,18 @@ class _ProductViewState extends State<ProductView>
 
     if (product.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.product1);
-      fields[label1] = product.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.product1,
+          value: product.customValue1);
     }
 
     if (product.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.product2);
-      fields[label2] = product.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.product2,
+          value: product.customValue2);
     }
 
     return WillPopScope(
