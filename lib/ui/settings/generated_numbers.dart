@@ -78,9 +78,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
   void _onChanged() {
     _debouncer.run(() {
-      final settings = widget.viewModel.settings.rebuild((b) => b
-        ..recurringNumberPrefix =
-            _recurringPrefixController.text.trim());
+      final settings = widget.viewModel.settings.rebuild((b) =>
+          b..recurringNumberPrefix = _recurringPrefixController.text.trim());
 
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
@@ -129,28 +128,18 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: localization.numberPadding,
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<int>(
-                        // TODO remove this check
-                        value: (settings.counterPadding ?? 0) > 0
-                            ? settings.counterPadding
-                            : 4,
-                        isExpanded: true,
-                        isDense: true,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..counterPadding = value)),
-                        items: List<int>.generate(10, (i) => i + 1)
-                            .map((value) => DropdownMenuItem(
-                                  child: Text('${'0' * (value - 1)}1'),
-                                  value: value,
-                                ))
-                            .toList(),
-                      ),
-                    ),
+                  AppDropdownButton<int>(
+                    labelText: localization.numberPadding,
+                    value: settings.counterPadding,
+                    blankValue: null,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..counterPadding = value)),
+                    items: List<int>.generate(10, (i) => i + 1)
+                        .map((value) => DropdownMenuItem(
+                              child: Text('${'0' * (value - 1)}1'),
+                              value: value,
+                            ))
+                        .toList(),
                   ),
                   AppDropdownButton<String>(
                     labelText: localization.generateNumber,
@@ -176,6 +165,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
+                    blankValue: '0',
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..resetCounterFrequencyId = value)),

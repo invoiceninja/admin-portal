@@ -63,35 +63,23 @@ class StubScreen extends StatelessWidget {
                             },
                           ),
                         if (viewModel.isInMultiselect)
-                          FlatButton(
-                            key: key,
-                            child: Text(
-                              localization.cancel,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              store.dispatch(ClearStubMultiselect(context: context));
-                            },
-                          ),
-                        if (viewModel.isInMultiselect)
-                          FlatButton(
-                            key: key,
-                            textColor: Colors.white,
-                            disabledTextColor: Colors.white54,
-                            child: Text(
-                              localization.done,
-                            ),
-                            onPressed: state.stubListState.selectedIds.isEmpty
+                          SaveCancelButtons(
+                            saveLabel: localization.done,
+                            onSavePressed: state.stubListState.selectedIds.isEmpty
                                 ? null
-                                : () async {
+                                : (context) async {
+                                    final stubs = viewModel.stubList
+                                        .map<StubEntity>(
+                                            (stubId) => viewModel.stubMap[stubId])
+                                        .toList();
+                
                                     await showEntityActionsDialog(
-                                        entities: state.stubListState.selectedIds,
-                                        userCompany: userCompany,
-                                        context: context,
-                                        onEntityAction: viewModel.onEntityAction,
-                                        multiselect: true);
-                                    store.dispatch(ClearStubMultiselect(context: context));
+                                        entities: stubs, context: context, multiselect: true);
+                
+                                    store.dispatch(ClearStubMultiselect());
                                   },
+                            onCancelPressed: (context) =>
+                                store.dispatch(ClearStubMultiselect()),
                           ),
                    ],
                    body: StubListBuilder(),

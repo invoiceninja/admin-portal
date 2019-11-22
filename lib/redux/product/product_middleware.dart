@@ -102,8 +102,7 @@ Middleware<AppState> _viewProductList() {
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveProductRequest;
-    repository
-        .bulkAction(
+    repository.bulkAction(
             store.state.credentials, action.productIds, EntityAction.archive)
         .then((List<ProductEntity> products) {
       store.dispatch(ArchiveProductSuccess(products));

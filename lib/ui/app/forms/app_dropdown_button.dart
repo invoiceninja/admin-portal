@@ -9,6 +9,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     @required this.onChanged,
     @required this.items,
     this.showBlank,
+    this.blankValue = '',
     this.enabled = true,
   });
 
@@ -18,6 +19,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
+  final dynamic blankValue;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class AppDropdownButton<T> extends StatelessWidget {
             items: [
               if (_showBlank || value == '')
                 DropdownMenuItem(
-                  value: '' as dynamic,
+                  value: blankValue,
                   child: SizedBox(),
                 ),
               ...items
