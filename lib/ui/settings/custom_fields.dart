@@ -36,7 +36,7 @@ class _CustomFieldsState extends State<CustomFields>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -64,6 +64,9 @@ class _CustomFieldsState extends State<CustomFields>
           ),
           Tab(
             text: localization.clients,
+          ),
+          Tab(
+            text: localization.products,
           ),
           Tab(
             text: localization.invoices,
@@ -96,6 +99,14 @@ class _CustomFieldsState extends State<CustomFields>
               fieldType: CustomFieldType.contact,
             ),
           ]),
+          ListView(
+            children: <Widget>[
+              CustomFieldsSettings(
+                viewModel: viewModel,
+                fieldType: CustomFieldType.product,
+              ),
+            ],
+          ),
           ListView(children: <Widget>[
             CustomFieldsSettings(
               viewModel: viewModel,
