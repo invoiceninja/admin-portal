@@ -131,6 +131,8 @@ Middleware<AppState> _showEmailQuote() {
 Middleware<AppState> _archiveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveQuoteRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
     repository
         .bulkAction(
             store.state.credentials, action.quoteIds, EntityAction.archive)
@@ -141,9 +143,7 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final quotes =
-          action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
-      store.dispatch(ArchiveQuoteFailure(quotes));
+      store.dispatch(ArchiveQuoteFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,6 +156,8 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
 Middleware<AppState> _deleteQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteQuoteRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -167,9 +169,7 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final quotes =
-          action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
-      store.dispatch(DeleteQuoteFailure(quotes));
+      store.dispatch(DeleteQuoteFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -182,6 +182,8 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
 Middleware<AppState> _restoreQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreQuoteRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -193,9 +195,7 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final quotes =
-          action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
-      store.dispatch(RestoreQuoteFailure(quotes));
+      store.dispatch(RestoreQuoteFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

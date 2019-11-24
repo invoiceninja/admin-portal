@@ -104,6 +104,9 @@ Middleware<AppState> _viewTaxRateList() {
 Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaxRateRequest;
+    final prevTaxRates = action.taxRateIds
+        .map((id) => store.state.taxRateState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -115,10 +118,7 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final taxRates = action.taxRateIds
-          .map((id) => store.state.taxRateState.map[id])
-          .toList();
-      store.dispatch(ArchiveTaxRateFailure(taxRates));
+      store.dispatch(ArchiveTaxRateFailure(prevTaxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -131,6 +131,9 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
 Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaxRateRequest;
+    final prevTaxRates = action.taxRateIds
+        .map((id) => store.state.taxRateState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -142,10 +145,7 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final taxRates = action.taxRateIds
-          .map((id) => store.state.taxRateState.map[id])
-          .toList();
-      store.dispatch(DeleteTaxRateFailure(taxRates));
+      store.dispatch(DeleteTaxRateFailure(prevTaxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -158,6 +158,9 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
 Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaxRateRequest;
+    final prevTaxRates = action.taxRateIds
+        .map((id) => store.state.taxRateState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -169,10 +172,7 @@ Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final taxRates = action.taxRateIds
-          .map((id) => store.state.taxRateState.map[id])
-          .toList();
-      store.dispatch(RestoreTaxRateFailure(taxRates));
+      store.dispatch(RestoreTaxRateFailure(prevTaxRates));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
