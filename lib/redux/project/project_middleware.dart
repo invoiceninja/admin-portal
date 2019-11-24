@@ -106,6 +106,9 @@ Middleware<AppState> _viewProjectList() {
 Middleware<AppState> _archiveProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveProjectRequest;
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -117,10 +120,7 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final projects = action.projectIds
-          .map((id) => store.state.projectState.map[id])
-          .toList();
-      store.dispatch(ArchiveProjectFailure(projects));
+      store.dispatch(ArchiveProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -133,6 +133,9 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
 Middleware<AppState> _deleteProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteProjectRequest;
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -144,10 +147,7 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final projects = action.projectIds
-          .map((id) => store.state.projectState.map[id])
-          .toList();
-      store.dispatch(DeleteProjectFailure(projects));
+      store.dispatch(DeleteProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -160,6 +160,9 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
 Middleware<AppState> _restoreProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreProjectRequest;
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
 
     repository
         .bulkAction(
@@ -171,10 +174,7 @@ Middleware<AppState> _restoreProject(ProjectRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final projects = action.projectIds
-          .map((id) => store.state.projectState.map[id])
-          .toList();
-      store.dispatch(RestoreProjectFailure(projects));
+      store.dispatch(RestoreProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

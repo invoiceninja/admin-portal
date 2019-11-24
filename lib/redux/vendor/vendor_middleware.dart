@@ -106,6 +106,8 @@ Middleware<AppState> _viewVendorList() {
 Middleware<AppState> _archiveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveVendorRequest;
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -117,10 +119,7 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final vendors = action.vendorIds
-          .map((id) => store.state.vendorState.map[id])
-          .toList();
-      store.dispatch(ArchiveVendorFailure(vendors));
+      store.dispatch(ArchiveVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -133,6 +132,8 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
 Middleware<AppState> _deleteVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteVendorRequest;
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -144,10 +145,7 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final vendors = action.vendorIds
-          .map((id) => store.state.vendorState.map[id])
-          .toList();
-      store.dispatch(DeleteVendorFailure(vendors));
+      store.dispatch(DeleteVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -160,6 +158,8 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
 Middleware<AppState> _restoreVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreVendorRequest;
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -171,10 +171,7 @@ Middleware<AppState> _restoreVendor(VendorRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final vendors = action.vendorIds
-          .map((id) => store.state.vendorState.map[id])
-          .toList();
-      store.dispatch(RestoreVendorFailure(vendors));
+      store.dispatch(RestoreVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

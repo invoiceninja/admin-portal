@@ -105,6 +105,8 @@ Middleware<AppState> _viewTaskList() {
 Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaskRequest;
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -116,9 +118,7 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final tasks =
-          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
-      store.dispatch(ArchiveTaskFailure(tasks));
+      store.dispatch(ArchiveTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -131,6 +131,8 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaskRequest;
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -142,9 +144,7 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final tasks =
-          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
-      store.dispatch(DeleteTaskFailure(tasks));
+      store.dispatch(DeleteTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,6 +157,8 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaskRequest;
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -168,9 +170,7 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final tasks =
-          action.taskIds.map((id) => store.state.taskState.map[id]).toList();
-      store.dispatch(RestoreTaskFailure(tasks));
+      store.dispatch(RestoreTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
