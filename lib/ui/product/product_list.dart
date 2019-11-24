@@ -52,78 +52,83 @@ class ProductList extends StatelessWidget {
           entityId: productList.first);
     }
 
-    final listView = ListView.separated(
-        separatorBuilder: (context, index) => ListDivider(),
-        itemCount: viewModel.productList.length,
-        itemBuilder: (BuildContext context, index) {
-          final productId = viewModel.productList[index];
-          final product = viewModel.productMap[productId];
+    final listOrTable = () {
+      if (isList) {
+        return ListView.separated(
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: viewModel.productList.length,
+            itemBuilder: (BuildContext context, index) {
+              final productId = viewModel.productList[index];
+              final product = viewModel.productMap[productId];
 
-          void showDialog() => showEntityActionsDialog(
-                entities: [product],
-                context: context,
+              void showDialog() => showEntityActionsDialog(
+                    entities: [product],
+                    context: context,
+                  );
+
+              return ProductListItem(
+                userCompany: viewModel.state.userCompany,
+                filter: viewModel.filter,
+                product: product,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleProductAction(context, [product], action);
+                  }
+                },
+                onTap: () => viewModel.onProductTap(context, product),
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      store.state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleProductAction(
+                        context, [product], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked:
+                    isInMultiselect && listUIState.isSelected(product.id),
               );
+            });
+      } else {
+        final sortFn = (String field) => store.dispatch(SortProducts(field));
 
-          return ProductListItem(
-            userCompany: viewModel.state.userCompany,
-            filter: viewModel.filter,
-            product: product,
-            onEntityAction: (EntityAction action) {
-              if (action == EntityAction.more) {
-                showDialog();
-              } else {
-                handleProductAction(context, [product], action);
-              }
-            },
-            onTap: () => viewModel.onProductTap(context, product),
-            onLongPress: () async {
-              final longPressIsSelection =
-                  store.state.prefState.longPressSelectionIsDefault ?? true;
-              if (longPressIsSelection && !isInMultiselect) {
-                handleProductAction(
-                    context, [product], EntityAction.toggleMultiselect);
-              } else {
-                showDialog();
-              }
-            },
-            isChecked: isInMultiselect && listUIState.isSelected(product.id),
-          );
-        });
-
-    final sortFn = (String field) => store.dispatch(SortProducts(field));
-
-    final dataTableView = SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: DataTable(
-              columns: [
-                DataColumn(
-                    label: Text(localization.name),
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.productKey)),
-                DataColumn(
-                    label: Text(localization.price),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.price)),
-                DataColumn(
-                    label: Text(localization.cost),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.cost)),
-                DataColumn(
-                    label: Text(localization.quantity),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.quantity)),
-              ],
-              rows: getDataTableRows(context, viewModel),
-            )));
+        return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                        label: Text(localization.name),
+                        onSort: (int columnIndex, bool ascending) =>
+                            sortFn(ProductFields.productKey)),
+                    DataColumn(
+                        label: Text(localization.price),
+                        numeric: true,
+                        onSort: (int columnIndex, bool ascending) =>
+                            sortFn(ProductFields.price)),
+                    DataColumn(
+                        label: Text(localization.cost),
+                        numeric: true,
+                        onSort: (int columnIndex, bool ascending) =>
+                            sortFn(ProductFields.cost)),
+                    DataColumn(
+                        label: Text(localization.quantity),
+                        numeric: true,
+                        onSort: (int columnIndex, bool ascending) =>
+                            sortFn(ProductFields.quantity)),
+                  ],
+                  rows: getDataTableRows(context, viewModel),
+                )));
+      }
+    };
 
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: isList ? listView : dataTableView,
+      child: listOrTable(),
     );
   }
 
