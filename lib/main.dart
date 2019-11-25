@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,7 +68,7 @@ void main({bool isTesting = false}) async {
           dsn: Config.SENTRY_DNS,
           environmentAttributes: Event(
             release: kAppVersion,
-            environment: Config.PLATFORM,
+            environment: Platform.operatingSystem,
           ));
 
   final store = Store<AppState>(appReducer,

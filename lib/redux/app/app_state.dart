@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -387,7 +386,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    return 'Platform: ${Platform.operatingSystem}';
+    return 'Platform: ${userCompany.token.name}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
