@@ -109,6 +109,9 @@ Middleware<AppState> _archiveCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveCompanyGatewayRequest;
+    final prevCompanyGateways = action.companyGatewayIds
+        .map((id) => store.state.companyGatewayState.map[id])
+        .toList();
 
     repository
         .bulkAction(store.state.credentials, action.companyGatewayIds,
@@ -120,10 +123,7 @@ Middleware<AppState> _archiveCompanyGateway(
       }
     }).catchError((Object error) {
       print(error);
-      final companyGateways = action.companyGatewayIds
-          .map((id) => store.state.companyGatewayState.map[id])
-          .toList();
-      store.dispatch(ArchiveCompanyGatewayFailure(companyGateways));
+      store.dispatch(ArchiveCompanyGatewayFailure(prevCompanyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -137,6 +137,9 @@ Middleware<AppState> _deleteCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteCompanyGatewayRequest;
+    final prevCompanyGateways = action.companyGatewayIds
+        .map((id) => store.state.companyGatewayState.map[id])
+        .toList();
     repository
         .bulkAction(store.state.credentials, action.companyGatewayIds,
             EntityAction.delete)
@@ -147,10 +150,7 @@ Middleware<AppState> _deleteCompanyGateway(
       }
     }).catchError((Object error) {
       print(error);
-      final companyGateways = action.companyGatewayIds
-          .map((id) => store.state.companyGatewayState.map[id])
-          .toList();
-      store.dispatch(DeleteCompanyGatewayFailure(companyGateways));
+      store.dispatch(DeleteCompanyGatewayFailure(prevCompanyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -164,6 +164,9 @@ Middleware<AppState> _restoreCompanyGateway(
     CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreCompanyGatewayRequest;
+    final prevCompanyGateways = action.companyGatewayIds
+        .map((id) => store.state.companyGatewayState.map[id])
+        .toList();
 
     repository
         .bulkAction(store.state.credentials, action.companyGatewayIds,
@@ -175,10 +178,7 @@ Middleware<AppState> _restoreCompanyGateway(
       }
     }).catchError((Object error) {
       print(error);
-      final companyGateways = action.companyGatewayIds
-          .map((id) => store.state.companyGatewayState.map[id])
-          .toList();
-      store.dispatch(RestoreCompanyGatewayFailure(companyGateways));
+      store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

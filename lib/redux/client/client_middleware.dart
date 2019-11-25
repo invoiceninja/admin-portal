@@ -105,6 +105,9 @@ Middleware<AppState> _viewClientList() {
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveClientRequest;
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.archive)
@@ -115,10 +118,7 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final clients = action.clientIds
-          .map((id) => store.state.clientState.map[id])
-          .toList();
-      store.dispatch(ArchiveClientFailure(clients));
+      store.dispatch(ArchiveClientFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -131,6 +131,9 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteClientRequest;
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.delete)
@@ -141,10 +144,7 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final clients = action.clientIds
-          .map((id) => store.state.clientState.map[id])
-          .toList();
-      store.dispatch(DeleteClientFailure(clients));
+      store.dispatch(DeleteClientFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,6 +157,9 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreClientRequest;
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.restore)
@@ -167,10 +170,7 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final clients = action.clientIds
-          .map((id) => store.state.clientState.map[id])
-          .toList();
-      store.dispatch(RestoreClientFailure(clients));
+      store.dispatch(RestoreClientFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

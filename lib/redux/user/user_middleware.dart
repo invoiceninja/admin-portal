@@ -104,6 +104,8 @@ Middleware<AppState> _viewUserList() {
 Middleware<AppState> _archiveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveUserRequest;
+    final prevUsers =
+        action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -115,9 +117,7 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final users =
-          action.userIds.map((id) => store.state.userState.map[id]).toList();
-      store.dispatch(ArchiveUserFailure(users));
+      store.dispatch(ArchiveUserFailure(prevUsers));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -130,6 +130,8 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
 Middleware<AppState> _deleteUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteUserRequest;
+    final prevUsers =
+        action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -141,9 +143,7 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final users =
-          action.userIds.map((id) => store.state.userState.map[id]).toList();
-      store.dispatch(DeleteUserFailure(users));
+      store.dispatch(DeleteUserFailure(prevUsers));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,6 +156,8 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
 Middleware<AppState> _restoreUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreUserRequest;
+    final prevUsers =
+        action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -167,9 +169,7 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final users =
-          action.userIds.map((id) => store.state.userState.map[id]).toList();
-      store.dispatch(RestoreUserFailure(users));
+      store.dispatch(RestoreUserFailure(prevUsers));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

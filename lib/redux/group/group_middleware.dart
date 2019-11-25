@@ -105,6 +105,8 @@ Middleware<AppState> _viewGroupList() {
 Middleware<AppState> _archiveGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveGroupRequest;
+    final prevGroups =
+        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -116,9 +118,7 @@ Middleware<AppState> _archiveGroup(GroupRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final groups =
-          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
-      store.dispatch(ArchiveGroupFailure(groups));
+      store.dispatch(ArchiveGroupFailure(prevGroups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -131,6 +131,8 @@ Middleware<AppState> _archiveGroup(GroupRepository repository) {
 Middleware<AppState> _deleteGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteGroupRequest;
+    final prevGroups =
+        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -142,9 +144,7 @@ Middleware<AppState> _deleteGroup(GroupRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final groups =
-          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
-      store.dispatch(DeleteGroupFailure(groups));
+      store.dispatch(DeleteGroupFailure(prevGroups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,6 +157,8 @@ Middleware<AppState> _deleteGroup(GroupRepository repository) {
 Middleware<AppState> _restoreGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreGroupRequest;
+    final prevGroups =
+        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
 
     repository
         .bulkAction(
@@ -168,9 +170,7 @@ Middleware<AppState> _restoreGroup(GroupRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final groups =
-          action.groupIds.map((id) => store.state.groupState.map[id]).toList();
-      store.dispatch(RestoreGroupFailure(groups));
+      store.dispatch(RestoreGroupFailure(prevGroups));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

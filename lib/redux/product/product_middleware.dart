@@ -102,7 +102,11 @@ Middleware<AppState> _viewProductList() {
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveProductRequest;
-    repository.bulkAction(
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
+    repository
+        .bulkAction(
             store.state.credentials, action.productIds, EntityAction.archive)
         .then((List<ProductEntity> products) {
       store.dispatch(ArchiveProductSuccess(products));
@@ -111,10 +115,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
       }
     }).catchError((dynamic error) {
       print(error);
-      final products = action.productIds
-          .map((id) => store.state.productState.map[id])
-          .toList();
-      store.dispatch(ArchiveProductFailure(products));
+      store.dispatch(ArchiveProductFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -127,6 +128,9 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteProductRequest;
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
     repository
         .bulkAction(
             store.state.credentials, action.productIds, EntityAction.delete)
@@ -137,10 +141,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final products = action.productIds
-          .map((id) => store.state.productState.map[id])
-          .toList();
-      store.dispatch(DeleteProductFailure(products));
+      store.dispatch(DeleteProductFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -153,6 +154,9 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreProductRequest;
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
     repository
         .bulkAction(
             store.state.credentials, action.productIds, EntityAction.restore)
@@ -163,10 +167,7 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
-      final products = action.productIds
-          .map((id) => store.state.productState.map[id])
-          .toList();
-      store.dispatch(RestoreProductFailure(products));
+      store.dispatch(RestoreProductFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
