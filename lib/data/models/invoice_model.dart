@@ -405,24 +405,28 @@ abstract class InvoiceEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
-      }
+      if (userCompany.canEditEntity(this)) {
+        if (includeEdit) {
+          actions.add(EntityAction.edit);
+        }
 
-      if (userCompany.canEditEntity(this) && !isSent) {
-        actions.add(EntityAction.markSent);
-      }
+        if (!isSent) {
+          actions.add(EntityAction.markSent);
+        }
 
-      if (userCompany.canEditEntity(this) &&
-          client != null &&
-          client.hasEmailAddress) {
-        actions.add(EntityAction.sendEmail);
-      }
+        if (!isPaid) {
+          actions.add(EntityAction.markPaid);
+        }
 
-      if (userCompany.canEditEntity(this) &&
-          userCompany.canCreate(EntityType.payment) &&
-          isUnpaid) {
-        actions.add(EntityAction.newPayment);
+        if (client != null &&
+            client.hasEmailAddress) {
+          actions.add(EntityAction.sendEmail);
+        }
+
+        if (userCompany.canCreate(EntityType.payment) &&
+            isUnpaid) {
+          actions.add(EntityAction.newPayment);
+        }
       }
 
       if (invitations.isNotEmpty) {
