@@ -42,6 +42,7 @@ class CompanyDetailsVM {
     @required this.onSettingsChanged,
     @required this.onSavePressed,
     @required this.onUploadLogo,
+    @required this.onDeleteLogo,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
@@ -55,6 +56,38 @@ class CompanyDetailsVM {
           store.dispatch(UpdateSettings(settings: settings)),
       onCompanyChanged: (company) =>
           store.dispatch(UpdateCompany(company: company)),
+      onDeleteLogo: (context) {
+        final settingsUIState = state.uiState.settingsUIState;
+        switch (settingsUIState.entityType) {
+          case EntityType.company:
+            final completer = snackBarCompleter<Null>(
+                context, AppLocalization.of(context).deletedLogo);
+            store.dispatch(SaveCompanyRequest(
+              completer: completer,
+              company: settingsUIState.company
+                  .rebuild((b) => b..settings.companyLogo = null),
+            ));
+            break;
+          case EntityType.group:
+            final completer = snackBarCompleter<GroupEntity>(
+                context, AppLocalization.of(context).deletedLogo);
+            store.dispatch(SaveGroupRequest(
+              completer: completer,
+              group: settingsUIState.group
+                  .rebuild((b) => b..settings.companyLogo = null),
+            ));
+            break;
+          case EntityType.client:
+            final completer = snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).deletedLogo);
+            store.dispatch(SaveClientRequest(
+              completer: completer,
+              client: settingsUIState.client
+                  .rebuild((b) => b..settings.companyLogo = null),
+            ));
+            break;
+        }
+      },
       onSavePressed: (context) {
         final settingsUIState = state.uiState.settingsUIState;
         switch (settingsUIState.entityType) {
@@ -95,4 +128,5 @@ class CompanyDetailsVM {
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, String) onUploadLogo;
+  final Function(BuildContext) onDeleteLogo;
 }
