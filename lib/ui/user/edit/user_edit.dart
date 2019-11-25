@@ -183,14 +183,13 @@ class _UserEditState extends State<UserEdit> {
                   title: Text(localization.administrator),
                   subtitle: Text(localization.administratorHelp),
                   value: userCompany.isAdmin ?? false,
-                  onChanged: null,
-                  //onChanged: (value) => viewModel
-                  //.onUserChanged(user.rebuild((b) => b..isAdmin = value)),
+                  onChanged: (value) => viewModel.onUserChanged(
+                      user.rebuild((b) => b..userCompany.isAdmin = value)),
                   activeColor: Theme.of(context).accentColor,
                 ),
               ],
             ),
-            if (userCompany.isAdmin)
+            if (viewModel.userCompany.isAdmin)
               FormCard(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
