@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
@@ -67,32 +68,11 @@ class DeviceSettingsVM {
       store.dispatch(LoadDashboard());
     }
 
-    void _confirmLogout(BuildContext context) {
-      final localization = AppLocalization.of(context);
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          semanticLabel: localization.areYouSure,
-          title: Text(localization.areYouSure),
-          actions: <Widget>[
-            new FlatButton(
-                child: Text(localization.cancel.toUpperCase()),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            new FlatButton(
-                child: Text(localization.ok.toUpperCase()),
-                onPressed: () {
-                  store.dispatch(UserLogout(context));
-                })
-          ],
-        ),
-      );
-    }
-
     return DeviceSettingsVM(
       state: store.state,
-      onLogoutTap: (BuildContext context) => _confirmLogout(context),
+      onLogoutTap: (BuildContext context) => confirmCallback(
+          context: context,
+          callback: () => store.dispatch(UserLogout(context))),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));

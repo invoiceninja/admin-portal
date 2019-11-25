@@ -334,7 +334,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               label: localization.delete,
                               icon: Icons.delete,
                               onPressed: () {
-                                confirmDelete(
+                                confirmCallback(
                                     context: context,
                                     callback: () =>
                                         viewModel.onDeleteLogo(context));

@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditContacts extends StatefulWidget {
@@ -229,30 +230,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
-    void _confirmDelete() {
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          semanticLabel: localization.areYouSure,
-          title: Text(localization.areYouSure),
-          actions: <Widget>[
-            FlatButton(
-                child: Text(localization.cancel.toUpperCase()),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            FlatButton(
-                child: Text(localization.ok.toUpperCase()),
-                onPressed: () {
-                  widget.viewModel.onRemoveContactPressed(widget.index);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                })
-          ],
-        ),
-      );
-    }
-
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context)
@@ -274,7 +251,10 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         color: Colors.red,
                         icon: Icons.delete,
                         label: localization.remove,
-                        onPressed: _confirmDelete,
+                        onPressed: () => confirmCallback(context: context, callback: () {
+                          widget.viewModel.onRemoveContactPressed(widget.index);
+                          Navigator.pop(context);
+                        }),
                       ),
                       SizedBox(
                         width: 10.0,

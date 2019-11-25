@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -144,30 +145,10 @@ class DocumentTile extends StatelessWidget {
                               icon: Icons.delete,
                               label: localization.delete,
                               onPressed: () {
-                                showDialog<AlertDialog>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    semanticLabel: localization.areYouSure,
-                                    title: Text(localization.areYouSure),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          child: Text(localization.cancel
-                                              .toUpperCase()),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          }),
-                                      FlatButton(
-                                          child: Text(
-                                              localization.ok.toUpperCase()),
-                                          onPressed: () {
-                                            onDeleteDocument(document);
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                          })
-                                    ],
-                                  ),
-                                );
+                                confirmCallback(context: context, callback: () {
+                                  onDeleteDocument(document);
+                                  Navigator.pop(context);
+                                });
                               },
                             ),
                       SizedBox(
