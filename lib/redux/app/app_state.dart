@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -39,14 +40,10 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 
@@ -390,7 +387,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    return 'Logo: ${company.settings.companyLogo}';
+    return 'Platform: ${Platform.operatingSystem}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
