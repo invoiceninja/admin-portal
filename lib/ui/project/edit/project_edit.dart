@@ -104,7 +104,6 @@ class _ProjectEditState extends State<ProjectEdit> {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final project = viewModel.project;
-    final company = viewModel.company;
 
     return WillPopScope(
       onWillPop: () async {

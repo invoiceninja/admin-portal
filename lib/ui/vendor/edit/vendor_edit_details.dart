@@ -93,7 +93,6 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
 
     return ListView(
       shrinkWrap: true,
