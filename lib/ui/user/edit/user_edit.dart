@@ -189,7 +189,7 @@ class _UserEditState extends State<UserEdit> {
                 ),
               ],
             ),
-            if (viewModel.userCompany.isAdmin)
+            if (!userCompany.isAdmin)
               FormCard(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
