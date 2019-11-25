@@ -165,7 +165,6 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
-                    blankValue: '0',
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..resetCounterFrequencyId = value)),
