@@ -214,23 +214,42 @@ class EmailInvoiceFailure implements StopSaving {
   final dynamic error;
 }
 
-class MarkSentInvoiceRequest implements StartSaving {
-  MarkSentInvoiceRequest(this.completer, this.invoiceId);
+class MarkInvoicesSentRequest implements StartSaving {
+  MarkInvoicesSentRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final String invoiceId;
+  final List<String> invoiceIds;
 }
 
-class MarkSentInvoiceSuccess implements StopSaving, PersistData {
-  MarkSentInvoiceSuccess(this.invoice);
+class MarkInvoicesSentSuccess implements StopSaving, PersistData {
+  MarkInvoicesSentSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class MarkSentInvoiceFailure implements StopSaving {
-  MarkSentInvoiceFailure(this.invoice);
+class MarkInvoicesSentFailure implements StopSaving {
+  MarkInvoicesSentFailure(this.error);
 
-  final InvoiceEntity invoice;
+  final dynamic error;
+}
+
+class MarkInvoicesPaidRequest implements StartSaving {
+  MarkInvoicesPaidRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class MarkInvoicesPaidSuccess implements StopSaving, PersistData {
+  MarkInvoicesPaidSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class MarkInvoicesPaidFailure implements StopSaving {
+  MarkInvoicesPaidFailure(this.error);
+
+  final dynamic error;
 }
 
 class ArchiveInvoiceRequest implements StartSaving {
@@ -375,9 +394,22 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       }
       break;
     case EntityAction.markSent:
-      store.dispatch(MarkSentInvoiceRequest(
-          snackBarCompleter<Null>(context, localization.markedInvoiceAsSent),
-          invoice.id));
+      store.dispatch(MarkInvoicesSentRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.markedInvoiceAsSent
+                  : localization.markedInvoicesAsSent),
+          invoiceIds));
+      break;
+    case EntityAction.markPaid:
+      store.dispatch(MarkInvoicesPaidRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.markedInvoiceAsPaid
+                  : localization.markedInvoicesAsPaid),
+          invoiceIds));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailInvoice(

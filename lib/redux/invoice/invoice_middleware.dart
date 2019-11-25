@@ -31,7 +31,8 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final deleteInvoice = _deleteInvoice(repository);
   final restoreInvoice = _restoreInvoice(repository);
   final emailInvoice = _emailInvoice(repository);
-  final markSentInvoice = _markSentInvoice(repository);
+  final markInvoiceSent = _markInvoiceSent(repository);
+  final markInvoicePaid = _markInvoicePaid(repository);
 
   return [
     TypedMiddleware<AppState, ViewInvoiceList>(viewInvoiceList),
@@ -45,7 +46,8 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
     TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
     TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
-    TypedMiddleware<AppState, MarkSentInvoiceRequest>(markSentInvoice),
+    TypedMiddleware<AppState, MarkInvoicesSentRequest>(markInvoiceSent),
+    TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
   ];
 }
 
@@ -208,21 +210,45 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
   };
 }
 
-Middleware<AppState> _markSentInvoice(InvoiceRepository repository) {
+Middleware<AppState> _markInvoiceSent(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as MarkSentInvoiceRequest;
-    final origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final action = dynamicAction as MarkInvoicesSentRequest;
     repository
-        .saveData(store.state.credentials, origInvoice, EntityAction.markSent)
-        .then((InvoiceEntity invoice) {
-      store.dispatch(MarkSentInvoiceSuccess(invoice));
-      store.dispatch(LoadClient(clientId: invoice.clientId));
+        .bulkAction(
+        store.state.credentials, action.invoiceIds, EntityAction.markSent)
+        .then((invoices) {
+      store.dispatch(MarkInvoicesSentSuccess(invoices));
+      store.dispatch(LoadClient(clientId: invoices.first.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkSentInvoiceFailure(origInvoice));
+      store.dispatch(MarkInvoicesSentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MarkInvoicesPaidRequest;
+    repository
+        .bulkAction(
+        store.state.credentials, action.invoiceIds, EntityAction.markSent)
+        .then((invoices) {
+      store.dispatch(MarkInvoicesSentSuccess(invoices));
+      store.dispatch(LoadClient(clientId: invoices.first.clientId));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(MarkInvoicesSentFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

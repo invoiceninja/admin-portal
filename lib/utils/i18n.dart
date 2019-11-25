@@ -656,6 +656,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_status_6': 'Paid',
       'mark_sent': 'Mark Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -14573,6 +14576,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get markedInvoiceAsSent =>
       _localizedValues[localeCode]['marked_invoice_as_sent'];
+
+  String get markedInvoiceAsPaid =>
+      _localizedValues[localeCode]['marked_invoice_as_paid'];
+
+  String get markedInvoicesAsSent =>
+      _localizedValues[localeCode]['marked_invoices_as_sent'];
+
+  String get markedInvoicesAsPaid =>
+      _localizedValues[localeCode]['marked_invoices_as_paid'];
 
   String get done => _localizedValues[localeCode]['done'];
 

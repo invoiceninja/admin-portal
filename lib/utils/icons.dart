@@ -18,6 +18,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.publish;
+    case EntityAction.markPaid:
+      return Icons.payment;
     case EntityAction.sendEmail:
       return Icons.send;
     case EntityAction.archive:
