@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -333,7 +334,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               label: localization.delete,
                               icon: Icons.delete,
                               onPressed: () {
-                                viewModel.onDeleteLogo(context);
+                                confirmDelete(
+                                    context: context,
+                                    callback: () =>
+                                        viewModel.onDeleteLogo(context));
                               },
                             ),
                           ),
