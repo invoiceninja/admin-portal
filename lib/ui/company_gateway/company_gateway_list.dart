@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -12,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayList extends StatelessWidget {
   const CompanyGatewayList({
@@ -26,18 +24,8 @@ class CompanyGatewayList extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final listUIState = store.state.uiState.companyGatewayUIState.listUIState;
+    final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final companyGatewayList = viewModel.companyGatewayList;
-
-    if (isNotMobile(context) &&
-        companyGatewayList.isNotEmpty &&
-        !companyGatewayList.contains(state.companyGatewayUIState.selectedId)) {
-      viewEntityById(
-          context: context,
-          entityType: EntityType.companyGateway,
-          entityId: companyGatewayList.first);
-    }
 
     void showDialog(CompanyGatewayEntity companyGateway) =>
         showEntityActionsDialog(

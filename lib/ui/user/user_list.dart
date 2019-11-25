@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -12,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/user/user_list_item.dart';
 import 'package:invoiceninja_flutter/ui/user/user_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class UserList extends StatelessWidget {
   const UserList({
@@ -24,30 +20,6 @@ class UserList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final state = store.state;
-
-    /*
-    final listUIState = state.uiState.userUIState.listUIState;
-    final localization = AppLocalization.of(context);
-    final listState = viewModel.listState;
-    final filteredClientId = listState.filterEntityId;
-    final filteredClient =
-        filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
-    final isInMultiselect = listUIState.isInMultiselect();
-    */
-
-    final userList = viewModel.userList;
-
-    if (isNotMobile(context) &&
-        userList.isNotEmpty &&
-        !userList.contains(state.userUIState.selectedId)) {
-      viewEntityById(
-          context: context,
-          entityType: EntityType.user,
-          entityId: userList.first);
-    }
-
     return Column(
       children: <Widget>[
         Expanded(
