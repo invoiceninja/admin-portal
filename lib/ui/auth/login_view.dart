@@ -337,7 +337,7 @@ class _LoginState extends State<LoginView> {
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (String value) =>
                                 FocusScope.of(context).nextFocus(),
-                            autovalidate: _autoValidate,
+                            //autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterAFirstName
@@ -350,7 +350,7 @@ class _LoginState extends State<LoginView> {
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (String value) =>
                                 FocusScope.of(context).nextFocus(),
-                            autovalidate: _autoValidate,
+                            //autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterALastName
