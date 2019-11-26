@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -35,9 +36,8 @@ class _ClientPortalState extends State<ClientPortal>
 
   bool autoValidate = false;
 
-  final _subdomainController = TextEditingController();
-  final _domainController = TextEditingController();
-  final _iFrameController = TextEditingController();
+  final _debouncer = Debouncer();
+  final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
   final _customJavaScriptController = TextEditingController();
 
@@ -62,9 +62,7 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void didChangeDependencies() {
     _controllers = [
-      _subdomainController,
-      _domainController,
-      _iFrameController,
+      _portalDomainController,
       _customCssController,
       _customJavaScriptController,
     ];
@@ -72,10 +70,8 @@ class _ClientPortalState extends State<ClientPortal>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    final product = widget.viewModel.product;
-    _productKeyController.text = product.productKey;
-      */
+    final company = widget.viewModel.company;
+    _portalDomainController.text = company.portalDomain;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -83,7 +79,29 @@ class _ClientPortalState extends State<ClientPortal>
     super.didChangeDependencies();
   }
 
-  void _onChanged() {}
+  void _onChanged() {
+    _debouncer.run(() {
+      final company = widget.viewModel.company.rebuild(
+          (b) => b..portalDomain = _portalDomainController.text.trim());
+      if (company != widget.viewModel.company) {
+        widget.viewModel.onCompanyChanged(company);
+      }
+    });
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      autoValidate = !isValid;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    widget.viewModel.onSavePressed(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +113,7 @@ class _ClientPortalState extends State<ClientPortal>
 
     return SettingsScaffold(
       title: localization.clientPortal,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: (context) => _onSavePressed(context),
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
@@ -147,46 +165,44 @@ class _ClientPortalState extends State<ClientPortal>
                       ],
                     ),
                     DecoratedFormField(
-                      label: localization.subdomain,
-                      controller: _subdomainController,
+                      label: company.portalMode == kClientPortalModeSubdomain
+                          ? localization.subdomain
+                          : localization.url,
+                      controller: _portalDomainController,
+                      keyboardType:
+                          company.portalMode == kClientPortalModeSubdomain
+                              ? TextInputType.text
+                              : TextInputType.url,
+                      validator: (val) => val.isEmpty || val.trim().isEmpty
+                          ? localization.pleaseEnterAValue
+                          : null,
                     ),
-                    if (company.portalMode == kClientPortalModeDomain &&
-                        company.isEnterprisePlan)
-                      DecoratedFormField(
-                        label: localization.domain,
-                        controller: _domainController,
-                        keyboardType: TextInputType.url,
-                      ),
-                    if (company.portalMode == kClientPortalModeIFrame)
-                      DecoratedFormField(
-                        label: 'iFrame',
-                        controller: _iFrameController,
-                        keyboardType: TextInputType.url,
-                      ),
                   ],
                 ),
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
                     label: localization.clientPortal,
-                    value: false,
+                    value: settings.enablePortal,
                     iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.cloud,
-                    onChanged: (value) => null,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enablePortal = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
-                    value: false,
+                    value: settings.enablePortalDashboard,
                     iconData: kIsWeb
                         ? Icons.dashboard
                         : FontAwesomeIcons.tachometerAlt,
-                    onChanged: (value) => null,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enablePortalDashboard = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.tasks,
-                    value: settings.showTasksInPortal,
+                    value: settings.enablePortalTasks,
                     iconData: getEntityIcon(EntityType.task),
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..showTasksInPortal = value)),
+                        settings.rebuild((b) => b..enablePortalTasks = value)),
                   ),
                 ],
               ),

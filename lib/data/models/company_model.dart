@@ -80,6 +80,10 @@ abstract class CompanyEntity extends Object
   String get portalMode;
 
   @nullable
+  @BuiltValueField(wireName: 'portal_domain')
+  String get portalDomain;
+
+  @nullable
   @BuiltValueField(wireName: 'update_products')
   bool get updateProducts;
 
@@ -565,9 +569,15 @@ abstract class SettingsEntity
       sendReminders: clientSettings?.sendReminders ??
           groupSettings?.sendReminders ??
           companySettings?.sendReminders,
-      showTasksInPortal: clientSettings?.showTasksInPortal ??
-          groupSettings?.showTasksInPortal ??
-          companySettings?.showTasksInPortal,
+      enablePortal: clientSettings?.enablePortal ??
+          groupSettings?.enablePortal ??
+          companySettings?.enablePortal,
+      enablePortalDashboard: clientSettings?.enablePortalDashboard ??
+          groupSettings?.enablePortalDashboard ??
+          companySettings?.enablePortalDashboard,
+      enablePortalTasks: clientSettings?.enablePortalTasks ??
+          groupSettings?.enablePortalTasks ??
+          companySettings?.enablePortalTasks,
       emailStyle: clientSettings?.emailStyle ??
           groupSettings?.emailStyle ??
           companySettings?.emailStyle,
@@ -995,8 +1005,16 @@ abstract class SettingsEntity
   bool get sendReminders;
 
   @nullable
-  @BuiltValueField(wireName: 'show_tasks_in_portal')
-  bool get showTasksInPortal;
+  @BuiltValueField(wireName: 'enable_client_portal')
+  bool get enablePortal;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_client_portal_dashboard')
+  bool get enablePortalDashboard;
+
+  @nullable
+  @BuiltValueField(wireName: 'enable_client_portal_tasks')
+  bool get enablePortalTasks;
 
   @nullable
   @BuiltValueField(wireName: 'email_style')
@@ -1497,15 +1515,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_reminder4')
   String get emailBodyReminder4;
-
-  // TODO add to constructor and viewer
-  @nullable
-  @BuiltValueField(wireName: 'enable_client_portal')
-  bool get enableClientPortal;
-
-  @nullable
-  @BuiltValueField(wireName: 'enable_client_portal_dashboard')
-  bool get enableClientPortalDashboard;
 
   @nullable
   @BuiltValueField(wireName: 'client_online_payment_notification')

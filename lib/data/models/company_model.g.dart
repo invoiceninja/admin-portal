@@ -90,6 +90,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.portalMode,
             specifiedType: const FullType(String)));
     }
+    if (object.portalDomain != null) {
+      result
+        ..add('portal_domain')
+        ..add(serializers.serialize(object.portalDomain,
+            specifiedType: const FullType(String)));
+    }
     if (object.updateProducts != null) {
       result
         ..add('update_products')
@@ -284,6 +290,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'portal_mode':
           result.portalMode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'portal_domain':
+          result.portalDomain = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'update_products':
@@ -800,10 +810,22 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.sendReminders,
             specifiedType: const FullType(bool)));
     }
-    if (object.showTasksInPortal != null) {
+    if (object.enablePortal != null) {
       result
-        ..add('show_tasks_in_portal')
-        ..add(serializers.serialize(object.showTasksInPortal,
+        ..add('enable_client_portal')
+        ..add(serializers.serialize(object.enablePortal,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enablePortalDashboard != null) {
+      result
+        ..add('enable_client_portal_dashboard')
+        ..add(serializers.serialize(object.enablePortalDashboard,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.enablePortalTasks != null) {
+      result
+        ..add('enable_client_portal_tasks')
+        ..add(serializers.serialize(object.enablePortalTasks,
             specifiedType: const FullType(bool)));
     }
     if (object.emailStyle != null) {
@@ -1569,18 +1591,6 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.emailBodyReminder4,
             specifiedType: const FullType(String)));
     }
-    if (object.enableClientPortal != null) {
-      result
-        ..add('enable_client_portal')
-        ..add(serializers.serialize(object.enableClientPortal,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableClientPortalDashboard != null) {
-      result
-        ..add('enable_client_portal_dashboard')
-        ..add(serializers.serialize(object.enableClientPortalDashboard,
-            specifiedType: const FullType(bool)));
-    }
     if (object.clientOnlinePaymentNotification != null) {
       result
         ..add('client_online_payment_notification')
@@ -1695,8 +1705,16 @@ class _$SettingsEntitySerializer
           result.sendReminders = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'show_tasks_in_portal':
-          result.showTasksInPortal = serializers.deserialize(value,
+        case 'enable_client_portal':
+          result.enablePortal = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_client_portal_dashboard':
+          result.enablePortalDashboard = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_client_portal_tasks':
+          result.enablePortalTasks = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'email_style':
@@ -2210,14 +2228,6 @@ class _$SettingsEntitySerializer
           result.emailBodyReminder4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'enable_client_portal':
-          result.enableClientPortal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'enable_client_portal_dashboard':
-          result.enableClientPortalDashboard = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'client_online_payment_notification':
           result.clientOnlinePaymentNotification = serializers
               .deserialize(value, specifiedType: const FullType(bool)) as bool;
@@ -2317,6 +2327,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String portalMode;
   @override
+  final String portalDomain;
+  @override
   final bool updateProducts;
   @override
   final bool convertProductExchangeRate;
@@ -2392,6 +2404,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.sizeId,
       this.industryId,
       this.portalMode,
+      this.portalDomain,
       this.updateProducts,
       this.convertProductExchangeRate,
       this.fillProducts,
@@ -2486,6 +2499,7 @@ class _$CompanyEntity extends CompanyEntity {
         sizeId == other.sizeId &&
         industryId == other.industryId &&
         portalMode == other.portalMode &&
+        portalDomain == other.portalDomain &&
         updateProducts == other.updateProducts &&
         convertProductExchangeRate == other.convertProductExchangeRate &&
         fillProducts == other.fillProducts &&
@@ -2540,7 +2554,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
                                                                                 taxRates.hashCode),
                                                                             taskStatuses.hashCode),
                                                                         taskStatusMap.hashCode),
@@ -2572,6 +2586,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
           ..add('portalMode', portalMode)
+          ..add('portalDomain', portalDomain)
           ..add('updateProducts', updateProducts)
           ..add('convertProductExchangeRate', convertProductExchangeRate)
           ..add('fillProducts', fillProducts)
@@ -2643,6 +2658,10 @@ class CompanyEntityBuilder
   String _portalMode;
   String get portalMode => _$this._portalMode;
   set portalMode(String portalMode) => _$this._portalMode = portalMode;
+
+  String _portalDomain;
+  String get portalDomain => _$this._portalDomain;
+  set portalDomain(String portalDomain) => _$this._portalDomain = portalDomain;
 
   bool _updateProducts;
   bool get updateProducts => _$this._updateProducts;
@@ -2815,6 +2834,7 @@ class CompanyEntityBuilder
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
       _portalMode = _$v.portalMode;
+      _portalDomain = _$v.portalDomain;
       _updateProducts = _$v.updateProducts;
       _convertProductExchangeRate = _$v.convertProductExchangeRate;
       _fillProducts = _$v.fillProducts;
@@ -2878,6 +2898,7 @@ class CompanyEntityBuilder
               sizeId: sizeId,
               industryId: industryId,
               portalMode: portalMode,
+              portalDomain: portalDomain,
               updateProducts: updateProducts,
               convertProductExchangeRate: convertProductExchangeRate,
               fillProducts: fillProducts,
@@ -3450,7 +3471,11 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool sendReminders;
   @override
-  final bool showTasksInPortal;
+  final bool enablePortal;
+  @override
+  final bool enablePortalDashboard;
+  @override
+  final bool enablePortalTasks;
   @override
   final String emailStyle;
   @override
@@ -3706,10 +3731,6 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String emailBodyReminder4;
   @override
-  final bool enableClientPortal;
-  @override
-  final bool enableClientPortalDashboard;
-  @override
   final bool clientOnlinePaymentNotification;
   @override
   final bool clientManualPaymentNotification;
@@ -3742,7 +3763,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.companyGatewayIds,
       this.defaultTaskRate,
       this.sendReminders,
-      this.showTasksInPortal,
+      this.enablePortal,
+      this.enablePortalDashboard,
+      this.enablePortalTasks,
       this.emailStyle,
       this.replyToEmail,
       this.bccEmail,
@@ -3870,8 +3893,6 @@ class _$SettingsEntity extends SettingsEntity {
       this.lateFeePercent3,
       this.emailSubjectReminder4,
       this.emailBodyReminder4,
-      this.enableClientPortal,
-      this.enableClientPortalDashboard,
       this.clientOnlinePaymentNotification,
       this.clientManualPaymentNotification,
       this.counterNumberApplied,
@@ -3907,7 +3928,9 @@ class _$SettingsEntity extends SettingsEntity {
         companyGatewayIds == other.companyGatewayIds &&
         defaultTaskRate == other.defaultTaskRate &&
         sendReminders == other.sendReminders &&
-        showTasksInPortal == other.showTasksInPortal &&
+        enablePortal == other.enablePortal &&
+        enablePortalDashboard == other.enablePortalDashboard &&
+        enablePortalTasks == other.enablePortalTasks &&
         emailStyle == other.emailStyle &&
         replyToEmail == other.replyToEmail &&
         bccEmail == other.bccEmail &&
@@ -4035,8 +4058,6 @@ class _$SettingsEntity extends SettingsEntity {
         lateFeePercent3 == other.lateFeePercent3 &&
         emailSubjectReminder4 == other.emailSubjectReminder4 &&
         emailBodyReminder4 == other.emailBodyReminder4 &&
-        enableClientPortal == other.enableClientPortal &&
-        enableClientPortalDashboard == other.enableClientPortalDashboard &&
         clientOnlinePaymentNotification ==
             other.clientOnlinePaymentNotification &&
         clientManualPaymentNotification ==
@@ -4068,19 +4089,19 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), showTasksInPortal.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
-                                                                                scheduleReminder3.hashCode),
-                                                                            endlessReminderFrequencyId.hashCode),
-                                                                        lateFeeAmount1.hashCode),
-                                                                    lateFeeAmount2.hashCode),
-                                                                lateFeeAmount3.hashCode),
-                                                            lateFeePercent1.hashCode),
-                                                        lateFeePercent2.hashCode),
-                                                    lateFeePercent3.hashCode),
-                                                emailSubjectReminder4.hashCode),
-                                            emailBodyReminder4.hashCode),
-                                        enableClientPortal.hashCode),
-                                    enableClientPortalDashboard.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode),
+                                                                                scheduleReminder1.hashCode),
+                                                                            scheduleReminder2.hashCode),
+                                                                        scheduleReminder3.hashCode),
+                                                                    endlessReminderFrequencyId.hashCode),
+                                                                lateFeeAmount1.hashCode),
+                                                            lateFeeAmount2.hashCode),
+                                                        lateFeeAmount3.hashCode),
+                                                    lateFeePercent1.hashCode),
+                                                lateFeePercent2.hashCode),
+                                            lateFeePercent3.hashCode),
+                                        emailSubjectReminder4.hashCode),
+                                    emailBodyReminder4.hashCode),
                                 clientOnlinePaymentNotification.hashCode),
                             clientManualPaymentNotification.hashCode),
                         counterNumberApplied.hashCode),
@@ -4107,7 +4128,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('companyGatewayIds', companyGatewayIds)
           ..add('defaultTaskRate', defaultTaskRate)
           ..add('sendReminders', sendReminders)
-          ..add('showTasksInPortal', showTasksInPortal)
+          ..add('enablePortal', enablePortal)
+          ..add('enablePortalDashboard', enablePortalDashboard)
+          ..add('enablePortalTasks', enablePortalTasks)
           ..add('emailStyle', emailStyle)
           ..add('replyToEmail', replyToEmail)
           ..add('bccEmail', bccEmail)
@@ -4235,8 +4258,6 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('lateFeePercent3', lateFeePercent3)
           ..add('emailSubjectReminder4', emailSubjectReminder4)
           ..add('emailBodyReminder4', emailBodyReminder4)
-          ..add('enableClientPortal', enableClientPortal)
-          ..add('enableClientPortalDashboard', enableClientPortalDashboard)
           ..add('clientOnlinePaymentNotification',
               clientOnlinePaymentNotification)
           ..add('clientManualPaymentNotification',
@@ -4316,10 +4337,19 @@ class SettingsEntityBuilder
   set sendReminders(bool sendReminders) =>
       _$this._sendReminders = sendReminders;
 
-  bool _showTasksInPortal;
-  bool get showTasksInPortal => _$this._showTasksInPortal;
-  set showTasksInPortal(bool showTasksInPortal) =>
-      _$this._showTasksInPortal = showTasksInPortal;
+  bool _enablePortal;
+  bool get enablePortal => _$this._enablePortal;
+  set enablePortal(bool enablePortal) => _$this._enablePortal = enablePortal;
+
+  bool _enablePortalDashboard;
+  bool get enablePortalDashboard => _$this._enablePortalDashboard;
+  set enablePortalDashboard(bool enablePortalDashboard) =>
+      _$this._enablePortalDashboard = enablePortalDashboard;
+
+  bool _enablePortalTasks;
+  bool get enablePortalTasks => _$this._enablePortalTasks;
+  set enablePortalTasks(bool enablePortalTasks) =>
+      _$this._enablePortalTasks = enablePortalTasks;
 
   String _emailStyle;
   String get emailStyle => _$this._emailStyle;
@@ -4937,16 +4967,6 @@ class SettingsEntityBuilder
   set emailBodyReminder4(String emailBodyReminder4) =>
       _$this._emailBodyReminder4 = emailBodyReminder4;
 
-  bool _enableClientPortal;
-  bool get enableClientPortal => _$this._enableClientPortal;
-  set enableClientPortal(bool enableClientPortal) =>
-      _$this._enableClientPortal = enableClientPortal;
-
-  bool _enableClientPortalDashboard;
-  bool get enableClientPortalDashboard => _$this._enableClientPortalDashboard;
-  set enableClientPortalDashboard(bool enableClientPortalDashboard) =>
-      _$this._enableClientPortalDashboard = enableClientPortalDashboard;
-
   bool _clientOnlinePaymentNotification;
   bool get clientOnlinePaymentNotification =>
       _$this._clientOnlinePaymentNotification;
@@ -5003,7 +5023,9 @@ class SettingsEntityBuilder
       _companyGatewayIds = _$v.companyGatewayIds;
       _defaultTaskRate = _$v.defaultTaskRate;
       _sendReminders = _$v.sendReminders;
-      _showTasksInPortal = _$v.showTasksInPortal;
+      _enablePortal = _$v.enablePortal;
+      _enablePortalDashboard = _$v.enablePortalDashboard;
+      _enablePortalTasks = _$v.enablePortalTasks;
       _emailStyle = _$v.emailStyle;
       _replyToEmail = _$v.replyToEmail;
       _bccEmail = _$v.bccEmail;
@@ -5131,8 +5153,6 @@ class SettingsEntityBuilder
       _lateFeePercent3 = _$v.lateFeePercent3;
       _emailSubjectReminder4 = _$v.emailSubjectReminder4;
       _emailBodyReminder4 = _$v.emailBodyReminder4;
-      _enableClientPortal = _$v.enableClientPortal;
-      _enableClientPortalDashboard = _$v.enableClientPortalDashboard;
       _clientOnlinePaymentNotification = _$v.clientOnlinePaymentNotification;
       _clientManualPaymentNotification = _$v.clientManualPaymentNotification;
       _counterNumberApplied = _$v.counterNumberApplied;
@@ -5178,7 +5198,9 @@ class SettingsEntityBuilder
               companyGatewayIds: companyGatewayIds,
               defaultTaskRate: defaultTaskRate,
               sendReminders: sendReminders,
-              showTasksInPortal: showTasksInPortal,
+              enablePortal: enablePortal,
+              enablePortalDashboard: enablePortalDashboard,
+              enablePortalTasks: enablePortalTasks,
               emailStyle: emailStyle,
               replyToEmail: replyToEmail,
               bccEmail: bccEmail,
@@ -5306,8 +5328,6 @@ class SettingsEntityBuilder
               lateFeePercent3: lateFeePercent3,
               emailSubjectReminder4: emailSubjectReminder4,
               emailBodyReminder4: emailBodyReminder4,
-              enableClientPortal: enableClientPortal,
-              enableClientPortalDashboard: enableClientPortalDashboard,
               clientOnlinePaymentNotification: clientOnlinePaymentNotification,
               clientManualPaymentNotification: clientManualPaymentNotification,
               counterNumberApplied: counterNumberApplied,

@@ -149,9 +149,15 @@ class SettingsViewer extends StatelessWidget {
       localization.sendReminders: settings.sendReminders == true
           ? localization.enabled
           : settings.sendReminders == false ? localization.disabled : null,
-      localization.showTasks: settings.showTasksInPortal == true
+      localization.clientPortal: settings.enablePortal == true
           ? localization.enabled
-          : settings.showTasksInPortal == false ? localization.disabled : null,
+          : settings.enablePortal == false ? localization.disabled : null,
+      localization.clientPortalTasks: settings.enablePortal == true
+          ? localization.enabled
+          : settings.enablePortal == false ? localization.disabled : null,
+      localization.clientPortalDashboard: settings.enablePortal == true
+          ? localization.enabled
+          : settings.enablePortal == false ? localization.disabled : null,
       localization.paymentType: settings.hasDefaultPaymentTypeId
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,
