@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'password_is_too_short': 'Password must be at least 8 character long',
+      'password_is_too_easy': 'Password msut contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -415,7 +417,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'copy_shipping': 'Copy Shipping',
       'copy_billing': 'Copy Billing',
       'design': 'Design',
-      'password_is_too_short': 'Password is too short',
       'failed_to_find_record': 'Failed to find record',
       'invoiced': 'Invoiced',
       'logged': 'Logged',
@@ -15816,6 +15817,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientPortalTasks => _localizedValues[localeCode]['client_portal_tasks'];
 
   String get clientPortalDashboard => _localizedValues[localeCode]['client_portal_dashboard'];
+
+  String get passwordIsTooEasy => _localizedValues[localeCode]['password_is_too_easy'];
+
 
 
   String lookup(String key) {

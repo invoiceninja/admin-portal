@@ -111,6 +111,12 @@ class _LoginState extends State<LoginView> {
     super.dispose();
   }
 
+  bool _validatePassword(String value) {
+    const pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
+    final regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
+
   void _onChanged() {
     if (_isFormComplete) {
       return;
@@ -137,11 +143,7 @@ class _LoginState extends State<LoginView> {
 
   void _submitForm() {
     if (_isFormComplete && !_createAccount) {
-      if (_createAccount) {
-        _submitSignUpForm();
-      } else {
-        _submitLoginForm();
-      }
+      _submitLoginForm();
     } else {
       FocusScope.of(context).nextFocus();
     }
@@ -154,6 +156,7 @@ class _LoginState extends State<LoginView> {
 
     setState(() {
       _autoValidate = !isValid;
+      print('_autoValidate: $_autoValidate');
       _loginError = '';
     });
 
@@ -395,10 +398,23 @@ class _LoginState extends State<LoginView> {
                                 },
                               ),
                             ),
-                            validator: (val) =>
-                                val.isEmpty || val.trim().isEmpty
-                                    ? localization.pleaseEnterYourPassword
-                                    : null,
+                            validator: (value) {
+                              if (value.isEmpty || value.trim().isEmpty) {
+                                return localization.pleaseEnterYourPassword;
+                              }
+
+                              if (_createAccount) {
+                                if (value.length < 8) {
+                                  return localization.passwordIsTooShort;
+                                }
+
+                                if (!_validatePassword(value)) {
+                                  return localization.passwordIsTooEasy;
+                                }
+                              }
+
+                              return null;
+                            },
                             obscureText: _isPasswordObscured,
                             onFieldSubmitted: (String value) => _submitForm(),
                           ),
