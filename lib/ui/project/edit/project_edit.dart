@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -177,16 +178,13 @@ class _ProjectEditState extends State<ProjectEdit> {
                             },
                           )
                         : SizedBox(),
-                    TextFormField(
-                      autocorrect: false,
+                    DecoratedFormField(
                       controller: _nameController,
                       validator: (String val) => val.trim().isEmpty
                           ? localization.pleaseEnterAName
                           : null,
                       autovalidate: autoValidate,
-                      decoration: InputDecoration(
-                        labelText: localization.name,
-                      ),
+                      label: localization.name,
                     ),
                     DatePicker(
                       labelText: localization.dueDate,
@@ -196,29 +194,23 @@ class _ProjectEditState extends State<ProjectEdit> {
                             project.rebuild((b) => b..dueDate = date));
                       },
                     ),
-                    TextFormField(
+                    DecoratedFormField(
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: _hoursController,
-                      decoration: InputDecoration(
-                        labelText: localization.budgetedHours,
-                      ),
+                      label: localization.budgetedHours,
                     ),
-                    TextFormField(
+                    DecoratedFormField(
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       controller: _taskRateController,
-                      decoration: InputDecoration(
-                        labelText: localization.taskRate,
-                      ),
+                      label: localization.taskRate,
                     ),
-                    TextFormField(
+                    DecoratedFormField(
                       maxLines: 4,
                       controller: _privateNotesController,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        labelText: localization.privateNotes,
-                      ),
+                      label: localization.privateNotes,
                     ),
                     CustomField(
                       controller: _custom1Controller,

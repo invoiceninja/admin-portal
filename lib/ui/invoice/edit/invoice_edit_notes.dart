@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -81,21 +82,17 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.publicNotes,
-              ),
+              label: localization.publicNotes,
             ),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.privateNotes,
-              ),
+              label: localization.privateNotes,
             ),
             TextFormField(
               maxLines: 4,
