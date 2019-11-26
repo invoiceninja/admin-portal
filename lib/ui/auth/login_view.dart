@@ -320,12 +320,9 @@ class _LoginState extends State<LoginView> {
                 isResponsive: calculateLayout(context) != AppLayout.mobile,
                 children: <Widget>[
                   if (isOneTimePassword)
-                    TextFormField(
+                    DecoratedFormField(
                       controller: _oneTimePasswordController,
-                      key: ValueKey(localization.oneTimePassword),
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                          labelText: localization.oneTimePassword),
+                      label: localization.oneTimePassword,
                     )
                   else
                     Column(
@@ -334,9 +331,6 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.firstName,
                             controller: _firstNameController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
                             //autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -347,9 +341,6 @@ class _LoginState extends State<LoginView> {
                           DecoratedFormField(
                             label: localization.lastName,
                             controller: _lastNameController,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
                             //autovalidate: _autoValidate,
                             validator: (val) =>
                                 val.isEmpty || val.trim().isEmpty
@@ -357,15 +348,13 @@ class _LoginState extends State<LoginView> {
                                     : null,
                           ),
                         if (_emailLogin)
-                          TextFormField(
+                          DecoratedFormField(
                             controller: _emailController,
-                            key: ValueKey(localization.email),
                             autocorrect: false,
                             textInputAction: _isFormComplete && !_createAccount
                                 ? TextInputAction.done
                                 : TextInputAction.next,
-                            decoration:
-                                InputDecoration(labelText: localization.email),
+                            label: localization.email,
                             keyboardType: TextInputType.emailAddress,
                             autovalidate: _autoValidate,
                             validator: (val) =>

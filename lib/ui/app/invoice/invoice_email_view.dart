@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -211,18 +212,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     return SingleChildScrollView(
       child: FormCard(
         children: <Widget>[
-          TextFormField(
+          DecoratedFormField(
             controller: _subjectController,
-            decoration: InputDecoration(
-              labelText: localization.subject,
-            ),
-            keyboardType: TextInputType.text,
+            label: localization.subject,
           ),
-          TextFormField(
+          DecoratedFormField(
             controller: _bodyController,
-            decoration: InputDecoration(
-              labelText: localization.body,
-            ),
+            label: localization.body,
             maxLines: 12,
             keyboardType: TextInputType.multiline,
           ),

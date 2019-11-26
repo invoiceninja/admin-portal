@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CustomField extends StatelessWidget {
@@ -37,14 +38,10 @@ class CustomField extends StatelessWidget {
     switch (fieldType) {
       case kFieldTypeSingleLineText:
       case kFieldTypeMultiLineText:
-        return TextFormField(
-          autocorrect: false,
+        return DecoratedFormField(
           controller: controller,
-          keyboardType: TextInputType.text,
           maxLines: fieldType == kFieldTypeSingleLineText ? 1 : 3,
-          decoration: InputDecoration(
-            labelText: fieldLabel,
-          ),
+          label: fieldLabel,
         );
       case kFieldTypeSwitch:
         return BoolDropdownButton(

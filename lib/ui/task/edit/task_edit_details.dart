@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -142,13 +143,11 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     },
                   )
                 : SizedBox(),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _descriptionController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.description,
-              ),
+              label: localization.description,
             ),
             CustomField(
               controller: _custom1Controller,

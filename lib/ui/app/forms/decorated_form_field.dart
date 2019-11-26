@@ -5,6 +5,8 @@ class DecoratedFormField extends StatelessWidget {
     @required this.controller,
     @required this.label,
     this.autovalidate = false,
+    this.autocorrect = false,
+    this.obscureText = false,
     this.validator,
     this.keyboardType,
     this.maxLines,
@@ -22,6 +24,8 @@ class DecoratedFormField extends StatelessWidget {
   final int maxLines;
   final bool autovalidate;
   final bool enabled;
+  final bool autocorrect;
+  final bool obscureText;
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
 
@@ -29,18 +33,21 @@ class DecoratedFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       key: ValueKey(label),
-      autocorrect: false,
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
       ),
       validator: validator,
-      keyboardType: null,
+      keyboardType: keyboardType ?? TextInputType.text,
       maxLines: maxLines ?? 1,
       autovalidate: autovalidate,
-      textInputAction: textInputAction,
-      onFieldSubmitted: onFieldSubmitted,
+      autocorrect: autocorrect,
+      obscureText: obscureText,
+      textInputAction: textInputAction ?? TextInputAction.next,
+      onFieldSubmitted: (value) => onFieldSubmitted != null
+          ? onFieldSubmitted(value)
+          : FocusScope.of(context).nextFocus(),
       enabled: enabled,
     );
   }

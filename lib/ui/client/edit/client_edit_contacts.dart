@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -270,44 +271,33 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     ],
                   )
                 : Container(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _firstNameController,
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-              ),
+              label: localization.firstName,
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _lastNameController,
-              decoration: InputDecoration(
-                labelText: localization.lastName,
-              ),
+              label: localization.lastName,
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _emailController,
-              decoration: InputDecoration(
-                labelText: localization.email,
-              ),
+              label: localization.email,
               keyboardType: TextInputType.emailAddress,
               validator: (value) => value.isNotEmpty && !value.contains('@')
                   ? localization.emailIsInvalid
                   : null,
             ),
             company.settings.enablePortalPassword ?? false
-                ? TextFormField(
+                ? DecoratedFormField(
                     autocorrect: false,
                     controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: localization.password,
-                    ),
+                    label: localization.password,
                     obscureText: true,
                     validator: (value) => value.isNotEmpty && value.length < 8
                         ? localization.passwordIsTooShort
