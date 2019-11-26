@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/block_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -119,11 +120,9 @@ class _FormColorPickerState extends State<FormColorPicker> {
     return Stack(
       alignment: Alignment.centerRight,
       children: <Widget>[
-        TextFormField(
+        DecoratedFormField(
           controller: _textController,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-          ),
+          label: widget.labelText,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,

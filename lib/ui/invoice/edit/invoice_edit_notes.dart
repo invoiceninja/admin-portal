@@ -94,21 +94,17 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               keyboardType: TextInputType.multiline,
               label: localization.privateNotes,
             ),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _termsController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.terms,
-              ),
+              label: localization.terms,
             ),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _footerController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.footer,
-              ),
+              label: localization.notes,
             ),
           ],
         ),

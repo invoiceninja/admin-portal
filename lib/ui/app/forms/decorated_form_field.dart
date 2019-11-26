@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class DecoratedFormField extends StatelessWidget {
   const DecoratedFormField({
+    Key key,
     @required this.controller,
     @required this.label,
     this.autovalidate = false,
     this.autocorrect = false,
     this.obscureText = false,
+    this.onChanged,
     this.validator,
     this.keyboardType,
     this.maxLines,
@@ -14,7 +16,7 @@ class DecoratedFormField extends StatelessWidget {
     this.onFieldSubmitted,
     this.enabled,
     this.hint,
-  });
+  }) : super(key: key);
 
   final TextEditingController controller;
   final String label;
@@ -28,6 +30,7 @@ class DecoratedFormField extends StatelessWidget {
   final bool obscureText;
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +51,7 @@ class DecoratedFormField extends StatelessWidget {
           (keyboardType == TextInputType.multiline
               ? TextInputAction.newline
               : TextInputAction.next),
+      onChanged: onChanged,
       onFieldSubmitted: (value) {
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);

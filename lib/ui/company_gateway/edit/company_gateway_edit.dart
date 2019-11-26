@@ -408,11 +408,9 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
         onChanged: (value) => widget.onChanged(value),
       );
     } else {
-      return TextFormField(
+      return DecoratedFormField(
         controller: _textController,
-        decoration: InputDecoration(
-          labelText: label,
-        ),
+        label: label,
         maxLines: widget.field == 'text' ? 6 : 1,
         onChanged: (value) => _onChanged(),
         obscureText: _obscureText(widget.field),

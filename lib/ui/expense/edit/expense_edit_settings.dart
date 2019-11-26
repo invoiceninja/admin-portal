@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -197,12 +198,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                               expense.rebuild((b) => b..paymentDate = date));
                         },
                       ),
-                      TextFormField(
+                      DecoratedFormField(
                         controller: _transactionReferenceController,
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: localization.transactionReference,
-                        ),
+                        label: localization.transactionReference,
                       ),
                       SizedBox(height: 16),
                     ],
@@ -241,14 +240,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         onSelected: (SelectableEntity currency) =>
                             _setCurrency(currency),
                       ),
-                      TextFormField(
+                      DecoratedFormField(
                         key: ValueKey('__${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(
-                          labelText: localization.exchangeRate,
-                        ),
+                        label: localization.exchangeRate,
                       ),
                       SizedBox(height: 16),
                     ],
