@@ -243,11 +243,14 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
             title: Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(entity.listDisplayName),
+                  child: Text(entity.listDisplayName,
+                      style: Theme.of(context).textTheme.title),
                 ),
                 entity.listDisplayAmount != null
-                    ? Text(formatNumber(entity.listDisplayAmount, context,
-                        formatNumberType: entity.listDisplayAmountType))
+                    ? Text(
+                        formatNumber(entity.listDisplayAmount, context,
+                            formatNumberType: entity.listDisplayAmountType),
+                        style: Theme.of(context).textTheme.title)
                     : Container(),
               ],
             ),
