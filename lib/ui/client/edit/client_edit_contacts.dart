@@ -304,12 +304,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         : null,
                   )
                 : SizedBox(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
+              label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
             CustomField(

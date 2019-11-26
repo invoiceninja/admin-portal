@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -242,10 +243,13 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         color: Colors.red,
                         icon: Icons.delete,
                         label: localization.remove,
-                        onPressed: () => confirmCallback(context: context, callback: () {
-                          widget.viewModel.onRemoveContactPressed(widget.index);
-                          Navigator.pop(context);
-                        }),
+                        onPressed: () => confirmCallback(
+                            context: context,
+                            callback: () {
+                              widget.viewModel
+                                  .onRemoveContactPressed(widget.index);
+                              Navigator.pop(context);
+                            }),
                       ),
                       SizedBox(
                         width: 10.0,
@@ -261,50 +265,35 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     ],
                   )
                 : Container(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _firstNameController,
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-              ),
+              label: localization.firstName,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _lastNameController,
-              decoration: InputDecoration(
-                labelText: localization.lastName,
-              ),
+              label: localization.lastName,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _emailController,
-              decoration: InputDecoration(
-                labelText: localization.email,
-              ),
+              label: localization.email,
               keyboardType: TextInputType.emailAddress,
               validator: (value) => value.isNotEmpty && !value.contains('@')
                   ? localization.emailIsInvalid
                   : null,
             ),
             company.settings.enablePortalPassword ?? false
-                ? TextFormField(
-                    autocorrect: false,
+                ? DecoratedFormField(
                     controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: localization.password,
-                    ),
+                    label: localization.password,
                     obscureText: true,
                     validator: (value) => value.isNotEmpty && value.length < 8
                         ? localization.passwordIsTooShort
                         : null,
                   )
                 : SizedBox(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
+              label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
             /*

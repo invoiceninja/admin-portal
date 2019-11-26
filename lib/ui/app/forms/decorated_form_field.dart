@@ -44,10 +44,19 @@ class DecoratedFormField extends StatelessWidget {
       autovalidate: autovalidate,
       autocorrect: autocorrect,
       obscureText: obscureText,
-      textInputAction: textInputAction ?? TextInputAction.next,
-      onFieldSubmitted: (value) => onFieldSubmitted != null
-          ? onFieldSubmitted(value)
-          : FocusScope.of(context).nextFocus(),
+      textInputAction: textInputAction ??
+          (keyboardType == TextInputType.multiline
+              ? TextInputAction.newline
+              : TextInputAction.next),
+      onFieldSubmitted: (value) {
+        if (onFieldSubmitted != null) {
+          return onFieldSubmitted(value);
+        } else if (keyboardType == TextInputType.multiline) {
+          return null;
+        } else {
+          FocusScope.of(context).nextFocus();
+        }
+      },
       enabled: enabled,
     );
   }
