@@ -197,7 +197,10 @@ abstract class CompanyGatewayEntity extends Object
 abstract class FeesAndLimitsSettings
     implements Built<FeesAndLimitsSettings, FeesAndLimitsSettingsBuilder> {
   factory FeesAndLimitsSettings({String id}) {
-    return _$FeesAndLimitsSettings._();
+    return _$FeesAndLimitsSettings._(
+      maxLimit: -1,
+      minLimit: -1,
+    );
   }
 
   FeesAndLimitsSettings._();

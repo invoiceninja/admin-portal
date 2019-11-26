@@ -38,7 +38,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
-  String _gatewayTypeId;
+  String _gatewayTypeId = kGatewayTypeCreditCard;
 
   @override
   void initState() {
@@ -51,7 +51,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = widget.viewModel.companyGateway;
     _gatewayTypeId =
         companyGateway.gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
-
     super.didChangeDependencies();
   }
 
@@ -223,13 +222,13 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   ],
                 ),
               LimitEditor(
-                key: ValueKey('__${_gatewayTypeId}__'),
+                key: ValueKey('__limits_${_gatewayTypeId}__'),
                 gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
               ),
               FeesEditor(
-                key: ValueKey('__${_gatewayTypeId}__'),
+                key: ValueKey('__fees_${_gatewayTypeId}__'),
                 gatewayTypeId: _gatewayTypeId,
                 viewModel: viewModel,
                 companyGateway: companyGateway,
