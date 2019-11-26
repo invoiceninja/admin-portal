@@ -47,6 +47,15 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   }
 
   @override
+  void didChangeDependencies() {
+    final companyGateway = widget.viewModel.companyGateway;
+    _gatewayTypeId =
+        companyGateway.gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -451,50 +460,58 @@ class _LimitEditorState extends State<LimitEditor> {
 
   @override
   void didChangeDependencies() {
-    _minController.removeListener(_onChanged);
-    _maxController.removeListener(_onChanged);
+    _minController.removeListener(_onTextChange);
+    _maxController.removeListener(_onTextChange);
 
     final companyGateway = widget.companyGateway;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
-    if (settings.minLimit != null) {
+    if (settings.minLimit != -1) {
       _enableMin = true;
     }
 
-    if (settings.maxLimit != null) {
+    if (settings.maxLimit != -1) {
       _enableMax = true;
     }
 
-    _minController.text = formatNumber(
-        (settings.minLimit ?? 0).toDouble(), context,
-        formatNumberType: FormatNumberType.input);
-    _maxController.text = formatNumber(
-        (settings.maxLimit ?? 0).toDouble(), context,
-        formatNumberType: FormatNumberType.input);
+    _minController.text = settings.minLimit == -1
+        ? ''
+        : formatNumber((settings.minLimit ?? 0).toDouble(), context,
+            formatNumberType: FormatNumberType.input);
+    _maxController.text = settings.maxLimit == -1
+        ? ''
+        : formatNumber((settings.maxLimit ?? 0).toDouble(), context,
+            formatNumberType: FormatNumberType.input);
 
-    _minController.addListener(_onChanged);
-    _maxController.addListener(_onChanged);
+    _minController.addListener(_onTextChange);
+    _maxController.addListener(_onTextChange);
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
+    print('_onChanged');
+    final viewModel = widget.viewModel;
+    final companyGateway = viewModel.companyGateway;
+    final settings =
+        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+
+    final updatedSettings = settings.rebuild((b) => b
+      ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : -1
+      ..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : -1);
+
+    if (settings != updatedSettings) {
+      print('_onChanged: updating...');
+      viewModel.onChanged(companyGateway.rebuild(
+          (b) => b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
+    }
+  }
+
+  void _onTextChange() {
+    print('_onTextChanged');
     _debouncer.run(() {
-      final viewModel = widget.viewModel;
-      final companyGateway = viewModel.companyGateway;
-      final settings =
-          companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
-
-      final updatedSettings = settings.rebuild((b) => b
-        ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : null
-        ..maxLimit =
-            _enableMax ? parseDouble(_maxController.text.trim()) : null);
-
-      if (settings != updatedSettings) {
-        viewModel.onChanged(companyGateway.rebuild((b) =>
-            b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
-      }
+      _onChanged();
     });
   }
 
@@ -504,23 +521,6 @@ class _LimitEditorState extends State<LimitEditor> {
 
     return FormCard(
       children: <Widget>[
-        /*
-        RangeSlider(
-          values: RangeValues((widget.companyGateway.minLimit ?? 0).toDouble(),
-              (widget.companyGateway.maxLimit ?? 100000).toDouble()),
-          min: 0,
-          max: 100000,
-          onChanged: (values) {
-            _minController.text = formatNumber(values.start, context,
-                formatNumberType: FormatNumberType.input);
-            _maxController.text = formatNumber(values.end, context,
-                formatNumberType: FormatNumberType.input);
-            widget.viewModel.onChanged(widget.companyGateway.rebuild((b) => b
-              ..minLimit = values.start.toInt()
-              ..maxLimit = values.end.toInt()));
-          },
-        ),
-         */
         Row(
           children: <Widget>[
             Expanded(

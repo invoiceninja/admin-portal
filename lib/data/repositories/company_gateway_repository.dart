@@ -46,7 +46,7 @@ class CompanyGatewayRepository {
 
   Future<List<CompanyGatewayEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/company_gateways/bulk?include=activities';
+    var url = credentials.url + '/company_gateways/bulk?include=gateway';
     if (action != null) {
       url += '&action=' + action.toString();
     }
