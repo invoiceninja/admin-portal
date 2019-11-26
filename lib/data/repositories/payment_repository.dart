@@ -41,24 +41,12 @@ class PaymentRepository {
 
   Future<List<PaymentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    dynamic response;
-
-    switch (action) {
-      case EntityAction.restore:
-      case EntityAction.archive:
-      case EntityAction.delete:
-        var url = credentials.url + '/payments/bulk?include=activities';
-        if (action != null) {
-          url += '&action=' + action.toString();
-        }
-        response = await webClient.post(url, credentials.token,
-            data: json.encode(ids));
-        break;
-      default:
-        // Might have other actions in the future
-        break;
+    var url = credentials.url + '/payments/bulk?include=activities';
+    if (action != null) {
+      url += '&action=' + action.toString();
     }
-
+    final dynamic response =
+        await webClient.post(url, credentials.token, data: json.encode(ids));
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);
 
