@@ -17,7 +17,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'iframe_url': 'iFrame URL',
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password must be at least 8 character long',
-      'password_is_too_easy': 'Password msut contain an upper case character and a number',
+      'password_is_too_easy':
+          'Password msut contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -47,10 +48,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-      'Display a product quantity field, otherwise default to one',
+          'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-      'Display a line item quantity field, otherwise default to one',
+          'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
           'Automatically set the line item quantity to one',
@@ -15754,12 +15755,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
 
-  String get showInvoiceQuantity => _localizedValues[localeCode]['show_invoice_quantity'];
+  String get showInvoiceQuantity =>
+      _localizedValues[localeCode]['show_invoice_quantity'];
 
   String get showProductQuantityHelp =>
       _localizedValues[localeCode]['show_product_quantity_help'];
 
-  String get showProductQuantity => _localizedValues[localeCode]['show_product_quantity'];
+  String get showProductQuantity =>
+      _localizedValues[localeCode]['show_product_quantity'];
 
   String get showInvoiceQuantityHelp =>
       _localizedValues[localeCode]['show_invoice_quantity_help'];
@@ -15817,17 +15820,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get deletedLogo => _localizedValues[localeCode]['deleted_logo'];
 
-  String get pleaseEnterAValue => _localizedValues[localeCode]['please_enter_a_value'];
+  String get pleaseEnterAValue =>
+      _localizedValues[localeCode]['please_enter_a_value'];
 
-  String get clientPortalTasks => _localizedValues[localeCode]['client_portal_tasks'];
+  String get clientPortalTasks =>
+      _localizedValues[localeCode]['client_portal_tasks'];
 
-  String get clientPortalDashboard => _localizedValues[localeCode]['client_portal_dashboard'];
+  String get clientPortalDashboard =>
+      _localizedValues[localeCode]['client_portal_dashboard'];
 
-  String get passwordIsTooEasy => _localizedValues[localeCode]['password_is_too_easy'];
+  String get passwordIsTooEasy =>
+      _localizedValues[localeCode]['password_is_too_easy'];
 
   String get iFrameUrl => _localizedValues[localeCode]['iframe_url'];
-  String get domainUrl => _localizedValues[localeCode]['domain_url'];
 
+  String get domainUrl => _localizedValues[localeCode]['domain_url'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
