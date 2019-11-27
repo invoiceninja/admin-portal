@@ -41,6 +41,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   FocusScopeNode _focusNode;
   TabController _controller;
 
+  static const kTabEdit = 0;
+  static const kTabPreview = 1;
+
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
@@ -180,23 +183,25 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _handleTabSelection() {
+    if (_controller.index == kTabEdit) {
+      return;
+    }
 
     _debouncer.run(() {
       final str =
           '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
       final webClient = WebClient();
       final state = widget.viewModel.state;
-      final token = state.userCompany.token.token;
+      final credentials = state.credentials;
       final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
           InvoiceEntity();
-      final url = '/templates/invoice/${invoice.id}';
+      final url = credentials.url + '/templates/invoice/${invoice.id}';
       webClient
-          .post(url, token, data: json.encode({'text': str}))
+          .post(url, credentials.token, data: json.encode({'text': str}))
           .then((dynamic response) {
-        print('response: $response');
         setState(() {
           final String contentBase64 =
-          base64Encode(const Utf8Encoder().convert(response));
+              base64Encode(const Utf8Encoder().convert(response));
           _templatePreview = 'data:text/html;base64,$contentBase64';
         });
       });
