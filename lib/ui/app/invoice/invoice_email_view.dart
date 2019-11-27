@@ -49,11 +49,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   static const kTabEdit = 1;
   static const kTabHistory = 2;
 
-
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
     _controller.addListener(_handleTabSelection);
   }
 
@@ -137,10 +136,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   void _handleTabSelection() {
+    print('## _handleTabSelection...');
     if (_isLoading || _controller.index != kTabPreview) {
+      print('## skipping');
       return;
     }
-    
+
     final str =
         '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
 
@@ -322,6 +323,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         onCancelPressed: (context) =>
             viewEntity(context: context, entity: widget.viewModel.invoice),
         appBarBottom: TabBar(
+          controller: _controller,
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
@@ -336,8 +338,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: viewModel.isLoading
             ? LoadingIndicator()
             : TabBarView(
-                key: ValueKey(
-                    '__email_invoice_${widget.viewModel.invoice.id}__'),
+                key: ValueKey('__invoice_${widget.viewModel.invoice.id}__'),
                 children: [
                   _buildPreview(context),
                   _buildEdit(context),
