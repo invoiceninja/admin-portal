@@ -88,7 +88,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       setState(() {
         _emailSubject = _subjectController.text;
         _emailBody = _bodyController.text;
-        updateTemplate();
       });
     });
   }
@@ -131,12 +130,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    updateTemplate();
   }
 
   void _handleTabSelection() {
-    print('## _handleTabSelection...');
+    print('## _handleTabSelection... index: ${_controller.index}');
     if (_isLoading || _controller.index != kTabPreview) {
       print('## skipping');
       return;
@@ -169,16 +166,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _isLoading = false;
           });
         });
-  }
-
-  void updateTemplate() {
-    // TODO implement server-side solution
-    //final viewModel = widget.viewModel;
-    //emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
-    //emailBody = processTemplate(emailBody, viewModel.invoice, context);
-
-    _emailBody = '';
-    _emailSubject = '';
   }
 
   Widget _buildPreview(BuildContext context) {
@@ -338,6 +325,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: viewModel.isLoading
             ? LoadingIndicator()
             : TabBarView(
+                controller: _controller,
                 key: ValueKey('__invoice_${widget.viewModel.invoice.id}__'),
                 children: [
                   _buildPreview(context),
