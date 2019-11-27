@@ -153,6 +153,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': 'Six Months',
       'freq_annually': 'Annually',
       'freq_two_years': 'Two Years',
+      'freq_three_years': 'Three Years',
       'never': 'Never',
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
@@ -15434,6 +15435,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get freqAnnually => _localizedValues[localeCode]['freq_annually'];
 
   String get freqTwoYears => _localizedValues[localeCode]['freq_two_years'];
+
+  String get freqThreeYears => _localizedValues[localeCode]['freq_three_years'];
 
   String get workflowSettings =>
       _localizedValues[localeCode]['workflow_settings'];
