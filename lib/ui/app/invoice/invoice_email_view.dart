@@ -78,15 +78,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     switch (template) {
       case EmailTemplate.initial:
-        /*
-        if (viewModel.invoice.isQuote) {
+        if (false) {
           emailSubject = company.settings.emailSubjectQuote;
           emailBody = company.settings.emailBodyQuote;
         } else {
           emailSubject = company.settings.emailSubjectInvoice;
           emailBody = company.settings.emailBodyInvoice;
         }
-         */
         break;
       case EmailTemplate.reminder1:
         emailSubject = company.settings.emailSubjectReminder1;
@@ -106,7 +104,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _subjectController.text = emailSubject;
-    _bodyController.text = emailBody.replaceAll('</div>', '</div>\n');
+    _bodyController.text = (emailBody ?? '').replaceAll('</div>', '</div>\n');
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -119,6 +117,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     //final viewModel = widget.viewModel;
     //emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
     //emailBody = processTemplate(emailBody, viewModel.invoice, context);
+
+    emailBody = '';
+    emailSubject = '';
   }
 
   Widget _buildPreview(BuildContext context) {
