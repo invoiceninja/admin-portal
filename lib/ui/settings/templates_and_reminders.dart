@@ -38,6 +38,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   String _template = kEmailTemplateInvoice;
   String _templatePreview = '';
+  bool _isLoading = false;
   FocusScopeNode _focusNode;
   TabController _controller;
 
@@ -196,14 +197,22 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
           InvoiceEntity();
       final url = credentials.url + '/templates/invoice/${invoice.id}';
+
+      setState(() {
+        _isLoading = true;
+      });
+
       webClient
           .post(url, credentials.token, data: json.encode({'text': str}))
           .then((dynamic response) {
         setState(() {
           final String contentBase64 =
               base64Encode(const Utf8Encoder().convert(response));
+          _isLoading = false;
           _templatePreview = 'data:text/html;base64,$contentBase64';
         });
+      }).catchError(() {
+        setState(() => _isLoading = false);
       });
     });
   }
@@ -346,7 +355,19 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 ),
             ],
           ),
-          TemplatePreview(_templatePreview),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: TemplatePreview(_templatePreview),
+              ),
+              if (_isLoading)
+                SizedBox(
+                  height: 4.0,
+                  child: LinearProgressIndicator(),
+                )
+            ],
+          ),
         ],
       ),
     );
@@ -530,17 +551,13 @@ class _TemplatePreviewState extends State<TemplatePreview>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(15),
-      child: WebView(
-        debuggingEnabled: true,
-        initialUrl: widget.html,
-        onWebViewCreated: (WebViewController webViewController) {
-          _webViewController = webViewController;
-        },
-        //onPageFinished: (String url) {},
-        javascriptMode: JavascriptMode.disabled,
-      ),
+    return WebView(
+      debuggingEnabled: true,
+      initialUrl: widget.html,
+      onWebViewCreated: (WebViewController webViewController) {
+        _webViewController = webViewController;
+      },
+      javascriptMode: JavascriptMode.disabled,
     );
   }
 }
