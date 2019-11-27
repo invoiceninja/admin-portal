@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 //import 'package:flutter_html_view/flutter_html_view.dart';
-import 'package:html/parser.dart';
+import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class InvoiceEmailView extends StatefulWidget {
@@ -28,7 +28,8 @@ class InvoiceEmailView extends StatefulWidget {
   _InvoiceEmailViewState createState() => new _InvoiceEmailViewState();
 }
 
-class _InvoiceEmailViewState extends State<InvoiceEmailView> {
+class _InvoiceEmailViewState extends State<InvoiceEmailView>
+    with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
   String _emailSubject;
   String _emailBody;
@@ -36,18 +37,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   String _templatePreview = '';
   bool _isLoading = false;
 
-  TabController _controller;
   final _debouncer = Debouncer();
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
+  TabController _controller;
   WebViewController _webViewController;
   List<TextEditingController> _controllers = [];
+
+  static const kTabPreview = 0;
+  static const kTabEdit = 1;
+  static const kTabHistory = 2;
+
 
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusScopeNode();
     _controller = TabController(vsync: this, length: 2);
     _controller.addListener(_handleTabSelection);
   }
@@ -62,13 +67,15 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
 
-    loadTemplate(client.getNextEmailTemplate(invoice.id));
+    _loadTemplate(client.getNextEmailTemplate(invoice.id));
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_handleTabSelection);
+    _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -87,7 +94,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     });
   }
 
-  void loadTemplate(EmailTemplate template) {
+  void _loadTemplate(EmailTemplate template) {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
@@ -130,10 +137,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   }
 
   void _handleTabSelection() {
-    if (_isLoading || _controller.index == kTabEdit) {
+    if (_isLoading || _controller.index != kTabPreview) {
       return;
     }
-
+    
     final str =
         '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
 
@@ -190,7 +197,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                     child: DropdownButton<EmailTemplate>(
                       value: selectedTemplate,
                       onChanged: (template) =>
-                          setState(() => loadTemplate(template)),
+                          setState(() => _loadTemplate(template)),
                       items: [
                         DropdownMenuItem<EmailTemplate>(
                           child: Text(localization.initialEmail),
@@ -219,8 +226,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
             ),
           ),
           Expanded(
-            child: ListView(
-              shrinkWrap: true,
+            child: Column(
               children: <Widget>[
                 Container(
                   color: Colors.white,
@@ -237,14 +243,21 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                     ),
                   ),
                 ),
-                WebView(
-                  debuggingEnabled: true,
-                  initialUrl: _templatePreview,
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _webViewController = webViewController;
-                  },
-                  javascriptMode: JavascriptMode.disabled,
+                Expanded(
+                  child: WebView(
+                    debuggingEnabled: true,
+                    initialUrl: _templatePreview,
+                    onWebViewCreated: (WebViewController webViewController) {
+                      _webViewController = webViewController;
+                    },
+                    javascriptMode: JavascriptMode.disabled,
+                  ),
                 ),
+                if (_isLoading)
+                  SizedBox(
+                    height: 4.0,
+                    child: LinearProgressIndicator(),
+                  )
               ],
             ),
           ),
