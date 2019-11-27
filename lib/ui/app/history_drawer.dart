@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -37,6 +39,25 @@ class HistoryDrawer extends StatelessWidget {
         continue;
       }
 
+      String clientId;
+      switch (history.entityType) {
+        case EntityType.invoice:
+          clientId = (entity as InvoiceEntity).clientId;
+          break;
+        case EntityType.payment:
+          clientId = (entity as PaymentEntity).clientId;
+          break;
+        case EntityType.task:
+          clientId = (entity as TaskEntity).clientId;
+          break;
+        case EntityType.expense:
+          clientId = (entity as ExpenseEntity).clientId;
+          break;
+        case EntityType.project:
+          clientId = (entity as ProjectEntity).clientId;
+          break;
+      }
+
       widgets.add(ListTile(
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
@@ -66,6 +87,7 @@ class HistoryDrawer extends StatelessWidget {
           showEntityActionsDialog(
             context: context,
             entities: [entity],
+            client: state.clientState.map[clientId],
           );
         },
       ));
