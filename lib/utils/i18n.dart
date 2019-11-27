@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'iframe_url': 'iFrame URL',
+      'domain_url': 'Domain URL',
       'password_is_too_short': 'Password must be at least 8 character long',
       'password_is_too_easy': 'Password msut contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
@@ -15823,6 +15825,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get passwordIsTooEasy => _localizedValues[localeCode]['password_is_too_easy'];
 
+  String get iFrameUrl => _localizedValues[localeCode]['iframe_url'];
+  String get domainUrl => _localizedValues[localeCode]['domain_url'];
 
 
   String lookup(String key) {

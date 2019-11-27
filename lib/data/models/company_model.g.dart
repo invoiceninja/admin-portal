@@ -84,6 +84,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.industryId,
             specifiedType: const FullType(String)));
     }
+    if (object.subdomain != null) {
+      result
+        ..add('subdomain')
+        ..add(serializers.serialize(object.subdomain,
+            specifiedType: const FullType(String)));
+    }
     if (object.portalMode != null) {
       result
         ..add('portal_mode')
@@ -286,6 +292,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'industry_id':
           result.industryId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'subdomain':
+          result.subdomain = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'portal_mode':
@@ -2325,6 +2335,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String industryId;
   @override
+  final String subdomain;
+  @override
   final String portalMode;
   @override
   final String portalDomain;
@@ -2403,6 +2415,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableCustomSurchargeTaxes4,
       this.sizeId,
       this.industryId,
+      this.subdomain,
       this.portalMode,
       this.portalDomain,
       this.updateProducts,
@@ -2498,6 +2511,7 @@ class _$CompanyEntity extends CompanyEntity {
         enableCustomSurchargeTaxes4 == other.enableCustomSurchargeTaxes4 &&
         sizeId == other.sizeId &&
         industryId == other.industryId &&
+        subdomain == other.subdomain &&
         portalMode == other.portalMode &&
         portalDomain == other.portalDomain &&
         updateProducts == other.updateProducts &&
@@ -2554,7 +2568,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
                                                                                 taxRates.hashCode),
                                                                             taskStatuses.hashCode),
                                                                         taskStatusMap.hashCode),
@@ -2585,6 +2599,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableCustomSurchargeTaxes4', enableCustomSurchargeTaxes4)
           ..add('sizeId', sizeId)
           ..add('industryId', industryId)
+          ..add('subdomain', subdomain)
           ..add('portalMode', portalMode)
           ..add('portalDomain', portalDomain)
           ..add('updateProducts', updateProducts)
@@ -2654,6 +2669,10 @@ class CompanyEntityBuilder
   String _industryId;
   String get industryId => _$this._industryId;
   set industryId(String industryId) => _$this._industryId = industryId;
+
+  String _subdomain;
+  String get subdomain => _$this._subdomain;
+  set subdomain(String subdomain) => _$this._subdomain = subdomain;
 
   String _portalMode;
   String get portalMode => _$this._portalMode;
@@ -2833,6 +2852,7 @@ class CompanyEntityBuilder
       _enableCustomSurchargeTaxes4 = _$v.enableCustomSurchargeTaxes4;
       _sizeId = _$v.sizeId;
       _industryId = _$v.industryId;
+      _subdomain = _$v.subdomain;
       _portalMode = _$v.portalMode;
       _portalDomain = _$v.portalDomain;
       _updateProducts = _$v.updateProducts;
@@ -2897,6 +2917,7 @@ class CompanyEntityBuilder
               enableCustomSurchargeTaxes4: enableCustomSurchargeTaxes4,
               sizeId: sizeId,
               industryId: industryId,
+              subdomain: subdomain,
               portalMode: portalMode,
               portalDomain: portalDomain,
               updateProducts: updateProducts,

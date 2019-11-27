@@ -37,6 +37,7 @@ class _ClientPortalState extends State<ClientPortal>
   bool autoValidate = false;
 
   final _debouncer = Debouncer();
+  final _subdomainController = TextEditingController();
   final _portalDomainController = TextEditingController();
   final _customCssController = TextEditingController();
   final _customJavaScriptController = TextEditingController();
@@ -62,6 +63,7 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void didChangeDependencies() {
     _controllers = [
+      _subdomainController,
       _portalDomainController,
       _customCssController,
       _customJavaScriptController,
@@ -72,6 +74,7 @@ class _ClientPortalState extends State<ClientPortal>
 
     final company = widget.viewModel.company;
     _portalDomainController.text = company.portalDomain;
+    _subdomainController.text = company.subdomain;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -81,8 +84,9 @@ class _ClientPortalState extends State<ClientPortal>
 
   void _onChanged() {
     _debouncer.run(() {
-      final company = widget.viewModel.company.rebuild(
-          (b) => b..portalDomain = _portalDomainController.text.trim());
+      final company = widget.viewModel.company.rebuild((b) => b
+        ..portalDomain = _portalDomainController.text.trim()
+        ..subdomain = _subdomainController.text.trim());
       if (company != widget.viewModel.company) {
         widget.viewModel.onCompanyChanged(company);
       }
@@ -165,18 +169,20 @@ class _ClientPortalState extends State<ClientPortal>
                       ],
                     ),
                     DecoratedFormField(
-                      label: company.portalMode == kClientPortalModeSubdomain
-                          ? localization.subdomain
-                          : localization.url,
-                      controller: _portalDomainController,
-                      keyboardType:
-                          company.portalMode == kClientPortalModeSubdomain
-                              ? TextInputType.text
-                              : TextInputType.url,
-                      validator: (val) => val.isEmpty || val.trim().isEmpty
-                          ? localization.pleaseEnterAValue
-                          : null,
+                      label: localization.subdomain,
+                      controller: _subdomainController,
                     ),
+                    if (company.portalMode != kClientPortalModeSubdomain)
+                      DecoratedFormField(
+                        label: company.portalMode == kClientPortalModeDomain
+                            ? localization.domainUrl
+                            : localization.iFrameUrl,
+                        controller: _portalDomainController,
+                        keyboardType: TextInputType.url,
+                        validator: (val) => val.isEmpty || val.trim().isEmpty
+                            ? localization.pleaseEnterAValue
+                            : null,
+                      ),
                   ],
                 ),
               FormCard(
@@ -194,8 +200,8 @@ class _ClientPortalState extends State<ClientPortal>
                     iconData: kIsWeb
                         ? Icons.dashboard
                         : FontAwesomeIcons.tachometerAlt,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enablePortalDashboard = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.tasks,

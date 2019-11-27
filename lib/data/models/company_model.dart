@@ -76,6 +76,10 @@ abstract class CompanyEntity extends Object
   String get industryId;
 
   @nullable
+  @BuiltValueField(wireName: 'subdomain')
+  String get subdomain;
+
+  @nullable
   @BuiltValueField(wireName: 'portal_mode')
   String get portalMode;
 
