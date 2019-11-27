@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -14,9 +11,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
@@ -199,30 +196,24 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _lastTemplate = str;
     }
 
-    final webClient = WebClient();
-    final state = widget.viewModel.state;
-    final credentials = state.credentials;
-    final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
-        InvoiceEntity();
-    final url = credentials.url + '/templates/invoice/${invoice.id}';
-
     setState(() {
       _isLoading = true;
     });
 
-    webClient
-        .post(url, credentials.token, data: json.encode({'text': str}))
-        .then((dynamic response) {
-      setState(() {
-        final String contentBase64 =
-            base64Encode(const Utf8Encoder().convert(response));
-        _isLoading = false;
-        _templatePreview = 'data:text/html;base64,$contentBase64';
-      });
-    }).catchError((dynamic error) {
-      showErrorDialog(context: context, message: '$error');
-      setState(() => _isLoading = false);
-    });
+    loadTemplate(
+        context: context,
+        template: str,
+        onSuccess: (response) {
+          setState(() {
+            _isLoading = false;
+            _templatePreview = 'data:text/html;base64,$response';
+          });
+        },
+        onError: (response) {
+          setState(() {
+            _isLoading = false;
+          });
+        });
   }
 
   @override
