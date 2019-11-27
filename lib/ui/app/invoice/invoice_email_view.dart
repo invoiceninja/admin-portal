@@ -171,86 +171,83 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   Widget _buildPreview(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Container(
-      //color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Container(
-            color: Theme.of(context).backgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<EmailTemplate>(
-                      value: selectedTemplate,
-                      onChanged: (template) =>
-                          setState(() => _loadTemplate(template)),
-                      items: [
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.initialEmail),
-                          value: EmailTemplate.initial,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.firstReminder),
-                          value: EmailTemplate.reminder1,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.secondReminder),
-                          value: EmailTemplate.reminder2,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.thirdReminder),
-                          value: EmailTemplate.reminder3,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Column(
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Theme.of(context).backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 14.0, top: 26.0, right: 14.0, bottom: 24.0),
-                    child: Text(
-                      _emailSubject,
-                      style: TextStyle(
-                        //color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<EmailTemplate>(
+                    value: selectedTemplate,
+                    onChanged: (template) =>
+                        setState(() => _loadTemplate(template)),
+                    items: [
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.initialEmail),
+                        value: EmailTemplate.initial,
                       ),
-                    ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstReminder),
+                        value: EmailTemplate.reminder1,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondReminder),
+                        value: EmailTemplate.reminder2,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdReminder),
+                        value: EmailTemplate.reminder3,
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
-                  child: WebView(
-                    debuggingEnabled: true,
-                    initialUrl: _templatePreview,
-                    onWebViewCreated: (WebViewController webViewController) {
-                      _webViewController = webViewController;
-                    },
-                    javascriptMode: JavascriptMode.disabled,
-                  ),
+                  child: Container(),
                 ),
-                if (_isLoading)
-                  SizedBox(
-                    height: 4.0,
-                    child: LinearProgressIndicator(),
-                  )
               ],
             ),
           ),
-        ],
-      ),
+        ),
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 14.0, top: 26.0, right: 14.0, bottom: 24.0),
+                  child: Text(
+                    _emailSubject,
+                    style: TextStyle(
+                      //color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: WebView(
+                  debuggingEnabled: true,
+                  initialUrl: _templatePreview,
+                  onWebViewCreated: (WebViewController webViewController) {
+                    _webViewController = webViewController;
+                  },
+                  javascriptMode: JavascriptMode.disabled,
+                ),
+              ),
+              if (_isLoading)
+                SizedBox(
+                  height: 4.0,
+                  child: LinearProgressIndicator(),
+                )
+            ],
+          ),
+        ),
+      ],
     );
   }
 
