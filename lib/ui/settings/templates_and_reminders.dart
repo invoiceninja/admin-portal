@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -35,6 +37,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   final _debouncer = Debouncer();
 
   String _template = kEmailTemplateInvoice;
+  String _templatePreview = '';
   FocusScopeNode _focusNode;
   TabController _controller;
 
@@ -172,28 +175,32 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
-
-        /*
-      final str =
-          '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-      final String contentBase64 =
-          base64Encode(const Utf8Encoder().convert(str));
-      final url = 'data:text/html;base64,$contentBase64';
-      _webViewController.loadUrl(url);
-       */
       }
     });
   }
 
   void _handleTabSelection() {
-    //_webViewController.loadUrl(_getUrl(_template));
-  }
 
-  String _getUrl(String template) {
-    final str =
-        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-    final String contentBase64 = base64Encode(const Utf8Encoder().convert(str));
-    return 'data:text/html;base64,$contentBase64';
+    _debouncer.run(() {
+      final str =
+          '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
+      final webClient = WebClient();
+      final state = widget.viewModel.state;
+      final token = state.userCompany.token.token;
+      final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
+          InvoiceEntity();
+      final url = '/templates/invoice/${invoice.id}';
+      webClient
+          .post(url, token, data: json.encode({'text': str}))
+          .then((dynamic response) {
+        print('response: $response');
+        setState(() {
+          final String contentBase64 =
+          base64Encode(const Utf8Encoder().convert(response));
+          _templatePreview = 'data:text/html;base64,$contentBase64';
+        });
+      });
+    });
   }
 
   @override
@@ -334,7 +341,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 ),
             ],
           ),
-          TemplatePreview(_getUrl(_template)),
+          TemplatePreview(_templatePreview),
         ],
       ),
     );

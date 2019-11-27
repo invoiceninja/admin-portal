@@ -40,7 +40,6 @@ class TemplatesAndRemindersVM {
     @required this.settings,
     @required this.onSettingsChanged,
     @required this.onSavePressed,
-    @required this.loadTemplate,
   });
 
   static TemplatesAndRemindersVM fromStore(Store<AppState> store) {
@@ -75,21 +74,11 @@ class TemplatesAndRemindersVM {
             break;
         }
       },
-      loadTemplate: (String template) {
-        print('## LOAD TEMPLATE');
-        /*
-        final webClient = WebClient();
-        final token = state.userCompany.token.token;
-        final url = ''
-        webClient.get(url, token);
-         */
-      },
     );
   }
 
   final AppState state;
   final SettingsEntity settings;
-  final Function(String) loadTemplate;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(BuildContext) onSavePressed;
 }
