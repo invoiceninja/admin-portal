@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -258,28 +260,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalization.of(context).sendEmail),
-          bottom: TabBar(
-            tabs: [
-              Tab(text: localization.preview),
-              Tab(text: localization.customize),
-              Tab(text: localization.history),
-            ],
-          ),
-          actions: <Widget>[
-            ActionFlatButton(
-              isSaving: viewModel.isSaving,
-              tooltip: localization.send,
-              onPressed: () => viewModel.onSendPressed(
-                  context,
-                  selectedTemplate,
-                  _subjectController.text,
-                  _bodyController.text),
-            )
+      child: SettingsScaffold(
+        title: localization.sendEmail,
+        onCancelPressed: (context) =>
+            viewEntity(context: context, entity: widget.viewModel.invoice),
+        appBarBottom: TabBar(
+          tabs: [
+            Tab(text: localization.preview),
+            Tab(text: localization.customize),
+            Tab(text: localization.history),
           ],
         ),
+        saveLabel: localization.send,
+        onSavePressed: (context) {
+          viewModel.onSendPressed(context, selectedTemplate,
+              _subjectController.text, _bodyController.text);
+        },
         body: viewModel.isLoading
             ? LoadingIndicator()
             : TabBarView(

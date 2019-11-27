@@ -13,6 +13,7 @@ class SettingsScaffold extends StatelessWidget {
     @required this.body,
     this.onCancelPressed,
     this.appBarBottom,
+    this.saveLabel,
   }) : super(key: key);
 
   final String title;
@@ -20,6 +21,7 @@ class SettingsScaffold extends StatelessWidget {
   final Function(BuildContext) onCancelPressed;
   final Widget appBarBottom;
   final Widget body;
+  final String saveLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class SettingsScaffold extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             SaveCancelButtons(
+              saveLabel: saveLabel,
               isSaving: state.isSaving,
               onSavePressed: (context) => onSavePressed(context),
               onCancelPressed: isMobile(context)
