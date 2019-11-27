@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -215,14 +216,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           child: Column(
             children: <Widget>[
               Expanded(
-                child: WebView(
-                  debuggingEnabled: true,
-                  initialUrl: _templatePreview,
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _webViewController = webViewController;
-                  },
-                  javascriptMode: JavascriptMode.disabled,
-                ),
+                child: TemplatePreview(_templatePreview),
               ),
               if (_isLoading)
                 SizedBox(
