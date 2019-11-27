@@ -37,6 +37,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   final _debouncer = Debouncer();
 
   String _template = kEmailTemplateInvoice;
+  String _lastTemplate = '';
   String _templatePreview = '';
   bool _isLoading = false;
   FocusScopeNode _focusNode;
@@ -184,36 +185,41 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _handleTabSelection() {
-    if (_controller.index == kTabEdit) {
+    if (_isLoading || _controller.index == kTabEdit) {
       return;
     }
 
-    _debouncer.run(() {
-      final str =
-          '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-      final webClient = WebClient();
-      final state = widget.viewModel.state;
-      final credentials = state.credentials;
-      final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
-          InvoiceEntity();
-      final url = credentials.url + '/templates/invoice/${invoice.id}';
+    final str =
+        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
 
+    if (str == _lastTemplate) {
+      return;
+    } else {
+      _lastTemplate = str;
+    }
+
+    final webClient = WebClient();
+    final state = widget.viewModel.state;
+    final credentials = state.credentials;
+    final invoice = state.invoiceState.map[state.invoiceState.list.first] ??
+        InvoiceEntity();
+    final url = credentials.url + '/templates/invoice/${invoice.id}';
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    webClient
+        .post(url, credentials.token, data: json.encode({'text': str}))
+        .then((dynamic response) {
       setState(() {
-        _isLoading = true;
+        final String contentBase64 =
+            base64Encode(const Utf8Encoder().convert(response));
+        _isLoading = false;
+        _templatePreview = 'data:text/html;base64,$contentBase64';
       });
-
-      webClient
-          .post(url, credentials.token, data: json.encode({'text': str}))
-          .then((dynamic response) {
-        setState(() {
-          final String contentBase64 =
-              base64Encode(const Utf8Encoder().convert(response));
-          _isLoading = false;
-          _templatePreview = 'data:text/html;base64,$contentBase64';
-        });
-      }).catchError(() {
-        setState(() => _isLoading = false);
-      });
+    }).catchError(() {
+      setState(() => _isLoading = false);
     });
   }
 
