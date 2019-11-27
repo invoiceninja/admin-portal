@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 //import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:html/parser.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -29,14 +30,27 @@ class InvoiceEmailView extends StatefulWidget {
 
 class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   EmailTemplate selectedTemplate;
-  String emailSubject;
-  String emailBody;
+  String _emailSubject;
+  String _emailBody;
+  String _lastTemplate = '';
+  String _templatePreview = '';
+  bool _isLoading = false;
 
+  TabController _controller;
   final _debouncer = Debouncer();
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
+  WebViewController _webViewController;
   List<TextEditingController> _controllers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusScopeNode();
+    _controller = TabController(vsync: this, length: 2);
+    _controller.addListener(_handleTabSelection);
+  }
 
   @override
   void didChangeDependencies() {
@@ -66,8 +80,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   void _onChanged() {
     _debouncer.run(() {
       setState(() {
-        emailSubject = _subjectController.text;
-        emailBody = _bodyController.text;
+        _emailSubject = _subjectController.text;
+        _emailBody = _bodyController.text;
         updateTemplate();
       });
     });
@@ -82,37 +96,71 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     switch (template) {
       case EmailTemplate.initial:
         if (false) {
-          emailSubject = company.settings.emailSubjectQuote;
-          emailBody = company.settings.emailBodyQuote;
+          _emailSubject = company.settings.emailSubjectQuote;
+          _emailBody = company.settings.emailBodyQuote;
         } else {
-          emailSubject = company.settings.emailSubjectInvoice;
-          emailBody = company.settings.emailBodyInvoice;
+          _emailSubject = company.settings.emailSubjectInvoice;
+          _emailBody = company.settings.emailBodyInvoice;
         }
         break;
       case EmailTemplate.reminder1:
-        emailSubject = company.settings.emailSubjectReminder1;
-        emailBody = company.settings.emailBodyReminder1;
+        _emailSubject = company.settings.emailSubjectReminder1;
+        _emailBody = company.settings.emailBodyReminder1;
         break;
       case EmailTemplate.reminder2:
-        emailSubject = company.settings.emailSubjectReminder2;
-        emailBody = company.settings.emailBodyReminder2;
+        _emailSubject = company.settings.emailSubjectReminder2;
+        _emailBody = company.settings.emailBodyReminder2;
         break;
       case EmailTemplate.reminder3:
-        emailSubject = company.settings.emailSubjectReminder3;
-        emailBody = company.settings.emailBodyReminder3;
+        _emailSubject = company.settings.emailSubjectReminder3;
+        _emailBody = company.settings.emailBodyReminder3;
         break;
     }
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _subjectController.text = emailSubject;
-    _bodyController.text = (emailBody ?? '').replaceAll('</div>', '</div>\n');
+    _subjectController.text = _emailSubject;
+    _bodyController.text = (_emailBody ?? '').replaceAll('</div>', '</div>\n');
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     updateTemplate();
+  }
+
+  void _handleTabSelection() {
+    if (_isLoading || _controller.index == kTabEdit) {
+      return;
+    }
+
+    final str =
+        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
+
+    if (str == _lastTemplate) {
+      return;
+    } else {
+      _lastTemplate = str;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    loadTemplate(
+        context: context,
+        template: str,
+        onSuccess: (response) {
+          setState(() {
+            _isLoading = false;
+            _templatePreview = 'data:text/html;base64,$response';
+          });
+        },
+        onError: (response) {
+          setState(() {
+            _isLoading = false;
+          });
+        });
   }
 
   void updateTemplate() {
@@ -121,8 +169,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     //emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
     //emailBody = processTemplate(emailBody, viewModel.invoice, context);
 
-    emailBody = '';
-    emailSubject = '';
+    _emailBody = '';
+    _emailSubject = '';
   }
 
   Widget _buildPreview(BuildContext context) {
@@ -175,12 +223,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
               shrinkWrap: true,
               children: <Widget>[
                 Container(
-                  //color: Colors.white,
+                  color: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 14.0, top: 26.0, right: 14.0, bottom: 24.0),
                     child: Text(
-                      emailSubject,
+                      _emailSubject,
                       style: TextStyle(
                         //color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -189,18 +237,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
                     ),
                   ),
                 ),
-                Container(
-                  //color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                        parse(emailBody.replaceAll('</div>', '\n')).body.text),
-                  ),
-                  /*
-                  child: HtmlView(
-                    data: emailBody,
-                  ),
-                  */
+                WebView(
+                  debuggingEnabled: true,
+                  initialUrl: _templatePreview,
+                  onWebViewCreated: (WebViewController webViewController) {
+                    _webViewController = webViewController;
+                  },
+                  javascriptMode: JavascriptMode.disabled,
                 ),
               ],
             ),
