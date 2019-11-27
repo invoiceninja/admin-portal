@@ -67,8 +67,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   void _onChanged() {
     _debouncer.run(() {
       final viewModel = widget.viewModel;
-      final client = viewModel.client.rebuild((b) =>
-          b..settings.defaultTaskRate = parseDouble(_taskRateController.text));
+      final client = viewModel.client.rebuild((b) => b
+        ..settings.defaultTaskRate =
+            parseDouble(_taskRateController.text, zeroIsNull: true));
       if (client != viewModel.client) {
         viewModel.onChanged(client);
       }

@@ -250,8 +250,7 @@ class SettingsViewer extends StatelessWidget {
       localization.creditNumberPattern: settings.creditNumberPattern,
       localization.creditNumberCounter:
           settings.creditNumberCounter?.toString(),
-      localization.recurringPrefix:
-          settings.recurringNumberPrefix?.toString(),
+      localization.recurringPrefix: settings.recurringNumberPrefix?.toString(),
       localization.resetCounter: settings.resetCounterFrequencyId?.toString(),
       localization.resetCounterDate: settings.resetCounterDate?.toString(),
       localization.counterPadding: settings.counterPadding?.toString(),

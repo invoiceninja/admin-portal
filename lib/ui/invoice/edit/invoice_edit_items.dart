@@ -239,10 +239,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               maxLines: 4,
             ),
             CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.product1,
-              value: widget.invoiceItem.customValue1
-            ),
+                controller: _custom1Controller,
+                field: CustomFieldType.product1,
+                value: widget.invoiceItem.customValue1),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.product2,

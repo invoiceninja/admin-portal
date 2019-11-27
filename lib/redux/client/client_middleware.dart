@@ -105,9 +105,8 @@ Middleware<AppState> _viewClientList() {
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveClientRequest;
-    final prevClients = action.clientIds
-        .map((id) => store.state.clientState.map[id])
-        .toList();
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.archive)
@@ -131,9 +130,8 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteClientRequest;
-    final prevClients = action.clientIds
-        .map((id) => store.state.clientState.map[id])
-        .toList();
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.delete)
@@ -157,9 +155,8 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreClientRequest;
-    final prevClients = action.clientIds
-        .map((id) => store.state.clientState.map[id])
-        .toList();
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
         .bulkAction(
             store.state.credentials, action.clientIds, EntityAction.restore)

@@ -389,14 +389,14 @@ class SidebarFooter extends StatelessWidget {
                       return StateInspector();
                     }),
               ),
-          if (state.lastError.isNotEmpty)
-            IconButton(
-              icon: Icon(
-                Icons.warning,
-                color: Colors.red,
-              ),
-              onPressed: () => viewPdf(InvoiceEntity(), context),
-              /*
+            if (state.lastError.isNotEmpty)
+              IconButton(
+                icon: Icon(
+                  Icons.warning,
+                  color: Colors.red,
+                ),
+                onPressed: () => viewPdf(InvoiceEntity(), context),
+                /*
               onPressed: () => showDialog<ErrorDialog>(
                   context: context,
                   builder: (BuildContext context) {
@@ -406,7 +406,7 @@ class SidebarFooter extends StatelessWidget {
                     );
                   }),
                */
-            ),
+              ),
             /*
           if (!Platform.isIOS &&
               isHosted(context) &&

@@ -17,7 +17,15 @@ double round(double value, int precision) {
   return (value * fac).round() / fac;
 }
 
-double parseDouble(String value) {
+int parseInt(String value, {bool zeroIsNull = false}) {
+  value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
+
+  final intValue = int.tryParse(value) ?? 0;
+
+  return (intValue == 0 && zeroIsNull) ? null : intValue;
+}
+
+double parseDouble(String value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
   final RegExp regExp = RegExp(r',[\d]{1,2}$');
   if (regExp.hasMatch(value)) {
@@ -27,7 +35,9 @@ double parseDouble(String value) {
 
   value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
 
-  return double.tryParse(value) ?? 0.0;
+  final doubleValue = double.tryParse(value) ?? 0.0;
+
+  return (doubleValue == 0 && zeroIsNull) ? null : doubleValue;
 }
 
 enum FormatNumberType {

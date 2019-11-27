@@ -459,9 +459,11 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   }
 
   void _onChanged() {
-    final int days = parseDouble(_daysController.text.trim()).toInt();
-    final feeAmount = parseDouble(_feeAmountController.text.trim());
-    final feePercent = parseDouble(_feePercentController.text.trim());
+    final int days = parseInt(_daysController.text.trim(), zeroIsNull: true);
+    final feeAmount =
+        parseDouble(_feeAmountController.text.trim(), zeroIsNull: true);
+    final feePercent =
+        parseDouble(_feePercentController.text.trim(), zeroIsNull: true);
 
     widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
   }

@@ -157,8 +157,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..city = _cityController.text.trim()
         ..state = _stateController.text.trim()
         ..postalCode = _postalCodeController.text.trim()
-        ..defaultTaskRate = parseDouble(_taskRateController.text) ?? 0
-        ..defaultPaymentTerms = int.tryParse(_paymentTermsController.text) ?? 0
+        ..defaultTaskRate =
+            parseDouble(_taskRateController.text, zeroIsNull: true)
+        ..defaultPaymentTerms =
+            parseInt(_paymentTermsController.text, zeroIsNull: true)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()

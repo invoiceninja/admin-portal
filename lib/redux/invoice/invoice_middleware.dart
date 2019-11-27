@@ -215,7 +215,7 @@ Middleware<AppState> _markInvoiceSent(InvoiceRepository repository) {
     final action = dynamicAction as MarkInvoicesSentRequest;
     repository
         .bulkAction(
-        store.state.credentials, action.invoiceIds, EntityAction.markSent)
+            store.state.credentials, action.invoiceIds, EntityAction.markSent)
         .then((invoices) {
       store.dispatch(MarkInvoicesSentSuccess(invoices));
       store.dispatch(LoadClient(clientId: invoices.first.clientId));
@@ -239,7 +239,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
     final action = dynamicAction as MarkInvoicesPaidRequest;
     repository
         .bulkAction(
-        store.state.credentials, action.invoiceIds, EntityAction.markSent)
+            store.state.credentials, action.invoiceIds, EntityAction.markSent)
         .then((invoices) {
       store.dispatch(MarkInvoicesSentSuccess(invoices));
       store.dispatch(LoadClient(clientId: invoices.first.clientId));

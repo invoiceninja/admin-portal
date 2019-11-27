@@ -178,8 +178,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   : localization.invoiceDate,
               selectedDate: invoice.date,
               onSelected: (date) {
-                viewModel
-                    .onChanged(invoice.rebuild((b) => b..date = date));
+                viewModel.onChanged(invoice.rebuild((b) => b..date = date));
               },
             ),
             DatePicker(

@@ -145,10 +145,12 @@ class DocumentTile extends StatelessWidget {
                               icon: Icons.delete,
                               label: localization.delete,
                               onPressed: () {
-                                confirmCallback(context: context, callback: () {
-                                  onDeleteDocument(document);
-                                  Navigator.pop(context);
-                                });
+                                confirmCallback(
+                                    context: context,
+                                    callback: () {
+                                      onDeleteDocument(document);
+                                      Navigator.pop(context);
+                                    });
                               },
                             ),
                       SizedBox(

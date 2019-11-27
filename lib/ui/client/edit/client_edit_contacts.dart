@@ -252,10 +252,13 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         color: Colors.red,
                         icon: Icons.delete,
                         label: localization.remove,
-                        onPressed: () => confirmCallback(context: context, callback: () {
-                          widget.viewModel.onRemoveContactPressed(widget.index);
-                          Navigator.pop(context);
-                        }),
+                        onPressed: () => confirmCallback(
+                            context: context,
+                            callback: () {
+                              widget.viewModel
+                                  .onRemoveContactPressed(widget.index);
+                              Navigator.pop(context);
+                            }),
                       ),
                       SizedBox(
                         width: 10.0,

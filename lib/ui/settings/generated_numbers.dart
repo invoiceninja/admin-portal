@@ -296,7 +296,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final int counter = parseDouble(_counterController.text.trim()).toInt();
+      final int counter =
+          parseInt(_counterController.text.trim(), zeroIsNull: true);
       final String pattern = _patternController.text.trim();
 
       if (counter != widget.counterValue || pattern != widget.patternValue) {

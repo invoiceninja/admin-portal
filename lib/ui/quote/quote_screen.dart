@@ -71,16 +71,16 @@ class QuoteScreen extends StatelessWidget {
             onSavePressed: state.quoteListState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-              final quotes = viewModel.quoteList
-                  .map<InvoiceEntity>(
-                      (quoteId) => viewModel.quoteMap[quoteId])
-                  .toList();
+                    final quotes = viewModel.quoteList
+                        .map<InvoiceEntity>(
+                            (quoteId) => viewModel.quoteMap[quoteId])
+                        .toList();
 
-              await showEntityActionsDialog(
-                  entities: quotes, context: context, multiselect: true);
+                    await showEntityActionsDialog(
+                        entities: quotes, context: context, multiselect: true);
 
-              store.dispatch(ClearQuoteMultiselect());
-            },
+                    store.dispatch(ClearQuoteMultiselect());
+                  },
             onCancelPressed: (context) =>
                 store.dispatch(ClearQuoteMultiselect()),
           ),

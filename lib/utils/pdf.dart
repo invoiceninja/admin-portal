@@ -27,8 +27,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
         final localization = AppLocalization.of(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-                localization.invoice + ' ' + (invoice.number ?? '')),
+            title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
             actions: <Widget>[
               FlatButton(
                 child: Text(
@@ -81,7 +80,8 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                                             Container(
                                               color: Colors.white,
                                               child: Image(
-                                                  image: MemoryImage(page.bytes),
+                                                  image:
+                                                      MemoryImage(page.bytes),
                                                   height: double.infinity),
                                             ),
                                           ],

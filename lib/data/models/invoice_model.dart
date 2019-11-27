@@ -334,8 +334,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (response == 0) {
-      return (invoiceA.number ?? '')
-          .compareTo(invoiceB.number ?? '');
+      return (invoiceA.number ?? '').compareTo(invoiceB.number ?? '');
     } else {
       return response;
     }
@@ -418,13 +417,11 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markPaid);
         }
 
-        if (client != null &&
-            client.hasEmailAddress) {
+        if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.sendEmail);
         }
 
-        if (userCompany.canCreate(EntityType.payment) &&
-            isUnpaid) {
+        if (userCompany.canCreate(EntityType.payment) && isUnpaid) {
           actions.add(EntityAction.newPayment);
         }
       }
@@ -481,8 +478,7 @@ abstract class InvoiceEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(date) <= 0 &&
-        endDate.compareTo(date) >= 0;
+    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
   double get requestedAmount => partial > 0 ? partial : amount;
