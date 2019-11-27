@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
@@ -377,7 +376,6 @@ class EntityScreens extends StatelessWidget {
     final uiState = state.uiState;
     final prefState = state.prefState;
     final subRoute = uiState.subRoute;
-    final entityUIState = state.getUIState(entityType);
 
     return Row(
       children: <Widget>[
@@ -388,16 +386,9 @@ class EntityScreens extends StatelessWidget {
         _CustomDivider(),
         Expanded(
           flex: 3,
-          child: IndexedStack(
-            index: subRoute == 'email' ? 2 : (subRoute == 'edit' ? 1 : 0),
-            children: <Widget>[
-              (entityUIState.selectedId ?? '').isNotEmpty
-                  ? viewWidget
-                  : BlankScreen(AppLocalization.of(context).noRecordSelected),
-              editWidget,
-              emailWidget,
-            ],
-          ),
+          child: subRoute == 'email'
+              ? emailWidget
+              : subRoute == 'edit' ? editWidget : viewWidget,
         ),
         if (prefState.showHistory) ...[
           _CustomDivider(),

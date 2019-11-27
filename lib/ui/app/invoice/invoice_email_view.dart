@@ -1,7 +1,6 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
@@ -21,6 +20,7 @@ class InvoiceEmailView extends StatefulWidget {
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
   final EmailEntityVM viewModel;
 
   @override
@@ -40,8 +40,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
-
     _controllers = [
       _subjectController,
       _bodyController,
@@ -49,7 +47,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
+
     loadTemplate(client.getNextEmailTemplate(invoice.id));
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -279,6 +280,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         body: viewModel.isLoading
             ? LoadingIndicator()
             : TabBarView(
+                key: ValueKey(
+                    '__email_invoice_${widget.viewModel.invoice.id}__'),
                 children: [
                   _buildPreview(context),
                   _buildEdit(context),
