@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -218,7 +219,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         _isLoading = false;
         _templatePreview = 'data:text/html;base64,$contentBase64';
       });
-    }).catchError(() {
+    }).catchError((dynamic error) {
+      showErrorDialog(context: context, message: '$error');
       setState(() => _isLoading = false);
     });
   }
