@@ -54,16 +54,19 @@ class DeviceSettingsVM {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete,
           shouldPop: true);
+
       store.dispatch(RefreshData(
         platform: getPlatform(context),
         completer: completer,
       ));
+
       await showDialog<AlertDialog>(
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) => SimpleDialog(
                 children: <Widget>[LoadingDialog()],
               ));
+
       AppBuilder.of(context).rebuild();
       store.dispatch(LoadDashboard());
     }
