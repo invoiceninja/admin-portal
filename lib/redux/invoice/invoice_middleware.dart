@@ -121,11 +121,15 @@ Middleware<AppState> _showEmailInvoice() {
 
     next(action);
 
-    final emailWasSent =
-        await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+    store.dispatch(UpdateCurrentRoute(InvoiceEmailScreen.route));
 
-    if (action.completer != null && emailWasSent != null && emailWasSent) {
-      action.completer.complete(null);
+    if (isMobile(action.context)) {
+      final emailWasSent =
+      await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+
+      if (action.completer != null && emailWasSent != null && emailWasSent) {
+        action.completer.complete(null);
+      }
     }
   };
 }

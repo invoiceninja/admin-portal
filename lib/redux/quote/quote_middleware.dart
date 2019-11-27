@@ -119,11 +119,15 @@ Middleware<AppState> _showEmailQuote() {
 
     next(action);
 
-    final emailWasSent =
-        await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
+    store.dispatch(UpdateCurrentRoute(QuoteEmailScreen.route));
 
-    if (action.completer != null && emailWasSent != null && emailWasSent) {
-      action.completer.complete(null);
+    if (isMobile(action.context)) {
+      final emailWasSent =
+          await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
+
+      if (action.completer != null && emailWasSent != null && emailWasSent) {
+        action.completer.complete(null);
+      }
     }
   };
 }

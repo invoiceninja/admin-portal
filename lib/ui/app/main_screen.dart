@@ -63,6 +63,7 @@ class MainScreen extends StatelessWidget {
                 listWidget: InvoiceScreenBuilder(),
                 viewWidget: InvoiceViewScreen(),
                 editWidget: InvoiceEditScreen(),
+                emailWidget: InvoiceEmailScreen(),
               );
               break;
             case PaymentScreen.route:
@@ -360,11 +361,13 @@ class EntityScreens extends StatelessWidget {
     @required this.editWidget,
     @required this.viewWidget,
     @required this.entityType,
+    this.emailWidget,
   });
 
   final Widget listWidget;
   final Widget viewWidget;
   final Widget editWidget;
+  final Widget emailWidget;
   final EntityType entityType;
 
   @override
@@ -386,12 +389,13 @@ class EntityScreens extends StatelessWidget {
         Expanded(
           flex: 3,
           child: IndexedStack(
-            index: subRoute == 'edit' ? 1 : 0,
+            index: subRoute == 'email' ? 2 : (subRoute == 'edit' ? 1 : 0),
             children: <Widget>[
               (entityUIState.selectedId ?? '').isNotEmpty
                   ? viewWidget
                   : BlankScreen(AppLocalization.of(context).noRecordSelected),
               editWidget,
+              emailWidget,
             ],
           ),
         ),
