@@ -214,21 +214,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         Expanded(
           child: Column(
             children: <Widget>[
-              Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 14.0, top: 26.0, right: 14.0, bottom: 24.0),
-                  child: Text(
-                    _emailSubject,
-                    style: TextStyle(
-                      //color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                ),
-              ),
               Expanded(
                 child: WebView(
                   debuggingEnabled: true,
