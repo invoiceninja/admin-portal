@@ -168,10 +168,6 @@ class _ClientPortalState extends State<ClientPortal>
                         ),
                       ],
                     ),
-                    DecoratedFormField(
-                      label: localization.subdomain,
-                      controller: _subdomainController,
-                    ),
                     if (company.portalMode != kClientPortalModeSubdomain)
                       DecoratedFormField(
                         label: company.portalMode == kClientPortalModeDomain
@@ -183,6 +179,10 @@ class _ClientPortalState extends State<ClientPortal>
                             ? localization.pleaseEnterAValue
                             : null,
                       ),
+                    DecoratedFormField(
+                      label: localization.subdomain,
+                      controller: _subdomainController,
+                    ),
                   ],
                 ),
               FormCard(
