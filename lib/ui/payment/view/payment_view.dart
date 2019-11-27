@@ -124,7 +124,7 @@ class _PaymentViewState extends State<PaymentView> {
                   child: ListTile(
                     title: EntityStateTitle(
                       entity: invoice,
-                      title: '${localization.invoice} ${invoice.invoiceNumber}',
+                      title: '${localization.invoice} ${invoice.number}',
                     ),
                     leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                     trailing: Icon(Icons.navigate_next),

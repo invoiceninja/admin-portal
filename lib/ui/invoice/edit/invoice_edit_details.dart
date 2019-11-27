@@ -61,7 +61,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final invoice = widget.viewModel.invoice;
-    _invoiceNumberController.text = invoice.invoiceNumber;
+    _invoiceNumberController.text = invoice.number;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = formatNumber(invoice.discount, context,
         formatNumberType: FormatNumberType.input);
@@ -94,7 +94,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   void _onChanged() {
     _debouncer.run(() {
       final invoice = widget.viewModel.invoice.rebuild((b) => b
-        ..invoiceNumber = widget.viewModel.invoice.isNew
+        ..number = widget.viewModel.invoice.isNew
             ? ''
             : _invoiceNumberController.text.trim()
         ..poNumber = _poNumberController.text.trim()
@@ -176,10 +176,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               labelText: widget.isQuote
                   ? localization.quoteDate
                   : localization.invoiceDate,
-              selectedDate: invoice.invoiceDate,
+              selectedDate: invoice.date,
               onSelected: (date) {
                 viewModel
-                    .onChanged(invoice.rebuild((b) => b..invoiceDate = date));
+                    .onChanged(invoice.rebuild((b) => b..date = date));
               },
             ),
             DatePicker(

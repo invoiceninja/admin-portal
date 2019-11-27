@@ -103,12 +103,12 @@ class InvoiceListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text(((invoice.invoiceNumber ?? localization.pending) +
+                      ? Text(((invoice.number ?? localization.pending) +
                               ' • ' +
                               formatDate(
                                   invoice.dueDate.isNotEmpty
                                       ? invoice.dueDate
-                                      : invoice.invoiceDate,
+                                      : invoice.date,
                                   context) +
                               (hasDocuments ? '  📎' : ''))
                           .trim())

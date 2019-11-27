@@ -137,9 +137,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'po_number',
       serializers.serialize(object.poNumber,
           specifiedType: const FullType(String)),
-      'invoice_date',
-      serializers.serialize(object.invoiceDate,
-          specifiedType: const FullType(String)),
+      'date',
+      serializers.serialize(object.date, specifiedType: const FullType(String)),
       'due_date',
       serializers.serialize(object.dueDate,
           specifiedType: const FullType(String)),
@@ -227,10 +226,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.clientId,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceNumber != null) {
+    if (object.number != null) {
       result
-        ..add('invoice_number')
-        ..add(serializers.serialize(object.invoiceNumber,
+        ..add('number')
+        ..add(serializers.serialize(object.number,
             specifiedType: const FullType(String)));
     }
     if (object.designId != null) {
@@ -360,8 +359,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_number':
-          result.invoiceNumber = serializers.deserialize(value,
+        case 'number':
+          result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'discount':
@@ -372,8 +371,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.poNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_date':
-          result.invoiceDate = serializers.deserialize(value,
+        case 'date':
+          result.date = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'due_date':
@@ -1052,13 +1051,13 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String statusId;
   @override
-  final String invoiceNumber;
+  final String number;
   @override
   final double discount;
   @override
   final String poNumber;
   @override
-  final String invoiceDate;
+  final String date;
   @override
   final String dueDate;
   @override
@@ -1152,10 +1151,10 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.balance,
       this.clientId,
       this.statusId,
-      this.invoiceNumber,
+      this.number,
       this.discount,
       this.poNumber,
-      this.invoiceDate,
+      this.date,
       this.dueDate,
       this.publicNotes,
       this.privateNotes,
@@ -1214,8 +1213,8 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (poNumber == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'poNumber');
     }
-    if (invoiceDate == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'invoiceDate');
+    if (date == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'date');
     }
     if (dueDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'dueDate');
@@ -1312,10 +1311,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         balance == other.balance &&
         clientId == other.clientId &&
         statusId == other.statusId &&
-        invoiceNumber == other.invoiceNumber &&
+        number == other.number &&
         discount == other.discount &&
         poNumber == other.poNumber &&
-        invoiceDate == other.invoiceDate &&
+        date == other.date &&
         dueDate == other.dueDate &&
         publicNotes == other.publicNotes &&
         privateNotes == other.privateNotes &&
@@ -1380,7 +1379,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
                                                                                 customSurcharge3.hashCode),
                                                                             customSurcharge4.hashCode),
                                                                         customTaxes1.hashCode),
@@ -1409,10 +1408,10 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('balance', balance)
           ..add('clientId', clientId)
           ..add('statusId', statusId)
-          ..add('invoiceNumber', invoiceNumber)
+          ..add('number', number)
           ..add('discount', discount)
           ..add('poNumber', poNumber)
-          ..add('invoiceDate', invoiceDate)
+          ..add('date', date)
           ..add('dueDate', dueDate)
           ..add('publicNotes', publicNotes)
           ..add('privateNotes', privateNotes)
@@ -1479,10 +1478,9 @@ class InvoiceEntityBuilder
   String get statusId => _$this._statusId;
   set statusId(String statusId) => _$this._statusId = statusId;
 
-  String _invoiceNumber;
-  String get invoiceNumber => _$this._invoiceNumber;
-  set invoiceNumber(String invoiceNumber) =>
-      _$this._invoiceNumber = invoiceNumber;
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   double _discount;
   double get discount => _$this._discount;
@@ -1492,9 +1490,9 @@ class InvoiceEntityBuilder
   String get poNumber => _$this._poNumber;
   set poNumber(String poNumber) => _$this._poNumber = poNumber;
 
-  String _invoiceDate;
-  String get invoiceDate => _$this._invoiceDate;
-  set invoiceDate(String invoiceDate) => _$this._invoiceDate = invoiceDate;
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
 
   String _dueDate;
   String get dueDate => _$this._dueDate;
@@ -1685,10 +1683,10 @@ class InvoiceEntityBuilder
       _balance = _$v.balance;
       _clientId = _$v.clientId;
       _statusId = _$v.statusId;
-      _invoiceNumber = _$v.invoiceNumber;
+      _number = _$v.number;
       _discount = _$v.discount;
       _poNumber = _$v.poNumber;
-      _invoiceDate = _$v.invoiceDate;
+      _date = _$v.date;
       _dueDate = _$v.dueDate;
       _publicNotes = _$v.publicNotes;
       _privateNotes = _$v.privateNotes;
@@ -1759,10 +1757,10 @@ class InvoiceEntityBuilder
               balance: balance,
               clientId: clientId,
               statusId: statusId,
-              invoiceNumber: invoiceNumber,
+              number: number,
               discount: discount,
               poNumber: poNumber,
-              invoiceDate: invoiceDate,
+              date: date,
               dueDate: dueDate,
               publicNotes: publicNotes,
               privateNotes: privateNotes,

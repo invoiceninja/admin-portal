@@ -50,9 +50,9 @@ class PaymentListItem extends StatelessWidget {
         ? payment.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ??
-        (invoice.invoiceNumber ?? '') +
+        (invoice.number ?? '') +
             ' • ' +
-            formatDate(invoice.invoiceDate, context);
+            formatDate(invoice.date, context);
 
     return DismissibleEntity(
       isSelected: payment.id ==

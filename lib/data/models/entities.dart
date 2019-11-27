@@ -474,8 +474,8 @@ abstract class ActivityEntity
 
     activity = activity.replaceFirst(':user', user?.fullName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
-    activity = activity.replaceFirst(':invoice', invoice?.invoiceNumber ?? '');
-    activity = activity.replaceFirst(':quote', quote?.invoiceNumber ?? '');
+    activity = activity.replaceFirst(':invoice', invoice?.number ?? '');
+    activity = activity.replaceFirst(':quote', quote?.number ?? '');
     activity = activity.replaceFirst(':contact',
         contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
     activity =

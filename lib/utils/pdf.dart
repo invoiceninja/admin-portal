@@ -28,7 +28,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-                localization.invoice + ' ' + (invoice.invoiceNumber ?? '')),
+                localization.invoice + ' ' + (invoice.number ?? '')),
             actions: <Widget>[
               FlatButton(
                 child: Text(

@@ -78,10 +78,10 @@ abstract class InvoiceEntity extends Object
       balance: 0.0,
       clientId: client?.id ?? '',
       statusId: '',
-      invoiceNumber: '',
+      number: '',
       discount: 0.0,
       poNumber: '',
-      invoiceDate: convertDateTimeToSqlDate(),
+      date: convertDateTimeToSqlDate(),
       dueDate: '',
       publicNotes: '',
       privateNotes: '',
@@ -135,8 +135,8 @@ abstract class InvoiceEntity extends Object
     ..isDeleted = false
     ..statusId = kInvoiceStatusDraft
     ..quoteInvoiceId = null
-    ..invoiceNumber = ''
-    ..invoiceDate = convertDateTimeToSqlDate()
+    ..number = ''
+    ..date = convertDateTimeToSqlDate()
     ..dueDate = '');
 
   @override
@@ -156,8 +156,8 @@ abstract class InvoiceEntity extends Object
   String get statusId;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_number')
-  String get invoiceNumber;
+  @BuiltValueField(wireName: 'number')
+  String get number;
 
   @override
   double get discount;
@@ -165,8 +165,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'po_number')
   String get poNumber;
 
-  @BuiltValueField(wireName: 'invoice_date')
-  String get invoiceDate;
+  @BuiltValueField(wireName: 'date')
+  String get date;
 
   @BuiltValueField(wireName: 'due_date')
   String get dueDate;
@@ -329,13 +329,13 @@ abstract class InvoiceEntity extends Object
         break;
       case InvoiceFields.invoiceDate:
       case QuoteFields.quoteDate:
-        response = invoiceA.invoiceDate.compareTo(invoiceB.invoiceDate);
+        response = invoiceA.date.compareTo(invoiceB.date);
         break;
     }
 
     if (response == 0) {
-      return (invoiceA.invoiceNumber ?? '')
-          .compareTo(invoiceB.invoiceNumber ?? '');
+      return (invoiceA.number ?? '')
+          .compareTo(invoiceB.number ?? '');
     } else {
       return response;
     }
@@ -366,7 +366,7 @@ abstract class InvoiceEntity extends Object
       return true;
     }
 
-    if (invoiceNumber != null && invoiceNumber.toLowerCase().contains(filter)) {
+    if (number != null && number.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue1.isNotEmpty &&
         customValue1.toLowerCase().contains(filter)) {
@@ -471,7 +471,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   String get listDisplayName {
-    return invoiceNumber ?? id;
+    return number ?? id;
   }
 
   @override
@@ -481,8 +481,8 @@ abstract class InvoiceEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(invoiceDate) <= 0 &&
-        endDate.compareTo(invoiceDate) >= 0;
+    return startDate.compareTo(date) <= 0 &&
+        endDate.compareTo(date) >= 0;
   }
 
   double get requestedAmount => partial > 0 ? partial : amount;

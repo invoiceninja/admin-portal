@@ -79,9 +79,9 @@ List<ChartDataGroup> chartInvoices({
         settings.currencyId != currencyId) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][invoice.invoiceDate] == null) {
-        totals[STATUS_ACTIVE][invoice.invoiceDate] = 0.0;
-        totals[STATUS_OUTSTANDING][invoice.invoiceDate] = 0.0;
+      if (totals[STATUS_ACTIVE][invoice.date] == null) {
+        totals[STATUS_ACTIVE][invoice.date] = 0.0;
+        totals[STATUS_OUTSTANDING][invoice.date] = 0.0;
       }
 
       double amount = invoice.amount;
@@ -96,8 +96,8 @@ List<ChartDataGroup> chartInvoices({
             fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
       }
 
-      totals[STATUS_ACTIVE][invoice.invoiceDate] += amount;
-      totals[STATUS_OUTSTANDING][invoice.invoiceDate] += balance;
+      totals[STATUS_ACTIVE][invoice.date] += amount;
+      totals[STATUS_OUTSTANDING][invoice.date] += balance;
 
       counts[STATUS_ACTIVE]++;
       if (invoice.balance > 0) {
@@ -197,10 +197,10 @@ List<ChartDataGroup> chartQuotes({
         settings.currencyId != currencyId) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][quote.invoiceDate] == null) {
-        totals[STATUS_ACTIVE][quote.invoiceDate] = 0.0;
-        totals[STATUS_APPROVED][quote.invoiceDate] = 0.0;
-        totals[STATUS_UNAPPROVED][quote.invoiceDate] = 0.0;
+      if (totals[STATUS_ACTIVE][quote.date] == null) {
+        totals[STATUS_ACTIVE][quote.date] = 0.0;
+        totals[STATUS_APPROVED][quote.date] = 0.0;
+        totals[STATUS_UNAPPROVED][quote.date] = 0.0;
       }
 
       double amount = quote.amount;
@@ -212,13 +212,13 @@ List<ChartDataGroup> chartQuotes({
             fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
       }
 
-      totals[STATUS_ACTIVE][quote.invoiceDate] += amount;
+      totals[STATUS_ACTIVE][quote.date] += amount;
       counts[STATUS_ACTIVE]++;
       if (quote.isApproved) {
-        totals[STATUS_APPROVED][quote.invoiceDate] += quote.amount;
+        totals[STATUS_APPROVED][quote.date] += quote.amount;
         counts[STATUS_APPROVED]++;
       } else {
-        totals[STATUS_UNAPPROVED][quote.invoiceDate] += quote.amount;
+        totals[STATUS_UNAPPROVED][quote.date] += quote.amount;
         counts[STATUS_UNAPPROVED]++;
       }
     }
