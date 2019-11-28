@@ -144,9 +144,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return;
     }
 
-    final str =
-        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
-
     final subject =_subjectController.text.trim();
     final body = _bodyController.text.trim();
 

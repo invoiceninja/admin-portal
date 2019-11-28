@@ -58,6 +58,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.groups,
           specifiedType:
               const FullType(BuiltList, const [const FullType(GroupEntity)])),
+      'activities',
+      serializers.serialize(object.activities,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ActivityEntity)])),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap, const [
@@ -358,6 +362,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.groups.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GroupEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'activities':
+          result.activities.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ActivityEntity)]))
               as BuiltList<dynamic>);
           break;
         case 'tax_rates':
@@ -2367,6 +2377,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<GroupEntity> groups;
   @override
+  final BuiltList<ActivityEntity> activities;
+  @override
   final BuiltList<TaxRateEntity> taxRates;
   @override
   final BuiltList<TaskStatusEntity> taskStatuses;
@@ -2431,6 +2443,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.firstDayOfWeek,
       this.firstMonthOfYear,
       this.groups,
+      this.activities,
       this.taxRates,
       this.taskStatuses,
       this.taskStatusMap,
@@ -2483,6 +2496,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (groups == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'groups');
     }
+    if (activities == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'activities');
+    }
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
     }
@@ -2527,6 +2543,7 @@ class _$CompanyEntity extends CompanyEntity {
         firstDayOfWeek == other.firstDayOfWeek &&
         firstMonthOfYear == other.firstMonthOfYear &&
         groups == other.groups &&
+        activities == other.activities &&
         taxRates == other.taxRates &&
         taskStatuses == other.taskStatuses &&
         taskStatusMap == other.taskStatusMap &&
@@ -2568,7 +2585,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode),
                                                                                 taxRates.hashCode),
                                                                             taskStatuses.hashCode),
                                                                         taskStatusMap.hashCode),
@@ -2615,6 +2632,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('firstDayOfWeek', firstDayOfWeek)
           ..add('firstMonthOfYear', firstMonthOfYear)
           ..add('groups', groups)
+          ..add('activities', activities)
           ..add('taxRates', taxRates)
           ..add('taskStatuses', taskStatuses)
           ..add('taskStatusMap', taskStatusMap)
@@ -2743,6 +2761,12 @@ class CompanyEntityBuilder
       _$this._groups ??= new ListBuilder<GroupEntity>();
   set groups(ListBuilder<GroupEntity> groups) => _$this._groups = groups;
 
+  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity> get activities =>
+      _$this._activities ??= new ListBuilder<ActivityEntity>();
+  set activities(ListBuilder<ActivityEntity> activities) =>
+      _$this._activities = activities;
+
   ListBuilder<TaxRateEntity> _taxRates;
   ListBuilder<TaxRateEntity> get taxRates =>
       _$this._taxRates ??= new ListBuilder<TaxRateEntity>();
@@ -2868,6 +2892,7 @@ class CompanyEntityBuilder
       _firstDayOfWeek = _$v.firstDayOfWeek;
       _firstMonthOfYear = _$v.firstMonthOfYear;
       _groups = _$v.groups?.toBuilder();
+      _activities = _$v.activities?.toBuilder();
       _taxRates = _$v.taxRates?.toBuilder();
       _taskStatuses = _$v.taskStatuses?.toBuilder();
       _taskStatusMap = _$v.taskStatusMap?.toBuilder();
@@ -2933,6 +2958,7 @@ class CompanyEntityBuilder
               firstDayOfWeek: firstDayOfWeek,
               firstMonthOfYear: firstMonthOfYear,
               groups: groups.build(),
+              activities: activities.build(),
               taxRates: _taxRates?.build(),
               taskStatuses: _taskStatuses?.build(),
               taskStatusMap: taskStatusMap.build(),
@@ -2957,6 +2983,8 @@ class CompanyEntityBuilder
       try {
         _$failedField = 'groups';
         groups.build();
+        _$failedField = 'activities';
+        activities.build();
         _$failedField = 'taxRates';
         _taxRates?.build();
         _$failedField = 'taskStatuses';

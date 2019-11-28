@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -19,7 +19,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
-        onInit: (Store<AppState> store) => store.dispatch(LoadDashboard()),
+        onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
           final uiState = store.state.uiState;
           final prefState = store.state.prefState;

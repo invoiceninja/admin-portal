@@ -50,6 +50,7 @@ abstract class CompanyEntity extends Object
       users: BuiltList<UserEntity>(),
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
+      activities: BuiltList<ActivityEntity>(),
     );
   }
 
@@ -135,6 +136,8 @@ abstract class CompanyEntity extends Object
   String get firstMonthOfYear;
 
   BuiltList<GroupEntity> get groups;
+
+  BuiltList<ActivityEntity> get activities;
 
   // TODO remove this
   @nullable

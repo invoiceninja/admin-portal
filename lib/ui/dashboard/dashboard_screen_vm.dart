@@ -37,7 +37,6 @@ class DashboardVM {
   DashboardVM({
     @required this.state,
     @required this.dashboardUIState,
-    @required this.dashboardState,
     @required this.currencyMap,
     @required this.isLoading,
     @required this.isNextEnabled,
@@ -56,7 +55,8 @@ class DashboardVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadDashboard(completer, true));
+      // TODO implement
+      //store.dispatch(LoadCompany(completer, true));
       return completer.future;
     }
 
@@ -66,7 +66,6 @@ class DashboardVM {
     return DashboardVM(
       state: state,
       dashboardUIState: state.dashboardUIState,
-      dashboardState: state.dashboardState,
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
       isNextEnabled:
@@ -85,7 +84,6 @@ class DashboardVM {
   }
 
   final AppState state;
-  final DashboardState dashboardState;
   final DashboardUIState dashboardUIState;
   final BuiltMap<String, CurrencyEntity> currencyMap;
   final String filter;

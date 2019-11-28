@@ -1,6 +1,5 @@
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -54,9 +53,6 @@ final serverVersionReducer = combineReducers<String>([
 final lastErrorReducer = combineReducers<String>([
   TypedReducer<String, ClearLastError>((state, action) {
     return '';
-  }),
-  TypedReducer<String, LoadDashboardFailure>((state, action) {
-    return '${action.error}';
   }),
   TypedReducer<String, LoadClientsFailure>((state, action) {
     return '${action.error}';

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
@@ -54,7 +54,7 @@ class MenuDrawerVM {
         // TODO re-enable
         //store.dispatch(SelectCompany(int.parse(companyIndex), company));
 
-        store.dispatch(LoadDashboard());
+        store.dispatch(LoadClients());
         AppBuilder.of(context).rebuild();
       },
     );

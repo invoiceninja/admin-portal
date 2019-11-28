@@ -274,19 +274,6 @@ abstract class LoginResponse
   static Serializer<LoginResponse> get serializer => _$loginResponseSerializer;
 }
 
-abstract class DashboardResponse
-    implements Built<DashboardResponse, DashboardResponseBuilder> {
-  factory DashboardResponse([void updates(DashboardResponseBuilder b)]) =
-      _$DashboardResponse;
-
-  DashboardResponse._();
-
-  DashboardEntity get data;
-
-  static Serializer<DashboardResponse> get serializer =>
-      _$dashboardResponseSerializer;
-}
-
 class CustomFieldType {
   static const String company = 'company';
   static const String company1 = 'company1';
@@ -361,19 +348,6 @@ class CustomFieldType {
   static const String group4 = 'group4';
 }
 
-abstract class DashboardEntity
-    implements Built<DashboardEntity, DashboardEntityBuilder> {
-  factory DashboardEntity([void updates(DashboardEntityBuilder b)]) =
-      _$DashboardEntity;
-
-  DashboardEntity._();
-
-  BuiltList<ActivityEntity> get activities;
-
-  static Serializer<DashboardEntity> get serializer =>
-      _$dashboardEntitySerializer;
-}
-
 abstract class ActivityEntity
     implements Built<ActivityEntity, ActivityEntityBuilder> {
   factory ActivityEntity([void updates(ActivityEntityBuilder b)]) =
@@ -428,21 +402,21 @@ abstract class ActivityEntity
   String get taskId;
 
   EntityType get entityType {
-    if ([1, 2, 3, 26].contains(activityTypeId)) {
+    if (['1', '2', '3', '26'].contains(activityTypeId)) {
       return EntityType.client;
-    } else if ([4, 5, 6, 7, 8, 9, 25].contains(activityTypeId)) {
+    } else if (['4', '5', '6', '7', '8', '9', '25'].contains(activityTypeId)) {
       return EntityType.invoice;
-    } else if ([10, 11, 12, 13, 27].contains(activityTypeId)) {
+    } else if (['10', '11', '12', '13', '27'].contains(activityTypeId)) {
       return EntityType.payment;
-    } else if ([14, 15, 16, 17, 28, 39, 40, 41].contains(activityTypeId)) {
+    } else if (['14', '15', '16', '17', '28', '39', '40', '41'].contains(activityTypeId)) {
       return EntityType.credit;
-    } else if ([18, 19, 20, 21, 22, 23, 24, 29].contains(activityTypeId)) {
+    } else if (['18', '19', '20', '21', '22', '23', '24', '29'].contains(activityTypeId)) {
       return EntityType.quote;
-    } else if ([30, 31, 32, 33].contains(activityTypeId)) {
+    } else if (['30', '31', '32', '33'].contains(activityTypeId)) {
       return EntityType.vendor;
-    } else if ([34, 35, 36, 37, 47].contains(activityTypeId)) {
+    } else if (['34', '35', '36', '37', '47'].contains(activityTypeId)) {
       return EntityType.expense;
-    } else if ([42, 43, 44, 45, 46].contains(activityTypeId)) {
+    } else if (['42', '43', '44', '45', '46'].contains(activityTypeId)) {
       return EntityType.task;
     } else {
       return null;

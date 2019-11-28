@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
@@ -18,11 +17,8 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
@@ -34,7 +30,6 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..userCompany.replace(userCompanyEntityReducer(state.userCompany, action))
     ..documentState.replace(documentsReducer(state.documentState, action))
     ..clientState.replace(clientsReducer(state.clientState, action))
-    ..dashboardState.replace(dashboardReducer(state.dashboardState, action))
     ..productState.replace(productsReducer(state.productState, action))
     ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
     ..expenseState.replace(expensesReducer(state.expenseState, action))

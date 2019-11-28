@@ -25,9 +25,6 @@ class _$UserCompanyStateSerializer
       'documentState',
       serializers.serialize(object.documentState,
           specifiedType: const FullType(DocumentState)),
-      'dashboardState',
-      serializers.serialize(object.dashboardState,
-          specifiedType: const FullType(DashboardState)),
       'productState',
       serializers.serialize(object.productState,
           specifiedType: const FullType(ProductState)),
@@ -97,10 +94,6 @@ class _$UserCompanyStateSerializer
         case 'documentState':
           result.documentState.replace(serializers.deserialize(value,
               specifiedType: const FullType(DocumentState)) as DocumentState);
-          break;
-        case 'dashboardState':
-          result.dashboardState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DashboardState)) as DashboardState);
           break;
         case 'productState':
           result.productState.replace(serializers.deserialize(value,
@@ -303,8 +296,6 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final DocumentState documentState;
   @override
-  final DashboardState dashboardState;
-  @override
   final ProductState productState;
   @override
   final ClientState clientState;
@@ -338,7 +329,6 @@ class _$UserCompanyState extends UserCompanyState {
   _$UserCompanyState._(
       {this.userCompany,
       this.documentState,
-      this.dashboardState,
       this.productState,
       this.clientState,
       this.invoiceState,
@@ -355,9 +345,6 @@ class _$UserCompanyState extends UserCompanyState {
       : super._() {
     if (documentState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
-    }
-    if (dashboardState == null) {
-      throw new BuiltValueNullFieldError('UserCompanyState', 'dashboardState');
     }
     if (productState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'productState');
@@ -415,7 +402,6 @@ class _$UserCompanyState extends UserCompanyState {
     return other is UserCompanyState &&
         userCompany == other.userCompany &&
         documentState == other.documentState &&
-        dashboardState == other.dashboardState &&
         productState == other.productState &&
         clientState == other.clientState &&
         invoiceState == other.invoiceState &&
@@ -448,13 +434,10 @@ class _$UserCompanyState extends UserCompanyState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(
-                                                                    0,
-                                                                    userCompany
-                                                                        .hashCode),
-                                                                documentState
+                                                                0,
+                                                                userCompany
                                                                     .hashCode),
-                                                            dashboardState
+                                                            documentState
                                                                 .hashCode),
                                                         productState.hashCode),
                                                     clientState.hashCode),
@@ -476,7 +459,6 @@ class _$UserCompanyState extends UserCompanyState {
     return (newBuiltValueToStringHelper('UserCompanyState')
           ..add('userCompany', userCompany)
           ..add('documentState', documentState)
-          ..add('dashboardState', dashboardState)
           ..add('productState', productState)
           ..add('clientState', clientState)
           ..add('invoiceState', invoiceState)
@@ -509,12 +491,6 @@ class UserCompanyStateBuilder
       _$this._documentState ??= new DocumentStateBuilder();
   set documentState(DocumentStateBuilder documentState) =>
       _$this._documentState = documentState;
-
-  DashboardStateBuilder _dashboardState;
-  DashboardStateBuilder get dashboardState =>
-      _$this._dashboardState ??= new DashboardStateBuilder();
-  set dashboardState(DashboardStateBuilder dashboardState) =>
-      _$this._dashboardState = dashboardState;
 
   ProductStateBuilder _productState;
   ProductStateBuilder get productState =>
@@ -598,7 +574,6 @@ class UserCompanyStateBuilder
     if (_$v != null) {
       _userCompany = _$v.userCompany?.toBuilder();
       _documentState = _$v.documentState?.toBuilder();
-      _dashboardState = _$v.dashboardState?.toBuilder();
       _productState = _$v.productState?.toBuilder();
       _clientState = _$v.clientState?.toBuilder();
       _invoiceState = _$v.invoiceState?.toBuilder();
@@ -638,7 +613,6 @@ class UserCompanyStateBuilder
           new _$UserCompanyState._(
               userCompany: _userCompany?.build(),
               documentState: documentState.build(),
-              dashboardState: dashboardState.build(),
               productState: productState.build(),
               clientState: clientState.build(),
               invoiceState: invoiceState.build(),
@@ -659,8 +633,6 @@ class UserCompanyStateBuilder
         _userCompany?.build();
         _$failedField = 'documentState';
         documentState.build();
-        _$failedField = 'dashboardState';
-        dashboardState.build();
         _$failedField = 'productState';
         productState.build();
         _$failedField = 'clientState';

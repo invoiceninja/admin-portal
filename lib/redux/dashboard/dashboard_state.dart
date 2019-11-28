@@ -8,39 +8,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'dashboard_state.g.dart';
 
-abstract class DashboardState
-    implements Built<DashboardState, DashboardStateBuilder> {
-  factory DashboardState() {
-    return _$DashboardState._(
-      data: null,
-    );
-  }
-
-  DashboardState._();
-
-  @nullable
-  int get lastUpdated;
-
-  @nullable
-  DashboardEntity get data;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded {
-    return lastUpdated != null && lastUpdated > 0;
-  }
-
-  static Serializer<DashboardState> get serializer =>
-      _$dashboardStateSerializer;
-}
-
 abstract class DashboardUIState
     implements Built<DashboardUIState, DashboardUIStateBuilder> {
   factory DashboardUIState() {

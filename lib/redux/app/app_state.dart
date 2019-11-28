@@ -98,14 +98,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       userCompanyStates[uiState.selectedCompanyIndex];
 
   bool get isLoaded {
-    return dashboardState.isLoaded &&
-        productState.isLoaded &&
+    return productState.isLoaded &&
         clientState.isLoaded;
   }
 
   CompanyEntity get company => userCompanyState.company;
-
-  DashboardState get dashboardState => userCompanyState.dashboardState;
 
   DashboardUIState get dashboardUIState => uiState.dashboardUIState;
 
@@ -386,7 +383,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    return 'Platform: ${userCompany.token.token}';
+    //return 'Platform: ${userCompany.token.token}';
+    return 'Activites: ${company.activities}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

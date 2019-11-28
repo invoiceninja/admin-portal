@@ -50,7 +50,6 @@ part 'serializers.g.dart';
   LoginResponse,
   UserItemResponse,
   CompanyItemResponse,
-  DashboardResponse,
   ProductListResponse,
   ProductItemResponse,
   ClientListResponse,

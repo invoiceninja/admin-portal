@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -231,8 +231,8 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClients());
       }
     }).catchError((Object error) {
       print(error);

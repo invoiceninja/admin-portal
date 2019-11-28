@@ -35,9 +35,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CurrencyEntity.serializer)
       ..add(CurrencyItemResponse.serializer)
       ..add(CurrencyListResponse.serializer)
-      ..add(DashboardEntity.serializer)
-      ..add(DashboardResponse.serializer)
-      ..add(DashboardState.serializer)
       ..add(DashboardUIState.serializer)
       ..add(DateFormatEntity.serializer)
       ..add(DateFormatItemResponse.serializer)
@@ -153,9 +150,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(VendorState.serializer)
       ..add(VendorUIState.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
-          () => new ListBuilder<ActivityEntity>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
       ..addBuilderFactory(
@@ -259,6 +253,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GroupEntity)]),
           () => new ListBuilder<GroupEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
+          () => new ListBuilder<ActivityEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(TaxRateEntity)]),
           () => new ListBuilder<TaxRateEntity>())

@@ -3,32 +3,20 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
-
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
-
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
-
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
-
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
-
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
-
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
-
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
-
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 
 part 'company_state.g.dart';
@@ -39,7 +27,6 @@ abstract class UserCompanyState
     return _$UserCompanyState._(
       userCompany: UserCompanyEntity(),
       documentState: DocumentState(),
-      dashboardState: DashboardState(),
       productState: ProductState(),
       clientState: ClientState(),
       invoiceState: InvoiceState(),
@@ -63,8 +50,6 @@ abstract class UserCompanyState
   UserCompanyEntity get userCompany;
 
   DocumentState get documentState;
-
-  DashboardState get dashboardState;
 
   ProductState get productState;
 

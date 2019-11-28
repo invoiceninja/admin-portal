@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 
 class DashboardOverview extends StatelessWidget {
@@ -12,10 +11,6 @@ class DashboardOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!viewModel.dashboardState.isLoaded) {
-      return LoadingIndicator();
-    }
-
     return new Container();
   }
 }
