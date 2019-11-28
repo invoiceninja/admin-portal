@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -259,10 +260,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         invoiceId: invoice.id, typeId: kActivityEmailInvoice);
 
     if (activities.isEmpty) {
-      return Center(
-        child: Text(localization.noHistory,
-            style: TextStyle(fontSize: 26, color: Colors.grey)),
-      );
+      return HelpText(localization.noHistory);
     }
 
     return ListView.builder(

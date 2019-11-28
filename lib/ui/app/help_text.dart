@@ -13,7 +13,7 @@ class HelpText extends StatelessWidget {
           child: Text(
             message,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 22,
               color: Colors.grey,
             ),
           ),
