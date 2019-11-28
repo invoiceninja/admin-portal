@@ -35,7 +35,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   final _debouncer = Debouncer();
 
   String _template = kEmailTemplateInvoice;
-  String _lastTemplate = '';
+  String _lastSubject;
+  String _lastBody;
   String _templatePreview = '';
   bool _isLoading = false;
   FocusScopeNode _focusNode;
@@ -187,13 +188,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       return;
     }
 
-    final str =
-        '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
 
-    if (str == _lastTemplate) {
+    final subject =_subjectController.text.trim();
+    final body = _bodyController.text.trim();
+
+    if (subject == _lastSubject && body == _lastBody) {
       return;
     } else {
-      _lastTemplate = str;
+      _lastSubject = subject;
+      _lastBody = body;
     }
 
     setState(() {
@@ -202,11 +205,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     loadTemplate(
         context: context,
-        template: str,
-        onSuccess: (response) {
+        body: body,
+        subject: subject,
+        onSuccess: (body, subject) {
           setState(() {
             _isLoading = false;
-            _templatePreview = 'data:text/html;base64,$response';
+            //_templatePreview = 'data:text/html;base64,$response';
           });
         },
         onError: (response) {

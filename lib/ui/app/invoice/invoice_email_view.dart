@@ -35,7 +35,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   EmailTemplate selectedTemplate;
   String _emailSubject;
   String _emailBody;
-  String _lastTemplate = '';
+  String _lastSubject;
+  String _lastBody;
   String _templatePreview = '';
   bool _isLoading = false;
 
@@ -146,10 +147,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final str =
         '<b>${_subjectController.text.trim()}</b><br/><br/>${_bodyController.text.trim()}';
 
-    if (str == _lastTemplate) {
+    final subject =_subjectController.text.trim();
+    final body = _bodyController.text.trim();
+
+    if (subject == _lastSubject && body == _lastBody) {
       return;
     } else {
-      _lastTemplate = str;
+      _lastSubject = subject;
+      _lastBody = body;
     }
 
     setState(() {
@@ -158,11 +163,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     loadTemplate(
         context: context,
-        template: str,
-        onSuccess: (response) {
+        subject: subject,
+        body: body,
+        onSuccess: (body, subject) {
           setState(() {
             _isLoading = false;
-            _templatePreview = 'data:text/html;base64,$response';
+            //_templatePreview = 'data:text/html;base64,$response';
           });
         },
         onError: (response) {

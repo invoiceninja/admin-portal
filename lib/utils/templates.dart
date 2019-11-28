@@ -10,8 +10,9 @@ import 'dialogs.dart';
 
 void loadTemplate({
   BuildContext context,
-  String template,
-  Function(String) onSuccess,
+  String subject,
+  String body,
+  Function(String, String) onSuccess,
   Function(String) onError,
 }) {
   final webClient = WebClient();
@@ -22,11 +23,15 @@ void loadTemplate({
   final url = credentials.url + '/templates/invoice/${invoice.id}';
 
   webClient
-      .post(url, credentials.token, data: json.encode({'text': template}))
+      .post(url, credentials.token,
+          data: json.encode({'subject': subject, 'body': body}))
       .then((dynamic response) {
+    print('### response');
+    print(response);
     final String contentBase64 =
         base64Encode(const Utf8Encoder().convert(response));
-    onSuccess(contentBase64);
+    print(response);
+    //onSuccess(contentBase64);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
     onError('$error');
