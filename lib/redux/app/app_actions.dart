@@ -21,6 +21,8 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PersistUI {}
 
@@ -296,6 +298,9 @@ void viewEntityById(
   final navigator = Navigator.of(context);
 
   if (!store.state.getEntityMap(entityType).containsKey(entityId)) {
+    showErrorDialog(
+        context: context,
+        message: AppLocalization.of(context).failedToFindRecord);
     return;
   }
 

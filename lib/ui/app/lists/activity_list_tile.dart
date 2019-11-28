@@ -81,12 +81,6 @@ class ActivityListTile extends StatelessWidget {
                       entityType: EntityType.expense);
                   break;
               }
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(
-                        AppLocalization.of(context).failedToFindRecord);
-                  });
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
       subtitle: Row(
