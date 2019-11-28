@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
@@ -130,7 +131,9 @@ void _checkResponse(http.Response response) {
     throw 'Saving is not supported in the demo';
   }
 
-  debugPrint('response: ${response.statusCode} ${response.body}', wrapWidth: 1000);
+  debugPrint(
+      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 20000))}',
+      wrapWidth: 1000);
   //print('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
