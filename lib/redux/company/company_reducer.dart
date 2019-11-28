@@ -64,7 +64,8 @@ UserCompanyEntity loadCompanySuccessReducer(
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
     ..expenseCategories.replace(<ExpenseCategoryEntity>[])
-    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>()));
+    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>())
+    ..userMap.replace(BuiltMap<String, UserEntity>()));
 
   /*
 
