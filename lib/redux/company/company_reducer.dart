@@ -61,17 +61,15 @@ UserCompanyEntity loadCompanySuccessReducer(
   var userCompany = action.userCompany;
 
   userCompany = userCompany.rebuild((b) => b.company
-    ..taxRates.replace(<TaxRateEntity>[])
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
     ..expenseCategories.replace(<ExpenseCategoryEntity>[])
-    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>())
-    ..users.replace(<UserEntity>[])
-    ..userMap.replace(BuiltMap<String, UserEntity>()));
+    ..expenseCategoryMap.replace(BuiltMap<String, ExpenseCategoryEntity>()));
+
+  /*
 
   return userCompany;
 
-  /*
   if (userCompany.company.taskStatuses != null) {
     userCompany = userCompany
       ..company.rebuild((b) => b
@@ -91,6 +89,7 @@ UserCompanyEntity loadCompanySuccessReducer(
           value: (dynamic item) => item,
         )));
   }
+  */
 
   return userCompany
     ..company.rebuild((b) => b
@@ -99,7 +98,6 @@ UserCompanyEntity loadCompanySuccessReducer(
         key: (dynamic item) => item.id,
         value: (dynamic item) => item,
       )));
-   */
 }
 
 UserCompanyEntity saveCompanySuccessReducer(
