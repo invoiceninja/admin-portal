@@ -66,7 +66,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
 
-    print('## Loading Template: ${client.getNextEmailTemplate(invoice.id)}');
     _loadTemplate(client.getNextEmailTemplate(invoice.id));
     _handleTabSelection();
 
@@ -135,9 +134,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   void _handleTabSelection() {
-    print('## _handleTabSelection... index: ${_controller.index}');
     if (_isLoading || _controller.index != kTabPreview) {
-      print('## skipping');
       return;
     }
 

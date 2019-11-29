@@ -28,10 +28,12 @@ void loadTemplate({
       .then((dynamic response) {
     print('### response');
     print(response);
+    /*
     final String contentBase64 =
         base64Encode(encoder.convert(response));
     print(response);
-    //onSuccess(contentBase64);
+    onSuccess(contentBase64);
+     */
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
     final hase64Body = base64Encode(encoder.convert(body));
