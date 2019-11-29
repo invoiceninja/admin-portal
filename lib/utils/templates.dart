@@ -9,10 +9,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'dialogs.dart';
 
 void loadTemplate({
-  BuildContext context,
-  String subject,
-  String body,
-  Function(String, String) onComplete,
+  @required BuildContext context,
+  @required String subject,
+  @required String body,
+  @required Function(String, String) onStart,
+  @required Function(String, String) onComplete,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -21,6 +22,10 @@ void loadTemplate({
       state.invoiceState.map[state.invoiceState.list.first] ?? InvoiceEntity();
   final url = credentials.url + '/templates/invoice/${invoice.id}';
   const encoder = const Utf8Encoder();
+
+  final hase64Body =
+      'data:text/html;base64,' + base64Encode(encoder.convert(body));
+  onStart(subject, hase64Body);
 
   webClient
       .post(url, credentials.token,
@@ -36,7 +41,6 @@ void loadTemplate({
      */
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    final hase64Body = base64Encode(encoder.convert(body));
-    onComplete(subject, 'data:text/html;base64,$hase64Body');
+    onComplete(subject, hase64Body);
   });
 }

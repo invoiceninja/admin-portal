@@ -67,7 +67,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final client = widget.viewModel.client;
 
     _loadTemplate(client.getNextEmailTemplate(invoice.id));
-    _handleTabSelection();
 
     super.didChangeDependencies();
   }
@@ -131,6 +130,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    _handleTabSelection();
   }
 
   void _handleTabSelection() {
@@ -148,14 +149,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       _lastBody = body;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
-
     loadTemplate(
         context: context,
         subject: subject,
         body: body,
+        onStart: (subject, body) {
+          setState(() {
+            _isLoading = true;
+            _subjectPreview = subject;
+            _bodyPreview = body;
+          });
+        },
         onComplete: (subject, body) {
           setState(() {
             _isLoading = false;

@@ -199,14 +199,17 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _lastBody = body;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
-
     loadTemplate(
         context: context,
         body: body,
         subject: subject,
+        onStart: (subject, body) {
+          setState(() {
+            _isLoading = true;
+            _subjectPreview = subject;
+            _bodyPreview = body;
+          });
+        },
         onComplete: (subject, body) {
           setState(() {
             _isLoading = false;
