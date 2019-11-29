@@ -1590,17 +1590,17 @@ abstract class SettingsEntity
         return emailSubjectQuote;
       case EmailTemplate.paymentEmail:
         return emailSubjectPayment;
-      case EmailTemplate.reminder1:
+      case EmailTemplate.firstReminder:
         return emailSubjectReminder1;
-      case EmailTemplate.reminder2:
+      case EmailTemplate.secondReminder:
         return emailSubjectReminder2;
-      case EmailTemplate.reminder3:
+      case EmailTemplate.thirdReminder:
         return emailSubjectReminder3;
-      case EmailTemplate.custom1:
+      case EmailTemplate.firstCustom:
         return emailSubjectCustom1;
-      case EmailTemplate.custom2:
+      case EmailTemplate.secondCustom:
         return emailSubjectCustom2;
-      case EmailTemplate.custom3:
+      case EmailTemplate.thirdCustom:
         return emailSubjectCustom3;
       default:
         return emailSubjectInvoice;
@@ -1615,17 +1615,17 @@ abstract class SettingsEntity
         return emailBodyQuote;
       case EmailTemplate.paymentEmail:
         return emailBodyPayment;
-      case EmailTemplate.reminder1:
+      case EmailTemplate.firstReminder:
         return emailBodyReminder1;
-      case EmailTemplate.reminder2:
+      case EmailTemplate.secondReminder:
         return emailBodyReminder2;
-      case EmailTemplate.reminder3:
+      case EmailTemplate.thirdReminder:
         return emailBodyReminder3;
-      case EmailTemplate.custom1:
+      case EmailTemplate.firstCustom:
         return emailBodyCustom1;
-      case EmailTemplate.custom2:
+      case EmailTemplate.secondCustom:
         return emailBodyCustom2;
-      case EmailTemplate.custom3:
+      case EmailTemplate.thirdCustom:
         return emailBodyCustom3;
       default:
         return emailBodyInvoice;

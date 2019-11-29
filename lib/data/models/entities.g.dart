@@ -182,13 +182,14 @@ const EmailTemplate _$invoiceEmail = const EmailTemplate._('invoiceEmail');
 const EmailTemplate _$quoteEmail = const EmailTemplate._('quoteEmail');
 const EmailTemplate _$paymentEmail = const EmailTemplate._('paymentEmail');
 const EmailTemplate _$creditEmail = const EmailTemplate._('creditEmail');
-const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
-const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
-const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
-const EmailTemplate _$reminder4 = const EmailTemplate._('reminder4');
-const EmailTemplate _$custom1 = const EmailTemplate._('custom1');
-const EmailTemplate _$custom2 = const EmailTemplate._('custom2');
-const EmailTemplate _$custom3 = const EmailTemplate._('custom3');
+const EmailTemplate _$firstReminder = const EmailTemplate._('firstReminder');
+const EmailTemplate _$secondReminder = const EmailTemplate._('secondReminder');
+const EmailTemplate _$thirdReminder = const EmailTemplate._('thirdReminder');
+const EmailTemplate _$endlessReminder =
+    const EmailTemplate._('endlessReminder');
+const EmailTemplate _$firstCustom = const EmailTemplate._('firstCustom');
+const EmailTemplate _$secondCustom = const EmailTemplate._('secondCustom');
+const EmailTemplate _$thirdCustom = const EmailTemplate._('thirdCustom');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
@@ -200,20 +201,20 @@ EmailTemplate _$templateValueOf(String name) {
       return _$paymentEmail;
     case 'creditEmail':
       return _$creditEmail;
-    case 'reminder1':
-      return _$reminder1;
-    case 'reminder2':
-      return _$reminder2;
-    case 'reminder3':
-      return _$reminder3;
-    case 'reminder4':
-      return _$reminder4;
-    case 'custom1':
-      return _$custom1;
-    case 'custom2':
-      return _$custom2;
-    case 'custom3':
-      return _$custom3;
+    case 'firstReminder':
+      return _$firstReminder;
+    case 'secondReminder':
+      return _$secondReminder;
+    case 'thirdReminder':
+      return _$thirdReminder;
+    case 'endlessReminder':
+      return _$endlessReminder;
+    case 'firstCustom':
+      return _$firstCustom;
+    case 'secondCustom':
+      return _$secondCustom;
+    case 'thirdCustom':
+      return _$thirdCustom;
     default:
       throw new ArgumentError(name);
   }
@@ -225,13 +226,13 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$quoteEmail,
   _$paymentEmail,
   _$creditEmail,
-  _$reminder1,
-  _$reminder2,
-  _$reminder3,
-  _$reminder4,
-  _$custom1,
-  _$custom2,
-  _$custom3,
+  _$firstReminder,
+  _$secondReminder,
+  _$thirdReminder,
+  _$endlessReminder,
+  _$firstCustom,
+  _$secondCustom,
+  _$thirdCustom,
 ]);
 
 const UserPermission _$create = const UserPermission._('create');

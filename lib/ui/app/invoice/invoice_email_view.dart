@@ -172,27 +172,27 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.firstReminder),
-                        value: EmailTemplate.reminder1,
+                        value: EmailTemplate.firstReminder,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.secondReminder),
-                        value: EmailTemplate.reminder2,
+                        value: EmailTemplate.secondReminder,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.thirdReminder),
-                        value: EmailTemplate.reminder3,
+                        value: EmailTemplate.thirdReminder,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.firstCustom),
-                        value: EmailTemplate.custom1,
+                        value: EmailTemplate.firstCustom,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.secondCustom),
-                        value: EmailTemplate.custom2,
+                        value: EmailTemplate.secondCustom,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.thirdCustom),
-                        value: EmailTemplate.custom3,
+                        value: EmailTemplate.thirdCustom,
                       ),
                     ],
                   ),

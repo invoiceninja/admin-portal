@@ -115,31 +115,31 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
-      } else if (_template == EmailTemplate.reminder1) {
+      } else if (_template == EmailTemplate.firstReminder) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder1 = body
           ..emailSubjectReminder1 = subject);
-      } else if (_template == EmailTemplate.reminder2) {
+      } else if (_template == EmailTemplate.secondReminder) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder2 = body
           ..emailSubjectReminder2 = subject);
-      } else if (_template == EmailTemplate.reminder3) {
+      } else if (_template == EmailTemplate.thirdReminder) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder3 = body
           ..emailSubjectReminder3 = subject);
-      } else if (_template == EmailTemplate.reminder4) {
+      } else if (_template == EmailTemplate.endlessReminder) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder4 = body
           ..emailSubjectReminder4 = subject);
-      } else if (_template == EmailTemplate.custom1) {
+      } else if (_template == EmailTemplate.firstCustom) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom1 = body
           ..emailSubjectCustom1 = subject);
-      } else if (_template == EmailTemplate.custom2) {
+      } else if (_template == EmailTemplate.secondCustom) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom2 = body
           ..emailSubjectCustom2 = subject);
-      } else if (_template == EmailTemplate.custom3) {
+      } else if (_template == EmailTemplate.thirdCustom) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom3 = body
           ..emailSubjectCustom3 = subject);
@@ -242,7 +242,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   maxLines: 8,
                 ),
               ]),
-              if (_template == EmailTemplate.reminder1)
+              if (_template == EmailTemplate.firstReminder)
                 ReminderSettings(
                   key: ValueKey('__reminder1_${_template}__'),
                   viewModel: viewModel,
@@ -259,7 +259,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount1 = feeAmount
                         ..lateFeePercent1 = feePercent)),
                 ),
-              if (_template == EmailTemplate.reminder2)
+              if (_template == EmailTemplate.secondReminder)
                 ReminderSettings(
                   key: ValueKey('__reminder2_${_template}__'),
                   viewModel: viewModel,
@@ -276,7 +276,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount2 = feeAmount
                         ..lateFeePercent2 = feePercent)),
                 ),
-              if (_template == EmailTemplate.reminder3)
+              if (_template == EmailTemplate.thirdReminder)
                 ReminderSettings(
                   key: ValueKey('__reminder3_${_template}__'),
                   viewModel: viewModel,
@@ -293,7 +293,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount3 = feeAmount
                         ..lateFeePercent3 = feePercent)),
                 ),
-              if (_template == EmailTemplate.reminder4)
+              if (_template == EmailTemplate.endlessReminder)
                 FormCard(
                   children: <Widget>[
                     BoolDropdownButton(

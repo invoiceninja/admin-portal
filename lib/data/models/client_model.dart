@@ -256,12 +256,12 @@ abstract class ClientEntity extends Object
     getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
         .forEach((activity) {
       if (template == EmailTemplate.invoiceEmail) {
-        template = EmailTemplate.reminder1;
+        template = EmailTemplate.firstReminder;
       }
       if (activity.notes == 'reminder1') {
-        template = EmailTemplate.reminder2;
+        template = EmailTemplate.secondReminder;
       } else if (activity.notes == 'reminder2') {
-        template = EmailTemplate.reminder3;
+        template = EmailTemplate.thirdReminder;
       }
     });
     return template;
