@@ -37,7 +37,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _template = kEmailTemplateInvoice;
   String _lastSubject;
   String _lastBody;
-  String _templatePreview = '';
+  String _subjectPreview = '';
+  String _bodyPreview = '';
   bool _isLoading = false;
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -188,8 +189,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       return;
     }
 
-
-    final subject =_subjectController.text.trim();
+    final subject = _subjectController.text.trim();
     final body = _bodyController.text.trim();
 
     if (subject == _lastSubject && body == _lastBody) {
@@ -207,15 +207,11 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         context: context,
         body: body,
         subject: subject,
-        onSuccess: (body, subject) {
+        onComplete: (subject, body) {
           setState(() {
             _isLoading = false;
-            //_templatePreview = 'data:text/html;base64,$response';
-          });
-        },
-        onError: (response) {
-          setState(() {
-            _isLoading = false;
+            _subjectPreview = subject;
+            _bodyPreview = body;
           });
         });
   }
@@ -358,18 +354,31 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 ),
             ],
           ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: TemplatePreview(_templatePreview),
-              ),
-              if (_isLoading)
-                SizedBox(
-                  height: 4.0,
-                  child: LinearProgressIndicator(),
-                )
-            ],
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  _subjectPreview,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Expanded(
+                  child: TemplatePreview(_bodyPreview),
+                ),
+                if (_isLoading)
+                  SizedBox(
+                    height: 4.0,
+                    child: LinearProgressIndicator(),
+                  )
+              ],
+            ),
           ),
         ],
       ),

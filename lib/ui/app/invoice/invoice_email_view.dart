@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-
-//import 'package:flutter_html_view/flutter_html_view.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -45,7 +42,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   final _bodyController = TextEditingController();
 
   TabController _controller;
-  WebViewController _webViewController;
   List<TextEditingController> _controllers = [];
 
   static const kTabPreview = 0;
@@ -162,15 +158,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         context: context,
         subject: subject,
         body: body,
-        onSuccess: (body, subject) {
+        onComplete: (subject, body) {
           setState(() {
             _isLoading = false;
             //_templatePreview = 'data:text/html;base64,$response';
-          });
-        },
-        onError: (response) {
-          setState(() {
-            _isLoading = false;
           });
         });
   }

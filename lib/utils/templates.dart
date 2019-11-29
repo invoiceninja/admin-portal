@@ -12,8 +12,7 @@ void loadTemplate({
   BuildContext context,
   String subject,
   String body,
-  Function(String, String) onSuccess,
-  Function(String) onError,
+  Function(String, String) onComplete,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -21,6 +20,7 @@ void loadTemplate({
   final invoice =
       state.invoiceState.map[state.invoiceState.list.first] ?? InvoiceEntity();
   final url = credentials.url + '/templates/invoice/${invoice.id}';
+  const encoder = const Utf8Encoder();
 
   webClient
       .post(url, credentials.token,
@@ -29,11 +29,12 @@ void loadTemplate({
     print('### response');
     print(response);
     final String contentBase64 =
-        base64Encode(const Utf8Encoder().convert(response));
+        base64Encode(encoder.convert(response));
     print(response);
     //onSuccess(contentBase64);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onError('$error');
+    final hase64Body = base64Encode(encoder.convert(body));
+    onComplete(subject, 'data:text/html;base64,$hase64Body');
   });
 }
