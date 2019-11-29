@@ -356,18 +356,21 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.all(10),
+            //padding: const EdgeInsets.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  _subjectPreview,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                Padding(
+                  child: Text(
+                    _subjectPreview,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
+                  padding: const EdgeInsets.only(left: 8, top: 12, bottom: 8, right: 8),
                 ),
                 Expanded(
                   child: TemplatePreview(_bodyPreview),
