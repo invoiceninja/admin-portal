@@ -178,21 +178,39 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
-const EmailTemplate _$initial = const EmailTemplate._('initial');
+const EmailTemplate _$invoiceTemplate = const EmailTemplate._('invoice');
+const EmailTemplate _$quoteTemplate = const EmailTemplate._('quote');
+const EmailTemplate _$paymentTemplate = const EmailTemplate._('payment');
+const EmailTemplate _$creditTemplate = const EmailTemplate._('credit');
 const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
 const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
 const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
+const EmailTemplate _$custom1 = const EmailTemplate._('custom1');
+const EmailTemplate _$custom2 = const EmailTemplate._('custom2');
+const EmailTemplate _$custom3 = const EmailTemplate._('custom3');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
-    case 'initial':
-      return _$initial;
+    case 'invoice':
+      return _$invoiceTemplate;
+    case 'quote':
+      return _$quoteTemplate;
+    case 'payment':
+      return _$paymentTemplate;
+    case 'credit':
+      return _$creditTemplate;
     case 'reminder1':
       return _$reminder1;
     case 'reminder2':
       return _$reminder2;
     case 'reminder3':
       return _$reminder3;
+    case 'custom1':
+      return _$custom1;
+    case 'custom2':
+      return _$custom2;
+    case 'custom3':
+      return _$custom3;
     default:
       throw new ArgumentError(name);
   }
@@ -200,10 +218,16 @@ EmailTemplate _$templateValueOf(String name) {
 
 final BuiltSet<EmailTemplate> _$templateValues =
     new BuiltSet<EmailTemplate>(const <EmailTemplate>[
-  _$initial,
+  _$invoiceTemplate,
+  _$quoteTemplate,
+  _$paymentTemplate,
+  _$creditTemplate,
   _$reminder1,
   _$reminder2,
   _$reminder3,
+  _$custom1,
+  _$custom2,
+  _$custom3,
 ]);
 
 const UserPermission _$create = const UserPermission._('create');

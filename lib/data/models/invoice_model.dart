@@ -481,6 +481,14 @@ abstract class InvoiceEntity extends Object
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
+  bool get isQuote => entityType == EntityType.quote;
+
+  bool get isCredit => entityType == EntityType.credit;
+
+  EmailTemplate get emailTemplate => isQuote
+      ? EmailTemplate.quote
+      : isCredit ? EmailTemplate.credit : EmailTemplate.invoice;
+
   double get requestedAmount => partial > 0 ? partial : amount;
 
   bool get isSent => statusId != kInvoiceStatusDraft;

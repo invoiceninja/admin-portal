@@ -98,29 +98,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     selectedTemplate = template;
 
-    switch (template) {
-      case EmailTemplate.initial:
-        if (false) {
-          _emailSubject = company.settings.emailSubjectQuote;
-          _emailBody = company.settings.emailBodyQuote;
-        } else {
-          _emailSubject = company.settings.emailSubjectInvoice;
-          _emailBody = company.settings.emailBodyInvoice;
-        }
-        break;
-      case EmailTemplate.reminder1:
-        _emailSubject = company.settings.emailSubjectReminder1;
-        _emailBody = company.settings.emailBodyReminder1;
-        break;
-      case EmailTemplate.reminder2:
-        _emailSubject = company.settings.emailSubjectReminder2;
-        _emailBody = company.settings.emailBodyReminder2;
-        break;
-      case EmailTemplate.reminder3:
-        _emailSubject = company.settings.emailSubjectReminder3;
-        _emailBody = company.settings.emailBodyReminder3;
-        break;
-    }
+    _emailSubject = company.settings.getEmailSubject(template);
+    _emailBody = company.settings.getEmailBody(template);
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
@@ -139,7 +118,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return;
     }
 
-    final subject =_subjectController.text.trim();
+    final subject = _subjectController.text.trim();
     final body = _bodyController.text.trim();
 
     if (subject == _lastSubject && body == _lastBody) {
@@ -189,7 +168,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     items: [
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.initialEmail),
-                        value: EmailTemplate.initial,
+                        value: widget.viewModel.invoice.emailTemplate,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.firstReminder),
@@ -202,6 +181,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.thirdReminder),
                         value: EmailTemplate.reminder3,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstCustom),
+                        value: EmailTemplate.custom1,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondCustom),
+                        value: EmailTemplate.custom2,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdCustom),
+                        value: EmailTemplate.custom3,
                       ),
                     ],
                   ),

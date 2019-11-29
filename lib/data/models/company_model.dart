@@ -1582,6 +1582,56 @@ abstract class SettingsEntity
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
 
+  String getEmailSubject(EmailTemplate template) {
+    switch (template) {
+      case EmailTemplate.invoice:
+        return emailSubjectInvoice;
+      case EmailTemplate.quote:
+        return emailSubjectQuote;
+      case EmailTemplate.payment:
+        return emailSubjectPayment;
+      case EmailTemplate.reminder1:
+        return emailSubjectReminder1;
+      case EmailTemplate.reminder2:
+        return emailSubjectReminder2;
+      case EmailTemplate.reminder3:
+        return emailSubjectReminder3;
+      case EmailTemplate.custom1:
+        return emailSubjectCustom1;
+      case EmailTemplate.custom2:
+        return emailSubjectCustom2;
+      case EmailTemplate.custom3:
+        return emailSubjectCustom3;
+      default:
+        return emailSubjectInvoice;
+    }
+  }
+
+  String getEmailBody(EmailTemplate template) {
+    switch (template) {
+      case EmailTemplate.invoice:
+        return emailBodyInvoice;
+      case EmailTemplate.quote:
+        return emailBodyQuote;
+      case EmailTemplate.payment:
+        return emailBodyPayment;
+      case EmailTemplate.reminder1:
+        return emailBodyReminder1;
+      case EmailTemplate.reminder2:
+        return emailBodyReminder2;
+      case EmailTemplate.reminder3:
+        return emailBodyReminder3;
+      case EmailTemplate.custom1:
+        return emailBodyCustom1;
+      case EmailTemplate.custom2:
+        return emailBodyCustom2;
+      case EmailTemplate.custom3:
+        return emailBodyCustom3;
+      default:
+        return emailBodyInvoice;
+    }
+  }
+
   bool hasInvoiceField(String field,
       [EntityType entityType = EntityType.product]) {
     if (invoiceFields != null && invoiceFields.isNotEmpty) {

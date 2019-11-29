@@ -94,7 +94,7 @@ class QuoteRepository {
   Future<Null> emailQuote(Credentials credentials, InvoiceEntity quote,
       EmailTemplate template, String subject, String body) async {
     final data = {
-      'reminder': template == EmailTemplate.initial ? '' : template.toString(),
+      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
       'template': {
         'body': body,
         'subject': subject,

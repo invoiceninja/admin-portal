@@ -94,7 +94,7 @@ class InvoiceRepository {
   Future<Null> emailInvoice(Credentials credentials, InvoiceEntity invoice,
       EmailTemplate template, String subject, String body) async {
     final data = {
-      'reminder': template == EmailTemplate.initial ? '' : template.toString(),
+      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
       'template': {
         'body': body,
         'subject': subject,
