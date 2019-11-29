@@ -83,6 +83,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate reminder1 = _$reminder1;
   static const EmailTemplate reminder2 = _$reminder2;
   static const EmailTemplate reminder3 = _$reminder3;
+  static const EmailTemplate reminder4 = _$reminder4;
   static const EmailTemplate custom1 = _$custom1;
   static const EmailTemplate custom2 = _$custom2;
   static const EmailTemplate custom3 = _$custom3;

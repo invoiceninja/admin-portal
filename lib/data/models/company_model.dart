@@ -1582,8 +1582,8 @@ abstract class SettingsEntity
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
 
-  String getEmailSubject(EmailTemplate template) {
-    switch (template) {
+  String getEmailSubject(EmailTemplate emailTemplate) {
+    switch (emailTemplate) {
       case EmailTemplate.invoice:
         return emailSubjectInvoice;
       case EmailTemplate.quote:

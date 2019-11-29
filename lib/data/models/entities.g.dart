@@ -185,6 +185,7 @@ const EmailTemplate _$creditTemplate = const EmailTemplate._('credit');
 const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
 const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
 const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
+const EmailTemplate _$reminder4 = const EmailTemplate._('reminder4');
 const EmailTemplate _$custom1 = const EmailTemplate._('custom1');
 const EmailTemplate _$custom2 = const EmailTemplate._('custom2');
 const EmailTemplate _$custom3 = const EmailTemplate._('custom3');
@@ -205,6 +206,8 @@ EmailTemplate _$templateValueOf(String name) {
       return _$reminder2;
     case 'reminder3':
       return _$reminder3;
+    case 'reminder4':
+      return _$reminder4;
     case 'custom1':
       return _$custom1;
     case 'custom2':
@@ -225,6 +228,7 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$reminder1,
   _$reminder2,
   _$reminder3,
+  _$reminder4,
   _$custom1,
   _$custom2,
   _$custom3,
