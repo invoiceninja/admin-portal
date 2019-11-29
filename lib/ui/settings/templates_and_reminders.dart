@@ -35,7 +35,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
   final _debouncer = Debouncer();
 
-  EmailTemplate _template = EmailTemplate.invoice;
+  EmailTemplate _template = EmailTemplate.invoiceEmail;
   String _lastSubject;
   String _lastBody;
   String _subjectPreview = '';
@@ -82,7 +82,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _loadTemplate(EmailTemplate.invoice);
+    _loadTemplate(EmailTemplate.invoiceEmail);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -103,15 +103,15 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       final String subject = _subjectController.text.trim();
       SettingsEntity settings = widget.viewModel.settings;
 
-      if (_template == EmailTemplate.invoice) {
+      if (_template == EmailTemplate.invoiceEmail) {
         settings = settings.rebuild((b) => b
           ..emailBodyInvoice = body
           ..emailSubjectInvoice = subject);
-      } else if (_template == EmailTemplate.quote) {
+      } else if (_template == EmailTemplate.quoteEmail) {
         settings = settings.rebuild((b) => b
           ..emailBodyQuote = body
           ..emailSubjectQuote = subject);
-      } else if (_template == EmailTemplate.payment) {
+      } else if (_template == EmailTemplate.paymentEmail) {
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
@@ -217,7 +217,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           ListView(
             children: <Widget>[
               FormCard(children: <Widget>[
-                AppDropdownButton(
+                AppDropdownButton<EmailTemplate>(
                   labelText: localization.template,
                   value: _template,
                   showBlank: false,
@@ -225,9 +225,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     _template = value;
                     _loadTemplate(_template);
                   }),
-                  items: kEmailTemplateTypes
-                      .map((item) => DropdownMenuItem<String>(
-                            child: Text(localization.lookup(item)),
+                  items: EmailTemplate.values
+                      .map((item) => DropdownMenuItem<EmailTemplate>(
+                            child: Text(localization.lookup(item.name)),
                             value: item,
                           ))
                       .toList(),

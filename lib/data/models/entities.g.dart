@@ -178,10 +178,10 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
-const EmailTemplate _$invoiceTemplate = const EmailTemplate._('invoice');
-const EmailTemplate _$quoteTemplate = const EmailTemplate._('quote');
-const EmailTemplate _$paymentTemplate = const EmailTemplate._('payment');
-const EmailTemplate _$creditTemplate = const EmailTemplate._('credit');
+const EmailTemplate _$invoiceEmail = const EmailTemplate._('invoiceEmail');
+const EmailTemplate _$quoteEmail = const EmailTemplate._('quoteEmail');
+const EmailTemplate _$paymentEmail = const EmailTemplate._('paymentEmail');
+const EmailTemplate _$creditEmail = const EmailTemplate._('creditEmail');
 const EmailTemplate _$reminder1 = const EmailTemplate._('reminder1');
 const EmailTemplate _$reminder2 = const EmailTemplate._('reminder2');
 const EmailTemplate _$reminder3 = const EmailTemplate._('reminder3');
@@ -192,14 +192,14 @@ const EmailTemplate _$custom3 = const EmailTemplate._('custom3');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
-    case 'invoice':
-      return _$invoiceTemplate;
-    case 'quote':
-      return _$quoteTemplate;
-    case 'payment':
-      return _$paymentTemplate;
-    case 'credit':
-      return _$creditTemplate;
+    case 'invoiceEmail':
+      return _$invoiceEmail;
+    case 'quoteEmail':
+      return _$quoteEmail;
+    case 'paymentEmail':
+      return _$paymentEmail;
+    case 'creditEmail':
+      return _$creditEmail;
     case 'reminder1':
       return _$reminder1;
     case 'reminder2':
@@ -221,10 +221,10 @@ EmailTemplate _$templateValueOf(String name) {
 
 final BuiltSet<EmailTemplate> _$templateValues =
     new BuiltSet<EmailTemplate>(const <EmailTemplate>[
-  _$invoiceTemplate,
-  _$quoteTemplate,
-  _$paymentTemplate,
-  _$creditTemplate,
+  _$invoiceEmail,
+  _$quoteEmail,
+  _$paymentEmail,
+  _$creditEmail,
   _$reminder1,
   _$reminder2,
   _$reminder3,

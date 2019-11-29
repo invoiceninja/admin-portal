@@ -486,8 +486,8 @@ abstract class InvoiceEntity extends Object
   bool get isCredit => entityType == EntityType.credit;
 
   EmailTemplate get emailTemplate => isQuote
-      ? EmailTemplate.quote
-      : isCredit ? EmailTemplate.credit : EmailTemplate.invoice;
+      ? EmailTemplate.quoteEmail
+      : isCredit ? EmailTemplate.creditEmail : EmailTemplate.invoiceEmail;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 

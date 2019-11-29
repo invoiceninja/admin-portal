@@ -161,6 +161,7 @@ const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
 
+/*
 const String kEmailTemplateInvoice = 'invoice_email';
 const String kEmailTemplateQuote = 'quote_email';
 const String kEmailTemplatePayment = 'payment_email';
@@ -171,23 +172,11 @@ const String kEmailTemplateReminder4 = 'endless_reminder';
 const String kEmailTemplateCustom1 = 'first_custom';
 const String kEmailTemplateCustom2 = 'second_custom';
 const String kEmailTemplateCustom3 = 'third_custom';
+*/
 
 const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
 const String kReminderScheduleAfterDueDate = 'after_due_date';
-
-const List<String> kEmailTemplateTypes = [
-  kEmailTemplateInvoice,
-  kEmailTemplateQuote,
-  kEmailTemplatePayment,
-  kEmailTemplateReminder1,
-  kEmailTemplateReminder2,
-  kEmailTemplateReminder3,
-  kEmailTemplateReminder4,
-  kEmailTemplateCustom1,
-  kEmailTemplateCustom2,
-  kEmailTemplateCustom3,
-];
 
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsUserDetails = 'user_details';

@@ -76,10 +76,10 @@ class EmailTemplate extends EnumClass {
 
   static Serializer<EmailTemplate> get serializer => _$emailTemplateSerializer;
 
-  static const EmailTemplate invoice = _$invoiceTemplate;
-  static const EmailTemplate quote = _$quoteTemplate;
-  static const EmailTemplate payment = _$paymentTemplate;
-  static const EmailTemplate credit = _$creditTemplate;
+  static const EmailTemplate invoiceEmail = _$invoiceEmail;
+  static const EmailTemplate quoteEmail = _$quoteEmail;
+  static const EmailTemplate paymentEmail = _$paymentEmail;
+  static const EmailTemplate creditEmail = _$creditEmail;
   static const EmailTemplate reminder1 = _$reminder1;
   static const EmailTemplate reminder2 = _$reminder2;
   static const EmailTemplate reminder3 = _$reminder3;

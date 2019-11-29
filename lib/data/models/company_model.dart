@@ -1584,11 +1584,11 @@ abstract class SettingsEntity
 
   String getEmailSubject(EmailTemplate emailTemplate) {
     switch (emailTemplate) {
-      case EmailTemplate.invoice:
+      case EmailTemplate.invoiceEmail:
         return emailSubjectInvoice;
-      case EmailTemplate.quote:
+      case EmailTemplate.quoteEmail:
         return emailSubjectQuote;
-      case EmailTemplate.payment:
+      case EmailTemplate.paymentEmail:
         return emailSubjectPayment;
       case EmailTemplate.reminder1:
         return emailSubjectReminder1;
@@ -1609,11 +1609,11 @@ abstract class SettingsEntity
 
   String getEmailBody(EmailTemplate template) {
     switch (template) {
-      case EmailTemplate.invoice:
+      case EmailTemplate.invoiceEmail:
         return emailBodyInvoice;
-      case EmailTemplate.quote:
+      case EmailTemplate.quoteEmail:
         return emailBodyQuote;
-      case EmailTemplate.payment:
+      case EmailTemplate.paymentEmail:
         return emailBodyPayment;
       case EmailTemplate.reminder1:
         return emailBodyReminder1;
