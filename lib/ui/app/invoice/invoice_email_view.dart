@@ -34,7 +34,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   String _emailBody;
   String _lastSubject;
   String _lastBody;
-  String _templatePreview = '';
+  String _bodyPreview = '';
+  String _subjectPreview = '';
   bool _isLoading = false;
 
   final _debouncer = Debouncer();
@@ -161,7 +162,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         onComplete: (subject, body) {
           setState(() {
             _isLoading = false;
-            //_templatePreview = 'data:text/html;base64,$response';
+            _subjectPreview = subject;
+            _bodyPreview = body;
           });
         });
   }
@@ -170,6 +172,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
 
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Container(
           color: Theme.of(context).backgroundColor,
@@ -210,17 +213,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           ),
         ),
         Expanded(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: TemplatePreview(_templatePreview),
-              ),
-              if (_isLoading)
-                SizedBox(
-                  height: 4.0,
-                  child: LinearProgressIndicator(),
-                )
-            ],
+          child: EmailPreview(
+            isLoading: _isLoading,
+            subject: _subjectPreview,
+            body: _bodyPreview,
           ),
         ),
       ],

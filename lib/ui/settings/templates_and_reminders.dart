@@ -354,34 +354,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 ),
             ],
           ),
-          Container(
-            color: Colors.white,
-            //padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  child: Text(
-                    _subjectPreview,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  padding: const EdgeInsets.only(left: 8, top: 12, bottom: 8, right: 8),
-                ),
-                Expanded(
-                  child: TemplatePreview(_bodyPreview),
-                ),
-                if (_isLoading)
-                  SizedBox(
-                    height: 4.0,
-                    child: LinearProgressIndicator(),
-                  )
-              ],
-            ),
+          EmailPreview(
+            isLoading: _isLoading,
+            subject: _subjectPreview,
+            body: _bodyPreview,
           ),
         ],
       ),
@@ -575,6 +551,51 @@ class _TemplatePreviewState extends State<TemplatePreview>
         _webViewController = webViewController;
       },
       javascriptMode: JavascriptMode.disabled,
+    );
+  }
+}
+
+class EmailPreview extends StatelessWidget {
+  const EmailPreview({
+    @required this.subject,
+    @required this.body,
+    @required this.isLoading,
+  });
+
+  final String subject;
+  final String body;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 8, top: 12, bottom: 8, right: 8),
+            child: Text(
+              subject,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Expanded(
+            child: TemplatePreview(body),
+          ),
+          if (isLoading)
+            SizedBox(
+              height: 4.0,
+              child: LinearProgressIndicator(),
+            )
+        ],
+      ),
     );
   }
 }
