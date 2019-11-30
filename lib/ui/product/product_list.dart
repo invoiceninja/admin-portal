@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -15,7 +16,7 @@ import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ProductList extends StatelessWidget {
+class ProductList extends StatefulWidget {
   const ProductList({
     Key key,
     @required this.viewModel,
@@ -24,10 +25,15 @@ class ProductList extends StatelessWidget {
   final ProductListVM viewModel;
 
   @override
+  _ProductListState createState() => _ProductListState();
+}
+
+class _ProductListState extends State<ProductList> {
+  @override
   Widget build(BuildContext context) {
-    if (!viewModel.isLoaded) {
-      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (viewModel.productList.isEmpty) {
+    if (!widget.viewModel.isLoaded) {
+      return widget.viewModel.isLoading ? LoadingIndicator() : SizedBox();
+    } else if (widget.viewModel.productList.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
@@ -41,7 +47,7 @@ class ProductList extends StatelessWidget {
     final isList = store.state.prefState.moduleLayout == ModuleLayout.list;
     final localization = AppLocalization.of(context);
     final state = store.state;
-    final productList = viewModel.productList;
+    final productList = widget.viewModel.productList;
 
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
@@ -56,10 +62,10 @@ class ProductList extends StatelessWidget {
       if (isList) {
         return ListView.separated(
             separatorBuilder: (context, index) => ListDivider(),
-            itemCount: viewModel.productList.length,
+            itemCount: widget.viewModel.productList.length,
             itemBuilder: (BuildContext context, index) {
-              final productId = viewModel.productList[index];
-              final product = viewModel.productMap[productId];
+              final productId = widget.viewModel.productList[index];
+              final product = widget.viewModel.productMap[productId];
 
               void showDialog() => showEntityActionsDialog(
                     entities: [product],
@@ -67,8 +73,8 @@ class ProductList extends StatelessWidget {
                   );
 
               return ProductListItem(
-                userCompany: viewModel.state.userCompany,
-                filter: viewModel.filter,
+                userCompany: widget.viewModel.state.userCompany,
+                filter: widget.viewModel.filter,
                 product: product,
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
@@ -77,7 +83,7 @@ class ProductList extends StatelessWidget {
                     handleProductAction(context, [product], action);
                   }
                 },
-                onTap: () => viewModel.onProductTap(context, product),
+                onTap: () => widget.viewModel.onProductTap(context, product),
                 onLongPress: () async {
                   final longPressIsSelection =
                       store.state.prefState.longPressSelectionIsDefault ?? true;
@@ -95,41 +101,55 @@ class ProductList extends StatelessWidget {
       } else {
         final sortFn = (String field) => store.dispatch(SortProducts(field));
 
-        return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: DataTable(
-                  columns: [
-                    DataColumn(
-                        label: Text(localization.name),
-                        onSort: (int columnIndex, bool ascending) =>
-                            sortFn(ProductFields.productKey)),
-                    DataColumn(
-                        label: Text(localization.price),
-                        numeric: true,
-                        onSort: (int columnIndex, bool ascending) =>
-                            sortFn(ProductFields.price)),
-                    DataColumn(
-                        label: Text(localization.cost),
-                        numeric: true,
-                        onSort: (int columnIndex, bool ascending) =>
-                            sortFn(ProductFields.cost)),
-                    DataColumn(
-                        label: Text(localization.quantity),
-                        numeric: true,
-                        onSort: (int columnIndex, bool ascending) =>
-                            sortFn(ProductFields.quantity)),
-                  ],
-                  rows: getDataTableRows(context, viewModel),
-                )));
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Scrollbar(
+              child: ListView(scrollDirection: Axis.vertical, children: [
+            PaginatedDataTable(
+              columns: [
+                DataColumn(
+                    label: Text(localization.name),
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.productKey)),
+                DataColumn(
+                    label: Text(localization.price),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.price)),
+                DataColumn(
+                    label: Text(localization.cost),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.cost)),
+                DataColumn(
+                    label: Text(localization.quantity),
+                    numeric: true,
+                    onSort: (int columnIndex, bool ascending) =>
+                        sortFn(ProductFields.quantity)),
+              ],
+              source: dataTableSource,
+              header: Container(),
+
+            )
+          ])),
+        );
       }
     };
 
     return RefreshIndicator(
-      onRefresh: () => viewModel.onRefreshed(context),
+      onRefresh: () => widget.viewModel.onRefreshed(context),
       child: listOrTable(),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dataTableSource = ProductDataTableSource(
+        productList: widget.viewModel.productList,
+        productMap: widget.viewModel.productMap,
+        onTap: (ProductEntity product) =>
+            widget.viewModel.onProductTap(context, product));
   }
 
   List<DataRow> getDataTableRows(
@@ -150,4 +170,37 @@ class ProductList extends StatelessWidget {
       ]);
     }).toList();
   }
+
+  ProductDataTableSource dataTableSource;
+}
+
+class ProductDataTableSource extends DataTableSource {
+  ProductDataTableSource(
+      {@required this.productList,
+      @required this.productMap,
+      @required this.onTap});
+
+  @override
+  DataRow getRow(int index) {
+    final product = productMap[productList[index]];
+    return DataRow(cells: [
+      DataCell(Text(product.productKey), onTap: () => onTap(product)),
+      DataCell(Text(product.price.toString()), onTap: () => onTap(product)),
+      DataCell(Text(product.cost.toString()), onTap: () => onTap(product)),
+      DataCell(Text(product.quantity.toString()), onTap: () => onTap(product)),
+    ]);
+  }
+
+  @override
+  int get selectedRowCount => 0;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => productList.length;
+
+  final List<String> productList;
+  final BuiltMap<String, ProductEntity> productMap;
+  final Function(ProductEntity product) onTap;
 }
