@@ -48,14 +48,19 @@ class InvoiceEditItemsDesktop extends StatelessWidget {
                       initialValue: item.notes,
                     )),
                     DataCell(TextFormField(
+                      textAlign: TextAlign.right,
                       initialValue: formatNumber(item.cost, context,
                           formatNumberType: FormatNumberType.input),
                     )),
                     DataCell(TextFormField(
+                      textAlign: TextAlign.right,
                       initialValue: formatNumber(item.quantity, context,
                           formatNumberType: FormatNumberType.input),
                     )),
-                    DataCell(Text(formatNumber(item.total, context))),
+                    DataCell(Text(
+                      formatNumber(item.total, context),
+                      textAlign: TextAlign.right,
+                    )),
                   ],
                 ))
             .toList(),
