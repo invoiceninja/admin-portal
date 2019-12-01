@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_table.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -20,7 +20,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
       },
       builder: (context, viewModel) {
         if (viewModel.state.prefState.isDesktop) {
-          return InvoiceEditItemsTable(
+          return InvoiceEditItemsDesktop(
             viewModel: viewModel,
           );
         } else {

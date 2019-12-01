@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -17,9 +18,15 @@ class InvoiceEditItemsScreen extends StatelessWidget {
         return InvoiceEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditItems(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditItemsDesktop(
+            viewModel: viewModel,
+          );
+        } else {
+          return InvoiceEditItems(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }

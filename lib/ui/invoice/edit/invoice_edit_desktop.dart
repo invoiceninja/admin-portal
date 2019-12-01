@@ -9,6 +9,8 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -126,6 +128,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
       children: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Expanded(
               child: FormCard(
@@ -254,7 +257,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
               ),
             ),
           ],
-        )
+        ),
+        widget.isQuote ? QuoteEditItemsScreen() : InvoiceEditItemsScreen()
       ],
     );
   }
