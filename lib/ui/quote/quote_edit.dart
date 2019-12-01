@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
@@ -63,6 +64,7 @@ class _QuoteEditState extends State<QuoteEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final state = viewModel.state;
 
     return WillPopScope(
       onWillPop: () async {
@@ -97,25 +99,29 @@ class _QuoteEditState extends State<QuoteEdit>
               },
             )
           ],
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              Tab(
-                text: localization.items,
-              ),
-              Tab(
-                text: localization.notes,
-              ),
-            ],
-          ),
+          bottom: state.prefState.isDesktop
+              ? null
+              : TabBar(
+                  controller: _controller,
+                  //isScrollable: true,
+                  tabs: [
+                    Tab(
+                      text: localization.details,
+                    ),
+                    Tab(
+                      text: localization.items,
+                    ),
+                    Tab(
+                      text: localization.notes,
+                    ),
+                  ],
+                ),
         ),
         body: Form(
           key: widget.formKey,
-          child: TabBarView(
+          child: state.prefState.isDesktop
+              ? QuoteEditDetailsScreen()
+              : TabBarView(
             key: ValueKey(viewModel.invoice.id),
             controller: _controller,
             children: <Widget>[

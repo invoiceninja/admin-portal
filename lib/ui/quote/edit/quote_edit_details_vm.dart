@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:redux/redux.dart';
@@ -24,10 +25,17 @@ class QuoteEditDetailsScreen extends StatelessWidget {
         return QuoteEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditDetails(
-          viewModel: viewModel,
-          isQuote: true,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditDesktop(
+            viewModel: viewModel,
+            isQuote: true,
+          );
+        } else {
+          return InvoiceEditDetails(
+            viewModel: viewModel,
+            isQuote: true,
+          );
+        }
       },
     );
   }
