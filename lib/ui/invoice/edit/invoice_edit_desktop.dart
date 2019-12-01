@@ -111,8 +111,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final company = viewModel.company;
-
+    
     return ListView(
       children: <Widget>[
         Row(

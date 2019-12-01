@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';

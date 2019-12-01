@@ -90,7 +90,7 @@ class InvoiceEditVM extends EntityEditVM {
         );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
-    final AppState state = store.state;
+    final state = store.state;
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditVM(
