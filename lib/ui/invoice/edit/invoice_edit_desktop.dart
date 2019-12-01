@@ -1,11 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -111,32 +110,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    
+
     return ListView(
       children: <Widget>[
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
               child: FormCard(
                 children: <Widget>[
                   if (invoice.isNew)
-                    EntityDropdown(
-                      key: ValueKey('__client_${invoice.clientId}__'),
-                      entityType: EntityType.client,
-                      labelText: localization.client,
-                      entityId: invoice.clientId,
-                      entityList: memoizedDropdownClientList(
-                          viewModel.clientMap, viewModel.clientList),
-                      validator: (String val) => val.trim().isEmpty
-                          ? AppLocalization.of(context).pleaseSelectAClient
-                          : null,
-                      onSelected: (client) {
-                        viewModel.onClientChanged(invoice, client);
-                      },
-                      onAddPressed: (completer) {
-                        viewModel.onAddClientPressed(context, completer);
-                      },
-                    )
+                    ClientPicker(
+                      clientId: invoice.clientId,
+                      clientState: viewModel.state.clientState,
+                      onSelected: (client) =>
+                          viewModel.onClientChanged(invoice, client),
+                      onAddPressed: (completer) =>
+                          viewModel.onAddClientPressed(context, completer),
+                    ),
+                  UserPicker(
+                    userId: invoice.assignedUserId,
+                    onChanged: (userId) => viewModel.onChanged(
+                        invoice.rebuild((b) => b..assignedUserId = userId)),
+                  ),
                 ],
               ),
             ),
@@ -152,9 +148,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                         : localization.invoiceDate,
                     selectedDate: invoice.date,
                     onSelected: (date) {
-                      viewModel.onChanged(invoice.rebuild((b) => b..date = date));
+                      viewModel
+                          .onChanged(invoice.rebuild((b) => b..date = date));
                     },
                   ),
+                  DatePicker(
+                    labelText: widget.isQuote
+                        ? localization.validUntil
+                        : localization.dueDate,
+                    selectedDate: invoice.dueDate,
+                    onSelected: (date) {
+                      viewModel
+                          .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                    },
+                  ),
+                  if (invoice.partial != null && invoice.partial > 0)
+                    DatePicker(
+                      labelText: localization.partialDueDate,
+                      selectedDate: invoice.partialDueDate,
+                      onSelected: (date) {
+                        viewModel.onChanged(
+                            invoice.rebuild((b) => b..partialDueDate = date));
+                      },
+                    ),
                 ],
               ),
             ),
@@ -169,6 +185,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
+                  ),
+                  DecoratedFormField(
+                    label: localization.poNumber,
+                    controller: _poNumberController,
                   ),
                 ],
               ),
