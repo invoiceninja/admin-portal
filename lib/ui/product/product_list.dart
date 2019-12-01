@@ -49,6 +49,9 @@ class _ProductListState extends State<ProductList> {
     final state = store.state;
     final productList = widget.viewModel.productList;
 
+    dataTableSource.productList = widget.viewModel.productList;
+    dataTableSource.productMap = widget.viewModel.productMap;
+
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
         !productList.contains(state.productUIState.selectedId)) {
@@ -129,7 +132,6 @@ class _ProductListState extends State<ProductList> {
               ],
               source: dataTableSource,
               header: Container(),
-
             )
           ])),
         );
@@ -140,6 +142,15 @@ class _ProductListState extends State<ProductList> {
       onRefresh: () => widget.viewModel.onRefreshed(context),
       child: listOrTable(),
     );
+  }
+
+  @override
+  void didUpdateWidget(ProductList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // The PaginatedDataTable does not update dynamically without this
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    dataTableSource.notifyListeners();
   }
 
   @override
@@ -200,7 +211,7 @@ class ProductDataTableSource extends DataTableSource {
   @override
   int get rowCount => productList.length;
 
-  final List<String> productList;
-  final BuiltMap<String, ProductEntity> productMap;
+  List<String> productList;
+  BuiltMap<String, ProductEntity> productMap;
   final Function(ProductEntity product) onTap;
 }
