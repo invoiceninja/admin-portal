@@ -323,30 +323,30 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: 160,
+                    height: 100,
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
                         DecoratedFormField(
-                          maxLines: 6,
+                          maxLines: 4,
                           controller: _publicNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 6,
+                          maxLines: 4,
                           controller: _privateNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 6,
+                          maxLines: 4,
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 6,
+                          maxLines: 4,
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
@@ -366,12 +366,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 children: <Widget>[
+                  /*
                   DecoratedFormField(
                     controller: null,
                     enabled: false,
                     initialValue: '10',
                     label: localization.subtotal,
                   ),
+                   */
                   CustomSurcharges(
                     surcharge1Controller: _surcharge1Controller,
                     surcharge2Controller: _surcharge2Controller,

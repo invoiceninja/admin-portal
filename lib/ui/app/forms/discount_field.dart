@@ -41,7 +41,7 @@ class DiscountField extends StatelessWidget {
                 child: Text(
                   localization.percent,
                   style: TextStyle(
-                    color: Colors.grey[600],
+                    fontSize: 14,
                   ),
                 ),
                 value: false,
@@ -50,7 +50,7 @@ class DiscountField extends StatelessWidget {
                 child: Text(
                   localization.amount,
                   style: TextStyle(
-                    color: Colors.grey[600],
+                    fontSize: 14,
                   ),
                 ),
                 value: true,
