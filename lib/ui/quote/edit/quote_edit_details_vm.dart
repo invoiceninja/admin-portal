@@ -35,6 +35,7 @@ class QuoteEditDetailsScreen extends StatelessWidget {
 
 class QuoteEditDetailsVM extends EntityEditDetailsVM {
   QuoteEditDetailsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
@@ -44,6 +45,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,

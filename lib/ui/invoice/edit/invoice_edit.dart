@@ -124,7 +124,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 ),
         ),
         body: state.prefState.isDesktop
-            ? InvoiceEditDesktop()
+            ? InvoiceEditDetailsScreen()
             : Form(
                 key: widget.formKey,
                 child: TabBarView(

@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -23,9 +24,15 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
         return InvoiceEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditDetails(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditDesktop(
+            viewModel: viewModel,
+          );
+        } else {
+          return InvoiceEditDetails(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
@@ -33,6 +40,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
 
 class EntityEditDetailsVM {
   EntityEditDetailsVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.onChanged,
@@ -42,6 +50,7 @@ class EntityEditDetailsVM {
     @required this.onAddClientPressed,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
@@ -54,6 +63,7 @@ class EntityEditDetailsVM {
 
 class InvoiceEditDetailsVM extends EntityEditDetailsVM {
   InvoiceEditDetailsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
@@ -63,6 +73,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,
@@ -77,6 +88,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditDetailsVM(
+      state: state,
       company: state.company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
