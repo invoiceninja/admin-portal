@@ -291,53 +291,50 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         Row(
           children: <Widget>[
             Expanded(
-              child: SizedBox(
-                height: 300,
-                child: FormCard(
-                  children: <Widget>[
-                    TabBar(
+              child: FormCard(
+                children: <Widget>[
+                  TabBar(
+                    controller: _tabController,
+                    tabs: [
+                      Tab(text: localization.publicNotes),
+                      Tab(text: localization.privateNotes),
+                      Tab(text: localization.terms),
+                      Tab(text: localization.footer),
+                    ],
+                  ),
+                  Container(
+                    height: 100,
+                    child: TabBarView(
                       controller: _tabController,
-                      tabs: [
-                        Tab(text: localization.publicNotes),
-                        Tab(text: localization.privateNotes),
-                        Tab(text: localization.terms),
-                        Tab(text: localization.footer),
+                      children: <Widget>[
+                        DecoratedFormField(
+                          maxLines: 4,
+                          controller: _publicNotesController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
+                        DecoratedFormField(
+                          maxLines: 4,
+                          controller: _privateNotesController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
+                        DecoratedFormField(
+                          maxLines: 4,
+                          controller: _termsController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
+                        DecoratedFormField(
+                          maxLines: 4,
+                          controller: _footerController,
+                          keyboardType: TextInputType.multiline,
+                          label: '',
+                        ),
                       ],
                     ),
-                    Container(
-                      height: 100,
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: <Widget>[
-                          DecoratedFormField(
-                            maxLines: 4,
-                            controller: _publicNotesController,
-                            keyboardType: TextInputType.multiline,
-                            label: '',
-                          ),
-                          DecoratedFormField(
-                            maxLines: 4,
-                            controller: _privateNotesController,
-                            keyboardType: TextInputType.multiline,
-                            label: '',
-                          ),
-                          DecoratedFormField(
-                            maxLines: 4,
-                            controller: _termsController,
-                            keyboardType: TextInputType.multiline,
-                            label: '',
-                          ),
-                          DecoratedFormField(
-                            maxLines: 4,
-                            controller: _footerController,
-                            keyboardType: TextInputType.multiline,
-                            label: '',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Expanded(
