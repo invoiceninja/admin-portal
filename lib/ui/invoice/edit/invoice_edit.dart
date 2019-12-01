@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -123,11 +122,11 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   ],
                 ),
         ),
-        body: state.prefState.isDesktop
-            ? InvoiceEditDetailsScreen()
-            : Form(
-                key: widget.formKey,
-                child: TabBarView(
+        body: Form(
+          key: widget.formKey,
+          child: state.prefState.isDesktop
+              ? InvoiceEditDetailsScreen()
+              : TabBarView(
                   key: ValueKey('__invoice_${viewModel.invoice.id}__'),
                   controller: _controller,
                   children: <Widget>[
@@ -137,7 +136,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                     InvoiceEditNotesScreen(),
                   ],
                 ),
-              ),
+        ),
         bottomNavigationBar: BottomAppBar(
           color: Theme.of(context).primaryColor,
           shape: CircularNotchedRectangle(),
