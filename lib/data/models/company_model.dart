@@ -212,6 +212,8 @@ abstract class CompanyEntity extends Object
     return designs;
   }
 
+  bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
+
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
       return customFields[field].split('|').first;

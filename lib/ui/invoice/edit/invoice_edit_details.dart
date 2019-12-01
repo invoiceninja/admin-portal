@@ -216,24 +216,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               field: CustomFieldType.invoice2,
               value: invoice.customValue2,
             ),
-            company.getCustomFieldLabel(CustomFieldType.surcharge1).isNotEmpty
-                ? DecoratedFormField(
-                    label:
-                        company.getCustomFieldLabel(CustomFieldType.surcharge1),
-                    controller: _surcharge1Controller,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  )
-                : Container(),
-            company.getCustomFieldLabel(CustomFieldType.surcharge2).isNotEmpty
-                ? DecoratedFormField(
-                    controller: _surcharge2Controller,
-                    label:
-                        company.getCustomFieldLabel(CustomFieldType.surcharge2),
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  )
-                : Container(),
+            if (company.hasCustomField(CustomFieldType.surcharge1))
+              DecoratedFormField(
+                label: company.getCustomFieldLabel(CustomFieldType.surcharge1),
+                controller: _surcharge1Controller,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
+            if (company.hasCustomField(CustomFieldType.surcharge2))
+              DecoratedFormField(
+                controller: _surcharge2Controller,
+                label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
             if (company.settings.enableFirstInvoiceTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) =>

@@ -44,6 +44,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   final _custom4Controller = TextEditingController();
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
+  final _surcharge3Controller = TextEditingController();
+  final _surcharge4Controller = TextEditingController();
   final _designController = TextEditingController();
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
@@ -73,6 +75,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       _custom4Controller,
       _surcharge1Controller,
       _surcharge2Controller,
+      _surcharge3Controller,
+      _surcharge4Controller,
       _designController,
       _publicNotesController,
       _privateNotesController,
@@ -97,6 +101,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
+        formatNumberType: FormatNumberType.input);
+    _surcharge3Controller.text = formatNumber(invoice.customSurcharge3, context,
+        formatNumberType: FormatNumberType.input);
+    _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
         formatNumberType: FormatNumberType.input);
     _designController.text =
         invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
@@ -137,6 +145,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         ..customValue4 = _custom4Controller.text.trim()
         ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
         ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
+        ..customSurcharge3 = parseDouble(_surcharge3Controller.text)
+        ..customSurcharge4 = parseDouble(_surcharge4Controller.text)
         ..publicNotes = _publicNotesController.text.trim()
         ..privateNotes = _privateNotesController.text.trim()
         ..terms = _termsController.text.trim()
@@ -152,6 +162,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final company = viewModel.company;
 
     return ListView(
       children: <Widget>[
@@ -294,6 +305,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             Expanded(
               flex: 2,
               child: FormCard(
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding),
                 children: <Widget>[
                   TabBar(
                     controller: _tabController,
@@ -342,12 +358,50 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             Expanded(
               flex: 1,
               child: FormCard(
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
                 children: <Widget>[
                   DecoratedFormField(
+                    controller: null,
                     enabled: false,
                     initialValue: '10',
                     label: localization.subtotal,
                   ),
+                  if (company.hasCustomField(CustomFieldType.surcharge1))
+                    DecoratedFormField(
+                      label: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge1),
+                      controller: _surcharge1Controller,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.surcharge2))
+                    DecoratedFormField(
+                      controller: _surcharge2Controller,
+                      label: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge2),
+                      keyboardType:
+                      TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.surcharge3))
+                    DecoratedFormField(
+                      controller: _surcharge3Controller,
+                      label: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge3),
+                      keyboardType:
+                      TextInputType.numberWithOptions(decimal: true),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.surcharge4))
+                    DecoratedFormField(
+                      controller: _surcharge4Controller,
+                      label: company
+                          .getCustomFieldLabel(CustomFieldType.surcharge4),
+                      keyboardType:
+                      TextInputType.numberWithOptions(decimal: true),
+                    ),
                 ],
               ),
             ),
