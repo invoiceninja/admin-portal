@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -15,6 +16,7 @@ class InvoiceEditItemsDesktop extends StatelessWidget {
     final invoice = viewModel.invoice;
 
     return FormCard(
+      padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: DataTable(
         columns: [
           DataColumn(
@@ -33,6 +35,7 @@ class InvoiceEditItemsDesktop extends StatelessWidget {
           ),
           DataColumn(
             label: Text(localization.lineTotal),
+            numeric: true,
           ),
         ],
         rows: invoice.lineItems

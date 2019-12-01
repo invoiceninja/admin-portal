@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -29,7 +30,9 @@ class InvoiceEditDesktop extends StatefulWidget {
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
 }
 
-class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
+class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
   final _invoiceNumberController = TextEditingController();
   final _poNumberController = TextEditingController();
   final _discountController = TextEditingController();
@@ -44,6 +47,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(vsync: this, length: 4);
+  }
 
   @override
   void didChangeDependencies() {
@@ -89,6 +99,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
 
   @override
   void dispose() {
+    _tabController.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -258,7 +269,44 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
             ),
           ],
         ),
-        widget.isQuote ? QuoteEditItemsScreen() : InvoiceEditItemsScreen()
+        widget.isQuote ? QuoteEditItemsScreen() : InvoiceEditItemsScreen(),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: SizedBox(
+                height: 300,
+                child: FormCard(
+                  children: <Widget>[
+                    TabBar(
+                      controller: _tabController,
+                      tabs: [
+                        Tab(text: localization.publicNotes),
+                        Tab(text: localization.privateNotes),
+                        Tab(text: localization.terms),
+                        Tab(text: localization.footer),
+                      ],
+                    ),
+                    Container(
+                      height: 100,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: <Widget>[
+                          Icon(Icons.directions_car),
+                          Icon(Icons.directions_transit),
+                          Icon(Icons.directions_car),
+                          Icon(Icons.directions_transit),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: SizedBox(),
+            )
+          ],
+        ),
       ],
     );
   }
