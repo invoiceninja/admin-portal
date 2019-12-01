@@ -79,6 +79,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     //final viewModel = widget.viewModel;
 
     return ListView(
+      shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[

@@ -28,11 +28,18 @@ class MainScreen extends StatelessWidget {
           final subRoute = '/' + uiState.subRoute;
           Widget screen = BlankScreen();
 
-          print('subRoute: $subRoute, isDesktop: ${prefState.isDesktop}');
-          if (subRoute == '/edit' && prefState.isDesktop) {
-            switch(mainRoute) {
+          if ([
+                InvoiceScreen.route,
+                QuoteScreen.route,
+              ].contains(mainRoute) &&
+              subRoute == '/edit' &&
+              prefState.isDesktop) {
+            switch (mainRoute) {
               case InvoiceScreen.route:
                 screen = InvoiceEditScreen();
+                break;
+              case QuoteScreen.route:
+                screen = QuoteEditScreen();
                 break;
             }
           } else {
@@ -129,7 +136,6 @@ class MainScreen extends StatelessWidget {
                 break;
             }
           }
-
 
           return Row(children: <Widget>[
             if (prefState.showMenu) ...[

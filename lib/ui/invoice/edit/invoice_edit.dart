@@ -130,6 +130,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Expanded(child: InvoiceEditDetailsScreen()),
+                      Expanded(child: InvoiceEditNotesScreen()),
                       Expanded(child: InvoiceEditContactsScreen()),
                     ],
                   ),
