@@ -107,6 +107,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_user': 'Successfully updated user',
       'archived_user': 'Successfully archived user',
       'deleted_user': 'Successfully deleted user',
+      'removed_user': 'Successfully removed user',
       'restored_user': 'Successfully restored user',
       'general_settings': 'General Settings',
       'invoice_options': 'Invoice Options',
@@ -15531,6 +15532,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get archivedUser => _localizedValues[localeCode]['archived_user'];
 
   String get deletedUser => _localizedValues[localeCode]['deleted_user'];
+
+  String get removedUser => _localizedValues[localeCode]['removed_user'];
 
   String get restoredUser => _localizedValues[localeCode]['restored_user'];
 

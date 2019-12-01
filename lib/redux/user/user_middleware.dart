@@ -24,6 +24,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
   final archiveUser = _archiveUser(repository);
   final deleteUser = _deleteUser(repository);
   final restoreUser = _restoreUser(repository);
+  final removeUser = _removeUser(repository);
 
   return [
     TypedMiddleware<AppState, ViewUserList>(viewUserList),
@@ -35,6 +36,7 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
     TypedMiddleware<AppState, ArchiveUserRequest>(archiveUser),
     TypedMiddleware<AppState, DeleteUserRequest>(deleteUser),
     TypedMiddleware<AppState, RestoreUserRequest>(restoreUser),
+    TypedMiddleware<AppState, RemoveUserRequest>(removeUser),
   ];
 }
 
@@ -170,6 +172,30 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreUserFailure(prevUsers));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _removeUser(UserRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RemoveUserRequest;
+
+    repository
+        .detachFromCompany(
+        store.state.credentials, action.userId)
+        .then((List<UserEntity> users) {
+      store.dispatch(RemoveUserSuccess(users));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RemoveUserFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

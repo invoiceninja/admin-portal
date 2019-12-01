@@ -49,10 +49,22 @@ class UserRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode(ids));
+    await webClient.post(url, credentials.token, data: json.encode(ids));
 
     final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response);
+    serializers.deserializeWith(UserListResponse.serializer, response);
+
+    return userResponse.data.toList();
+  }
+
+  Future<List<UserEntity>> detachFromCompany(
+      Credentials credentials, String userId) async {
+    final url = credentials.url + '/users/$userId/detachFromCompany';
+    final dynamic response =
+    await webClient.delete(url, credentials.token);
+
+    final UserListResponse userResponse =
+    serializers.deserializeWith(UserListResponse.serializer, response);
 
     return userResponse.data.toList();
   }

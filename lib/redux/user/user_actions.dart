@@ -207,6 +207,25 @@ class RestoreUserFailure implements StopSaving {
   final List<UserEntity> users;
 }
 
+class RemoveUserRequest implements StartSaving {
+  RemoveUserRequest(this.completer, this.userId);
+
+  final Completer completer;
+  final String userId;
+}
+
+class RemoveUserSuccess implements StopSaving, PersistData {
+  RemoveUserSuccess(this.users);
+
+  final List<UserEntity> users;
+}
+
+class RemoveUserFailure implements StopSaving {
+  RemoveUserFailure(this.error);
+
+  final dynamic error;
+}
+
 class FilterUsers {
   FilterUsers(this.filter);
 
@@ -273,6 +292,10 @@ void handleUserAction(
     case EntityAction.delete:
       store.dispatch(DeleteUserRequest(
           snackBarCompleter<Null>(context, localization.deletedUser), userIds));
+      break;
+    case EntityAction.remove:
+      store.dispatch(RemoveUserRequest(
+          snackBarCompleter<Null>(context, localization.removedUser), user.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {
