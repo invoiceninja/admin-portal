@@ -28,106 +28,108 @@ class MainScreen extends StatelessWidget {
           final subRoute = '/' + uiState.subRoute;
           Widget screen = BlankScreen();
 
-          if (subRoute == 'edit' && prefState.isDesktop) {
+          print('subRoute: $subRoute, isDesktop: ${prefState.isDesktop}');
+          if (subRoute == '/edit' && prefState.isDesktop) {
             switch(mainRoute) {
-              case InvoiceEditScreen.route:
-                return InvoiceEditScreen();
+              case InvoiceScreen.route:
+                screen = InvoiceEditScreen();
+                break;
+            }
+          } else {
+            switch (mainRoute) {
+              case DashboardScreenBuilder.route:
+                screen = Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: DashboardScreenBuilder(),
+                      flex: 5,
+                    ),
+                    if (prefState.showHistory) ...[
+                      _CustomDivider(),
+                      HistoryDrawerBuilder(),
+                    ],
+                  ],
+                );
+                break;
+              case ClientScreen.route:
+                screen = EntityScreens(
+                    entityType: EntityType.client,
+                    listWidget: ClientScreenBuilder(),
+                    viewWidget: ClientViewScreen(),
+                    editWidget: ClientEditScreen());
+                break;
+              case ProductScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.product,
+                  listWidget: ProductScreenBuilder(),
+                  viewWidget: ProductViewScreen(),
+                  editWidget: ProductEditScreen(),
+                );
+                break;
+              case InvoiceScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.invoice,
+                  listWidget: InvoiceScreenBuilder(),
+                  viewWidget: InvoiceViewScreen(),
+                  editWidget: InvoiceEditScreen(),
+                  emailWidget: InvoiceEmailScreen(),
+                );
+                break;
+              case PaymentScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.payment,
+                  listWidget: PaymentScreenBuilder(),
+                  viewWidget: PaymentViewScreen(),
+                  editWidget: PaymentEditScreen(),
+                );
+                break;
+              case QuoteScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.quote,
+                  listWidget: QuoteScreenBuilder(),
+                  viewWidget: QuoteViewScreen(),
+                  editWidget: QuoteEditScreen(),
+                );
+                break;
+              case ProjectScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.project,
+                  listWidget: ProjectScreenBuilder(),
+                  viewWidget: ProjectViewScreen(),
+                  editWidget: ProjectEditScreen(),
+                );
+                break;
+              case TaskScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.task,
+                  listWidget: TaskScreenBuilder(),
+                  viewWidget: TaskViewScreen(),
+                  editWidget: TaskEditScreen(),
+                );
+                break;
+              case VendorScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.vendor,
+                  listWidget: VendorScreenBuilder(),
+                  viewWidget: VendorViewScreen(),
+                  editWidget: VendorEditScreen(),
+                );
+                break;
+              case ExpenseScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.expense,
+                  listWidget: ExpenseScreenBuilder(),
+                  viewWidget: ExpenseViewScreen(),
+                  editWidget: ExpenseEditScreen(),
+                );
+                break;
+
+              case SettingsScreen.route:
+                screen = SettingsScreens();
                 break;
             }
           }
 
-          switch (mainRoute) {
-            case DashboardScreenBuilder.route:
-              screen = Row(
-                children: <Widget>[
-                  Expanded(
-                    child: DashboardScreenBuilder(),
-                    flex: 5,
-                  ),
-                  if (prefState.showHistory) ...[
-                    _CustomDivider(),
-                    HistoryDrawerBuilder(),
-                  ],
-                ],
-              );
-              break;
-            case ClientScreen.route:
-              screen = EntityScreens(
-                  entityType: EntityType.client,
-                  listWidget: ClientScreenBuilder(),
-                  viewWidget: ClientViewScreen(),
-                  editWidget: ClientEditScreen());
-              break;
-            case ProductScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.product,
-                listWidget: ProductScreenBuilder(),
-                viewWidget: ProductViewScreen(),
-                editWidget: ProductEditScreen(),
-              );
-              break;
-            case InvoiceScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.invoice,
-                listWidget: InvoiceScreenBuilder(),
-                viewWidget: InvoiceViewScreen(),
-                editWidget: InvoiceEditScreen(),
-                emailWidget: InvoiceEmailScreen(),
-              );
-              break;
-            case PaymentScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.payment,
-                listWidget: PaymentScreenBuilder(),
-                viewWidget: PaymentViewScreen(),
-                editWidget: PaymentEditScreen(),
-              );
-              break;
-            case QuoteScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.quote,
-                listWidget: QuoteScreenBuilder(),
-                viewWidget: QuoteViewScreen(),
-                editWidget: QuoteEditScreen(),
-              );
-              break;
-            case ProjectScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.project,
-                listWidget: ProjectScreenBuilder(),
-                viewWidget: ProjectViewScreen(),
-                editWidget: ProjectEditScreen(),
-              );
-              break;
-            case TaskScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.task,
-                listWidget: TaskScreenBuilder(),
-                viewWidget: TaskViewScreen(),
-                editWidget: TaskEditScreen(),
-              );
-              break;
-            case VendorScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.vendor,
-                listWidget: VendorScreenBuilder(),
-                viewWidget: VendorViewScreen(),
-                editWidget: VendorEditScreen(),
-              );
-              break;
-            case ExpenseScreen.route:
-              screen = EntityScreens(
-                entityType: EntityType.expense,
-                listWidget: ExpenseScreenBuilder(),
-                viewWidget: ExpenseViewScreen(),
-                editWidget: ExpenseEditScreen(),
-              );
-              break;
-
-            case SettingsScreen.route:
-              screen = SettingsScreens();
-              break;
-          }
 
           return Row(children: <Widget>[
             if (prefState.showMenu) ...[
