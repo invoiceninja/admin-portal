@@ -11,11 +11,13 @@ class DecoratedFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.keyboardType,
+    this.minLines,
     this.maxLines,
     this.textInputAction,
     this.onFieldSubmitted,
     this.enabled,
     this.hint,
+    this.expands = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -24,10 +26,12 @@ class DecoratedFormField extends StatelessWidget {
   final Function(String) validator;
   final TextInputType keyboardType;
   final int maxLines;
+  final int minLines;
   final bool autovalidate;
   final bool enabled;
   final bool autocorrect;
   final bool obscureText;
+  final bool expands;
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
@@ -43,7 +47,9 @@ class DecoratedFormField extends StatelessWidget {
       ),
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,
-      maxLines: maxLines ?? 1,
+      maxLines: expands ? null : maxLines ?? 1,
+      minLines: expands ? null : minLines,
+      expands: expands,
       autovalidate: autovalidate,
       autocorrect: autocorrect,
       obscureText: obscureText,

@@ -302,31 +302,31 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       Tab(text: localization.footer),
                     ],
                   ),
-                  Container(
-                    height: 100,
+                  SizedBox(
+                    height: 160,
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _publicNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _privateNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
