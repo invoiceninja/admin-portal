@@ -26,6 +26,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.archive;
     case EntityAction.delete:
       return Icons.delete;
+    case EntityAction.remove:
+      return Icons.remove_circle_outline;
     case EntityAction.restore:
       return Icons.restore;
     case EntityAction.convert:

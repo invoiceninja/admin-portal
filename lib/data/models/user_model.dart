@@ -166,7 +166,7 @@ abstract class UserEntity extends Object
       }
     }
 
-    if (userCompany.isAdmin) {
+    if (userCompany.isAdmin && !this.userCompany.isOwner) {
       actions.add(EntityAction.remove);
     }
 

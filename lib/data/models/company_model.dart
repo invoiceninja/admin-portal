@@ -436,6 +436,7 @@ abstract class UserCompanyEntity
   factory UserCompanyEntity() {
     return _$UserCompanyEntity._(
       isAdmin: false,
+      isOwner: false,
       permissions: '',
       company: CompanyEntity(),
       user: UserEntity(),
@@ -447,6 +448,9 @@ abstract class UserCompanyEntity
 
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
+
+  @BuiltValueField(wireName: 'is_owner')
+  bool get isOwner;
 
   String get permissions;
 
