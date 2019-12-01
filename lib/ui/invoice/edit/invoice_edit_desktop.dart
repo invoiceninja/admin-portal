@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
@@ -193,6 +194,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     userId: invoice.assignedUserId,
                     onChanged: (userId) => viewModel.onChanged(
                         invoice.rebuild((b) => b..assignedUserId = userId)),
+                  ),
+                  SizedBox(
+                    height: 100,
+                    child: InvoiceEditContactsScreen(),
                   ),
                 ],
               ),
