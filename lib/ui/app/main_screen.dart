@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -383,11 +384,11 @@ class EntityScreens extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: listWidget,
-          flex: 2,
+          flex: state.prefState.moduleLayout == ModuleLayout.list ? 2 : 3,
         ),
         _CustomDivider(),
         Expanded(
-          flex: 3,
+          flex: state.prefState.moduleLayout == ModuleLayout.list ? 3 : 2,
           child: subRoute == 'email'
               ? emailWidget
               : subRoute == 'edit'
