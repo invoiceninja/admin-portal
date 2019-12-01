@@ -5,10 +5,12 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_surcharges.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
@@ -370,38 +372,43 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     initialValue: '10',
                     label: localization.subtotal,
                   ),
-                  if (company.hasCustomField(CustomFieldType.surcharge1))
-                    DecoratedFormField(
-                      label: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge1),
-                      controller: _surcharge1Controller,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                  CustomSurcharges(
+                    surcharge1Controller: _surcharge1Controller,
+                    surcharge2Controller: _surcharge2Controller,
+                    surcharge3Controller: _surcharge3Controller,
+                    surcharge4Controller: _surcharge4Controller,
+                  ),
+                  if (company.settings.enableFirstInvoiceTaxRate)
+                    TaxRateDropdown(
+                      onSelected: (taxRate) =>
+                          viewModel.onChanged(invoice.applyTax(taxRate)),
+                      labelText: localization.tax,
+                      initialTaxName: invoice.taxName1,
+                      initialTaxRate: invoice.taxRate1,
                     ),
-                  if (company.hasCustomField(CustomFieldType.surcharge2))
-                    DecoratedFormField(
-                      controller: _surcharge2Controller,
-                      label: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge2),
-                      keyboardType:
-                      TextInputType.numberWithOptions(decimal: true),
+                  if (company.settings.enableSecondInvoiceTaxRate)
+                    TaxRateDropdown(
+                      onSelected: (taxRate) => viewModel
+                          .onChanged(invoice.applyTax(taxRate, isSecond: true)),
+                      labelText: localization.tax,
+                      initialTaxName: invoice.taxName2,
+                      initialTaxRate: invoice.taxRate2,
                     ),
-                  if (company.hasCustomField(CustomFieldType.surcharge3))
-                    DecoratedFormField(
-                      controller: _surcharge3Controller,
-                      label: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge3),
-                      keyboardType:
-                      TextInputType.numberWithOptions(decimal: true),
+                  if (company.settings.enableThirdInvoiceTaxRate)
+                    TaxRateDropdown(
+                      onSelected: (taxRate) => viewModel
+                          .onChanged(invoice.applyTax(taxRate, isThird: true)),
+                      labelText: localization.tax,
+                      initialTaxName: invoice.taxName3,
+                      initialTaxRate: invoice.taxRate3,
                     ),
-                  if (company.hasCustomField(CustomFieldType.surcharge4))
-                    DecoratedFormField(
-                      controller: _surcharge4Controller,
-                      label: company
-                          .getCustomFieldLabel(CustomFieldType.surcharge4),
-                      keyboardType:
-                      TextInputType.numberWithOptions(decimal: true),
-                    ),
+                  CustomSurcharges(
+                    surcharge1Controller: _surcharge1Controller,
+                    surcharge2Controller: _surcharge2Controller,
+                    surcharge3Controller: _surcharge3Controller,
+                    surcharge4Controller: _surcharge4Controller,
+                    isAfterTaxes: true,
+                  ),
                 ],
               ),
             ),
