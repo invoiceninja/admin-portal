@@ -46,7 +46,7 @@ class ProductRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode(ids));
+        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);

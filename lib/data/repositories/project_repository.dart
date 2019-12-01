@@ -57,7 +57,7 @@ class ProjectRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode(ids));
+        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
 
     final ProjectListResponse projectResponse =
         serializers.deserializeWith(ProjectListResponse.serializer, response);

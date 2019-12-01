@@ -56,7 +56,7 @@ class TaskRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode(ids));
+        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
 
     final TaskListResponse taskResponse =
         serializers.deserializeWith(TaskListResponse.serializer, response);

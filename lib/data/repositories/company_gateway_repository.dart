@@ -51,7 +51,7 @@ class CompanyGatewayRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode(ids));
+        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
 
     final CompanyGatewayListResponse companyGatewayResponse = serializers
         .deserializeWith(CompanyGatewayListResponse.serializer, response);

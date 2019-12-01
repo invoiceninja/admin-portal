@@ -49,7 +49,7 @@ class UserRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response =
-    await webClient.post(url, credentials.token, data: json.encode(ids));
+    await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
 
     final UserListResponse userResponse =
     serializers.deserializeWith(UserListResponse.serializer, response);
