@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
@@ -32,6 +34,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
   final _partialController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
   final _designController = TextEditingController();
@@ -48,6 +52,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
       _partialController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
       _surcharge1Controller,
       _surcharge2Controller,
       _designController,
@@ -65,6 +71,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoice.customValue1;
     _custom2Controller.text = invoice.customValue2;
+    _custom3Controller.text = invoice.customValue3;
+    _custom4Controller.text = invoice.customValue4;
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
@@ -98,6 +106,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
         ..partial = parseDouble(_partialController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
         ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
         ..customSurcharge2 = parseDouble(_surcharge2Controller.text));
       if (invoice != widget.viewModel.invoice) {
@@ -173,6 +183,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                           .onChanged(invoice.rebuild((b) => b..dueDate = date));
                     },
                   ),
+                  DecoratedFormField(
+                    label: localization.partialDeposit,
+                    controller: _partialController,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  ),
                   if (invoice.partial != null && invoice.partial > 0)
                     DatePicker(
                       labelText: localization.partialDueDate,
@@ -182,6 +197,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                             invoice.rebuild((b) => b..partialDueDate = date));
                       },
                     ),
+                  CustomField(
+                    controller: _custom1Controller,
+                    field: CustomFieldType.invoice1,
+                    value: invoice.customValue1,
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    field: CustomFieldType.invoice2,
+                    value: invoice.customValue2,
+                  ),
                 ],
               ),
             ),
@@ -212,6 +237,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                     isAmountDiscount: invoice.isAmountDiscount,
                     onTypeChanged: (value) => viewModel.onChanged(
                         invoice.rebuild((b) => b..isAmountDiscount = value)),
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    field: CustomFieldType.invoice2,
+                    value: invoice.customValue2,
+                  ),
+                  CustomField(
+                    controller: _custom4Controller,
+                    field: CustomFieldType.invoice4,
+                    value: invoice.customValue4,
                   ),
                 ],
               ),
