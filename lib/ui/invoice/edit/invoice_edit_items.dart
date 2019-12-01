@@ -66,7 +66,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     if (invoice.lineItems.isEmpty) {
       return HelpText(localization.clickPlusToAddItem);
     }
-    return ListView(
+    
+    return Column(
       children: [
         for (int i = 0; i < invoice.lineItems.length; i++)
           InvoiceItemListTile(

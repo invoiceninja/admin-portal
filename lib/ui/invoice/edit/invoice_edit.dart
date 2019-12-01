@@ -134,7 +134,6 @@ class _InvoiceEditState extends State<InvoiceEdit>
                       Expanded(child: InvoiceEditContactsScreen()),
                     ],
                   ),
-
                 ],
               )
             : Form(
@@ -143,10 +142,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   key: ValueKey('__invoice_${viewModel.invoice.id}__'),
                   controller: _controller,
                   children: <Widget>[
-                    InvoiceEditDetailsScreen(),
-                    InvoiceEditContactsScreen(),
-                    InvoiceEditItemsScreen(),
-                    InvoiceEditNotesScreen(),
+                    SingleChildScrollView(child: InvoiceEditDetailsScreen()),
+                    SingleChildScrollView(child: InvoiceEditContactsScreen()),
+                    SingleChildScrollView(child: InvoiceEditItemsScreen()),
+                    SingleChildScrollView(child: InvoiceEditNotesScreen()),
                   ],
                 ),
               ),
