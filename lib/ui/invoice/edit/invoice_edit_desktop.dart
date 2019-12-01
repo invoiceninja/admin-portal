@@ -186,7 +186,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                   DecoratedFormField(
                     label: localization.partialDeposit,
                     controller: _partialController,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
                   ),
                   if (invoice.partial != null && invoice.partial > 0)
                     DatePicker(
@@ -223,7 +224,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                     label: widget.isQuote
                         ? localization.quoteNumber
                         : localization.invoiceNumber,
-                    validator: (String val) => val.trim().isEmpty
+                    validator: (String val) => val.trim().isEmpty &&
+                            invoice.isOld
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
                   ),
