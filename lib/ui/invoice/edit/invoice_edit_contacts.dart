@@ -35,6 +35,7 @@ class InvoiceEditContacts extends StatelessWidget {
       });
 
     return ListView(
+      shrinkWrap: true,
       children: contacts.map((contact) {
         final invitation = invoice.getInvitationForContact(contact);
         return _ContactListTile(

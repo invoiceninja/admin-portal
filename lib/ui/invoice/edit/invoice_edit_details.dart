@@ -134,6 +134,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     }
 
     return ListView(
+      shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[

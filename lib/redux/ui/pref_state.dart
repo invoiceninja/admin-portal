@@ -59,6 +59,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isDesktop => appLayout == AppLayout.desktop;
 
+  bool get isNotDesktop => !isDesktop;
+
   bool get isTablet => appLayout == AppLayout.tablet;
 
   bool get isMobile => appLayout == AppLayout.mobile;

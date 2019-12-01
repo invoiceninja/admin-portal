@@ -65,6 +65,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final state = viewModel.state;
 
     return WillPopScope(
       onWillPop: () async {
@@ -100,38 +101,54 @@ class _InvoiceEditState extends State<InvoiceEdit>
               },
             )
           ],
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              Tab(
-                text: localization.contacts,
-              ),
-              Tab(
-                text: localization.items,
-              ),
-              Tab(
-                text: localization.notes,
-              ),
-            ],
-          ),
+          bottom: state.prefState.isDesktop
+              ? null
+              : TabBar(
+                  controller: _controller,
+                  //isScrollable: true,
+                  tabs: [
+                    Tab(
+                      text: localization.details,
+                    ),
+                    Tab(
+                      text: localization.contacts,
+                    ),
+                    Tab(
+                      text: localization.items,
+                    ),
+                    Tab(
+                      text: localization.notes,
+                    ),
+                  ],
+                ),
         ),
-        body: Form(
-          key: widget.formKey,
-          child: TabBarView(
-            key: ValueKey('__invoice_${viewModel.invoice.id}__'),
-            controller: _controller,
-            children: <Widget>[
-              InvoiceEditDetailsScreen(),
-              InvoiceEditContactsScreen(),
-              InvoiceEditItemsScreen(),
-              InvoiceEditNotesScreen(),
-            ],
-          ),
-        ),
+        body: state.prefState.isDesktop
+            ? ListView(
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(child: InvoiceEditDetailsScreen()),
+                      Expanded(child: InvoiceEditContactsScreen()),
+                    ],
+                  ),
+
+                ],
+              )
+            : Form(
+                key: widget.formKey,
+                child: TabBarView(
+                  key: ValueKey('__invoice_${viewModel.invoice.id}__'),
+                  controller: _controller,
+                  children: <Widget>[
+                    InvoiceEditDetailsScreen(),
+                    InvoiceEditContactsScreen(),
+                    InvoiceEditItemsScreen(),
+                    InvoiceEditNotesScreen(),
+                  ],
+                ),
+              ),
         bottomNavigationBar: BottomAppBar(
           color: Theme.of(context).primaryColor,
           shape: CircularNotchedRectangle(),
