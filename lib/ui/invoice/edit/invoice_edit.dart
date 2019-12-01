@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
@@ -123,29 +124,17 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 ),
         ),
         body: state.prefState.isDesktop
-            ? ListView(
-                children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(child: InvoiceEditDetailsScreen()),
-                      Expanded(child: InvoiceEditNotesScreen()),
-                      Expanded(child: InvoiceEditContactsScreen()),
-                    ],
-                  ),
-                ],
-              )
+            ? InvoiceEditDesktop()
             : Form(
                 key: widget.formKey,
                 child: TabBarView(
                   key: ValueKey('__invoice_${viewModel.invoice.id}__'),
                   controller: _controller,
                   children: <Widget>[
-                    SingleChildScrollView(child: InvoiceEditDetailsScreen()),
-                    SingleChildScrollView(child: InvoiceEditContactsScreen()),
-                    SingleChildScrollView(child: InvoiceEditItemsScreen()),
-                    SingleChildScrollView(child: InvoiceEditNotesScreen()),
+                    InvoiceEditDetailsScreen(),
+                    InvoiceEditContactsScreen(),
+                    InvoiceEditItemsScreen(),
+                    InvoiceEditNotesScreen(),
                   ],
                 ),
               ),

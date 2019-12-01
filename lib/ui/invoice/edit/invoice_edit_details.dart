@@ -133,7 +133,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       designIds = designIds.sublist(0, 4);
     }
 
-    return Column(
+    return ListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

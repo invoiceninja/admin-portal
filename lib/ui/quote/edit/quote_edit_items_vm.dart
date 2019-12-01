@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_table.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -18,9 +19,15 @@ class QuoteEditItemsScreen extends StatelessWidget {
         return QuoteEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditItems(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditItemsTable(
+            viewModel: viewModel,
+          );
+        } else {
+          return InvoiceEditItems(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
@@ -28,6 +35,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
 
 class QuoteEditItemsVM extends EntityEditItemsVM {
   QuoteEditItemsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     int invoiceItemIndex,
@@ -35,6 +43,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           invoiceItemIndex: invoiceItemIndex,
@@ -48,6 +57,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     final quote = state.quoteUIState.editing;
 
     return QuoteEditItemsVM(
+        state: state,
         company: state.company,
         invoice: quote,
         invoiceItemIndex: state.quoteUIState.editingItemIndex,

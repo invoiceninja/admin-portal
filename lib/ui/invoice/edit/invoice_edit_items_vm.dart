@@ -27,6 +27,7 @@ class InvoiceEditItemsScreen extends StatelessWidget {
 
 class EntityEditItemsVM {
   EntityEditItemsVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.invoiceItemIndex,
@@ -35,6 +36,7 @@ class EntityEditItemsVM {
     @required this.onChangedInvoiceItem,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
@@ -45,6 +47,7 @@ class EntityEditItemsVM {
 
 class InvoiceEditItemsVM extends EntityEditItemsVM {
   InvoiceEditItemsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     int invoiceItemIndex,
@@ -52,6 +55,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           invoiceItemIndex: invoiceItemIndex,
@@ -65,6 +69,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
+        state: state,
         company: state.company,
         invoice: invoice,
         invoiceItemIndex: state.invoiceUIState.editingItemIndex,

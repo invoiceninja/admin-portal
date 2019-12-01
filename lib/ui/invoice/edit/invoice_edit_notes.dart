@@ -78,7 +78,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     final localization = AppLocalization.of(context);
     //final viewModel = widget.viewModel;
 
-    return Column(
+    return ListView(
       children: <Widget>[
         FormCard(
           children: <Widget>[

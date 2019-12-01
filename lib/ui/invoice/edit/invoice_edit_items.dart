@@ -67,7 +67,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
       return HelpText(localization.clickPlusToAddItem);
     }
     
-    return Column(
+    return ListView(
       children: [
         for (int i = 0; i < invoice.lineItems.length; i++)
           InvoiceItemListTile(

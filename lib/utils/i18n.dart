@@ -14,6 +14,8 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'line_total': 'Line Total',
+      'item': 'Item',
       'credit_email': 'Credit Email',
       'iframe_url': 'iFrame URL',
       'domain_url': 'Domain URL',
@@ -15841,6 +15843,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get domainUrl => _localizedValues[localeCode]['domain_url'];
 
   String get creditEmail => _localizedValues[localeCode]['credit_email'];
+
+  String get item => _localizedValues[localeCode]['item'];
+
+  String get lineTotal => _localizedValues[localeCode]['line_total'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
