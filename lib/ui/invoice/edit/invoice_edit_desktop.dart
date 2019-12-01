@@ -118,6 +118,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
           children: <Widget>[
             Expanded(
               child: FormCard(
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding),
                 children: <Widget>[
                   if (invoice.isNew)
                     ClientPicker(
@@ -138,6 +143,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
             ),
             Expanded(
               child: FormCard(
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding / 2,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
                 children: <Widget>[
                   DatePicker(
                     validator: (String val) => val.trim().isEmpty
@@ -176,6 +186,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
             ),
             Expanded(
               child: FormCard(
+                padding: const EdgeInsets.only(
+                    top: kMobileDialogPadding,
+                    right: kMobileDialogPadding,
+                    bottom: kMobileDialogPadding,
+                    left: kMobileDialogPadding / 2),
                 children: <Widget>[
                   DecoratedFormField(
                     controller: _invoiceNumberController,

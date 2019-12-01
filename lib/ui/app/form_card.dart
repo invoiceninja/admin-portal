@@ -8,22 +8,25 @@ class FormCard extends StatelessWidget {
     this.children,
     this.child,
     this.crossAxisAlignment,
+    this.padding,
   }) : super(key: key);
 
   final Widget child;
   final List<Widget> children;
   final CrossAxisAlignment crossAxisAlignment;
   final bool isResponsive;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: isResponsive
-          ? const EdgeInsets.symmetric(
-              vertical: kMobileDialogPadding,
-              horizontal: kTabletDialogPadding,
-            )
-          : const EdgeInsets.all(kMobileDialogPadding),
+      padding: padding ??
+          (isResponsive
+              ? const EdgeInsets.symmetric(
+                  vertical: kMobileDialogPadding,
+                  horizontal: kTabletDialogPadding,
+                )
+              : const EdgeInsets.all(kMobileDialogPadding)),
       child: Card(
         elevation: 4.0,
         child: Padding(
