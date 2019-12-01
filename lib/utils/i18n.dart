@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'subtotal': 'Subtotal',
       'line_total': 'Line Total',
       'item': 'Item',
       'credit_email': 'Credit Email',
@@ -15847,6 +15848,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get item => _localizedValues[localeCode]['item'];
 
   String get lineTotal => _localizedValues[localeCode]['line_total'];
+
+  String get subtotal => _localizedValues[localeCode]['subtotal'];
 
 
   String lookup(String key) {

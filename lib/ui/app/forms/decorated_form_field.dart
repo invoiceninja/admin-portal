@@ -15,6 +15,7 @@ class DecoratedFormField extends StatelessWidget {
     this.maxLines,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.initialValue,
     this.enabled,
     this.hint,
     this.expands = false,
@@ -23,6 +24,7 @@ class DecoratedFormField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final String hint;
+  final String initialValue;
   final Function(String) validator;
   final TextInputType keyboardType;
   final int maxLines;
@@ -53,6 +55,7 @@ class DecoratedFormField extends StatelessWidget {
       autovalidate: autovalidate,
       autocorrect: autocorrect,
       obscureText: obscureText,
+      initialValue: initialValue,
       textInputAction: textInputAction ??
           (keyboardType == TextInputType.multiline
               ? TextInputAction.newline

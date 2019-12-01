@@ -289,8 +289,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         ),
         widget.isQuote ? QuoteEditItemsScreen() : InvoiceEditItemsScreen(),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
+              flex: 2,
               child: FormCard(
                 children: <Widget>[
                   TabBar(
@@ -338,8 +340,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               ),
             ),
             Expanded(
-              child: SizedBox(),
-            )
+              flex: 1,
+              child: FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    enabled: false,
+                    initialValue: '10',
+                    label: localization.subtotal,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ],
