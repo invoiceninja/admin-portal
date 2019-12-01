@@ -106,7 +106,7 @@ class DeviceSettingsVM {
         store.dispatch(UserSettingsChanged(layout: value));
         if (value == AppLayout.mobile) {
           store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-        } else {
+        } else if (store.state.prefState.isMobile) {
           store.dispatch(
               ViewMainScreen(navigator: Navigator.of(context), addDelay: true));
         }

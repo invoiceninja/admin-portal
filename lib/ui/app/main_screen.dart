@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -26,7 +25,16 @@ class MainScreen extends StatelessWidget {
           final uiState = store.state.uiState;
           final prefState = store.state.prefState;
           final mainRoute = '/' + uiState.mainRoute;
+          final subRoute = '/' + uiState.subRoute;
           Widget screen = BlankScreen();
+
+          if (subRoute == 'edit' && prefState.isDesktop) {
+            switch(mainRoute) {
+              case InvoiceEditScreen.route:
+                return InvoiceEditScreen();
+                break;
+            }
+          }
 
           switch (mainRoute) {
             case DashboardScreenBuilder.route:
@@ -384,11 +392,11 @@ class EntityScreens extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: listWidget,
-          flex: state.prefState.moduleLayout == ModuleLayout.list ? 2 : 3,
+          flex: state.prefState.isModuleList ? 2 : 3,
         ),
         _CustomDivider(),
         Expanded(
-          flex: state.prefState.moduleLayout == ModuleLayout.list ? 3 : 2,
+          flex: state.prefState.isModuleList ? 3 : 2,
           child: subRoute == 'email'
               ? emailWidget
               : subRoute == 'edit'

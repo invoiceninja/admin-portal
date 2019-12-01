@@ -58,6 +58,10 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         viewModel.onLayoutChanged(context, value),
                     items: [
                       DropdownMenuItem(
+                        child: Text(localization.desktop),
+                        value: AppLayout.desktop,
+                      ),
+                      DropdownMenuItem(
                         child: Text(localization.tablet),
                         value: AppLayout.tablet,
                       ),
@@ -67,7 +71,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                       ),
                     ],
                   ),
-                  if (state.prefState.appLayout == AppLayout.tablet) ...[
+                  if (state.prefState.isNotMobile) ...[
                     AppDropdownButton<AppSidebarMode>(
                       labelText: localization.menuSidebar,
                       value: state.prefState.menuSidebarMode,
