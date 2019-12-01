@@ -30,7 +30,8 @@ class InvoiceEditDesktop extends StatefulWidget {
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
 }
 
-class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTickerProviderStateMixin {
+class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
+    with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   final _invoiceNumberController = TextEditingController();
@@ -44,6 +45,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTicke
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
   final _designController = TextEditingController();
+  final _publicNotesController = TextEditingController();
+  final _privateNotesController = TextEditingController();
+  final _termsController = TextEditingController();
+  final _footerController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -69,6 +74,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTicke
       _surcharge1Controller,
       _surcharge2Controller,
       _designController,
+      _publicNotesController,
+      _privateNotesController,
+      _termsController,
+      _footerController,
     ];
 
     _controllers
@@ -91,6 +100,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTicke
         formatNumberType: FormatNumberType.input);
     _designController.text =
         invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
+    _publicNotesController.text = invoice.publicNotes;
+    _privateNotesController.text = invoice.privateNotes;
+    _termsController.text = invoice.terms;
+    _footerController.text = invoice.footer;
+
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -122,7 +136,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTicke
         ..customValue3 = _custom3Controller.text.trim()
         ..customValue4 = _custom4Controller.text.trim()
         ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
-        ..customSurcharge2 = parseDouble(_surcharge2Controller.text));
+        ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim()
+        ..terms = _termsController.text.trim()
+        ..footer = _footerController.text.trim());
       if (invoice != widget.viewModel.invoice) {
         widget.viewModel.onChanged(invoice);
       }
@@ -291,10 +309,30 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> with SingleTicke
                       child: TabBarView(
                         controller: _tabController,
                         children: <Widget>[
-                          Icon(Icons.directions_car),
-                          Icon(Icons.directions_transit),
-                          Icon(Icons.directions_car),
-                          Icon(Icons.directions_transit),
+                          DecoratedFormField(
+                            maxLines: 4,
+                            controller: _publicNotesController,
+                            keyboardType: TextInputType.multiline,
+                            label: '',
+                          ),
+                          DecoratedFormField(
+                            maxLines: 4,
+                            controller: _privateNotesController,
+                            keyboardType: TextInputType.multiline,
+                            label: '',
+                          ),
+                          DecoratedFormField(
+                            maxLines: 4,
+                            controller: _termsController,
+                            keyboardType: TextInputType.multiline,
+                            label: '',
+                          ),
+                          DecoratedFormField(
+                            maxLines: 4,
+                            controller: _footerController,
+                            keyboardType: TextInputType.multiline,
+                            label: '',
+                          ),
                         ],
                       ),
                     ),
