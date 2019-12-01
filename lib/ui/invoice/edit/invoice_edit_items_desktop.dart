@@ -43,6 +43,9 @@ class InvoiceEditItemsDesktop extends StatelessWidget {
                   cells: [
                     DataCell(TextFormField(
                       initialValue: item.productKey,
+                      onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          item.rebuild((b) => b..productKey = value),
+                          invoice.lineItems.indexOf(item)),
                     )),
                     DataCell(TextFormField(
                       initialValue: item.notes,

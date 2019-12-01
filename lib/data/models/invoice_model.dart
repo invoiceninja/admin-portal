@@ -114,7 +114,10 @@ abstract class InvoiceEntity extends Object
       customSurcharge3: 0,
       customSurcharge4: 0,
       filename: '',
-      lineItems: BuiltList<InvoiceItemEntity>(),
+      lineItems: state?.prefState?.isDesktop ?? false
+          ? BuiltList<InvoiceItemEntity>(
+              <InvoiceItemEntity>[InvoiceItemEntity()])
+          : BuiltList<InvoiceItemEntity>(),
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
