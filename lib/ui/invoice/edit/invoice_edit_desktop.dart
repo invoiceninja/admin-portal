@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -204,6 +205,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop> {
                   DecoratedFormField(
                     label: localization.poNumber,
                     controller: _poNumberController,
+                  ),
+                  DiscountField(
+                    controller: _discountController,
+                    value: invoice.discount,
+                    isAmountDiscount: invoice.isAmountDiscount,
+                    onTypeChanged: (value) => viewModel.onChanged(
+                        invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -198,49 +199,12 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               label: localization.poNumber,
               controller: _poNumberController,
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Expanded(
-                  child: DecoratedFormField(
-                    label: localization.discount,
-                    controller: _discountController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<bool>(
-                    value: invoice.isAmountDiscount,
-                    items: [
-                      DropdownMenuItem<bool>(
-                        child: Text(
-                          localization.percent,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        value: false,
-                      ),
-                      DropdownMenuItem<bool>(
-                        child: Text(
-                          localization.amount,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        value: true,
-                      )
-                    ],
-                    onChanged: (bool value) => viewModel.onChanged(
-                        invoice.rebuild((b) => b..isAmountDiscount = value)),
-                  ),
-                ),
-                SizedBox(width: 12),
-              ],
+            DiscountField(
+              controller: _discountController,
+              value: invoice.discount,
+              isAmountDiscount: invoice.isAmountDiscount,
+              onTypeChanged: (value) => viewModel.onChanged(
+                  invoice.rebuild((b) => b..isAmountDiscount = value)),
             ),
             CustomField(
               controller: _custom1Controller,
