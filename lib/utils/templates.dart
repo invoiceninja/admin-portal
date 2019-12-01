@@ -18,9 +18,10 @@ void loadTemplate({
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
-  final invoice =
-      state.invoiceState.map[state.invoiceState.list.first] ?? InvoiceEntity();
-  final url = credentials.url + '/templates/invoice/${invoice.id}';
+  final invoice = state.invoiceState.list.isEmpty
+      ? InvoiceEntity(state: state)
+      : state.invoiceState.map[state.invoiceState.list.first];
+  final url = credentials.url + '/templates';
   const encoder = const Utf8Encoder();
 
   final hase64Body =
@@ -29,12 +30,16 @@ void loadTemplate({
 
   webClient
       .post(url, credentials.token,
-          data: json.encode({'subject': subject, 'body': body}))
+          data: json.encode({
+            'entity': 'invoice',
+            'entity_id': '${invoice.id}',
+            'subject': subject,
+            'body': body
+          }))
       .then((dynamic response) {
     print('### response');
     print(response);
-    final String contentBase64 =
-        base64Encode(encoder.convert(response));
+    final String contentBase64 = base64Encode(encoder.convert(response));
     onComplete(subject, contentBase64);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
