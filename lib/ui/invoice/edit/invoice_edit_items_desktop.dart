@@ -115,6 +115,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   initialValue: lineItems[index].notes,
                   onChanged: (value) => viewModel.onChangedInvoiceItem(
                       lineItems[index].rebuild((b) => b..notes = value), index),
+                  minLines: 2,
+                  maxLines: 6,
                 )),
                 DataCell(TextFormField(
                   textAlign: TextAlign.right,
