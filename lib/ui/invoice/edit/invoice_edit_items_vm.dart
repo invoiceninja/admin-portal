@@ -37,6 +37,8 @@ class EntityEditItemsVM {
     @required this.state,
     @required this.company,
     @required this.invoice,
+    @required this.addLineItem,
+    @required this.deleteLineItem,
     @required this.invoiceItemIndex,
     @required this.onRemoveInvoiceItemPressed,
     @required this.onDoneInvoiceItemPressed,
@@ -47,6 +49,8 @@ class EntityEditItemsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final int invoiceItemIndex;
+  final Function addLineItem;
+  final Function deleteLineItem;
   final Function(int) onRemoveInvoiceItemPressed;
   final Function onDoneInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
@@ -58,6 +62,8 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     int invoiceItemIndex,
+    Function addLineItem,
+    Function(int) deleteLineItem,
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
@@ -65,6 +71,8 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
           state: state,
           company: company,
           invoice: invoice,
+          addLineItem: addLineItem,
+          deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
@@ -80,6 +88,9 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
         company: state.company,
         invoice: invoice,
         invoiceItemIndex: state.invoiceUIState.editingItemIndex,
+        addLineItem: () =>
+            store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
+        deleteLineItem: null,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteInvoiceItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),

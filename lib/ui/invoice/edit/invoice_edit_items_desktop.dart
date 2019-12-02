@@ -17,6 +17,9 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 }
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
+
+  int _updatedAt;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -28,6 +31,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: DataTable(
+        key: ValueKey('__datatable_${_updatedAt}__'),
         columns: [
           DataColumn(
             label: Text(localization.item),
@@ -79,6 +83,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ..cost = product.price);
                         widget.viewModel.onChangedInvoiceItem(
                             updatedItem, invoice.lineItems.indexOf(item));
+                        widget.viewModel.addLineItem();
+                        setState(() {
+                          _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                        });
                       },
                       autoFlipDirection: true,
                       direction: AxisDirection.up,
