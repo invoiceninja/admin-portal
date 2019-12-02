@@ -42,80 +42,113 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(children: [
-            Text(localization.item),
-            Text(localization.description),
-            Text(localization.unitCost),
-            Text(localization.quantity),
-            Text(localization.lineTotal),
+            TableHeader(localization.item),
+            TableHeader(localization.description),
+            TableHeader(localization.unitCost, isNumeric: true),
+            TableHeader(localization.quantity, isNumeric: true),
+            TableHeader(localization.lineTotal, isNumeric: true),
           ]),
           for (var index = 0; index < lineItems.length; index++)
             TableRow(children: [
-              TypeAheadFormField<String>(
-                initialValue: lineItems[index].productKey,
-                suggestionsCallback: (pattern) {
-                  return productIds
-                      .where((productId) =>
-                          productState.map[productId].matchesFilter(pattern))
-                      .toList();
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    title: Text(productState.map[suggestion].productKey),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  final item = lineItems[index];
-                  final product = productState.map[suggestion];
-                  final updatedItem = item.rebuild((b) => b
-                    ..productKey = product.productKey
-                    ..notes = product.notes
-                    ..cost = product.price
-                    ..quantity = item.quantity == 0 &&
-                            viewModel.state.company.defaultQuantity
-                        ? 1
-                        : item.quantity);
-                  viewModel.onChangedInvoiceItem(updatedItem, index);
-                  viewModel.addLineItem();
-                  setState(() {
-                    _updatedAt = DateTime.now().millisecondsSinceEpoch;
-                  });
-                },
-                autoFlipDirection: true,
-                direction: AxisDirection.up,
-                animationStart: 1,
-                debounceDuration: Duration(seconds: 0),
+              Padding(
+                padding: const EdgeInsets.only(right: kTableColumnGap),
+                child: TypeAheadFormField<String>(
+                  initialValue: lineItems[index].productKey,
+                  suggestionsCallback: (pattern) {
+                    return productIds
+                        .where((productId) =>
+                            productState.map[productId].matchesFilter(pattern))
+                        .toList();
+                  },
+                  itemBuilder: (context, suggestion) {
+                    return ListTile(
+                      title: Text(productState.map[suggestion].productKey),
+                    );
+                  },
+                  onSuggestionSelected: (suggestion) {
+                    final item = lineItems[index];
+                    final product = productState.map[suggestion];
+                    final updatedItem = item.rebuild((b) => b
+                      ..productKey = product.productKey
+                      ..notes = product.notes
+                      ..cost = product.price
+                      ..quantity = item.quantity == 0 &&
+                              viewModel.state.company.defaultQuantity
+                          ? 1
+                          : item.quantity);
+                    viewModel.onChangedInvoiceItem(updatedItem, index);
+                    viewModel.addLineItem();
+                    setState(() {
+                      _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                    });
+                  },
+                  autoFlipDirection: true,
+                  direction: AxisDirection.up,
+                  animationStart: 1,
+                  debounceDuration: Duration(seconds: 0),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: kTableColumnGap),
+                child: TextFormField(
+                  initialValue: lineItems[index].notes,
+                  onChanged: (value) => viewModel.onChangedInvoiceItem(
+                      lineItems[index].rebuild((b) => b..notes = value), index),
+                  minLines: 1,
+                  maxLines: 6,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: kTableColumnGap),
+                child: TextFormField(
+                  textAlign: TextAlign.right,
+                  initialValue: formatNumber(lineItems[index].cost, context,
+                      formatNumberType: FormatNumberType.input),
+                  onChanged: (value) => viewModel.onChangedInvoiceItem(
+                      lineItems[index]
+                          .rebuild((b) => b..cost = parseDouble(value)),
+                      index),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: kTableColumnGap),
+                child: TextFormField(
+                  textAlign: TextAlign.right,
+                  initialValue: formatNumber(lineItems[index].quantity, context,
+                      formatNumberType: FormatNumberType.input),
+                  onChanged: (value) => viewModel.onChangedInvoiceItem(
+                      lineItems[index]
+                          .rebuild((b) => b..quantity = parseDouble(value)),
+                      index),
+                ),
               ),
               TextFormField(
-                initialValue: lineItems[index].notes,
-                onChanged: (value) => viewModel.onChangedInvoiceItem(
-                    lineItems[index].rebuild((b) => b..notes = value), index),
-                minLines: 1,
-                maxLines: 6,
-              ),
-              TextFormField(
-                textAlign: TextAlign.right,
-                initialValue: formatNumber(lineItems[index].cost, context,
-                    formatNumberType: FormatNumberType.input),
-                onChanged: (value) => viewModel.onChangedInvoiceItem(
-                    lineItems[index]
-                        .rebuild((b) => b..cost = parseDouble(value)),
-                    index),
-              ),
-              TextFormField(
-                textAlign: TextAlign.right,
-                initialValue: formatNumber(lineItems[index].quantity, context,
-                    formatNumberType: FormatNumberType.input),
-                onChanged: (value) => viewModel.onChangedInvoiceItem(
-                    lineItems[index]
-                        .rebuild((b) => b..quantity = parseDouble(value)),
-                    index),
-              ),
-              Text(
-                formatNumber(lineItems[index].total, context),
+                readOnly: true,
+                enabled: false,
+                initialValue: formatNumber(lineItems[index].total, context),
                 textAlign: TextAlign.right,
               ),
             ])
         ],
+      ),
+    );
+  }
+}
+
+class TableHeader extends StatelessWidget {
+  const TableHeader(this.label, {this.isNumeric = false});
+
+  final String label;
+  final bool isNumeric;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        label,
+        textAlign: isNumeric ? TextAlign.right : TextAlign.left,
+        style: TextStyle(color: Colors.grey),
       ),
     );
   }

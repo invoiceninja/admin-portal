@@ -46,6 +46,7 @@ const kProductPlans = [
 const double kMobileLayoutWidth = 600;
 const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
+const double kTableColumnGap = 20;
 
 const double kTabletLayoutWidth = 1000;
 const double kTabletDialogPadding = 250;
