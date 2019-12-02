@@ -266,6 +266,25 @@ abstract class CompanyEntity extends Object
 
   bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
+  List<String> get invoiceDesignIds {
+    var designIds = kInvoiceDesigns.keys.toList();
+
+    if (!(settings.hasCustomDesign1 ?? true)) {
+      designIds.remove(kDesignCustom1);
+    }
+    if (!(settings.hasCustomDesign2 ?? true)) {
+      designIds.remove(kDesignCustom2);
+    }
+    if (!(settings.hasCustomDesign3 ?? true)) {
+      designIds.remove(kDesignCustom3);
+    }
+    if (!isProPlan) {
+      designIds = designIds.sublist(0, 4);
+    }
+
+    return designIds;
+  }
+
   bool isModuleEnabled(EntityType entityType) {
     if (Config.DEMO_MODE) {
       if ([

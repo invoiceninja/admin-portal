@@ -127,22 +127,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final invoice = viewModel.invoice;
     final company = viewModel.company;
 
-    // TODO replace with company.getInvoiceDesigns
-    var designIds = kInvoiceDesigns.keys.toList();
-
-    if (!(company.settings.hasCustomDesign1 ?? true)) {
-      designIds.remove(kDesignCustom1);
-    }
-    if (!(company.settings.hasCustomDesign2 ?? true)) {
-      designIds.remove(kDesignCustom2);
-    }
-    if (!(company.settings.hasCustomDesign3 ?? true)) {
-      designIds.remove(kDesignCustom3);
-    }
-    if (!company.isProPlan) {
-      designIds = designIds.sublist(0, 4);
-    }
-
     return ListView(
       children: <Widget>[
         FormCard(
@@ -279,7 +263,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               value: invoice.designId,
               onChanged: (dynamic value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value)),
-              items: designIds
+              items: company.invoiceDesignIds
                   .map((designId) => DropdownMenuItem<String>(
                         value: designId,
                         child: Text(kInvoiceDesigns[designId]),

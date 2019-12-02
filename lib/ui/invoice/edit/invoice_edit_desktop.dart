@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_surcharges.dart';
@@ -415,6 +416,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     surcharge3Controller: _surcharge3Controller,
                     surcharge4Controller: _surcharge4Controller,
                     isAfterTaxes: true,
+                  ),
+                  AppDropdownButton(
+                    labelText: localization.design,
+                    value: invoice.designId,
+                    onChanged: (dynamic value) => viewModel
+                        .onChanged(invoice.rebuild((b) => b..designId = value)),
+                    items: company.invoiceDesignIds
+                        .map((designId) => DropdownMenuItem<String>(
+                      value: designId,
+                      child: Text(kInvoiceDesigns[designId]),
+                    ))
+                        .toList(),
                   ),
                 ],
               ),
