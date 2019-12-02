@@ -32,116 +32,83 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
-      child: DataTable(
+      child: Table(
         key: ValueKey('__datatable_${_updatedAt}__'),
-        columns: [
-          DataColumn(
-            label: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: 100),
-              child: Text(
-                localization.item,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ),
-          DataColumn(
-            label: Text(
-              localization.description,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          DataColumn(
-            label: Text(
-              localization.unitCost,
-              overflow: TextOverflow.ellipsis,
-            ),
-            numeric: true,
-          ),
-          DataColumn(
-            label: Text(
-              localization.quantity,
-              overflow: TextOverflow.ellipsis,
-            ),
-            numeric: true,
-          ),
-          DataColumn(
-            label: Text(
-              localization.lineTotal,
-              overflow: TextOverflow.ellipsis,
-            ),
-            numeric: true,
-          ),
-        ],
-        rows: [
+        children: [
+          TableRow(children: [
+            Text(localization.item),
+            Text(localization.description),
+            Text(localization.unitCost),
+            Text(localization.quantity),
+            Text(localization.lineTotal),
+          ]),
           for (var index = 0; index < lineItems.length; index++)
-            DataRow(
-              cells: [
-                DataCell(TypeAheadFormField<String>(
-                  initialValue: lineItems[index].productKey,
-                  suggestionsCallback: (pattern) {
-                    return productIds
-                        .where((productId) =>
-                            productState.map[productId].matchesFilter(pattern))
-                        .toList();
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(productState.map[suggestion].productKey),
-                    );
-                  },
-                  onSuggestionSelected: (suggestion) {
-                    final item = lineItems[index];
-                    final product = productState.map[suggestion];
-                    final updatedItem = item.rebuild((b) => b
-                      ..productKey = product.productKey
-                      ..notes = product.notes
-                      ..cost = product.price
-                      ..quantity = item.quantity == 0 &&
-                              viewModel.state.company.defaultQuantity
-                          ? 1
-                          : item.quantity);
-                    viewModel.onChangedInvoiceItem(updatedItem, index);
-                    viewModel.addLineItem();
-                    setState(() {
-                      _updatedAt = DateTime.now().millisecondsSinceEpoch;
-                    });
-                  },
-                  autoFlipDirection: true,
-                  direction: AxisDirection.up,
-                  animationStart: 1,
-                  debounceDuration: Duration(seconds: 0),
-                )),
-                DataCell(TextFormField(
-                  initialValue: lineItems[index].notes,
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index].rebuild((b) => b..notes = value), index),
-                  minLines: 2,
-                  maxLines: 6,
-                )),
-                DataCell(TextFormField(
-                  textAlign: TextAlign.right,
-                  initialValue: formatNumber(lineItems[index].cost, context,
-                      formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..cost = parseDouble(value)),
-                      index),
-                )),
-                DataCell(TextFormField(
-                  textAlign: TextAlign.right,
-                  initialValue: formatNumber(lineItems[index].quantity, context,
-                      formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..quantity = parseDouble(value)),
-                      index),
-                )),
-                DataCell(Text(
-                  formatNumber(lineItems[index].total, context),
-                  textAlign: TextAlign.right,
-                )),
-              ],
-            )
+            TableRow(children: [
+              TypeAheadFormField<String>(
+                initialValue: lineItems[index].productKey,
+                suggestionsCallback: (pattern) {
+                  return productIds
+                      .where((productId) =>
+                          productState.map[productId].matchesFilter(pattern))
+                      .toList();
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    title: Text(productState.map[suggestion].productKey),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  final item = lineItems[index];
+                  final product = productState.map[suggestion];
+                  final updatedItem = item.rebuild((b) => b
+                    ..productKey = product.productKey
+                    ..notes = product.notes
+                    ..cost = product.price
+                    ..quantity = item.quantity == 0 &&
+                            viewModel.state.company.defaultQuantity
+                        ? 1
+                        : item.quantity);
+                  viewModel.onChangedInvoiceItem(updatedItem, index);
+                  viewModel.addLineItem();
+                  setState(() {
+                    _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                  });
+                },
+                autoFlipDirection: true,
+                direction: AxisDirection.up,
+                animationStart: 1,
+                debounceDuration: Duration(seconds: 0),
+              ),
+              TextFormField(
+                initialValue: lineItems[index].notes,
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    lineItems[index].rebuild((b) => b..notes = value), index),
+                minLines: 1,
+                maxLines: 6,
+              ),
+              TextFormField(
+                textAlign: TextAlign.right,
+                initialValue: formatNumber(lineItems[index].cost, context,
+                    formatNumberType: FormatNumberType.input),
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    lineItems[index]
+                        .rebuild((b) => b..cost = parseDouble(value)),
+                    index),
+              ),
+              TextFormField(
+                textAlign: TextAlign.right,
+                initialValue: formatNumber(lineItems[index].quantity, context,
+                    formatNumberType: FormatNumberType.input),
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    lineItems[index]
+                        .rebuild((b) => b..quantity = parseDouble(value)),
+                    index),
+              ),
+              Text(
+                formatNumber(lineItems[index].total, context),
+                textAlign: TextAlign.right,
+              ),
+            ])
         ],
       ),
     );
