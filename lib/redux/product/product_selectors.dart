@@ -8,19 +8,44 @@ InvoiceItemEntity convertProductToInvoiceItem({
   @required ProductEntity product,
   @required CompanyEntity company,
 }) {
-  return InvoiceItemEntity().rebuild((b) => b
-    ..productKey = product.productKey
-    ..notes = product.notes
-    ..cost = product.price
-    ..quantity = company.enableProductQuantity
-        ? product.quantity
-        : company.defaultQuantity ? 1 : null
-    ..customValue1 = product.customValue1
-    ..customValue2 = product.customValue2
-    ..taxName1 = product.taxName1
-    ..taxRate1 = product.taxRate1
-    ..taxName2 = product.taxName2
-    ..taxRate2 = product.taxRate2);
+  if (company.fillProducts) {
+    return InvoiceItemEntity().rebuild((b) => b
+      ..productKey = product.productKey
+      ..notes = product.notes
+      ..cost = product.price
+      ..quantity = company.enableProductQuantity
+          ? product.quantity
+          : company.defaultQuantity ? 1 : null
+      ..customValue1 = product.customValue1
+      ..customValue2 = product.customValue2
+      ..taxName1 = product.taxName1
+      ..taxRate1 = product.taxRate1
+      ..taxName2 = product.taxName2
+      ..taxRate2 = product.taxRate2);
+  } else {
+    return InvoiceItemEntity(
+        productKey: product.productKey,
+        quantity: company.defaultQuantity ? 1 : null);
+  }
+}
+
+var memoizedDropdownProductList = memo2(
+    (BuiltMap<String, ProductEntity> productMap,
+            BuiltList<String> productList) =>
+        dropdownProductsSelector(productMap, productList));
+
+List<String> dropdownProductsSelector(
+    BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList) {
+  final list =
+      productList.where((productId) => productMap[productId].isActive).toList();
+
+  list.sort((productAId, productBId) {
+    final productA = productMap[productAId];
+    final productB = productMap[productBId];
+    return productA.compareTo(productB, ProductFields.productKey, true);
+  });
+
+  return list;
 }
 
 var memoizedProductList = memo1(

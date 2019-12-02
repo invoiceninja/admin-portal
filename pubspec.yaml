@@ -41,6 +41,7 @@ dependencies:
   webview_flutter: ^0.3.15+1
   timeago: ^2.0.22
   native_pdf_renderer: any
+  flutter_typeahead: ^1.7.0
   #quick_actions: ^0.2.1
 
 dev_dependencies:

@@ -136,6 +136,7 @@ class InvoiceEditVM extends EntityEditVM {
               UpdateInvoice(invoice.rebuild((b) => b..clientId = clientId)));
         }
         store.dispatch(AddInvoiceItems(items));
+
         // if we're just adding one item automatically show the editor
         if (items.length == 1) {
           store.dispatch(EditInvoiceItem(invoice.lineItems.length));
