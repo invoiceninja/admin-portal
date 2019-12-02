@@ -25,6 +25,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taxRateEdit');
 
+  FocusScopeNode _focusNode;
   bool autoValidate = false;
 
   final _nameController = TextEditingController();
@@ -85,6 +86,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       body: AppForm(
+        focusNode: _focusNode,
         formKey: _formKey,
         children: <Widget>[
           FormCard(

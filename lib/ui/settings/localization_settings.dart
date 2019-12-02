@@ -33,11 +33,19 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
+  FocusScopeNode _focusNode;
 
   List<TextEditingController> _controllers = [];
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusScopeNode();
+  }
+
+  @override
   void dispose() {
+    _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -78,6 +86,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
+        focusNode: _focusNode,
         children: <Widget>[
           FormCard(
             children: <Widget>[

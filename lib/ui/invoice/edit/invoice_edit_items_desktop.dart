@@ -8,7 +8,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
-  const InvoiceEditItemsDesktop({this.viewModel});
+  const InvoiceEditItemsDesktop({
+    this.viewModel,
+  });
 
   final EntityEditItemsVM viewModel;
 
@@ -19,6 +21,32 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   int _updatedAt;
+
+  /*
+  final Map<int, FocusNode> _focusNodes = {};
+
+  @override
+  void didChangeDependencies() {
+    _focusNodes.values.forEach((node) => node.dispose());
+
+    final lineItems = widget.viewModel.invoice.lineItems;
+    for (var index = 0; index < lineItems.length; index++) {
+      _focusNodes[index] = FocusNode()
+        ..addListener(() => _onFocusChange(index));
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _focusNodes.values.forEach((node) => node.dispose());
+    super.dispose();
+  }
+
+  void _onFocusChange(int index) {
+    setState(() {});
+  }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +124,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       lineItems[index].rebuild((b) => b..notes = value), index),
                   minLines: 1,
                   maxLines: 6,
+                  //maxLines: _focusNodes[index].hasFocus ? 6 : 1,
+                  //focusNode: _focusNodes[index],
                 ),
               ),
               Padding(

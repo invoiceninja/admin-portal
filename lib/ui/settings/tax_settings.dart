@@ -26,6 +26,19 @@ class TaxSettings extends StatefulWidget {
 class _TaxSettingsState extends State<TaxSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taxSettings');
+  FocusScopeNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusScopeNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +52,7 @@ class _TaxSettingsState extends State<TaxSettings> {
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
+        focusNode: _focusNode,
         children: <Widget>[
           FormCard(
             children: <Widget>[

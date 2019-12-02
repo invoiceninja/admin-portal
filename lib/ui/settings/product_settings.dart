@@ -21,6 +21,19 @@ class ProductSettings extends StatefulWidget {
 class _ProductSettingsState extends State<ProductSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productSettings');
+  FocusScopeNode _focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusScopeNode();
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +46,7 @@ class _ProductSettingsState extends State<ProductSettings> {
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
         formKey: _formKey,
+        focusNode: _focusNode,
         children: <Widget>[
           FormCard(
             children: <Widget>[

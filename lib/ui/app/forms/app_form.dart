@@ -4,20 +4,27 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppForm extends StatelessWidget {
   const AppForm({
-    @required this.children,
+    this.children,
+    this.child,
     @required this.formKey,
+    @required this.focusNode,
   });
 
   final GlobalKey<FormState> formKey;
   final List<Widget> children;
+  final Widget child;
+  final FocusScopeNode focusNode;
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: ListView(
-        shrinkWrap: true,
-        children: children,
+    return FocusScope(
+      node: focusNode,
+      child: Form(
+        key: formKey,
+        child: child ?? ListView(
+          shrinkWrap: true,
+          children: children,
+        ),
       ),
     );
   }

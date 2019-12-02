@@ -23,7 +23,7 @@ class UserDetails extends StatefulWidget {
 class _UserDetailsState extends State<UserDetails> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_userDetails');
-
+  FocusScopeNode _focusNode;
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
@@ -35,7 +35,14 @@ class _UserDetailsState extends State<UserDetails> {
   final _debouncer = Debouncer();
 
   @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusScopeNode();
+  }
+
+  @override
   void dispose() {
+    _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -89,6 +96,7 @@ class _UserDetailsState extends State<UserDetails> {
       title: localization.userDetails,
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(
+        focusNode: _focusNode,
         formKey: _formKey,
         children: <Widget>[
           FormCard(

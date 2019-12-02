@@ -29,7 +29,7 @@ class _UserEditState extends State<UserEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_userEdit');
   final _debouncer = Debouncer();
-
+  FocusScopeNode _focusNode;
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
@@ -143,6 +143,7 @@ class _UserEditState extends State<UserEdit> {
           ],
         ),
         body: AppForm(
+          focusNode: _focusNode,
           formKey: _formKey,
           children: <Widget>[
             FormCard(
