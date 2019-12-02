@@ -57,7 +57,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           final index = invoice.lineItems.indexOf(item);
           return DataRow(
             cells: [
-              DataCell(TypeAheadField<String>(
+              DataCell(TypeAheadFormField<String>(
+                initialValue: item.productKey,
                 suggestionsCallback: (pattern) {
                   return productIds
                       .where((productId) =>
