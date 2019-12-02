@@ -38,6 +38,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _custom2Controller = TextEditingController();
   final _surcharge1Controller = TextEditingController();
   final _surcharge2Controller = TextEditingController();
+  final _surcharge3Controller = TextEditingController();
+  final _surcharge4Controller = TextEditingController();
   final _designController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
@@ -54,6 +56,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _custom2Controller,
       _surcharge1Controller,
       _surcharge2Controller,
+      _surcharge3Controller,
+      _surcharge4Controller,
       _designController,
     ];
 
@@ -72,6 +76,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
         formatNumberType: FormatNumberType.input);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
+        formatNumberType: FormatNumberType.input);
+    _surcharge3Controller.text = formatNumber(invoice.customSurcharge3, context,
+        formatNumberType: FormatNumberType.input);
+    _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
         formatNumberType: FormatNumberType.input);
     _designController.text =
         invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
@@ -103,7 +111,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customSurcharge1 = parseDouble(_surcharge1Controller.text)
-        ..customSurcharge2 = parseDouble(_surcharge2Controller.text));
+        ..customSurcharge2 = parseDouble(_surcharge2Controller.text)
+        ..customSurcharge3 = parseDouble(_surcharge3Controller.text)
+        ..customSurcharge4 = parseDouble(_surcharge4Controller.text));
       if (invoice != widget.viewModel.invoice) {
         widget.viewModel.onChanged(invoice);
       }
@@ -226,6 +236,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               DecoratedFormField(
                 controller: _surcharge2Controller,
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
+            if (company.hasCustomField(CustomFieldType.surcharge3))
+              DecoratedFormField(
+                label: company.getCustomFieldLabel(CustomFieldType.surcharge3),
+                controller: _surcharge3Controller,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
+            if (company.hasCustomField(CustomFieldType.surcharge4))
+              DecoratedFormField(
+                controller: _surcharge4Controller,
+                label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             if (company.settings.enableFirstInvoiceTaxRate)
