@@ -33,6 +33,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
+        defaultColumnWidth: FixedColumnWidth(150),
+        columnWidths: {
+          0: FixedColumnWidth(200),
+          1: FlexColumnWidth(),
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.top,
         key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(children: [
