@@ -13,18 +13,19 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
   final EntityEditItemsVM viewModel;
 
   @override
-  _InvoiceEditItemsDesktopState createState() => _InvoiceEditItemsDesktopState();
+  _InvoiceEditItemsDesktopState createState() =>
+      _InvoiceEditItemsDesktopState();
 }
 
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
-
   int _updatedAt;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final invoice = widget.viewModel.invoice;
-    final productState = widget.viewModel.state.productState;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final productState = viewModel.state.productState;
     final productIds =
         memoizedDropdownProductList(productState.map, productState.list);
 
@@ -52,66 +53,69 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             numeric: true,
           ),
         ],
-        rows: invoice.lineItems
-            .map((item) => DataRow(
-                  cells: [
-                    /*
-                    DataCell(TextFormField(
-                      initialValue: item.productKey,
-                      onChanged: (value) => viewModel.onChangedInvoiceItem(
-                          item.rebuild((b) => b..productKey = value),
-                          invoice.lineItems.indexOf(item)),
-                    )),
-                     */
-                    DataCell(TypeAheadField<String>(
-                      suggestionsCallback: (pattern) {
-                        return productIds
-                            .where((productId) => productState.map[productId]
-                                .matchesFilter(pattern))
-                            .toList();
-                      },
-                      itemBuilder: (context, suggestion) {
-                        return ListTile(
-                          title: Text(productState.map[suggestion].productKey),
-                        );
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        final product = productState.map[suggestion];
-                        final updatedItem = item.rebuild((b) => b
-                          ..productKey = product.productKey
-                          ..notes = product.notes
-                          ..cost = product.price);
-                        widget.viewModel.onChangedInvoiceItem(
-                            updatedItem, invoice.lineItems.indexOf(item));
-                        widget.viewModel.addLineItem();
-                        setState(() {
-                          _updatedAt = DateTime.now().millisecondsSinceEpoch;
-                        });
-                      },
-                      autoFlipDirection: true,
-                      direction: AxisDirection.up,
-                      animationStart: 1,
-                    )),
-                    DataCell(TextFormField(
-                      initialValue: item.notes,
-                    )),
-                    DataCell(TextFormField(
-                      textAlign: TextAlign.right,
-                      initialValue: formatNumber(item.cost, context,
-                          formatNumberType: FormatNumberType.input),
-                    )),
-                    DataCell(TextFormField(
-                      textAlign: TextAlign.right,
-                      initialValue: formatNumber(item.quantity, context,
-                          formatNumberType: FormatNumberType.input),
-                    )),
-                    DataCell(Text(
-                      formatNumber(item.total, context),
-                      textAlign: TextAlign.right,
-                    )),
-                  ],
-                ))
-            .toList(),
+        rows: invoice.lineItems.map((item) {
+          final index = invoice.lineItems.indexOf(item);
+          return DataRow(
+            cells: [
+              DataCell(TypeAheadField<String>(
+                suggestionsCallback: (pattern) {
+                  return productIds
+                      .where((productId) =>
+                          productState.map[productId].matchesFilter(pattern))
+                      .toList();
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    title: Text(productState.map[suggestion].productKey),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  final product = productState.map[suggestion];
+                  final updatedItem = item.rebuild((b) => b
+                    ..productKey = product.productKey
+                    ..notes = product.notes
+                    ..cost = product.price
+                    ..quantity = item.quantity == 0 &&
+                            viewModel.state.company.defaultQuantity
+                        ? 1
+                        : item.quantity);
+                  viewModel.onChangedInvoiceItem(updatedItem, index);
+                  viewModel.addLineItem();
+                  setState(() {
+                    _updatedAt = DateTime.now().millisecondsSinceEpoch;
+                  });
+                },
+                autoFlipDirection: true,
+                direction: AxisDirection.up,
+                animationStart: 1,
+              )),
+              DataCell(TextFormField(
+                initialValue: item.notes,
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    item.rebuild((b) => b..notes = value), index),
+              )),
+              DataCell(TextFormField(
+                textAlign: TextAlign.right,
+                initialValue: formatNumber(item.cost, context,
+                    formatNumberType: FormatNumberType.input),
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    item.rebuild((b) => b..cost = parseDouble(value)), index),
+              )),
+              DataCell(TextFormField(
+                textAlign: TextAlign.right,
+                initialValue: formatNumber(item.quantity, context,
+                    formatNumberType: FormatNumberType.input),
+                onChanged: (value) => viewModel.onChangedInvoiceItem(
+                    item.rebuild((b) => b..quantity = parseDouble(value)),
+                    index),
+              )),
+              DataCell(Text(
+                formatNumber(item.total, context),
+                textAlign: TextAlign.right,
+              )),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
