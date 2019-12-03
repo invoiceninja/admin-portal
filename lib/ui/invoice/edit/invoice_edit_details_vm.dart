@@ -27,6 +27,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
+            key: ValueKey('__invoice_${viewModel.invoice.id}__'),
           );
         } else {
           return InvoiceEditDetails(

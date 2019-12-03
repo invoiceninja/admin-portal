@@ -28,6 +28,7 @@ class QuoteEditDetailsScreen extends StatelessWidget {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
+            key: ValueKey('__quote_${viewModel.invoice.id}__'),
             isQuote: true,
           );
         } else {

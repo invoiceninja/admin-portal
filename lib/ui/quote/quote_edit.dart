@@ -121,14 +121,14 @@ class _QuoteEditState extends State<QuoteEdit>
           child: state.prefState.isDesktop
               ? QuoteEditDetailsScreen()
               : TabBarView(
-            key: ValueKey(viewModel.invoice.id),
-            controller: _controller,
-            children: <Widget>[
-              QuoteEditDetailsScreen(),
-              QuoteEditItemsScreen(),
-              QuoteEditNotesScreen(),
-            ],
-          ),
+                  key: ValueKey('__quote_${viewModel.invoice.id}__'),
+                  controller: _controller,
+                  children: <Widget>[
+                    QuoteEditDetailsScreen(),
+                    QuoteEditItemsScreen(),
+                    QuoteEditNotesScreen(),
+                  ],
+                ),
         ),
         bottomNavigationBar: BottomAppBar(
           color: Theme.of(context).primaryColor,

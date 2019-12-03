@@ -179,6 +179,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       formKey: _formKey,
       focusNode: _focusNode,
       child: ListView(
+        key: ValueKey('__invoice_${invoice.id}__'),
         children: <Widget>[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
