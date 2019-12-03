@@ -105,6 +105,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 padding: const EdgeInsets.only(right: kTableColumnGap),
                 child: TypeAheadFormField<String>(
                   initialValue: lineItems[index].productKey,
+                  noItemsFoundBuilder: (context) => SizedBox(),
                   suggestionsCallback: (pattern) {
                     return productIds
                         .where((productId) =>

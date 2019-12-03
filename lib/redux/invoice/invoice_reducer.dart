@@ -47,6 +47,15 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, UpdateInvoice>((invoice, action) {
     return action.invoice.rebuild((b) => b..isChanged = true);
   }),
+  TypedReducer<InvoiceEntity, AddInvoiceItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, DeleteInvoiceItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, UpdateInvoiceItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<InvoiceEntity, UpdateInvoiceClient>((invoice, action) {
     final client = action.client;
     return invoice.rebuild((b) => b
