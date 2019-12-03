@@ -153,6 +153,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 ),
               ),
               TextFormField(
+                key: ValueKey('__total_${index}_${lineItems[index].total}__'),
                 readOnly: true,
                 enabled: false,
                 initialValue: formatNumber(lineItems[index].total, context),
