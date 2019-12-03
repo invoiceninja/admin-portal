@@ -22,7 +22,14 @@ class InvoiceEditItemsDesktop extends StatefulWidget {
 class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   int _updatedAt;
 
-  /*
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _addBlankRow();
+  }
+
+    /*
   final Map<int, FocusNode> _focusNodes = {};
 
   @override

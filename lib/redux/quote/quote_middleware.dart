@@ -278,8 +278,14 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
 Middleware<AppState> _saveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveQuoteRequest;
+
+    // remove any empty line items
+    final updatedQuote = action.quote.rebuild((b) => b
+      ..lineItems
+          .replace(action.quote.lineItems.where((item) => !item.isEmpty)));
+
     repository
-        .saveData(store.state.credentials, action.quote)
+        .saveData(store.state.credentials, updatedQuote)
         .then((InvoiceEntity quote) {
       if (action.quote.isNew) {
         store.dispatch(AddQuoteSuccess(quote));

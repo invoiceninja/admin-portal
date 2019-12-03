@@ -124,8 +124,8 @@ Middleware<AppState> _showEmailInvoice() {
     store.dispatch(UpdateCurrentRoute(InvoiceEmailScreen.route));
 
     if (isMobile(action.context)) {
-      final emailWasSent =
-      await Navigator.of(action.context).pushNamed(InvoiceEmailScreen.route);
+      final emailWasSent = await Navigator.of(action.context)
+          .pushNamed(InvoiceEmailScreen.route);
 
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
@@ -290,8 +290,14 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
 Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveInvoiceRequest;
+
+    // remove any empty line items
+    final updatedInvoice = action.invoice.rebuild((b) => b
+      ..lineItems
+          .replace(action.invoice.lineItems.where((item) => !item.isEmpty)));
+
     repository
-        .saveData(store.state.credentials, action.invoice)
+        .saveData(store.state.credentials, updatedInvoice)
         .then((InvoiceEntity invoice) {
       if (action.invoice.isNew) {
         store.dispatch(AddInvoiceSuccess(invoice));
