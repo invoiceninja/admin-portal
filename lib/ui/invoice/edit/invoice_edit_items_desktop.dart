@@ -48,6 +48,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   }
   */
 
+  void _addBlankRow() {
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    if (invoice.lineItems.where((item) => item.isEmpty).isEmpty) {
+      viewModel.addLineItem();
+    }
+  }
+
   void _updateTable() {
     setState(() {
       _updatedAt = DateTime.now().millisecondsSinceEpoch;
@@ -113,9 +121,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ? 1
                           : item.quantity);
                     viewModel.onChangedInvoiceItem(updatedItem, index);
-                    viewModel.addLineItem();
                     _updateTable();
                   },
+                  textFieldConfiguration:
+                      TextFieldConfiguration<String>(onChanged: (value) {
+                    viewModel.onChangedInvoiceItem(
+                        lineItems[index].rebuild((b) => b..productKey = value),
+                        index);
+                    _addBlankRow();
+                  }),
                   autoFlipDirection: true,
                   direction: AxisDirection.up,
                   animationStart: 1,
@@ -126,8 +140,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 padding: const EdgeInsets.only(right: kTableColumnGap),
                 child: TextFormField(
                   initialValue: lineItems[index].notes,
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index].rebuild((b) => b..notes = value), index),
+                  onChanged: (value) {
+                    viewModel.onChangedInvoiceItem(
+                        lineItems[index].rebuild((b) => b..notes = value),
+                        index);
+                    _addBlankRow();
+                  },
                   minLines: 1,
                   maxLines: 6,
                   //maxLines: _focusNodes[index].hasFocus ? 6 : 1,
@@ -140,10 +158,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   textAlign: TextAlign.right,
                   initialValue: formatNumber(lineItems[index].cost, context,
                       formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..cost = parseDouble(value)),
-                      index),
+                  onChanged: (value) {
+                    viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..cost = parseDouble(value)),
+                        index);
+                    _addBlankRow();
+                  },
                 ),
               ),
               Padding(
@@ -152,10 +173,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   textAlign: TextAlign.right,
                   initialValue: formatNumber(lineItems[index].quantity, context,
                       formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..quantity = parseDouble(value)),
-                      index),
+                  onChanged: (value) {
+                    viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..quantity = parseDouble(value)),
+                        index);
+                    _addBlankRow();
+                  },
                 ),
               ),
               TextFormField(
