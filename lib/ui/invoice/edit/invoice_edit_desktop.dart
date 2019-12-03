@@ -335,8 +335,14 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       tabs: [
                         Tab(text: localization.publicNotes),
                         Tab(text: localization.privateNotes),
-                        Tab(text: localization.terms),
-                        Tab(text: localization.footer),
+                        Tab(
+                            text: widget.isQuote
+                                ? localization.quoteTerms
+                                : localization.invoiceTerms),
+                        Tab(
+                            text: widget.isQuote
+                                ? localization.quoteFooter
+                                : localization.invoiceFooter),
                       ],
                     ),
                     SizedBox(
