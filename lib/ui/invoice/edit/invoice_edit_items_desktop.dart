@@ -65,6 +65,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         columnWidths: {
           0: FixedColumnWidth(200),
           1: FlexColumnWidth(),
+          5: FixedColumnWidth(50),
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.top,
         key: ValueKey('__datatable_${_updatedAt}__'),
@@ -75,6 +76,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             TableHeader(localization.unitCost, isNumeric: true),
             TableHeader(localization.quantity, isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
+            TableHeader(''),
           ]),
           for (var index = 0; index < lineItems.length; index++)
             TableRow(children: [
@@ -159,6 +161,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 initialValue: formatNumber(lineItems[index].total, context),
                 textAlign: TextAlign.right,
               ),
+              Row(
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: lineItems.length == 1
+                        ? null
+                        : () => viewModel.onRemoveInvoiceItemPressed(index),
+                  ),
+                ],
+              )
             ])
         ],
       ),
