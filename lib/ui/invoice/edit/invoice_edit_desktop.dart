@@ -206,10 +206,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onChanged: (userId) => viewModel.onChanged(
                           invoice.rebuild((b) => b..assignedUserId = userId)),
                     ),
-                    SizedBox(
-                      height: 100,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 200),
                       child: InvoiceEditContactsScreen(),
-                    ),
+                    )
                   ],
                 ),
               ),
