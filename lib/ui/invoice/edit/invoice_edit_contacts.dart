@@ -19,20 +19,25 @@ class InvoiceEditContacts extends StatelessWidget {
     final invoice = viewModel.invoice;
     final client = viewModel.client;
 
+    List<ContactEntity> contacts;
     if (client == null) {
-      return HelpText(localization.noClientSelected);
+      if (viewModel.state.prefState.isDesktop) {
+        contacts = [];
+      } else {
+        return HelpText(localization.noClientSelected);
+      }
+    } else {
+      contacts = client.contacts.toList()
+        ..sort((contactA, contactB) {
+          if (contactA.sendInvoice != contactB.sendInvoice) {
+            return contactA.sendInvoice ? 1 : -1;
+          } else {
+            return contactA.fullName
+                .toLowerCase()
+                .compareTo(contactB.fullName.toLowerCase());
+          }
+        });
     }
-
-    final contacts = client.contacts.toList()
-      ..sort((contactA, contactB) {
-        if (contactA.sendInvoice != contactB.sendInvoice) {
-          return contactA.sendInvoice ? 1 : -1;
-        } else {
-          return contactA.fullName
-              .toLowerCase()
-              .compareTo(contactB.fullName.toLowerCase());
-        }
-      });
 
     return ListView(
       children: contacts.map((contact) {

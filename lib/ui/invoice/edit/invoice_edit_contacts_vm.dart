@@ -27,6 +27,7 @@ class InvoiceEditContactsScreen extends StatelessWidget {
 
 class EntityEditContactsVM {
   EntityEditContactsVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.client,
@@ -34,6 +35,7 @@ class EntityEditContactsVM {
     @required this.onRemoveContact,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
@@ -43,12 +45,14 @@ class EntityEditContactsVM {
 
 class InvoiceEditContactsVM extends EntityEditContactsVM {
   InvoiceEditContactsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
     Function(ContactEntity) onAddContact,
     Function(InvitationEntity) onRemoveContact,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           client: client,
@@ -61,6 +65,7 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditContactsVM(
+      state: state,
       company: state.company,
       invoice: invoice,
       client: state.clientState.map[invoice.clientId],
