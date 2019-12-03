@@ -10,7 +10,7 @@ part 'pref_state.g.dart';
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   factory PrefState() {
     return _$PrefState._(
-      appLayout: AppLayout.tablet,
+      appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.list,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.visible,

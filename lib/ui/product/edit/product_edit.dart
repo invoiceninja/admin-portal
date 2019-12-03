@@ -1,5 +1,6 @@
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -28,7 +29,7 @@ class ProductEdit extends StatefulWidget {
 class _ProductEditState extends State<ProductEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productEdit');
-
+  final FocusScopeNode _focusNode = FocusScopeNode();
   bool autoValidate = false;
 
   final _productKeyController = TextEditingController();
@@ -81,6 +82,7 @@ class _ProductEditState extends State<ProductEdit> {
       controller.removeListener(_onChanged);
       controller.dispose();
     });
+    _focusNode.dispose();
 
     super.dispose();
   }
@@ -156,8 +158,9 @@ class _ProductEditState extends State<ProductEdit> {
             }),
           ],
         ),
-        body: Form(
-          key: _formKey,
+        body: AppForm(
+          formKey: _formKey,
+          focusNode: _focusNode,
           child: ListView(
             key: ValueKey(widget.viewModel.product.id),
             children: <Widget>[

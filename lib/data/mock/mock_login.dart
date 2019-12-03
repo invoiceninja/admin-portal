@@ -3,7 +3,7 @@ const dynamic kMockLogin = '''
     "data": [
         {
             "permissions": "[]",
-            "settings": "",
+            "settings": {},
             "is_owner": true,
             "is_admin": true,
             "is_locked": false,
@@ -34,7 +34,7 @@ const dynamic kMockLogin = '''
                 "enable_product_cost": false,
                 "enable_product_quantity": true,
                 "default_quantity": true,
-                "custom_fields": "",
+                "custom_fields": {},
                 "size_id": "",
                 "industry_id": "",
                 "first_month_of_year": "",
