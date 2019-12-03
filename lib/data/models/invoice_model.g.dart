@@ -607,6 +607,18 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
     if (object.taskId != null) {
       result
         ..add('task_public_id')
@@ -684,6 +696,14 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'discount':
@@ -1849,6 +1869,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final double discount;
   @override
   final String taskId;
@@ -1873,6 +1897,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.invoiceItemTypeId,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.discount,
       this.taskId,
       this.expenseId})
@@ -1947,6 +1973,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         invoiceItemTypeId == other.invoiceItemTypeId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         discount == other.discount &&
         taskId == other.taskId &&
         expenseId == other.expenseId;
@@ -1970,21 +1998,28 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    productKey
+                                                                    $jc(
+                                                                        $jc(
+                                                                            0,
+                                                                            productKey
+                                                                                .hashCode),
+                                                                        notes
+                                                                            .hashCode),
+                                                                    cost
                                                                         .hashCode),
-                                                                notes.hashCode),
-                                                            cost.hashCode),
-                                                        quantity.hashCode),
-                                                    taxName1.hashCode),
-                                                taxRate1.hashCode),
-                                            taxName2.hashCode),
-                                        taxRate2.hashCode),
-                                    taxName3.hashCode),
-                                taxRate3.hashCode),
-                            invoiceItemTypeId.hashCode),
-                        customValue1.hashCode),
-                    customValue2.hashCode),
+                                                                quantity
+                                                                    .hashCode),
+                                                            taxName1.hashCode),
+                                                        taxRate1.hashCode),
+                                                    taxName2.hashCode),
+                                                taxRate2.hashCode),
+                                            taxName3.hashCode),
+                                        taxRate3.hashCode),
+                                    invoiceItemTypeId.hashCode),
+                                customValue1.hashCode),
+                            customValue2.hashCode),
+                        customValue3.hashCode),
+                    customValue4.hashCode),
                 discount.hashCode),
             taskId.hashCode),
         expenseId.hashCode));
@@ -2006,6 +2041,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('invoiceItemTypeId', invoiceItemTypeId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('discount', discount)
           ..add('taskId', taskId)
           ..add('expenseId', expenseId))
@@ -2070,6 +2107,14 @@ class InvoiceItemEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   double _discount;
   double get discount => _$this._discount;
   set discount(double discount) => _$this._discount = discount;
@@ -2099,6 +2144,8 @@ class InvoiceItemEntityBuilder
       _invoiceItemTypeId = _$v.invoiceItemTypeId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _discount = _$v.discount;
       _taskId = _$v.taskId;
       _expenseId = _$v.expenseId;
@@ -2137,6 +2184,8 @@ class InvoiceItemEntityBuilder
             invoiceItemTypeId: invoiceItemTypeId,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
             discount: discount,
             taskId: taskId,
             expenseId: expenseId);

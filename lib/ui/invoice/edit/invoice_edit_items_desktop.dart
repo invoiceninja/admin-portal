@@ -48,6 +48,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   }
   */
 
+  void _updateTable() {
+    setState(() {
+      _updatedAt = DateTime.now().millisecondsSinceEpoch;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -108,9 +114,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           : item.quantity);
                     viewModel.onChangedInvoiceItem(updatedItem, index);
                     viewModel.addLineItem();
-                    setState(() {
-                      _updatedAt = DateTime.now().millisecondsSinceEpoch;
-                    });
+                    _updateTable();
                   },
                   autoFlipDirection: true,
                   direction: AxisDirection.up,
@@ -161,16 +165,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 initialValue: formatNumber(lineItems[index].total, context),
                 textAlign: TextAlign.right,
               ),
-              Row(
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: lineItems.length == 1
-                        ? null
-                        : () => viewModel.onRemoveInvoiceItemPressed(index),
-                  ),
-                ],
-              )
+              lineItems[index].isEmpty
+                  ? SizedBox()
+                  : IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        viewModel.onRemoveInvoiceItemPressed(index);
+                        _updateTable();
+                      },
+                    ),
             ])
         ],
       ),

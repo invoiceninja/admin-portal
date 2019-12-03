@@ -599,6 +599,14 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   double get discount;
 
   @nullable
@@ -614,6 +622,15 @@ abstract class InvoiceItemEntity
   bool get isTask => taskId != null && taskId.isNotEmpty;
 
   bool get isExpense => expenseId != null && expenseId.isNotEmpty;
+
+  bool get isEmpty =>
+      productKey.isEmpty &&
+      notes.isEmpty &&
+      cost == 0 &&
+      quantity == 0 &&
+      customValue1.isEmpty &&
+      customValue2.isEmpty;
+  // TODO add custom 3 and 4
 
   InvoiceItemEntity applyTax(TaxRateEntity taxRate,
       {bool isSecond = false, bool isThird = false}) {
