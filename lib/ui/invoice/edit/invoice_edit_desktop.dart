@@ -41,7 +41,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   FocusNode _focusNode;
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_invoicesEdit');
+      GlobalKey<FormState>(debugLabel: '_invoicesEdit');
 
   final _invoiceNumberController = TextEditingController();
   final _poNumberController = TextEditingController();
@@ -117,7 +117,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
         formatNumberType: FormatNumberType.input);
     _designController.text =
-    invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
+        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
     _publicNotesController.text = invoice.publicNotes;
     _privateNotesController.text = invoice.privateNotes;
     _termsController.text = invoice.terms;
@@ -143,8 +143,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   void _onChanged() {
     _debouncer.run(() {
-      final invoice = widget.viewModel.invoice.rebuild((b) =>
-      b
+      final invoice = widget.viewModel.invoice.rebuild((b) => b
         ..number = widget.viewModel.invoice.isNew
             ? ''
             : _invoiceNumberController.text.trim()
@@ -204,10 +203,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ),
                     UserPicker(
                       userId: invoice.assignedUserId,
-                      onChanged: (userId) =>
-                          viewModel.onChanged(
-                              invoice.rebuild((
-                                  b) => b..assignedUserId = userId)),
+                      onChanged: (userId) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..assignedUserId = userId)),
                     ),
                     SizedBox(
                       height: 100,
@@ -225,13 +222,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       left: kMobileDialogPadding / 2),
                   children: <Widget>[
                     DatePicker(
-                      validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty
-                          ? AppLocalization
-                          .of(context)
-                          .pleaseSelectADate
+                      validator: (String val) => val.trim().isEmpty
+                          ? AppLocalization.of(context).pleaseSelectADate
                           : null,
                       labelText: widget.isQuote
                           ? localization.quoteDate
@@ -248,8 +240,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           : localization.dueDate,
                       selectedDate: invoice.dueDate,
                       onSelected: (date) {
-                        viewModel
-                            .onChanged(
+                        viewModel.onChanged(
                             invoice.rebuild((b) => b..dueDate = date));
                       },
                     ),
@@ -257,7 +248,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       label: localization.partialDeposit,
                       controller: _partialController,
                       keyboardType:
-                      TextInputType.numberWithOptions(decimal: true),
+                          TextInputType.numberWithOptions(decimal: true),
                     ),
                     if (invoice.partial != null && invoice.partial > 0)
                       DatePicker(
@@ -295,14 +286,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           ? localization.quoteNumber
                           : localization.invoiceNumber,
                       validator: (String val) =>
-                      val
-                          .trim()
-                          .isEmpty &&
-                          invoice.isOld
-                          ? AppLocalization
-                          .of(context)
-                          .pleaseEnterAnInvoiceNumber
-                          : null,
+                          val.trim().isEmpty && invoice.isOld
+                              ? AppLocalization.of(context)
+                                  .pleaseEnterAnInvoiceNumber
+                              : null,
                     ),
                     DecoratedFormField(
                       label: localization.poNumber,
@@ -312,10 +299,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       controller: _discountController,
                       value: invoice.discount,
                       isAmountDiscount: invoice.isAmountDiscount,
-                      onTypeChanged: (value) =>
-                          viewModel.onChanged(
-                              invoice.rebuild((
-                                  b) => b..isAmountDiscount = value)),
+                      onTypeChanged: (value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..isAmountDiscount = value)),
                     ),
                     CustomField(
                       controller: _custom2Controller,
@@ -422,20 +407,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       ),
                     if (company.settings.enableSecondInvoiceTaxRate)
                       TaxRateDropdown(
-                        onSelected: (taxRate) =>
-                            viewModel
-                                .onChanged(
-                                invoice.applyTax(taxRate, isSecond: true)),
+                        onSelected: (taxRate) => viewModel.onChanged(
+                            invoice.applyTax(taxRate, isSecond: true)),
                         labelText: localization.tax,
                         initialTaxName: invoice.taxName2,
                         initialTaxRate: invoice.taxRate2,
                       ),
                     if (company.settings.enableThirdInvoiceTaxRate)
                       TaxRateDropdown(
-                        onSelected: (taxRate) =>
-                            viewModel
-                                .onChanged(
-                                invoice.applyTax(taxRate, isThird: true)),
+                        onSelected: (taxRate) => viewModel.onChanged(
+                            invoice.applyTax(taxRate, isThird: true)),
                         labelText: localization.tax,
                         initialTaxName: invoice.taxName3,
                         initialTaxRate: invoice.taxRate3,
@@ -450,16 +431,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     AppDropdownButton(
                       labelText: localization.design,
                       value: invoice.designId,
-                      onChanged: (dynamic value) =>
-                          viewModel
-                              .onChanged(
-                              invoice.rebuild((b) => b..designId = value)),
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..designId = value)),
                       items: company.invoiceDesignIds
-                          .map((designId) =>
-                          DropdownMenuItem<String>(
-                            value: designId,
-                            child: Text(kInvoiceDesigns[designId]),
-                          ))
+                          .map((designId) => DropdownMenuItem<String>(
+                                value: designId,
+                                child: Text(kInvoiceDesigns[designId]),
+                              ))
                           .toList(),
                     ),
                   ],
