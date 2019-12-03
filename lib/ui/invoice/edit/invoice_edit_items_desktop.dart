@@ -29,7 +29,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     _addBlankRow();
   }
 
-    /*
+  /*
   final Map<int, FocusNode> _focusNodes = {};
 
   @override
@@ -191,12 +191,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   },
                 ),
               ),
-              TextFormField(
-                key: ValueKey('__total_${index}_${lineItems[index].total}__'),
-                readOnly: true,
-                enabled: false,
-                initialValue: formatNumber(lineItems[index].total, context),
-                textAlign: TextAlign.right,
+              Padding(
+                padding: const EdgeInsets.only(right: kTableColumnGap),
+                child: TextFormField(
+                  key: ValueKey('__total_${index}_${lineItems[index].total}__'),
+                  readOnly: true,
+                  enabled: false,
+                  initialValue: formatNumber(lineItems[index].total, context),
+                  textAlign: TextAlign.right,
+                ),
               ),
               lineItems[index].isEmpty
                   ? SizedBox()
@@ -223,7 +226,8 @@ class TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding:
+          EdgeInsets.only(bottom: 8, right: isNumeric ? kTableColumnGap : 0),
       child: Text(
         label,
         textAlign: isNumeric ? TextAlign.right : TextAlign.left,
