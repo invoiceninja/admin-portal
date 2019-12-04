@@ -75,8 +75,7 @@ List<ChartDataGroup> chartInvoices({
     } else if (!invoice.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if ((settings.currencyId ?? '').isNotEmpty &&
-        settings.currencyId != currencyId) {
+    } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][invoice.date] == null) {
@@ -193,8 +192,7 @@ List<ChartDataGroup> chartQuotes({
     } else if (!quote.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if ((settings.currencyId ?? '').isNotEmpty &&
-        settings.currencyId != currencyId) {
+    } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][quote.date] == null) {
@@ -314,8 +312,7 @@ List<ChartDataGroup> chartPayments(
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if ((settings.currencyId ?? '').isNotEmpty &&
-        settings.currencyId != currencyId) {
+    } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
       if (totals[STATUS_ACTIVE][payment.paymentDate] == null) {
@@ -430,8 +427,7 @@ List<ChartDataGroup> chartTasks(
     } else if (!task.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if ((settings.currencyId ?? '').isNotEmpty &&
-        settings.currencyId != currencyId) {
+    } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
       task.taskTimes.forEach((taskTime) {
@@ -547,8 +543,7 @@ List<ChartDataGroup> chartExpenses(
     } else if (!expense.isBetween(
         settings.startDate(company), settings.endDate(company))) {
       // skip it
-    } else if ((settings.currencyId ?? '').isNotEmpty &&
-        settings.currencyId != currencyId) {
+    } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
       if (totals[STATUS_LOGGED][date] == null) {

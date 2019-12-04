@@ -47,6 +47,16 @@ abstract class DashboardUIState
   static Serializer<DashboardUIState> get serializer =>
       _$dashboardUIStateSerializer;
 
+  bool matchesCurrency(String match) {
+    if (currencyId == null ||
+        currencyId.isEmpty ||
+        currencyId == kCurrencyAll) {
+      return true;
+    }
+
+    return currencyId == match;
+  }
+
   String startDate(CompanyEntity company) {
     final today = DateTime.now();
     final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
