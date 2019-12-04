@@ -30,6 +30,7 @@ class ClientPicker extends StatelessWidget {
       labelText: localization.client,
       entityId: clientId,
       entityList: memoizedDropdownClientList(clientState.map, clientState.list),
+      entityMap: clientState.map,
       validator: (String val) => val.trim().isEmpty
           ? AppLocalization.of(context).pleaseSelectAClient
           : null,

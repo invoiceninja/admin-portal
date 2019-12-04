@@ -140,7 +140,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     _addBlankRow();
                   }),
                   autoFlipDirection: true,
-                  direction: AxisDirection.up,
+                  //direction: AxisDirection.up,
                   animationStart: 1,
                   debounceDuration: Duration(seconds: 0),
                 ),

@@ -111,30 +111,35 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb && isNotMobile(context)) {
+    if (true || kIsWeb && isNotMobile(context)) {
       return TypeAheadFormField<String>(
+        initialValue: _entityMap[widget.entityId]?.listDisplayName ?? '',
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsCallback: (filter) {
           return widget.entityList
               .where((entityId) =>
-                  widget.entityMap[entityId].matchesFilter(filter))
+                  _entityMap[entityId]?.matchesFilter(filter) ?? false)
               .toList();
         },
         itemBuilder: (context, entityId) {
           return _EntityListTile(
-            entity: widget.entityMap[entityId],
+            entity: _entityMap[entityId],
             filter: _textController.text,
           );
         },
         onSuggestionSelected: (entityId) {
-          widget.onSelected(widget.entityMap[entityId]);
+          final entity = _entityMap[entityId];
+          widget.onSelected(entity);
         },
-        textFieldConfiguration:
-            TextFieldConfiguration<String>(onChanged: (value) {
-          _textController.text = value;
-        }),
+        textFieldConfiguration: TextFieldConfiguration<String>(
+            decoration: InputDecoration(
+              labelText: widget.labelText,
+            ),
+            onChanged: (value) {
+              _textController.text = value;
+            }),
         autoFlipDirection: true,
-        direction: AxisDirection.up,
+        //direction: AxisDirection.up,
         animationStart: 1,
         debounceDuration: Duration(seconds: 0),
       );
@@ -144,7 +149,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
       alignment: Alignment.centerRight,
       children: <Widget>[
         InkWell(
-          key: ValueKey(widget.labelText),
+          //key: ValueKey('__stack_${widget.labelText}__'),
           onTap: () => _showOptions(),
           child: IgnorePointer(
             child: TextFormField(
@@ -217,8 +222,8 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               /*
               onSubmitted: (value) {
                 final entityId = widget.entityList.firstWhere((entityId) =>
-                    widget.entityMap[entityId].matchesFilter(_filter));
-                final entity = widget.entityMap[entityId];
+                    _entityMap[entityId].matchesFilter(_filter));
+                final entity = _entityMap[entityId];
                 _selectEntity(entity);
               },
                */
@@ -259,8 +264,8 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 
     Widget _createList() {
       final matches = widget.entityList
-          .where(
-              (entityId) => widget.entityMap[entityId].matchesFilter(_filter))
+          .where((entityId) =>
+              widget.entityMap[entityId]?.matchesFilter(_filter) ?? false)
           .toList();
 
       return ListView.builder(
