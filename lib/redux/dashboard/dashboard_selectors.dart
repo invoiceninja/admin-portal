@@ -78,9 +78,13 @@ List<ChartDataGroup> chartInvoices({
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][invoice.date] == null) {
-        totals[STATUS_ACTIVE][invoice.date] = 0.0;
-        totals[STATUS_OUTSTANDING][invoice.date] = 0.0;
+
+      // Fix for mock data
+      final date = invoice.date.split('T')[0];
+      
+      if (totals[STATUS_ACTIVE][date] == null) {
+        totals[STATUS_ACTIVE][date] = 0.0;
+        totals[STATUS_OUTSTANDING][date] = 0.0;
       }
 
       double amount = invoice.amount;
@@ -95,8 +99,8 @@ List<ChartDataGroup> chartInvoices({
             fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
       }
 
-      totals[STATUS_ACTIVE][invoice.date] += amount;
-      totals[STATUS_OUTSTANDING][invoice.date] += balance;
+      totals[STATUS_ACTIVE][date] += amount;
+      totals[STATUS_OUTSTANDING][date] += balance;
 
       counts[STATUS_ACTIVE]++;
       if (invoice.balance > 0) {
