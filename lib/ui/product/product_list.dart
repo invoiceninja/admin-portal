@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -15,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:local_auth/error_codes.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({
@@ -104,37 +106,36 @@ class _ProductListState extends State<ProductList> {
       } else {
         final sortFn = (String field) => store.dispatch(SortProducts(field));
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Scrollbar(
-              child: ListView(scrollDirection: Axis.vertical, children: [
-            PaginatedDataTable(
-              columns: [
-                DataColumn(
-                    label: Text(localization.name),
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.productKey)),
-                DataColumn(
-                    label: Text(localization.price),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.price)),
-                DataColumn(
-                    label: Text(localization.cost),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.cost)),
-                DataColumn(
-                    label: Text(localization.quantity),
-                    numeric: true,
-                    onSort: (int columnIndex, bool ascending) =>
-                        sortFn(ProductFields.quantity)),
-              ],
-              source: dataTableSource,
-              header: Container(),
-            )
-          ])),
-        );
+        return SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: PaginatedDataTable(
+            columns: [
+              DataColumn(
+                  label: Text(localization.name),
+                  onSort: (int columnIndex, bool ascending) =>
+                      sortFn(ProductFields.productKey)),
+              DataColumn(
+                  label: Text(localization.price),
+                  numeric: true,
+                  onSort: (int columnIndex, bool ascending) =>
+                      sortFn(ProductFields.price)),
+              DataColumn(
+                  label: Text(localization.cost),
+                  numeric: true,
+                  onSort: (int columnIndex, bool ascending) =>
+                      sortFn(ProductFields.cost)),
+              DataColumn(
+                  label: Text(localization.quantity),
+                  numeric: true,
+                  onSort: (int columnIndex, bool ascending) =>
+                      sortFn(ProductFields.quantity)),
+              DataColumn(label: SizedBox()),
+            ],
+            source: dataTableSource,
+            header: SizedBox(),
+          ),
+        ));
       }
     };
 
@@ -157,6 +158,7 @@ class _ProductListState extends State<ProductList> {
   void initState() {
     super.initState();
     dataTableSource = ProductDataTableSource(
+        context: context,
         productList: widget.viewModel.productList,
         productMap: widget.viewModel.productMap,
         onTap: (ProductEntity product) =>
@@ -178,6 +180,14 @@ class _ProductListState extends State<ProductList> {
         DataCell(Text(product.price.toString()), onTap: onTap),
         DataCell(Text(product.cost.toString()), onTap: onTap),
         DataCell(Text(product.quantity.toString()), onTap: onTap),
+        DataCell(FlatButton(
+          child: Text(
+            AppLocalization.of(context).edit,
+          ),
+          onPressed: () {
+            editEntity(context: context, entity: product);
+          },
+        )),
       ]);
     }).toList();
   }
@@ -187,18 +197,39 @@ class _ProductListState extends State<ProductList> {
 
 class ProductDataTableSource extends DataTableSource {
   ProductDataTableSource(
-      {@required this.productList,
+      {@required this.context,
+      @required this.productList,
       @required this.productMap,
       @required this.onTap});
 
   @override
   DataRow getRow(int index) {
+    final state = StoreProvider.of<AppState>(context).state;
     final product = productMap[productList[index]];
     return DataRow(cells: [
       DataCell(Text(product.productKey), onTap: () => onTap(product)),
       DataCell(Text(product.price.toString()), onTap: () => onTap(product)),
       DataCell(Text(product.cost.toString()), onTap: () => onTap(product)),
       DataCell(Text(product.quantity.toString()), onTap: () => onTap(product)),
+      DataCell(Row(
+        children: <Widget>[
+          FlatButton(
+            child: Text(
+              AppLocalization.of(context).edit,
+            ),
+            onPressed: () {
+              editEntity(context: context, entity: product);
+            },
+          ),
+          ActionMenuButton(
+            entityActions: product.getActions(userCompany: state.userCompany),
+            isSaving: false,
+            entity: product,
+            onSelected: (context, action) =>
+                handleProductAction(context, [product], action),
+          )
+        ],
+      )),
     ]);
   }
 
@@ -211,6 +242,7 @@ class ProductDataTableSource extends DataTableSource {
   @override
   int get rowCount => productList.length;
 
+  BuildContext context;
   List<String> productList;
   BuiltMap<String, ProductEntity> productMap;
   final Function(ProductEntity product) onTap;

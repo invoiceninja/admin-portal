@@ -75,6 +75,7 @@
 #.android/
 #.ios/
 
+.flutter-plugins-dependencies
 .env.dart
 key.properties
 google-services.json
