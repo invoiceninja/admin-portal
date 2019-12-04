@@ -27,6 +27,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
@@ -224,7 +225,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
-        final state = widget.store.state;
+        final store = widget.store;
+        final state = store.state;
         final accentColor = convertHexStringToColor(state.accentColor) ??
             Colors.lightBlueAccent;
         final fontFamily = kIsWeb ? 'Roboto' : null;

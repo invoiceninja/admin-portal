@@ -128,7 +128,7 @@ Map<String, String> _getHeaders(String token, [String secret]) => {
 
 void _checkResponse(http.Response response) {
   if (Config.DEMO_MODE) {
-    throw 'Saving is not supported in the demo';
+    throw 'Server requests are not supported in the demo';
   }
 
   debugPrint(

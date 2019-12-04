@@ -202,15 +202,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         onAddPressed: (completer) =>
                             viewModel.onAddClientPressed(context, completer),
                       ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 200),
+                      child: InvoiceEditContactsScreen(),
+                    ),
                     UserPicker(
                       userId: invoice.assignedUserId,
                       onChanged: (userId) => viewModel.onChanged(
                           invoice.rebuild((b) => b..assignedUserId = userId)),
                     ),
-                    ConstrainedBox(
-                      constraints: BoxConstraints(maxHeight: 200),
-                      child: InvoiceEditContactsScreen(),
-                    )
                   ],
                 ),
               ),
