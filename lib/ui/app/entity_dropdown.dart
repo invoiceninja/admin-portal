@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
@@ -108,6 +111,35 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb && isNotMobile(context)) {
+      return TypeAheadFormField<String>(
+        noItemsFoundBuilder: (context) => SizedBox(),
+        suggestionsCallback: (filter) {
+          return widget.entityList
+              .where((entityId) =>
+                  widget.entityMap[entityId].matchesFilter(filter))
+              .toList();
+        },
+        itemBuilder: (context, entityId) {
+          return _EntityListTile(
+            entity: widget.entityMap[entityId],
+            filter: _textController.text,
+          );
+        },
+        onSuggestionSelected: (entityId) {
+          widget.onSelected(widget.entityMap[entityId]);
+        },
+        textFieldConfiguration:
+            TextFieldConfiguration<String>(onChanged: (value) {
+          _textController.text = value;
+        }),
+        autoFlipDirection: true,
+        direction: AxisDirection.up,
+        animationStart: 1,
+        debounceDuration: Duration(seconds: 0),
+      );
+    }
+
     return Stack(
       alignment: Alignment.centerRight,
       children: <Widget>[
@@ -237,25 +269,10 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];
           final entity = widget.entityMap[entityId];
-          final String subtitle = entity.matchesFilterValue(_filter);
-          return ListTile(
-            dense: true,
-            title: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(entity.listDisplayName,
-                      style: Theme.of(context).textTheme.title),
-                ),
-                entity.listDisplayAmount != null
-                    ? Text(
-                        formatNumber(entity.listDisplayAmount, context,
-                            formatNumberType: entity.listDisplayAmountType),
-                        style: Theme.of(context).textTheme.title)
-                    : Container(),
-              ],
-            ),
-            subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
-            onTap: () => _selectEntity(entity),
+          return _EntityListTile(
+            entity: entity,
+            filter: _filter,
+            onTap: (entity) => _selectEntity(entity),
           );
         },
       );
@@ -272,6 +289,41 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _EntityListTile extends StatelessWidget {
+  const _EntityListTile({
+    @required this.entity,
+    @required this.filter,
+    this.onTap,
+  });
+
+  final SelectableEntity entity;
+  final Function(SelectableEntity entity) onTap;
+  final String filter;
+
+  @override
+  Widget build(BuildContext context) {
+    final String subtitle = entity.matchesFilterValue(filter);
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(entity.listDisplayName,
+                style: Theme.of(context).textTheme.title),
+          ),
+          entity.listDisplayAmount != null
+              ? Text(
+                  formatNumber(entity.listDisplayAmount, context,
+                      formatNumberType: entity.listDisplayAmountType),
+                  style: Theme.of(context).textTheme.title)
+              : Container(),
+        ],
+      ),
+      subtitle: subtitle != null ? Text(subtitle, maxLines: 2) : null,
+      onTap: onTap != null ? () => onTap(entity) : null,
     );
   }
 }

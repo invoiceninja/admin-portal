@@ -111,6 +111,7 @@ class _ProductListState extends State<ProductList> {
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
             columns: [
+              DataColumn(label: SizedBox()),
               DataColumn(
                   label: Text(localization.name),
                   onSort: (int columnIndex, bool ascending) =>
@@ -130,7 +131,6 @@ class _ProductListState extends State<ProductList> {
                   numeric: true,
                   onSort: (int columnIndex, bool ascending) =>
                       sortFn(ProductFields.quantity)),
-              DataColumn(label: SizedBox()),
             ],
             source: dataTableSource,
             header: SizedBox(),
@@ -176,10 +176,6 @@ class _ProductListState extends State<ProductList> {
       final onTap = () => viewModel.onProductTap(context, product);
 
       return DataRow(cells: [
-        DataCell(Text(product.productKey), onTap: onTap),
-        DataCell(Text(product.price.toString()), onTap: onTap),
-        DataCell(Text(product.cost.toString()), onTap: onTap),
-        DataCell(Text(product.quantity.toString()), onTap: onTap),
         DataCell(FlatButton(
           child: Text(
             AppLocalization.of(context).edit,
@@ -188,6 +184,10 @@ class _ProductListState extends State<ProductList> {
             editEntity(context: context, entity: product);
           },
         )),
+        DataCell(Text(product.productKey), onTap: onTap),
+        DataCell(Text(product.price.toString()), onTap: onTap),
+        DataCell(Text(product.cost.toString()), onTap: onTap),
+        DataCell(Text(product.quantity.toString()), onTap: onTap),
       ]);
     }).toList();
   }
@@ -207,29 +207,18 @@ class ProductDataTableSource extends DataTableSource {
     final state = StoreProvider.of<AppState>(context).state;
     final product = productMap[productList[index]];
     return DataRow(cells: [
+      DataCell(ActionMenuButton(
+        entityActions: product.getActions(
+            userCompany: state.userCompany, includeEdit: true),
+        isSaving: false,
+        entity: product,
+        onSelected: (context, action) =>
+            handleProductAction(context, [product], action),
+      )),
       DataCell(Text(product.productKey), onTap: () => onTap(product)),
       DataCell(Text(product.price.toString()), onTap: () => onTap(product)),
       DataCell(Text(product.cost.toString()), onTap: () => onTap(product)),
       DataCell(Text(product.quantity.toString()), onTap: () => onTap(product)),
-      DataCell(Row(
-        children: <Widget>[
-          FlatButton(
-            child: Text(
-              AppLocalization.of(context).edit,
-            ),
-            onPressed: () {
-              editEntity(context: context, entity: product);
-            },
-          ),
-          ActionMenuButton(
-            entityActions: product.getActions(userCompany: state.userCompany),
-            isSaving: false,
-            entity: product,
-            onSelected: (context, action) =>
-                handleProductAction(context, [product], action),
-          )
-        ],
-      )),
     ]);
   }
 
