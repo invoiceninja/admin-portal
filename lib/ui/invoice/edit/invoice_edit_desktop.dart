@@ -206,11 +206,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       constraints: BoxConstraints(maxHeight: 200),
                       child: InvoiceEditContactsScreen(),
                     ),
-                    UserPicker(
-                      userId: invoice.assignedUserId,
-                      onChanged: (userId) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..assignedUserId = userId)),
-                    ),
                   ],
                 ),
               ),
@@ -398,6 +393,23 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       label: localization.subtotal,
                     ),
                      */
+                    UserPicker(
+                      userId: invoice.assignedUserId,
+                      onChanged: (userId) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..assignedUserId = userId)),
+                    ),
+                    AppDropdownButton(
+                      labelText: localization.design,
+                      value: invoice.designId,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..designId = value)),
+                      items: company.invoiceDesignIds
+                          .map((designId) => DropdownMenuItem<String>(
+                        value: designId,
+                        child: Text(kInvoiceDesigns[designId]),
+                      ))
+                          .toList(),
+                    ),
                     CustomSurcharges(
                       surcharge1Controller: _surcharge1Controller,
                       surcharge2Controller: _surcharge2Controller,
@@ -434,18 +446,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       surcharge3Controller: _surcharge3Controller,
                       surcharge4Controller: _surcharge4Controller,
                       isAfterTaxes: true,
-                    ),
-                    AppDropdownButton(
-                      labelText: localization.design,
-                      value: invoice.designId,
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..designId = value)),
-                      items: company.invoiceDesignIds
-                          .map((designId) => DropdownMenuItem<String>(
-                                value: designId,
-                                child: Text(kInvoiceDesigns[designId]),
-                              ))
-                          .toList(),
                     ),
                   ],
                 ),

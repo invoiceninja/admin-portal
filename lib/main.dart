@@ -282,6 +282,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           title: 'Invoice Ninja',
           routes: {
                   LoginScreen.route: (context) => LoginScreen(),
+                  MainScreen.route: (context) => MainScreen(),
                   DashboardScreenBuilder.route: (context) =>
                       DashboardScreenBuilder(),
                   ProductScreen.route: (context) => ProductScreenBuilder(),
