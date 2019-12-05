@@ -159,6 +159,7 @@ Future<AppState> _initialState(bool isTesting) async {
   }
 
   String currentRoute;
+
   /*
   if (kIsWeb && prefState.isDesktop) {
     currentRoute = html.window.location.hash.replaceFirst('#', '');
@@ -279,12 +280,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   buttonColor: const Color(0xFF0D5D91),
                 ),
           title: 'Invoice Ninja',
-          routes: isNotMobile(context)
-              ? {
-                  LoginScreen.route: (context) => LoginScreen(),
-                  MainScreen.route: (context) => MainScreen(),
-                }
-              : {
+          routes: {
                   LoginScreen.route: (context) => LoginScreen(),
                   DashboardScreenBuilder.route: (context) =>
                       DashboardScreenBuilder(),

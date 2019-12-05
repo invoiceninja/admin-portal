@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -45,6 +46,8 @@ class DashboardPanels extends StatelessWidget {
       currencies.insert(0, kCurrencyAll);
     }
     final localization = AppLocalization.of(context);
+    final hasMultipleCurrencies =
+        memoizedHasMultipleCurrencies(company, clientMap, groupMap);
 
     return Material(
       color: Theme.of(context).backgroundColor,
@@ -72,7 +75,9 @@ class DashboardPanels extends StatelessWidget {
             ),
             onTap: () => _showDateOptions(context),
           ),
-          SizedBox(width: 8.0),
+          isMobile(context) && !hasMultipleCurrencies
+              ? Spacer()
+              : SizedBox(width: 8.0),
           IconButton(
             icon: Icon(Icons.navigate_before),
             onPressed: () => viewModel.onOffsetChanged(1),
@@ -84,11 +89,11 @@ class DashboardPanels extends StatelessWidget {
                 ? () => viewModel.onOffsetChanged(-1)
                 : null,
           ),
-          SizedBox(width: 8.0),
-          Spacer(),
-          if (memoizedHasMultipleCurrencies(company, clientMap, groupMap))
+          if (hasMultipleCurrencies)
             Row(
               children: <Widget>[
+                SizedBox(width: 8.0),
+                Spacer(),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     items: memoizedGetCurrencyIds(company, clientMap, groupMap)

@@ -261,7 +261,7 @@ Middleware<AppState> _createLoadState(
                 ViewMainScreen(navigator: Navigator.of(action.context)));
           }
         }).catchError((Object error) {
-          print('Refresh Data: $error');
+          print('Error (app_middleware): $error');
           store.dispatch(UserLogout(action.context));
         });
         store.dispatch(RefreshData(
