@@ -111,7 +111,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (true || kIsWeb && isNotMobile(context)) {
+    if (kIsWeb && isNotMobile(context)) {
       return TypeAheadFormField<String>(
         initialValue: _entityMap[widget.entityId]?.listDisplayName ?? '',
         noItemsFoundBuilder: (context) => SizedBox(),
