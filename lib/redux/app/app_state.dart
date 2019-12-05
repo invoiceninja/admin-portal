@@ -39,6 +39,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
@@ -51,6 +52,7 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
+    String currentRoute,
   }) {
     return _$AppState._(
       isLoading: false,
@@ -64,7 +66,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
               .map((index) => UserCompanyState())
               .toList()),
-      uiState: UIState(),
+      uiState: UIState(currentRoute: currentRoute),
       prefState: prefState ?? PrefState(),
     );
   }
@@ -98,8 +100,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       userCompanyStates[uiState.selectedCompanyIndex];
 
   bool get isLoaded {
-    return productState.isLoaded &&
-        clientState.isLoaded;
+    return productState.isLoaded && clientState.isLoaded;
   }
 
   CompanyEntity get company => userCompanyState.company;

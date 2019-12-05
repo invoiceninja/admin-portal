@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:html' as html;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -39,6 +40,7 @@ import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -156,8 +158,19 @@ Future<AppState> _initialState(bool isTesting) async {
     }
   }
 
+  String currentRoute;
+  /*
+  if (kIsWeb && prefState.isDesktop) {
+    currentRoute = html.window.location.hash.replaceFirst('#', '');
+    if (currentRoute.isEmpty || currentRoute == '/') {
+      currentRoute = DashboardScreenBuilder.route;
+    }
+  }
+   */
+
   return AppState(
     prefState: prefState,
+    currentRoute: currentRoute,
   );
 }
 
@@ -266,87 +279,99 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   buttonColor: const Color(0xFF0D5D91),
                 ),
           title: 'Invoice Ninja',
-          routes: {
-            LoginScreen.route: (context) => LoginScreen(),
-            MainScreen.route: (context) => MainScreen(),
-            DashboardScreenBuilder.route: (context) => DashboardScreenBuilder(),
-            ProductScreen.route: (context) => ProductScreenBuilder(),
-            ProductViewScreen.route: (context) => ProductViewScreen(),
-            ProductEditScreen.route: (context) => ProductEditScreen(),
-            ClientScreen.route: (context) => ClientScreenBuilder(),
-            ClientViewScreen.route: (context) => ClientViewScreen(),
-            ClientEditScreen.route: (context) => ClientEditScreen(),
-            InvoiceScreen.route: (context) => InvoiceScreenBuilder(),
-            InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
-            InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
-            InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-            DocumentScreen.route: (context) => DocumentScreenBuilder(),
-            DocumentViewScreen.route: (context) => DocumentViewScreen(),
-            DocumentEditScreen.route: (context) => DocumentEditScreen(),
-            ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
-            ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
-            ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-            VendorScreen.route: (context) => VendorScreenBuilder(),
-            VendorViewScreen.route: (context) => VendorViewScreen(),
-            VendorEditScreen.route: (context) => VendorEditScreen(),
-            TaskScreen.route: (context) => TaskScreenBuilder(),
-            TaskViewScreen.route: (context) => TaskViewScreen(),
-            TaskEditScreen.route: (context) => TaskEditScreen(),
-            ProjectScreen.route: (context) => ProjectScreenBuilder(),
-            ProjectViewScreen.route: (context) => ProjectViewScreen(),
-            ProjectEditScreen.route: (context) => ProjectEditScreen(),
-            PaymentScreen.route: (context) => PaymentScreenBuilder(),
-            PaymentViewScreen.route: (context) => PaymentViewScreen(),
-            PaymentEditScreen.route: (context) => PaymentEditScreen(),
-            QuoteScreen.route: (context) => QuoteScreenBuilder(),
-            QuoteViewScreen.route: (context) => QuoteViewScreen(),
-            QuoteEditScreen.route: (context) => QuoteEditScreen(),
-            QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
-            // STARTER: routes - do not remove comment
-            UserScreen.route: (context) => UserScreenBuilder(),
-            UserViewScreen.route: (context) => UserViewScreen(),
-            UserEditScreen.route: (context) => UserEditScreen(),
+          routes: isNotMobile(context)
+              ? {
+                  LoginScreen.route: (context) => LoginScreen(),
+                  MainScreen.route: (context) => MainScreen(),
+                }
+              : {
+                  LoginScreen.route: (context) => LoginScreen(),
+                  DashboardScreenBuilder.route: (context) =>
+                      DashboardScreenBuilder(),
+                  ProductScreen.route: (context) => ProductScreenBuilder(),
+                  ProductViewScreen.route: (context) => ProductViewScreen(),
+                  ProductEditScreen.route: (context) => ProductEditScreen(),
+                  ClientScreen.route: (context) => ClientScreenBuilder(),
+                  ClientViewScreen.route: (context) => ClientViewScreen(),
+                  ClientEditScreen.route: (context) => ClientEditScreen(),
+                  InvoiceScreen.route: (context) => InvoiceScreenBuilder(),
+                  InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
+                  InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
+                  InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
+                  DocumentScreen.route: (context) => DocumentScreenBuilder(),
+                  DocumentViewScreen.route: (context) => DocumentViewScreen(),
+                  DocumentEditScreen.route: (context) => DocumentEditScreen(),
+                  ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
+                  ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
+                  ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
+                  VendorScreen.route: (context) => VendorScreenBuilder(),
+                  VendorViewScreen.route: (context) => VendorViewScreen(),
+                  VendorEditScreen.route: (context) => VendorEditScreen(),
+                  TaskScreen.route: (context) => TaskScreenBuilder(),
+                  TaskViewScreen.route: (context) => TaskViewScreen(),
+                  TaskEditScreen.route: (context) => TaskEditScreen(),
+                  ProjectScreen.route: (context) => ProjectScreenBuilder(),
+                  ProjectViewScreen.route: (context) => ProjectViewScreen(),
+                  ProjectEditScreen.route: (context) => ProjectEditScreen(),
+                  PaymentScreen.route: (context) => PaymentScreenBuilder(),
+                  PaymentViewScreen.route: (context) => PaymentViewScreen(),
+                  PaymentEditScreen.route: (context) => PaymentEditScreen(),
+                  QuoteScreen.route: (context) => QuoteScreenBuilder(),
+                  QuoteViewScreen.route: (context) => QuoteViewScreen(),
+                  QuoteEditScreen.route: (context) => QuoteEditScreen(),
+                  QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
+                  // STARTER: routes - do not remove comment
+                  UserScreen.route: (context) => UserScreenBuilder(),
+                  UserViewScreen.route: (context) => UserViewScreen(),
+                  UserEditScreen.route: (context) => UserEditScreen(),
 
-            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
-            GroupViewScreen.route: (context) => GroupViewScreen(),
-            GroupEditScreen.route: (context) => GroupEditScreen(),
-            SettingsScreen.route: (context) => SettingsScreenBuilder(),
-            CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
-            UserDetailsScreen.route: (context) => UserDetailsScreen(),
-            LocalizationScreen.route: (context) => LocalizationScreen(),
-            CompanyGatewayScreen.route: (context) =>
-                CompanyGatewayScreenBuilder(),
-            CompanyGatewayViewScreen.route: (context) =>
-                CompanyGatewayViewScreen(),
-            CompanyGatewayEditScreen.route: (context) =>
-                CompanyGatewayEditScreen(),
-            OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
-            TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
-            TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
-            TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
-            TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
-            ProductSettingsScreen.route: (context) => ProductSettingsScreen(),
-            NotificationsSettingsScreen.route: (context) =>
-                NotificationsSettingsScreen(),
-            ImportExportScreen.route: (context) => ImportExportScreen(),
-            DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
-            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
-            GroupEditScreen.route: (context) => GroupEditScreen(),
-            GroupViewScreen.route: (context) => GroupViewScreen(),
-            CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
-            GeneratedNumbersScreen.route: (context) => GeneratedNumbersScreen(),
-            WorkflowSettingsScreen.route: (context) => WorkflowSettingsScreen(),
-            InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
-            ClientPortalScreen.route: (context) => ClientPortalScreen(),
-            BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
-            EmailSettingsScreen.route: (context) => EmailSettingsScreen(),
-            TemplatesAndRemindersScreen.route: (context) =>
-                TemplatesAndRemindersScreen(),
-            CreditCardsAndBanksScreen.route: (context) =>
-                CreditCardsAndBanksScreen(),
-            DataVisualizationsScreen.route: (context) =>
-                DataVisualizationsScreen(),
-          },
+                  GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
+                  GroupViewScreen.route: (context) => GroupViewScreen(),
+                  GroupEditScreen.route: (context) => GroupEditScreen(),
+                  SettingsScreen.route: (context) => SettingsScreenBuilder(),
+                  CompanyDetailsScreen.route: (context) =>
+                      CompanyDetailsScreen(),
+                  UserDetailsScreen.route: (context) => UserDetailsScreen(),
+                  LocalizationScreen.route: (context) => LocalizationScreen(),
+                  CompanyGatewayScreen.route: (context) =>
+                      CompanyGatewayScreenBuilder(),
+                  CompanyGatewayViewScreen.route: (context) =>
+                      CompanyGatewayViewScreen(),
+                  CompanyGatewayEditScreen.route: (context) =>
+                      CompanyGatewayEditScreen(),
+                  OnlinePaymentsScreen.route: (context) =>
+                      OnlinePaymentsScreen(),
+                  TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
+                  TaxRateSettingsScreen.route: (context) =>
+                      TaxRateScreenBuilder(),
+                  TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
+                  TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
+                  ProductSettingsScreen.route: (context) =>
+                      ProductSettingsScreen(),
+                  NotificationsSettingsScreen.route: (context) =>
+                      NotificationsSettingsScreen(),
+                  ImportExportScreen.route: (context) => ImportExportScreen(),
+                  DeviceSettingsScreen.route: (context) =>
+                      DeviceSettingsScreen(),
+                  GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
+                  GroupEditScreen.route: (context) => GroupEditScreen(),
+                  GroupViewScreen.route: (context) => GroupViewScreen(),
+                  CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
+                  GeneratedNumbersScreen.route: (context) =>
+                      GeneratedNumbersScreen(),
+                  WorkflowSettingsScreen.route: (context) =>
+                      WorkflowSettingsScreen(),
+                  InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
+                  ClientPortalScreen.route: (context) => ClientPortalScreen(),
+                  BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
+                  EmailSettingsScreen.route: (context) => EmailSettingsScreen(),
+                  TemplatesAndRemindersScreen.route: (context) =>
+                      TemplatesAndRemindersScreen(),
+                  CreditCardsAndBanksScreen.route: (context) =>
+                      CreditCardsAndBanksScreen(),
+                  DataVisualizationsScreen.route: (context) =>
+                      DataVisualizationsScreen(),
+                },
         );
       }),
     );
