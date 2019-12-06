@@ -2,7 +2,6 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
 
-
 DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
   if (action is UpdateDashboardSettings) {
     final settings = action.settings;

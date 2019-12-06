@@ -6,9 +6,10 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+//import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
+  /*
   final localization = AppLocalization.of(context);
   if (Platform.isIOS) {
     if (await canLaunch(invoice.invitationBorderlessLink)) {
@@ -94,8 +95,11 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
           ),
         );
       });
+
+   */
 }
 
+/*
 Future<List<PDFPageImage>> renderPDF(String url) async {
   url =
       //'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd'; // one page
@@ -116,3 +120,4 @@ Future<List<PDFPageImage>> renderPDF(String url) async {
 
   return pages;
 }
+*/

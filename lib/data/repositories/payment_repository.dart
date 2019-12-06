@@ -45,8 +45,8 @@ class PaymentRepository {
     if (action != null) {
       url += '&action=' + action.toString();
     }
-    final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids}));
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);
 

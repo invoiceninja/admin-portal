@@ -415,9 +415,11 @@ abstract class ActivityEntity
       return EntityType.invoice;
     } else if (['10', '11', '12', '13', '27'].contains(activityTypeId)) {
       return EntityType.payment;
-    } else if (['14', '15', '16', '17', '28', '39', '40', '41'].contains(activityTypeId)) {
+    } else if (['14', '15', '16', '17', '28', '39', '40', '41']
+        .contains(activityTypeId)) {
       return EntityType.credit;
-    } else if (['18', '19', '20', '21', '22', '23', '24', '29'].contains(activityTypeId)) {
+    } else if (['18', '19', '20', '21', '22', '23', '24', '29']
+        .contains(activityTypeId)) {
       return EntityType.quote;
     } else if (['30', '31', '32', '33'].contains(activityTypeId)) {
       return EntityType.vendor;

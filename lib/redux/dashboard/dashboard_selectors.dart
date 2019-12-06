@@ -78,10 +78,9 @@ List<ChartDataGroup> chartInvoices({
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-
       // Fix for mock data
       final date = invoice.date.split('T')[0];
-      
+
       if (totals[STATUS_ACTIVE][date] == null) {
         totals[STATUS_ACTIVE][date] = 0.0;
         totals[STATUS_OUTSTANDING][date] = 0.0;

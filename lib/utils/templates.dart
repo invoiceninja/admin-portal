@@ -37,10 +37,9 @@ void loadTemplate({
             'body': body
           }))
       .then((dynamic response) {
-    print('### response');
-    print(response);
-    final String contentBase64 = base64Encode(encoder.convert(response));
-    onComplete(subject, contentBase64);
+    subject = response['subject'];
+    body = base64Encode(encoder.convert(response['body']));
+    onComplete(subject, body);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
     onComplete(subject, hase64Body);

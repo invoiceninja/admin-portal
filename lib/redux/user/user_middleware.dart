@@ -186,8 +186,7 @@ Middleware<AppState> _removeUser(UserRepository repository) {
     final action = dynamicAction as RemoveUserRequest;
 
     repository
-        .detachFromCompany(
-        store.state.credentials, action.userId)
+        .detachFromCompany(store.state.credentials, action.userId)
         .then((List<UserEntity> users) {
       store.dispatch(RemoveUserSuccess(users));
       if (action.completer != null) {

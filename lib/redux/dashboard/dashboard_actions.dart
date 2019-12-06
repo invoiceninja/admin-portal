@@ -18,4 +18,3 @@ class UpdateDashboardSettings implements PersistUI {
   int offset;
   String currencyId;
 }
-

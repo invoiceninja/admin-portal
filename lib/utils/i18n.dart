@@ -15851,7 +15851,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get subtotal => _localizedValues[localeCode]['subtotal'];
 
-
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??

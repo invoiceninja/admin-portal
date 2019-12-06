@@ -251,8 +251,7 @@ Middleware<AppState> _createLoadState(
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
-          if (store.state.prefState.isNotMobile &&
-              layout == AppLayout.mobile) {
+          if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
             store.dispatch(UserSettingsChanged(layout: layout));
             store.dispatch(
                 ViewDashboard(navigator: Navigator.of(action.context)));

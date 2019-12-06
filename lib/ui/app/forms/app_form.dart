@@ -21,10 +21,11 @@ class AppForm extends StatelessWidget {
       node: focusNode,
       child: Form(
         key: formKey,
-        child: child ?? ListView(
-          shrinkWrap: true,
-          children: children,
-        ),
+        child: child ??
+            ListView(
+              shrinkWrap: true,
+              children: children,
+            ),
       ),
     );
   }

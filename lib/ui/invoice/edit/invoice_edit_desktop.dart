@@ -405,9 +405,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           invoice.rebuild((b) => b..designId = value)),
                       items: company.invoiceDesignIds
                           .map((designId) => DropdownMenuItem<String>(
-                        value: designId,
-                        child: Text(kInvoiceDesigns[designId]),
-                      ))
+                                value: designId,
+                                child: Text(kInvoiceDesigns[designId]),
+                              ))
                           .toList(),
                     ),
                     CustomSurcharges(

@@ -56,8 +56,8 @@ class ExpenseRepository {
     if (action != null) {
       url += '&action=' + action.toString();
     }
-    final dynamic response =
-        await webClient.post(url, credentials.token, data: json.encode({'ids':ids}));
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids}));
 
     final ExpenseListResponse expenseResponse =
         serializers.deserializeWith(ExpenseListResponse.serializer, response);
