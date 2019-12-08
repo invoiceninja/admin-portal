@@ -5,14 +5,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -23,8 +15,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-
-import 'actions_menu_button.dart';
 
 class HistoryDrawer extends StatelessWidget {
   const HistoryDrawer({
@@ -103,7 +93,7 @@ class HistoryListTile extends StatefulWidget {
 }
 
 class _HistoryListTileState extends State<HistoryListTile> {
-  bool _isHovered = false;
+  //bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +136,11 @@ class _HistoryListTileState extends State<HistoryListTile> {
             : entity.listDisplayName),
         subtitle: Text(localization.lookup('${history.entityType}')),
         // TODO this needs to be localized
+        trailing: LiveText(
+              () => timeago.format(history.dateTime, locale: 'en_short'),
+          duration: Duration(minutes: 1),
+        ),
+        /*
         trailing: _isHovered
             ? ActionMenuButton(
                 entityActions: entity.getActions(
@@ -183,6 +178,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 () => timeago.format(history.dateTime, locale: 'en_short'),
                 duration: Duration(minutes: 1),
               ),
+
+         */
         onTap: () {
           if (state.prefState.isHistoryFloated) {
             Navigator.pop(context);

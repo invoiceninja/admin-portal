@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:local_auth/error_codes.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({

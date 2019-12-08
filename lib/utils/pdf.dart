@@ -1,12 +1,15 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+/*
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+ */
+
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   /*

@@ -27,7 +27,6 @@ class _CustomFieldsState extends State<CustomFields>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_customFields');
-  final _debouncer = Debouncer();
 
   FocusScopeNode _focusNode;
   TabController _controller;
