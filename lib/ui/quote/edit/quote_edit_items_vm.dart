@@ -71,7 +71,11 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
             store.dispatch(DeleteQuoteItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
         onChangedInvoiceItem: (quoteItem, index) {
-          store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
+          if (index == quote.lineItems.length) {
+            store.dispatch(AddQuoteItem(quoteItem: quoteItem));
+          } else {
+            store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
+          }
         });
   }
 }

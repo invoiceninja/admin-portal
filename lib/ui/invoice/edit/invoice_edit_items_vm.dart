@@ -97,8 +97,12 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
             store.dispatch(DeleteInvoiceItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),
         onChangedInvoiceItem: (invoiceItem, index) {
-          store.dispatch(
-              UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
+          if (index == invoice.lineItems.length) {
+            store.dispatch(AddInvoiceItem(invoiceItem: invoiceItem));
+          } else {
+            store.dispatch(
+                UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
+          }
         });
   }
 }
