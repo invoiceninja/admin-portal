@@ -145,6 +145,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                         entityType: EntityType.client,
                         labelText: AppLocalization.of(context).client,
                         entityId: payment.clientId,
+                        autoValidate: autoValidate,
+                        validator: (String val) => val.trim().isEmpty
+                            ? AppLocalization.of(context).pleaseSelectAClient
+                            : null,
                         onSelected: (client) {
                           viewModel.onChanged(payment.rebuild((b) => b
                             ..clientId = client.id
@@ -158,10 +162,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                         entityType: EntityType.invoice,
                         labelText: AppLocalization.of(context).invoice,
                         entityId: payment.invoiceId,
-                        autoValidate: autoValidate,
-                        validator: (String val) => val.trim().isEmpty
-                            ? AppLocalization.of(context).pleaseSelectAnInvoice
-                            : null,
                         entityList: memoizedDropdownInvoiceList(
                             viewModel.invoiceMap,
                             viewModel.clientMap,

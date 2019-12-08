@@ -103,10 +103,10 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'payment_type_id')
   String get paymentTypeId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 

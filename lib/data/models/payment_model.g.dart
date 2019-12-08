@@ -136,8 +136,8 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'payment_type_id',
       serializers.serialize(object.paymentTypeId,
           specifiedType: const FullType(String)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
+      'client_id',
+      serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
       'invoice_number',
       serializers.serialize(object.invoiceNumber,
@@ -152,10 +152,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.exchangeCurrencyId,
           specifiedType: const FullType(String)),
     ];
-    if (object.clientId != null) {
+    if (object.invoiceId != null) {
       result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -583,8 +583,8 @@ class _$PaymentEntity extends PaymentEntity {
     if (paymentTypeId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentTypeId');
     }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceId');
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'clientId');
     }
     if (invoiceNumber == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceNumber');
