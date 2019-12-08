@@ -98,8 +98,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
     selectedTemplate = template;
 
-    _emailSubject = company.settings.getEmailSubject(template);
-    _emailBody = company.settings.getEmailBody(template);
+    _emailSubject = company.settings.getEmailSubject(template) ?? '';
+    _emailBody = company.settings.getEmailBody(template) ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));

@@ -24,6 +24,9 @@ void loadTemplate({
   final url = credentials.url + '/templates';
   const encoder = const Utf8Encoder();
 
+  subject ??= '';
+  body ??= '';
+
   final hase64Body =
       'data:text/html;base64,' + base64Encode(encoder.convert(body));
   onStart(subject, hase64Body);
@@ -37,8 +40,8 @@ void loadTemplate({
             'body': body
           }))
       .then((dynamic response) {
-    subject = response['subject'];
-    body = base64Encode(encoder.convert(response['body']));
+    subject = response['subject'] ?? '';
+    body = base64Encode(encoder.convert(response['body'] ?? ''));
     onComplete(subject, body);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
