@@ -76,7 +76,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         columnWidths: {
           0: FixedColumnWidth(200),
           1: FlexColumnWidth(),
-          5: FixedColumnWidth(50),
+          5: FixedColumnWidth(kMinInteractiveDimension),
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.top,
         key: ValueKey('__datatable_${_updatedAt}__'),
@@ -182,10 +182,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
               ),
               IconButton(
                 icon: Icon(Icons.clear),
-                onPressed: () {
-                  viewModel.onRemoveInvoiceItemPressed(index);
-                  _updateTable();
-                },
+                onPressed: lineItems[index].isEmpty
+                    ? null
+                    : () {
+                        viewModel.onRemoveInvoiceItemPressed(index);
+                        _updateTable();
+                      },
               ),
             ])
         ],
