@@ -68,7 +68,6 @@ abstract class PaymentEntity extends Object
           : '',
       invoiceId: '',
       clientId: '',
-      invoiceNumber: '',
       privateNotes: '',
       exchangeRate: 0.0,
       exchangeCurrencyId: '',
@@ -89,8 +88,10 @@ abstract class PaymentEntity extends Object
 
   double get amount;
 
+  @nullable
   double get refunded;
 
+  @nullable
   @BuiltValueField(wireName: 'payment_status_id')
   String get paymentStatusId;
 
@@ -110,15 +111,15 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @BuiltValueField(wireName: 'invoice_number')
-  String get invoiceNumber;
-
+  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
+  @nullable
   @BuiltValueField(wireName: 'exchange_currency_id')
   String get exchangeCurrencyId;
 
@@ -205,7 +206,8 @@ abstract class PaymentEntity extends Object
 
   @override
   String get listDisplayName {
-    return invoiceNumber;
+    // TODO change to payment number
+    return id;
   }
 
   @override

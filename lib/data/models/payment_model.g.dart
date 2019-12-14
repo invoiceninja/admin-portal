@@ -121,12 +121,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
-      'refunded',
-      serializers.serialize(object.refunded,
-          specifiedType: const FullType(double)),
-      'payment_status_id',
-      serializers.serialize(object.paymentStatusId,
-          specifiedType: const FullType(String)),
       'transaction_reference',
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
@@ -139,23 +133,41 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(String)),
-      'invoice_number',
-      serializers.serialize(object.invoiceNumber,
-          specifiedType: const FullType(String)),
-      'private_notes',
-      serializers.serialize(object.privateNotes,
-          specifiedType: const FullType(String)),
-      'exchange_rate',
-      serializers.serialize(object.exchangeRate,
-          specifiedType: const FullType(double)),
-      'exchange_currency_id',
-      serializers.serialize(object.exchangeCurrencyId,
-          specifiedType: const FullType(String)),
     ];
+    if (object.refunded != null) {
+      result
+        ..add('refunded')
+        ..add(serializers.serialize(object.refunded,
+            specifiedType: const FullType(double)));
+    }
+    if (object.paymentStatusId != null) {
+      result
+        ..add('payment_status_id')
+        ..add(serializers.serialize(object.paymentStatusId,
+            specifiedType: const FullType(String)));
+    }
     if (object.invoiceId != null) {
       result
         ..add('invoice_id')
         ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.privateNotes != null) {
+      result
+        ..add('private_notes')
+        ..add(serializers.serialize(object.privateNotes,
+            specifiedType: const FullType(String)));
+    }
+    if (object.exchangeRate != null) {
+      result
+        ..add('exchange_rate')
+        ..add(serializers.serialize(object.exchangeRate,
+            specifiedType: const FullType(double)));
+    }
+    if (object.exchangeCurrencyId != null) {
+      result
+        ..add('exchange_currency_id')
+        ..add(serializers.serialize(object.exchangeCurrencyId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -251,10 +263,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_number':
-          result.invoiceNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -515,8 +523,6 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String clientId;
   @override
-  final String invoiceNumber;
-  @override
   final String privateNotes;
   @override
   final double exchangeRate;
@@ -551,7 +557,6 @@ class _$PaymentEntity extends PaymentEntity {
       this.paymentTypeId,
       this.invoiceId,
       this.clientId,
-      this.invoiceNumber,
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
@@ -567,12 +572,6 @@ class _$PaymentEntity extends PaymentEntity {
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
     }
-    if (refunded == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
-    }
-    if (paymentStatusId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentStatusId');
-    }
     if (transactionReference == null) {
       throw new BuiltValueNullFieldError(
           'PaymentEntity', 'transactionReference');
@@ -585,18 +584,6 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (clientId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'clientId');
-    }
-    if (invoiceNumber == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'invoiceNumber');
-    }
-    if (privateNotes == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
-    }
-    if (exchangeRate == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeRate');
-    }
-    if (exchangeCurrencyId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
     }
   }
 
@@ -619,7 +606,6 @@ class _$PaymentEntity extends PaymentEntity {
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
         clientId == other.clientId &&
-        invoiceNumber == other.invoiceNumber &&
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
@@ -653,15 +639,22 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, amount.hashCode),
-                                                                                refunded.hashCode),
-                                                                            paymentStatusId.hashCode),
-                                                                        transactionReference.hashCode),
-                                                                    paymentDate.hashCode),
-                                                                paymentTypeId.hashCode),
-                                                            invoiceId.hashCode),
-                                                        clientId.hashCode),
-                                                    invoiceNumber.hashCode),
+                                                                            $jc(
+                                                                                0,
+                                                                                amount
+                                                                                    .hashCode),
+                                                                            refunded
+                                                                                .hashCode),
+                                                                        paymentStatusId
+                                                                            .hashCode),
+                                                                    transactionReference
+                                                                        .hashCode),
+                                                                paymentDate
+                                                                    .hashCode),
+                                                            paymentTypeId
+                                                                .hashCode),
+                                                        invoiceId.hashCode),
+                                                    clientId.hashCode),
                                                 privateNotes.hashCode),
                                             exchangeRate.hashCode),
                                         exchangeCurrencyId.hashCode),
@@ -686,7 +679,6 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('paymentTypeId', paymentTypeId)
           ..add('invoiceId', invoiceId)
           ..add('clientId', clientId)
-          ..add('invoiceNumber', invoiceNumber)
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
@@ -740,11 +732,6 @@ class PaymentEntityBuilder
   String _clientId;
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
-
-  String _invoiceNumber;
-  String get invoiceNumber => _$this._invoiceNumber;
-  set invoiceNumber(String invoiceNumber) =>
-      _$this._invoiceNumber = invoiceNumber;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -805,7 +792,6 @@ class PaymentEntityBuilder
       _paymentTypeId = _$v.paymentTypeId;
       _invoiceId = _$v.invoiceId;
       _clientId = _$v.clientId;
-      _invoiceNumber = _$v.invoiceNumber;
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
@@ -847,7 +833,6 @@ class PaymentEntityBuilder
             paymentTypeId: paymentTypeId,
             invoiceId: invoiceId,
             clientId: clientId,
-            invoiceNumber: invoiceNumber,
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,

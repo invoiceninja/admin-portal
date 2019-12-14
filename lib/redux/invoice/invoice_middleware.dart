@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -243,10 +245,15 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
     final action = dynamicAction as MarkInvoicesPaidRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.markSent)
+            store.state.credentials, action.invoiceIds, EntityAction.markPaid)
         .then((invoices) {
       store.dispatch(MarkInvoicesSentSuccess(invoices));
-      store.dispatch(LoadClient(clientId: invoices.first.clientId));
+      final Completer<Null> completer = Completer<Null>();
+      completer.future.then((_) {
+        store.dispatch(LoadPayments(force: true));
+      });
+      store.dispatch(
+          LoadClient(clientId: invoices.first.clientId, completer: completer));
       if (action.completer != null) {
         action.completer.complete(null);
       }

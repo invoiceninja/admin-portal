@@ -87,7 +87,7 @@ class _PaymentViewState extends State<PaymentView> {
           builder: (BuildContext context) {
             return ListView(
               children: <Widget>[
-                payment.refunded > 0
+                (payment.refunded ?? 0) > 0
                     ? EntityHeader(
                         backgroundColor:
                             PaymentStatusColors.colors[payment.paymentStatusId],
