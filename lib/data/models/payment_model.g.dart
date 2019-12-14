@@ -140,6 +140,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.refunded,
             specifiedType: const FullType(double)));
     }
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
     if (object.paymentStatusId != null) {
       result
         ..add('payment_status_id')
@@ -240,6 +246,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'refunded':
           result.refunded = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'number':
+          result.number = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'payment_status_id':
           result.paymentStatusId = serializers.deserialize(value,
@@ -511,6 +521,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final double refunded;
   @override
+  final String number;
+  @override
   final String paymentStatusId;
   @override
   final String transactionReference;
@@ -551,6 +563,7 @@ class _$PaymentEntity extends PaymentEntity {
   _$PaymentEntity._(
       {this.amount,
       this.refunded,
+      this.number,
       this.paymentStatusId,
       this.transactionReference,
       this.paymentDate,
@@ -600,6 +613,7 @@ class _$PaymentEntity extends PaymentEntity {
     return other is PaymentEntity &&
         amount == other.amount &&
         refunded == other.refunded &&
+        number == other.number &&
         paymentStatusId == other.paymentStatusId &&
         transactionReference == other.transactionReference &&
         paymentDate == other.paymentDate &&
@@ -640,10 +654,13 @@ class _$PaymentEntity extends PaymentEntity {
                                                                     $jc(
                                                                         $jc(
                                                                             $jc(
-                                                                                0,
-                                                                                amount
+                                                                                $jc(
+                                                                                    0,
+                                                                                    amount
+                                                                                        .hashCode),
+                                                                                refunded
                                                                                     .hashCode),
-                                                                            refunded
+                                                                            number
                                                                                 .hashCode),
                                                                         paymentStatusId
                                                                             .hashCode),
@@ -673,6 +690,7 @@ class _$PaymentEntity extends PaymentEntity {
     return (newBuiltValueToStringHelper('PaymentEntity')
           ..add('amount', amount)
           ..add('refunded', refunded)
+          ..add('number', number)
           ..add('paymentStatusId', paymentStatusId)
           ..add('transactionReference', transactionReference)
           ..add('paymentDate', paymentDate)
@@ -705,6 +723,10 @@ class PaymentEntityBuilder
   double _refunded;
   double get refunded => _$this._refunded;
   set refunded(double refunded) => _$this._refunded = refunded;
+
+  String _number;
+  String get number => _$this._number;
+  set number(String number) => _$this._number = number;
 
   String _paymentStatusId;
   String get paymentStatusId => _$this._paymentStatusId;
@@ -786,6 +808,7 @@ class PaymentEntityBuilder
     if (_$v != null) {
       _amount = _$v.amount;
       _refunded = _$v.refunded;
+      _number = _$v.number;
       _paymentStatusId = _$v.paymentStatusId;
       _transactionReference = _$v.transactionReference;
       _paymentDate = _$v.paymentDate;
@@ -827,6 +850,7 @@ class PaymentEntityBuilder
         new _$PaymentEntity._(
             amount: amount,
             refunded: refunded,
+            number: number,
             paymentStatusId: paymentStatusId,
             transactionReference: transactionReference,
             paymentDate: paymentDate,

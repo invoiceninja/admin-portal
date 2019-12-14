@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -65,7 +64,8 @@ class PaymentList extends StatelessWidget {
                             final paymentId = viewModel.paymentList[index];
                             final payment = state.paymentState.map[paymentId];
                             final client =
-                                paymentClientSelector(paymentId, state);
+                                state.clientState.map[payment.clientId] ??
+                                    ClientEntity(id: payment.clientId);
 
                             void showDialog() => showEntityActionsDialog(
                                   entities: [payment],

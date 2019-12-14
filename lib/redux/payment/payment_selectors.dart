@@ -24,12 +24,6 @@ InvoiceEntity paymentInvoiceSelector(String paymentId, AppState state) {
       InvoiceEntity(id: payment.invoiceId);
 }
 
-ClientEntity paymentClientSelector(String paymentId, AppState state) {
-  final invoice = paymentInvoiceSelector(paymentId, state);
-  return state.clientState.map[invoice.clientId] ??
-      ClientEntity(id: invoice.clientId);
-}
-
 var memoizedDropdownPaymentList = memo2(
     (BuiltMap<String, PaymentEntity> paymentMap,
             BuiltList<String> paymentList) =>

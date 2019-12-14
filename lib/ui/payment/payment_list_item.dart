@@ -1,7 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -42,15 +41,14 @@ class PaymentListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final invoice = paymentInvoiceSelector(payment.id, state);
-    final client = paymentClientSelector(payment.id, state);
+    final client = state.clientState.map[payment.clientId];
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? payment.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ??
-        (invoice.number ?? '') + ' • ' + formatDate(invoice.date, context);
+        (payment.number ?? '') + ' • ' + formatDate(payment.paymentDate, context);
 
     return DismissibleEntity(
       isSelected: payment.id ==

@@ -92,6 +92,9 @@ abstract class PaymentEntity extends Object
   double get refunded;
 
   @nullable
+  String get number;
+
+  @nullable
   @BuiltValueField(wireName: 'payment_status_id')
   String get paymentStatusId;
 

@@ -51,7 +51,8 @@ class PaymentViewVM {
     final state = store.state;
     final payment = state.paymentState.map[state.paymentUIState.selectedId] ??
         PaymentEntity(id: state.paymentUIState.selectedId);
-    final client = paymentClientSelector(payment.id, state) ?? ClientEntity();
+    final client = state.clientState.map[payment.clientId] ??
+        ClientEntity(id: payment.clientId);
     final invoice =
         paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
 
