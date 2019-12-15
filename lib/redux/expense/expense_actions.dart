@@ -238,6 +238,18 @@ class FilterExpensesByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterExpensesByCustom3 implements PersistUI {
+  FilterExpensesByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterExpensesByCustom4 implements PersistUI {
+  FilterExpensesByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterExpensesByEntity implements PersistUI {
   FilterExpensesByEntity({this.entityId, this.entityType});
 

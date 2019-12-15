@@ -132,6 +132,8 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
+  TypedReducer<ListUIState, FilterInvoicesByCustom3>(_filterInvoicesByCustom3),
+  TypedReducer<ListUIState, FilterInvoicesByCustom4>(_filterInvoicesByCustom4),
   TypedReducer<ListUIState, StartInvoiceMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToInvoiceMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
@@ -156,6 +158,27 @@ ListUIState _filterInvoicesByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return invoiceListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterInvoicesByCustom3(
+    ListUIState invoiceListState, FilterInvoicesByCustom3 action) {
+  if (invoiceListState.custom3Filters.contains(action.value)) {
+    return invoiceListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return invoiceListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+
+ListUIState _filterInvoicesByCustom4(
+    ListUIState invoiceListState, FilterInvoicesByCustom4 action) {
+  if (invoiceListState.custom4Filters.contains(action.value)) {
+    return invoiceListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return invoiceListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

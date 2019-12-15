@@ -95,10 +95,18 @@ class ExpenseScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.expense2,
             excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.expense3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.expense4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterExpensesByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterExpensesByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterExpensesByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterExpensesByCustom4(value)),
         sortFields: [
           ExpenseFields.publicNotes,
           ExpenseFields.expenseDate,

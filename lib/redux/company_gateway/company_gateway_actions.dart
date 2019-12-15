@@ -234,6 +234,18 @@ class FilterCompanyGatewaysByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterCompanyGatewaysByCustom3 implements PersistUI {
+  FilterCompanyGatewaysByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterCompanyGatewaysByCustom4 implements PersistUI {
+  FilterCompanyGatewaysByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterCompanyGatewaysByEntity implements PersistUI {
   FilterCompanyGatewaysByEntity({this.entityId, this.entityType});
 

@@ -90,6 +90,10 @@ class PaymentScreen extends StatelessWidget {
             store.dispatch(FilterPaymentsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterPaymentsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterPaymentsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterPaymentsByCustom4(value)),
         sortFields: [
           PaymentFields.paymentDate,
           PaymentFields.amount,

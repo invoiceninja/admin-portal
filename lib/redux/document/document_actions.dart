@@ -224,6 +224,18 @@ class FilterDocumentsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterDocumentsByCustom3 implements PersistUI {
+  FilterDocumentsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterDocumentsByCustom4 implements PersistUI {
+  FilterDocumentsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterDocumentsByEntity implements PersistUI {
   FilterDocumentsByEntity({this.entityId, this.entityType});
 

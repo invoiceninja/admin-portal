@@ -49,6 +49,8 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterPayments>(_filterPayments),
   TypedReducer<ListUIState, FilterPaymentsByCustom1>(_filterPaymentsByCustom1),
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
+  TypedReducer<ListUIState, FilterPaymentsByCustom3>(_filterPaymentsByCustom3),
+  TypedReducer<ListUIState, FilterPaymentsByCustom4>(_filterPaymentsByCustom4),
   TypedReducer<ListUIState, FilterPaymentsByEntity>(_filterPaymentsByEntity),
   TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
@@ -81,6 +83,26 @@ ListUIState _filterPaymentsByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return paymentListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterPaymentsByCustom3(
+    ListUIState paymentListState, FilterPaymentsByCustom3 action) {
+  if (paymentListState.custom3Filters.contains(action.value)) {
+    return paymentListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return paymentListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterPaymentsByCustom4(
+    ListUIState paymentListState, FilterPaymentsByCustom4 action) {
+  if (paymentListState.custom4Filters.contains(action.value)) {
+    return paymentListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return paymentListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

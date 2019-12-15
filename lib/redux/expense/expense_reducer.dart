@@ -50,6 +50,8 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterExpenses>(_filterExpenses),
   TypedReducer<ListUIState, FilterExpensesByCustom1>(_filterExpensesByCustom1),
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
+  TypedReducer<ListUIState, FilterExpensesByCustom3>(_filterExpensesByCustom3),
+  TypedReducer<ListUIState, FilterExpensesByCustom4>(_filterExpensesByCustom4),
   TypedReducer<ListUIState, FilterExpensesByEntity>(_filterExpensesByClient),
   TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
@@ -82,6 +84,26 @@ ListUIState _filterExpensesByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return expenseListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterExpensesByCustom3(
+    ListUIState expenseListState, FilterExpensesByCustom3 action) {
+  if (expenseListState.custom3Filters.contains(action.value)) {
+    return expenseListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return expenseListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterExpensesByCustom4(
+    ListUIState expenseListState, FilterExpensesByCustom4 action) {
+  if (expenseListState.custom4Filters.contains(action.value)) {
+    return expenseListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return expenseListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

@@ -358,6 +358,18 @@ class FilterInvoicesByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterInvoicesByCustom3 implements PersistUI {
+  FilterInvoicesByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterInvoicesByCustom4 implements PersistUI {
+  FilterInvoicesByCustom4(this.value);
+
+  final String value;
+}
+
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   assert(

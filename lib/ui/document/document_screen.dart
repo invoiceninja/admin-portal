@@ -95,6 +95,10 @@ class DocumentScreen extends StatelessWidget {
             store.dispatch(FilterDocumentsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterDocumentsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterDocumentsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterDocumentsByCustom4(value)),
         sortFields: [
           DocumentFields.updatedAt,
         ],

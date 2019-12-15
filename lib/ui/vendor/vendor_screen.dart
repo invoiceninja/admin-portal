@@ -91,10 +91,18 @@ class VendorScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.vendor2,
             excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.vendor3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.vendor4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterVendorsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterVendorsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterVendorsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterVendorsByCustom4(value)),
         sortFields: [
           VendorFields.name,
           VendorFields.updatedAt,

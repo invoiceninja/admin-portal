@@ -245,6 +245,18 @@ class FilterPaymentsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterPaymentsByCustom3 implements PersistUI {
+  FilterPaymentsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterPaymentsByCustom4 implements PersistUI {
+  FilterPaymentsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterPaymentsByEntity implements PersistUI {
   FilterPaymentsByEntity({this.entityId, this.entityType});
 

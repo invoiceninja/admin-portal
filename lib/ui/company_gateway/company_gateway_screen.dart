@@ -87,6 +87,10 @@ class CompanyGatewayScreen extends StatelessWidget {
             store.dispatch(FilterCompanyGatewaysByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterCompanyGatewaysByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterCompanyGatewaysByCustom4(value)),
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterCompanyGatewaysByState(state));
         },

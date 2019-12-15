@@ -260,6 +260,18 @@ class FilterVendorsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterVendorsByCustom3 implements PersistUI {
+  FilterVendorsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterVendorsByCustom4 implements PersistUI {
+  FilterVendorsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterVendorsByEntity implements PersistUI {
   FilterVendorsByEntity({this.entityId, this.entityType});
 

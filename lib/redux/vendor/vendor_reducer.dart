@@ -93,6 +93,8 @@ final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterVendors>(_filterVendors),
   TypedReducer<ListUIState, FilterVendorsByCustom1>(_filterVendorsByCustom1),
   TypedReducer<ListUIState, FilterVendorsByCustom2>(_filterVendorsByCustom2),
+  TypedReducer<ListUIState, FilterVendorsByCustom3>(_filterVendorsByCustom3),
+  TypedReducer<ListUIState, FilterVendorsByCustom4>(_filterVendorsByCustom4),
   TypedReducer<ListUIState, FilterVendorsByEntity>(_filterVendorsByClient),
   TypedReducer<ListUIState, StartVendorMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToVendorMultiselect>(_addToListMultiselect),
@@ -125,6 +127,26 @@ ListUIState _filterVendorsByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return vendorListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterVendorsByCustom3(ListUIState vendorListState,
+    FilterVendorsByCustom3 action) {
+  if (vendorListState.custom3Filters.contains(action.value)) {
+    return vendorListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return vendorListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterVendorsByCustom4(
+    ListUIState vendorListState, FilterVendorsByCustom4 action) {
+  if (vendorListState.custom4Filters.contains(action.value)) {
+    return vendorListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return vendorListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

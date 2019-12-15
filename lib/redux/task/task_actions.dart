@@ -269,6 +269,18 @@ class FilterTasksByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterTasksByCustom3 implements PersistUI {
+  FilterTasksByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterTasksByCustom4 implements PersistUI {
+  FilterTasksByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterTasksByEntity implements PersistUI {
   FilterTasksByEntity({this.entityId, this.entityType});
 
