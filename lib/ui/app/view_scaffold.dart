@@ -71,7 +71,12 @@ class ViewScaffold extends StatelessWidget {
                     entity: entity,
                     onSelected: (context, action) =>
                         handleEntityAction(context, entity, action),
-                    entityActions: entity.getActions(userCompany: userCompany),
+                    entityActions: entity.getActions(
+                        userCompany: userCompany,
+                        client: entity is BelongsToClient
+                            ? state.clientState.map[
+                                    (entity as BelongsToClient).clientId]
+                            : null),
                   )
                 ],
         ),

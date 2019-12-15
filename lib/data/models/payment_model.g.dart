@@ -130,9 +130,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'payment_type_id',
       serializers.serialize(object.paymentTypeId,
           specifiedType: const FullType(String)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(String)),
     ];
     if (object.refunded != null) {
       result
@@ -144,6 +141,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       result
         ..add('number')
         ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(String)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
             specifiedType: const FullType(String)));
     }
     if (object.paymentStatusId != null) {
@@ -251,6 +254,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.number = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'client_id':
+          result.clientId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'payment_status_id':
           result.paymentStatusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -269,10 +276,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'client_id':
-          result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -523,6 +526,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String number;
   @override
+  final String clientId;
+  @override
   final String paymentStatusId;
   @override
   final String transactionReference;
@@ -532,8 +537,6 @@ class _$PaymentEntity extends PaymentEntity {
   final String paymentTypeId;
   @override
   final String invoiceId;
-  @override
-  final String clientId;
   @override
   final String privateNotes;
   @override
@@ -564,12 +567,12 @@ class _$PaymentEntity extends PaymentEntity {
       {this.amount,
       this.refunded,
       this.number,
+      this.clientId,
       this.paymentStatusId,
       this.transactionReference,
       this.paymentDate,
       this.paymentTypeId,
       this.invoiceId,
-      this.clientId,
       this.privateNotes,
       this.exchangeRate,
       this.exchangeCurrencyId,
@@ -595,9 +598,6 @@ class _$PaymentEntity extends PaymentEntity {
     if (paymentTypeId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentTypeId');
     }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'clientId');
-    }
   }
 
   @override
@@ -614,12 +614,12 @@ class _$PaymentEntity extends PaymentEntity {
         amount == other.amount &&
         refunded == other.refunded &&
         number == other.number &&
+        clientId == other.clientId &&
         paymentStatusId == other.paymentStatusId &&
         transactionReference == other.transactionReference &&
         paymentDate == other.paymentDate &&
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
-        clientId == other.clientId &&
         privateNotes == other.privateNotes &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
@@ -662,16 +662,16 @@ class _$PaymentEntity extends PaymentEntity {
                                                                                     .hashCode),
                                                                             number
                                                                                 .hashCode),
-                                                                        paymentStatusId
+                                                                        clientId
                                                                             .hashCode),
-                                                                    transactionReference
+                                                                    paymentStatusId
                                                                         .hashCode),
-                                                                paymentDate
+                                                                transactionReference
                                                                     .hashCode),
-                                                            paymentTypeId
+                                                            paymentDate
                                                                 .hashCode),
-                                                        invoiceId.hashCode),
-                                                    clientId.hashCode),
+                                                        paymentTypeId.hashCode),
+                                                    invoiceId.hashCode),
                                                 privateNotes.hashCode),
                                             exchangeRate.hashCode),
                                         exchangeCurrencyId.hashCode),
@@ -691,12 +691,12 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('amount', amount)
           ..add('refunded', refunded)
           ..add('number', number)
+          ..add('clientId', clientId)
           ..add('paymentStatusId', paymentStatusId)
           ..add('transactionReference', transactionReference)
           ..add('paymentDate', paymentDate)
           ..add('paymentTypeId', paymentTypeId)
           ..add('invoiceId', invoiceId)
-          ..add('clientId', clientId)
           ..add('privateNotes', privateNotes)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
@@ -728,6 +728,10 @@ class PaymentEntityBuilder
   String get number => _$this._number;
   set number(String number) => _$this._number = number;
 
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
+
   String _paymentStatusId;
   String get paymentStatusId => _$this._paymentStatusId;
   set paymentStatusId(String paymentStatusId) =>
@@ -750,10 +754,6 @@ class PaymentEntityBuilder
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
-
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -809,12 +809,12 @@ class PaymentEntityBuilder
       _amount = _$v.amount;
       _refunded = _$v.refunded;
       _number = _$v.number;
+      _clientId = _$v.clientId;
       _paymentStatusId = _$v.paymentStatusId;
       _transactionReference = _$v.transactionReference;
       _paymentDate = _$v.paymentDate;
       _paymentTypeId = _$v.paymentTypeId;
       _invoiceId = _$v.invoiceId;
-      _clientId = _$v.clientId;
       _privateNotes = _$v.privateNotes;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
@@ -851,12 +851,12 @@ class PaymentEntityBuilder
             amount: amount,
             refunded: refunded,
             number: number,
+            clientId: clientId,
             paymentStatusId: paymentStatusId,
             transactionReference: transactionReference,
             paymentDate: paymentDate,
             paymentTypeId: paymentTypeId,
             invoiceId: invoiceId,
-            clientId: clientId,
             privateNotes: privateNotes,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,

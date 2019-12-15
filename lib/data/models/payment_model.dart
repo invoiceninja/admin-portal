@@ -53,7 +53,7 @@ class PaymentFields {
 }
 
 abstract class PaymentEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<PaymentEntity, PaymentEntityBuilder> {
   factory PaymentEntity({String id, AppState state}) {
     return _$PaymentEntity._(
@@ -95,6 +95,11 @@ abstract class PaymentEntity extends Object
   String get number;
 
   @nullable
+  @override
+  @BuiltValueField(wireName: 'client_id')
+  String get clientId;
+
+  @nullable
   @BuiltValueField(wireName: 'payment_status_id')
   String get paymentStatusId;
 
@@ -110,9 +115,6 @@ abstract class PaymentEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
-
-  @BuiltValueField(wireName: 'client_id')
-  String get clientId;
 
   @nullable
   @BuiltValueField(wireName: 'private_notes')
@@ -195,9 +197,7 @@ abstract class PaymentEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canEditEntity(this) &&
-          client != null &&
-          client.hasEmailAddress) {
+      if (userCompany.canEditEntity(this) && client.hasEmailAddress) {
         actions.add(EntityAction.sendEmail);
       }
     }
