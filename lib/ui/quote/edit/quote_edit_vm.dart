@@ -59,7 +59,6 @@ class QuoteEditVM extends EntityEditVM {
           origInvoice: origInvoice,
           onSavePressed: onSavePressed,
           onItemsAdded: onItemsAdded,
-          onBackPressed: onBackPressed,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
         );

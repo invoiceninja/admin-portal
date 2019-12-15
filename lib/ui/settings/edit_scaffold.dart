@@ -12,6 +12,8 @@ class EditScaffold extends StatelessWidget {
     @required this.onSavePressed,
     @required this.body,
     this.onCancelPressed,
+    this.bottomNavigationBar,
+    this.floatingActionButton,
     this.appBarBottom,
     this.saveLabel,
   }) : super(key: key);
@@ -20,7 +22,9 @@ class EditScaffold extends StatelessWidget {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Widget appBarBottom;
+  final Widget floatingActionButton;
   final Widget body;
+  final Widget bottomNavigationBar;
   final String saveLabel;
 
   @override
@@ -55,6 +59,9 @@ class EditScaffold extends StatelessWidget {
           ],
           bottom: appBarBottom,
         ),
+        bottomNavigationBar: bottomNavigationBar,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: floatingActionButton,
       ),
     );
   }

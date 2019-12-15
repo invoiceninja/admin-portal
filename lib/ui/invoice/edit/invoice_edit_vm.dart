@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -47,7 +46,6 @@ class EntityEditVM {
     @required this.origInvoice,
     @required this.onSavePressed,
     @required this.onItemsAdded,
-    @required this.onBackPressed,
     @required this.isSaving,
     @required this.onCancelPressed,
   });
@@ -59,7 +57,6 @@ class EntityEditVM {
   final InvoiceEntity origInvoice;
   final Function(BuildContext) onSavePressed;
   final Function(List<InvoiceItemEntity>, String) onItemsAdded;
-  final Function onBackPressed;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
 }
@@ -73,7 +70,6 @@ class InvoiceEditVM extends EntityEditVM {
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
     Function(List<InvoiceItemEntity>, String) onItemsAdded,
-    Function onBackPressed,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
   }) : super(
@@ -84,7 +80,6 @@ class InvoiceEditVM extends EntityEditVM {
           origInvoice: origInvoice,
           onSavePressed: onSavePressed,
           onItemsAdded: onItemsAdded,
-          onBackPressed: onBackPressed,
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
         );
@@ -100,12 +95,6 @@ class InvoiceEditVM extends EntityEditVM {
       invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              invoice.isNew ? InvoiceScreen.route : InvoiceViewScreen.route));
-        }
-      },
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(

@@ -67,7 +67,6 @@ class _QuoteEditState extends State<QuoteEdit>
 
     return WillPopScope(
       onWillPop: () async {
-        viewModel.onBackPressed();
         return true;
       },
       child: Scaffold(
