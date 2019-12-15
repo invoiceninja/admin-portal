@@ -32,6 +32,7 @@ class UserView extends StatelessWidget {
 
     return ViewScaffold(
       entity: user,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[
           FormCard(

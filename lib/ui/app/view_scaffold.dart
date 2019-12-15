@@ -17,12 +17,14 @@ class ViewScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.appBarBottom,
     this.isSettings = false,
+    this.onBackPressed,
   });
 
   final bool isSettings;
   final BaseEntity entity;
   final String title;
   final Widget body;
+  final Function onBackPressed;
   final Widget floatingActionButton;
   final Widget appBarBottom;
 
@@ -41,8 +43,10 @@ class ViewScaffold extends StatelessWidget {
           leading: !isMobile(context) && isSettings
               ? IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: () => store.dispatch(
-                      UpdateCurrentRoute(state.uiState.previousRoute)),
+                  onPressed: () => onBackPressed != null
+                      ? onBackPressed()
+                      : store.dispatch(
+                          UpdateCurrentRoute(state.uiState.previousRoute)),
                 )
               : null,
           automaticallyImplyLeading: isMobile(context) && !isSettings,
