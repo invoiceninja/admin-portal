@@ -71,6 +71,7 @@ class EntityHeader extends StatelessWidget {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           stops: [0.1, 0.3, 0.5, 0.9],
+          transform: GradientRotation(45),
           colors: [
             (backgroundColor ?? Colors.grey)[300],
             (backgroundColor ?? Colors.grey)[400],
