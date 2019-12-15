@@ -227,7 +227,7 @@ abstract class PaymentEntity extends Object
       return 0.0;
     }
 
-    return amount - refunded;
+    return amount - (refunded ?? 0);
   }
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;

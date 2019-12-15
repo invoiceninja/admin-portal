@@ -43,7 +43,6 @@ class ClientViewVM {
     @required this.onEntityAction,
     @required this.onEntityPressed,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -147,11 +146,6 @@ class ClientViewVM {
       },
       onRefreshed: (context, loadActivities) =>
           _handleRefresh(context, loadActivities),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ClientScreen.route));
-        }
-      },
       onGroupPressed: (context) {
         viewEntityById(
             context: context,
@@ -168,7 +162,6 @@ class ClientViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onGroupPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext, bool) onRefreshed;

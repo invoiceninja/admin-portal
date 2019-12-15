@@ -336,10 +336,10 @@ List<ChartDataGroup> chartPayments(
       }
 
       totals[STATUS_ACTIVE][payment.paymentDate] += completedAmount;
-      totals[STATUS_REFUNDED][payment.paymentDate] += refunded;
+      totals[STATUS_REFUNDED][payment.paymentDate] += refunded ?? 0;
 
       counts[STATUS_ACTIVE]++;
-      if (payment.refunded > 0) {
+      if ((payment.refunded ?? 0) > 0) {
         counts[STATUS_REFUNDED]++;
       }
     }
