@@ -345,6 +345,18 @@ class FilterQuotesByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterQuotesByCustom3 implements PersistUI {
+  FilterQuotesByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterQuotesByCustom4 implements PersistUI {
+  FilterQuotesByCustom4(this.value);
+
+  final String value;
+}
+
 class ConvertQuote implements PersistData {
   ConvertQuote(this.completer, this.quoteId);
 

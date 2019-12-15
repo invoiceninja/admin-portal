@@ -93,10 +93,18 @@ class ProductScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.product2,
             excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.product3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.product4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterProductsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterProductsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterProductsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterProductsByCustom4(value)),
         sortFields: [
           ProductFields.productKey,
           ProductFields.cost,

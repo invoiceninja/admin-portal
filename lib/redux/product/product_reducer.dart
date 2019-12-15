@@ -58,6 +58,8 @@ final productListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProductsByState>(_filterProductsByState),
   TypedReducer<ListUIState, FilterProductsByCustom1>(_filterProductsByCustom1),
   TypedReducer<ListUIState, FilterProductsByCustom2>(_filterProductsByCustom2),
+  TypedReducer<ListUIState, FilterProductsByCustom3>(_filterProductsByCustom3),
+  TypedReducer<ListUIState, FilterProductsByCustom4>(_filterProductsByCustom4),
   TypedReducer<ListUIState, StartProductMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProductMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromProductMultiselect>(
@@ -92,6 +94,26 @@ ListUIState _filterProductsByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return productListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterProductsByCustom3(
+    ListUIState productListState, FilterProductsByCustom3 action) {
+  if (productListState.custom3Filters.contains(action.value)) {
+    return productListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return productListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterProductsByCustom4(
+    ListUIState productListState, FilterProductsByCustom4 action) {
+  if (productListState.custom4Filters.contains(action.value)) {
+    return productListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return productListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

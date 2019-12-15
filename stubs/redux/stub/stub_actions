@@ -233,6 +233,18 @@ class FilterStubsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterStubsByCustom3 implements PersistUI {
+  FilterStubsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterStubsByCustom4 implements PersistUI {
+  FilterStubsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterStubsByEntity implements PersistUI {
   FilterStubsByEntity({this.entityId, this.entityType});
 

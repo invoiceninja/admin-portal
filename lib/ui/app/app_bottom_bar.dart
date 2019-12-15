@@ -16,15 +16,15 @@ class AppBottomBar extends StatefulWidget {
     this.entityType,
     this.onSelectedState,
     this.onSelectedStatus,
-    @required this.onSelectedCustom1,
-    @required this.onSelectedCustom2,
-    @required this.onSelectedCustom3,
-    @required this.onSelectedCustom4,
+    this.onSelectedCustom1,
+    this.onSelectedCustom2,
+    this.onSelectedCustom3,
+    this.onSelectedCustom4,
     this.statuses = const [],
-    @required this.customValues1 = const [],
-    @required this.customValues2 = const [],
-    @required this.customValues3 = const [],
-    @required this.customValues4 = const [],
+    this.customValues1 = const [],
+    this.customValues2 = const [],
+    this.customValues3 = const [],
+    this.customValues4 = const [],
   });
 
   final EntityType entityType;

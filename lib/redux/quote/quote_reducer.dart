@@ -120,6 +120,8 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
+  TypedReducer<ListUIState, FilterQuotesByCustom3>(_filterQuotesByCustom3),
+  TypedReducer<ListUIState, FilterQuotesByCustom4>(_filterQuotesByCustom4),
   TypedReducer<ListUIState, StartQuoteMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToQuoteMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
@@ -144,6 +146,26 @@ ListUIState _filterQuotesByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return quoteListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterQuotesByCustom3(
+    ListUIState quoteListState, FilterQuotesByCustom3 action) {
+  if (quoteListState.custom3Filters.contains(action.value)) {
+    return quoteListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return quoteListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterQuotesByCustom4(
+    ListUIState quoteListState, FilterQuotesByCustom4 action) {
+  if (quoteListState.custom4Filters.contains(action.value)) {
+    return quoteListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return quoteListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
