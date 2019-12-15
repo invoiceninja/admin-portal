@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -46,7 +45,6 @@ class TaskEditVM {
     @required this.origTask,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -62,11 +60,6 @@ class TaskEditVM {
       taskTime: state.taskUIState.editingTime,
       state: state,
       company: state.company,
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(TaskScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(TaskScreen.route));
-        }
-      },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: TaskEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
@@ -120,7 +113,6 @@ class TaskEditVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function onFabPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final TaskEntity origTask;

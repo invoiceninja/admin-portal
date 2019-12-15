@@ -44,7 +44,6 @@ class StubEditVM {
     @required this.origStub,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -61,11 +60,6 @@ class StubEditVM {
       company: state.selectedCompany,
       onChanged: (StubEntity stub) {
         store.dispatch(UpdateStub(stub));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(StubScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(stub.isNew ? StubScreen.route : StubViewScreen.route));
-        }
       },
     onCancelPressed: (BuildContext context) {
       store.dispatch(EditStub(
@@ -102,7 +96,6 @@ class StubEditVM {
   final Function(StubEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final StubEntity origStub;

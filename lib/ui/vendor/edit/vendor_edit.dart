@@ -1,13 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_address.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEdit extends StatefulWidget {
   const VendorEdit({
@@ -45,75 +44,52 @@ class _VendorEditState extends State<VendorEdit>
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      title: vendor.isNew
+          ? localization.newVendor
+          : localization.editVendor,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(
-              vendor.isNew ? localization.newVendor : localization.editVendor),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionFlatButton(
-              tooltip: localization.save,
-              isVisible: !vendor.isDeleted,
-              isDirty: vendor.isNew || vendor != viewModel.origVendor,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            )
+      appBarBottom: TabBar(
+        controller: _controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.contacts,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+          Tab(
+            text: localization.address,
+          ),
+        ],
+      ),
+      body: Form(
+        key: _formKey,
+        child: TabBarView(
+          key: ValueKey(viewModel.vendor.id),
+          controller: _controller,
+          children: <Widget>[
+            VendorEditDetails(
+              viewModel: widget.viewModel,
+            ),
+            VendorEditContactsScreen(),
+            VendorEditNotes(
+              viewModel: widget.viewModel,
+            ),
+            VendorEditAddress(
+              viewModel: widget.viewModel,
+            ),
           ],
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              Tab(
-                text: localization.contacts,
-              ),
-              Tab(
-                text: localization.notes,
-              ),
-              Tab(
-                text: localization.address,
-              ),
-            ],
-          ),
-        ),
-        body: Form(
-          key: _formKey,
-          child: TabBarView(
-            key: ValueKey(viewModel.vendor.id),
-            controller: _controller,
-            children: <Widget>[
-              VendorEditDetails(
-                viewModel: widget.viewModel,
-              ),
-              VendorEditContactsScreen(),
-              VendorEditNotes(
-                viewModel: widget.viewModel,
-              ),
-              VendorEditAddress(
-                viewModel: widget.viewModel,
-              ),
-            ],
-          ),
         ),
       ),
     );

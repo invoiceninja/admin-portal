@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -49,7 +48,6 @@ class ProjectEditVM {
     @required this.origProject,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -66,12 +64,6 @@ class ProjectEditVM {
       origProject: state.projectState.map[project.id],
       onChanged: (ProjectEntity project) {
         store.dispatch(UpdateProject(project));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              project.isNew ? ProjectScreen.route : ProjectViewScreen.route));
-        }
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: ProjectEntity(), force: true);
@@ -130,7 +122,6 @@ class ProjectEditVM {
   final Function(BuildContext) onCancelPressed;
   final bool isSaving;
   final ProjectEntity origProject;
-  final Function onBackPressed;
   final bool isLoading;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)

@@ -9,13 +9,11 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
   const PaymentEdit({
@@ -94,6 +92,20 @@ class _PaymentEditState extends State<PaymentEdit> {
       title: viewModel.payment.isNew
           ? localization.enterPayment
           : localization.editPayment,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          autoValidate = !isValid;
+        });
+
+        if (!isValid) {
+          return;
+        }
+
+        viewModel.onSavePressed(context);
+      },
       body: Form(
         key: _formKey,
         child: ListView(
@@ -144,13 +156,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                     controller: _amountController,
                     autocorrect: false,
                     keyboardType:
-                    TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                     label: localization.amount,
                   ),
                 ],
                 EntityDropdown(
-                  key:
-                  ValueKey('__payment_type_${payment.paymentTypeId}__'),
+                  key: ValueKey('__payment_type_${payment.paymentTypeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
@@ -185,62 +196,18 @@ class _PaymentEditState extends State<PaymentEdit> {
             ),
             payment.isNew
                 ? FormCard(children: <Widget>[
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.sendEmail),
-                value: viewModel.prefState.emailPayment,
-                subtitle: Text(localization.emailReceipt),
-                onChanged: (value) => viewModel.onEmailChanged(value),
-              ),
-            ])
+                    SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text(localization.sendEmail),
+                      value: viewModel.prefState.emailPayment,
+                      subtitle: Text(localization.emailReceipt),
+                      onChanged: (value) => viewModel.onEmailChanged(value),
+                    ),
+                  ])
                 : Container(),
           ],
         ),
       ),
     );
-
-    return WillPopScope(
-        onWillPop: () async {
-          viewModel.onBackPressed();
-          return true;
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: isMobile(context),
-            title: Text(),
-            actions: <Widget>[
-              if (!isMobile(context))
-                FlatButton(
-                  child: Text(
-                    localization.cancel,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () => viewModel.onCancelPressed(context),
-                ),
-              Builder(builder: (BuildContext context) {
-                return ActionFlatButton(
-                  tooltip: AppLocalization.of(context).save,
-                  isVisible: !payment.isDeleted,
-                  isSaving: viewModel.isSaving,
-                  isDirty: payment.isNew || payment != viewModel.origPayment,
-                  onPressed: () {
-                    final bool isValid = _formKey.currentState.validate();
-
-                    setState(() {
-                      autoValidate = !isValid;
-                    });
-
-                    if (!isValid) {
-                      return;
-                    }
-
-                    viewModel.onSavePressed(context);
-                  },
-                );
-              }),
-            ],
-          ),
-          body: ,
-        ));
   }
 }

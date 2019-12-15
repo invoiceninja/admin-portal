@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
@@ -72,56 +73,36 @@ class _StubEditState extends State<StubEdit> {
     final localization = AppLocalization.of(context);
     final stub = viewModel.stub;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+              onSavePressed: (context) {
+          final bool isValid = _formKey.currentState.validate();
+
+          setState(() {
+            _autoValidate = !isValid;
+          });
+
+          if (!isValid) {
+            return;
+          }
+
+          viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.stub.isNew
-              ? localization.newStub
-              : localization.editStub),
-          actions: <Widget>[
-                if (!isMobile(context))
-                  FlatButton(
-                    child: Text(
-                      localization.cancel,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => viewModel.onCancelPressed(context),
-                  ),
-                ActionIconButton(
-                  icon: Icons.cloud_upload,
-                  tooltip: localization.save,
-                  isVisible: !stub.isDeleted,
-                  isDirty: stub.isNew || stub != viewModel.origStub,
-                  isSaving: viewModel.isSaving,
-                  onPressed: () {
-                    if (! _formKey.currentState.validate()) {
-                      return;
-                    }
-                    viewModel.onSavePressed(context);
-                  },
-                ),
-          ],
-        ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })
-        ),
-      ),
+      body:Form(
+                       key: _formKey,
+                       child: Builder(builder: (BuildContext context) {
+                         return ListView(
+                           children: <Widget>[
+                             FormCard(
+                               children: <Widget>[
+                                 // STARTER: widgets - do not remove comment
+                               ],
+                             ),
+                           ],
+                         );
+                       })
+                   ),
+
     );
   }
 }
