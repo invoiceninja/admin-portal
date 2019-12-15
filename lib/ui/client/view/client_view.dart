@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -51,6 +52,29 @@ class _ClientViewState extends State<ClientView>
     final client = viewModel.client;
     final company = viewModel.company;
     final userCompany = viewModel.state.userCompany;
+
+    return ViewScaffold(
+      body: TabBarView(
+        controller: _controller,
+        children: <Widget>[
+          RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context, false),
+            child: ClientOverview(viewModel: viewModel),
+          ),
+          RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context, false),
+            child: ClientViewDetails(client: viewModel.client),
+          ),
+          RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context, true),
+            child: ClientViewActivity(
+              viewModel: viewModel,
+              key: ValueKey(viewModel.client.id),
+            ),
+          ),
+        ],
+      ),
+    );
 
     return WillPopScope(
       onWillPop: () async {
@@ -164,47 +188,6 @@ class _ClientViewState extends State<ClientView>
           tooltip: localization.create,
         ),
       ),
-    );
-  }
-}
-
-class CustomTabBarView extends StatefulWidget {
-  const CustomTabBarView({
-    @required this.viewModel,
-    @required this.controller,
-  });
-
-  final ClientViewVM viewModel;
-  final TabController controller;
-
-  @override
-  _CustomTabBarViewState createState() => _CustomTabBarViewState();
-}
-
-class _CustomTabBarViewState extends State<CustomTabBarView> {
-  @override
-  Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
-
-    return TabBarView(
-      controller: widget.controller,
-      children: <Widget>[
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context, false),
-          child: ClientOverview(viewModel: viewModel),
-        ),
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context, false),
-          child: ClientViewDetails(client: viewModel.client),
-        ),
-        RefreshIndicator(
-          onRefresh: () => viewModel.onRefreshed(context, true),
-          child: ClientViewActivity(
-            viewModel: viewModel,
-            key: ValueKey(viewModel.client.id),
-          ),
-        ),
-      ],
     );
   }
 }
