@@ -6,15 +6,12 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({
@@ -34,33 +31,10 @@ class _GroupViewState extends State<GroupView> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final userCompany = state.userCompany;
     final group = viewModel.group;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: !isMobile(context)
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: viewModel.onBackPressed,
-              )
-            : null,
-        title: EntityStateTitle(entity: group),
-        actions: [
-          userCompany.canEditEntity(group)
-              ? EditIconButton(
-                  isVisible: !(group.isDeleted ?? false), // TODO remove this
-                  onPressed: () => viewModel.onEditPressed(context),
-                )
-              : Container(),
-          ActionMenuButton(
-            entityActions: group.getActions(userCompany: userCompany),
-            isSaving: viewModel.isSaving,
-            entity: group,
-            onSelected: viewModel.onEntityAction,
-          )
-        ],
-      ),
+    return ViewScaffold(
+      entity: group,
       body: ListView(
         children: <Widget>[
           Container(
@@ -77,8 +51,8 @@ class _GroupViewState extends State<GroupView> {
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),
             subtitle:
-                memoizedClientStatsForGroup(state.clientState.map, group.id)
-                    .present(localization.active, localization.archived),
+            memoizedClientStatsForGroup(state.clientState.map, group.id)
+                .present(localization.active, localization.archived),
           ),
           Container(
             color: Theme.of(context).backgroundColor,

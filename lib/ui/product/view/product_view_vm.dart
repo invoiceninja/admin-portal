@@ -2,12 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ProductViewScreen extends StatelessWidget {
@@ -37,7 +34,6 @@ class ProductViewVM {
     @required this.product,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -68,13 +64,6 @@ class ProductViewVM {
       isDirty: product.isNew,
       product: product,
       company: state.company,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: product,
-            completer: snackBarCompleter<ProjectEntity>(
-                context, AppLocalization.of(context).updatedProduct));
-      },
       onRefreshed: null,
       /*
       onRefreshed: (context, loadActivities) =>
@@ -89,7 +78,6 @@ class ProductViewVM {
   final ProductEntity product;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;

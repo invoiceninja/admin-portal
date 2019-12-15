@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/payment/payment_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -56,7 +55,6 @@ class PaymentEditVM {
     @required this.clientMap,
     @required this.clientList,
     @required this.staticState,
-    @required this.onBackPressed,
     @required this.onCancelPressed,
     @required this.isSaving,
     @required this.isDirty,
@@ -90,12 +88,6 @@ class PaymentEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: PaymentEntity(), force: true);
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(PaymentScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              payment.isNew ? PaymentScreen.route : PaymentViewScreen.route));
-        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
@@ -135,7 +127,6 @@ class PaymentEditVM {
   final BuiltList<String> invoiceList;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;
-  final Function onBackPressed;
   final StaticState staticState;
   final bool isSaving;
   final bool isDirty;

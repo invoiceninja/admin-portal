@@ -43,7 +43,6 @@ class ExpenseViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onEntityPressed,
-    @required this.onEditPressed,
     @required this.onRefreshed,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
@@ -74,13 +73,6 @@ class ExpenseViewVM {
         isLoading: state.isLoading,
         isDirty: expense.isNew,
         expense: expense,
-        onEditPressed: (BuildContext context) {
-          editEntity(
-              context: context,
-              entity: expense,
-              completer: snackBarCompleter<ProjectEntity>(
-                  context, AppLocalization.of(context).updatedExpense));
-        },
         onRefreshed: (context) => _handleRefresh(context),
         onEntityPressed: (BuildContext context, EntityType entityType,
             [longPress = false]) {
@@ -148,7 +140,6 @@ class ExpenseViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;

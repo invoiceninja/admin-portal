@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -40,7 +39,6 @@ class CompanyGatewayViewVM {
     @required this.companyGateway,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
@@ -69,13 +67,6 @@ class CompanyGatewayViewVM {
       isLoading: state.isLoading,
       isDirty: companyGateway.isNew,
       companyGateway: companyGateway,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: companyGateway,
-            completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedCompanyGateway));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
         store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
@@ -89,7 +80,6 @@ class CompanyGatewayViewVM {
   final CompanyGatewayEntity companyGateway;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

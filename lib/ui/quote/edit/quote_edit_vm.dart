@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_edit.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -48,7 +47,6 @@ class QuoteEditVM extends EntityEditVM {
     InvoiceEntity origInvoice,
     Function(BuildContext) onSavePressed,
     Function(List<InvoiceItemEntity>, String) onItemsAdded,
-    Function onBackPressed,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
   }) : super(
@@ -74,12 +72,6 @@ class QuoteEditVM extends EntityEditVM {
       invoice: quote,
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              quote.isNew ? QuoteScreen.route : QuoteViewScreen.route));
-        }
-      },
       onSavePressed: (BuildContext context) {
         final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));

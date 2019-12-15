@@ -41,7 +41,6 @@ class GroupViewVM {
     @required this.group,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onClientsPressed,
     @required this.onRefreshed,
@@ -69,13 +68,6 @@ class GroupViewVM {
         isLoading: state.isLoading,
         isDirty: group.isNew,
         group: group,
-        onEditPressed: (BuildContext context) {
-          editEntity(
-              context: context,
-              entity: group,
-              completer: snackBarCompleter<ProjectEntity>(
-                  context, AppLocalization.of(context).updatedGroup));
-        },
         onRefreshed: (context) => _handleRefresh(context),
         onBackPressed: () {
           store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
@@ -98,7 +90,6 @@ class GroupViewVM {
   final GroupEntity group;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

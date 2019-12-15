@@ -39,7 +39,6 @@ class ProjectViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onTasksPressed,
-    @required this.onEditPressed,
     @required this.onAddTaskPressed,
     @required this.onClientPressed,
     @required this.onRefreshed,
@@ -70,13 +69,6 @@ class ProjectViewVM {
       isDirty: project.isNew,
       project: project,
       client: client,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: project,
-            completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedProject));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
@@ -120,7 +112,6 @@ class ProjectViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext, {bool longPress}) onTasksPressed;

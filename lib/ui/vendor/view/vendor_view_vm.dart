@@ -40,7 +40,6 @@ class VendorViewVM {
     @required this.onAddExpensePressed,
     @required this.onEntityAction,
     @required this.onEntityPressed,
-    @required this.onEditPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -66,13 +65,6 @@ class VendorViewVM {
       isLoading: state.isLoading,
       isDirty: vendor.isNew,
       vendor: vendor,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: vendor,
-            completer: snackBarCompleter<ProjectEntity>(
-                context, AppLocalization.of(context).updatedVendor));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
@@ -105,7 +97,6 @@ class VendorViewVM {
   final VendorEntity vendor;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext) onAddExpensePressed;

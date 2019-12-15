@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
@@ -30,7 +27,6 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
     final companyGateway = viewModel.companyGateway;
     final localization = AppLocalization.of(context);
 
@@ -57,30 +53,8 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             : formatNumber(settings.maxLimit, context);
       }
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: !isMobile(context)
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: viewModel.onBackPressed,
-              )
-            : null,
-        title: EntityStateTitle(entity: companyGateway),
-        actions: [
-          userCompany.canEditEntity(companyGateway)
-              ? EditIconButton(
-                  isVisible: !(companyGateway.isDeleted ?? false),
-                  onPressed: () => viewModel.onEditPressed(context),
-                )
-              : Container(),
-          ActionMenuButton(
-            entityActions: companyGateway.getActions(userCompany: userCompany),
-            isSaving: viewModel.isSaving,
-            entity: companyGateway,
-            onSelected: viewModel.onEntityAction,
-          )
-        ],
-      ),
+    return ViewScaffold(
+      entity: companyGateway,
       body: ListView(
         children: <Widget>[
           EntityHeader(

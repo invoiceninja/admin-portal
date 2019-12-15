@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -43,7 +42,6 @@ class DocumentEditVM {
     @required this.isSaving,
     @required this.origDocument,
     @required this.onSavePressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -60,13 +58,6 @@ class DocumentEditVM {
       company: state.company,
       onChanged: (DocumentEntity document) {
         store.dispatch(UpdateDocument(document));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(DocumentScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(document.isNew
-              ? DocumentScreen.route
-              : DocumentViewScreen.route));
-        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<DocumentEntity> completer =
@@ -104,7 +95,6 @@ class DocumentEditVM {
   final CompanyEntity company;
   final Function(DocumentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final DocumentEntity origDocument;

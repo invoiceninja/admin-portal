@@ -40,7 +40,6 @@ class ClientViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onEntityPressed,
-    @required this.onEditPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -70,13 +69,6 @@ class ClientViewVM {
       isDirty: client.isNew,
       client: client,
       company: state.company,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: client,
-            completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedClient));
-      },
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
         switch (entityType) {
@@ -159,7 +151,6 @@ class ClientViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext) onGroupPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext, bool) onRefreshed;

@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -40,8 +37,6 @@ class DocumentViewVM {
     @required this.document,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -69,19 +64,7 @@ class DocumentViewVM {
       isLoading: state.isLoading,
       isDirty: document.isNew,
       document: document,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: document,
-            completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedDocument));
-      },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(DocumentScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleDocumentAction(context, [document], action),
     );
@@ -91,8 +74,6 @@ class DocumentViewVM {
   final DocumentEntity document;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

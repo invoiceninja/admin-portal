@@ -4,18 +4,15 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserView extends StatelessWidget {
@@ -32,32 +29,9 @@ class UserView extends StatelessWidget {
     final user = viewModel.user;
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    final userCompany = state.userCompany;
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: !isMobile(context)
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: viewModel.onBackPressed,
-              )
-            : null,
-        title: EntityStateTitle(entity: user),
-        actions: [
-          userCompany.canEditEntity(user)
-              ? EditIconButton(
-                  isVisible: !(user.isDeleted ?? false), // TODO remove this
-                  onPressed: () => viewModel.onEditPressed(context),
-                )
-              : Container(),
-          ActionMenuButton(
-            entityActions: user.getActions(userCompany: userCompany),
-            isSaving: viewModel.isSaving,
-            entity: user,
-            onSelected: viewModel.onEntityAction,
-          )
-        ],
-      ),
+    return ViewScaffold(
+      entity: user,
       body: ListView(
         children: <Widget>[
           FormCard(
@@ -98,8 +72,8 @@ class UserView extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.invoice, true),
             subtitle:
-                memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
-                    .present(localization.active, localization.archived),
+            memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
+                .present(localization.active, localization.archived),
           ),
           EntityListTile(
             bottomPadding: 1,
@@ -109,23 +83,23 @@ class UserView extends StatelessWidget {
             onLongPress: () =>
                 viewModel.onEntityPressed(context, EntityType.payment, true),
             subtitle: memoizedPaymentStatsForUser(
-                    user.id, state.paymentState.map, state.invoiceState.map)
+                user.id, state.paymentState.map, state.invoiceState.map)
                 .present(localization.active, localization.archived),
           ),
           company.isModuleEnabled(EntityType.quote)
               ? EntityListTile(
-                  bottomPadding: 1,
-                  icon: getEntityIcon(EntityType.quote),
-                  title: localization.quotes,
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.quote),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.quote, true),
-                  subtitle: memoizedQuoteStatsForUser(
-                    user.id,
-                    state.quoteState.map,
-                  ).present(localization.active, localization.archived),
-                )
+            bottomPadding: 1,
+            icon: getEntityIcon(EntityType.quote),
+            title: localization.quotes,
+            onTap: () =>
+                viewModel.onEntityPressed(context, EntityType.quote),
+            onLongPress: () => viewModel.onEntityPressed(
+                context, EntityType.quote, true),
+            subtitle: memoizedQuoteStatsForUser(
+              user.id,
+              state.quoteState.map,
+            ).present(localization.active, localization.archived),
+          )
               : Container(),
           /*
         company.isModuleEnabled(EntityType.project)

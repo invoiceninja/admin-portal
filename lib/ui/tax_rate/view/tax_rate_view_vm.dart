@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -40,7 +39,6 @@ class TaxRateViewVM {
     @required this.taxRate,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
@@ -67,13 +65,6 @@ class TaxRateViewVM {
       isLoading: state.isLoading,
       isDirty: taxRate.isNew,
       taxRate: taxRate,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: taxRate,
-            completer: snackBarCompleter<ProjectEntity>(
-                context, AppLocalization.of(context).updatedTaxRate));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
         store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
@@ -87,7 +78,6 @@ class TaxRateViewVM {
   final TaxRateEntity taxRate;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

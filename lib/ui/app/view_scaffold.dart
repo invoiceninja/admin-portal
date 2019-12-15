@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
@@ -15,8 +16,10 @@ class ViewScaffold extends StatelessWidget {
     this.title,
     this.floatingActionButton,
     this.appBarBottom,
+    this.isSettings = false,
   });
 
+  final bool isSettings;
   final BaseEntity entity;
   final String title;
   final Widget body;
@@ -35,7 +38,14 @@ class ViewScaffold extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
+          leading: !isMobile(context) && isSettings
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => store.dispatch(
+                      UpdateCurrentRoute(state.uiState.previousRoute)),
+                )
+              : null,
+          automaticallyImplyLeading: isMobile(context) && !isSettings,
           title: EntityStateTitle(
             entity: entity,
             title: title,

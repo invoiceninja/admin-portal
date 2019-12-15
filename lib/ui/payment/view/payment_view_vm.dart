@@ -9,8 +9,6 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
@@ -39,7 +37,6 @@ class PaymentViewVM {
     @required this.payment,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.onClientPressed,
     @required this.onInvoicePressed,
     @required this.isSaving,
@@ -63,13 +60,6 @@ class PaymentViewVM {
       isDirty: payment.isNew,
       isLoading: state.isLoading,
       payment: payment,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: payment,
-            completer: snackBarCompleter<PaymentEntity>(
-                context, AppLocalization.of(context).updatedProduct));
-      },
       onClientPressed: (context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(context: context, entities: [client]);
@@ -97,7 +87,6 @@ class PaymentViewVM {
   final PaymentEntity payment;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onInvoicePressed;
   final Function(BuildContext, [bool]) onClientPressed;
   final bool isSaving;

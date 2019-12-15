@@ -40,7 +40,6 @@ class UserViewVM {
     @required this.user,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
     @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
@@ -68,13 +67,6 @@ class UserViewVM {
       isLoading: state.isLoading,
       isDirty: user.isNew,
       user: user,
-      onEditPressed: (BuildContext context) {
-        editEntity(
-            context: context,
-            entity: user,
-            completer: snackBarCompleter<ProjectEntity>(
-                context, AppLocalization.of(context).updatedUser));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onBackPressed: () {
         store.dispatch(UpdateCurrentRoute(UserScreen.route));
@@ -159,7 +151,6 @@ class UserViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
-  final Function(BuildContext) onEditPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
