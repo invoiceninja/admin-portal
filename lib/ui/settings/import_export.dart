@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ImportExport extends StatefulWidget {

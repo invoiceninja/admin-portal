@@ -5,7 +5,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart'
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 

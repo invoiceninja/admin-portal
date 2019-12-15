@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseEdit extends StatefulWidget {

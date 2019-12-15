@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
