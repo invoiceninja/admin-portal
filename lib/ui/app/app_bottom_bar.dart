@@ -278,33 +278,33 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
       _filterCustom3Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
-            return StoreConnector<AppState, BuiltList<String>>(
-              converter: (Store<AppState> store) =>
+        return StoreConnector<AppState, BuiltList<String>>(
+          converter: (Store<AppState> store) =>
               store.state.getListState(widget.entityType).custom1Filters,
-              builder: (BuildContext context, customFilters) {
-                return Container(
-                  color: Theme.of(context).backgroundColor,
-                  child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    Column(
-                      children: widget.customValues3.map<Widget>((customField) {
-                        return CheckboxListTile(
-                          key: Key(customField.toString()),
-                          title: Text(customField),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: customFilters.contains(customField),
-                          activeColor: Theme.of(context).accentColor,
-                          dense: true,
-                          onChanged: (value) {
-                            widget.onSelectedCustom3(customField);
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  ]),
-                );
-              },
+          builder: (BuildContext context, customFilters) {
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Column(
+                  children: widget.customValues3.map<Widget>((customField) {
+                    return CheckboxListTile(
+                      key: Key(customField.toString()),
+                      title: Text(customField),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: customFilters.contains(customField),
+                      activeColor: Theme.of(context).accentColor,
+                      dense: true,
+                      onChanged: (value) {
+                        widget.onSelectedCustom3(customField);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ]),
             );
-          });
+          },
+        );
+      });
 
       _filterCustom3Controller.closed.whenComplete(() {
         _filterCustom3Controller = null;
@@ -319,33 +319,33 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
       _filterCustom4Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
-            return StoreConnector<AppState, BuiltList<String>>(
-              converter: (Store<AppState> store) =>
+        return StoreConnector<AppState, BuiltList<String>>(
+          converter: (Store<AppState> store) =>
               store.state.getListState(widget.entityType).custom4Filters,
-              builder: (BuildContext context, customFilters) {
-                return Container(
-                  color: Theme.of(context).backgroundColor,
-                  child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    Column(
-                      children: widget.customValues4.map<Widget>((customField) {
-                        return CheckboxListTile(
-                          key: Key(customField.toString()),
-                          title: Text(customField),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: customFilters.contains(customField),
-                          activeColor: Theme.of(context).accentColor,
-                          dense: true,
-                          onChanged: (value) {
-                            widget.onSelectedCustom4(customField);
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  ]),
-                );
-              },
+          builder: (BuildContext context, customFilters) {
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                Column(
+                  children: widget.customValues4.map<Widget>((customField) {
+                    return CheckboxListTile(
+                      key: Key(customField.toString()),
+                      title: Text(customField),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: customFilters.contains(customField),
+                      activeColor: Theme.of(context).accentColor,
+                      dense: true,
+                      onChanged: (value) {
+                        widget.onSelectedCustom4(customField);
+                      },
+                    );
+                  }).toList(),
+                ),
+              ]),
             );
-          });
+          },
+        );
+      });
 
       _filterCustom4Controller.closed.whenComplete(() {
         _filterCustom4Controller = null;
@@ -410,8 +410,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom2Sheet,
                 color: store.state
-                    .getListState(widget.entityType)
-                    .hasCustom2Filters
+                        .getListState(widget.entityType)
+                        .hasCustom2Filters
                     ? Theme.of(context).accentColor
                     : null,
               ),
@@ -421,8 +421,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom3Sheet,
                 color: store.state
-                    .getListState(widget.entityType)
-                    .hasCustom3Filters
+                        .getListState(widget.entityType)
+                        .hasCustom3Filters
                     ? Theme.of(context).accentColor
                     : null,
               ),
@@ -432,8 +432,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom4Sheet,
                 color: store.state
-                    .getListState(widget.entityType)
-                    .hasCustom4Filters
+                        .getListState(widget.entityType)
+                        .hasCustom4Filters
                     ? Theme.of(context).accentColor
                     : null,
               ),
@@ -441,5 +441,45 @@ class _AppBottomBarState extends State<AppBottomBar> {
         ),
       );
     });
+  }
+}
+
+class CustomFieldSelector extends StatelessWidget {
+  const CustomFieldSelector({
+    @required this.entityType,
+    @required this.customValues,
+    @required this.onSelected,
+  });
+
+  final EntityType entityType;
+  final List<String> customValues;
+  final Function(String) onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, BuiltList<String>>(
+      converter: (Store<AppState> store) =>
+          store.state.getListState(entityType).custom4Filters,
+      builder: (BuildContext context, customFilters) {
+        return Container(
+          color: Theme.of(context).backgroundColor,
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            Column(
+              children: customValues.map<Widget>((customField) {
+                return CheckboxListTile(
+                  key: Key(customField.toString()),
+                  title: Text(customField),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: customFilters.contains(customField),
+                  activeColor: Theme.of(context).accentColor,
+                  dense: true,
+                  onChanged: (value) => onSelected(customField),
+                );
+              }).toList(),
+            ),
+          ]),
+        );
+      },
+    );
   }
 }
