@@ -4,17 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskView extends StatefulWidget {
   const TaskView({
@@ -51,234 +49,182 @@ class _TaskViewState extends State<TaskView> {
     final task = viewModel.task;
     final localization = AppLocalization.of(context);
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: _CustomAppBar(
-          viewModel: viewModel,
-        ),
-        body: Builder(
-          builder: (BuildContext context) {
-            final project = viewModel.project;
-            final client = viewModel.client;
-            final company = viewModel.company;
-            final invoice = viewModel.state.invoiceState.map[task.invoiceId];
+    return ViewScaffold(
+      entity: task,
+      body: Builder(
+        builder: (BuildContext context) {
+          final project = viewModel.project;
+          final client = viewModel.client;
+          final company = viewModel.company;
+          final invoice = viewModel.state.invoiceState.map[task.invoiceId];
 
-            final Map<String, String> fields = {};
+          final Map<String, String> fields = {};
 
-            // TODO Remove isNotEmpty check in v2
-            if (company.taskStatusMap.isNotEmpty &&
-                (task.taskStatusId ?? '').isNotEmpty) {
-              fields[localization.status] =
-                  company.taskStatusMap[task.taskStatusId]?.name ?? '';
-            }
+          // TODO Remove isNotEmpty check in v2
+          if (company.taskStatusMap.isNotEmpty &&
+              (task.taskStatusId ?? '').isNotEmpty) {
+            fields[localization.status] =
+                company.taskStatusMap[task.taskStatusId]?.name ?? '';
+          }
 
-            if (task.customValue1.isNotEmpty) {
-              final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
-              fields[label1] = formatCustomValue(
-                  context: context,
-                  field: CustomFieldType.task1,
-                  value: task.customValue1);
-            }
-            if (task.customValue2.isNotEmpty) {
-              final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
-              fields[label2] = formatCustomValue(
-                  context: context,
-                  field: CustomFieldType.task2,
-                  value: task.customValue2);
-            }
+          if (task.customValue1.isNotEmpty) {
+            final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
+            fields[label1] = formatCustomValue(
+                context: context,
+                field: CustomFieldType.task1,
+                value: task.customValue1);
+          }
+          if (task.customValue2.isNotEmpty) {
+            final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
+            fields[label2] = formatCustomValue(
+                context: context,
+                field: CustomFieldType.task2,
+                value: task.customValue2);
+          }
 
-            List<Widget> _buildView() {
-              final widgets = <Widget>[
-                EntityHeader(
-                  backgroundColor: task.isInvoiced
-                      ? Colors.green
-                      : task.isRunning ? Colors.blue : null,
-                  label: localization.duration,
-                  value: formatDuration(task.calculateDuration),
-                  secondLabel: localization.amount,
-                  secondValue: formatNumber(
-                      task.calculateAmount(taskRateSelector(
-                          company: company, project: project, client: client)),
-                      context,
-                      roundToTwo: true),
-                ),
-              ];
-
-              if (client != null) {
-                widgets.addAll([
-                  Material(
-                    color: Theme.of(context).canvasColor,
-                    child: ListTile(
-                      title: EntityStateTitle(entity: client),
-                      leading:
-                          Icon(getEntityIcon(EntityType.client), size: 18.0),
-                      trailing: Icon(Icons.navigate_next),
-                      onTap: () => viewModel.onClientPressed(context),
-                      onLongPress: () =>
-                          viewModel.onClientPressed(context, true),
-                    ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ]);
-              }
-
-              if (project != null) {
-                widgets.addAll([
-                  Material(
-                    color: Theme.of(context).canvasColor,
-                    child: ListTile(
-                      title: EntityStateTitle(entity: project),
-                      leading:
-                          Icon(getEntityIcon(EntityType.project), size: 18.0),
-                      trailing: Icon(Icons.navigate_next),
-                      onTap: () => viewModel.onProjectPressed(context),
-                      onLongPress: () =>
-                          viewModel.onProjectPressed(context, true),
-                    ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ]);
-              }
-
-              if (invoice != null) {
-                widgets.addAll([
-                  Material(
-                    color: Theme.of(context).canvasColor,
-                    child: ListTile(
-                      title: EntityStateTitle(entity: invoice),
-                      leading:
-                          Icon(getEntityIcon(EntityType.invoice), size: 18.0),
-                      trailing: Icon(Icons.navigate_next),
-                      onTap: () => viewModel.onInvoicePressed(context),
-                      onLongPress: () =>
-                          viewModel.onInvoicePressed(context, true),
-                    ),
-                  ),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ]);
-              }
-
-              if (task.description.isNotEmpty) {
-                widgets.addAll([
-                  IconMessage(task.description),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ]);
-              }
-
-              if (fields.isNotEmpty) {
-                widgets.addAll([
-                  FieldGrid(fields),
-                ]);
-              }
-
-              final items = task.taskTimes;
-              if (items.isNotEmpty) {
-                items.reversed.forEach((taskTime) {
-                  widgets.addAll([
-                    TaskTimeListTile(
-                      task: task,
-                      taskTime: taskTime,
-                      onTap: (BuildContext context) =>
-                          viewModel.state.userCompany.canEditEntity(task)
-                              ? viewModel.onEditPressed(context, taskTime)
-                              : null,
-                    )
-                  ]);
-                });
-
-                widgets.add(
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                );
-              }
-
-              return widgets;
-            }
-
-            return RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: ListView(
-                children: _buildView(),
+          List<Widget> _buildView() {
+            final widgets = <Widget>[
+              EntityHeader(
+                backgroundColor: task.isInvoiced
+                    ? Colors.green
+                    : task.isRunning ? Colors.blue : null,
+                label: localization.duration,
+                value: formatDuration(task.calculateDuration),
+                secondLabel: localization.amount,
+                secondValue: formatNumber(
+                    task.calculateAmount(taskRateSelector(
+                        company: company, project: project, client: client)),
+                    context,
+                    roundToTwo: true),
               ),
-            );
-          },
-        ),
-        floatingActionButton: Builder(builder: (BuildContext context) {
-          return task.isInvoiced || task.isDeleted
-              ? SizedBox()
-              : FloatingActionButton(
-                  heroTag: 'task_view_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () => viewModel.onFabPressed(context),
-                  child: Icon(
-                    task.isRunning ? Icons.stop : Icons.play_arrow,
-                    color: Colors.white,
+            ];
+
+            if (client != null) {
+              widgets.addAll([
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: client),
+                    leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onClientPressed(context),
+                    onLongPress: () => viewModel.onClientPressed(context, true),
                   ),
-                  tooltip:
-                      task.isRunning ? localization.stop : localization.start,
-                );
-        }),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              ]);
+            }
+
+            if (project != null) {
+              widgets.addAll([
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: project),
+                    leading:
+                        Icon(getEntityIcon(EntityType.project), size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onProjectPressed(context),
+                    onLongPress: () =>
+                        viewModel.onProjectPressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              ]);
+            }
+
+            if (invoice != null) {
+              widgets.addAll([
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(entity: invoice),
+                    leading:
+                        Icon(getEntityIcon(EntityType.invoice), size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onInvoicePressed(context),
+                    onLongPress: () =>
+                        viewModel.onInvoicePressed(context, true),
+                  ),
+                ),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              ]);
+            }
+
+            if (task.description.isNotEmpty) {
+              widgets.addAll([
+                IconMessage(task.description),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              ]);
+            }
+
+            if (fields.isNotEmpty) {
+              widgets.addAll([
+                FieldGrid(fields),
+              ]);
+            }
+
+            final items = task.taskTimes;
+            if (items.isNotEmpty) {
+              items.reversed.forEach((taskTime) {
+                widgets.addAll([
+                  TaskTimeListTile(
+                    task: task,
+                    taskTime: taskTime,
+                    onTap: (BuildContext context) =>
+                        viewModel.state.userCompany.canEditEntity(task)
+                            ? viewModel.onEditPressed(context, taskTime)
+                            : null,
+                  )
+                ]);
+              });
+
+              widgets.add(
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
+              );
+            }
+
+            return widgets;
+          }
+
+          return RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: ListView(
+              children: _buildView(),
+            ),
+          );
+        },
       ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _CustomAppBar({
-    @required this.viewModel,
-  });
-
-  final TaskViewVM viewModel;
-
-  @override
-  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    final task = viewModel.task;
-    final userCompany = viewModel.state.userCompany;
-
-    return AppBar(
-      automaticallyImplyLeading: isMobile(context),
-      title: EntityStateTitle(
-        entity: task,
-        title: AppLocalization.of(context).task,
-      ),
-      actions: task.isNew
-          ? []
-          : [
-              userCompany.canEditEntity(task)
-                  ? EditIconButton(
-                      isVisible: !task.isDeleted,
-                      onPressed: () => viewModel.onEditPressed(context),
-                    )
-                  : Container(),
-              ActionMenuButton(
-                entityActions: task.getActions(
-                    client: viewModel.client, userCompany: userCompany),
-                isSaving: viewModel.isSaving,
-                entity: task,
-                onSelected: viewModel.onEntityAction,
-              )
-            ],
+      floatingActionButton: Builder(builder: (BuildContext context) {
+        return task.isInvoiced || task.isDeleted
+            ? SizedBox()
+            : FloatingActionButton(
+                heroTag: 'task_view_fab',
+                backgroundColor: Theme.of(context).primaryColorDark,
+                onPressed: () => viewModel.onFabPressed(context),
+                child: Icon(
+                  task.isRunning ? Icons.stop : Icons.play_arrow,
+                  color: Colors.white,
+                ),
+                tooltip:
+                    task.isRunning ? localization.stop : localization.start,
+              );
+      }),
     );
   }
 }

@@ -98,7 +98,6 @@ class TaxRateEditVM {
   final CompanyEntity company;
   final Function(TaxRateEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
