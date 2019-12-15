@@ -268,6 +268,18 @@ class FilterClientsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterClientsByCustom3 implements PersistUI {
+  FilterClientsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterClientsByCustom4 implements PersistUI {
+  FilterClientsByCustom4(this.value);
+
+  final String value;
+}
+
 void handleClientAction(
     BuildContext context, List<BaseEntity> clients, EntityAction action) {
   assert(

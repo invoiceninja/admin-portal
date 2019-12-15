@@ -106,6 +106,8 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterClientsByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
+  TypedReducer<ListUIState, FilterClientsByCustom3>(_filterClientsByCustom3),
+  TypedReducer<ListUIState, FilterClientsByCustom4>(_filterClientsByCustom4),
   TypedReducer<ListUIState, StartClientMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToClientMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromClientMultiselect>(
@@ -130,6 +132,26 @@ ListUIState _filterClientsByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return clientListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterClientsByCustom3(
+    ListUIState clientListState, FilterClientsByCustom3 action) {
+  if (clientListState.custom3Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterClientsByCustom4(
+    ListUIState clientListState, FilterClientsByCustom4 action) {
+  if (clientListState.custom4Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

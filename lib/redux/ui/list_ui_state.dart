@@ -17,6 +17,8 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
         statusFilters: BuiltList<EntityStatus>(),
         custom1Filters: BuiltList<String>(),
         custom2Filters: BuiltList<String>(),
+        custom3Filters: BuiltList<String>(),
+        custom4Filters: BuiltList<String>(),
         filter: null);
   }
 
@@ -49,6 +51,10 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   BuiltList<String> get custom2Filters;
 
+  BuiltList<String> get custom3Filters;
+
+  BuiltList<String> get custom4Filters;
+
   bool get hasStateFilters =>
       stateFilters.length != 1 || stateFilters.first != EntityState.active;
 
@@ -57,6 +63,10 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get hasCustom1Filters => custom1Filters.isNotEmpty;
 
   bool get hasCustom2Filters => custom2Filters.isNotEmpty;
+
+  bool get hasCustom3Filters => custom3Filters.isNotEmpty;
+
+  bool get hasCustom4Filters => custom4Filters.isNotEmpty;
 
   @nullable
   BuiltList<String> get selectedIds;

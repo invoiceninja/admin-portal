@@ -243,6 +243,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ExpenseEntity)]),
           () => new ListBuilder<ExpenseEntity>())
       ..addBuilderFactory(
@@ -276,10 +282,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ]),
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ExpenseCategoryEntity)]),
           () => new MapBuilder<String, ExpenseCategoryEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserEntity)]),
@@ -327,8 +331,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ProjectEntity)]),
           () => new ListBuilder<ProjectEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(SizeEntity)]),
-          () => new ListBuilder<SizeEntity>())
+          const FullType(BuiltList, const [const FullType(SizeEntity)]), () => new ListBuilder<SizeEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaskEntity)]), () => new ListBuilder<TaskEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TaxRateEntity)]), () => new ListBuilder<TaxRateEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(TimezoneEntity)]), () => new ListBuilder<TimezoneEntity>())

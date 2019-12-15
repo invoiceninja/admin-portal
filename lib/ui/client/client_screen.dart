@@ -70,16 +70,16 @@ class ClientScreen extends StatelessWidget {
             onSavePressed: state.clientListState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final clients = viewModel.clientList
-                        .map<ClientEntity>(
-                            (clientId) => viewModel.clientMap[clientId])
-                        .toList();
+              final clients = viewModel.clientList
+                  .map<ClientEntity>(
+                      (clientId) => viewModel.clientMap[clientId])
+                  .toList();
 
-                    await showEntityActionsDialog(
-                        entities: clients, context: context, multiselect: true);
+              await showEntityActionsDialog(
+                  entities: clients, context: context, multiselect: true);
 
-                    store.dispatch(ClearClientMultiselect());
-                  },
+              store.dispatch(ClearClientMultiselect());
+            },
             onCancelPressed: (context) =>
                 store.dispatch(ClearClientMultiselect()),
           ),
@@ -102,25 +102,35 @@ class ClientScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.client2,
             excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.client3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.client4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterClientsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterClientsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterClientsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterClientsByCustom4(value)),
       ),
       floatingActionButton: userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
-              heroTag: 'client_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.client);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newClient,
-            )
+        heroTag: 'client_fab',
+        backgroundColor: Theme
+            .of(context)
+            .primaryColorDark,
+        onPressed: () {
+          createEntityByType(
+              context: context, entityType: EntityType.client);
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        tooltip: localization.newClient,
+      )
           : null,
     );
   }
