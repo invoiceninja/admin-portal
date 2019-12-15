@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -81,75 +82,31 @@ class _ProductViewState extends State<ProductView>
           value: product.customValue2);
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: _CustomAppBar(
-          viewModel: viewModel,
-        ),
-        body: ListView(
-          children: <Widget>[
-            EntityHeader(
-              label: localization.price,
-              value: formatNumber(product.price, context),
-              secondLabel: localization.cost,
-              secondValue: company.enableProductCost
-                  ? formatNumber(product.cost, context)
-                  : null,
+    return ViewScaffold(
+      entity: product,
+      body: ListView(
+        children: <Widget>[
+          EntityHeader(
+            label: localization.price,
+            value: formatNumber(product.price, context),
+            secondLabel: localization.cost,
+            secondValue: company.enableProductCost
+                ? formatNumber(product.cost, context)
+                : null,
+          ),
+          FieldGrid(fields),
+          Divider(
+            height: 1.0,
+          ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              product.notes,
+              style: TextStyle(fontSize: 16),
             ),
-            FieldGrid(fields),
-            Divider(
-              height: 1.0,
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                product.notes,
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _CustomAppBar({
-    @required this.viewModel,
-  });
-
-  final ProductViewVM viewModel;
-
-  @override
-  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    final userCompany = viewModel.state.userCompany;
-    final product = viewModel.product;
-
-    return AppBar(
-      automaticallyImplyLeading: isMobile(context),
-      title: EntityStateTitle(entity: product),
-      actions: [
-        userCompany.canEditEntity(product)
-            ? EditIconButton(
-                isVisible: !product.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              )
-            : Container(),
-        ActionMenuButton(
-          entityActions: product.getActions(userCompany: userCompany),
-          isSaving: viewModel.isSaving,
-          entity: product,
-          onSelected: viewModel.onEntityAction,
-        )
-      ],
     );
   }
 }

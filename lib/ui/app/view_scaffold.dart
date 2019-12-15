@@ -12,11 +12,13 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
+    this.title,
     this.floatingActionButton,
     this.appBarBottom,
   });
 
   final BaseEntity entity;
+  final String title;
   final Widget body;
   final Widget floatingActionButton;
   final Widget appBarBottom;
@@ -34,7 +36,10 @@ class ViewScaffold extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: isMobile(context),
-          title: EntityStateTitle(entity: entity),
+          title: EntityStateTitle(
+            entity: entity,
+            title: title,
+          ),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
