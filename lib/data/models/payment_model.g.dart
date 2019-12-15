@@ -167,6 +167,30 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.privateNotes,
             specifiedType: const FullType(String)));
     }
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
     if (object.exchangeRate != null) {
       result
         ..add('exchange_rate')
@@ -280,6 +304,22 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'exchange_rate':
@@ -540,6 +580,14 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String privateNotes;
   @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final double exchangeRate;
   @override
   final String exchangeCurrencyId;
@@ -574,6 +622,10 @@ class _$PaymentEntity extends PaymentEntity {
       this.paymentTypeId,
       this.invoiceId,
       this.privateNotes,
+      this.customValue1,
+      this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.exchangeRate,
       this.exchangeCurrencyId,
       this.isChanged,
@@ -621,6 +673,10 @@ class _$PaymentEntity extends PaymentEntity {
         paymentTypeId == other.paymentTypeId &&
         invoiceId == other.invoiceId &&
         privateNotes == other.privateNotes &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
         isChanged == other.isChanged &&
@@ -653,26 +709,16 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    amount
-                                                                                        .hashCode),
-                                                                                refunded
-                                                                                    .hashCode),
-                                                                            number
-                                                                                .hashCode),
-                                                                        clientId
-                                                                            .hashCode),
-                                                                    paymentStatusId
-                                                                        .hashCode),
-                                                                transactionReference
-                                                                    .hashCode),
-                                                            paymentDate
-                                                                .hashCode),
-                                                        paymentTypeId.hashCode),
-                                                    invoiceId.hashCode),
-                                                privateNotes.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), paymentStatusId.hashCode),
+                                                                                transactionReference.hashCode),
+                                                                            paymentDate.hashCode),
+                                                                        paymentTypeId.hashCode),
+                                                                    invoiceId.hashCode),
+                                                                privateNotes.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
                                             exchangeRate.hashCode),
                                         exchangeCurrencyId.hashCode),
                                     isChanged.hashCode),
@@ -698,6 +744,10 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('paymentTypeId', paymentTypeId)
           ..add('invoiceId', invoiceId)
           ..add('privateNotes', privateNotes)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
           ..add('isChanged', isChanged)
@@ -759,6 +809,22 @@ class PaymentEntityBuilder
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
 
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   double _exchangeRate;
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
@@ -816,6 +882,10 @@ class PaymentEntityBuilder
       _paymentTypeId = _$v.paymentTypeId;
       _invoiceId = _$v.invoiceId;
       _privateNotes = _$v.privateNotes;
+      _customValue1 = _$v.customValue1;
+      _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
       _isChanged = _$v.isChanged;
@@ -858,6 +928,10 @@ class PaymentEntityBuilder
             paymentTypeId: paymentTypeId,
             invoiceId: invoiceId,
             privateNotes: privateNotes,
+            customValue1: customValue1,
+            customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
             isChanged: isChanged,

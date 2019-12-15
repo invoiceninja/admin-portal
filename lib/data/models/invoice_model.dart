@@ -376,6 +376,12 @@ abstract class InvoiceEntity extends Object
     } else if (customValue2.isNotEmpty &&
         customValue2.toLowerCase().contains(filter)) {
       return true;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return false;
@@ -394,6 +400,12 @@ abstract class InvoiceEntity extends Object
     } else if (customValue2.isNotEmpty &&
         customValue2.toLowerCase().contains(filter)) {
       return customValue2;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
     return null;
   }
@@ -630,6 +642,7 @@ abstract class InvoiceItemEntity
       quantity == 0 &&
       customValue1.isEmpty &&
       customValue2.isEmpty;
+
   // TODO add custom 3 and 4
 
   InvoiceItemEntity applyTax(TaxRateEntity taxRate,

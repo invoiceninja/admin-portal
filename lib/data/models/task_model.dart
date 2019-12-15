@@ -144,6 +144,8 @@ abstract class TaskEntity extends Object
       isRunning: isRunning,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -349,6 +351,14 @@ abstract class TaskEntity extends Object
   String get customValue2;
 
   @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @nullable
   @BuiltValueField(wireName: 'task_status_id')
   String get taskStatusId;
 
@@ -420,6 +430,14 @@ abstract class TaskEntity extends Object
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return description.toLowerCase().contains(filter);
@@ -448,6 +466,14 @@ abstract class TaskEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;

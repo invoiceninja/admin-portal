@@ -164,6 +164,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'vendor_contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -301,6 +307,14 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'vendor_contacts':
@@ -728,6 +742,10 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final BuiltList<VendorContactEntity> contacts;
   @override
   final bool isChanged;
@@ -768,6 +786,8 @@ class _$VendorEntity extends VendorEntity {
       this.currencyId,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.contacts,
       this.isChanged,
       this.createdAt,
@@ -832,6 +852,12 @@ class _$VendorEntity extends VendorEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'customValue4');
+    }
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
@@ -866,6 +892,8 @@ class _$VendorEntity extends VendorEntity {
         currencyId == other.currencyId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         contacts == other.contacts &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -897,17 +925,17 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode),
-                                                                                countryId.hashCode),
-                                                                            workPhone.hashCode),
-                                                                        privateNotes.hashCode),
-                                                                    lastLogin.hashCode),
-                                                                website.hashCode),
-                                                            vatNumber.hashCode),
-                                                        idNumber.hashCode),
-                                                    currencyId.hashCode),
-                                                customValue1.hashCode),
-                                            customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode),
+                                                                                privateNotes.hashCode),
+                                                                            lastLogin.hashCode),
+                                                                        website.hashCode),
+                                                                    vatNumber.hashCode),
+                                                                idNumber.hashCode),
+                                                            currencyId.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
                                         contacts.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -940,6 +968,8 @@ class _$VendorEntity extends VendorEntity {
           ..add('currencyId', currencyId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('contacts', contacts)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -1029,6 +1059,14 @@ class VendorEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   ListBuilder<VendorContactEntity> _contacts;
   ListBuilder<VendorContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<VendorContactEntity>();
@@ -1091,6 +1129,8 @@ class VendorEntityBuilder
       _currencyId = _$v.currencyId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1142,6 +1182,8 @@ class VendorEntityBuilder
               currencyId: currencyId,
               customValue1: customValue1,
               customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               contacts: contacts.build(),
               isChanged: isChanged,
               createdAt: createdAt,

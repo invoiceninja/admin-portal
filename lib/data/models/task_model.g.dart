@@ -198,6 +198,18 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(object.projectId,
             specifiedType: const FullType(String)));
     }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
     if (object.taskStatusId != null) {
       result
         ..add('task_status_id')
@@ -306,6 +318,14 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'task_status_id':
@@ -702,6 +722,10 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final String taskStatusId;
   @override
   final int taskStatusSortOrder;
@@ -735,6 +759,8 @@ class _$TaskEntity extends TaskEntity {
       this.isRunning,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.taskStatusId,
       this.taskStatusSortOrder,
       this.isChanged,
@@ -786,6 +812,8 @@ class _$TaskEntity extends TaskEntity {
         isRunning == other.isRunning &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         taskStatusId == other.taskStatusId &&
         taskStatusSortOrder == other.taskStatusSortOrder &&
         isChanged == other.isChanged &&
@@ -818,22 +846,16 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                0,
-                                                                                description
-                                                                                    .hashCode),
-                                                                            duration
-                                                                                .hashCode),
-                                                                        invoiceId
-                                                                            .hashCode),
-                                                                    clientId
-                                                                        .hashCode),
-                                                                projectId
-                                                                    .hashCode),
-                                                            timeLog.hashCode),
-                                                        isRunning.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
+                                                                            $jc($jc($jc(0, description.hashCode), duration.hashCode),
+                                                                                invoiceId.hashCode),
+                                                                            clientId.hashCode),
+                                                                        projectId.hashCode),
+                                                                    timeLog.hashCode),
+                                                                isRunning.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
                                             taskStatusId.hashCode),
                                         taskStatusSortOrder.hashCode),
                                     isChanged.hashCode),
@@ -858,6 +880,8 @@ class _$TaskEntity extends TaskEntity {
           ..add('isRunning', isRunning)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('taskStatusId', taskStatusId)
           ..add('taskStatusSortOrder', taskStatusSortOrder)
           ..add('isChanged', isChanged)
@@ -910,6 +934,14 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
   String _taskStatusId;
   String get taskStatusId => _$this._taskStatusId;
@@ -967,6 +999,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _isRunning = _$v.isRunning;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _taskStatusId = _$v.taskStatusId;
       _taskStatusSortOrder = _$v.taskStatusSortOrder;
       _isChanged = _$v.isChanged;
@@ -1008,6 +1042,8 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             isRunning: isRunning,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
             taskStatusId: taskStatusId,
             taskStatusSortOrder: taskStatusSortOrder,
             isChanged: isChanged,

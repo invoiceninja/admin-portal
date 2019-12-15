@@ -76,6 +76,10 @@ abstract class PaymentEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
     );
   }
 
@@ -121,6 +125,22 @@ abstract class PaymentEntity extends Object
   String get privateNotes;
 
   @nullable
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
@@ -162,7 +182,25 @@ abstract class PaymentEntity extends Object
       return true;
     } else if (privateNotes.toLowerCase().contains(filter)) {
       return true;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
+    /*
+    } else if (customValue1.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    }
+    */
 
     return false;
   }
@@ -179,6 +217,18 @@ abstract class PaymentEntity extends Object
       return transactionReference;
     } else if (privateNotes.toLowerCase().contains(filter)) {
       return privateNotes;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;

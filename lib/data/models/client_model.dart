@@ -342,6 +342,14 @@ abstract class ClientEntity extends Object
         .where((contact) => contact.matchesFilter(filter))
         .isNotEmpty) {
       return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return false;
@@ -373,6 +381,14 @@ abstract class ClientEntity extends Object
     } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == displayName ? null : match;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;
@@ -539,7 +555,6 @@ abstract class ContactEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
-
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();

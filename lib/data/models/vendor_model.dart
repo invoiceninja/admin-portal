@@ -154,6 +154,12 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get contacts;
 
@@ -223,6 +229,14 @@ abstract class VendorEntity extends Object
         .where((contact) => contact.matchesFilter(filter))
         .isNotEmpty) {
       return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return false;
@@ -252,6 +266,14 @@ abstract class VendorEntity extends Object
     } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == name ? null : match;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;

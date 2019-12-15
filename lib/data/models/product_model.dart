@@ -67,6 +67,8 @@ abstract class ProductEntity extends Object
       taxRate3: 0,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -119,6 +121,14 @@ abstract class ProductEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
 
   @override
   String get listDisplayName {
@@ -173,6 +183,12 @@ abstract class ProductEntity extends Object
     } else if (customValue2.isNotEmpty &&
         customValue2.toLowerCase().contains(filter)) {
       return true;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return false;
@@ -192,6 +208,12 @@ abstract class ProductEntity extends Object
       return customValue1;
     } else if (customValue2.isNotEmpty &&
         customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
       return customValue2;
     }
     return null;
