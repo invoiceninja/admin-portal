@@ -31,6 +31,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
@@ -45,6 +47,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _phoneController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -58,6 +62,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _phoneController.text = client.phone;
     _custom1Controller.text = client.customValue1;
     _custom2Controller.text = client.customValue2;
+    _custom3Controller.text = client.customValue3;
+    _custom4Controller.text = client.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -85,7 +91,10 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         ..website = _websiteController.text.trim()
         ..phone = _phoneController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
+      );
       if (client != viewModel.client) {
         viewModel.onChanged(client);
       }
@@ -150,6 +159,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               controller: _custom2Controller,
               field: CustomFieldType.client2,
               value: client.customValue2,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.client3,
+              value: client.customValue3,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.client4,
+              value: client.customValue4,
             ),
           ],
         ),

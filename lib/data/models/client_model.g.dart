@@ -173,6 +173,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType:
@@ -412,6 +418,14 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -505,6 +519,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
     ];
     if (object.password != null) {
@@ -614,6 +634,14 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -904,6 +932,10 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final BuiltList<ContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -959,6 +991,8 @@ class _$ClientEntity extends ClientEntity {
       this.settings,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.contacts,
       this.activities,
       this.gatewayTokens,
@@ -1034,6 +1068,12 @@ class _$ClientEntity extends ClientEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue4');
+    }
     if (contacts == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
     }
@@ -1085,6 +1125,8 @@ class _$ClientEntity extends ClientEntity {
         settings == other.settings &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         contacts == other.contacts &&
         activities == other.activities &&
         gatewayTokens == other.gatewayTokens &&
@@ -1118,15 +1160,15 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode),
-                                                                                shippingAddress2.hashCode),
-                                                                            shippingCity.hashCode),
-                                                                        shippingState.hashCode),
-                                                                    shippingPostalCode.hashCode),
-                                                                shippingCountryId.hashCode),
-                                                            settings.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode),
+                                                                                shippingState.hashCode),
+                                                                            shippingPostalCode.hashCode),
+                                                                        shippingCountryId.hashCode),
+                                                                    settings.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
                                                 contacts.hashCode),
                                             activities.hashCode),
                                         gatewayTokens.hashCode),
@@ -1172,6 +1214,8 @@ class _$ClientEntity extends ClientEntity {
           ..add('settings', settings)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('gatewayTokens', gatewayTokens)
@@ -1314,6 +1358,14 @@ class ClientEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   ListBuilder<ContactEntity> _contacts;
   ListBuilder<ContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<ContactEntity>();
@@ -1399,6 +1451,8 @@ class ClientEntityBuilder
       _settings = _$v.settings?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
       _activities = _$v.activities?.toBuilder();
       _gatewayTokens = _$v.gatewayTokens?.toBuilder();
@@ -1463,6 +1517,8 @@ class ClientEntityBuilder
               settings: settings.build(),
               customValue1: customValue1,
               customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               contacts: contacts.build(),
               activities: activities.build(),
               gatewayTokens: gatewayTokens.build(),
@@ -1519,6 +1575,10 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1549,6 +1609,8 @@ class _$ContactEntity extends ContactEntity {
       this.sendInvoice,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1585,6 +1647,12 @@ class _$ContactEntity extends ContactEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
+    }
   }
 
   @override
@@ -1608,6 +1676,8 @@ class _$ContactEntity extends ContactEntity {
         sendInvoice == other.sendInvoice &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1638,21 +1708,18 @@ class _$ContactEntity extends ContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            firstName
-                                                                                .hashCode),
-                                                                        lastName
-                                                                            .hashCode),
-                                                                    email
-                                                                        .hashCode),
-                                                                password
-                                                                    .hashCode),
-                                                            phone.hashCode),
-                                                        contactKey.hashCode),
-                                                    isPrimary.hashCode),
-                                                sendInvoice.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
+                                                                            $jc($jc(0, firstName.hashCode),
+                                                                                lastName.hashCode),
+                                                                            email.hashCode),
+                                                                        password.hashCode),
+                                                                    phone.hashCode),
+                                                                contactKey.hashCode),
+                                                            isPrimary.hashCode),
+                                                        sendInvoice.hashCode),
+                                                    customValue1.hashCode),
+                                                customValue2.hashCode),
+                                            customValue3.hashCode),
+                                        customValue4.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1676,6 +1743,8 @@ class _$ContactEntity extends ContactEntity {
           ..add('sendInvoice', sendInvoice)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1732,6 +1801,14 @@ class ContactEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1780,6 +1857,8 @@ class ContactEntityBuilder
       _sendInvoice = _$v.sendInvoice;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1820,6 +1899,8 @@ class ContactEntityBuilder
             sendInvoice: sendInvoice,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

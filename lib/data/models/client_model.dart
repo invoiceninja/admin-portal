@@ -213,6 +213,12 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   BuiltList<ContactEntity> get contacts;
 
   BuiltList<ActivityEntity> get activities;
@@ -523,6 +529,13 @@ abstract class ContactEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();
