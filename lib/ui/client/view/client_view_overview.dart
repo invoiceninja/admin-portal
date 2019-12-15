@@ -55,13 +55,26 @@ class ClientOverview extends StatelessWidget {
           field: CustomFieldType.client1,
           value: client.customValue1);
     }
-
     if (client.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.client2);
       fields[label2] = formatCustomValue(
           context: context,
           field: CustomFieldType.client2,
           value: client.customValue2);
+    }
+    if (client.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.client3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.client3,
+          value: client.customValue3);
+    }
+    if (client.customValue4.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.client4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.client4,
+          value: client.customValue4);
     }
 
     return ListView(
