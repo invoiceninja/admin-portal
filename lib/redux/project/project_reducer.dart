@@ -65,6 +65,8 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProjects>(_filterProjects),
   TypedReducer<ListUIState, FilterProjectsByCustom1>(_filterProjectsByCustom1),
   TypedReducer<ListUIState, FilterProjectsByCustom2>(_filterProjectsByCustom2),
+  TypedReducer<ListUIState, FilterProjectsByCustom3>(_filterProjectsByCustom3),
+  TypedReducer<ListUIState, FilterProjectsByCustom4>(_filterProjectsByCustom4),
   TypedReducer<ListUIState, FilterProjectsByEntity>(_filterProjectsByClient),
   TypedReducer<ListUIState, StartProjectMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProjectMultiselect>(_addToListMultiselect),
@@ -97,6 +99,26 @@ ListUIState _filterProjectsByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return projectListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterProjectsByCustom3(
+    ListUIState projectListState, FilterProjectsByCustom3 action) {
+  if (projectListState.custom3Filters.contains(action.value)) {
+    return projectListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return projectListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterProjectsByCustom4(
+    ListUIState projectListState, FilterProjectsByCustom4 action) {
+  if (projectListState.custom4Filters.contains(action.value)) {
+    return projectListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return projectListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 

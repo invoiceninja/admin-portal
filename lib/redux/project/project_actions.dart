@@ -234,6 +234,18 @@ class FilterProjectsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterProjectsByCustom3 implements PersistUI {
+  FilterProjectsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterProjectsByCustom4 implements PersistUI {
+  FilterProjectsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterProjectsByEntity implements PersistUI {
   FilterProjectsByEntity({this.entityId, this.entityType});
 

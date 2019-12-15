@@ -93,10 +93,18 @@ class ProjectScreen extends StatelessWidget {
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.project2,
             excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.project3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.project4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterProjectsByCustom1(value)),
         onSelectedCustom2: (value) =>
             store.dispatch(FilterProjectsByCustom2(value)),
+        onSelectedCustom3: (value) =>
+            store.dispatch(FilterProjectsByCustom3(value)),
+        onSelectedCustom4: (value) =>
+            store.dispatch(FilterProjectsByCustom4(value)),
         sortFields: [
           ProjectFields.name,
           ProjectFields.updatedAt,

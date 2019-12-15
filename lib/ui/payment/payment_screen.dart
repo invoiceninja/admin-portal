@@ -26,6 +26,7 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.paymentUIState.listUIState;
@@ -86,6 +87,14 @@ class PaymentScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,
         onSelectedSortField: (value) => store.dispatch(SortPayments(value)),
+        customValues1: company.getCustomFieldValues(CustomFieldType.payment1,
+            excludeBlank: true),
+        customValues2: company.getCustomFieldValues(CustomFieldType.payment2,
+            excludeBlank: true),
+        customValues3: company.getCustomFieldValues(CustomFieldType.payment3,
+            excludeBlank: true),
+        customValues4: company.getCustomFieldValues(CustomFieldType.payment4,
+            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterPaymentsByCustom1(value)),
         onSelectedCustom2: (value) =>
