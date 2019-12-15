@@ -89,6 +89,8 @@ abstract class ClientEntity extends Object
       shippingCountryId: '',
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       contacts: BuiltList<ContactEntity>(
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
@@ -494,6 +496,8 @@ abstract class ContactEntity extends Object
       sendInvoice: true,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
