@@ -44,6 +44,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final expense = viewModel.expense;
 
     return EditScaffold(
+      entity: expense,
       title: expense.isNew
           ? localization.newExpense
           : localization.editExpense,

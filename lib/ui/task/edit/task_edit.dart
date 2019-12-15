@@ -70,6 +70,7 @@ class _TaskEditState extends State<TaskEdit>
     final task = viewModel.task;
 
     return EditScaffold(
+      entity: task,
       title: task.isNew
           ? localization.newTask
           : localization.editTask,

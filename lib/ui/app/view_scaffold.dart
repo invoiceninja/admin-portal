@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
 import 'entities/entity_state_title.dart';
@@ -48,7 +49,7 @@ class ViewScaffold extends StatelessWidget {
                       : store.dispatch(
                           UpdateCurrentRoute(state.uiState.previousRoute)),
                 )
-              : null,
+              : Icon(getEntityIcon(entity.entityType)),
           automaticallyImplyLeading: isMobile(context) && !isSettings,
           title: EntityStateTitle(
             entity: entity,
@@ -60,7 +61,7 @@ class ViewScaffold extends StatelessWidget {
               : [
                   userCompany.canEditEntity(entity)
                       ? EditIconButton(
-                          isVisible: !entity.isDeleted,
+                          isVisible: !(entity.isDeleted ?? false),
                           onPressed: () =>
                               editEntity(context: context, entity: entity),
                         )

@@ -65,6 +65,7 @@ class _QuoteEditState extends State<QuoteEdit>
     final state = viewModel.state;
 
     return EditScaffold(
+      entity: invoice,
       title: invoice.isNew ? localization.newQuote : localization.editQuote,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {

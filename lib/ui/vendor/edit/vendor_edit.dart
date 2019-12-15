@@ -45,6 +45,7 @@ class _VendorEditState extends State<VendorEdit>
     final vendor = viewModel.vendor;
 
     return EditScaffold(
+      entity: vendor,
       title: vendor.isNew
           ? localization.newVendor
           : localization.editVendor,

@@ -56,6 +56,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     return ViewScaffold(
       entity: companyGateway,
       onBackPressed: () => viewModel.onBackPressed(),
+      isSettings: true,
       body: ListView(
         children: <Widget>[
           EntityHeader(

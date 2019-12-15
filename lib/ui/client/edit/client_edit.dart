@@ -47,6 +47,7 @@ class _ClientEditState extends State<ClientEdit>
     final client = viewModel.client;
 
     return EditScaffold(
+      entity: client,
       title: client.isNew ? localization.newClient : localization.editClient,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {

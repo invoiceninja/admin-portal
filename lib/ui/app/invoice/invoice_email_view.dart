@@ -260,13 +260,15 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     return DefaultTabController(
       length: 3,
       child: EditScaffold(
+        entity: invoice,
         title: localization.sendEmail,
         onCancelPressed: (context) =>
-            viewEntity(context: context, entity: widget.viewModel.invoice),
+            viewEntity(context: context, entity: invoice),
         appBarBottom: TabBar(
           controller: _controller,
           tabs: [

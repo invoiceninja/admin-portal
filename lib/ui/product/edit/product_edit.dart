@@ -110,6 +110,7 @@ class _ProductEditState extends State<ProductEdit> {
     final company = viewModel.company;
 
     return EditScaffold(
+      entity: product,
       title: viewModel.product.isNew
           ? localization.newProduct
           : localization.editProduct,

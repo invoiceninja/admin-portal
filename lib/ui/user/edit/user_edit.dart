@@ -108,6 +108,7 @@ class _UserEditState extends State<UserEdit> {
     final userCompany = user.userCompany;
 
     return EditScaffold(
+      entity: user,
       title:
           viewModel.user.isNew ? localization.newUser : localization.editUser,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),

@@ -35,6 +35,7 @@ class _GroupViewState extends State<GroupView> {
 
     return ViewScaffold(
       entity: group,
+      isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[

@@ -67,6 +67,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final state = viewModel.state;
 
     return EditScaffold(
+      entity: invoice,
       title: invoice.isNew
           ? localization.newInvoice
           : localization.editInvoice,

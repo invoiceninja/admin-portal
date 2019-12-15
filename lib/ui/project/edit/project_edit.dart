@@ -106,6 +106,7 @@ class _ProjectEditState extends State<ProjectEdit> {
     final project = viewModel.project;
 
     return EditScaffold(
+      entity: project,
       title: project.isNew
           ? localization.newProject
           : localization.editProject,

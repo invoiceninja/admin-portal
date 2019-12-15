@@ -71,6 +71,7 @@ class _DocumentEditState extends State<DocumentEdit> {
     final document = viewModel.document;
 
     return EditScaffold(
+      entity: document,
       title: document.isNew
           ? localization.newDocument
           : localization.editDocument,
