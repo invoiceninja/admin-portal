@@ -372,12 +372,13 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
 class CustomFieldSelector extends StatelessWidget {
   const CustomFieldSelector({
+    Key key,
     @required this.customNumber,
     @required this.entityType,
     @required this.customValues,
     @required this.onSelected,
     @required this.customFilters,
-  });
+  }) : super(key: key);
 
   final int customNumber;
   final EntityType entityType;
@@ -388,29 +389,28 @@ class CustomFieldSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, BuiltList<String>>(
-      converter: (Store<AppState> store) => customFilters,
+      converter: (Store<AppState> store) =>
+          store.state.getListState(entityType).getCustomFilters(customNumber),
       builder: (BuildContext context, customFilters) {
+        print('Store Conecter: $customFilters');
         return Container(
           color: Theme.of(context).backgroundColor,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Column(
-                children: customValues.map<Widget>((customField) {
-                  final isSelected = customFilters.contains(customField);
-                  return CheckboxListTile(
-                    key: ValueKey('__custom_${customNumber}_${isSelected}__'),
-                    title: Text(customField),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: isSelected,
-                    activeColor: Theme.of(context).accentColor,
-                    dense: true,
-                    onChanged: (value) => onSelected(customField),
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            Column(
+              children: customValues.map<Widget>((customField) {
+                print('Column: $customFilters');
+                return CheckboxListTile(
+                  key: Key(customField.toString()),
+                  title: Text(customField),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: customFilters.contains(customField),
+                  activeColor: Theme.of(context).accentColor,
+                  dense: true,
+                  onChanged: (value) => onSelected(customField),
+                );
+              }).toList(),
+            ),
+          ]),
         );
       },
     );

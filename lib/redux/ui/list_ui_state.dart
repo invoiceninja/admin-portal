@@ -47,6 +47,21 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   BuiltList<EntityStatus> get statusFilters;
 
+  BuiltList<String> getCustomFilters(int fieldNumber) {
+    switch (fieldNumber) {
+      case 1:
+        return custom1Filters;
+      case 2:
+        return custom2Filters;
+      case 3:
+        return custom3Filters;
+      case 4:
+        return custom4Filters;
+      default:
+        return null;
+    }
+  }
+
   BuiltList<String> get custom1Filters;
 
   BuiltList<String> get custom2Filters;
