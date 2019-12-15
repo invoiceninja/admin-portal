@@ -244,6 +244,13 @@ abstract class CompanyEntity extends Object
     } else {
       final data = values.split('|').last.split(',');
 
+      if (data.length == 1) {
+        final first = data.first;
+        if (first == kFieldTypeSwitch) {
+          return [getCustomFieldLabel(field)];
+        }
+    }
+
       if (excludeBlank) {
         return data.where((data) => data.isNotEmpty).toList();
       } else {
