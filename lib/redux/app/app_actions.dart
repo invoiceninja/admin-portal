@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -21,6 +22,7 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -662,49 +664,80 @@ void editEntityById(
     Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
+  final localization = AppLocalization.of(context);
   final map = store.state.getEntityMap(entityType);
+  final entity = map[entityId] as BaseEntity;
 
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(EditClient(
-        client: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+      store.dispatch(
+        EditClient(
+            client: map[entityId],
+            navigator: navigator,
+            completer: completer ??
+                snackBarCompleter<ClientEntity>(
+                    context,
+                    entity.isNew
+                        ? localization.createdClient
+                        : localization.updatedClient)),
+      );
       break;
     case EntityType.user:
-      store.dispatch(EditUser(
-        user: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+      store.dispatch(
+        EditUser(
+            user: map[entityId],
+            navigator: navigator,
+            completer: completer ??
+                snackBarCompleter<UserEntity>(
+                    context,
+                    entity.isNew
+                        ? localization.createdUser
+                        : localization.updatedUser)),
+      );
       break;
     case EntityType.project:
       store.dispatch(EditProject(
-        project: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+          project: map[entityId],
+          navigator: navigator,
+          completer: completer ??
+              snackBarCompleter<ProjectEntity>(
+                  context,
+                  entity.isNew
+                      ? localization.createdProject
+                      : localization.updatedProject)));
       break;
     case EntityType.taxRate:
       store.dispatch(EditTaxRate(
-        taxRate: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+          taxRate: map[entityId],
+          navigator: navigator,
+          completer: completer ??
+              snackBarCompleter<TaxRateEntity>(
+                  context,
+                  entity.isNew
+                      ? localization.createdTaxRate
+                      : localization.updatedTaxRate)));
       break;
     case EntityType.companyGateway:
       store.dispatch(EditCompanyGateway(
-        companyGateway: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+          companyGateway: map[entityId],
+          navigator: navigator,
+          completer: completer ??
+              snackBarCompleter<CompanyGatewayEntity>(
+                  context,
+                  entity.isNew
+                      ? localization.createdCompanyGateway
+                      : localization.updatedCompanyGateway)));
       break;
     case EntityType.invoice:
       store.dispatch(EditInvoice(
         invoice: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<InvoiceEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdInvoice
+                    : localization.updatedInvoice),
         invoiceItemIndex: subIndex,
       ));
       break;
@@ -715,7 +748,12 @@ void editEntityById(
       store.dispatch(EditQuote(
         quote: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<InvoiceEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdQuote
+                    : localization.updatedQuote),
         quoteItemIndex: subIndex,
       ));
       break;
@@ -723,28 +761,47 @@ void editEntityById(
       store.dispatch(EditVendor(
         vendor: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<VendorEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdVendor
+                    : localization.updatedVendor),
       ));
       break;
     case EntityType.product:
       store.dispatch(EditProduct(
-        product: map[entityId],
-        navigator: navigator,
-        completer: completer,
-      ));
+          product: map[entityId],
+          navigator: navigator,
+          completer: completer ??
+              snackBarCompleter<ProductEntity>(
+                  context,
+                  entity.isNew
+                      ? localization.createdProduct
+                      : localization.updatedProduct)));
       break;
     case EntityType.task:
       store.dispatch(EditTask(
         task: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<TaskEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdTask
+                    : localization.updatedTask),
       ));
       break;
     case EntityType.expense:
       store.dispatch(EditExpense(
         expense: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<ExpenseEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdExpense
+                    : localization.updatedExpense),
       ));
       break;
     //case EntityType.expenseCategory:
@@ -757,14 +814,24 @@ void editEntityById(
       store.dispatch(EditPayment(
         payment: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<PaymentEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdPayment
+                    : localization.updatedPayment),
       ));
       break;
     case EntityType.group:
       store.dispatch(EditGroup(
         group: map[entityId],
         navigator: navigator,
-        completer: completer,
+        completer: completer ??
+            snackBarCompleter<GroupEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdGroup
+                    : localization.updatedGroup),
       ));
       break;
     // TODO Add to starter
@@ -782,3 +849,59 @@ void editEntity(
         entityType: entity.entityType,
         subIndex: subIndex,
         completer: completer);
+
+void handleEntityAction(
+    BuildContext context, BaseEntity entity, dynamic action) {
+  handleEntitiesActions(context, [entity], action);
+}
+
+void handleEntitiesActions(
+    BuildContext context, List<BaseEntity> entities, dynamic action) {
+  if (entities.isEmpty) {
+    return;
+  }
+
+  switch (entities.first.entityType) {
+    case EntityType.client:
+      handleClientAction(context, entities, action);
+      break;
+    case EntityType.product:
+      handleProductAction(context, entities, action);
+      break;
+    case EntityType.invoice:
+      handleInvoiceAction(context, entities, action);
+      break;
+    case EntityType.payment:
+      handlePaymentAction(context, entities, action);
+      break;
+    case EntityType.quote:
+      handleQuoteAction(context, entities, action);
+      break;
+    case EntityType.task:
+      handleTaskAction(context, entities, action);
+      break;
+    case EntityType.project:
+      handleProjectAction(context, entities, action);
+      break;
+    case EntityType.expense:
+      handleExpenseAction(context, entities, action);
+      break;
+    case EntityType.vendor:
+      handleVendorAction(context, entities, action);
+      break;
+    case EntityType.user:
+      handleUserAction(context, entities, action);
+      break;
+    case EntityType.companyGateway:
+      handleCompanyGatewayAction(context, entities, action);
+      break;
+    case EntityType.taxRate:
+      handleTaxRateAction(context, entities, action);
+      break;
+    case EntityType.group:
+      handleGroupAction(context, entities, action);
+      break;
+    case EntityType.document:
+      handleDocumentAction(context, entities, action);
+  }
+}

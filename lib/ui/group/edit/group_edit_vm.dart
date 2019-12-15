@@ -46,7 +46,6 @@ class GroupEditVM {
     @required this.origGroup,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -63,12 +62,6 @@ class GroupEditVM {
       company: state.company,
       onChanged: (GroupEntity group) {
         store.dispatch(UpdateGroup(group));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(GroupSettingsScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              group.isNew ? GroupSettingsScreen.route : GroupViewScreen.route));
-        }
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: GroupEntity(), force: true);
@@ -104,7 +97,6 @@ class GroupEditVM {
   final Function(GroupEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final GroupEntity origGroup;

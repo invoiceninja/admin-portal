@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -108,196 +109,169 @@ class _UserEditState extends State<UserEdit> {
     final user = viewModel.user;
     final userCompany = user.userCompany;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      title:
+          viewModel.user.isNew ? localization.newUser : localization.editUser,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.user.isNew
-              ? localization.newUser
-              : localization.editUser),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
+      body: AppForm(
+        focusNode: _focusNode,
+        formKey: _formKey,
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                label: localization.firstName,
+                controller: _firstNameController,
+                validator: (val) => val.isEmpty || val.trim().isEmpty
+                    ? localization.pleaseEnterAFirstName
+                    : null,
+                autovalidate: autoValidate,
               ),
-            ActionFlatButton(
-              tooltip: localization.save,
-              isVisible: user.isActive,
-              isDirty: user.isNew || user != viewModel.origUser,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            ),
-          ],
-        ),
-        body: AppForm(
-          focusNode: _focusNode,
-          formKey: _formKey,
-          children: <Widget>[
+              DecoratedFormField(
+                label: localization.lastName,
+                controller: _lastNameController,
+                validator: (val) => val.isEmpty || val.trim().isEmpty
+                    ? localization.pleaseEnterALastName
+                    : null,
+                autovalidate: autoValidate,
+              ),
+              DecoratedFormField(
+                label: localization.email,
+                controller: _emailController,
+                validator: (val) => val.isEmpty || val.trim().isEmpty
+                    ? localization.pleaseEnterYourEmail
+                    : null,
+                autovalidate: autoValidate,
+              ),
+              DecoratedFormField(
+                label: localization.phone,
+                controller: _phoneController,
+              ),
+            ],
+          ),
+          FormCard(
+            children: <Widget>[
+              SwitchListTile(
+                title: Text(localization.administrator),
+                subtitle: Text(localization.administratorHelp),
+                value: userCompany.isAdmin ?? false,
+                onChanged: (value) => viewModel.onUserChanged(
+                    user.rebuild((b) => b..userCompany.isAdmin = value)),
+                activeColor: Theme.of(context).accentColor,
+              ),
+            ],
+          ),
+          if (!userCompany.isAdmin)
             FormCard(
-              children: <Widget>[
-                DecoratedFormField(
-                  label: localization.firstName,
-                  controller: _firstNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterAFirstName
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.lastName,
-                  controller: _lastNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterALastName
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.email,
-                  controller: _emailController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterYourEmail
-                      : null,
-                  autovalidate: autoValidate,
-                ),
-                DecoratedFormField(
-                  label: localization.phone,
-                  controller: _phoneController,
-                ),
-              ],
-            ),
-            FormCard(
-              children: <Widget>[
-                SwitchListTile(
-                  title: Text(localization.administrator),
-                  subtitle: Text(localization.administratorHelp),
-                  value: userCompany.isAdmin ?? false,
-                  onChanged: (value) => viewModel.onUserChanged(
-                      user.rebuild((b) => b..userCompany.isAdmin = value)),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-              ],
-            ),
-            if (!userCompany.isAdmin)
-              FormCard(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: [
-                      DataColumn(
-                        label: SizedBox(),
-                      ),
-                      DataColumn(
-                        label: Text(localization.create),
-                      ),
-                      DataColumn(
-                        label: Text(localization.view),
-                      ),
-                      DataColumn(
-                        label: Text(localization.edit),
-                      ),
-                    ],
-                    rows: [
-                      DataRow(cells: [
-                        DataCell(Text(localization.all)),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                      label: SizedBox(),
+                    ),
+                    DataColumn(
+                      label: Text(localization.create),
+                    ),
+                    DataColumn(
+                      label: Text(localization.view),
+                    ),
+                    DataColumn(
+                      label: Text(localization.edit),
+                    ),
+                  ],
+                  rows: [
+                    DataRow(cells: [
+                      DataCell(Text(localization.all)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionCreateAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionCreateAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionCreateAll)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionViewAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionViewAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionViewAll)),
+                      DataCell(
+                          _PermissionCheckbox(
+                            userCompany: userCompany,
+                            permission: kPermissionEditAll,
+                            onChanged: (value) =>
+                                _togglePermission(kPermissionEditAll),
+                          ),
+                          onTap: () => _togglePermission(kPermissionEditAll)),
+                    ]),
+                    ...<EntityType>[
+                      EntityType.client,
+                      EntityType.product,
+                      EntityType.invoice,
+                      EntityType.payment,
+                      EntityType.quote,
+                    ].map((EntityType type) {
+                      final createPermission = 'create_' + toSnakeCase('$type');
+                      final editPermission = 'edit_' + toSnakeCase('$type');
+                      final viewPermission = 'view_' + toSnakeCase('$type');
+                      return DataRow(cells: [
+                        DataCell(Text(localization.lookup('$type'))),
                         DataCell(
                             _PermissionCheckbox(
                               userCompany: userCompany,
-                              permission: kPermissionCreateAll,
+                              permission: createPermission,
                               onChanged: (value) =>
-                                  _togglePermission(kPermissionCreateAll),
+                                  _togglePermission(createPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionCreateAll),
                             ),
-                            onTap: () =>
-                                _togglePermission(kPermissionCreateAll)),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionCreateAll)
+                                ? null
+                                : () => _togglePermission(createPermission)),
                         DataCell(
                             _PermissionCheckbox(
                               userCompany: userCompany,
-                              permission: kPermissionViewAll,
+                              permission: viewPermission,
                               onChanged: (value) =>
-                                  _togglePermission(kPermissionViewAll),
+                                  _togglePermission(viewPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionViewAll),
                             ),
-                            onTap: () => _togglePermission(kPermissionViewAll)),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionViewAll)
+                                ? null
+                                : () => _togglePermission(viewPermission)),
                         DataCell(
                             _PermissionCheckbox(
                               userCompany: userCompany,
-                              permission: kPermissionEditAll,
+                              permission: editPermission,
                               onChanged: (value) =>
-                                  _togglePermission(kPermissionEditAll),
+                                  _togglePermission(editPermission),
+                              checkAll: userCompany.permissions
+                                  .contains(kPermissionEditAll),
                             ),
-                            onTap: () => _togglePermission(kPermissionEditAll)),
-                      ]),
-                      ...<EntityType>[
-                        EntityType.client,
-                        EntityType.product,
-                        EntityType.invoice,
-                        EntityType.payment,
-                        EntityType.quote,
-                      ].map((EntityType type) {
-                        final createPermission =
-                            'create_' + toSnakeCase('$type');
-                        final editPermission = 'edit_' + toSnakeCase('$type');
-                        final viewPermission = 'view_' + toSnakeCase('$type');
-                        return DataRow(cells: [
-                          DataCell(Text(localization.lookup('$type'))),
-                          DataCell(
-                              _PermissionCheckbox(
-                                userCompany: userCompany,
-                                permission: createPermission,
-                                onChanged: (value) =>
-                                    _togglePermission(createPermission),
-                                checkAll: userCompany.permissions
-                                    .contains(kPermissionCreateAll),
-                              ),
-                              onTap: userCompany.permissions
-                                      .contains(kPermissionCreateAll)
-                                  ? null
-                                  : () => _togglePermission(createPermission)),
-                          DataCell(
-                              _PermissionCheckbox(
-                                userCompany: userCompany,
-                                permission: viewPermission,
-                                onChanged: (value) =>
-                                    _togglePermission(viewPermission),
-                                checkAll: userCompany.permissions
-                                    .contains(kPermissionViewAll),
-                              ),
-                              onTap: userCompany.permissions
-                                      .contains(kPermissionViewAll)
-                                  ? null
-                                  : () => _togglePermission(viewPermission)),
-                          DataCell(
-                              _PermissionCheckbox(
-                                userCompany: userCompany,
-                                permission: editPermission,
-                                onChanged: (value) =>
-                                    _togglePermission(editPermission),
-                                checkAll: userCompany.permissions
-                                    .contains(kPermissionEditAll),
-                              ),
-                              onTap: userCompany.permissions
-                                      .contains(kPermissionEditAll)
-                                  ? null
-                                  : () => _togglePermission(editPermission)),
-                        ]);
-                      }).toList()
-                    ],
-                  ),
+                            onTap: userCompany.permissions
+                                    .contains(kPermissionEditAll)
+                                ? null
+                                : () => _togglePermission(editPermission)),
+                      ]);
+                    }).toList()
+                  ],
                 ),
-              )
-          ],
-        ),
+              ),
+            )
+        ],
       ),
     );
   }

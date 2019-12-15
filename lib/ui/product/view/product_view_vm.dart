@@ -40,7 +40,6 @@ class ProductViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -83,11 +82,6 @@ class ProductViewVM {
       onRefreshed: (context, loadActivities) =>
           _handleRefresh(context, loadActivities),
           */
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleProductAction(context, [product], action),
     );
@@ -98,7 +92,6 @@ class ProductViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;

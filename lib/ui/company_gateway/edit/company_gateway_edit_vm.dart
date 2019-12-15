@@ -46,7 +46,6 @@ class CompanyGatewayEditVM {
     @required this.origCompanyGateway,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -63,13 +62,6 @@ class CompanyGatewayEditVM {
       company: state.company,
       onChanged: (CompanyGatewayEntity companyGateway) {
         store.dispatch(UpdateCompanyGateway(companyGateway));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(CompanyGatewayScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(companyGateway.isNew
-              ? CompanyGatewayScreen.route
-              : CompanyGatewayViewScreen.route));
-        }
       },
       onCancelPressed: (BuildContext context) {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
@@ -111,7 +103,6 @@ class CompanyGatewayEditVM {
   final Function(CompanyGatewayEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final CompanyGatewayEntity origCompanyGateway;

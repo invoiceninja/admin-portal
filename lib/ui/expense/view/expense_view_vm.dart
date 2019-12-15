@@ -46,7 +46,6 @@ class ExpenseViewVM {
     @required this.onEntityAction,
     @required this.onEntityPressed,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
@@ -85,11 +84,6 @@ class ExpenseViewVM {
                   context, AppLocalization.of(context).updatedExpense));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ExpenseScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
-          }
-        },
         onEntityPressed: (BuildContext context, EntityType entityType,
             [longPress = false]) {
           switch (entityType) {
@@ -157,7 +151,6 @@ class ExpenseViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;

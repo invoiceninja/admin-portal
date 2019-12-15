@@ -43,7 +43,6 @@ class VendorViewVM {
     @required this.onEntityAction,
     @required this.onEntityPressed,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -77,11 +76,6 @@ class VendorViewVM {
                 context, AppLocalization.of(context).updatedVendor));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(VendorScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(VendorScreen.route));
-        }
-      },
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
         switch (entityType) {
@@ -115,7 +109,6 @@ class VendorViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext) onAddExpensePressed;
   final bool isSaving;

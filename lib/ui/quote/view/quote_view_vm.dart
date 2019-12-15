@@ -54,7 +54,6 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function onBackPressed,
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
@@ -71,7 +70,6 @@ class QuoteViewVM extends EntityViewVM {
           onPaymentsPressed: onPaymentsPressed,
           onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
-          onBackPressed: onBackPressed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
@@ -107,11 +105,6 @@ class QuoteViewVM extends EntityViewVM {
                 context, AppLocalization.of(context).updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-        }
-      },
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(

@@ -41,7 +41,6 @@ class StubViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -75,11 +74,6 @@ class StubViewVM {
                 context, AppLocalization.of(context).updatedStub));
         },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(StubScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(StubScreen.route));
-          }
-        },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleStubAction(context, stub, action),
         );
@@ -90,7 +84,6 @@ class StubViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

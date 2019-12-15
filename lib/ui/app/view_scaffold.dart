@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
+import 'buttons/edit_icon_button.dart';
 import 'entities/entity_state_title.dart';
 
 class ViewScaffold extends StatelessWidget {
@@ -19,6 +23,10 @@ class ViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final userCompany = state.userCompany;
+
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -28,6 +36,24 @@ class ViewScaffold extends StatelessWidget {
           automaticallyImplyLeading: isMobile(context),
           title: EntityStateTitle(entity: entity),
           bottom: appBarBottom,
+          actions: entity.isNew
+              ? []
+              : [
+                  userCompany.canEditEntity(entity)
+                      ? EditIconButton(
+                          isVisible: !entity.isDeleted,
+                          onPressed: () =>
+                              editEntity(context: context, entity: entity),
+                        )
+                      : Container(),
+                  ActionMenuButton(
+                    isSaving: state.isSaving,
+                    entity: entity,
+                    onSelected: (context, action) =>
+                        handleEntityAction(context, entity, action),
+                    entityActions: entity.getActions(userCompany: userCompany),
+                  )
+                ],
         ),
         body: body,
       ),

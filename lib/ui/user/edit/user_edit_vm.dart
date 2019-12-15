@@ -47,7 +47,6 @@ class UserEditVM {
     @required this.origUser,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -65,12 +64,6 @@ class UserEditVM {
       company: state.company,
       onUserChanged: (UserEntity user) {
         store.dispatch(UpdateUser(user));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(UserScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              user.isNew ? UserScreen.route : UserViewScreen.route));
-        }
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: UserEntity(), force: true);
@@ -107,7 +100,6 @@ class UserEditVM {
   final Function(UserEntity) onUserChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final UserEntity origUser;

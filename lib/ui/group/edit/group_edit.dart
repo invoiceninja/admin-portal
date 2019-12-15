@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
@@ -79,57 +80,33 @@ class _GroupEditState extends State<GroupEdit> {
     final localization = AppLocalization.of(context);
     final group = viewModel.group;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      title: group.isNew ? localization.newGroup : localization.editGroup,
+      onSavePressed: (context) {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.group.isNew
-              ? localization.newGroup
-              : localization.editGroup),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
+      body: Form(
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
+            return ListView(
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    DecoratedFormField(
+                      label: localization.name,
+                      controller: _nameController,
+                    ),
+                  ],
                 ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-            ActionFlatButton(
-              tooltip: localization.save,
-              isVisible: !(group.isDeleted ?? false),
-              // TODO remove this
-              isDirty: group.isNew || group != viewModel.origGroup,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            ),
-          ],
+              ],
+            );
+          },
         ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      DecoratedFormField(
-                        label: localization.name,
-                        controller: _nameController,
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            })),
       ),
     );
   }

@@ -47,7 +47,6 @@ class TaskViewVM {
     @required this.state,
     @required this.onEntityAction,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.onClientPressed,
     @required this.onProjectPressed,
@@ -157,11 +156,6 @@ class TaskViewVM {
          */
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(TaskScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(TaskScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleTaskAction(context, [task], action),
     );
@@ -174,7 +168,6 @@ class TaskViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, [TaskTime]) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onFabPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;

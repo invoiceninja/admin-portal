@@ -42,7 +42,6 @@ class ProjectViewVM {
     @required this.onEntityAction,
     @required this.onTasksPressed,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onAddTaskPressed,
     @required this.onClientPressed,
     @required this.onRefreshed,
@@ -113,11 +112,6 @@ class ProjectViewVM {
               ..clientId = project.clientId),
             force: true);
       },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleProjectAction(context, [project], action),
     );
@@ -130,7 +124,6 @@ class ProjectViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext, {bool longPress}) onTasksPressed;
   final Function(BuildContext) onRefreshed;

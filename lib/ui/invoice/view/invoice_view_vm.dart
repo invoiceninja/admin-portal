@@ -50,7 +50,6 @@ class EntityViewVM {
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onClientPressed,
     @required this.onPaymentsPressed,
     @required this.onPaymentPressed,
@@ -70,7 +69,6 @@ class EntityViewVM {
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed;
   final Function(BuildContext) onRefreshed;
-  final Function onBackPressed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
@@ -90,7 +88,6 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
-    Function onBackPressed,
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
@@ -107,7 +104,6 @@ class InvoiceViewVM extends EntityViewVM {
             onPaymentPressed: onPaymentPressed,
             onPaymentsPressed: onPaymentsPressed,
             onRefreshed: onRefreshed,
-            onBackPressed: onBackPressed,
             onUploadDocument: onUploadDocument,
             onDeleteDocument: onDeleteDocument,
             onViewExpense: onViewExpense);
@@ -140,11 +136,6 @@ class InvoiceViewVM extends EntityViewVM {
                 context, AppLocalization.of(context).updatedInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(InvoiceScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
-        }
-      },
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
