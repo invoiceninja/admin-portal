@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -58,7 +58,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final company = viewModel.company;
     final designs = company.getInvoiceDesigns();
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: localization.invoiceDesign,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(

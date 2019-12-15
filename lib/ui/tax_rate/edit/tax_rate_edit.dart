@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -79,7 +79,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: viewModel.taxRate.isNew
           ? localization.newTaxRate
           : localization.editTaxRate,

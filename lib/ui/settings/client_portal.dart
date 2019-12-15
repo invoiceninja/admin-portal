@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -115,7 +115,7 @@ class _ClientPortalState extends State<ClientPortal>
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: localization.clientPortal,
       onSavePressed: (context) => _onSavePressed(context),
       appBarBottom: TabBar(

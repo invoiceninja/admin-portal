@@ -5,8 +5,8 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class SettingsScaffold extends StatelessWidget {
-  const SettingsScaffold({
+class EditScaffold extends StatelessWidget {
+  const EditScaffold({
     Key key,
     @required this.title,
     @required this.onSavePressed,

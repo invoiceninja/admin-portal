@@ -208,10 +208,7 @@ abstract class PaymentEntity extends Object
   }
 
   @override
-  String get listDisplayName {
-    // TODO change to payment number
-    return id;
-  }
+  String get listDisplayName => number ?? '';
 
   @override
   double get listDisplayAmount => amount;

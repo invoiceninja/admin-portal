@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -183,7 +183,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: localization.companyDetails,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(

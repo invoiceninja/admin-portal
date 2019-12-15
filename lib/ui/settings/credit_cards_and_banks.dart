@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditCardsAndBanks extends StatefulWidget {
@@ -69,7 +69,7 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
     final localization = AppLocalization.of(context);
     //final viewModel = widget.viewModel;
 
-    return SettingsScaffold(
+    return EditScaffold(
       body: SizedBox(),
       onSavePressed: null,
       title: localization.creditCardsAndBanks,

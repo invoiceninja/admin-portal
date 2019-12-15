@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -67,7 +67,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
           : companyGateway.gateway.name,

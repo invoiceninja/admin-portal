@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/settings/data_visualizations_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DataVisualizations extends StatefulWidget {
@@ -59,7 +59,7 @@ class _DataVisualizationsState extends State<DataVisualizations> {
     final localization = AppLocalization.of(context);
     //final viewModel = widget.viewModel;
 
-    return SettingsScaffold(
+    return EditScaffold(
       body: SizedBox(),
       onSavePressed: null,
       title: localization.dataVisualizations,

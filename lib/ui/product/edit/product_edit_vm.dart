@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
-import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -45,7 +44,6 @@ class ProductEditVM {
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.onEntityAction,
     @required this.isSaving,
     @required this.isDirty,
@@ -64,11 +62,6 @@ class ProductEditVM {
       origProduct: state.productState.map[product.id],
       onChanged: (ProductEntity product) {
         store.dispatch(UpdateProduct(product));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: ProductEntity(), force: true);
@@ -122,7 +115,6 @@ class ProductEditVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function onBackPressed;
   final bool isSaving;
   final bool isDirty;
 }

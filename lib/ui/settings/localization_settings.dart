@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -81,7 +81,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
     final settings = viewModel.settings;
     final company = viewModel.company;
 
-    return SettingsScaffold(
+    return EditScaffold(
       title: localization.localization,
       onSavePressed: viewModel.onSavePressed,
       body: AppForm(

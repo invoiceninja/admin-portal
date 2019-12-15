@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,7 +44,6 @@ class ClientEditVM {
     @required this.origClient,
     @required this.onChanged,
     @required this.onSavePressed,
-    @required this.onBackPressed,
     @required this.onCancelPressed,
     @required this.staticState,
     @required this.copyBillingAddress,
@@ -63,12 +61,6 @@ class ClientEditVM {
         origClient: state.clientState.map[client.id],
         staticState: state.staticState,
         isSaving: state.isSaving,
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(
-                client.isNew ? ClientScreen.route : ClientViewScreen.route));
-          }
-        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         copyBillingAddress: () =>
@@ -137,7 +129,6 @@ class ClientEditVM {
   final ClientEntity origClient;
   final Function(ClientEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
   final Function(BuildContext) onCancelPressed;
   final StaticState staticState;
   final Function() copyShippingAddress;

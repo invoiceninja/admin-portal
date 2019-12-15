@@ -55,7 +55,7 @@ class HistoryDrawer extends StatelessWidget {
               if (state.prefState.isHistoryFloated)
                 Builder(
                   builder: (context) => IconButton(
-                    icon: Icon(Icons.menu),
+                    icon: Icon(Icons.close),
                     onPressed: () {
                       Navigator.pop(context);
                     },
