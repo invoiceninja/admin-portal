@@ -199,6 +199,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       _filterCustom1Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return CustomFieldSelector(
+          customNumber: 1,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom1Filters,
           onSelected: (field) => widget.onSelectedCustom1(field),
@@ -220,6 +221,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       _filterCustom2Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return CustomFieldSelector(
+          customNumber: 2,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom2Filters,
           onSelected: (field) => widget.onSelectedCustom2(field),
@@ -241,6 +243,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       _filterCustom3Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return CustomFieldSelector(
+          customNumber: 3,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom3Filters,
           onSelected: (field) => widget.onSelectedCustom3(field),
@@ -262,6 +265,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       _filterCustom4Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return CustomFieldSelector(
+          customNumber: 4,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom4Filters,
           onSelected: (field) => widget.onSelectedCustom4(field),
@@ -368,12 +372,14 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
 class CustomFieldSelector extends StatelessWidget {
   const CustomFieldSelector({
+    @required this.customNumber,
     @required this.entityType,
     @required this.customValues,
     @required this.onSelected,
     @required this.customFilters,
   });
 
+  final int customNumber;
   final EntityType entityType;
   final List<String> customValues;
   final Function(String) onSelected;
@@ -391,11 +397,12 @@ class CustomFieldSelector extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: customValues.map<Widget>((customField) {
+                  final isSelected = customFilters.contains(customField);
                   return CheckboxListTile(
-                    key: Key(customField.toString()),
+                    key: ValueKey('__custom_${customNumber}_${isSelected}__'),
                     title: Text(customField),
                     controlAffinity: ListTileControlAffinity.leading,
-                    value: customFilters.contains(customField),
+                    value: isSelected,
                     activeColor: Theme.of(context).accentColor,
                     dense: true,
                     onChanged: (value) => onSelected(customField),
