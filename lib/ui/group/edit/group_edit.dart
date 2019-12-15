@@ -42,8 +42,6 @@ class _GroupEditState extends State<GroupEdit> {
 
     final group = widget.viewModel.group;
     _nameController.text = group.name;
-    _custom1Controller.text = group.customValue1;
-    _custom2Controller.text = group.customValue2;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -64,8 +62,7 @@ class _GroupEditState extends State<GroupEdit> {
     _debouncer.run(() {
       final group = widget.viewModel.group.rebuild((b) => b
         ..name = _nameController.text.trim()
-        ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+      );
       if (group != widget.viewModel.group) {
         widget.viewModel.onChanged(group);
       }

@@ -50,8 +50,6 @@ abstract class GroupEntity extends Object
       isChanged: false,
       name: '',
       settings: SettingsEntity(),
-      customValue1: '',
-      customValue2: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -66,16 +64,6 @@ abstract class GroupEntity extends Object
   }
 
   String get name;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'custom_value1')
-  String get customValue1;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'custom_value2')
-  String get customValue2;
 
   SettingsEntity get settings;
 

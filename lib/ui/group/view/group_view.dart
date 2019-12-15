@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -43,10 +42,6 @@ class _GroupViewState extends State<GroupView> {
             color: Theme.of(context).backgroundColor,
             height: 12.0,
           ),
-          FieldGrid({
-            GroupFields.custom1: group.customValue1,
-            GroupFields.custom2: group.customValue2,
-          }),
           EntityListTile(
             icon: getEntityIcon(EntityType.client),
             title: localization.clients,

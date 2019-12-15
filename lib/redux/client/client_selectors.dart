@@ -65,6 +65,14 @@ List<String> filteredClientsSelector(
         !clientListState.custom2Filters.contains(client.customValue2)) {
       return false;
     }
+    if (clientListState.custom3Filters.isNotEmpty &&
+        !clientListState.custom3Filters.contains(client.customValue3)) {
+      return false;
+    }
+    if (clientListState.custom4Filters.isNotEmpty &&
+        !clientListState.custom4Filters.contains(client.customValue4)) {
+      return false;
+    }
     if (!client.matchesFilter(clientListState.filter) &&
         !group.matchesFilter(clientListState.filter)) {
       return false;

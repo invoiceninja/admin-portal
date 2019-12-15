@@ -246,10 +246,10 @@ abstract class CompanyEntity extends Object
 
       if (data.length == 1) {
         final first = data.first;
-        if (first == kFieldTypeSwitch) {
-          return [getCustomFieldLabel(field)];
+        if (first == kFieldTypeSwitch || first == kFieldTypeDate) {
+          return [];
         }
-    }
+      }
 
       if (excludeBlank) {
         return data.where((data) => data.isNotEmpty).toList();

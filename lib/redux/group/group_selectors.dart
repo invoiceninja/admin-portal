@@ -42,14 +42,6 @@ List<String> filteredGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
     if (!group.matchesStates(groupListState.stateFilters)) {
       return false;
     }
-    if (groupListState.custom1Filters.isNotEmpty &&
-        !groupListState.custom1Filters.contains(group.customValue1)) {
-      return false;
-    }
-    if (groupListState.custom2Filters.isNotEmpty &&
-        !groupListState.custom2Filters.contains(group.customValue2)) {
-      return false;
-    }
     return group.matchesFilter(groupListState.filter);
   }).toList();
 

@@ -115,18 +115,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -191,14 +179,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'settings':
@@ -433,10 +413,6 @@ class _$GroupEntity extends GroupEntity {
   @override
   final String name;
   @override
-  final String customValue1;
-  @override
-  final String customValue2;
-  @override
   final SettingsEntity settings;
   @override
   final bool isChanged;
@@ -460,8 +436,6 @@ class _$GroupEntity extends GroupEntity {
 
   _$GroupEntity._(
       {this.name,
-      this.customValue1,
-      this.customValue2,
       this.settings,
       this.isChanged,
       this.createdAt,
@@ -492,8 +466,6 @@ class _$GroupEntity extends GroupEntity {
     if (identical(other, this)) return true;
     return other is GroupEntity &&
         name == other.name &&
-        customValue1 == other.customValue1 &&
-        customValue2 == other.customValue2 &&
         settings == other.settings &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -515,11 +487,7 @@ class _$GroupEntity extends GroupEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc($jc(0, name.hashCode),
-                                                customValue1.hashCode),
-                                            customValue2.hashCode),
+                                    $jc($jc(0, name.hashCode),
                                         settings.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -535,8 +503,6 @@ class _$GroupEntity extends GroupEntity {
   String toString() {
     return (newBuiltValueToStringHelper('GroupEntity')
           ..add('name', name)
-          ..add('customValue1', customValue1)
-          ..add('customValue2', customValue2)
           ..add('settings', settings)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -556,14 +522,6 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
-
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
-
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
@@ -609,8 +567,6 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   GroupEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
       _settings = _$v.settings?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -645,8 +601,6 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
       _$result = _$v ??
           new _$GroupEntity._(
               name: name,
-              customValue1: customValue1,
-              customValue2: customValue2,
               settings: settings.build(),
               isChanged: isChanged,
               createdAt: createdAt,

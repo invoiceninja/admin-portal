@@ -392,13 +392,11 @@ class CustomFieldSelector extends StatelessWidget {
       converter: (Store<AppState> store) =>
           store.state.getListState(entityType).getCustomFilters(customNumber),
       builder: (BuildContext context, customFilters) {
-        print('Store Conecter: $customFilters');
         return Container(
           color: Theme.of(context).backgroundColor,
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
               children: customValues.map<Widget>((customField) {
-                print('Column: $customFilters');
                 return CheckboxListTile(
                   key: Key(customField.toString()),
                   title: Text(customField),
