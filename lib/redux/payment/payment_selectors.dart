@@ -67,11 +67,11 @@ List<String> filteredPaymentsSelector(
     final invoice =
         invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 
     if (paymentListState.filterEntityId != null) {
       if (paymentListState.filterEntityType == EntityType.client &&
-          invoice.clientId != paymentListState.filterEntityId) {
+          payment.clientId != paymentListState.filterEntityId) {
         return false;
       } else if (paymentListState.filterEntityType == EntityType.invoice &&
           payment.invoiceId != paymentListState.filterEntityId) {
@@ -109,8 +109,7 @@ EntityStats paymentStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
-    if (invoiceMap.containsKey(payment.invoiceId) &&
-        invoiceMap[payment.invoiceId].clientId == clientId) {
+    if (payment.clientId == clientId) {
       if (payment.isActive) {
         countActive++;
       } else if (payment.isArchived) {
