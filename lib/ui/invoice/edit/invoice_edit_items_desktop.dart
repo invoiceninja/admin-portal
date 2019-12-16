@@ -237,41 +237,46 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   ),
                 ),
               if (company.settings.numberOfItemTaxRates >= 1)
-                TaxRateDropdown(
-                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                      lineItems[index].rebuild((b) => b
-                        ..taxName1 = taxRate.name
-                        ..taxRate1 = taxRate.rate),
-                      index),
-                  labelText: null,
-                  initialTaxName: lineItems[index].taxName1,
-                  initialTaxRate: lineItems[index].taxRate1,
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: TaxRateDropdown(
+                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                        lineItems[index].rebuild((b) => b
+                          ..taxName1 = taxRate.name
+                          ..taxRate1 = taxRate.rate),
+                        index),
+                    labelText: null,
+                    initialTaxName: lineItems[index].taxName1,
+                    initialTaxRate: lineItems[index].taxRate1,
+                  ),
                 ),
-
               if (company.settings.numberOfItemTaxRates >= 2)
-                TaxRateDropdown(
-                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                      lineItems[index].rebuild((b) => b
-                        ..taxName2 = taxRate.name
-                        ..taxRate2 = taxRate.rate),
-                      index),
-                  labelText: null,
-                  initialTaxName: lineItems[index].taxName2,
-                  initialTaxRate: lineItems[index].taxRate2,
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: TaxRateDropdown(
+                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                        lineItems[index].rebuild((b) => b
+                          ..taxName2 = taxRate.name
+                          ..taxRate2 = taxRate.rate),
+                        index),
+                    labelText: null,
+                    initialTaxName: lineItems[index].taxName2,
+                    initialTaxRate: lineItems[index].taxRate2,
+                  ),
                 ),
-
               if (company.settings.numberOfItemTaxRates >= 3)
-                TaxRateDropdown(
-                  onSelected: (taxRate) =>
-                      viewModel.onChangedInvoiceItem(
-                          lineItems[index].rebuild((b) =>
-                          b
-                            ..taxName3 = taxRate.name
-                            ..taxRate3 = taxRate.rate),
-                          index),
-                  labelText: null,
-                  initialTaxName: lineItems[index].taxName3,
-                  initialTaxRate: lineItems[index].taxRate3,
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: TaxRateDropdown(
+                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                        lineItems[index].rebuild((b) => b
+                          ..taxName3 = taxRate.name
+                          ..taxRate3 = taxRate.rate),
+                        index),
+                    labelText: null,
+                    initialTaxName: lineItems[index].taxName3,
+                    initialTaxRate: lineItems[index].taxRate3,
+                  ),
                 ),
               Padding(
                 padding: const EdgeInsets.only(right: kTableColumnGap),
