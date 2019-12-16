@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -74,6 +75,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
 
     int lastIndex = 5;
+    lastIndex += company.settings.numberOfItemTaxRates;
     if (company.hasCustomField(CustomFieldType.product1)) {
       lastIndex++;
     }
@@ -114,6 +116,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             if (company.hasCustomField(CustomFieldType.product4))
               TableHeader(
                   company.getCustomFieldLabel(CustomFieldType.product4)),
+            if (company.settings.numberOfItemTaxRates >= 1)
+              TableHeader(localization.tax),
+            if (company.settings.numberOfItemTaxRates >= 2)
+              TableHeader(localization.tax),
+            if (company.settings.numberOfItemTaxRates >= 3)
+              TableHeader(localization.tax),
             TableHeader(localization.unitCost, isNumeric: true),
             TableHeader(localization.quantity, isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
@@ -227,6 +235,43 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             .rebuild((b) => b..customValue4 = value),
                         index),
                   ),
+                ),
+              if (company.settings.numberOfItemTaxRates >= 1)
+                TaxRateDropdown(
+                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                      lineItems[index].rebuild((b) => b
+                        ..taxName1 = taxRate.name
+                        ..taxRate1 = taxRate.rate),
+                      index),
+                  labelText: null,
+                  initialTaxName: lineItems[index].taxName1,
+                  initialTaxRate: lineItems[index].taxRate1,
+                ),
+
+              if (company.settings.numberOfItemTaxRates >= 2)
+                TaxRateDropdown(
+                  onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                      lineItems[index].rebuild((b) => b
+                        ..taxName2 = taxRate.name
+                        ..taxRate2 = taxRate.rate),
+                      index),
+                  labelText: null,
+                  initialTaxName: lineItems[index].taxName2,
+                  initialTaxRate: lineItems[index].taxRate2,
+                ),
+
+              if (company.settings.numberOfItemTaxRates >= 3)
+                TaxRateDropdown(
+                  onSelected: (taxRate) =>
+                      viewModel.onChangedInvoiceItem(
+                          lineItems[index].rebuild((b) =>
+                          b
+                            ..taxName3 = taxRate.name
+                            ..taxRate3 = taxRate.rate),
+                          index),
+                  labelText: null,
+                  initialTaxName: lineItems[index].taxName3,
+                  initialTaxRate: lineItems[index].taxRate3,
                 ),
               Padding(
                 padding: const EdgeInsets.only(right: kTableColumnGap),
