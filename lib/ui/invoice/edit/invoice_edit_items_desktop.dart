@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/custom_fields.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -74,6 +73,20 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       lineItems.add(InvoiceItemEntity());
     }
 
+    int lastIndex = 5;
+    if (company.hasCustomField(CustomFieldType.product1)) {
+      lastIndex++;
+    }
+    if (company.hasCustomField(CustomFieldType.product2)) {
+      lastIndex++;
+    }
+    if (company.hasCustomField(CustomFieldType.product3)) {
+      lastIndex++;
+    }
+    if (company.hasCustomField(CustomFieldType.product4)) {
+      lastIndex++;
+    }
+
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
@@ -81,7 +94,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         columnWidths: {
           0: FixedColumnWidth(200),
           1: FlexColumnWidth(),
-          5: FixedColumnWidth(kMinInteractiveDimension),
+          lastIndex: FixedColumnWidth(kMinInteractiveDimension),
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.top,
         key: ValueKey('__datatable_${_updatedAt}__'),
@@ -173,6 +186,45 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     onChanged: (value) => viewModel.onChangedInvoiceItem(
                         lineItems[index]
                             .rebuild((b) => b..customValue1 = value),
+                        index),
+                  ),
+                ),
+              if (company.hasCustomField(CustomFieldType.product2))
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: CustomField(
+                    field: CustomFieldType.product2,
+                    value: lineItems[index].customValue2,
+                    hideFieldLabel: true,
+                    onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..customValue2 = value),
+                        index),
+                  ),
+                ),
+              if (company.hasCustomField(CustomFieldType.product3))
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: CustomField(
+                    field: CustomFieldType.product3,
+                    value: lineItems[index].customValue3,
+                    hideFieldLabel: true,
+                    onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..customValue3 = value),
+                        index),
+                  ),
+                ),
+              if (company.hasCustomField(CustomFieldType.product4))
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: CustomField(
+                    field: CustomFieldType.product4,
+                    value: lineItems[index].customValue4,
+                    hideFieldLabel: true,
+                    onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..customValue4 = value),
                         index),
                   ),
                 ),
