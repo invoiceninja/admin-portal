@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/custom_fields.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -59,9 +62,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final company = state.company;
     final invoice = viewModel.invoice;
     final lineItems = invoice.lineItems.toList();
-    final productState = viewModel.state.productState;
+    final productState = state.productState;
     final productIds =
         memoizedDropdownProductList(productState.map, productState.list);
 
@@ -84,6 +89,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           TableRow(children: [
             TableHeader(localization.item),
             TableHeader(localization.description),
+            if (company.hasCustomField(CustomFieldType.product1))
+              TableHeader(
+                  company.getCustomFieldLabel(CustomFieldType.product1)),
+            if (company.hasCustomField(CustomFieldType.product2))
+              TableHeader(
+                  company.getCustomFieldLabel(CustomFieldType.product2)),
+            if (company.hasCustomField(CustomFieldType.product3))
+              TableHeader(
+                  company.getCustomFieldLabel(CustomFieldType.product3)),
+            if (company.hasCustomField(CustomFieldType.product4))
+              TableHeader(
+                  company.getCustomFieldLabel(CustomFieldType.product4)),
             TableHeader(localization.unitCost, isNumeric: true),
             TableHeader(localization.quantity, isNumeric: true),
             TableHeader(localization.lineTotal, isNumeric: true),
@@ -146,6 +163,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   //focusNode: _focusNodes[index],
                 ),
               ),
+              if (company.hasCustomField(CustomFieldType.product1))
+                Padding(
+                  padding: const EdgeInsets.only(right: kTableColumnGap),
+                  child: CustomField(
+                    field: CustomFieldType.product1,
+                    value: lineItems[index].customValue1,
+                    hideFieldLabel: true,
+                    onChanged: (value) => viewModel.onChangedInvoiceItem(
+                        lineItems[index]
+                            .rebuild((b) => b..customValue1 = value),
+                        index),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.only(right: kTableColumnGap),
                 child: TextFormField(
