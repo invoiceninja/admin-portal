@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'support_forum': 'Support Forum',
+      'about': 'About',
+      'documentation': 'Documentation',
+      'contact_us': 'Contact Us',
       'subtotal': 'Subtotal',
       'line_total': 'Line Total',
       'item': 'Item',
@@ -15850,6 +15854,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get lineTotal => _localizedValues[localeCode]['line_total'];
 
   String get subtotal => _localizedValues[localeCode]['subtotal'];
+
+  String get contactUs => _localizedValues[localeCode]['contact_us'];
+
+  String get documentation => _localizedValues[localeCode]['documentation'];
+
+  String get about => _localizedValues[localeCode]['about'];
+
+  String get supportForum => _localizedValues[localeCode]['support_forum'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -220,7 +221,9 @@ class MenuDrawer extends StatelessWidget {
                       ],
                     )),
               Align(
-                child: SidebarFooter(),
+                child: state.prefState.isMenuCollapsed
+                    ? SidebarFooterCollapsed()
+                    : SidebarFooter(),
                 alignment: Alignment(0, 1),
               ),
             ],
@@ -313,51 +316,6 @@ class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final localization = AppLocalization.of(context);
-    final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle =
-        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
-
-    void showAbout() {
-      showAboutDialog(
-        context: context,
-        applicationName: 'Invoice Ninja',
-        applicationIcon: Image.asset(
-          'assets/images/logo.png',
-          width: 40.0,
-          height: 40.0,
-        ),
-        applicationVersion: 'Version: $kAppVersion',
-        applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: RichText(
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    style: aboutTextStyle,
-                    text: localization.thankYouForUsingOurApp +
-                        '\n\n' +
-                        localization.ifYouLikeIt,
-                  ),
-                  _LinkTextSpan(
-                    style: linkStyle,
-                    url: getAppURL(context),
-                    text: ' ' + localization.clickHere + ' ',
-                  ),
-                  TextSpan(
-                    style: aboutTextStyle,
-                    text: localization.toRateIt,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-    }
 
     return Container(
       color: Theme.of(context).bottomAppBarColor,
@@ -377,8 +335,13 @@ class SidebarFooter extends StatelessWidget {
               onPressed: () => launch('https://docs.invoiceninja.com'),
             ),
             IconButton(
+              icon: Icon(Icons.group),
+              onPressed: () =>
+                  launch('https://www.invoiceninja.com/forums/forum/support'),
+            ),
+            IconButton(
               icon: Icon(Icons.info_outline),
-              onPressed: () => showAbout(),
+              onPressed: () => _showAbout(context),
             ),
             if (kDebugMode)
               IconButton(
@@ -429,4 +392,97 @@ class SidebarFooter extends StatelessWidget {
       ),
     );
   }
+}
+
+class SidebarFooterCollapsed extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    return PopupMenuButton<String>(
+      icon: Icon(Icons.info_outline),
+      onSelected: (value) {
+        if (value == localization.about) {
+          _showAbout(context);
+        }
+      },
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem<String>(
+          child: ListTile(
+            leading: Icon(Icons.mail),
+            title: Text(localization.contactUs),
+          ),
+          value: localization.contactUs,
+        ),
+        PopupMenuItem<String>(
+          child: ListTile(
+            leading: Icon(Icons.help_outline),
+            title: Text(localization.documentation),
+          ),
+          value: localization.documentation,
+        ),
+        PopupMenuItem<String>(
+          child: ListTile(
+            leading: Icon(Icons.group),
+            title: Text(localization.supportForum),
+          ),
+          value: localization.supportForum,
+        ),
+        PopupMenuItem<String>(
+          child: ListTile(
+            leading: Icon(Icons.info_outline),
+            title: Text(localization.about),
+          ),
+          value: localization.about,
+        ),
+      ],
+    );
+  }
+}
+
+void _showAbout(BuildContext context) {
+
+  final localization = AppLocalization.of(context);
+  final ThemeData themeData = Theme.of(context);
+  final TextStyle aboutTextStyle = themeData.textTheme.body2;
+  final TextStyle linkStyle =
+  themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+
+
+  showAboutDialog(
+    context: context,
+    applicationName: 'Invoice Ninja',
+    applicationIcon: Image.asset(
+      'assets/images/logo.png',
+      width: 40.0,
+      height: 40.0,
+    ),
+    applicationVersion: 'Version: $kAppVersion',
+    applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
+    children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(top: 24.0),
+        child: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                style: aboutTextStyle,
+                text: localization.thankYouForUsingOurApp +
+                    '\n\n' +
+                    localization.ifYouLikeIt,
+              ),
+              _LinkTextSpan(
+                style: linkStyle,
+                url: getAppURL(context),
+                text: ' ' + localization.clickHere + ' ',
+              ),
+              TextSpan(
+                style: aboutTextStyle,
+                text: localization.toRateIt,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
 }
