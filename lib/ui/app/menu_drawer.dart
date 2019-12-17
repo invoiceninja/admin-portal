@@ -335,7 +335,7 @@ class SidebarFooter extends StatelessWidget {
               onPressed: () => launch('https://docs.invoiceninja.com'),
             ),
             IconButton(
-              icon: Icon(Icons.group),
+              icon: Icon(Icons.forum),
               onPressed: () =>
                   launch('https://www.invoiceninja.com/forums/forum/support'),
             ),
@@ -422,7 +422,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         ),
         PopupMenuItem<String>(
           child: ListTile(
-            leading: Icon(Icons.group),
+            leading: Icon(Icons.forum),
             title: Text(localization.supportForum),
           ),
           value: localization.supportForum,
