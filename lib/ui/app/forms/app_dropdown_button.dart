@@ -29,6 +29,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     return InputDecorator(
         decoration: InputDecoration(
           labelText: labelText,
+          contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
         ),
         isEmpty: value == null || value == '',
         child: DropdownButtonHideUnderline(
