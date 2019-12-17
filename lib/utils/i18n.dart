@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'configure_settings': 'Configure Settings',
       'support_forum': 'Support Forum',
       'about': 'About',
       'documentation': 'Documentation',
@@ -667,10 +668,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'paid': 'Paid',
       'invoice_status_1': 'Draft',
       'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
-      'invoice_status_5': 'Partial',
-      'invoice_status_6': 'Paid',
+      'invoice_status_3': 'Partial',
+      'invoice_status_4': 'Paid',
       'mark_sent': 'Mark Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'marked_invoice_as_paid': 'Successfully marked invoice as sent',
@@ -14585,10 +14584,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get invoiceStatus4 => _localizedValues[localeCode]['invoice_status_4'];
 
-  String get invoiceStatus5 => _localizedValues[localeCode]['invoice_status_5'];
-
-  String get invoiceStatus6 => _localizedValues[localeCode]['invoice_status_6'];
-
   String get markSent => _localizedValues[localeCode]['mark_sent'];
 
   String get markedInvoiceAsSent =>
@@ -15863,6 +15858,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get supportForum => _localizedValues[localeCode]['support_forum'];
 
+  String get configureSettings => _localizedValues[localeCode]['configure_settings'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
