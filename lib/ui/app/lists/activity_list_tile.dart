@@ -27,7 +27,7 @@ class ActivityListTile extends StatelessWidget {
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
       title,
-      user: state.company.userMap[activity.userId] ?? UserEntity(),
+      user: state.userState.map[activity.userId],
       client: state.clientState.map[activity.clientId],
       invoice: state.invoiceState.map[activity.invoiceId],
       quote: state.quoteState.map[activity.invoiceId],

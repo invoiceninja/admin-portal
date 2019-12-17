@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -59,8 +60,11 @@ class DashboardVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      // TODO implement
-      //store.dispatch(LoadCompany(completer, true));
+
+      // TODO just reload activities 
+      store.dispatch(
+          RefreshData(completer: completer, platform: getPlatform(context)));
+
       return completer.future;
     }
 

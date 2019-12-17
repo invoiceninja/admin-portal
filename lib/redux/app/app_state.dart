@@ -384,7 +384,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    return 'Color: $accentColor, User Settings: ${user.userCompany.settings}';
+    //return 'Color: $accentColor, User Settings: ${user?.userCompany?.settings}';
+    return 'Activities: ${company.activities}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
