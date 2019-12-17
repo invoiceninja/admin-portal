@@ -35,7 +35,6 @@ class SaveCancelButtons extends StatelessWidget {
           return ActionFlatButton(
             tooltip: saveLabel ?? localization.save,
             isVisible: true,
-            isDirty: true,
             isSaving: isSaving,
             onPressed: () => onSavePressed(context),
           );

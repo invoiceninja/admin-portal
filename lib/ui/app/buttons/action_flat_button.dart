@@ -7,12 +7,10 @@ class ActionFlatButton extends StatelessWidget {
     this.onPressed,
     this.tooltip,
     this.isSaving = false,
-    this.isDirty = false,
     this.isVisible = true,
   });
 
   final bool isSaving;
-  final bool isDirty;
   final bool isVisible;
   final Function onPressed;
   final String tooltip;
@@ -37,13 +35,10 @@ class ActionFlatButton extends StatelessWidget {
       );
     }
 
-    final state = StoreProvider.of<AppState>(context).state;
-
     return FlatButton(
       child: Text(
         tooltip,
-        style: TextStyle(
-            color: Colors.white),
+        style: TextStyle(color: Colors.white),
       ),
       onPressed: onPressed,
     );
