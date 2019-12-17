@@ -14,6 +14,8 @@ Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
+Serializer<UserSettingsEntity> _$userSettingsEntitySerializer =
+    new _$UserSettingsEntitySerializer();
 Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
@@ -650,6 +652,12 @@ class _$UserCompanyEntitySerializer
         ..add(serializers.serialize(object.token,
             specifiedType: const FullType(TokenEntity)));
     }
+    if (object.settings != null) {
+      result
+        ..add('settings')
+        ..add(serializers.serialize(object.settings,
+            specifiedType: const FullType(UserSettingsEntity)));
+    }
     return result;
   }
 
@@ -688,6 +696,54 @@ class _$UserCompanyEntitySerializer
         case 'token':
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
+          break;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserSettingsEntity))
+              as UserSettingsEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserSettingsEntitySerializer
+    implements StructuredSerializer<UserSettingsEntity> {
+  @override
+  final Iterable<Type> types = const [UserSettingsEntity, _$UserSettingsEntity];
+  @override
+  final String wireName = 'UserSettingsEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, UserSettingsEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.accentColor != null) {
+      result
+        ..add('accent_color')
+        ..add(serializers.serialize(object.accentColor,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  UserSettingsEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserSettingsEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'accent_color':
+          result.accentColor = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -3271,6 +3327,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   final UserEntity user;
   @override
   final TokenEntity token;
+  @override
+  final UserSettingsEntity settings;
 
   factory _$UserCompanyEntity(
           [void Function(UserCompanyEntityBuilder) updates]) =>
@@ -3282,7 +3340,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       this.permissions,
       this.company,
       this.user,
-      this.token})
+      this.token,
+      this.settings})
       : super._() {
     if (isAdmin == null) {
       throw new BuiltValueNullFieldError('UserCompanyEntity', 'isAdmin');
@@ -3312,7 +3371,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         permissions == other.permissions &&
         company == other.company &&
         user == other.user &&
-        token == other.token;
+        token == other.token &&
+        settings == other.settings;
   }
 
   @override
@@ -3320,11 +3380,13 @@ class _$UserCompanyEntity extends UserCompanyEntity {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
-                    permissions.hashCode),
-                company.hashCode),
-            user.hashCode),
-        token.hashCode));
+                $jc(
+                    $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
+                        permissions.hashCode),
+                    company.hashCode),
+                user.hashCode),
+            token.hashCode),
+        settings.hashCode));
   }
 
   @override
@@ -3335,7 +3397,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('permissions', permissions)
           ..add('company', company)
           ..add('user', user)
-          ..add('token', token))
+          ..add('token', token)
+          ..add('settings', settings))
         .toString();
   }
 }
@@ -3369,6 +3432,12 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
 
+  UserSettingsEntityBuilder _settings;
+  UserSettingsEntityBuilder get settings =>
+      _$this._settings ??= new UserSettingsEntityBuilder();
+  set settings(UserSettingsEntityBuilder settings) =>
+      _$this._settings = settings;
+
   UserCompanyEntityBuilder();
 
   UserCompanyEntityBuilder get _$this {
@@ -3379,6 +3448,7 @@ class UserCompanyEntityBuilder
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
+      _settings = _$v.settings?.toBuilder();
       _$v = null;
     }
     return this;
@@ -3408,7 +3478,8 @@ class UserCompanyEntityBuilder
               permissions: permissions,
               company: _company?.build(),
               user: _user?.build(),
-              token: _token?.build());
+              token: _token?.build(),
+              settings: _settings?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -3418,12 +3489,92 @@ class UserCompanyEntityBuilder
         _user?.build();
         _$failedField = 'token';
         _token?.build();
+        _$failedField = 'settings';
+        _settings?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserCompanyEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserSettingsEntity extends UserSettingsEntity {
+  @override
+  final String accentColor;
+
+  factory _$UserSettingsEntity(
+          [void Function(UserSettingsEntityBuilder) updates]) =>
+      (new UserSettingsEntityBuilder()..update(updates)).build();
+
+  _$UserSettingsEntity._({this.accentColor}) : super._();
+
+  @override
+  UserSettingsEntity rebuild(
+          void Function(UserSettingsEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserSettingsEntityBuilder toBuilder() =>
+      new UserSettingsEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserSettingsEntity && accentColor == other.accentColor;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, accentColor.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserSettingsEntity')
+          ..add('accentColor', accentColor))
+        .toString();
+  }
+}
+
+class UserSettingsEntityBuilder
+    implements Builder<UserSettingsEntity, UserSettingsEntityBuilder> {
+  _$UserSettingsEntity _$v;
+
+  String _accentColor;
+  String get accentColor => _$this._accentColor;
+  set accentColor(String accentColor) => _$this._accentColor = accentColor;
+
+  UserSettingsEntityBuilder();
+
+  UserSettingsEntityBuilder get _$this {
+    if (_$v != null) {
+      _accentColor = _$v.accentColor;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserSettingsEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserSettingsEntity;
+  }
+
+  @override
+  void update(void Function(UserSettingsEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserSettingsEntity build() {
+    final _$result =
+        _$v ?? new _$UserSettingsEntity._(accentColor: accentColor);
     replace(_$result);
     return _$result;
   }

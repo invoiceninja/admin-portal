@@ -466,6 +466,7 @@ abstract class UserCompanyEntity
       isAdmin: false,
       isOwner: false,
       permissions: '',
+      settings: UserSettingsEntity(),
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
@@ -490,6 +491,9 @@ abstract class UserCompanyEntity
 
   @nullable
   TokenEntity get token;
+
+  @nullable
+  UserSettingsEntity get settings;
 
   bool can(UserPermission permission, EntityType entityType) {
     if (entityType == null) {
@@ -540,6 +544,23 @@ abstract class UserCompanyEntity
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
 }
+
+abstract class UserSettingsEntity implements Built<UserSettingsEntity, UserSettingsEntityBuilder> {
+  factory UserSettingsEntity() {
+    return _$UserSettingsEntity._(
+      accentColor: kDefaultAccentColor,
+    );
+  }
+
+  UserSettingsEntity._();
+
+  @nullable
+  @BuiltValueField(wireName: 'accent_color')
+  String get accentColor;
+
+  static Serializer<UserSettingsEntity> get serializer => _$userSettingsEntitySerializer;
+}
+
 
 abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
   factory TokenEntity() {
