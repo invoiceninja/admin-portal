@@ -162,14 +162,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                   ),
                 ],
                 EntityDropdown(
-                  key: ValueKey('__payment_type_${payment.paymentTypeId}__'),
+                  key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
                   labelText: localization.paymentType,
-                  entityId: payment.paymentTypeId,
+                  entityId: payment.typeId,
                   onSelected: (paymentType) => viewModel.onChanged(payment
-                      .rebuild((b) => b..paymentTypeId = paymentType.id)),
+                      .rebuild((b) => b..typeId = paymentType.id)),
                 ),
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
@@ -177,10 +177,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                       : null,
                   autoValidate: autoValidate,
                   labelText: localization.paymentDate,
-                  selectedDate: payment.paymentDate,
+                  selectedDate: payment.date,
                   onSelected: (date) {
                     viewModel.onChanged(
-                        payment.rebuild((b) => b..paymentDate = date));
+                        payment.rebuild((b) => b..date = date));
                   },
                 ),
                 DecoratedFormField(

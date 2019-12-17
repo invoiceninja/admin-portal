@@ -121,22 +121,21 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
+      'refunded',
+      serializers.serialize(object.refunded,
+          specifiedType: const FullType(double)),
       'transaction_reference',
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
-      'payment_date',
-      serializers.serialize(object.paymentDate,
+      'date',
+      serializers.serialize(object.date, specifiedType: const FullType(String)),
+      'type_id',
+      serializers.serialize(object.typeId,
           specifiedType: const FullType(String)),
-      'payment_type_id',
-      serializers.serialize(object.paymentTypeId,
-          specifiedType: const FullType(String)),
+      'is_manual',
+      serializers.serialize(object.isManual,
+          specifiedType: const FullType(bool)),
     ];
-    if (object.refunded != null) {
-      result
-        ..add('refunded')
-        ..add(serializers.serialize(object.refunded,
-            specifiedType: const FullType(double)));
-    }
     if (object.number != null) {
       result
         ..add('number')
@@ -149,10 +148,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.clientId,
             specifiedType: const FullType(String)));
     }
-    if (object.paymentStatusId != null) {
+    if (object.statusId != null) {
       result
-        ..add('payment_status_id')
-        ..add(serializers.serialize(object.paymentStatusId,
+        ..add('status_id')
+        ..add(serializers.serialize(object.statusId,
             specifiedType: const FullType(String)));
     }
     if (object.invoiceId != null) {
@@ -282,20 +281,20 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'payment_status_id':
-          result.paymentStatusId = serializers.deserialize(value,
+        case 'status_id':
+          result.statusId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'transaction_reference':
           result.transactionReference = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'payment_date':
-          result.paymentDate = serializers.deserialize(value,
+        case 'date':
+          result.date = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'payment_type_id':
-          result.paymentTypeId = serializers.deserialize(value,
+        case 'type_id':
+          result.typeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
@@ -329,6 +328,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'exchange_currency_id':
           result.exchangeCurrencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_manual':
+          result.isManual = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -568,13 +571,13 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String clientId;
   @override
-  final String paymentStatusId;
+  final String statusId;
   @override
   final String transactionReference;
   @override
-  final String paymentDate;
+  final String date;
   @override
-  final String paymentTypeId;
+  final String typeId;
   @override
   final String invoiceId;
   @override
@@ -591,6 +594,8 @@ class _$PaymentEntity extends PaymentEntity {
   final double exchangeRate;
   @override
   final String exchangeCurrencyId;
+  @override
+  final bool isManual;
   @override
   final bool isChanged;
   @override
@@ -616,10 +621,10 @@ class _$PaymentEntity extends PaymentEntity {
       this.refunded,
       this.number,
       this.clientId,
-      this.paymentStatusId,
+      this.statusId,
       this.transactionReference,
-      this.paymentDate,
-      this.paymentTypeId,
+      this.date,
+      this.typeId,
       this.invoiceId,
       this.privateNotes,
       this.customValue1,
@@ -628,6 +633,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.customValue4,
       this.exchangeRate,
       this.exchangeCurrencyId,
+      this.isManual,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -640,15 +646,21 @@ class _$PaymentEntity extends PaymentEntity {
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
     }
+    if (refunded == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
+    }
     if (transactionReference == null) {
       throw new BuiltValueNullFieldError(
           'PaymentEntity', 'transactionReference');
     }
-    if (paymentDate == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentDate');
+    if (date == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'date');
     }
-    if (paymentTypeId == null) {
-      throw new BuiltValueNullFieldError('PaymentEntity', 'paymentTypeId');
+    if (typeId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'typeId');
+    }
+    if (isManual == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'isManual');
     }
   }
 
@@ -667,10 +679,10 @@ class _$PaymentEntity extends PaymentEntity {
         refunded == other.refunded &&
         number == other.number &&
         clientId == other.clientId &&
-        paymentStatusId == other.paymentStatusId &&
+        statusId == other.statusId &&
         transactionReference == other.transactionReference &&
-        paymentDate == other.paymentDate &&
-        paymentTypeId == other.paymentTypeId &&
+        date == other.date &&
+        typeId == other.typeId &&
         invoiceId == other.invoiceId &&
         privateNotes == other.privateNotes &&
         customValue1 == other.customValue1 &&
@@ -679,6 +691,7 @@ class _$PaymentEntity extends PaymentEntity {
         customValue4 == other.customValue4 &&
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
+        isManual == other.isManual &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -709,18 +722,18 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), paymentStatusId.hashCode),
-                                                                                transactionReference.hashCode),
-                                                                            paymentDate.hashCode),
-                                                                        paymentTypeId.hashCode),
-                                                                    invoiceId.hashCode),
-                                                                privateNotes.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            exchangeRate.hashCode),
-                                        exchangeCurrencyId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode),
+                                                                                date.hashCode),
+                                                                            typeId.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    privateNotes.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                exchangeRate.hashCode),
+                                            exchangeCurrencyId.hashCode),
+                                        isManual.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -738,10 +751,10 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('refunded', refunded)
           ..add('number', number)
           ..add('clientId', clientId)
-          ..add('paymentStatusId', paymentStatusId)
+          ..add('statusId', statusId)
           ..add('transactionReference', transactionReference)
-          ..add('paymentDate', paymentDate)
-          ..add('paymentTypeId', paymentTypeId)
+          ..add('date', date)
+          ..add('typeId', typeId)
           ..add('invoiceId', invoiceId)
           ..add('privateNotes', privateNotes)
           ..add('customValue1', customValue1)
@@ -750,6 +763,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('customValue4', customValue4)
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
+          ..add('isManual', isManual)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -782,24 +796,22 @@ class PaymentEntityBuilder
   String get clientId => _$this._clientId;
   set clientId(String clientId) => _$this._clientId = clientId;
 
-  String _paymentStatusId;
-  String get paymentStatusId => _$this._paymentStatusId;
-  set paymentStatusId(String paymentStatusId) =>
-      _$this._paymentStatusId = paymentStatusId;
+  String _statusId;
+  String get statusId => _$this._statusId;
+  set statusId(String statusId) => _$this._statusId = statusId;
 
   String _transactionReference;
   String get transactionReference => _$this._transactionReference;
   set transactionReference(String transactionReference) =>
       _$this._transactionReference = transactionReference;
 
-  String _paymentDate;
-  String get paymentDate => _$this._paymentDate;
-  set paymentDate(String paymentDate) => _$this._paymentDate = paymentDate;
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
 
-  String _paymentTypeId;
-  String get paymentTypeId => _$this._paymentTypeId;
-  set paymentTypeId(String paymentTypeId) =>
-      _$this._paymentTypeId = paymentTypeId;
+  String _typeId;
+  String get typeId => _$this._typeId;
+  set typeId(String typeId) => _$this._typeId = typeId;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -833,6 +845,10 @@ class PaymentEntityBuilder
   String get exchangeCurrencyId => _$this._exchangeCurrencyId;
   set exchangeCurrencyId(String exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
+
+  bool _isManual;
+  bool get isManual => _$this._isManual;
+  set isManual(bool isManual) => _$this._isManual = isManual;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -876,10 +892,10 @@ class PaymentEntityBuilder
       _refunded = _$v.refunded;
       _number = _$v.number;
       _clientId = _$v.clientId;
-      _paymentStatusId = _$v.paymentStatusId;
+      _statusId = _$v.statusId;
       _transactionReference = _$v.transactionReference;
-      _paymentDate = _$v.paymentDate;
-      _paymentTypeId = _$v.paymentTypeId;
+      _date = _$v.date;
+      _typeId = _$v.typeId;
       _invoiceId = _$v.invoiceId;
       _privateNotes = _$v.privateNotes;
       _customValue1 = _$v.customValue1;
@@ -888,6 +904,7 @@ class PaymentEntityBuilder
       _customValue4 = _$v.customValue4;
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
+      _isManual = _$v.isManual;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -922,10 +939,10 @@ class PaymentEntityBuilder
             refunded: refunded,
             number: number,
             clientId: clientId,
-            paymentStatusId: paymentStatusId,
+            statusId: statusId,
             transactionReference: transactionReference,
-            paymentDate: paymentDate,
-            paymentTypeId: paymentTypeId,
+            date: date,
+            typeId: typeId,
             invoiceId: invoiceId,
             privateNotes: privateNotes,
             customValue1: customValue1,
@@ -934,6 +951,7 @@ class PaymentEntityBuilder
             customValue4: customValue4,
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
+            isManual: isManual,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

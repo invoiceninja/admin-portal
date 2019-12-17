@@ -40,14 +40,14 @@ class _PaymentViewState extends State<PaymentView> {
 
     final fields = <String, String>{};
     fields[PaymentFields.paymentStatusId] =
-        localization.lookup('payment_status_${payment.paymentStatusId}');
-    if (payment.paymentDate.isNotEmpty) {
+        localization.lookup('payment_status_${payment.statusId}');
+    if (payment.date.isNotEmpty) {
       fields[PaymentFields.paymentDate] =
-          formatDate(payment.paymentDate, context);
+          formatDate(payment.date, context);
     }
-    if ((payment.paymentTypeId ?? '').isNotEmpty) {
+    if ((payment.typeId ?? '').isNotEmpty) {
       final paymentType =
-          state.staticState.paymentTypeMap[payment.paymentTypeId];
+          state.staticState.paymentTypeMap[payment.typeId];
       if (paymentType != null) {
         fields[PaymentFields.paymentTypeId] = paymentType.name;
       }
@@ -68,7 +68,7 @@ class _PaymentViewState extends State<PaymentView> {
               (payment.refunded ?? 0) > 0
                   ? EntityHeader(
                 backgroundColor:
-                PaymentStatusColors.colors[payment.paymentStatusId],
+                PaymentStatusColors.colors[payment.statusId],
                 label: localization.amount,
                 value: formatNumber(payment.amount, context,
                     clientId: client.id),
@@ -78,7 +78,7 @@ class _PaymentViewState extends State<PaymentView> {
               )
                   : EntityHeader(
                 backgroundColor:
-                PaymentStatusColors.colors[payment.paymentStatusId],
+                PaymentStatusColors.colors[payment.statusId],
                 label: localization.amount,
                 value: formatNumber(payment.amount, context,
                     clientId: client.id),

@@ -112,7 +112,7 @@ class InvoiceOverview extends StatelessWidget {
               subtitle: Text(
                   formatNumber(payment.amount, context, clientId: client.id) +
                       ' • ' +
-                      formatDate(payment.paymentDate, context)),
+                      formatDate(payment.date, context)),
               leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onPaymentPressed(context, payment),

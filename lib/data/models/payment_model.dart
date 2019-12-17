@@ -61,8 +61,8 @@ abstract class PaymentEntity extends Object
       isChanged: false,
       amount: 0.0,
       transactionReference: '',
-      paymentDate: convertDateTimeToSqlDate(),
-      paymentTypeId: state?.company != null &&
+      date: convertDateTimeToSqlDate(),
+      typeId: state?.company != null &&
               (state.company.settings.defaultPaymentTypeId ?? '').isNotEmpty
           ? state.company.settings.defaultPaymentTypeId
           : '',
@@ -72,10 +72,11 @@ abstract class PaymentEntity extends Object
       exchangeRate: 0.0,
       exchangeCurrencyId: '',
       refunded: 0.0,
-      paymentStatusId: '',
+      statusId: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      isManual: true,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -92,7 +93,6 @@ abstract class PaymentEntity extends Object
 
   double get amount;
 
-  @nullable
   double get refunded;
 
   @nullable
@@ -104,17 +104,17 @@ abstract class PaymentEntity extends Object
   String get clientId;
 
   @nullable
-  @BuiltValueField(wireName: 'payment_status_id')
-  String get paymentStatusId;
+  @BuiltValueField(wireName: 'status_id')
+  String get statusId;
 
   @BuiltValueField(wireName: 'transaction_reference')
   String get transactionReference;
 
-  @BuiltValueField(wireName: 'payment_date')
-  String get paymentDate;
+  @BuiltValueField(wireName: 'date')
+  String get date;
 
-  @BuiltValueField(wireName: 'payment_type_id')
-  String get paymentTypeId;
+  @BuiltValueField(wireName: 'type_id')
+  String get typeId;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
@@ -148,6 +148,9 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'exchange_currency_id')
   String get exchangeCurrencyId;
 
+  @BuiltValueField(wireName: 'is_manual')
+  bool get isManual;
+
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : credit;
@@ -162,7 +165,7 @@ abstract class PaymentEntity extends Object
             .compareTo(paymentB.transactionReference);
         break;
       case PaymentFields.paymentDate:
-        response = paymentA.paymentDate.compareTo(paymentB.paymentDate);
+        response = paymentA.date.compareTo(paymentB.date);
         break;
       case PaymentFields.updatedAt:
         response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
@@ -266,8 +269,8 @@ abstract class PaymentEntity extends Object
   double get listDisplayAmount => amount;
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(paymentDate) <= 0 &&
-        endDate.compareTo(paymentDate) >= 0;
+    return startDate.compareTo(date) <= 0 &&
+        endDate.compareTo(date) >= 0;
   }
 
   @override
@@ -275,7 +278,7 @@ abstract class PaymentEntity extends Object
 
   double get completedAmount {
     if ([kPaymentStatusVoided, kPaymentStatusFailed]
-        .contains(paymentStatusId)) {
+        .contains(statusId)) {
       return 0.0;
     }
 

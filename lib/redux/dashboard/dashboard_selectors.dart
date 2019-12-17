@@ -318,9 +318,9 @@ List<ChartDataGroup> chartPayments(
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][payment.paymentDate] == null) {
-        totals[STATUS_ACTIVE][payment.paymentDate] = 0.0;
-        totals[STATUS_REFUNDED][payment.paymentDate] = 0.0;
+      if (totals[STATUS_ACTIVE][payment.date] == null) {
+        totals[STATUS_ACTIVE][payment.date] = 0.0;
+        totals[STATUS_REFUNDED][payment.date] = 0.0;
       }
 
       double completedAmount = payment.completedAmount;
@@ -335,8 +335,8 @@ List<ChartDataGroup> chartPayments(
             fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
       }
 
-      totals[STATUS_ACTIVE][payment.paymentDate] += completedAmount;
-      totals[STATUS_REFUNDED][payment.paymentDate] += refunded ?? 0;
+      totals[STATUS_ACTIVE][payment.date] += completedAmount;
+      totals[STATUS_REFUNDED][payment.date] += refunded ?? 0;
 
       counts[STATUS_ACTIVE]++;
       if ((payment.refunded ?? 0) > 0) {

@@ -48,7 +48,7 @@ class PaymentListItem extends StatelessWidget {
         ? payment.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ??
-        (payment.number ?? '') + ' • ' + formatDate(payment.paymentDate, context);
+        (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
 
     return DismissibleEntity(
       isSelected: payment.id ==
@@ -105,10 +105,10 @@ class PaymentListItem extends StatelessWidget {
                 ),
                 Text(
                     localization
-                        .lookup('payment_status_${payment.paymentStatusId}'),
+                        .lookup('payment_status_${payment.statusId}'),
                     style: TextStyle(
                       color:
-                          PaymentStatusColors.colors[payment.paymentStatusId],
+                          PaymentStatusColors.colors[payment.statusId],
                     )),
               ],
             ),
