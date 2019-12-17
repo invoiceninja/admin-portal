@@ -243,9 +243,6 @@ class _$CompanyPrefStateSerializer
   Iterable<Object> serialize(Serializers serializers, CompanyPrefState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'accentColor',
-      serializers.serialize(object.accentColor,
-          specifiedType: const FullType(String)),
       'historyList',
       serializers.serialize(object.historyList,
           specifiedType:
@@ -267,10 +264,6 @@ class _$CompanyPrefStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'accentColor':
-          result.accentColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'historyList':
           result.historyList.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -708,18 +701,13 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
 class _$CompanyPrefState extends CompanyPrefState {
   @override
-  final String accentColor;
-  @override
   final BuiltList<HistoryRecord> historyList;
 
   factory _$CompanyPrefState(
           [void Function(CompanyPrefStateBuilder) updates]) =>
       (new CompanyPrefStateBuilder()..update(updates)).build();
 
-  _$CompanyPrefState._({this.accentColor, this.historyList}) : super._() {
-    if (accentColor == null) {
-      throw new BuiltValueNullFieldError('CompanyPrefState', 'accentColor');
-    }
+  _$CompanyPrefState._({this.historyList}) : super._() {
     if (historyList == null) {
       throw new BuiltValueNullFieldError('CompanyPrefState', 'historyList');
     }
@@ -736,20 +724,17 @@ class _$CompanyPrefState extends CompanyPrefState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CompanyPrefState &&
-        accentColor == other.accentColor &&
-        historyList == other.historyList;
+    return other is CompanyPrefState && historyList == other.historyList;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, accentColor.hashCode), historyList.hashCode));
+    return $jf($jc(0, historyList.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyPrefState')
-          ..add('accentColor', accentColor)
           ..add('historyList', historyList))
         .toString();
   }
@@ -758,10 +743,6 @@ class _$CompanyPrefState extends CompanyPrefState {
 class CompanyPrefStateBuilder
     implements Builder<CompanyPrefState, CompanyPrefStateBuilder> {
   _$CompanyPrefState _$v;
-
-  String _accentColor;
-  String get accentColor => _$this._accentColor;
-  set accentColor(String accentColor) => _$this._accentColor = accentColor;
 
   ListBuilder<HistoryRecord> _historyList;
   ListBuilder<HistoryRecord> get historyList =>
@@ -773,7 +754,6 @@ class CompanyPrefStateBuilder
 
   CompanyPrefStateBuilder get _$this {
     if (_$v != null) {
-      _accentColor = _$v.accentColor;
       _historyList = _$v.historyList?.toBuilder();
       _$v = null;
     }
@@ -797,9 +777,8 @@ class CompanyPrefStateBuilder
   _$CompanyPrefState build() {
     _$CompanyPrefState _$result;
     try {
-      _$result = _$v ??
-          new _$CompanyPrefState._(
-              accentColor: accentColor, historyList: historyList.build());
+      _$result =
+          _$v ?? new _$CompanyPrefState._(historyList: historyList.build());
     } catch (_) {
       String _$failedField;
       try {

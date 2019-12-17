@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,6 +46,9 @@ class UserDetailsVM {
         onSavePressed: (context) {
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
+          completer.future.then((_) {
+            AppBuilder.of(context).rebuild();
+          });
           store.dispatch(SaveUserSettingsRequest(
               completer: completer, user: state.uiState.settingsUIState.user));
         });

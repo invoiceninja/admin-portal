@@ -115,7 +115,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       Credentials(token: userCompanyState.token.token, url: authState.url);
 
   String get accentColor =>
-      prefState.companyPrefs[uiState.selectedCompanyIndex].accentColor;
+      user?.userCompany?.settings?.accentColor ?? kDefaultAccentColor;
 
   BuiltList<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList;
@@ -384,7 +384,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    return 'User Settings: ${userCompany.settings}';
+    return 'Color: $accentColor, User Settings: ${user.userCompany.settings}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

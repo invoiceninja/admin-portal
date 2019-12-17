@@ -43,7 +43,6 @@ class DeviceSettingsVM {
     @required this.onLayoutChanged,
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
-    @required this.onAccentColorChanged,
     @required this.onLongPressSelectionIsDefault,
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
@@ -80,11 +79,6 @@ class DeviceSettingsVM {
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UserSettingsChanged(enableDarkMode: value));
-        AppBuilder.of(context).rebuild();
-      },
-      onAccentColorChanged: (BuildContext context, String value) async {
-        value ??= kDefaultAccentColor;
-        store.dispatch(UserSettingsChanged(accentColor: value));
         AppBuilder.of(context).rebuild();
       },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
@@ -149,7 +143,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
   final Function(BuildContext, AppSidebarMode) onHistoryModeChanged;
-  final Function(BuildContext, String) onAccentColorChanged;
   final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;

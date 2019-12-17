@@ -137,8 +137,6 @@ class _UserDetailsState extends State<UserDetails> {
                 labelText: localization.accentColor,
                 initialValue: user.userCompany.settings.accentColor,
                 onSelected: (value) {
-                  print('onSelected..');
-                  //viewModel.onAccentColorChanged(context, value);
                   widget.viewModel.onChanged(user.rebuild(
                       (b) => b..userCompany.settings.accentColor = value));
                 },

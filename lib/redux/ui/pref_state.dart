@@ -99,14 +99,11 @@ abstract class CompanyPrefState
     String accentColor,
   }) {
     return _$CompanyPrefState._(
-      accentColor: kDefaultAccentColor,
       historyList: BuiltList<HistoryRecord>(),
     );
   }
 
   CompanyPrefState._();
-
-  String get accentColor;
 
   BuiltList<HistoryRecord> get historyList;
 

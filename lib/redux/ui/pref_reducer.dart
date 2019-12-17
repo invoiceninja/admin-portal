@@ -268,15 +268,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
 
 CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
   return state.rebuild((b) => b
-    ..accentColor = accentColorReducer(state.accentColor, action)
     ..historyList.replace(historyReducer(state.historyList, action)));
 }
-
-Reducer<String> accentColorReducer = combineReducers([
-  TypedReducer<String, UserSettingsChanged>((accentColor, action) {
-    return action.accentColor ?? accentColor;
-  }),
-]);
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
