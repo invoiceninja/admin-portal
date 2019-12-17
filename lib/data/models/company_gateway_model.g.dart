@@ -169,6 +169,18 @@ class _$CompanyGatewayEntitySerializer
         ..add(serializers.serialize(object.customValue2,
             specifiedType: const FullType(String)));
     }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -256,6 +268,13 @@ class _$CompanyGatewayEntitySerializer
           result.updateDetails = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'fees_and_limits':
+          result.feesAndLimitsMap.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(FeesAndLimitsSettings)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -264,12 +283,13 @@ class _$CompanyGatewayEntitySerializer
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'fees_and_limits':
-          result.feesAndLimitsMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(FeesAndLimitsSettings)
-              ])) as BuiltMap<dynamic, dynamic>);
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'config':
           result.config = serializers.deserialize(value,
@@ -667,11 +687,15 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final bool updateDetails;
   @override
+  final BuiltMap<String, FeesAndLimitsSettings> feesAndLimitsMap;
+  @override
   final String customValue1;
   @override
   final String customValue2;
   @override
-  final BuiltMap<String, FeesAndLimitsSettings> feesAndLimitsMap;
+  final String customValue3;
+  @override
+  final String customValue4;
   @override
   final String config;
   @override
@@ -702,9 +726,11 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.showBillingAddress,
       this.showShippingAddress,
       this.updateDetails,
+      this.feesAndLimitsMap,
       this.customValue1,
       this.customValue2,
-      this.feesAndLimitsMap,
+      this.customValue3,
+      this.customValue4,
       this.config,
       this.isChanged,
       this.createdAt,
@@ -762,9 +788,11 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         showBillingAddress == other.showBillingAddress &&
         showShippingAddress == other.showShippingAddress &&
         updateDetails == other.updateDetails &&
+        feesAndLimitsMap == other.feesAndLimitsMap &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
-        feesAndLimitsMap == other.feesAndLimitsMap &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         config == other.config &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -796,21 +824,27 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            gateway
+                                                                            $jc(
+                                                                                $jc(
+                                                                                    0,
+                                                                                    gateway
+                                                                                        .hashCode),
+                                                                                gatewayId
+                                                                                    .hashCode),
+                                                                            acceptedCreditCards
                                                                                 .hashCode),
-                                                                        gatewayId
+                                                                        showBillingAddress
                                                                             .hashCode),
-                                                                    acceptedCreditCards
+                                                                    showShippingAddress
                                                                         .hashCode),
-                                                                showBillingAddress
+                                                                updateDetails
                                                                     .hashCode),
-                                                            showShippingAddress
+                                                            feesAndLimitsMap
                                                                 .hashCode),
-                                                        updateDetails.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            feesAndLimitsMap.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
                                         config.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -831,9 +865,11 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('showBillingAddress', showBillingAddress)
           ..add('showShippingAddress', showShippingAddress)
           ..add('updateDetails', updateDetails)
+          ..add('feesAndLimitsMap', feesAndLimitsMap)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
-          ..add('feesAndLimitsMap', feesAndLimitsMap)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('config', config)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -880,6 +916,14 @@ class CompanyGatewayEntityBuilder
   set updateDetails(bool updateDetails) =>
       _$this._updateDetails = updateDetails;
 
+  MapBuilder<String, FeesAndLimitsSettings> _feesAndLimitsMap;
+  MapBuilder<String, FeesAndLimitsSettings> get feesAndLimitsMap =>
+      _$this._feesAndLimitsMap ??=
+          new MapBuilder<String, FeesAndLimitsSettings>();
+  set feesAndLimitsMap(
+          MapBuilder<String, FeesAndLimitsSettings> feesAndLimitsMap) =>
+      _$this._feesAndLimitsMap = feesAndLimitsMap;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -888,13 +932,13 @@ class CompanyGatewayEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
-  MapBuilder<String, FeesAndLimitsSettings> _feesAndLimitsMap;
-  MapBuilder<String, FeesAndLimitsSettings> get feesAndLimitsMap =>
-      _$this._feesAndLimitsMap ??=
-          new MapBuilder<String, FeesAndLimitsSettings>();
-  set feesAndLimitsMap(
-          MapBuilder<String, FeesAndLimitsSettings> feesAndLimitsMap) =>
-      _$this._feesAndLimitsMap = feesAndLimitsMap;
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
   String _config;
   String get config => _$this._config;
@@ -944,9 +988,11 @@ class CompanyGatewayEntityBuilder
       _showBillingAddress = _$v.showBillingAddress;
       _showShippingAddress = _$v.showShippingAddress;
       _updateDetails = _$v.updateDetails;
+      _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
-      _feesAndLimitsMap = _$v.feesAndLimitsMap?.toBuilder();
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _config = _$v.config;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -986,9 +1032,11 @@ class CompanyGatewayEntityBuilder
               showBillingAddress: showBillingAddress,
               showShippingAddress: showShippingAddress,
               updateDetails: updateDetails,
+              feesAndLimitsMap: feesAndLimitsMap.build(),
               customValue1: customValue1,
               customValue2: customValue2,
-              feesAndLimitsMap: feesAndLimitsMap.build(),
+              customValue3: customValue3,
+              customValue4: customValue4,
               config: config,
               isChanged: isChanged,
               createdAt: createdAt,

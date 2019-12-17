@@ -408,6 +408,15 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'task_id')
   String get taskId;
 
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
+
   EntityType get entityType {
     if (['1', '2', '3', '26'].contains(activityTypeId)) {
       return EntityType.client;

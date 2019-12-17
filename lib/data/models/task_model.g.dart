@@ -222,6 +222,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add(serializers.serialize(object.taskStatusSortOrder,
             specifiedType: const FullType(int)));
     }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -335,6 +341,10 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'task_status_sort_order':
           result.taskStatusSortOrder = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -730,6 +740,8 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int taskStatusSortOrder;
   @override
+  final String vendorId;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -763,6 +775,7 @@ class _$TaskEntity extends TaskEntity {
       this.customValue4,
       this.taskStatusId,
       this.taskStatusSortOrder,
+      this.vendorId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -816,6 +829,7 @@ class _$TaskEntity extends TaskEntity {
         customValue4 == other.customValue4 &&
         taskStatusId == other.taskStatusId &&
         taskStatusSortOrder == other.taskStatusSortOrder &&
+        vendorId == other.vendorId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -846,18 +860,18 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, description.hashCode), duration.hashCode),
-                                                                                invoiceId.hashCode),
-                                                                            clientId.hashCode),
-                                                                        projectId.hashCode),
-                                                                    timeLog.hashCode),
-                                                                isRunning.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            taskStatusId.hashCode),
-                                        taskStatusSortOrder.hashCode),
+                                                                            $jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode),
+                                                                                clientId.hashCode),
+                                                                            projectId.hashCode),
+                                                                        timeLog.hashCode),
+                                                                    isRunning.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                taskStatusId.hashCode),
+                                            taskStatusSortOrder.hashCode),
+                                        vendorId.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -884,6 +898,7 @@ class _$TaskEntity extends TaskEntity {
           ..add('customValue4', customValue4)
           ..add('taskStatusId', taskStatusId)
           ..add('taskStatusSortOrder', taskStatusSortOrder)
+          ..add('vendorId', vendorId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -952,6 +967,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set taskStatusSortOrder(int taskStatusSortOrder) =>
       _$this._taskStatusSortOrder = taskStatusSortOrder;
 
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1003,6 +1022,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _customValue4 = _$v.customValue4;
       _taskStatusId = _$v.taskStatusId;
       _taskStatusSortOrder = _$v.taskStatusSortOrder;
+      _vendorId = _$v.vendorId;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1046,6 +1066,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             customValue4: customValue4,
             taskStatusId: taskStatusId,
             taskStatusSortOrder: taskStatusSortOrder,
+            vendorId: vendorId,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

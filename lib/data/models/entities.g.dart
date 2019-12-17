@@ -507,6 +507,18 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.taskId,
             specifiedType: const FullType(String)));
     }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -572,6 +584,14 @@ class _$ActivityEntitySerializer
           break;
         case 'task_id':
           result.taskId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -797,6 +817,10 @@ class _$ActivityEntity extends ActivityEntity {
   final String contactId;
   @override
   final String taskId;
+  @override
+  final String projectId;
+  @override
+  final String vendorId;
 
   factory _$ActivityEntity([void Function(ActivityEntityBuilder) updates]) =>
       (new ActivityEntityBuilder()..update(updates)).build();
@@ -814,7 +838,9 @@ class _$ActivityEntity extends ActivityEntity {
       this.expenseId,
       this.isSystem,
       this.contactId,
-      this.taskId})
+      this.taskId,
+      this.projectId,
+      this.vendorId})
       : super._() {
     if (notes == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
@@ -857,7 +883,9 @@ class _$ActivityEntity extends ActivityEntity {
         expenseId == other.expenseId &&
         isSystem == other.isSystem &&
         contactId == other.contactId &&
-        taskId == other.taskId;
+        taskId == other.taskId &&
+        projectId == other.projectId &&
+        vendorId == other.vendorId;
   }
 
   @override
@@ -873,19 +901,26 @@ class _$ActivityEntity extends ActivityEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, notes.hashCode),
-                                                    key.hashCode),
-                                                activityTypeId.hashCode),
-                                            clientId.hashCode),
-                                        userId.hashCode),
-                                    invoiceId.hashCode),
-                                paymentId.hashCode),
-                            creditId.hashCode),
-                        updatedAt.hashCode),
-                    expenseId.hashCode),
-                isSystem.hashCode),
-            contactId.hashCode),
-        taskId.hashCode));
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                notes.hashCode),
+                                                            key.hashCode),
+                                                        activityTypeId
+                                                            .hashCode),
+                                                    clientId.hashCode),
+                                                userId.hashCode),
+                                            invoiceId.hashCode),
+                                        paymentId.hashCode),
+                                    creditId.hashCode),
+                                updatedAt.hashCode),
+                            expenseId.hashCode),
+                        isSystem.hashCode),
+                    contactId.hashCode),
+                taskId.hashCode),
+            projectId.hashCode),
+        vendorId.hashCode));
   }
 
   @override
@@ -903,7 +938,9 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('expenseId', expenseId)
           ..add('isSystem', isSystem)
           ..add('contactId', contactId)
-          ..add('taskId', taskId))
+          ..add('taskId', taskId)
+          ..add('projectId', projectId)
+          ..add('vendorId', vendorId))
         .toString();
   }
 }
@@ -965,6 +1002,14 @@ class ActivityEntityBuilder
   String get taskId => _$this._taskId;
   set taskId(String taskId) => _$this._taskId = taskId;
 
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+
   ActivityEntityBuilder();
 
   ActivityEntityBuilder get _$this {
@@ -982,6 +1027,8 @@ class ActivityEntityBuilder
       _isSystem = _$v.isSystem;
       _contactId = _$v.contactId;
       _taskId = _$v.taskId;
+      _projectId = _$v.projectId;
+      _vendorId = _$v.vendorId;
       _$v = null;
     }
     return this;
@@ -1016,7 +1063,9 @@ class ActivityEntityBuilder
             expenseId: expenseId,
             isSystem: isSystem,
             contactId: contactId,
-            taskId: taskId);
+            taskId: taskId,
+            projectId: projectId,
+            vendorId: vendorId);
     replace(_$result);
     return _$result;
   }

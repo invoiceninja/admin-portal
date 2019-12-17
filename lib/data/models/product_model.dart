@@ -130,6 +130,14 @@ abstract class ProductEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
   @override
   String get listDisplayName {
     return productKey;

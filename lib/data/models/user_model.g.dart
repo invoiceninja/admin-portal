@@ -122,6 +122,30 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
     if (object.userCompany != null) {
       result
         ..add('company_user')
@@ -204,6 +228,22 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'company_user':
@@ -445,6 +485,14 @@ class _$UserEntity extends UserEntity {
   @override
   final String phone;
   @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final UserCompanyEntity userCompany;
   @override
   final bool isChanged;
@@ -471,6 +519,10 @@ class _$UserEntity extends UserEntity {
       this.lastName,
       this.email,
       this.phone,
+      this.customValue1,
+      this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.userCompany,
       this.isChanged,
       this.createdAt,
@@ -510,6 +562,10 @@ class _$UserEntity extends UserEntity {
         lastName == other.lastName &&
         email == other.email &&
         phone == other.phone &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         userCompany == other.userCompany &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -534,10 +590,23 @@ class _$UserEntity extends UserEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, firstName.hashCode),
-                                                    lastName.hashCode),
-                                                email.hashCode),
-                                            phone.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        0,
+                                                                        firstName
+                                                                            .hashCode),
+                                                                    lastName
+                                                                        .hashCode),
+                                                                email.hashCode),
+                                                            phone.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
                                         userCompany.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -556,6 +625,10 @@ class _$UserEntity extends UserEntity {
           ..add('lastName', lastName)
           ..add('email', email)
           ..add('phone', phone)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('userCompany', userCompany)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -587,6 +660,22 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String _phone;
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
+
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
@@ -636,6 +725,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _lastName = _$v.lastName;
       _email = _$v.email;
       _phone = _$v.phone;
+      _customValue1 = _$v.customValue1;
+      _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _userCompany = _$v.userCompany?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -673,6 +766,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               lastName: lastName,
               email: email,
               phone: phone,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               userCompany: _userCompany?.build(),
               isChanged: isChanged,
               createdAt: createdAt,

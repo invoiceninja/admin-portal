@@ -71,7 +71,6 @@ abstract class QuoteEntity extends Object
     return _$QuoteEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      settings: SettingsEntity(),
       amount: 0.0,
       balance: 0.0,
       clientId: '',
@@ -282,7 +281,13 @@ abstract class QuoteEntity extends Object
 
   String get filename;
 
-  SettingsEntity get settings;
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
 
   @override
   @BuiltValueField(wireName: 'line_items')

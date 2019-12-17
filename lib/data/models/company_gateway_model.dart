@@ -60,10 +60,12 @@ abstract class CompanyGatewayEntity extends Object
       showBillingAddress: true,
       showShippingAddress: false,
       updateDetails: true,
-      customValue1: '',
-      customValue2: '',
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
     );
   }
 
@@ -92,6 +94,10 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'update_details')
   bool get updateDetails;
 
+
+  @BuiltValueField(wireName: 'fees_and_limits')
+  BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
+
   @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -100,8 +106,14 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @BuiltValueField(wireName: 'fees_and_limits')
-  BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
 
   String get config;
 

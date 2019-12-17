@@ -366,6 +366,10 @@ abstract class TaskEntity extends Object
   @BuiltValueField(wireName: 'task_status_sort_order')
   int get taskStatusSortOrder;
 
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,

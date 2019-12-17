@@ -151,6 +151,15 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'is_manual')
   bool get isManual;
 
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
+
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : credit;

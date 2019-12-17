@@ -225,9 +225,6 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       'filename',
       serializers.serialize(object.filename,
           specifiedType: const FullType(String)),
-      'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -247,6 +244,18 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       result
         ..add('design_id')
         ..add(serializers.serialize(object.designId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -471,9 +480,13 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'line_items':
           result.lineItems.replace(serializers.deserialize(value,
@@ -940,7 +953,9 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final String filename;
   @override
-  final SettingsEntity settings;
+  final String projectId;
+  @override
+  final String vendorId;
   @override
   final BuiltList<InvoiceItemEntity> lineItems;
   @override
@@ -1006,7 +1021,8 @@ class _$QuoteEntity extends QuoteEntity {
       this.hasExpenses,
       this.quoteInvoiceId,
       this.filename,
-      this.settings,
+      this.projectId,
+      this.vendorId,
       this.lineItems,
       this.invitations,
       this.isChanged,
@@ -1132,9 +1148,6 @@ class _$QuoteEntity extends QuoteEntity {
     if (filename == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'filename');
     }
-    if (settings == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'settings');
-    }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'lineItems');
     }
@@ -1194,7 +1207,8 @@ class _$QuoteEntity extends QuoteEntity {
         hasExpenses == other.hasExpenses &&
         quoteInvoiceId == other.quoteInvoiceId &&
         filename == other.filename &&
-        settings == other.settings &&
+        projectId == other.projectId &&
+        vendorId == other.vendorId &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         isChanged == other.isChanged &&
@@ -1227,16 +1241,16 @@ class _$QuoteEntity extends QuoteEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
-                                                                                customSurcharge4.hashCode),
-                                                                            customTaxes1.hashCode),
-                                                                        customTaxes2.hashCode),
-                                                                    customTaxes3.hashCode),
-                                                                customTaxes4.hashCode),
-                                                            hasExpenses.hashCode),
-                                                        quoteInvoiceId.hashCode),
-                                                    filename.hashCode),
-                                                settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), invoiceNumber.hashCode), discount.hashCode), poNumber.hashCode), invoiceDate.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode),
+                                                                                customTaxes1.hashCode),
+                                                                            customTaxes2.hashCode),
+                                                                        customTaxes3.hashCode),
+                                                                    customTaxes4.hashCode),
+                                                                hasExpenses.hashCode),
+                                                            quoteInvoiceId.hashCode),
+                                                        filename.hashCode),
+                                                    projectId.hashCode),
+                                                vendorId.hashCode),
                                             lineItems.hashCode),
                                         invitations.hashCode),
                                     isChanged.hashCode),
@@ -1292,7 +1306,8 @@ class _$QuoteEntity extends QuoteEntity {
           ..add('hasExpenses', hasExpenses)
           ..add('quoteInvoiceId', quoteInvoiceId)
           ..add('filename', filename)
-          ..add('settings', settings)
+          ..add('projectId', projectId)
+          ..add('vendorId', vendorId)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
           ..add('isChanged', isChanged)
@@ -1478,10 +1493,13 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
 
-  SettingsEntityBuilder _settings;
-  SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
-  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
   ListBuilder<InvoiceItemEntity> _lineItems;
   ListBuilder<InvoiceItemEntity> get lineItems =>
@@ -1573,7 +1591,8 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
       _hasExpenses = _$v.hasExpenses;
       _quoteInvoiceId = _$v.quoteInvoiceId;
       _filename = _$v.filename;
-      _settings = _$v.settings?.toBuilder();
+      _projectId = _$v.projectId;
+      _vendorId = _$v.vendorId;
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _isChanged = _$v.isChanged;
@@ -1648,7 +1667,8 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
               hasExpenses: hasExpenses,
               quoteInvoiceId: quoteInvoiceId,
               filename: filename,
-              settings: settings.build(),
+              projectId: projectId,
+              vendorId: vendorId,
               lineItems: lineItems.build(),
               invitations: invitations.build(),
               isChanged: isChanged,
@@ -1662,8 +1682,6 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'settings';
-        settings.build();
         _$failedField = 'lineItems';
         lineItems.build();
         _$failedField = 'invitations';

@@ -57,6 +57,10 @@ abstract class UserEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
     );
   }
 
@@ -76,6 +80,22 @@ abstract class UserEntity extends Object
   String get email;
 
   String get phone;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
 
   @nullable
   @BuiltValueField(wireName: 'company_user')

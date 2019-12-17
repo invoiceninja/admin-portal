@@ -202,6 +202,18 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.exchangeCurrencyId,
             specifiedType: const FullType(String)));
     }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -332,6 +344,14 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'is_manual':
           result.isManual = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -597,6 +617,10 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool isManual;
   @override
+  final String projectId;
+  @override
+  final String vendorId;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -634,6 +658,8 @@ class _$PaymentEntity extends PaymentEntity {
       this.exchangeRate,
       this.exchangeCurrencyId,
       this.isManual,
+      this.projectId,
+      this.vendorId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -692,6 +718,8 @@ class _$PaymentEntity extends PaymentEntity {
         exchangeRate == other.exchangeRate &&
         exchangeCurrencyId == other.exchangeCurrencyId &&
         isManual == other.isManual &&
+        projectId == other.projectId &&
+        vendorId == other.vendorId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -722,18 +750,18 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode),
-                                                                                date.hashCode),
-                                                                            typeId.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    privateNotes.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                exchangeRate.hashCode),
-                                            exchangeCurrencyId.hashCode),
-                                        isManual.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode),
+                                                                                invoiceId.hashCode),
+                                                                            privateNotes.hashCode),
+                                                                        customValue1.hashCode),
+                                                                    customValue2.hashCode),
+                                                                customValue3.hashCode),
+                                                            customValue4.hashCode),
+                                                        exchangeRate.hashCode),
+                                                    exchangeCurrencyId.hashCode),
+                                                isManual.hashCode),
+                                            projectId.hashCode),
+                                        vendorId.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -764,6 +792,8 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('exchangeRate', exchangeRate)
           ..add('exchangeCurrencyId', exchangeCurrencyId)
           ..add('isManual', isManual)
+          ..add('projectId', projectId)
+          ..add('vendorId', vendorId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -850,6 +880,14 @@ class PaymentEntityBuilder
   bool get isManual => _$this._isManual;
   set isManual(bool isManual) => _$this._isManual = isManual;
 
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -905,6 +943,8 @@ class PaymentEntityBuilder
       _exchangeRate = _$v.exchangeRate;
       _exchangeCurrencyId = _$v.exchangeCurrencyId;
       _isManual = _$v.isManual;
+      _projectId = _$v.projectId;
+      _vendorId = _$v.vendorId;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -952,6 +992,8 @@ class PaymentEntityBuilder
             exchangeRate: exchangeRate,
             exchangeCurrencyId: exchangeCurrencyId,
             isManual: isManual,
+            projectId: projectId,
+            vendorId: vendorId,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
