@@ -43,11 +43,7 @@ class ActionFlatButton extends StatelessWidget {
       child: Text(
         tooltip,
         style: TextStyle(
-            color: isDirty
-                ? (state.prefState.enableDarkMode
-                    ? Theme.of(context).accentColor
-                    : Colors.yellowAccent)
-                : Colors.white),
+            color: Colors.white),
       ),
       onPressed: onPressed,
     );

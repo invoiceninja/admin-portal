@@ -61,7 +61,7 @@ class DashboardVM {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
 
-      // TODO just reload activities 
+      // TODO just reload activities
       store.dispatch(
           RefreshData(completer: completer, platform: getPlatform(context)));
 
