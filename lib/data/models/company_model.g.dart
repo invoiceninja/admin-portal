@@ -1308,13 +1308,13 @@ class _$SettingsEntitySerializer
     }
     if (object.numberOfInvoiceTaxRates != null) {
       result
-        ..add('invoice_taxes_HIDDEN')
+        ..add('enabled_tax_rates')
         ..add(serializers.serialize(object.numberOfInvoiceTaxRates,
             specifiedType: const FullType(int)));
     }
     if (object.numberOfItemTaxRates != null) {
       result
-        ..add('invoice_item_taxes_HIDDEN')
+        ..add('enabled_tax_rates')
         ..add(serializers.serialize(object.numberOfItemTaxRates,
             specifiedType: const FullType(int)));
     }
@@ -2109,11 +2109,11 @@ class _$SettingsEntitySerializer
           result.defaultQuoteFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_taxes_HIDDEN':
+        case 'enabled_tax_rates':
           result.numberOfInvoiceTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'invoice_item_taxes_HIDDEN':
+        case 'enabled_tax_rates':
           result.numberOfItemTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;

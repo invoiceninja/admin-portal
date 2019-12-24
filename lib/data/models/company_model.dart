@@ -1313,11 +1313,11 @@ abstract class SettingsEntity
   String get defaultQuoteFooter;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_taxes_HIDDEN')
+  @BuiltValueField(wireName: 'enabled_tax_rates')
   int get numberOfInvoiceTaxRates;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_item_taxes_HIDDEN')
+  @BuiltValueField(wireName: 'enabled_tax_rates')
   int get numberOfItemTaxRates;
 
   @nullable

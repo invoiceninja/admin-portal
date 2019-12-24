@@ -75,7 +75,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
 
     int lastIndex = 5;
-    lastIndex += company.settings.numberOfItemTaxRates;
+    lastIndex += company.settings.numberOfItemTaxRates ?? 0;
     if (company.hasCustomField(CustomFieldType.product1)) {
       lastIndex++;
     }
@@ -116,11 +116,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             if (company.hasCustomField(CustomFieldType.product4))
               TableHeader(
                   company.getCustomFieldLabel(CustomFieldType.product4)),
-            if (company.settings.numberOfItemTaxRates >= 1)
+            if (company.settings.numberOfItemTaxRates ?? 0 >= 1)
               TableHeader(localization.tax),
-            if (company.settings.numberOfItemTaxRates >= 2)
+            if (company.settings.numberOfItemTaxRates ?? 0 >= 2)
               TableHeader(localization.tax),
-            if (company.settings.numberOfItemTaxRates >= 3)
+            if (company.settings.numberOfItemTaxRates ?? 0 >= 3)
               TableHeader(localization.tax),
             TableHeader(localization.unitCost, isNumeric: true),
             TableHeader(localization.quantity, isNumeric: true),
@@ -236,7 +236,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         index),
                   ),
                 ),
-              if (company.settings.numberOfItemTaxRates >= 1)
+              if (company.settings.numberOfItemTaxRates ?? 0 >= 1)
                 Padding(
                   padding: const EdgeInsets.only(right: kTableColumnGap),
                   child: TaxRateDropdown(
@@ -250,7 +250,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     initialTaxRate: lineItems[index].taxRate1,
                   ),
                 ),
-              if (company.settings.numberOfItemTaxRates >= 2)
+              if (company.settings.numberOfItemTaxRates ?? 0 >= 2)
                 Padding(
                   padding: const EdgeInsets.only(right: kTableColumnGap),
                   child: TaxRateDropdown(
@@ -264,7 +264,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     initialTaxRate: lineItems[index].taxRate2,
                   ),
                 ),
-              if (company.settings.numberOfItemTaxRates >= 3)
+              if (company.settings.numberOfItemTaxRates ?? 0 >= 3)
                 Padding(
                   padding: const EdgeInsets.only(right: kTableColumnGap),
                   child: TaxRateDropdown(
