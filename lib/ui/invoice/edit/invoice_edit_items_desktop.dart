@@ -157,7 +157,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ? 1
                           : item.quantity);
                     viewModel.onChangedInvoiceItem(updatedItem, index);
-                    viewModel.addLineItem();
                     _updateTable();
                   },
                   textFieldConfiguration:
