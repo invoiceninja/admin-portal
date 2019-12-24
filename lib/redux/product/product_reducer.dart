@@ -157,6 +157,7 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
+  TypedReducer<ProductState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
   TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProductSuccess),
   TypedReducer<ProductState, ArchiveProductFailure>(_archiveProductFailure),
@@ -282,14 +283,14 @@ ProductState _updateProduct(
 }
 
 ProductState _setLoadedProducts(
-    ProductState productState, LoadProductsSuccess action) {
-  final state = productState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.products,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        ProductState productState, LoadProductsSuccess action) =>
+    productState.loadProducts(action.products);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+ProductState _companyLoaded(
+    ProductState productState, LoadCompanySuccess action) {
+  final products = action.userCompany.company.products;
+  if (products.isEmpty) {
+    return productState;
+  }
+  return productState.loadProducts(products);
 }

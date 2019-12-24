@@ -38,6 +38,19 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  VendorState loadVendors(BuiltList<VendorEntity> clients) {
+    final map = Map<String, VendorEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<VendorState> get serializer => _$vendorStateSerializer;
 }
 

@@ -36,6 +36,19 @@ abstract class ProductState
         kMillisecondsToRefreshData;
   }
 
+  ProductState loadProducts(BuiltList<ProductEntity> clients) {
+    final map = Map<String, ProductEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ProductState> get serializer => _$productStateSerializer;

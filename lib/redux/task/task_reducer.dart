@@ -164,6 +164,7 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, AddTaskSuccess>(_addTask),
   TypedReducer<TaskState, LoadTasksSuccess>(_setLoadedTasks),
   TypedReducer<TaskState, LoadTaskSuccess>(_setLoadedTask),
+  TypedReducer<TaskState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<TaskState, ArchiveTaskRequest>(_archiveTaskRequest),
   TypedReducer<TaskState, ArchiveTaskSuccess>(_archiveTaskSuccess),
   TypedReducer<TaskState, ArchiveTaskFailure>(_archiveTaskFailure),
@@ -281,14 +282,15 @@ TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) {
-  final state = taskState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.tasks,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
+    taskState.loadTasks(action.tasks);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+TaskState _companyLoaded(
+    TaskState taskState, LoadCompanySuccess action) {
+  final tasks = action.userCompany.company.tasks;
+  if (tasks.isEmpty) {
+    return taskState;
+  }
+  return taskState.loadTasks(tasks);
 }
+

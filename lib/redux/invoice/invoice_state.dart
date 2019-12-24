@@ -48,6 +48,19 @@ abstract class InvoiceState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  InvoiceState loadInvoices(BuiltList<InvoiceEntity> clients) {
+    final map = Map<String, InvoiceEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }
 

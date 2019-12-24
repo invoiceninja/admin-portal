@@ -234,6 +234,7 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, AddQuoteSuccess>(_addQuote),
   TypedReducer<QuoteState, LoadQuotesSuccess>(_setLoadedQuotes),
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
+  TypedReducer<QuoteState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
   TypedReducer<QuoteState, ArchiveQuoteRequest>(_archiveQuoteRequest),
   TypedReducer<QuoteState, ArchiveQuoteSuccess>(_archiveQuoteSuccess),
@@ -371,14 +372,14 @@ QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
-QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) {
-  final state = quoteState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.quotes,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
+    quoteState.loadQuotes(action.quotes);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+QuoteState _companyLoaded(
+    QuoteState quoteState, LoadCompanySuccess action) {
+  final quotes = action.userCompany.company.quotes;
+  if (quotes.isEmpty) {
+    return quoteState;
+  }
+  return quoteState.loadQuotes(quotes);
 }

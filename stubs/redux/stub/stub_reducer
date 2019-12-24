@@ -220,14 +220,14 @@ StubState _setLoadedStub(
 }
 
 StubState _setLoadedStubs(
-    StubState stubState, LoadStubsSuccess action) {
-  final state = stubState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.stubs,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        StubState stubState, LoadStubsSuccess action) =>
+    stubState.loadStubs(action.stubs);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+StubState _companyLoaded(
+        StubState stubState, LoadCompanySuccess action) {
+  final stubs = action.userCompany.company.stubs;
+  if (stubs.isEmpty) {
+    return stubState;
+  }
+  return stubState.loadStubs(stubs);
 }

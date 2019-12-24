@@ -171,7 +171,6 @@ ListUIState _filterInvoicesByCustom3(
   }
 }
 
-
 ListUIState _filterInvoicesByCustom4(
     ListUIState invoiceListState, FilterInvoicesByCustom4 action) {
   if (invoiceListState.custom4Filters.contains(action.value)) {
@@ -249,6 +248,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, SaveInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, AddInvoiceSuccess>(_addInvoice),
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
+  TypedReducer<InvoiceState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, MarkInvoicesSentSuccess>(_markInvoicesSentSuccess),
   TypedReducer<InvoiceState, MarkInvoicesPaidSuccess>(_markInvoicesPaidSuccess),
@@ -403,14 +403,14 @@ InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
 }
 
 InvoiceState _setLoadedInvoices(
-    InvoiceState invoiceState, LoadInvoicesSuccess action) {
-  final state = invoiceState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.invoices,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        InvoiceState invoiceState, LoadInvoicesSuccess action) =>
+    invoiceState.loadInvoices(action.invoices);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+InvoiceState _companyLoaded(
+    InvoiceState invoiceState, LoadCompanySuccess action) {
+  final invoices = action.userCompany.company.invoices;
+  if (invoices.isEmpty) {
+    return invoiceState;
+  }
+  return invoiceState.loadInvoices(invoices);
 }

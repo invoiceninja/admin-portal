@@ -41,6 +41,19 @@ abstract class PaymentState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
+    final map = Map<String, PaymentEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<PaymentState> get serializer => _$paymentStateSerializer;
 }
 

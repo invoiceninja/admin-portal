@@ -39,6 +39,19 @@ abstract class ProjectState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  ProjectState loadProjects(BuiltList<ProjectEntity> clients) {
+    final map = Map<String, ProjectEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<ProjectState> get serializer => _$projectStateSerializer;
 }
 

@@ -39,6 +39,19 @@ abstract class ExpenseState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
+    final map = Map<String, ExpenseEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<ExpenseState> get serializer => _$expenseStateSerializer;
 }
 

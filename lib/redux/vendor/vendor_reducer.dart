@@ -130,8 +130,8 @@ ListUIState _filterVendorsByCustom2(
   }
 }
 
-ListUIState _filterVendorsByCustom3(ListUIState vendorListState,
-    FilterVendorsByCustom3 action) {
+ListUIState _filterVendorsByCustom3(
+    ListUIState vendorListState, FilterVendorsByCustom3 action) {
   if (vendorListState.custom3Filters.contains(action.value)) {
     return vendorListState
         .rebuild((b) => b..custom3Filters.remove(action.value));
@@ -199,6 +199,7 @@ final vendorsReducer = combineReducers<VendorState>([
   TypedReducer<VendorState, AddVendorSuccess>(_addVendor),
   TypedReducer<VendorState, LoadVendorsSuccess>(_setLoadedVendors),
   TypedReducer<VendorState, LoadVendorSuccess>(_setLoadedVendor),
+  TypedReducer<VendorState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<VendorState, ArchiveVendorRequest>(_archiveVendorRequest),
   TypedReducer<VendorState, ArchiveVendorSuccess>(_archiveVendorSuccess),
   TypedReducer<VendorState, ArchiveVendorFailure>(_archiveVendorFailure),
@@ -327,14 +328,14 @@ VendorState _setLoadedVendor(
 }
 
 VendorState _setLoadedVendors(
-    VendorState vendorState, LoadVendorsSuccess action) {
-  final state = vendorState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.vendors,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        VendorState vendorState, LoadVendorsSuccess action) =>
+    vendorState.loadVendors(action.vendors);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+VendorState _companyLoaded(
+    VendorState vendorState, LoadCompanySuccess action) {
+  final vendors = action.userCompany.company.vendors;
+  if (vendors.isEmpty) {
+    return vendorState;
+  }
+  return vendorState.loadVendors(vendors);
 }

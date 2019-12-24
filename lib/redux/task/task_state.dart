@@ -38,6 +38,19 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  TaskState loadTasks(BuiltList<TaskEntity> clients) {
+    final map = Map<String, TaskEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<TaskState> get serializer => _$taskStateSerializer;
 }
 

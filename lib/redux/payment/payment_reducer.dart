@@ -157,6 +157,7 @@ final paymentsReducer = combineReducers<PaymentState>([
   TypedReducer<PaymentState, AddPaymentSuccess>(_addPayment),
   TypedReducer<PaymentState, LoadPaymentsSuccess>(_setLoadedPayments),
   TypedReducer<PaymentState, LoadPaymentSuccess>(_setLoadedPayment),
+  TypedReducer<PaymentState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<PaymentState, ArchivePaymentRequest>(_archivePaymentRequest),
   TypedReducer<PaymentState, ArchivePaymentSuccess>(_archivePaymentSuccess),
   TypedReducer<PaymentState, ArchivePaymentFailure>(_archivePaymentFailure),
@@ -288,14 +289,14 @@ PaymentState _setLoadedPayment(
 }
 
 PaymentState _setLoadedPayments(
-    PaymentState paymentState, LoadPaymentsSuccess action) {
-  final state = paymentState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.payments,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        PaymentState paymentState, LoadPaymentsSuccess action) =>
+    paymentState.loadPayments(action.payments);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+PaymentState _companyLoaded(
+    PaymentState paymentState, LoadCompanySuccess action) {
+  final payments = action.userCompany.company.payments;
+  if (payments.isEmpty) {
+    return paymentState;
+  }
+  return paymentState.loadPayments(payments);
 }
