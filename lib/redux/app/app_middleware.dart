@@ -386,6 +386,8 @@ Middleware<AppState> _createAccountLoaded() {
 
         store.dispatch(SelectCompany(i, userCompany));
         store.dispatch(LoadCompanySuccess(userCompany));
+
+
       }
 
       store.dispatch(SelectCompany(0, response.userCompanies[0]));

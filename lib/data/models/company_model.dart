@@ -51,6 +51,16 @@ abstract class CompanyEntity extends Object
       userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       activities: BuiltList<ActivityEntity>(),
+      clients: BuiltList<ClientEntity>(),
+      products: BuiltList<ProductEntity>(),
+      invoices: BuiltList<InvoiceEntity>(),
+      payments: BuiltList<PaymentEntity>(),
+      quotes: BuiltList<InvoiceEntity>(),
+      credits: BuiltList<InvoiceEntity>(),
+      tasks: BuiltList<TaskEntity>(),
+      expenses: BuiltList<ExpenseEntity>(),
+      projects: BuiltList<ProjectEntity>(),
+      vendors: BuiltList<VendorEntity>(),
     );
   }
 
@@ -168,6 +178,56 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'clients')
+  BuiltList<ClientEntity> get clients;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'products')
+  BuiltList<ProductEntity> get products;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'invoices')
+  BuiltList<InvoiceEntity> get invoices;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'payments')
+  BuiltList<PaymentEntity> get payments;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'quotes')
+  BuiltList<InvoiceEntity> get quotes;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'credits')
+  BuiltList<InvoiceEntity> get credits;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'tasks')
+  BuiltList<TaskEntity> get tasks;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'projects')
+  BuiltList<ProjectEntity> get projects;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'expenses')
+  BuiltList<ExpenseEntity> get expenses;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'vendors')
+  BuiltList<VendorEntity> get vendors;
 
   // TODO remove this
   @nullable
@@ -545,7 +605,8 @@ abstract class UserCompanyEntity
       _$userCompanyEntitySerializer;
 }
 
-abstract class UserSettingsEntity implements Built<UserSettingsEntity, UserSettingsEntityBuilder> {
+abstract class UserSettingsEntity
+    implements Built<UserSettingsEntity, UserSettingsEntityBuilder> {
   factory UserSettingsEntity() {
     return _$UserSettingsEntity._(
       accentColor: kDefaultAccentColor,
@@ -558,9 +619,9 @@ abstract class UserSettingsEntity implements Built<UserSettingsEntity, UserSetti
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
 
-  static Serializer<UserSettingsEntity> get serializer => _$userSettingsEntitySerializer;
+  static Serializer<UserSettingsEntity> get serializer =>
+      _$userSettingsEntitySerializer;
 }
-
 
 abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
   factory TokenEntity() {

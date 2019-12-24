@@ -211,6 +211,7 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientSuccess>(_setLoadedClient),
+  TypedReducer<ClientState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
   TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
   TypedReducer<ClientState, ArchiveClientFailure>(_archiveClientFailure),
@@ -343,14 +344,14 @@ ClientState _setLoadedClient(
 }
 
 ClientState _setLoadedClients(
-    ClientState clientState, LoadClientsSuccess action) {
-  final state = clientState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.clients,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+        ClientState clientState, LoadClientsSuccess action) =>
+    clientState.loadClients(action.clients);
 
-  return state.rebuild((b) => b..list.replace(state.map.keys));
+ClientState _companyLoaded(
+        ClientState clientState, LoadCompanySuccess action) {
+  final clients = action.userCompany.company.clients;
+  if (clients.isEmpty) {
+    return clientState;
+  }
+  return clientState.loadClients(clients);
 }

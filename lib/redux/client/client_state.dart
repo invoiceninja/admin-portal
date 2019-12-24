@@ -18,12 +18,14 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   ClientState._();
 
   @nullable
   int get lastUpdated;
 
   BuiltMap<String, ClientEntity> get map;
+
   BuiltList<String> get list;
 
   ClientEntity get(String clientId) {
@@ -43,6 +45,19 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
         kMillisecondsToRefreshData;
   }
 
+  ClientState loadClients(BuiltList<ClientEntity> clients) {
+    final map = Map<String, ClientEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
@@ -59,6 +74,7 @@ abstract class ClientUIState extends Object
       saveCompleter: null,
     );
   }
+
   ClientUIState._();
 
   @nullable

@@ -101,6 +101,17 @@ class AuthRepository {
       'company.tax_rates',
       'company.groups',
       'company.company_gateways.gateway',
+      'company.clients',
+      'company.products',
+      'company.invoices',
+      'company.payments',
+      'company.quotes',
+      //'company.credits',
+      //'company.tasks',
+      //'company.projects',
+      //'company.expenses',
+      //'company.vendors',
+      // TODO add to starter
     ];
     url += '?include=${includes.join(',')}&include_static=true';
 

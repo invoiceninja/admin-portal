@@ -200,6 +200,76 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(UserEntity)])));
     }
+    if (object.clients != null) {
+      result
+        ..add('clients')
+        ..add(serializers.serialize(object.clients,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ClientEntity)])));
+    }
+    if (object.products != null) {
+      result
+        ..add('products')
+        ..add(serializers.serialize(object.products,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ProductEntity)])));
+    }
+    if (object.invoices != null) {
+      result
+        ..add('invoices')
+        ..add(serializers.serialize(object.invoices,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(InvoiceEntity)])));
+    }
+    if (object.payments != null) {
+      result
+        ..add('payments')
+        ..add(serializers.serialize(object.payments,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(PaymentEntity)])));
+    }
+    if (object.quotes != null) {
+      result
+        ..add('quotes')
+        ..add(serializers.serialize(object.quotes,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(InvoiceEntity)])));
+    }
+    if (object.credits != null) {
+      result
+        ..add('credits')
+        ..add(serializers.serialize(object.credits,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(InvoiceEntity)])));
+    }
+    if (object.tasks != null) {
+      result
+        ..add('tasks')
+        ..add(serializers.serialize(object.tasks,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(TaskEntity)])));
+    }
+    if (object.projects != null) {
+      result
+        ..add('projects')
+        ..add(serializers.serialize(object.projects,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ProjectEntity)])));
+    }
+    if (object.expenses != null) {
+      result
+        ..add('expenses')
+        ..add(serializers.serialize(object.expenses,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(ExpenseEntity)])));
+    }
+    if (object.vendors != null) {
+      result
+        ..add('vendors')
+        ..add(serializers.serialize(object.vendors,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(VendorEntity)])));
+    }
     if (object.userMap != null) {
       result
         ..add('userMap')
@@ -414,6 +484,66 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.users.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(UserEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'clients':
+          result.clients.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ClientEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'products':
+          result.products.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ProductEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'invoices':
+          result.invoices.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'payments':
+          result.payments.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'quotes':
+          result.quotes.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'credits':
+          result.credits.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'tasks':
+          result.tasks.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(TaskEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'projects':
+          result.projects.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ProjectEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'expenses':
+          result.expenses.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(ExpenseEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'vendors':
+          result.vendors.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(VendorEntity)]))
               as BuiltList<dynamic>);
           break;
         case 'userMap':
@@ -2456,6 +2586,26 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<UserEntity> users;
   @override
+  final BuiltList<ClientEntity> clients;
+  @override
+  final BuiltList<ProductEntity> products;
+  @override
+  final BuiltList<InvoiceEntity> invoices;
+  @override
+  final BuiltList<PaymentEntity> payments;
+  @override
+  final BuiltList<InvoiceEntity> quotes;
+  @override
+  final BuiltList<InvoiceEntity> credits;
+  @override
+  final BuiltList<TaskEntity> tasks;
+  @override
+  final BuiltList<ProjectEntity> projects;
+  @override
+  final BuiltList<ExpenseEntity> expenses;
+  @override
+  final BuiltList<VendorEntity> vendors;
+  @override
   final BuiltMap<String, UserEntity> userMap;
   @override
   final BuiltMap<String, String> customFields;
@@ -2514,6 +2664,16 @@ class _$CompanyEntity extends CompanyEntity {
       this.expenseCategories,
       this.expenseCategoryMap,
       this.users,
+      this.clients,
+      this.products,
+      this.invoices,
+      this.payments,
+      this.quotes,
+      this.credits,
+      this.tasks,
+      this.projects,
+      this.expenses,
+      this.vendors,
       this.userMap,
       this.customFields,
       this.settings,
@@ -2614,6 +2774,16 @@ class _$CompanyEntity extends CompanyEntity {
         expenseCategories == other.expenseCategories &&
         expenseCategoryMap == other.expenseCategoryMap &&
         users == other.users &&
+        clients == other.clients &&
+        products == other.products &&
+        invoices == other.invoices &&
+        payments == other.payments &&
+        quotes == other.quotes &&
+        credits == other.credits &&
+        tasks == other.tasks &&
+        projects == other.projects &&
+        expenses == other.expenses &&
+        vendors == other.vendors &&
         userMap == other.userMap &&
         customFields == other.customFields &&
         settings == other.settings &&
@@ -2648,14 +2818,14 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode),
-                                                                                taxRates.hashCode),
-                                                                            taskStatuses.hashCode),
-                                                                        taskStatusMap.hashCode),
-                                                                    companyGateways.hashCode),
-                                                                expenseCategories.hashCode),
-                                                            expenseCategoryMap.hashCode),
-                                                        users.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
+                                                                                payments.hashCode),
+                                                                            quotes.hashCode),
+                                                                        credits.hashCode),
+                                                                    tasks.hashCode),
+                                                                projects.hashCode),
+                                                            expenses.hashCode),
+                                                        vendors.hashCode),
                                                     userMap.hashCode),
                                                 customFields.hashCode),
                                             settings.hashCode),
@@ -2703,6 +2873,16 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('expenseCategories', expenseCategories)
           ..add('expenseCategoryMap', expenseCategoryMap)
           ..add('users', users)
+          ..add('clients', clients)
+          ..add('products', products)
+          ..add('invoices', invoices)
+          ..add('payments', payments)
+          ..add('quotes', quotes)
+          ..add('credits', credits)
+          ..add('tasks', tasks)
+          ..add('projects', projects)
+          ..add('expenses', expenses)
+          ..add('vendors', vendors)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('settings', settings)
@@ -2873,6 +3053,61 @@ class CompanyEntityBuilder
       _$this._users ??= new ListBuilder<UserEntity>();
   set users(ListBuilder<UserEntity> users) => _$this._users = users;
 
+  ListBuilder<ClientEntity> _clients;
+  ListBuilder<ClientEntity> get clients =>
+      _$this._clients ??= new ListBuilder<ClientEntity>();
+  set clients(ListBuilder<ClientEntity> clients) => _$this._clients = clients;
+
+  ListBuilder<ProductEntity> _products;
+  ListBuilder<ProductEntity> get products =>
+      _$this._products ??= new ListBuilder<ProductEntity>();
+  set products(ListBuilder<ProductEntity> products) =>
+      _$this._products = products;
+
+  ListBuilder<InvoiceEntity> _invoices;
+  ListBuilder<InvoiceEntity> get invoices =>
+      _$this._invoices ??= new ListBuilder<InvoiceEntity>();
+  set invoices(ListBuilder<InvoiceEntity> invoices) =>
+      _$this._invoices = invoices;
+
+  ListBuilder<PaymentEntity> _payments;
+  ListBuilder<PaymentEntity> get payments =>
+      _$this._payments ??= new ListBuilder<PaymentEntity>();
+  set payments(ListBuilder<PaymentEntity> payments) =>
+      _$this._payments = payments;
+
+  ListBuilder<InvoiceEntity> _quotes;
+  ListBuilder<InvoiceEntity> get quotes =>
+      _$this._quotes ??= new ListBuilder<InvoiceEntity>();
+  set quotes(ListBuilder<InvoiceEntity> quotes) => _$this._quotes = quotes;
+
+  ListBuilder<InvoiceEntity> _credits;
+  ListBuilder<InvoiceEntity> get credits =>
+      _$this._credits ??= new ListBuilder<InvoiceEntity>();
+  set credits(ListBuilder<InvoiceEntity> credits) => _$this._credits = credits;
+
+  ListBuilder<TaskEntity> _tasks;
+  ListBuilder<TaskEntity> get tasks =>
+      _$this._tasks ??= new ListBuilder<TaskEntity>();
+  set tasks(ListBuilder<TaskEntity> tasks) => _$this._tasks = tasks;
+
+  ListBuilder<ProjectEntity> _projects;
+  ListBuilder<ProjectEntity> get projects =>
+      _$this._projects ??= new ListBuilder<ProjectEntity>();
+  set projects(ListBuilder<ProjectEntity> projects) =>
+      _$this._projects = projects;
+
+  ListBuilder<ExpenseEntity> _expenses;
+  ListBuilder<ExpenseEntity> get expenses =>
+      _$this._expenses ??= new ListBuilder<ExpenseEntity>();
+  set expenses(ListBuilder<ExpenseEntity> expenses) =>
+      _$this._expenses = expenses;
+
+  ListBuilder<VendorEntity> _vendors;
+  ListBuilder<VendorEntity> get vendors =>
+      _$this._vendors ??= new ListBuilder<VendorEntity>();
+  set vendors(ListBuilder<VendorEntity> vendors) => _$this._vendors = vendors;
+
   MapBuilder<String, UserEntity> _userMap;
   MapBuilder<String, UserEntity> get userMap =>
       _$this._userMap ??= new MapBuilder<String, UserEntity>();
@@ -2963,6 +3198,16 @@ class CompanyEntityBuilder
       _expenseCategories = _$v.expenseCategories?.toBuilder();
       _expenseCategoryMap = _$v.expenseCategoryMap?.toBuilder();
       _users = _$v.users?.toBuilder();
+      _clients = _$v.clients?.toBuilder();
+      _products = _$v.products?.toBuilder();
+      _invoices = _$v.invoices?.toBuilder();
+      _payments = _$v.payments?.toBuilder();
+      _quotes = _$v.quotes?.toBuilder();
+      _credits = _$v.credits?.toBuilder();
+      _tasks = _$v.tasks?.toBuilder();
+      _projects = _$v.projects?.toBuilder();
+      _expenses = _$v.expenses?.toBuilder();
+      _vendors = _$v.vendors?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _settings = _$v.settings?.toBuilder();
@@ -3029,6 +3274,16 @@ class CompanyEntityBuilder
               expenseCategories: _expenseCategories?.build(),
               expenseCategoryMap: _expenseCategoryMap?.build(),
               users: _users?.build(),
+              clients: _clients?.build(),
+              products: _products?.build(),
+              invoices: _invoices?.build(),
+              payments: _payments?.build(),
+              quotes: _quotes?.build(),
+              credits: _credits?.build(),
+              tasks: _tasks?.build(),
+              projects: _projects?.build(),
+              expenses: _expenses?.build(),
+              vendors: _vendors?.build(),
               userMap: _userMap?.build(),
               customFields: customFields.build(),
               settings: settings.build(),
@@ -3062,6 +3317,26 @@ class CompanyEntityBuilder
         _expenseCategoryMap?.build();
         _$failedField = 'users';
         _users?.build();
+        _$failedField = 'clients';
+        _clients?.build();
+        _$failedField = 'products';
+        _products?.build();
+        _$failedField = 'invoices';
+        _invoices?.build();
+        _$failedField = 'payments';
+        _payments?.build();
+        _$failedField = 'quotes';
+        _quotes?.build();
+        _$failedField = 'credits';
+        _credits?.build();
+        _$failedField = 'tasks';
+        _tasks?.build();
+        _$failedField = 'projects';
+        _projects?.build();
+        _$failedField = 'expenses';
+        _expenses?.build();
+        _$failedField = 'vendors';
+        _vendors?.build();
         _$failedField = 'userMap';
         _userMap?.build();
         _$failedField = 'customFields';
