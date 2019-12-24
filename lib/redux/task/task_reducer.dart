@@ -288,7 +288,7 @@ TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
 TaskState _companyLoaded(
     TaskState taskState, LoadCompanySuccess action) {
   final tasks = action.userCompany.company.tasks;
-  if (tasks.isEmpty) {
+  if (tasks == null || tasks.isEmpty) {
     return taskState;
   }
   return taskState.loadTasks(tasks);

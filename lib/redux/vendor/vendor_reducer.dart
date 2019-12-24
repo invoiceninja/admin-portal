@@ -334,7 +334,7 @@ VendorState _setLoadedVendors(
 VendorState _companyLoaded(
     VendorState vendorState, LoadCompanySuccess action) {
   final vendors = action.userCompany.company.vendors;
-  if (vendors.isEmpty) {
+  if (vendors == null || vendors.isEmpty) {
     return vendorState;
   }
   return vendorState.loadVendors(vendors);

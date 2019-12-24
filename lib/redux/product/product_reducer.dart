@@ -289,7 +289,7 @@ ProductState _setLoadedProducts(
 ProductState _companyLoaded(
     ProductState productState, LoadCompanySuccess action) {
   final products = action.userCompany.company.products;
-  if (products.isEmpty) {
+  if (products == null || products.isEmpty) {
     return productState;
   }
   return productState.loadProducts(products);

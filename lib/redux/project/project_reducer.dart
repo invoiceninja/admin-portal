@@ -312,7 +312,7 @@ ProjectState _setLoadedProjects(
 ProjectState _companyLoaded(
     ProjectState projectState, LoadCompanySuccess action) {
   final projects = action.userCompany.company.projects;
-  if (projects.isEmpty) {
+  if (projects == null || projects.isEmpty) {
     return projectState;
   }
   return projectState.loadProjects(projects);

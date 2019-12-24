@@ -306,7 +306,7 @@ ExpenseState _setLoadedExpenses(
 ExpenseState _companyLoaded(
     ExpenseState expenseState, LoadCompanySuccess action) {
   final expenses = action.userCompany.company.expenses;
-  if (expenses.isEmpty) {
+  if (expenses == null || expenses.isEmpty) {
     return expenseState;
   }
   return expenseState.loadExpenses(expenses);

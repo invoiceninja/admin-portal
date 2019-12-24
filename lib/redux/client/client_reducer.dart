@@ -350,7 +350,7 @@ ClientState _setLoadedClients(
 ClientState _companyLoaded(
         ClientState clientState, LoadCompanySuccess action) {
   final clients = action.userCompany.company.clients;
-  if (clients.isEmpty) {
+  if (clients == null || clients.isEmpty) {
     return clientState;
   }
   return clientState.loadClients(clients);

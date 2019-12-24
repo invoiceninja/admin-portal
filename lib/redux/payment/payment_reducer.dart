@@ -295,7 +295,7 @@ PaymentState _setLoadedPayments(
 PaymentState _companyLoaded(
     PaymentState paymentState, LoadCompanySuccess action) {
   final payments = action.userCompany.company.payments;
-  if (payments.isEmpty) {
+  if (payments == null || payments.isEmpty) {
     return paymentState;
   }
   return paymentState.loadPayments(payments);

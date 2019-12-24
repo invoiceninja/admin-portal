@@ -409,7 +409,7 @@ InvoiceState _setLoadedInvoices(
 InvoiceState _companyLoaded(
     InvoiceState invoiceState, LoadCompanySuccess action) {
   final invoices = action.userCompany.company.invoices;
-  if (invoices.isEmpty) {
+  if (invoices == null || invoices.isEmpty) {
     return invoiceState;
   }
   return invoiceState.loadInvoices(invoices);

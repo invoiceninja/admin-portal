@@ -378,7 +378,7 @@ QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
 QuoteState _companyLoaded(
     QuoteState quoteState, LoadCompanySuccess action) {
   final quotes = action.userCompany.company.quotes;
-  if (quotes.isEmpty) {
+  if (quotes == null || quotes.isEmpty) {
     return quoteState;
   }
   return quoteState.loadQuotes(quotes);
