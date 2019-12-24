@@ -101,7 +101,7 @@ class AuthRepository {
       'company.tax_rates',
       'company.groups',
       'company.company_gateways.gateway',
-      'company.clients',
+      //'company.clients',
       //'company.products',
       //'company.invoices',
       //'company.payments',
