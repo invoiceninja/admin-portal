@@ -216,7 +216,7 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   final _customFieldController = TextEditingController();
   final _optionsController = TextEditingController();
-  String _fieldType = kFieldTypeMultiLineText;
+  String _fieldType = kFieldTypeSingleLineText;
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -240,23 +240,27 @@ class _CustomFormFieldState extends State<CustomFormField> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    if ('${widget.value ?? ''}'.isNotEmpty && widget.value.contains('|')) {
-      final parts = widget.value.split('|');
-      _customFieldController.text = parts[0];
-      switch (parts[1]) {
-        case kFieldTypeSingleLineText:
-          _fieldType = kFieldTypeSingleLineText;
-          break;
-        case kFieldTypeDate:
-          _fieldType = kFieldTypeDate;
-          break;
-        case kFieldTypeSwitch:
-          _fieldType = kFieldTypeSwitch;
-          break;
-        default:
-          _fieldType = kFieldTypeDropdown;
-          _optionsController.text = parts[1];
-          break;
+    if ('${widget.value ?? ''}'.isNotEmpty) {
+      if (widget.value.contains('|')) {
+        final parts = widget.value.split('|');
+        _customFieldController.text = parts[0];
+        switch (parts[1]) {
+          case kFieldTypeSingleLineText:
+            _fieldType = kFieldTypeSingleLineText;
+            break;
+          case kFieldTypeDate:
+            _fieldType = kFieldTypeDate;
+            break;
+          case kFieldTypeSwitch:
+            _fieldType = kFieldTypeSwitch;
+            break;
+          default:
+            _fieldType = kFieldTypeDropdown;
+            _optionsController.text = parts[1];
+            break;
+        }
+      } else {
+        _fieldType = kFieldTypeMultiLineText;
       }
     } else {
       _customFieldController.text = widget.value;
