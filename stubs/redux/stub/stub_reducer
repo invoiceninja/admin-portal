@@ -222,12 +222,3 @@ StubState _setLoadedStub(
 StubState _setLoadedStubs(
         StubState stubState, LoadStubsSuccess action) =>
     stubState.loadStubs(action.stubs);
-
-StubState _companyLoaded(
-        StubState stubState, LoadCompanySuccess action) {
-  final stubs = action.userCompany.company.stubs;
-  if (stubs == null || stubs.isEmpty) {
-    return stubState;
-  }
-  return stubState.loadStubs(stubs);
-}

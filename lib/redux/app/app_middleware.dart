@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -399,6 +398,10 @@ Middleware<AppState> _createAccountLoaded() {
           store.dispatch(LoadInvoicesSuccess(company.invoices));
           store.dispatch(LoadPaymentsSuccess(company.payments));
           //store.dispatch(LoadQuotesSuccess(company.quotes));
+          //store.dispatch(LoadTasksSuccess(company.tasks));
+          //store.dispatch(LoadProjectsSuccess(company.projects));
+          //store.dispatch(LoadVendorsSuccess(company.vendors));
+          //store.dispatch(LoadExpensesSuccess(company.expenses));
         }
       }
 

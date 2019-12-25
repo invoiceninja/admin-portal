@@ -168,7 +168,6 @@ final expensesReducer = combineReducers<ExpenseState>([
   TypedReducer<ExpenseState, AddExpenseSuccess>(_addExpense),
   TypedReducer<ExpenseState, LoadExpensesSuccess>(_setLoadedExpenses),
   TypedReducer<ExpenseState, LoadExpenseSuccess>(_setLoadedExpense),
-  TypedReducer<ExpenseState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<ExpenseState, ArchiveExpenseRequest>(_archiveExpenseRequest),
   TypedReducer<ExpenseState, ArchiveExpenseSuccess>(_archiveExpenseSuccess),
   TypedReducer<ExpenseState, ArchiveExpenseFailure>(_archiveExpenseFailure),
@@ -302,12 +301,3 @@ ExpenseState _setLoadedExpense(
 ExpenseState _setLoadedExpenses(
         ExpenseState expenseState, LoadExpensesSuccess action) =>
     expenseState.loadExpenses(action.expenses);
-
-ExpenseState _companyLoaded(
-    ExpenseState expenseState, LoadCompanySuccess action) {
-  final expenses = action.userCompany.company.expenses;
-  if (expenses == null || expenses.isEmpty) {
-    return expenseState;
-  }
-  return expenseState.loadExpenses(expenses);
-}

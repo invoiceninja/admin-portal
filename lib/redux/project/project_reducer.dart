@@ -172,7 +172,6 @@ final projectsReducer = combineReducers<ProjectState>([
   TypedReducer<ProjectState, SaveProjectSuccess>(_updateProject),
   TypedReducer<ProjectState, AddProjectSuccess>(_addProject),
   TypedReducer<ProjectState, LoadProjectsSuccess>(_setLoadedProjects),
-  TypedReducer<ProjectState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<ProjectState, LoadProjectSuccess>(_setLoadedProject),
   TypedReducer<ProjectState, ArchiveProjectRequest>(_archiveProjectRequest),
   TypedReducer<ProjectState, ArchiveProjectSuccess>(_archiveProjectSuccess),
@@ -305,15 +304,5 @@ ProjectState _setLoadedProject(
 }
 
 ProjectState _setLoadedProjects(
-    ProjectState projectState, LoadProjectsSuccess action) =>
+        ProjectState projectState, LoadProjectsSuccess action) =>
     projectState.loadProjects(action.projects);
-
-
-ProjectState _companyLoaded(
-    ProjectState projectState, LoadCompanySuccess action) {
-  final projects = action.userCompany.company.projects;
-  if (projects == null || projects.isEmpty) {
-    return projectState;
-  }
-  return projectState.loadProjects(projects);
-}

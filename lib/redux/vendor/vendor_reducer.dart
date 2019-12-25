@@ -199,7 +199,6 @@ final vendorsReducer = combineReducers<VendorState>([
   TypedReducer<VendorState, AddVendorSuccess>(_addVendor),
   TypedReducer<VendorState, LoadVendorsSuccess>(_setLoadedVendors),
   TypedReducer<VendorState, LoadVendorSuccess>(_setLoadedVendor),
-  TypedReducer<VendorState, LoadCompanySuccess>(_companyLoaded),
   TypedReducer<VendorState, ArchiveVendorRequest>(_archiveVendorRequest),
   TypedReducer<VendorState, ArchiveVendorSuccess>(_archiveVendorSuccess),
   TypedReducer<VendorState, ArchiveVendorFailure>(_archiveVendorFailure),
@@ -330,12 +329,3 @@ VendorState _setLoadedVendor(
 VendorState _setLoadedVendors(
         VendorState vendorState, LoadVendorsSuccess action) =>
     vendorState.loadVendors(action.vendors);
-
-VendorState _companyLoaded(
-    VendorState vendorState, LoadCompanySuccess action) {
-  final vendors = action.userCompany.company.vendors;
-  if (vendors == null || vendors.isEmpty) {
-    return vendorState;
-  }
-  return vendorState.loadVendors(vendors);
-}
