@@ -567,6 +567,7 @@ abstract class InvoiceItemEntity
       customValue1: '',
       customValue2: '',
       discount: 0.0,
+      createdAt: DateTime.now().microsecondsSinceEpoch,
     );
   }
 
@@ -625,6 +626,8 @@ abstract class InvoiceItemEntity
   @nullable
   @BuiltValueField(wireName: 'expense_public_id')
   String get expenseId;
+
+  int get createdAt;
 
   double get total => round(quantity * cost, 2);
 

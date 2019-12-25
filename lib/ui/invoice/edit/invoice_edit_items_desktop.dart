@@ -128,199 +128,207 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             TableHeader(''),
           ]),
           for (var index = 0; index < lineItems.length; index++)
-            TableRow(children: [
-              Padding(
-                padding: const EdgeInsets.only(right: kTableColumnGap),
-                child: TypeAheadFormField<String>(
-                  initialValue: lineItems[index].productKey,
-                  noItemsFoundBuilder: (context) => SizedBox(),
-                  suggestionsCallback: (pattern) {
-                    return productIds
-                        .where((productId) =>
-                            productState.map[productId].matchesFilter(pattern))
-                        .toList();
-                  },
-                  itemBuilder: (context, suggestion) {
-                    return ListTile(
-                      title: Text(productState.map[suggestion].productKey),
-                    );
-                  },
-                  onSuggestionSelected: (suggestion) {
-                    final item = lineItems[index];
-                    final product = productState.map[suggestion];
-                    final updatedItem = item.rebuild((b) => b
-                      ..productKey = product.productKey
-                      ..notes = product.notes
-                      ..cost = product.price
-                      ..quantity = item.quantity == 0 &&
-                              viewModel.state.company.defaultQuantity
-                          ? 1
-                          : item.quantity);
-                    viewModel.onChangedInvoiceItem(updatedItem, index);
-                    _updateTable();
-                  },
-                  textFieldConfiguration:
-                      TextFieldConfiguration<String>(onChanged: (value) {
-                    viewModel.onChangedInvoiceItem(
-                        lineItems[index].rebuild((b) => b..productKey = value),
-                        index);
-                  }),
-                  autoFlipDirection: true,
-                  //direction: AxisDirection.up,
-                  animationStart: 1,
-                  debounceDuration: Duration(seconds: 0),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: kTableColumnGap),
-                child: TextFormField(
-                  initialValue: lineItems[index].notes,
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index].rebuild((b) => b..notes = value), index),
-                  minLines: 1,
-                  maxLines: 6,
-                  //maxLines: _focusNodes[index].hasFocus ? 6 : 1,
-                  //focusNode: _focusNodes[index],
-                ),
-              ),
-              if (company.hasCustomField(CustomFieldType.product1))
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: CustomField(
-                    field: CustomFieldType.product1,
-                    value: lineItems[index].customValue1,
-                    hideFieldLabel: true,
-                    onChanged: (value) => viewModel.onChangedInvoiceItem(
-                        lineItems[index]
-                            .rebuild((b) => b..customValue1 = value),
-                        index),
-                  ),
-                ),
-              if (company.hasCustomField(CustomFieldType.product2))
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: CustomField(
-                    field: CustomFieldType.product2,
-                    value: lineItems[index].customValue2,
-                    hideFieldLabel: true,
-                    onChanged: (value) => viewModel.onChangedInvoiceItem(
-                        lineItems[index]
-                            .rebuild((b) => b..customValue2 = value),
-                        index),
-                  ),
-                ),
-              if (company.hasCustomField(CustomFieldType.product3))
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: CustomField(
-                    field: CustomFieldType.product3,
-                    value: lineItems[index].customValue3,
-                    hideFieldLabel: true,
-                    onChanged: (value) => viewModel.onChangedInvoiceItem(
-                        lineItems[index]
-                            .rebuild((b) => b..customValue3 = value),
-                        index),
-                  ),
-                ),
-              if (company.hasCustomField(CustomFieldType.product4))
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: CustomField(
-                    field: CustomFieldType.product4,
-                    value: lineItems[index].customValue4,
-                    hideFieldLabel: true,
-                    onChanged: (value) => viewModel.onChangedInvoiceItem(
-                        lineItems[index]
-                            .rebuild((b) => b..customValue4 = value),
-                        index),
-                  ),
-                ),
-              if ((company.settings.numberOfItemTaxRates ?? 0) >= 1)
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: TaxRateDropdown(
-                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        lineItems[index].rebuild((b) => b
-                          ..taxName1 = taxRate.name
-                          ..taxRate1 = taxRate.rate),
-                        index),
-                    labelText: null,
-                    initialTaxName: lineItems[index].taxName1,
-                    initialTaxRate: lineItems[index].taxRate1,
-                  ),
-                ),
-              if ((company.settings.numberOfItemTaxRates ?? 0) >= 2)
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: TaxRateDropdown(
-                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        lineItems[index].rebuild((b) => b
-                          ..taxName2 = taxRate.name
-                          ..taxRate2 = taxRate.rate),
-                        index),
-                    labelText: null,
-                    initialTaxName: lineItems[index].taxName2,
-                    initialTaxRate: lineItems[index].taxRate2,
-                  ),
-                ),
-              if ((company.settings.numberOfItemTaxRates ?? 0) >= 3)
-                Padding(
-                  padding: const EdgeInsets.only(right: kTableColumnGap),
-                  child: TaxRateDropdown(
-                    onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
-                        lineItems[index].rebuild((b) => b
-                          ..taxName3 = taxRate.name
-                          ..taxRate3 = taxRate.rate),
-                        index),
-                    labelText: null,
-                    initialTaxName: lineItems[index].taxName3,
-                    initialTaxRate: lineItems[index].taxRate3,
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.only(right: kTableColumnGap),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  initialValue: formatNumber(lineItems[index].cost, context,
-                      formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..cost = parseDouble(value)),
-                      index),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: kTableColumnGap),
-                child: TextFormField(
-                  textAlign: TextAlign.right,
-                  initialValue: formatNumber(lineItems[index].quantity, context,
-                      formatNumberType: FormatNumberType.input),
-                  onChanged: (value) => viewModel.onChangedInvoiceItem(
-                      lineItems[index]
-                          .rebuild((b) => b..quantity = parseDouble(value)),
-                      index),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: kTableColumnGap),
-                child: TextFormField(
-                  key: ValueKey('__total_${index}_${lineItems[index].total}__'),
-                  readOnly: true,
-                  enabled: false,
-                  initialValue: formatNumber(lineItems[index].total, context),
-                  textAlign: TextAlign.right,
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.clear),
-                onPressed: lineItems[index].isEmpty
-                    ? null
-                    : () {
-                        viewModel.onRemoveInvoiceItemPressed(index);
+            TableRow(
+                key: ValueKey(
+                    '__line_item_${index}_${lineItems[index].createdAt}__'),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TypeAheadFormField<String>(
+                      initialValue: lineItems[index].productKey,
+                      noItemsFoundBuilder: (context) => SizedBox(),
+                      suggestionsCallback: (pattern) {
+                        return productIds
+                            .where((productId) => productState.map[productId]
+                                .matchesFilter(pattern))
+                            .toList();
+                      },
+                      itemBuilder: (context, suggestion) {
+                        return ListTile(
+                          title: Text(productState.map[suggestion].productKey),
+                        );
+                      },
+                      onSuggestionSelected: (suggestion) {
+                        final item = lineItems[index];
+                        final product = productState.map[suggestion];
+                        final updatedItem = item.rebuild((b) => b
+                          ..productKey = product.productKey
+                          ..notes = product.notes
+                          ..cost = product.price
+                          ..quantity = item.quantity == 0 &&
+                                  viewModel.state.company.defaultQuantity
+                              ? 1
+                              : item.quantity);
+                        viewModel.onChangedInvoiceItem(updatedItem, index);
                         _updateTable();
                       },
-              ),
-            ])
+                      textFieldConfiguration:
+                          TextFieldConfiguration<String>(onChanged: (value) {
+                        viewModel.onChangedInvoiceItem(
+                            lineItems[index]
+                                .rebuild((b) => b..productKey = value),
+                            index);
+                      }),
+                      autoFlipDirection: true,
+                      //direction: AxisDirection.up,
+                      animationStart: 1,
+                      debounceDuration: Duration(seconds: 0),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TextFormField(
+                      initialValue: lineItems[index].notes,
+                      onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          lineItems[index].rebuild((b) => b..notes = value),
+                          index),
+                      minLines: 1,
+                      maxLines: 6,
+                      //maxLines: _focusNodes[index].hasFocus ? 6 : 1,
+                      //focusNode: _focusNodes[index],
+                    ),
+                  ),
+                  if (company.hasCustomField(CustomFieldType.product1))
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: CustomField(
+                        field: CustomFieldType.product1,
+                        value: lineItems[index].customValue1,
+                        hideFieldLabel: true,
+                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                            lineItems[index]
+                                .rebuild((b) => b..customValue1 = value),
+                            index),
+                      ),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.product2))
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: CustomField(
+                        field: CustomFieldType.product2,
+                        value: lineItems[index].customValue2,
+                        hideFieldLabel: true,
+                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                            lineItems[index]
+                                .rebuild((b) => b..customValue2 = value),
+                            index),
+                      ),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.product3))
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: CustomField(
+                        field: CustomFieldType.product3,
+                        value: lineItems[index].customValue3,
+                        hideFieldLabel: true,
+                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                            lineItems[index]
+                                .rebuild((b) => b..customValue3 = value),
+                            index),
+                      ),
+                    ),
+                  if (company.hasCustomField(CustomFieldType.product4))
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: CustomField(
+                        field: CustomFieldType.product4,
+                        value: lineItems[index].customValue4,
+                        hideFieldLabel: true,
+                        onChanged: (value) => viewModel.onChangedInvoiceItem(
+                            lineItems[index]
+                                .rebuild((b) => b..customValue4 = value),
+                            index),
+                      ),
+                    ),
+                  if ((company.settings.numberOfItemTaxRates ?? 0) >= 1)
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: TaxRateDropdown(
+                        onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                            lineItems[index].rebuild((b) => b
+                              ..taxName1 = taxRate.name
+                              ..taxRate1 = taxRate.rate),
+                            index),
+                        labelText: null,
+                        initialTaxName: lineItems[index].taxName1,
+                        initialTaxRate: lineItems[index].taxRate1,
+                      ),
+                    ),
+                  if ((company.settings.numberOfItemTaxRates ?? 0) >= 2)
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: TaxRateDropdown(
+                        onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                            lineItems[index].rebuild((b) => b
+                              ..taxName2 = taxRate.name
+                              ..taxRate2 = taxRate.rate),
+                            index),
+                        labelText: null,
+                        initialTaxName: lineItems[index].taxName2,
+                        initialTaxRate: lineItems[index].taxRate2,
+                      ),
+                    ),
+                  if ((company.settings.numberOfItemTaxRates ?? 0) >= 3)
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: TaxRateDropdown(
+                        onSelected: (taxRate) => viewModel.onChangedInvoiceItem(
+                            lineItems[index].rebuild((b) => b
+                              ..taxName3 = taxRate.name
+                              ..taxRate3 = taxRate.rate),
+                            index),
+                        labelText: null,
+                        initialTaxName: lineItems[index].taxName3,
+                        initialTaxRate: lineItems[index].taxRate3,
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TextFormField(
+                      textAlign: TextAlign.right,
+                      initialValue: formatNumber(lineItems[index].cost, context,
+                          formatNumberType: FormatNumberType.input),
+                      onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          lineItems[index]
+                              .rebuild((b) => b..cost = parseDouble(value)),
+                          index),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TextFormField(
+                      textAlign: TextAlign.right,
+                      initialValue: formatNumber(
+                          lineItems[index].quantity, context,
+                          formatNumberType: FormatNumberType.input),
+                      onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          lineItems[index]
+                              .rebuild((b) => b..quantity = parseDouble(value)),
+                          index),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TextFormField(
+                      key: ValueKey(
+                          '__total_${index}_${lineItems[index].total}__'),
+                      readOnly: true,
+                      enabled: false,
+                      initialValue:
+                          formatNumber(lineItems[index].total, context),
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: lineItems[index].isEmpty
+                        ? null
+                        : () {
+                            viewModel.onRemoveInvoiceItemPressed(index);
+                            _updateTable();
+                          },
+                  ),
+                ])
         ],
       ),
     );

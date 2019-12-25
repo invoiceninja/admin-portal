@@ -385,6 +385,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
     //return 'Color: $accentColor, User Settings: ${user?.userCompany?.settings}';
+    return 'Line items: ${invoiceUIState.editing.lineItems.map((item) => item.productKey)}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
