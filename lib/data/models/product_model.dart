@@ -235,8 +235,8 @@ abstract class ProductEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted) {
+      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
