@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -75,9 +77,11 @@ class PaymentScreen extends StatelessWidget {
                     await showEntityActionsDialog(
                         entities: payments,
                         context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearPaymentMultiselect());
+                        multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearPaymentMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearPaymentMultiselect()),

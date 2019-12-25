@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
@@ -79,9 +81,11 @@ class InvoiceScreen extends StatelessWidget {
                     await showEntityActionsDialog(
                         entities: invoices,
                         context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearInvoiceMultiselect());
+                        multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearInvoiceMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearInvoiceMultiselect()),

@@ -25,7 +25,6 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   void didChangeDependencies() {
-    print('## FORMATTING: ${widget.selectedDate}, ${formatDate(widget.selectedDate, context)}');
     _textController.text = formatDate(widget.selectedDate, context);
 
     super.didChangeDependencies();

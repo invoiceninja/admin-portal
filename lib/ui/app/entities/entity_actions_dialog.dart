@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -18,11 +20,11 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-Future<void> showEntityActionsDialog(
-    {@required BuildContext context,
-    @required List<BaseEntity> entities,
-    ClientEntity client,
-    bool multiselect = false}) async {
+Future<void> showEntityActionsDialog({@required BuildContext context,
+  @required List<BaseEntity> entities,
+  ClientEntity client,
+  Completer completer,
+  bool multiselect = false}) async {
   if (entities == null) {
     return;
   }
@@ -30,15 +32,18 @@ Future<void> showEntityActionsDialog(
   showDialog<String>(
       context: context,
       builder: (BuildContext dialogContext) {
-        final state = StoreProvider.of<AppState>(context).state;
+        final state = StoreProvider
+            .of<AppState>(context)
+            .state;
         final actions = <Widget>[];
 
         actions.addAll(entities[0]
             .getActions(
-                userCompany: state.userCompany,
-                includeEdit: true,
-                client: client,
-                multiselect: multiselect)
+          userCompany: state.userCompany,
+          includeEdit: true,
+          client: client,
+          multiselect: multiselect,
+        )
             .map((entityAction) {
           if (entityAction == null) {
             return Divider();
@@ -47,6 +52,7 @@ Future<void> showEntityActionsDialog(
               entities: entities,
               action: entityAction,
               mainContext: mainContext,
+              completer: completer,
             );
           }
         }).toList());
@@ -56,12 +62,18 @@ Future<void> showEntityActionsDialog(
 }
 
 class EntityActionListTile extends StatelessWidget {
-  const EntityActionListTile(
-      {this.entities, this.action, this.onEntityAction, this.mainContext});
+  const EntityActionListTile({
+    this.entities,
+    this.action,
+    this.onEntityAction,
+    this.mainContext,
+    this.completer,
+  });
 
   final List<BaseEntity> entities;
   final EntityAction action;
   final BuildContext mainContext;
+  final Completer completer;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
 
   @override
@@ -72,6 +84,9 @@ class EntityActionListTile extends StatelessWidget {
       leading: Icon(getEntityActionIcon(action)),
       title: Text(localization.lookup(action.toString())),
       onTap: () {
+        if (completer != null) {
+          completer.complete(null);
+        }
         Navigator.of(context).pop();
         final first = entities.first;
         switch (first.entityType) {

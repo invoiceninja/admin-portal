@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -77,11 +79,13 @@ class ExpenseScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: expenses,
-                        context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearExpenseMultiselect());
+                      entities: expenses,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearExpenseMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearExpenseMultiselect()),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -75,9 +77,13 @@ class VendorScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: vendors, context: context, multiselect: true);
-
-                    store.dispatch(ClearVendorMultiselect());
+                      entities: vendors,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearVendorMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearVendorMultiselect()),

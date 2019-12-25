@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -77,11 +79,13 @@ class DocumentScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: documents,
-                        context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearDocumentMultiselect());
+                      entities: documents,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then(
+                            (_) => store.dispatch(ClearDocumentMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearDocumentMultiselect()),

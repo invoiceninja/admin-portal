@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -70,16 +72,20 @@ class ClientScreen extends StatelessWidget {
             onSavePressed: state.clientListState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-              final clients = viewModel.clientList
-                  .map<ClientEntity>(
-                      (clientId) => viewModel.clientMap[clientId])
-                  .toList();
+                    final clients = viewModel.clientList
+                        .map<ClientEntity>(
+                            (clientId) => viewModel.clientMap[clientId])
+                        .toList();
 
-              await showEntityActionsDialog(
-                  entities: clients, context: context, multiselect: true);
-
-              store.dispatch(ClearClientMultiselect());
-            },
+                    await showEntityActionsDialog(
+                      entities: clients,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearClientMultiselect())),
+                    );
+                  },
             onCancelPressed: (context) =>
                 store.dispatch(ClearClientMultiselect()),
           ),
@@ -117,20 +123,18 @@ class ClientScreen extends StatelessWidget {
       ),
       floatingActionButton: userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
-        heroTag: 'client_fab',
-        backgroundColor: Theme
-            .of(context)
-            .primaryColorDark,
-        onPressed: () {
-          createEntityByType(
-              context: context, entityType: EntityType.client);
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        tooltip: localization.newClient,
-      )
+              heroTag: 'client_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.client);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newClient,
+            )
           : null,
     );
   }

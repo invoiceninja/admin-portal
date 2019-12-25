@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -78,9 +80,13 @@ class GroupSettingsScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: groups, context: context, multiselect: true);
-
-                    store.dispatch(ClearGroupMultiselect());
+                      entities: groups,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearGroupMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearGroupMultiselect()),

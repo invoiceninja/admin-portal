@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
@@ -74,9 +76,11 @@ class StubScreen extends StatelessWidget {
                                         .toList();
                 
                                     await showEntityActionsDialog(
-                                        entities: stubs, context: context, multiselect: true);
-                
-                                    store.dispatch(ClearStubMultiselect());
+                                        entities: stubs, context: context, multiselect: true,
+                                        completer: Completer<Null>()
+                                          ..future.then((_) =>
+                                          store.dispatch(ClearStubMultiselect())),
+                                        );
                                   },
                             onCancelPressed: (context) =>
                                 store.dispatch(ClearStubMultiselect()),

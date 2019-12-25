@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -80,9 +82,11 @@ class TaxRateSettingsScreen extends StatelessWidget {
                     await showEntityActionsDialog(
                         entities: taxRates,
                         context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearTaxRateMultiselect());
+                        multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearTaxRateMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearTaxRateMultiselect()),

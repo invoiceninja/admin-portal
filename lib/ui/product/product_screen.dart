@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -77,9 +79,10 @@ class ProductScreen extends StatelessWidget {
                     await showEntityActionsDialog(
                         entities: products,
                         context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearProductMultiselect());
+                        multiselect: true,
+                        completer: Completer<Null>()
+                          ..future.then((_) =>
+                              store.dispatch(ClearProductMultiselect())));
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearProductMultiselect()),

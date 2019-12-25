@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -79,9 +81,13 @@ class UserScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: users, context: context, multiselect: true);
-
-                    store.dispatch(ClearUserMultiselect());
+                      entities: users,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearUserMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearUserMultiselect()),

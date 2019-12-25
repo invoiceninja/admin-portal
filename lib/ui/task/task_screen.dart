@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -75,9 +77,13 @@ class TaskScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: tasks, context: context, multiselect: true);
-
-                    store.dispatch(ClearTaskMultiselect());
+                      entities: tasks,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearTaskMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearTaskMultiselect()),

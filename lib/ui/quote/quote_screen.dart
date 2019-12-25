@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -77,9 +79,13 @@ class QuoteScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: quotes, context: context, multiselect: true);
-
-                    store.dispatch(ClearQuoteMultiselect());
+                      entities: quotes,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then(
+                            (_) => store.dispatch(ClearQuoteMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearQuoteMultiselect()),

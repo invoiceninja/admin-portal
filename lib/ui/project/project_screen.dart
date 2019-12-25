@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -75,11 +77,13 @@ class ProjectScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: projects,
-                        context: context,
-                        multiselect: true);
-
-                    store.dispatch(ClearProjectMultiselect());
+                      entities: projects,
+                      context: context,
+                      multiselect: true,
+                      completer: Completer<Null>()
+                        ..future.then((_) =>
+                            store.dispatch(ClearProjectMultiselect())),
+                    );
                   },
             onCancelPressed: (context) =>
                 store.dispatch(ClearProjectMultiselect()),
