@@ -37,6 +37,7 @@ class StubList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         stubList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !stubList.contains(state.stubUIState.selectedId)) {
       viewEntityById(
           context: context,

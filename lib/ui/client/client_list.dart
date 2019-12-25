@@ -30,6 +30,7 @@ class ClientList extends StatelessWidget {
     final clientList = viewModel.clientList;
 
     if (isNotMobile(context) &&
+        !state.uiState.isEditing &&
         clientList.isNotEmpty &&
         !clientList.contains(state.clientUIState.selectedId)) {
       viewEntityById(

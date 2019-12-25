@@ -31,6 +31,7 @@ class InvoiceList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         invoiceList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !invoiceList.contains(state.invoiceUIState.selectedId)) {
       viewEntityById(
           context: context,

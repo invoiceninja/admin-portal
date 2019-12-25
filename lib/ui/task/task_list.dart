@@ -31,6 +31,7 @@ class TaskList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         taskList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !taskList.contains(state.taskUIState.selectedId)) {
       viewEntityById(
           context: context,

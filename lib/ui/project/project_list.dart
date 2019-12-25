@@ -33,6 +33,7 @@ class ProjectList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         projectList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !projectList.contains(state.projectUIState.selectedId)) {
       viewEntityById(
           context: context,

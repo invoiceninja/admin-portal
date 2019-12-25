@@ -32,6 +32,7 @@ class VendorList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         vendorList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !vendorList.contains(state.vendorUIState.selectedId)) {
       viewEntityById(
           context: context,

@@ -48,6 +48,7 @@ class ExpenseList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         expenseList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !expenseList.contains(state.expenseUIState.selectedId)) {
       viewEntityById(
           context: context,

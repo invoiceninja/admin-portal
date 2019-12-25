@@ -55,6 +55,7 @@ class _ProductListState extends State<ProductList> {
 
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !productList.contains(state.productUIState.selectedId)) {
       viewEntityById(
           context: context,

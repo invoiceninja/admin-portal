@@ -33,6 +33,7 @@ class PaymentList extends StatelessWidget {
 
     if (isNotMobile(context) &&
         paymentList.isNotEmpty &&
+        !state.uiState.isEditing &&
         !paymentList.contains(state.paymentUIState.selectedId)) {
       viewEntityById(
           context: context,
