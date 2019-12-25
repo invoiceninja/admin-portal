@@ -1314,7 +1314,7 @@ class _$SettingsEntitySerializer
     }
     if (object.numberOfItemTaxRates != null) {
       result
-        ..add('invoice_item_taxes')
+        ..add('enabled_item_tax_rates')
         ..add(serializers.serialize(object.numberOfItemTaxRates,
             specifiedType: const FullType(int)));
     }
@@ -2113,7 +2113,7 @@ class _$SettingsEntitySerializer
           result.numberOfInvoiceTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'invoice_item_taxes':
+        case 'enabled_item_tax_rates':
           result.numberOfItemTaxRates = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;

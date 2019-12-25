@@ -1317,7 +1317,7 @@ abstract class SettingsEntity
   int get numberOfInvoiceTaxRates;
 
   @nullable
-  @BuiltValueField(wireName: 'invoice_item_taxes')
+  @BuiltValueField(wireName: 'enabled_item_tax_rates')
   int get numberOfItemTaxRates;
 
   @nullable

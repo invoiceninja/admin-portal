@@ -155,7 +155,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                             });
                           },
                         )
-                      : Container(),
+                      : SizedBox(),
             ),
             onChanged: (value) {
               _textController.text = value;
