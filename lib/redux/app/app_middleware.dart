@@ -13,9 +13,14 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -387,7 +392,14 @@ Middleware<AppState> _createAccountLoaded() {
         store.dispatch(SelectCompany(i, userCompany));
         store.dispatch(LoadCompanySuccess(userCompany));
 
-
+        final company = userCompany.company;
+        if (company.clients.isNotEmpty) {
+          store.dispatch(LoadClientsSuccess(company.clients));
+          store.dispatch(LoadProductsSuccess(company.products));
+          store.dispatch(LoadInvoicesSuccess(company.invoices));
+          store.dispatch(LoadPaymentsSuccess(company.payments));
+          //store.dispatch(LoadQuotesSuccess(company.quotes));
+        }
       }
 
       store.dispatch(SelectCompany(0, response.userCompanies[0]));

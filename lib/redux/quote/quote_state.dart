@@ -41,9 +41,9 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
-  QuoteState loadQuotes(BuiltList<InvoiceEntity> clients) {
+  QuoteState loadQuotes(BuiltList<InvoiceEntity> quotes) {
     final map = Map<String, InvoiceEntity>.fromIterable(
-      clients,
+      quotes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );
