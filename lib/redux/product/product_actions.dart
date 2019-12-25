@@ -224,12 +224,13 @@ void handleProductAction(
 
   switch (action) {
     case EntityAction.newInvoice:
-      final item =
-          convertProductToInvoiceItem(company: state.company, product: product);
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state)
-              .rebuild((b) => b..lineItems.add(item)));
+          entity: InvoiceEntity(state: state).rebuild((b) => b
+            ..lineItems.addAll(productIds.map((productId) =>
+                convertProductToInvoiceItem(
+                    company: state.company,
+                    product: state.productState.map[productId])))));
       break;
     case EntityAction.edit:
       editEntity(context: context, entity: product);
