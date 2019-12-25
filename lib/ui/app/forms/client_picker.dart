@@ -36,6 +36,7 @@ class ClientPicker extends StatelessWidget {
           : null,
       onSelected: onSelected,
       onAddPressed: onAddPressed,
+      allowClearing: true,
     );
   }
 }

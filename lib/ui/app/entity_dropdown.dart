@@ -111,7 +111,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb && isNotMobile(context)) {
+    if (isNotMobile(context)) {
       return TypeAheadFormField<String>(
         initialValue: _entityMap[widget.entityId]?.listDisplayName ?? '',
         noItemsFoundBuilder: (context) => SizedBox(),
@@ -134,6 +134,28 @@ class _EntityDropdownState extends State<EntityDropdown> {
         textFieldConfiguration: TextFieldConfiguration<String>(
             decoration: InputDecoration(
               labelText: widget.labelText,
+              suffix: showClear
+                  ? IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        _textController.text = '';
+                        widget.onSelected(null);
+                      },
+                    )
+                  : widget.onAddPressed != null
+                      ? IconButton(
+                          icon: Icon(Icons.add_circle_outline),
+                          tooltip: AppLocalization.of(context).createNew,
+                          onPressed: () {
+                            final Completer<SelectableEntity> completer =
+                                Completer<SelectableEntity>();
+                            widget.onAddPressed(completer);
+                            completer.future.then((entity) {
+                              widget.onSelected(entity);
+                            });
+                          },
+                        )
+                      : Container(),
             ),
             onChanged: (value) {
               _textController.text = value;
