@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -206,6 +207,12 @@ Middleware<AppState> _saveCompanyGateway(CompanyGatewayRepository repository) {
       }
     }).catchError((Object error) {
       print(error);
+      dev.log(
+        'Failed to save company gateway',
+        name: 'company_gateway_middleware',
+        stackTrace: StackTrace.current,
+        error: error,
+      );
       store.dispatch(SaveCompanyGatewayFailure(error));
       action.completer.completeError(error);
     });

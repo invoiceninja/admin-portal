@@ -348,7 +348,11 @@ class _$FeesAndLimitsSettingsSerializer
   Iterable<Object> serialize(
       Serializers serializers, FeesAndLimitsSettings object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
+    final result = <Object>[
+      'adjust_fee_percent',
+      serializers.serialize(object.adjustFeePercent,
+          specifiedType: const FullType(bool)),
+    ];
     if (object.minLimit != null) {
       result
         ..add('min_limit')
@@ -473,6 +477,10 @@ class _$FeesAndLimitsSettingsSerializer
         case 'fee_tax_name3':
           result.taxName3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'adjust_fee_percent':
+          result.adjustFeePercent = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -1088,6 +1096,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
   final double taxRate3;
   @override
   final String taxName3;
+  @override
+  final bool adjustFeePercent;
 
   factory _$FeesAndLimitsSettings(
           [void Function(FeesAndLimitsSettingsBuilder) updates]) =>
@@ -1104,8 +1114,14 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.taxRate2,
       this.taxName2,
       this.taxRate3,
-      this.taxName3})
-      : super._();
+      this.taxName3,
+      this.adjustFeePercent})
+      : super._() {
+    if (adjustFeePercent == null) {
+      throw new BuiltValueNullFieldError(
+          'FeesAndLimitsSettings', 'adjustFeePercent');
+    }
+  }
 
   @override
   FeesAndLimitsSettings rebuild(
@@ -1130,7 +1146,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
         taxRate2 == other.taxRate2 &&
         taxName2 == other.taxName2 &&
         taxRate3 == other.taxRate3 &&
-        taxName3 == other.taxName3;
+        taxName3 == other.taxName3 &&
+        adjustFeePercent == other.adjustFeePercent;
   }
 
   @override
@@ -1144,17 +1161,19 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, minLimit.hashCode),
-                                            maxLimit.hashCode),
-                                        feeAmount.hashCode),
-                                    feePercent.hashCode),
-                                feeCap.hashCode),
-                            taxRate1.hashCode),
-                        taxName1.hashCode),
-                    taxRate2.hashCode),
-                taxName2.hashCode),
-            taxRate3.hashCode),
-        taxName3.hashCode));
+                                        $jc(
+                                            $jc($jc(0, minLimit.hashCode),
+                                                maxLimit.hashCode),
+                                            feeAmount.hashCode),
+                                        feePercent.hashCode),
+                                    feeCap.hashCode),
+                                taxRate1.hashCode),
+                            taxName1.hashCode),
+                        taxRate2.hashCode),
+                    taxName2.hashCode),
+                taxRate3.hashCode),
+            taxName3.hashCode),
+        adjustFeePercent.hashCode));
   }
 
   @override
@@ -1170,7 +1189,8 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
           ..add('taxRate2', taxRate2)
           ..add('taxName2', taxName2)
           ..add('taxRate3', taxRate3)
-          ..add('taxName3', taxName3))
+          ..add('taxName3', taxName3)
+          ..add('adjustFeePercent', adjustFeePercent))
         .toString();
   }
 }
@@ -1223,6 +1243,11 @@ class FeesAndLimitsSettingsBuilder
   String get taxName3 => _$this._taxName3;
   set taxName3(String taxName3) => _$this._taxName3 = taxName3;
 
+  bool _adjustFeePercent;
+  bool get adjustFeePercent => _$this._adjustFeePercent;
+  set adjustFeePercent(bool adjustFeePercent) =>
+      _$this._adjustFeePercent = adjustFeePercent;
+
   FeesAndLimitsSettingsBuilder();
 
   FeesAndLimitsSettingsBuilder get _$this {
@@ -1238,6 +1263,7 @@ class FeesAndLimitsSettingsBuilder
       _taxName2 = _$v.taxName2;
       _taxRate3 = _$v.taxRate3;
       _taxName3 = _$v.taxName3;
+      _adjustFeePercent = _$v.adjustFeePercent;
       _$v = null;
     }
     return this;
@@ -1270,7 +1296,8 @@ class FeesAndLimitsSettingsBuilder
             taxRate2: taxRate2,
             taxName2: taxName2,
             taxRate3: taxRate3,
-            taxName3: taxName3);
+            taxName3: taxName3,
+            adjustFeePercent: adjustFeePercent);
     replace(_$result);
     return _$result;
   }

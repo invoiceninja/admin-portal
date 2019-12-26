@@ -728,6 +728,17 @@ class _FeesEditorState extends State<FeesEditor> {
             initialTaxName: settings.taxName3,
             initialTaxRate: settings.taxRate3,
           ),
+        SizedBox(height: 15),
+        SwitchListTile(
+          value: settings.adjustFeePercent,
+          onChanged: (value) => viewModel.onChanged(companyGateway.rebuild(
+              (b) => b
+                ..feesAndLimitsMap[widget.gatewayTypeId] =
+                    settings.rebuild((b) => b..adjustFeePercent = value))),
+          title: Text(localization.adjustFeePercent),
+          activeColor: Theme.of(context).accentColor,
+          subtitle: Text(localization.adjustFeePercentHelp),
+        ),
       ],
     );
   }

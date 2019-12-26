@@ -114,7 +114,6 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-
   String get config;
 
   Map<String, dynamic> get parsedConfig =>
@@ -212,6 +211,7 @@ abstract class FeesAndLimitsSettings
     return _$FeesAndLimitsSettings._(
       maxLimit: -1,
       minLimit: -1,
+      adjustFeePercent: false,
     );
   }
 
@@ -260,6 +260,9 @@ abstract class FeesAndLimitsSettings
   @nullable
   @BuiltValueField(wireName: 'fee_tax_name3')
   String get taxName3;
+
+  @BuiltValueField(wireName: 'adjust_fee_percent')
+  bool get adjustFeePercent;
 
   static Serializer<FeesAndLimitsSettings> get serializer =>
       _$feesAndLimitsSettingsSerializer;
