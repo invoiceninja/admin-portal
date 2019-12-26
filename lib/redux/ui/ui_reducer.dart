@@ -245,7 +245,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     switch (state.entityType) {
       case EntityType.client:
         return state.rebuild((b) => b
-          //..client.settings.replace(action.settings)
+          ..client.settings.replace(action.settings)
           ..isChanged = true);
       case EntityType.group:
         return state.rebuild((b) => b

@@ -155,7 +155,7 @@ abstract class SettingsUIState extends Object
 
   SettingsEntity get settings {
     if (entityType == EntityType.client && client != null) {
-      return company.settings; // TODO fix this, change to client.settings
+      return client.settings;
     } else if (entityType == EntityType.group && group != null) {
       return group.settings;
     } else {

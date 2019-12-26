@@ -407,6 +407,10 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.edit);
       }
 
+      if (userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.settings);
+      }
+
       if (userCompany.canCreate(EntityType.client)) {
         actions.add(EntityAction.newInvoice);
       }

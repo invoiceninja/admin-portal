@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -305,6 +307,13 @@ void handleClientAction(
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: client);
+      break;
+    case EntityAction.settings:
+      store.dispatch(ViewSettings(
+        navigator: Navigator.of(context),
+        client: client,
+        section: kSettingsCompanyDetails,
+      ));
       break;
     case EntityAction.newInvoice:
       if (isNotMobile(context)) {

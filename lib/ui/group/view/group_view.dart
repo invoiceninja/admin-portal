@@ -41,6 +41,14 @@ class _GroupViewState extends State<GroupView> {
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: ElevatedButton(
+              label: localization.configureSettings.toUpperCase(),
+              icon: Icons.settings,
+              onPressed: () => handleGroupAction(context, [group], EntityAction.settings),
+            ),
+          ),
           Container(
             color: Theme.of(context).backgroundColor,
             height: 12.0,
@@ -57,14 +65,6 @@ class _GroupViewState extends State<GroupView> {
           Container(
             color: Theme.of(context).backgroundColor,
             height: 12.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ElevatedButton(
-              label: localization.configureSettings.toUpperCase(),
-              icon: Icons.settings,
-              onPressed: () => handleGroupAction(context, [group], EntityAction.settings),
-            ),
           ),
           SettingsViewer(
             settings: group.settings,

@@ -432,7 +432,7 @@ Middleware<AppState> _createPersistStatic(
   };
 }
 
-final _persistDebouncer = Debouncer(milliseconds: 5000);
+final _persistDebouncer = Debouncer(milliseconds: 3000);
 Middleware<AppState> _createPersistData(
   List<PersistenceRepository> companyRepositories,
 ) {
