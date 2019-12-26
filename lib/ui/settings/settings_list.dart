@@ -121,10 +121,11 @@ class SettingsList extends StatelessWidget {
           section: kSettingsGeneratedNumbers,
           viewModel: viewModel,
         ),
-        SettingsListTile(
-          section: kSettingsCustomFields,
-          viewModel: viewModel,
-        ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsCustomFields,
+            viewModel: viewModel,
+          ),
         SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,
