@@ -86,6 +86,16 @@ class _ProductSettingsState extends State<ProductSettings> {
           ),
           FormCard(
             children: <Widget>[
+              /*
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.showProductDetails),
+                value: company.showProductDetails,
+                subtitle: Text(localization.showProductDetailsHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..showProductDetails = value)),
+              ),
+               */
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.fillProducts),

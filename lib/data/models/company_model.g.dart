@@ -53,6 +53,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'default_quantity',
       serializers.serialize(object.defaultQuantity,
           specifiedType: const FullType(bool)),
+      'show_product_details',
+      serializers.serialize(object.showProductDetails,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -408,6 +411,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'default_quantity':
           result.defaultQuantity = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'show_product_details':
+          result.showProductDetails = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
@@ -2558,6 +2565,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool defaultQuantity;
   @override
+  final bool showProductDetails;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -2650,6 +2659,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.enableProductQuantity,
       this.enableInvoiceQuantity,
       this.defaultQuantity,
+      this.showProductDetails,
       this.plan,
       this.companyKey,
       this.appUrl,
@@ -2713,6 +2723,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (defaultQuantity == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuantity');
     }
+    if (showProductDetails == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'showProductDetails');
+    }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
@@ -2760,6 +2773,7 @@ class _$CompanyEntity extends CompanyEntity {
         enableProductQuantity == other.enableProductQuantity &&
         enableInvoiceQuantity == other.enableInvoiceQuantity &&
         defaultQuantity == other.defaultQuantity &&
+        showProductDetails == other.showProductDetails &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         appUrl == other.appUrl &&
@@ -2818,7 +2832,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
                                                                                 payments.hashCode),
                                                                             quotes.hashCode),
                                                                         credits.hashCode),
@@ -2859,6 +2873,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('enableProductQuantity', enableProductQuantity)
           ..add('enableInvoiceQuantity', enableInvoiceQuantity)
           ..add('defaultQuantity', defaultQuantity)
+          ..add('showProductDetails', showProductDetails)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('appUrl', appUrl)
@@ -2976,6 +2991,11 @@ class CompanyEntityBuilder
   bool get defaultQuantity => _$this._defaultQuantity;
   set defaultQuantity(bool defaultQuantity) =>
       _$this._defaultQuantity = defaultQuantity;
+
+  bool _showProductDetails;
+  bool get showProductDetails => _$this._showProductDetails;
+  set showProductDetails(bool showProductDetails) =>
+      _$this._showProductDetails = showProductDetails;
 
   String _plan;
   String get plan => _$this._plan;
@@ -3184,6 +3204,7 @@ class CompanyEntityBuilder
       _enableProductQuantity = _$v.enableProductQuantity;
       _enableInvoiceQuantity = _$v.enableInvoiceQuantity;
       _defaultQuantity = _$v.defaultQuantity;
+      _showProductDetails = _$v.showProductDetails;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _appUrl = _$v.appUrl;
@@ -3260,6 +3281,7 @@ class CompanyEntityBuilder
               enableProductQuantity: enableProductQuantity,
               enableInvoiceQuantity: enableInvoiceQuantity,
               defaultQuantity: defaultQuantity,
+              showProductDetails: showProductDetails,
               plan: plan,
               companyKey: companyKey,
               appUrl: appUrl,

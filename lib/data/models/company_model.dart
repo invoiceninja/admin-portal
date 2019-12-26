@@ -31,6 +31,7 @@ abstract class CompanyEntity extends Object
       firstDayOfWeek: '0',
       updateProducts: true,
       fillProducts: true,
+      showProductDetails: true,
       enableProductCost: false,
       enableProductQuantity: true,
       enableInvoiceQuantity: true,
@@ -122,6 +123,10 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
+
+  @BuiltValueField(wireName: 'show_product_details')
+  bool get showProductDetails;
+
 
   // TODO remove this
   @nullable
