@@ -190,6 +190,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.3"
+  extended_image:
+    dependency: transitive
+    description:
+      name: extended_image
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.8"
+  extended_image_library:
+    dependency: transitive
+    description:
+      name: extended_image_library
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.9"
   extension:
     dependency: transitive
     description:
@@ -395,6 +409,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.0+2"
+  http_client_helper:
+    dependency: transitive
+    description:
+      name: http_client_helper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   http_multi_server:
     dependency: transitive
     description:
@@ -522,12 +543,19 @@ packages:
     source: hosted
     version: "1.0.2"
   native_pdf_renderer:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: native_pdf_renderer
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.1"
+  native_pdf_view:
+    dependency: "direct main"
+    description:
+      name: native_pdf_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   node_interop:
     dependency: transitive
     description:

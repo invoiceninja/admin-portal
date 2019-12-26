@@ -5,9 +5,10 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
-
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
@@ -56,7 +57,8 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                       return LoadingIndicator();
                     case ConnectionState.done:
                       if (snapshot.hasError)
-                        return Text('Error: ${snapshot.error}');
+                        return Text(
+                            '${getPdfRequirements(context)} - Error: ${snapshot.error}');
                       else
                         return snapshot.data.length == 1
                             ? Center(
@@ -80,10 +82,11 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                                             ),
                                             Container(
                                               color: Colors.white,
-                                              child: Image(
-                                                  image:
-                                                      MemoryImage(page.bytes),
-                                                  height: double.infinity),
+                                              child: ExtendedImage.memory(
+                                                page.bytes,
+                                                fit: BoxFit.fitHeight,
+                                                mode: ExtendedImageMode.gesture,
+                                              ),
                                             ),
                                           ],
                                         ))

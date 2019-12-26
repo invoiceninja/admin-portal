@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ensure client fee matches the gateway fee',
       'configure_settings': 'Configure Settings',
@@ -15865,6 +15866,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get adjustFeePercent => _localizedValues[localeCode]['adjust_fee_percent'];
 
   String get adjustFeePercentHelp => _localizedValues[localeCode]['adjust_fee_percent_help'];
+
+  String get pdfMinRequirements => _localizedValues[localeCode]['pdf_min_requirements'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
