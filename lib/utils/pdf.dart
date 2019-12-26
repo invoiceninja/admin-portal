@@ -85,7 +85,6 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                                               child: ExtendedImage.memory(
                                                 page.bytes,
                                                 fit: BoxFit.fitHeight,
-                                                mode: ExtendedImageMode.gesture,
                                               ),
                                             ),
                                           ],
