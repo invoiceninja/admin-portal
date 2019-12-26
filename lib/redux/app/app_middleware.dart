@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -431,6 +432,7 @@ Middleware<AppState> _createPersistStatic(
   };
 }
 
+final _persistDebouncer = Debouncer(milliseconds: 5000);
 Middleware<AppState> _createPersistData(
   List<PersistenceRepository> companyRepositories,
 ) {
@@ -443,10 +445,11 @@ Middleware<AppState> _createPersistData(
       return;
     }
 
-    final AppState state = store.state;
-    final index = state.uiState.selectedCompanyIndex;
-
-    companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
+    _persistDebouncer.run(() {
+      final AppState state = store.state;
+      final index = state.uiState.selectedCompanyIndex;
+      companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
+    });
   };
 }
 
