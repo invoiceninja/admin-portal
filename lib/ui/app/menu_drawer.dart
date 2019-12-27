@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -346,8 +348,7 @@ class SidebarFooter extends StatelessWidget {
           ] else ...[
             IconButton(
               icon: Icon(Icons.mail),
-              onPressed: () => launch(
-                  'mailto:contact@invoiceninja.com?subject=Mobile%20App%20-%20v$kAppVersion'),
+              onPressed: () => _showContactUs(context),
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
@@ -423,6 +424,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
       onSelected: (value) {
         if (value == localization.about) {
           _showAbout(context);
+        } else if (value == localization.contactUs) {
+          _showContactUs(context);
         }
       },
       itemBuilder: (BuildContext context) => [
@@ -457,6 +460,66 @@ class SidebarFooterCollapsed extends StatelessWidget {
       ],
     );
   }
+}
+
+void _showContactUs(BuildContext context) {
+  final localization = AppLocalization.of(context);
+  final state = StoreProvider.of<AppState>(context).state;
+  final user = state.user;
+
+  showDialog<AlertDialog>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      contentPadding: EdgeInsets.all(25),
+      title: Text(localization.contactUs),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(localization.cancel),
+          onPressed: () => Navigator.pop(context),
+        ),
+        FlatButton(
+          child: Text(localization.send),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+      content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        TextFormField(
+          enabled: false,
+          decoration: InputDecoration(
+            labelText: localization.from,
+          ),
+          initialValue: '${user.fullName} <${user.email}>',
+        ),
+        SizedBox(height: 10),
+        TextFormField(
+          decoration: InputDecoration(
+            labelText: localization.message,
+          ),
+          minLines: 8,
+          maxLines: 8,
+        ),
+        SizedBox(height: 10),
+      ]),
+    ),
+  );
+
+  /*
+  showDialog<ResponsivePadding>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return ResponsivePadding(
+          child: Material(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+              ],
+            ),
+          ),
+        );
+      });
+
+   */
 }
 
 void _showAbout(BuildContext context) {
