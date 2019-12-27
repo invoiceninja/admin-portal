@@ -47,9 +47,11 @@ class _DatePickerState extends State<DatePicker> {
         firstDate: new DateTime(2015, 8),
         lastDate: new DateTime(2101));
 
-    final date = convertDateTimeToSqlDate(selectedDate);
-    _textController.text = formatDate(date, context);
-    widget.onSelected(date);
+    if (selectedDate != null) {
+      final date = convertDateTimeToSqlDate(selectedDate);
+      _textController.text = formatDate(date, context);
+      widget.onSelected(date);
+    }
   }
 
   @override
