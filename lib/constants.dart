@@ -79,6 +79,7 @@ const int kMaxRecordsPerApiPage = 5000;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
+const int kMillisecondsToDebounceStateSave = 1000 * 3; // 3 seconds
 const int kUpdatedAtBufferSeconds = 600;
 
 const String kLanguageEnglish = '1';

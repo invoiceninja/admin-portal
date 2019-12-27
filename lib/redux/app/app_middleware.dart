@@ -340,6 +340,33 @@ Middleware<AppState> _createUserLoggedIn(
   };
 }
 
+final _persistDataDebouncer =
+    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
+
+Middleware<AppState> _createPersistData(
+  List<PersistenceRepository> companyRepositories,
+) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistData;
+
+    next(action);
+
+    if (kIsWeb) {
+      return;
+    }
+
+    _persistDataDebouncer.run(() {
+      final AppState state = store.state;
+      final index = state.uiState.selectedCompanyIndex;
+      companyRepositories[index]
+          .saveCompanyState(state.userCompanyStates[index]);
+    });
+  };
+}
+
+final _persistUIDebouncer =
+    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
+
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as PersistUI;
@@ -350,7 +377,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
       return;
     }
 
-    uiRepository.saveUIState(store.state.uiState);
+    _persistUIDebouncer.run(() {
+      uiRepository.saveUIState(store.state.uiState);
+    });
   };
 }
 
@@ -429,27 +458,6 @@ Middleware<AppState> _createPersistStatic(
     }
 
     staticRepository.saveStaticState(store.state.staticState);
-  };
-}
-
-final _persistDebouncer = Debouncer(milliseconds: 3000);
-Middleware<AppState> _createPersistData(
-  List<PersistenceRepository> companyRepositories,
-) {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistData;
-
-    next(action);
-
-    if (kIsWeb) {
-      return;
-    }
-
-    _persistDebouncer.run(() {
-      final AppState state = store.state;
-      final index = state.uiState.selectedCompanyIndex;
-      companyRepositories[index].saveCompanyState(state.userCompanyStates[index]);
-    });
   };
 }
 
