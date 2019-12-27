@@ -482,24 +482,26 @@ void _showContactUs(BuildContext context) {
           onPressed: () => Navigator.pop(context),
         ),
       ],
-      content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        TextFormField(
-          enabled: false,
-          decoration: InputDecoration(
-            labelText: localization.from,
+      content: SingleChildScrollView(
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          TextFormField(
+            enabled: false,
+            decoration: InputDecoration(
+              labelText: localization.from,
+            ),
+            initialValue: '${user.fullName} <${user.email}>',
           ),
-          initialValue: '${user.fullName} <${user.email}>',
-        ),
-        SizedBox(height: 10),
-        TextFormField(
-          decoration: InputDecoration(
-            labelText: localization.message,
+          SizedBox(height: 10),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: localization.message,
+            ),
+            minLines: 6,
+            maxLines: 6,
           ),
-          minLines: 8,
-          maxLines: 8,
-        ),
-        SizedBox(height: 10),
-      ]),
+          SizedBox(height: 10),
+        ]),
+      ),
     ),
   );
 
