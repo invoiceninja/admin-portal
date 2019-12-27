@@ -281,9 +281,9 @@ class DrawerTile extends StatelessWidget {
             if (isMobile(context)) {
               navigator.pop();
             }
-            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-            store.dispatch(
-                FilterCompany(state.uiState.filter == null ? '' : null));
+            store.dispatch(ViewDashboard(
+                navigator: Navigator.of(context),
+                filter: ''));
           },
         );
       } else if (userCompany.canCreate(entityType)) {

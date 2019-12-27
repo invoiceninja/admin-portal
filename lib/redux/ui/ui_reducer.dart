@@ -193,7 +193,7 @@ Reducer<String> filterReducer = combineReducers([
     return action.filter;
   }),
   TypedReducer<String, ViewDashboard>((state, action) {
-    return null;
+    return action.filter;
   }),
 ]);
 
@@ -202,6 +202,9 @@ Reducer<int> filterClearedAtReducer = combineReducers([
     return action.filter == null
         ? DateTime.now().millisecondsSinceEpoch
         : filterClearedAt;
+  }),
+  TypedReducer<int, ViewDashboard>((state, action) {
+    return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);
 

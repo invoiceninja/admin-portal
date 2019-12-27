@@ -6,9 +6,11 @@ class ViewDashboard extends AbstractNavigatorAction implements PersistUI {
   ViewDashboard({
     @required NavigatorState navigator,
     this.force = false,
+    this.filter,
   }) : super(navigator: navigator);
 
   final bool force;
+  final String filter;
 }
 
 class UpdateDashboardSettings implements PersistUI {
