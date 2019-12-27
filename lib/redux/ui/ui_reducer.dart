@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
@@ -33,6 +34,7 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
@@ -189,6 +191,9 @@ BuiltList<HistoryRecord> _addToHistory(
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
+  }),
+  TypedReducer<String, ViewDashboard>((state, action) {
+    return null;
   }),
 ]);
 
