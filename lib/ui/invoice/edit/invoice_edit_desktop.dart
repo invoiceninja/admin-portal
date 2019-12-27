@@ -231,6 +231,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       },
                     ),
                     DatePicker(
+                      allowClearing: true,
                       labelText: widget.isQuote
                           ? localization.validUntil
                           : localization.dueDate,

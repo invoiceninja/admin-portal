@@ -8,6 +8,7 @@ class DatePicker extends StatefulWidget {
     @required this.selectedDate,
     this.validator,
     this.autoValidate = false,
+    this.allowClearing = false,
   });
 
   final String labelText;
@@ -15,6 +16,7 @@ class DatePicker extends StatefulWidget {
   final Function(String) onSelected;
   final Function validator;
   final bool autoValidate;
+  final bool allowClearing;
 
   @override
   _DatePickerState createState() => new _DatePickerState();
@@ -58,16 +60,32 @@ class _DatePickerState extends State<DatePicker> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _showDatePicker(),
-      child: IgnorePointer(
-        child: TextFormField(
-          validator: widget.validator,
-          autovalidate: widget.autoValidate,
-          controller: _textController,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            suffixIcon: Icon(Icons.date_range),
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: <Widget>[
+          IgnorePointer(
+            child: TextFormField(
+              validator: widget.validator,
+              autovalidate: widget.autoValidate,
+              controller: _textController,
+              decoration: InputDecoration(
+                labelText: widget.labelText,
+              ),
+            ),
           ),
-        ),
+          widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
+              ? IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _textController.text = '';
+                    widget.onSelected('');
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.date_range),
+                  onPressed: () => _showDatePicker(),
+                )
+        ],
       ),
     );
   }
