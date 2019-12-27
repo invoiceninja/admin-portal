@@ -15,7 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'show_product_details': 'Show Product Details',
-      'show_product_details_help': 'Include the description and cost in the product dropdown',
+      'show_product_details_help':
+          'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ensure client fee matches the gateway fee',
@@ -800,6 +801,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_45': ':user deleted task :task',
       'activity_46': ':user restored task :task',
       'activity_47': ':user updated expense :expense',
+      'activity_48': ':user created task :user',
+      'activity_49': ':user updated task :user',
+      'activity_50': ':user archived task :user',
+      'activity_51': ':user deleted task :user',
+      'activity_52': ':user restored task :user',
+      'activity_53': ':user marked invoice :invoice as sent',
+      'activity_54': '',
+      'activity_55': '',
+      'activity_56': '',
+      'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
@@ -14828,6 +14839,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get activity_47 => _localizedValues[localeCode]['activity_47'];
 
+  String get activity_48 => _localizedValues[localeCode]['activity_48'];
+
+  String get activity_79 => _localizedValues[localeCode]['activity_49'];
+
+  String get activity_50 => _localizedValues[localeCode]['activity_50'];
+
+  String get activity_51 => _localizedValues[localeCode]['activity_51'];
+
+  String get activity_52 => _localizedValues[localeCode]['activity_52'];
+
+  String get activity_53 => _localizedValues[localeCode]['activity_53'];
+
+  String get activity_54 => _localizedValues[localeCode]['activity_54'];
+
+  String get activity_55 => _localizedValues[localeCode]['activity_55'];
+
+  String get activity_56 => _localizedValues[localeCode]['activity_56'];
+
+  String get activity_57 => _localizedValues[localeCode]['activity_57'];
+
   String get oneTimePassword =>
       _localizedValues[localeCode]['one_time_password'];
 
@@ -15863,18 +15894,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get supportForum => _localizedValues[localeCode]['support_forum'];
 
-  String get configureSettings => _localizedValues[localeCode]['configure_settings'];
+  String get configureSettings =>
+      _localizedValues[localeCode]['configure_settings'];
 
-  String get adjustFeePercent => _localizedValues[localeCode]['adjust_fee_percent'];
+  String get adjustFeePercent =>
+      _localizedValues[localeCode]['adjust_fee_percent'];
 
-  String get adjustFeePercentHelp => _localizedValues[localeCode]['adjust_fee_percent_help'];
+  String get adjustFeePercentHelp =>
+      _localizedValues[localeCode]['adjust_fee_percent_help'];
 
-  String get pdfMinRequirements => _localizedValues[localeCode]['pdf_min_requirements'];
+  String get pdfMinRequirements =>
+      _localizedValues[localeCode]['pdf_min_requirements'];
 
-  String get showProductDetails => _localizedValues[localeCode]['show_product_details'];
+  String get showProductDetails =>
+      _localizedValues[localeCode]['show_product_details'];
 
-  String get showProductDetailsHelp => _localizedValues[localeCode]['show_product_details_help'];
-
+  String get showProductDetailsHelp =>
+      _localizedValues[localeCode]['show_product_details_help'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

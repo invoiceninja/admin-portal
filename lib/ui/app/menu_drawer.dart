@@ -272,6 +272,33 @@ class DrawerTile extends StatelessWidget {
         ? kDashboard
         : title == localization.settings ? kSettings : entityType.name;
 
+    Widget trailingWidget;
+    if (!state.prefState.isMenuCollapsed) {
+      if (title == localization.dashboard) {
+        trailingWidget = IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () {
+            if (isMobile(context)) {
+              navigator.pop();
+            }
+            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+            store.dispatch(
+                FilterCompany(state.uiState.filter == null ? '' : null));
+          },
+        );
+      } else if (userCompany.canCreate(entityType)) {
+        trailingWidget = IconButton(
+          icon: Icon(Icons.add_circle_outline),
+          onPressed: () {
+            if (isMobile(context)) {
+              navigator.pop();
+            }
+            createEntityByType(context: context, entityType: entityType);
+          },
+        );
+      }
+    }
+
     return SelectedIndicator(
       isSelected: uiState.currentRoute.startsWith('/$route'),
       child: ListTile(
@@ -284,18 +311,7 @@ class DrawerTile extends StatelessWidget {
         onLongPress: () => entityType != null
             ? createEntityByType(context: context, entityType: entityType)
             : null,
-        trailing: state.prefState.isMenuCollapsed ||
-                !userCompany.canCreate(entityType)
-            ? null
-            : IconButton(
-                icon: Icon(Icons.add_circle_outline),
-                onPressed: () {
-                  if (isMobile(context)) {
-                    navigator.pop();
-                  }
-                  createEntityByType(context: context, entityType: entityType);
-                },
-              ),
+        trailing: trailingWidget,
       ),
     );
   }
