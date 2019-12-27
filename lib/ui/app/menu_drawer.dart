@@ -150,6 +150,8 @@ class MenuDrawer extends StatelessWidget {
                           title: localization.dashboard,
                           onTap: () => store.dispatch(
                               ViewDashboard(navigator: Navigator.of(context))),
+                          onLongPress: () => store.dispatch(ViewDashboard(
+                              navigator: Navigator.of(context), filter: '')),
                         ),
                         DrawerTile(
                           company: company,
@@ -281,9 +283,8 @@ class DrawerTile extends StatelessWidget {
             if (isMobile(context)) {
               navigator.pop();
             }
-            store.dispatch(ViewDashboard(
-                navigator: Navigator.of(context),
-                filter: ''));
+            store.dispatch(
+                ViewDashboard(navigator: Navigator.of(context), filter: ''));
           },
         );
       } else if (userCompany.canCreate(entityType)) {
@@ -308,9 +309,11 @@ class DrawerTile extends StatelessWidget {
         onTap: () => entityType != null
             ? viewEntitiesByType(context: context, entityType: entityType)
             : onTap(),
-        onLongPress: () => entityType != null
-            ? createEntityByType(context: context, entityType: entityType)
-            : null,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : entityType != null
+                ? createEntityByType(context: context, entityType: entityType)
+                : null,
         trailing: trailingWidget,
       ),
     );
