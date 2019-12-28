@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
-import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -463,46 +466,9 @@ class SidebarFooterCollapsed extends StatelessWidget {
 }
 
 void _showContactUs(BuildContext context) {
-  final localization = AppLocalization.of(context);
-  final state = StoreProvider.of<AppState>(context).state;
-  final user = state.user;
-
-  showDialog<AlertDialog>(
+  showDialog<ContactUsDialog>(
     context: context,
-    builder: (BuildContext context) => AlertDialog(
-      contentPadding: EdgeInsets.all(25),
-      title: Text(localization.contactUs),
-      actions: <Widget>[
-        FlatButton(
-          child: Text(localization.cancel),
-          onPressed: () => Navigator.pop(context),
-        ),
-        FlatButton(
-          child: Text(localization.send),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ],
-      content: SingleChildScrollView(
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          TextFormField(
-            enabled: false,
-            decoration: InputDecoration(
-              labelText: localization.from,
-            ),
-            initialValue: '${user.fullName} <${user.email}>',
-          ),
-          SizedBox(height: 10),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: localization.message,
-            ),
-            minLines: 6,
-            maxLines: 6,
-          ),
-          SizedBox(height: 10),
-        ]),
-      ),
-    ),
+    builder: (BuildContext context) => ContactUsDialog(),
   );
 
   /*
@@ -568,4 +534,79 @@ void _showAbout(BuildContext context) {
       ),
     ],
   );
+}
+
+class ContactUsDialog extends StatefulWidget {
+  @override
+  _ContactUsDialogState createState() => _ContactUsDialogState();
+}
+
+class _ContactUsDialogState extends State<ContactUsDialog> {
+  String _message = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    final user = state.user;
+
+    return AlertDialog(
+      contentPadding: EdgeInsets.all(25),
+      title: Text(localization.contactUs),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(localization.cancel),
+          onPressed: () => Navigator.pop(context),
+        ),
+        FlatButton(
+          child: Text(localization.send),
+          onPressed: () {
+            Navigator.pop(context);
+            if (_message.isNotEmpty) {
+              WebClient()
+                  .post(state.credentials.url + '/support/messages/send',
+                      state.credentials.token,
+                      data: json.encode({
+                        'message': _message,
+                      }))
+                  .then((dynamic response) {
+                showDialog<MessageDialog>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return MessageDialog(
+                          localization.yourMessageHasBeenReceived);
+                    });
+              }).catchError((dynamic error) {
+                showErrorDialog(context: context, message: '$error');
+              });
+            }
+          },
+        ),
+      ],
+      content: SingleChildScrollView(
+        child: Container(
+          width: isMobile(context) ? null : 500,
+          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+            TextFormField(
+              enabled: false,
+              decoration: InputDecoration(
+                labelText: localization.from,
+              ),
+              initialValue: '${user.fullName} <${user.email}>',
+            ),
+            SizedBox(height: 10),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: localization.message,
+              ),
+              minLines: 6,
+              maxLines: 6,
+              onChanged: (value) => _message = value,
+            ),
+            SizedBox(height: 10),
+          ]),
+        ),
+      ),
+    );
+  }
 }

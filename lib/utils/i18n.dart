@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'your_message_has_been_received': 'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
@@ -15917,6 +15918,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get from => _localizedValues[localeCode]['from'];
 
   String get message => _localizedValues[localeCode]['message'];
+
+  String get yourMessageHasBeenReceived =>
+      _localizedValues[localeCode]['your_message_has_been_received'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
