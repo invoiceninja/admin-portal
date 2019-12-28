@@ -555,11 +555,11 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       title: Text(localization.contactUs),
       actions: <Widget>[
         FlatButton(
-          child: Text(localization.cancel),
+          child: Text(localization.cancel.toUpperCase()),
           onPressed: () => Navigator.pop(context),
         ),
         FlatButton(
-          child: Text(localization.send),
+          child: Text(localization.send.toUpperCase()),
           onPressed: () {
             Navigator.pop(context);
             if (_message.isNotEmpty) {
