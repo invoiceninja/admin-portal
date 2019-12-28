@@ -525,6 +525,7 @@ class ContactUsDialog extends StatefulWidget {
 
 class _ContactUsDialogState extends State<ContactUsDialog> {
   String _message = '';
+  bool _includeLogs = false;
 
   @override
   Widget build(BuildContext context) {
@@ -581,11 +582,19 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
               decoration: InputDecoration(
                 labelText: localization.message,
               ),
-              minLines: 6,
-              maxLines: 6,
+              minLines: 4,
+              maxLines: 4,
               onChanged: (value) => _message = value,
             ),
             SizedBox(height: 10),
+            SwitchListTile(
+              value: _includeLogs,
+              onChanged: (value) {
+                setState(() => _includeLogs = value);
+              },
+              title: Text(localization.includeRecentErrors),
+              activeColor: Theme.of(context).accentColor,
+            ),
           ]),
         ),
       ),
