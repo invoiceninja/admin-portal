@@ -470,24 +470,6 @@ void _showContactUs(BuildContext context) {
     context: context,
     builder: (BuildContext context) => ContactUsDialog(),
   );
-
-  /*
-  showDialog<ResponsivePadding>(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return ResponsivePadding(
-          child: Material(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-              ],
-            ),
-          ),
-        );
-      });
-
-   */
 }
 
 void _showAbout(BuildContext context) {
