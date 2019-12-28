@@ -551,6 +551,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                       state.credentials.token,
                       data: json.encode({
                         'message': _message,
+                        'include_logs': _includeLogs ? 'true' : 'false',
                       }))
                   .then((dynamic response) {
                 showDialog<MessageDialog>(
