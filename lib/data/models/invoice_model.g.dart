@@ -594,9 +594,6 @@ class _$InvoiceItemEntitySerializer
       'tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
-      'invoice_item_type_id',
-      serializers.serialize(object.invoiceItemTypeId,
-          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -610,6 +607,12 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
     ];
+    if (object.invoiceItemTypeId != null) {
+      result
+        ..add('invoice_item_type_id')
+        ..add(serializers.serialize(object.invoiceItemTypeId,
+            specifiedType: const FullType(String)));
+    }
     if (object.customValue3 != null) {
       result
         ..add('custom_value3')
@@ -1942,10 +1945,6 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     }
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxRate3');
-    }
-    if (invoiceItemTypeId == null) {
-      throw new BuiltValueNullFieldError(
-          'InvoiceItemEntity', 'invoiceItemTypeId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue1');

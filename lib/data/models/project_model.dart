@@ -50,7 +50,7 @@ class ProjectFields {
 }
 
 abstract class ProjectEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ProjectEntity, ProjectEntityBuilder> {
   factory ProjectEntity({String id, AppState state}) {
     return _$ProjectEntity._(
@@ -86,6 +86,7 @@ abstract class ProjectEntity extends Object
 
   String get name;
 
+  @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 

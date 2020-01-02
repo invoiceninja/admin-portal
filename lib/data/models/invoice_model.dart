@@ -66,7 +66,7 @@ class InvoiceFields {
 }
 
 abstract class InvoiceEntity extends Object
-    with BaseEntity, SelectableEntity, CalculateInvoiceTotal
+    with BaseEntity, SelectableEntity, CalculateInvoiceTotal, BelongsToClient
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity(
       {String id, bool isQuote = false, AppState state, ClientEntity client}) {
@@ -148,6 +148,7 @@ abstract class InvoiceEntity extends Object
 
   double get balance;
 
+  @override
   @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
@@ -600,6 +601,7 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_item_type_id')
   String get invoiceItemTypeId;
 

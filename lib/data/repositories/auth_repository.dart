@@ -115,6 +115,8 @@ class AuthRepository {
     ];
     url += '?include=${includes.join(',')}&include_static=true';
 
+    //url += '?first_load=true&include_static=true';
+
     dynamic response;
 
     if (Config.DEMO_MODE) {

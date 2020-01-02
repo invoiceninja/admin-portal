@@ -241,6 +241,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final accentColor = convertHexStringToColor(state.accentColor) ??
             Colors.lightBlueAccent;
         final fontFamily = kIsWeb ? 'Roboto' : null;
+        final pageTransitionsTheme = PageTransitionsTheme(builders: {
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        });
         Intl.defaultLocale = localeSelector(state);
 
         return MaterialApp(
@@ -261,12 +264,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           locale: AppLocalization.createLocale(localeSelector(state)),
           theme: state.prefState.enableDarkMode
               ? ThemeData(
+                  pageTransitionsTheme: pageTransitionsTheme,
                   brightness: Brightness.dark,
                   accentColor: accentColor,
                   textSelectionHandleColor: accentColor,
                   fontFamily: fontFamily,
                 )
               : ThemeData(fontFamily: fontFamily).copyWith(
+                  pageTransitionsTheme: pageTransitionsTheme,
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
                   primaryColor: const Color(0xFF117cc1),
