@@ -440,7 +440,9 @@ abstract class InvoiceEntity extends Object
       }
 
       if (invitations.isNotEmpty) {
-        actions.add(EntityAction.pdf);
+        if (includeEdit) {
+          actions.add(EntityAction.pdf);
+        }
         actions.add(EntityAction.clientPortal);
       }
     }
