@@ -6,12 +6,14 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ListFilterButton extends StatelessWidget {
   const ListFilterButton({
-    this.filter,
-    this.onFilterPressed,
+    @required this.filter,
+    @required this.onFilterPressed,
+    this.filterLabel,
   });
 
   final String filter;
   final Function onFilterPressed;
+  final String filterLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class ListFilterButton extends StatelessWidget {
       builder: (BuildContext context, Store<AppState> store) {
         return FlatButton(
           child: Text(
-            filter == null ? localization.filter : localization.close,
+            filter == null
+                ? (filterLabel ?? localization.filter)
+                : localization.close,
             style: TextStyle(color: Colors.white),
           ),
           onPressed: () => onFilterPressed(filter == null ? '' : null),

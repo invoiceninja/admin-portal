@@ -72,6 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
             },
+            filterLabel: localization.search,
           ),
           actions: [
             ListFilterButton(
@@ -79,6 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               onFilterPressed: (String value) {
                 store.dispatch(FilterCompany(value));
               },
+              filterLabel: localization.search,
             ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(

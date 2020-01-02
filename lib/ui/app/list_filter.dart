@@ -7,14 +7,16 @@ import 'package:redux/redux.dart';
 class ListFilter extends StatefulWidget {
   const ListFilter({
     Key key,
-    this.filter,
-    this.title,
-    this.onFilterChanged,
+    @required this.filter,
+    @required this.title,
+    @required this.onFilterChanged,
+    this.filterLabel,
   }) : super(key: key);
 
   final String filter;
   final String title;
   final Function(String) onFilterChanged;
+  final String filterLabel;
 
   @override
   _ListFilterState createState() => new _ListFilterState();
@@ -71,7 +73,7 @@ class _ListFilterState extends State<ListFilter> {
                       ),
                      */
                       border: InputBorder.none,
-                      hintText: localization.filter),
+                      hintText: widget.filterLabel ?? localization.filter),
                   autofocus: true,
                   autocorrect: false,
                   onChanged: (value) {
