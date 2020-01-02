@@ -1,11 +1,14 @@
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
@@ -61,6 +64,13 @@ class _InvoiceViewState extends State<InvoiceView>
           ),
         ],
       ),
+      secondaryWidget: isNotMobile(context)
+          ? FlatButton(
+              child: Text(localization.pdf.toUpperCase()),
+              onPressed: () =>
+                  handleInvoiceAction(context, [invoice], EntityAction.pdf),
+            )
+          : null,
       body: Builder(
         builder: (BuildContext context) {
           return RefreshIndicator(

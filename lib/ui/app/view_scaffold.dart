@@ -14,6 +14,7 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
+    this.secondaryWidget,
     this.title,
     this.floatingActionButton,
     this.appBarBottom,
@@ -23,6 +24,7 @@ class ViewScaffold extends StatelessWidget {
 
   final bool isSettings;
   final BaseEntity entity;
+  final Widget secondaryWidget;
   final String title;
   final Widget body;
   final Function onBackPressed;
@@ -59,6 +61,7 @@ class ViewScaffold extends StatelessWidget {
           actions: entity.isNew
               ? []
               : [
+                  if (secondaryWidget != null) secondaryWidget,
                   userCompany.canEditEntity(entity)
                       ? EditIconButton(
                           isVisible: !(entity.isDeleted ?? false),
@@ -74,8 +77,8 @@ class ViewScaffold extends StatelessWidget {
                     entityActions: entity.getActions(
                         userCompany: userCompany,
                         client: entity is BelongsToClient
-                            ? state.clientState.map[
-                                    (entity as BelongsToClient).clientId]
+                            ? state.clientState
+                                .map[(entity as BelongsToClient).clientId]
                             : null),
                   )
                 ],
