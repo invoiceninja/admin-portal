@@ -50,7 +50,7 @@ class InvoiceListItem extends StatelessWidget {
         : null;
 
     final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
-        ? kInvoiceStatusApproved
+        ? kQuoteStatusApproved
         : invoice.statusId;
 
     return DismissibleEntity(

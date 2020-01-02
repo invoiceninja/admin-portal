@@ -309,7 +309,7 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvitationEntity> get invitations;
 
   bool get isApproved =>
-      statusId == kInvoiceStatusApproved || (quoteInvoiceId ?? '').isNotEmpty;
+      statusId == kQuoteStatusApproved || (quoteInvoiceId ?? '').isNotEmpty;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 

@@ -138,11 +138,6 @@ class InvoiceScreen extends StatelessWidget {
           ),
           InvoiceStatusEntity().rebuild(
             (b) => b
-              ..id = kInvoiceStatusViewed
-              ..name = localization.viewed,
-          ),
-          InvoiceStatusEntity().rebuild(
-            (b) => b
               ..id = kInvoiceStatusPartial
               ..name = localization.partial,
           ),

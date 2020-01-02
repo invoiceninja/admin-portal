@@ -335,7 +335,7 @@ abstract class QuoteEntity extends Object
         return true;
       }
 
-      if (status.id == kQuoteStatusPastDue && isPastDue) {
+      if (status.id == kQuoteStatusExpired && isPastDue) {
         return true;
       }
     }
