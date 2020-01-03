@@ -44,7 +44,7 @@ class GroupRepository {
 
   Future<List<GroupEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/groups/bulk?include=activities';
+    var url = credentials.url + '/groups/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

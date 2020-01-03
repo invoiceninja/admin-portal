@@ -44,7 +44,7 @@ class TaxRateRepository {
 
   Future<List<TaxRateEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/tax_rates/bulk?include=activities';
+    var url = credentials.url + '/tax_rates/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

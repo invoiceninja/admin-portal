@@ -77,9 +77,9 @@ class InvoiceRepository {
           credentials.url + '/invoices?include=invitations', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/invoices/${invoice.id}';
+      var url = '${credentials.url}/invoices/${invoice.id}?include=invitations';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

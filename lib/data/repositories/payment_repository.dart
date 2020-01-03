@@ -19,7 +19,7 @@ class PaymentRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/payments?';
+    String url = credentials.url + '/payments?include=paymentables';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -41,7 +41,7 @@ class PaymentRepository {
 
   Future<List<PaymentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/payments/bulk?include=activities';
+    var url = credentials.url + '/payments/bulk?include=paymentables';
     if (action != null) {
       url += '&action=' + action.toString();
     }
@@ -59,14 +59,14 @@ class PaymentRepository {
     dynamic response;
 
     if (payment.isNew) {
-      var url = credentials.url + '/payments';
+      var url = credentials.url + '/payments?include=paymentables';
       if (sendEmail) {
-        url += '?email_receipt=true';
+        url += '&email_receipt=true';
       }
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
-      var url = '${credentials.url}/payments/${payment.id}?';
+      var url = '${credentials.url}/payments/${payment.id}?include=paymentables';
       if (sendEmail) {
         url += '&email_receipt=true';
       }

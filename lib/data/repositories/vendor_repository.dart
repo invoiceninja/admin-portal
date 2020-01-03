@@ -52,7 +52,7 @@ class VendorRepository {
 
   Future<List<VendorEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/vendors/bulk?include=activities';
+    var url = credentials.url + '/vendors/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

@@ -104,7 +104,7 @@ class AuthRepository {
       'company.clients',
       'company.products',
       'company.invoices',
-      'company.payments',
+      'company.payments.paymentables',
       'company.quotes',
       //'company.credits',
       //'company.tasks',

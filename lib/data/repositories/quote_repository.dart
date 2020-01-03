@@ -54,7 +54,7 @@ class QuoteRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/quotes/bulk?include=activities';
+    var url = credentials.url + '/quotes/bulk?include=invitations';
     if (action != null) {
       url += '&action=' + action.toString();
     }
@@ -77,7 +77,7 @@ class QuoteRepository {
           credentials.url + '/quotes?include=invitations', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/quotes/${quote.id}';
+      var url = '${credentials.url}/quotes/${quote.id}?include=invitations';
       if (action != null) {
         url += '?action=' + action.toString();
       }

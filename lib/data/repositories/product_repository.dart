@@ -41,7 +41,7 @@ class ProductRepository {
 
   Future<List<ProductEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/products/bulk?include=activities';
+    var url = credentials.url + '/products/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

@@ -81,6 +81,7 @@ abstract class PaymentEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      paymentables: BuiltList<PaymentableEntity>(),
     );
   }
 
@@ -159,6 +160,7 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  BuiltList<PaymentableEntity> get paymentables;
 
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
@@ -278,16 +280,14 @@ abstract class PaymentEntity extends Object
   double get listDisplayAmount => amount;
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(date) <= 0 &&
-        endDate.compareTo(date) >= 0;
+    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {
-    if ([kPaymentStatusVoided, kPaymentStatusFailed]
-        .contains(statusId)) {
+    if ([kPaymentStatusVoided, kPaymentStatusFailed].contains(statusId)) {
       return 0.0;
     }
 
@@ -295,4 +295,59 @@ abstract class PaymentEntity extends Object
   }
 
   static Serializer<PaymentEntity> get serializer => _$paymentEntitySerializer;
+}
+
+abstract class PaymentableEntity extends Object
+    with SelectableEntity
+    implements Built<PaymentableEntity, PaymentableEntityBuilder> {
+  factory PaymentableEntity() {
+    return _$PaymentableEntity._(
+      id: '',
+      invoiceId: '',
+      amount: 0,
+    );
+  }
+
+  PaymentableEntity._();
+
+  @BuiltValueField(wireName: 'invoice_id')
+  String get invoiceId;
+
+  double get amount;
+
+  /*
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    filter = filter.toLowerCase();
+
+    return false;
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    filter = filter.toLowerCase();
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  double get listDisplayAmount => null;
+
+*/
+
+  static Serializer<PaymentableEntity> get serializer =>
+      _$paymentableEntitySerializer;
 }

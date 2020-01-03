@@ -52,7 +52,7 @@ class ProjectRepository {
 
   Future<List<ProjectEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/projects/bulk?include=activities';
+    var url = credentials.url + '/projects/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

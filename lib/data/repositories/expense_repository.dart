@@ -52,7 +52,7 @@ class ExpenseRepository {
 
   Future<List<ExpenseEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/expenses/bulk?include=activities';
+    var url = credentials.url + '/expenses/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }

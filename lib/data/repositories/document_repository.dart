@@ -52,7 +52,7 @@ class DocumentRepository {
 
   Future<List<DocumentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/documents/bulk?include=activities';
+    var url = credentials.url + '/documents/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }
