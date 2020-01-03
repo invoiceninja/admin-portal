@@ -300,9 +300,9 @@ abstract class PaymentEntity extends Object
 abstract class PaymentableEntity extends Object
     with SelectableEntity
     implements Built<PaymentableEntity, PaymentableEntityBuilder> {
-  factory PaymentableEntity() {
+  factory PaymentableEntity({String id}) {
     return _$PaymentableEntity._(
-      id: '',
+      id: id ?? BaseEntity.nextId,
       invoiceId: '',
       //amount: 0,
       amount: '',

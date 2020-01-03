@@ -141,10 +141,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                     label: localization.amount,
                   ),
                 ],
-                for (final paymentable in payment.paymentables)
+                for (var index = 0;
+                    index < payment.paymentables.length;
+                    index++)
                   PaymentableEditor(
                     viewModel: viewModel,
-                    paymentable: paymentable,
+                    paymentable: payment.paymentables[index],
+                    index: index,
                     onChanged: () {},
                   ),
                 EntityDropdown(
@@ -203,11 +206,13 @@ class PaymentableEditor extends StatelessWidget {
     @required this.viewModel,
     @required this.paymentable,
     @required this.onChanged,
+    @required this.index,
   });
 
   final PaymentEditVM viewModel;
   final PaymentableEntity paymentable;
   final Function onChanged;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -226,15 +231,11 @@ class PaymentableEditor extends StatelessWidget {
                 viewModel.clientMap, viewModel.invoiceList, payment.clientId),
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
-              /*
-              _amountController.text = formatNumber(
-                  invoice.balance, context,
-                  formatNumberType: FormatNumberType.input);
-               */
               viewModel.onChanged(payment.rebuild((b) => b
-                ..invoiceId = invoice.id
-                ..clientId = invoice.clientId
-                ..amount = invoice.balance));
+                ..paymentables[index] =
+                    paymentable.rebuild((b) => b..invoiceId = invoice.id
+                        //..amount = invoice.balance
+                        )));
             },
           ),
         ),
