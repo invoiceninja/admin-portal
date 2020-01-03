@@ -284,7 +284,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 payment.clientId),
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
-              _amountController.text = formatNumber(invoice.balance, context);
+              _amountController.text = formatNumber(invoice.balance, context,
+                  formatNumberType: FormatNumberType.input);
               widget.viewModel.onChanged(payment.rebuild((b) => b
                 ..paymentables[widget.index] =
                     widget.paymentable.rebuild((b) => b..invoiceId = invoice.id
