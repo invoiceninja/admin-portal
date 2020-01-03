@@ -420,7 +420,7 @@ class _$PaymentableEntitySerializer
           specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
-          specifiedType: const FullType(double)),
+          specifiedType: const FullType(String)),
     ];
     if (object.id != null) {
       result
@@ -449,7 +449,7 @@ class _$PaymentableEntitySerializer
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1110,7 +1110,7 @@ class _$PaymentableEntity extends PaymentableEntity {
   @override
   final String invoiceId;
   @override
-  final double amount;
+  final String amount;
   @override
   final String id;
 
@@ -1168,9 +1168,9 @@ class PaymentableEntityBuilder
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  String _amount;
+  String get amount => _$this._amount;
+  set amount(String amount) => _$this._amount = amount;
 
   String _id;
   String get id => _$this._id;
