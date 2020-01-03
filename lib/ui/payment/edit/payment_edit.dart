@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
@@ -251,15 +252,19 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   }
 
   void _onChanged() {
-    /*
-    final payment = widget.viewModel.payment.rebuild((b) => b
-      ..amount = parseDouble(_amountController.text)
-      ..transactionReference = _transactionReferenceController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim());
+    var payment = widget.viewModel.payment.rebuild((b) => b
+      ..paymentables[widget.index] = widget.paymentable.rebuild((b) => b
+        //..amount = parseDouble(_amountController.text)
+        ..amount = _amountController.text));
+    if (payment.paymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
+      payment =
+          payment.rebuild((b) => b..paymentables.add(PaymentableEntity()));
+    }
     if (payment != widget.viewModel.payment) {
       widget.viewModel.onChanged(payment);
-    }    
-     */
+    }
   }
 
   @override
@@ -293,6 +298,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                         )));
             },
           ),
+        ),
+        SizedBox(
+          width: kTableColumnGap,
         ),
         Expanded(
           child: DecoratedFormField(

@@ -317,6 +317,9 @@ abstract class PaymentableEntity extends Object
   //double get amount;
   String get amount;
 
+  //bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
+  bool get isEmpty => (invoiceId ?? '').isEmpty && amount.isEmpty;
+
   /*
   @override
   bool matchesFilter(String filter) {
