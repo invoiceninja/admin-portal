@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -132,27 +133,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                     entityList: memoizedDropdownClientList(
                         viewModel.clientMap, viewModel.clientList),
                   ),
-                  EntityDropdown(
-                    key: Key('__invoice_${payment.clientId}__'),
-                    entityType: EntityType.invoice,
-                    labelText: AppLocalization.of(context).invoice,
-                    entityId: payment.invoiceId,
-                    entityList: memoizedDropdownInvoiceList(
-                        viewModel.invoiceMap,
-                        viewModel.clientMap,
-                        viewModel.invoiceList,
-                        payment.clientId),
-                    onSelected: (selected) {
-                      final invoice = selected as InvoiceEntity;
-                      _amountController.text = formatNumber(
-                          invoice.balance, context,
-                          formatNumberType: FormatNumberType.input);
-                      viewModel.onChanged(payment.rebuild((b) => b
-                        ..invoiceId = invoice.id
-                        ..clientId = invoice.clientId
-                        ..amount = invoice.balance));
-                    },
-                  ),
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
@@ -161,6 +141,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                     label: localization.amount,
                   ),
                 ],
+                for (final paymentable in payment.paymentables)
+                  PaymentableEditor(
+                    viewModel: viewModel,
+                    paymentable: paymentable,
+                    onChanged: () {},
+                  ),
                 EntityDropdown(
                   key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
@@ -168,8 +154,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       viewModel.staticState.paymentTypeMap),
                   labelText: localization.paymentType,
                   entityId: payment.typeId,
-                  onSelected: (paymentType) => viewModel.onChanged(payment
-                      .rebuild((b) => b..typeId = paymentType.id)),
+                  onSelected: (paymentType) => viewModel.onChanged(
+                      payment.rebuild((b) => b..typeId = paymentType.id)),
                 ),
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
@@ -179,8 +165,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   labelText: localization.paymentDate,
                   selectedDate: payment.date,
                   onSelected: (date) {
-                    viewModel.onChanged(
-                        payment.rebuild((b) => b..date = date));
+                    viewModel.onChanged(payment.rebuild((b) => b..date = date));
                   },
                 ),
                 DecoratedFormField(
@@ -209,6 +194,64 @@ class _PaymentEditState extends State<PaymentEdit> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PaymentableEditor extends StatelessWidget {
+  const PaymentableEditor({
+    @required this.viewModel,
+    @required this.paymentable,
+    @required this.onChanged,
+  });
+
+  final PaymentEditVM viewModel;
+  final PaymentableEntity paymentable;
+  final Function onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final payment = viewModel.payment;
+    final localization = AppLocalization.of(context);
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: EntityDropdown(
+            key: Key('__invoice_${payment.clientId}__'),
+            entityType: EntityType.invoice,
+            labelText: AppLocalization.of(context).invoice,
+            entityId: payment.invoiceId,
+            entityList: memoizedDropdownInvoiceList(viewModel.invoiceMap,
+                viewModel.clientMap, viewModel.invoiceList, payment.clientId),
+            onSelected: (selected) {
+              final invoice = selected as InvoiceEntity;
+              /*
+              _amountController.text = formatNumber(
+                  invoice.balance, context,
+                  formatNumberType: FormatNumberType.input);
+               */
+              viewModel.onChanged(payment.rebuild((b) => b
+                ..invoiceId = invoice.id
+                ..clientId = invoice.clientId
+                ..amount = invoice.balance));
+            },
+          ),
+        ),
+        Expanded(
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: localization.applied,
+            ),
+          ),
+        ),
+        FlatButton(
+          child: Text(localization.remove),
+          onPressed: () {
+            // TODO
+          },
+        )
+      ],
     );
   }
 }

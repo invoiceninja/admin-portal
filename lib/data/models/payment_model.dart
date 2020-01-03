@@ -81,7 +81,7 @@ abstract class PaymentEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
-      paymentables: BuiltList<PaymentableEntity>(),
+      paymentables: BuiltList(<PaymentableEntity>[PaymentableEntity()]),
     );
   }
 

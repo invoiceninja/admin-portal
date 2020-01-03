@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received': 'We have received your message and will try to respond promptly.',
       'message': 'Message',
@@ -15926,7 +15927,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeRecentErrors =>
       _localizedValues[localeCode]['include_recent_errors'];
 
-
+  String get applied =>
+      _localizedValues[localeCode]['applied'];
 
 
   String lookup(String key) {
