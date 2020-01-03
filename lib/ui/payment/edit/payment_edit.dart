@@ -201,7 +201,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 }
 
-class PaymentableEditor extends StatelessWidget {
+class PaymentableEditor extends StatefulWidget {
   const PaymentableEditor({
     @required this.viewModel,
     @required this.paymentable,
@@ -215,8 +215,58 @@ class PaymentableEditor extends StatelessWidget {
   final int index;
 
   @override
+  _PaymentableEditorState createState() => _PaymentableEditorState();
+}
+
+class _PaymentableEditorState extends State<PaymentableEditor> {
+  final _amountController = TextEditingController();
+  List<TextEditingController> _controllers = [];
+
+  @override
+  void didChangeDependencies() {
+    _controllers = [
+      _amountController,
+    ];
+
+    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+
+    final payment = widget.viewModel.payment;
+
+    _amountController.text = formatNumber(payment.amount, context,
+        formatNumberType: FormatNumberType.input);
+
+    _controllers.forEach((controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  void _onChanged() {
+    /*
+    final payment = widget.viewModel.payment.rebuild((b) => b
+      ..amount = parseDouble(_amountController.text)
+      ..transactionReference = _transactionReferenceController.text.trim()
+      ..privateNotes = _privateNotesController.text.trim());
+    if (payment != widget.viewModel.payment) {
+      widget.viewModel.onChanged(payment);
+    }    
+     */
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final viewModel = widget.viewModel;
     final payment = viewModel.payment;
+    final paymentable = widget.paymentable;
     final localization = AppLocalization.of(context);
 
     return Row(
@@ -226,30 +276,34 @@ class PaymentableEditor extends StatelessWidget {
             key: Key('__invoice_${payment.clientId}__'),
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
-            entityId: payment.invoiceId,
-            entityList: memoizedDropdownInvoiceList(viewModel.invoiceMap,
-                viewModel.clientMap, viewModel.invoiceList, payment.clientId),
+            entityId: paymentable.invoiceId,
+            entityList: memoizedDropdownInvoiceList(
+                widget.viewModel.invoiceMap,
+                widget.viewModel.clientMap,
+                widget.viewModel.invoiceList,
+                payment.clientId),
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
-              viewModel.onChanged(payment.rebuild((b) => b
-                ..paymentables[index] =
-                    paymentable.rebuild((b) => b..invoiceId = invoice.id
+              _amountController.text = formatNumber(invoice.balance, context);
+              widget.viewModel.onChanged(payment.rebuild((b) => b
+                ..paymentables[widget.index] =
+                    widget.paymentable.rebuild((b) => b..invoiceId = invoice.id
                         //..amount = invoice.balance
                         )));
             },
           ),
         ),
         Expanded(
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: localization.applied,
-            ),
+          child: DecoratedFormField(
+            controller: _amountController,
+            label: localization.applied,
           ),
         ),
         FlatButton(
           child: Text(localization.remove),
           onPressed: () {
-            // TODO
+            viewModel.onChanged(
+                payment.rebuild((b) => b..paymentables.removeAt(widget.index)));
           },
         )
       ],
