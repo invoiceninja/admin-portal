@@ -301,10 +301,12 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ),
         FlatButton(
           child: Text(localization.remove),
-          onPressed: () {
-            viewModel.onChanged(
-                payment.rebuild((b) => b..paymentables.removeAt(widget.index)));
-          },
+          onPressed: payment.paymentables.length == 1
+              ? null
+              : () {
+                  viewModel.onChanged(payment
+                      .rebuild((b) => b..paymentables.removeAt(widget.index)));
+                },
         )
       ],
     );
