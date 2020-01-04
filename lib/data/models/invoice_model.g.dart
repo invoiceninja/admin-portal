@@ -606,9 +606,6 @@ class _$InvoiceItemEntitySerializer
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
-      'createdAt',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.customValue3 != null) {
       result
@@ -633,6 +630,12 @@ class _$InvoiceItemEntitySerializer
         ..add('expense_public_id')
         ..add(serializers.serialize(object.expenseId,
             specifiedType: const FullType(String)));
+    }
+    if (object.createdAt != null) {
+      result
+        ..add('createdAt')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
     }
     return result;
   }
@@ -1954,9 +1957,6 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'discount');
-    }
-    if (createdAt == null) {
-      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'createdAt');
     }
   }
 

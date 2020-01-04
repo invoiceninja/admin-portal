@@ -630,6 +630,7 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'expense_public_id')
   String get expenseId;
 
+  @nullable
   int get createdAt;
 
   double get total => round(quantity * cost, 2);

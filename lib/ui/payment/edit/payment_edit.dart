@@ -90,6 +90,11 @@ class _PaymentEditState extends State<PaymentEdit> {
     final payment = viewModel.payment;
     final localization = AppLocalization.of(context);
 
+    final paymentables = payment.paymentables.toList();
+    if (paymentables.where((paymentable) => paymentable.isEmpty).isEmpty) {
+      paymentables.add(PaymentableEntity());
+    }
+
     return EditScaffold(
       entity: payment,
       title: viewModel.payment.isNew
@@ -142,12 +147,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                     label: localization.amount,
                   ),
                 ],
-                for (var index = 0;
-                    index < payment.paymentables.length;
-                    index++)
+                for (var index = 0; index < paymentables.length; index++)
                   PaymentableEditor(
+                    key: ValueKey(
+                        '__paymentable_${index}_${paymentables[index].createdAt}__'),
                     viewModel: viewModel,
-                    paymentable: payment.paymentables[index],
+                    paymentable: paymentables[index],
                     index: index,
                     onChanged: () {},
                   ),
@@ -204,11 +209,12 @@ class _PaymentEditState extends State<PaymentEdit> {
 
 class PaymentableEditor extends StatefulWidget {
   const PaymentableEditor({
+    Key key,
     @required this.viewModel,
     @required this.paymentable,
     @required this.onChanged,
     @required this.index,
-  });
+  }) : super(key: key);
 
   final PaymentEditVM viewModel;
   final PaymentableEntity paymentable;
@@ -221,6 +227,7 @@ class PaymentableEditor extends StatefulWidget {
 
 class _PaymentableEditorState extends State<PaymentableEditor> {
   final _amountController = TextEditingController();
+  String _invoiceId = '';
   List<TextEditingController> _controllers = [];
 
   @override
@@ -231,9 +238,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final payment = widget.viewModel.payment;
-
-    _amountController.text = formatNumber(payment.amount, context,
+    _amountController.text = formatNumber(widget.paymentable.amount, context,
         formatNumberType: FormatNumberType.input);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -252,18 +257,25 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   }
 
   void _onChanged() {
-    var payment = widget.viewModel.payment.rebuild((b) => b
-      ..paymentables[widget.index] = widget.paymentable
-          .rebuild((b) => b..amount = parseDouble(_amountController.text)));
-    if (payment.paymentables
-        .where((paymentable) => paymentable.isEmpty)
-        .isEmpty) {
-      payment =
-          payment.rebuild((b) => b..paymentables.add(PaymentableEntity()));
+    final paymentable = widget.paymentable.rebuild((b) => b
+      ..invoiceId = _invoiceId
+      ..amount = parseDouble(_amountController.text));
+
+    if (paymentable == widget.paymentable || paymentable.isEmpty) {
+      return;
     }
-    if (payment != widget.viewModel.payment) {
-      widget.viewModel.onChanged(payment);
+
+    PaymentEntity payment;
+
+    if (widget.index == widget.viewModel.payment.paymentables.length) {
+      payment = widget.viewModel.payment
+          .rebuild((b) => b..paymentables.add(paymentable));
+    } else {
+      payment = widget.viewModel.payment
+          .rebuild((b) => b..paymentables[widget.index] = paymentable);
     }
+
+    widget.viewModel.onChanged(payment);
   }
 
   @override
@@ -290,11 +302,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               final invoice = selected as InvoiceEntity;
               _amountController.text = formatNumber(invoice.balance, context,
                   formatNumberType: FormatNumberType.input);
-              widget.viewModel.onChanged(payment.rebuild((b) => b
-                ..paymentables[widget.index] =
-                    widget.paymentable.rebuild((b) => b..invoiceId = invoice.id
-                        //..amount = invoice.balance
-                        )));
+              _invoiceId = invoice.id;
+              _onChanged();
             },
           ),
         ),
@@ -309,7 +318,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ),
         FlatButton(
           child: Text(localization.remove),
-          onPressed: payment.paymentables.length == 1
+          onPressed: paymentable.isEmpty
               ? null
               : () {
                   viewModel.onChanged(payment

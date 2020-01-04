@@ -81,7 +81,7 @@ abstract class PaymentEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
-      paymentables: BuiltList(<PaymentableEntity>[PaymentableEntity()]),
+      paymentables: BuiltList<PaymentableEntity>(),
     );
   }
 
@@ -305,6 +305,7 @@ abstract class PaymentableEntity extends Object
       id: id ?? BaseEntity.nextId,
       invoiceId: '',
       amount: 0,
+      createdAt: DateTime.now().microsecondsSinceEpoch,
     );
   }
 
@@ -314,6 +315,9 @@ abstract class PaymentableEntity extends Object
   String get invoiceId;
 
   double get amount;
+
+  @nullable
+  int get createdAt;
 
   bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
 

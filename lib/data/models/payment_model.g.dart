@@ -422,6 +422,12 @@ class _$PaymentableEntitySerializer
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('createdAt')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -450,6 +456,10 @@ class _$PaymentableEntitySerializer
         case 'amount':
           result.amount = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'createdAt':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1112,13 +1122,16 @@ class _$PaymentableEntity extends PaymentableEntity {
   @override
   final double amount;
   @override
+  final int createdAt;
+  @override
   final String id;
 
   factory _$PaymentableEntity(
           [void Function(PaymentableEntityBuilder) updates]) =>
       (new PaymentableEntityBuilder()..update(updates)).build();
 
-  _$PaymentableEntity._({this.invoiceId, this.amount, this.id}) : super._() {
+  _$PaymentableEntity._({this.invoiceId, this.amount, this.createdAt, this.id})
+      : super._() {
     if (invoiceId == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'invoiceId');
     }
@@ -1141,13 +1154,16 @@ class _$PaymentableEntity extends PaymentableEntity {
     return other is PaymentableEntity &&
         invoiceId == other.invoiceId &&
         amount == other.amount &&
+        createdAt == other.createdAt &&
         id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, invoiceId.hashCode), amount.hashCode), id.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, invoiceId.hashCode), amount.hashCode),
+            createdAt.hashCode),
+        id.hashCode));
   }
 
   @override
@@ -1155,6 +1171,7 @@ class _$PaymentableEntity extends PaymentableEntity {
     return (newBuiltValueToStringHelper('PaymentableEntity')
           ..add('invoiceId', invoiceId)
           ..add('amount', amount)
+          ..add('createdAt', createdAt)
           ..add('id', id))
         .toString();
   }
@@ -1172,6 +1189,10 @@ class PaymentableEntityBuilder
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1182,6 +1203,7 @@ class PaymentableEntityBuilder
     if (_$v != null) {
       _invoiceId = _$v.invoiceId;
       _amount = _$v.amount;
+      _createdAt = _$v.createdAt;
       _id = _$v.id;
       _$v = null;
     }
@@ -1204,7 +1226,8 @@ class PaymentableEntityBuilder
   @override
   _$PaymentableEntity build() {
     final _$result = _$v ??
-        new _$PaymentableEntity._(invoiceId: invoiceId, amount: amount, id: id);
+        new _$PaymentableEntity._(
+            invoiceId: invoiceId, amount: amount, createdAt: createdAt, id: id);
     replace(_$result);
     return _$result;
   }

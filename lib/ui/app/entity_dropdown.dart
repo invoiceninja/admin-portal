@@ -113,7 +113,6 @@ class _EntityDropdownState extends State<EntityDropdown> {
   Widget build(BuildContext context) {
     if (isNotMobile(context)) {
       return TypeAheadFormField<String>(
-        initialValue: _entityMap[widget.entityId]?.listDisplayName ?? '',
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsCallback: (filter) {
           return widget.entityList
@@ -129,9 +128,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
         },
         onSuggestionSelected: (entityId) {
           final entity = _entityMap[entityId];
+          _textController.text = _entityMap[entityId].listDisplayName;
           widget.onSelected(entity);
         },
         textFieldConfiguration: TextFieldConfiguration<String>(
+            controller: _textController,
             decoration: InputDecoration(
               labelText: widget.labelText,
               suffix: showClear
