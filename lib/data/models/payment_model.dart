@@ -304,8 +304,7 @@ abstract class PaymentableEntity extends Object
     return _$PaymentableEntity._(
       id: id ?? BaseEntity.nextId,
       invoiceId: '',
-      //amount: 0,
-      amount: '',
+      amount: 0,
     );
   }
 
@@ -314,11 +313,9 @@ abstract class PaymentableEntity extends Object
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
-  //double get amount;
-  String get amount;
+  double get amount;
 
-  //bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
-  bool get isEmpty => (invoiceId ?? '').isEmpty && amount.isEmpty;
+  bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
 
   /*
   @override

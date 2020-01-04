@@ -253,9 +253,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
   void _onChanged() {
     var payment = widget.viewModel.payment.rebuild((b) => b
-      ..paymentables[widget.index] = widget.paymentable.rebuild((b) => b
-        //..amount = parseDouble(_amountController.text)
-        ..amount = _amountController.text));
+      ..paymentables[widget.index] = widget.paymentable
+          .rebuild((b) => b..amount = parseDouble(_amountController.text)));
     if (payment.paymentables
         .where((paymentable) => paymentable.isEmpty)
         .isEmpty) {

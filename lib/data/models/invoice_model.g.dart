@@ -594,6 +594,9 @@ class _$InvoiceItemEntitySerializer
       'tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
+      'line_item_type_id',
+      serializers.serialize(object.lineItemTypeId,
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -607,12 +610,6 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
     ];
-    if (object.invoiceItemTypeId != null) {
-      result
-        ..add('invoice_item_type_id')
-        ..add(serializers.serialize(object.invoiceItemTypeId,
-            specifiedType: const FullType(String)));
-    }
     if (object.customValue3 != null) {
       result
         ..add('custom_value3')
@@ -692,8 +689,8 @@ class _$InvoiceItemEntitySerializer
           result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'invoice_item_type_id':
-          result.invoiceItemTypeId = serializers.deserialize(value,
+        case 'line_item_type_id':
+          result.lineItemTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
@@ -1873,7 +1870,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double taxRate3;
   @override
-  final String invoiceItemTypeId;
+  final String lineItemTypeId;
   @override
   final String customValue1;
   @override
@@ -1906,7 +1903,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.taxRate2,
       this.taxName3,
       this.taxRate3,
-      this.invoiceItemTypeId,
+      this.lineItemTypeId,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1946,6 +1943,9 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxRate3');
     }
+    if (lineItemTypeId == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'lineItemTypeId');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue1');
     }
@@ -1982,7 +1982,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         taxRate2 == other.taxRate2 &&
         taxName3 == other.taxName3 &&
         taxRate3 == other.taxRate3 &&
-        invoiceItemTypeId == other.invoiceItemTypeId &&
+        lineItemTypeId == other.lineItemTypeId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -2030,7 +2030,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                     taxRate2.hashCode),
                                                 taxName3.hashCode),
                                             taxRate3.hashCode),
-                                        invoiceItemTypeId.hashCode),
+                                        lineItemTypeId.hashCode),
                                     customValue1.hashCode),
                                 customValue2.hashCode),
                             customValue3.hashCode),
@@ -2054,7 +2054,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('taxRate2', taxRate2)
           ..add('taxName3', taxName3)
           ..add('taxRate3', taxRate3)
-          ..add('invoiceItemTypeId', invoiceItemTypeId)
+          ..add('lineItemTypeId', lineItemTypeId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -2111,10 +2111,10 @@ class InvoiceItemEntityBuilder
   double get taxRate3 => _$this._taxRate3;
   set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
-  String _invoiceItemTypeId;
-  String get invoiceItemTypeId => _$this._invoiceItemTypeId;
-  set invoiceItemTypeId(String invoiceItemTypeId) =>
-      _$this._invoiceItemTypeId = invoiceItemTypeId;
+  String _lineItemTypeId;
+  String get lineItemTypeId => _$this._lineItemTypeId;
+  set lineItemTypeId(String lineItemTypeId) =>
+      _$this._lineItemTypeId = lineItemTypeId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -2162,7 +2162,7 @@ class InvoiceItemEntityBuilder
       _taxRate2 = _$v.taxRate2;
       _taxName3 = _$v.taxName3;
       _taxRate3 = _$v.taxRate3;
-      _invoiceItemTypeId = _$v.invoiceItemTypeId;
+      _lineItemTypeId = _$v.lineItemTypeId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -2203,7 +2203,7 @@ class InvoiceItemEntityBuilder
             taxRate2: taxRate2,
             taxName3: taxName3,
             taxRate3: taxRate3,
-            invoiceItemTypeId: invoiceItemTypeId,
+            lineItemTypeId: lineItemTypeId,
             customValue1: customValue1,
             customValue2: customValue2,
             customValue3: customValue3,

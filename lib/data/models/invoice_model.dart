@@ -566,7 +566,7 @@ abstract class InvoiceItemEntity
       taxRate2: 0.0,
       taxName3: '',
       taxRate3: 0.0,
-      invoiceItemTypeId: '',
+      lineItemTypeId: '',
       customValue1: '',
       customValue2: '',
       discount: 0.0,
@@ -603,9 +603,8 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
-  @nullable
-  @BuiltValueField(wireName: 'invoice_item_type_id')
-  String get invoiceItemTypeId;
+  @BuiltValueField(wireName: 'line_item_type_id')
+  String get lineItemTypeId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
