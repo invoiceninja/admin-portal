@@ -316,6 +316,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             label: localization.applied,
           ),
         ),
+        SizedBox(
+          width: kTableColumnGap,
+        ),
         IconButton(
           icon: Icon(Icons.clear),
           tooltip: localization.remove,
