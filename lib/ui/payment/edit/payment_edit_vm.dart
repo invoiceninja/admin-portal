@@ -88,6 +88,7 @@ class PaymentEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: PaymentEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
