@@ -321,6 +321,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   ),
                   IconButton(
                     icon: Icon(Icons.clear),
+                    tooltip: localization.remove,
                     onPressed: lineItems[index].isEmpty
                         ? null
                         : () {

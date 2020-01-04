@@ -316,15 +316,16 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             label: localization.applied,
           ),
         ),
-        FlatButton(
-          child: Text(localization.remove),
+        IconButton(
+          icon: Icon(Icons.clear),
+          tooltip: localization.remove,
           onPressed: paymentable.isEmpty
               ? null
               : () {
                   viewModel.onChanged(payment
                       .rebuild((b) => b..paymentables.removeAt(widget.index)));
                 },
-        )
+        ),
       ],
     );
   }
