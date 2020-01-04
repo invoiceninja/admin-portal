@@ -213,12 +213,12 @@ const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
-const int kPaymentStatusPending = 1;
-const int kPaymentStatusVoided = 2;
-const int kPaymentStatusFailed = 3;
-const int kPaymentStatusCompleted = 4;
-const int kPaymentStatusPartiallyRefunded = 5;
-const int kPaymentStatusRefunded = 6;
+const String kPaymentStatusPending = '1';
+const String kPaymentStatusVoided = '2';
+const String kPaymentStatusFailed = '3';
+const String kPaymentStatusCompleted = '4';
+const String kPaymentStatusPartiallyRefunded = '5';
+const String kPaymentStatusRefunded = '6';
 
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
