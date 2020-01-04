@@ -256,7 +256,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     super.dispose();
   }
 
-  void _onChanged() {
+  void _onChanged([String clientId]) {
     final paymentable = widget.paymentable.rebuild((b) => b
       ..invoiceId = _invoiceId
       ..amount = parseDouble(_amountController.text));
@@ -273,6 +273,10 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     } else {
       payment = widget.viewModel.payment
           .rebuild((b) => b..paymentables[widget.index] = paymentable);
+    }
+
+    if (clientId != null) {
+      payment = payment.rebuild((b) => b..clientId = clientId);
     }
 
     widget.viewModel.onChanged(payment);
@@ -303,7 +307,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               _amountController.text = formatNumber(invoice.balance, context,
                   formatNumberType: FormatNumberType.input);
               _invoiceId = invoice.id;
-              _onChanged();
+              _onChanged(invoice.clientId);
             },
           ),
         ),

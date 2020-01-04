@@ -42,12 +42,10 @@ class _PaymentViewState extends State<PaymentView> {
     fields[PaymentFields.paymentStatusId] =
         localization.lookup('payment_status_${payment.statusId}');
     if (payment.date.isNotEmpty) {
-      fields[PaymentFields.paymentDate] =
-          formatDate(payment.date, context);
+      fields[PaymentFields.paymentDate] = formatDate(payment.date, context);
     }
     if ((payment.typeId ?? '').isNotEmpty) {
-      final paymentType =
-          state.staticState.paymentTypeMap[payment.typeId];
+      final paymentType = state.staticState.paymentTypeMap[payment.typeId];
       if (paymentType != null) {
         fields[PaymentFields.paymentTypeId] = paymentType.name;
       }
@@ -67,22 +65,25 @@ class _PaymentViewState extends State<PaymentView> {
             children: <Widget>[
               (payment.refunded ?? 0) > 0
                   ? EntityHeader(
-                backgroundColor:
-                PaymentStatusColors.colors[payment.statusId],
-                label: localization.amount,
-                value: formatNumber(payment.amount, context,
-                    clientId: client.id),
-                secondLabel: localization.refunded,
-                secondValue: formatNumber(payment.refunded, context,
-                    clientId: client.id),
-              )
+                      backgroundColor:
+                          PaymentStatusColors.colors[payment.statusId],
+                      label: localization.amount,
+                      value: formatNumber(payment.amount, context,
+                          clientId: client.id),
+                      secondLabel: localization.refunded,
+                      secondValue: formatNumber(payment.refunded, context,
+                          clientId: client.id),
+                    )
                   : EntityHeader(
-                backgroundColor:
-                PaymentStatusColors.colors[payment.statusId],
-                label: localization.amount,
-                value: formatNumber(payment.amount, context,
-                    clientId: client.id),
-              ),
+                      backgroundColor:
+                          PaymentStatusColors.colors[payment.statusId],
+                      label: localization.amount,
+                      value: formatNumber(payment.amount, context,
+                          clientId: client.id),
+                      secondLabel: localization.applied,
+                      secondValue: formatNumber(payment.applied, context,
+                          clientId: client.id),
+                    ),
               Material(
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
@@ -107,8 +108,7 @@ class _PaymentViewState extends State<PaymentView> {
                   leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () => viewModel.onInvoicePressed(context),
-                  onLongPress: () =>
-                      viewModel.onInvoicePressed(context, true),
+                  onLongPress: () => viewModel.onInvoicePressed(context, true),
                 ),
               ),
               Container(
@@ -117,14 +117,14 @@ class _PaymentViewState extends State<PaymentView> {
               ),
               payment.privateNotes != null && payment.privateNotes.isNotEmpty
                   ? Column(
-                children: <Widget>[
-                  IconMessage(payment.privateNotes),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ],
-              )
+                      children: <Widget>[
+                        IconMessage(payment.privateNotes),
+                        Container(
+                          color: Theme.of(context).backgroundColor,
+                          height: 12.0,
+                        ),
+                      ],
+                    )
                   : Container(),
               FieldGrid(fields),
             ],

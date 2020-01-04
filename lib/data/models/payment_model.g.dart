@@ -123,6 +123,9 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
+      'applied',
+      serializers.serialize(object.applied,
+          specifiedType: const FullType(double)),
       'refunded',
       serializers.serialize(object.refunded,
           specifiedType: const FullType(double)),
@@ -285,6 +288,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       switch (key) {
         case 'amount':
           result.amount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'applied':
+          result.applied = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'refunded':
@@ -665,6 +672,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final double amount;
   @override
+  final double applied;
+  @override
   final double refunded;
   @override
   final String number;
@@ -724,6 +733,7 @@ class _$PaymentEntity extends PaymentEntity {
 
   _$PaymentEntity._(
       {this.amount,
+      this.applied,
       this.refunded,
       this.number,
       this.clientId,
@@ -754,6 +764,9 @@ class _$PaymentEntity extends PaymentEntity {
       : super._() {
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'amount');
+    }
+    if (applied == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'applied');
     }
     if (refunded == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
@@ -788,6 +801,7 @@ class _$PaymentEntity extends PaymentEntity {
     if (identical(other, this)) return true;
     return other is PaymentEntity &&
         amount == other.amount &&
+        applied == other.applied &&
         refunded == other.refunded &&
         number == other.number &&
         clientId == other.clientId &&
@@ -837,7 +851,7 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode),
                                                                                 privateNotes.hashCode),
                                                                             customValue1.hashCode),
                                                                         customValue2.hashCode),
@@ -863,6 +877,7 @@ class _$PaymentEntity extends PaymentEntity {
   String toString() {
     return (newBuiltValueToStringHelper('PaymentEntity')
           ..add('amount', amount)
+          ..add('applied', applied)
           ..add('refunded', refunded)
           ..add('number', number)
           ..add('clientId', clientId)
@@ -901,6 +916,10 @@ class PaymentEntityBuilder
   double _amount;
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
+
+  double _applied;
+  double get applied => _$this._applied;
+  set applied(double applied) => _$this._applied = applied;
 
   double _refunded;
   double get refunded => _$this._refunded;
@@ -1021,6 +1040,7 @@ class PaymentEntityBuilder
   PaymentEntityBuilder get _$this {
     if (_$v != null) {
       _amount = _$v.amount;
+      _applied = _$v.applied;
       _refunded = _$v.refunded;
       _number = _$v.number;
       _clientId = _$v.clientId;
@@ -1073,6 +1093,7 @@ class PaymentEntityBuilder
       _$result = _$v ??
           new _$PaymentEntity._(
               amount: amount,
+              applied: applied,
               refunded: refunded,
               number: number,
               clientId: clientId,

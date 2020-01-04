@@ -72,6 +72,7 @@ abstract class PaymentEntity extends Object
       exchangeRate: 0.0,
       exchangeCurrencyId: '',
       refunded: 0.0,
+      applied: 0,
       statusId: '',
       updatedAt: 0,
       archivedAt: 0,
@@ -93,6 +94,8 @@ abstract class PaymentEntity extends Object
   }
 
   double get amount;
+
+  double get applied;
 
   double get refunded;
 
