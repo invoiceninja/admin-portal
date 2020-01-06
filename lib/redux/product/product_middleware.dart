@@ -30,9 +30,9 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
-    TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
-    TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
-    TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
+    TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
+    TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
+    TypedMiddleware<AppState, RestoreProductsRequest>(restoreProduct),
   ];
 }
 
@@ -101,7 +101,7 @@ Middleware<AppState> _viewProductList() {
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveProductRequest;
+    final action = dynamicAction as ArchiveProductsRequest;
     final prevProducts = action.productIds
         .map((id) => store.state.productState.map[id])
         .toList();
@@ -109,13 +109,13 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
         .bulkAction(
             store.state.credentials, action.productIds, EntityAction.archive)
         .then((List<ProductEntity> products) {
-      store.dispatch(ArchiveProductSuccess(products));
+      store.dispatch(ArchiveProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((dynamic error) {
       print(error);
-      store.dispatch(ArchiveProductFailure(prevProducts));
+      store.dispatch(ArchiveProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -127,7 +127,7 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteProductRequest;
+    final action = dynamicAction as DeleteProductsRequest;
     final prevProducts = action.productIds
         .map((id) => store.state.productState.map[id])
         .toList();
@@ -135,13 +135,13 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
         .bulkAction(
             store.state.credentials, action.productIds, EntityAction.delete)
         .then((List<ProductEntity> products) {
-      store.dispatch(DeleteProductSuccess(products));
+      store.dispatch(DeleteProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteProductFailure(prevProducts));
+      store.dispatch(DeleteProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -153,7 +153,7 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreProductRequest;
+    final action = dynamicAction as RestoreProductsRequest;
     final prevProducts = action.productIds
         .map((id) => store.state.productState.map[id])
         .toList();
@@ -161,13 +161,13 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
         .bulkAction(
             store.state.credentials, action.productIds, EntityAction.restore)
         .then((List<ProductEntity> products) {
-      store.dispatch(RestoreProductSuccess(products));
+      store.dispatch(RestoreProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreProductFailure(prevProducts));
+      store.dispatch(RestoreProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

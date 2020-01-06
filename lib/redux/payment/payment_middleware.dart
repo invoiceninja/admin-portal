@@ -35,9 +35,9 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, LoadPayments>(loadPayments),
     //TypedMiddleware<AppState, LoadPayment>(loadPayment),
     TypedMiddleware<AppState, SavePaymentRequest>(savePayment),
-    TypedMiddleware<AppState, ArchivePaymentRequest>(archivePayment),
-    TypedMiddleware<AppState, DeletePaymentRequest>(deletePayment),
-    TypedMiddleware<AppState, RestorePaymentRequest>(restorePayment),
+    TypedMiddleware<AppState, ArchivePaymentsRequest>(archivePayment),
+    TypedMiddleware<AppState, DeletePaymentsRequest>(deletePayment),
+    TypedMiddleware<AppState, RestorePaymentsRequest>(restorePayment),
     TypedMiddleware<AppState, EmailPaymentRequest>(emailPayment),
   ];
 }
@@ -104,7 +104,7 @@ Middleware<AppState> _viewPaymentList() {
 
 Middleware<AppState> _archivePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchivePaymentRequest;
+    final action = dynamicAction as ArchivePaymentsRequest;
     final prevPayments = action.paymentIds
         .map((id) => store.state.paymentState.map[id])
         .toList();
@@ -112,13 +112,13 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
         .bulkAction(
             store.state.credentials, action.paymentIds, EntityAction.archive)
         .then((List<PaymentEntity> payments) {
-      store.dispatch(ArchivePaymentSuccess(payments));
+      store.dispatch(ArchivePaymentsSuccess(payments));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchivePaymentFailure(prevPayments));
+      store.dispatch(ArchivePaymentsFailure(prevPayments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -130,7 +130,7 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
 
 Middleware<AppState> _deletePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeletePaymentRequest;
+    final action = dynamicAction as DeletePaymentsRequest;
     final prevPayments = action.paymentIds
         .map((id) => store.state.paymentState.map[id])
         .toList();
@@ -138,14 +138,14 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
         .bulkAction(
             store.state.credentials, action.paymentIds, EntityAction.delete)
         .then((List<PaymentEntity> payments) {
-      store.dispatch(DeletePaymentSuccess(payments));
+      store.dispatch(DeletePaymentsSuccess(payments));
       store.dispatch(LoadInvoice(invoiceId: payments.first.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeletePaymentFailure(prevPayments));
+      store.dispatch(DeletePaymentsFailure(prevPayments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -157,7 +157,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
 
 Middleware<AppState> _restorePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestorePaymentRequest;
+    final action = dynamicAction as RestorePaymentsRequest;
     final prevPayments = action.paymentIds
         .map((id) => store.state.paymentState.map[id])
         .toList();
@@ -165,14 +165,14 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
         .bulkAction(
             store.state.credentials, action.paymentIds, EntityAction.restore)
         .then((List<PaymentEntity> payments) {
-      store.dispatch(RestorePaymentSuccess(payments));
+      store.dispatch(RestorePaymentsSuccess(payments));
       store.dispatch(LoadInvoice(invoiceId: payments.first.invoiceId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestorePaymentFailure(prevPayments));
+      store.dispatch(RestorePaymentsFailure(prevPayments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

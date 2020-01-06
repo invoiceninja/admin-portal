@@ -176,46 +176,46 @@ class SaveClientFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveClientRequest implements StartSaving {
-  ArchiveClientRequest(this.completer, this.clientIds);
+class ArchiveClientsRequest implements StartSaving {
+  ArchiveClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
   final List<String> clientIds;
 }
 
-class ArchiveClientSuccess implements StopSaving, PersistData {
-  ArchiveClientSuccess(this.clients);
+class ArchiveClientsSuccess implements StopSaving, PersistData {
+  ArchiveClientsSuccess(this.clients);
 
   final List<ClientEntity> clients;
 }
 
-class ArchiveClientFailure implements StopSaving {
-  ArchiveClientFailure(this.clients);
+class ArchiveClientsFailure implements StopSaving {
+  ArchiveClientsFailure(this.clients);
 
   final List<ClientEntity> clients;
 }
 
-class DeleteClientRequest implements StartSaving {
-  DeleteClientRequest(this.completer, this.clientIds);
+class DeleteClientsRequest implements StartSaving {
+  DeleteClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
   final List<String> clientIds;
 }
 
-class DeleteClientSuccess implements StopSaving, PersistData {
-  DeleteClientSuccess(this.clients);
+class DeleteClientsSuccess implements StopSaving, PersistData {
+  DeleteClientsSuccess(this.clients);
 
   final List<ClientEntity> clients;
 }
 
-class DeleteClientFailure implements StopSaving {
-  DeleteClientFailure(this.clients);
+class DeleteClientsFailure implements StopSaving {
+  DeleteClientsFailure(this.clients);
 
   final List<ClientEntity> clients;
 }
 
-class RestoreClientRequest implements StartSaving {
-  RestoreClientRequest(this.completer, this.clientIds);
+class RestoreClientsRequest implements StartSaving {
+  RestoreClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
   final List<String> clientIds;
@@ -373,17 +373,17 @@ void handleClientAction(
               .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreClientRequest(
+      store.dispatch(RestoreClientsRequest(
           snackBarCompleter<Null>(context, localization.restoredClient),
           clientIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveClientRequest(
+      store.dispatch(ArchiveClientsRequest(
           snackBarCompleter<Null>(context, localization.archivedClient),
           clientIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteClientRequest(
+      store.dispatch(DeleteClientsRequest(
           snackBarCompleter<Null>(context, localization.deletedClient),
           clientIds));
       break;

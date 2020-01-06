@@ -252,59 +252,59 @@ class MarkInvoicesPaidFailure implements StopSaving {
   final dynamic error;
 }
 
-class ArchiveInvoiceRequest implements StartSaving {
-  ArchiveInvoiceRequest(this.completer, this.invoiceIds);
+class ArchiveInvoicesRequest implements StartSaving {
+  ArchiveInvoicesRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
   final List<String> invoiceIds;
 }
 
-class ArchiveInvoiceSuccess implements StopSaving, PersistData {
-  ArchiveInvoiceSuccess(this.invoices);
+class ArchiveInvoicesSuccess implements StopSaving, PersistData {
+  ArchiveInvoicesSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
 
-class ArchiveInvoiceFailure implements StopSaving {
-  ArchiveInvoiceFailure(this.invoices);
+class ArchiveInvoicesFailure implements StopSaving {
+  ArchiveInvoicesFailure(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
 
-class DeleteInvoiceRequest implements StartSaving {
-  DeleteInvoiceRequest(this.completer, this.invoiceIds);
+class DeleteInvoicesRequest implements StartSaving {
+  DeleteInvoicesRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
   final List<String> invoiceIds;
 }
 
-class DeleteInvoiceSuccess implements StopSaving, PersistData {
-  DeleteInvoiceSuccess(this.invoices);
+class DeleteInvoicesSuccess implements StopSaving, PersistData {
+  DeleteInvoicesSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
 
-class DeleteInvoiceFailure implements StopSaving {
-  DeleteInvoiceFailure(this.invoices);
+class DeleteInvoicesFailure implements StopSaving {
+  DeleteInvoicesFailure(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
 
-class RestoreInvoiceRequest implements StartSaving {
-  RestoreInvoiceRequest(this.completer, this.invoiceIds);
+class RestoreInvoicesRequest implements StartSaving {
+  RestoreInvoicesRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
   final List<String> invoiceIds;
 }
 
-class RestoreInvoiceSuccess implements StopSaving, PersistData {
-  RestoreInvoiceSuccess(this.invoices);
+class RestoreInvoicesSuccess implements StopSaving, PersistData {
+  RestoreInvoicesSuccess(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
 
-class RestoreInvoiceFailure implements StopSaving {
-  RestoreInvoiceFailure(this.invoices);
+class RestoreInvoicesFailure implements StopSaving {
+  RestoreInvoicesFailure(this.invoices);
 
   final List<InvoiceEntity> invoices;
 }
@@ -436,17 +436,17 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
                 .toList())));
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreInvoiceRequest(
+      store.dispatch(RestoreInvoicesRequest(
           snackBarCompleter<Null>(context, localization.restoredInvoice),
           invoiceIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveInvoiceRequest(
+      store.dispatch(ArchiveInvoicesRequest(
           snackBarCompleter<Null>(context, localization.archivedInvoice),
           invoiceIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteInvoiceRequest(
+      store.dispatch(DeleteInvoicesRequest(
           snackBarCompleter<Null>(context, localization.deletedInvoice),
           invoiceIds));
       break;

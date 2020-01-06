@@ -62,9 +62,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
       ..invitations.addAll(client.contacts
           .map((contact) => InvitationEntity(contactId: contact.id))));
   }),
-  TypedReducer<InvoiceEntity, RestoreQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ArchiveQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, DeleteQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreQuotesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, ArchiveQuotesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, DeleteQuotesSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddQuoteItem>(_addQuoteItem),
   TypedReducer<InvoiceEntity, AddQuoteItems>(_addQuoteItems),
   TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),
@@ -235,15 +235,15 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, LoadQuotesSuccess>(_setLoadedQuotes),
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuoteRequest>(_archiveQuoteRequest),
-  TypedReducer<QuoteState, ArchiveQuoteSuccess>(_archiveQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuoteFailure>(_archiveQuoteFailure),
-  TypedReducer<QuoteState, DeleteQuoteRequest>(_deleteQuoteRequest),
-  TypedReducer<QuoteState, DeleteQuoteSuccess>(_deleteQuoteSuccess),
-  TypedReducer<QuoteState, DeleteQuoteFailure>(_deleteQuoteFailure),
-  TypedReducer<QuoteState, RestoreQuoteRequest>(_restoreQuoteRequest),
-  TypedReducer<QuoteState, RestoreQuoteSuccess>(_restoreQuoteSuccess),
-  TypedReducer<QuoteState, RestoreQuoteFailure>(_restoreQuoteFailure),
+  TypedReducer<QuoteState, ArchiveQuotesRequest>(_archiveQuoteRequest),
+  TypedReducer<QuoteState, ArchiveQuotesSuccess>(_archiveQuoteSuccess),
+  TypedReducer<QuoteState, ArchiveQuotesFailure>(_archiveQuoteFailure),
+  TypedReducer<QuoteState, DeleteQuotesRequest>(_deleteQuoteRequest),
+  TypedReducer<QuoteState, DeleteQuotesSuccess>(_deleteQuoteSuccess),
+  TypedReducer<QuoteState, DeleteQuotesFailure>(_deleteQuoteFailure),
+  TypedReducer<QuoteState, RestoreQuotesRequest>(_restoreQuoteRequest),
+  TypedReducer<QuoteState, RestoreQuotesSuccess>(_restoreQuoteSuccess),
+  TypedReducer<QuoteState, RestoreQuotesFailure>(_restoreQuoteFailure),
   TypedReducer<QuoteState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
@@ -253,7 +253,7 @@ QuoteState _markSentQuoteSuccess(
 }
 
 QuoteState _archiveQuoteRequest(
-    QuoteState quoteState, ArchiveQuoteRequest action) {
+    QuoteState quoteState, ArchiveQuotesRequest action) {
   final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
 
   for (int i = 0; i < quotes.length; i++) {
@@ -268,7 +268,7 @@ QuoteState _archiveQuoteRequest(
 }
 
 QuoteState _archiveQuoteSuccess(
-    QuoteState quoteState, ArchiveQuoteSuccess action) {
+    QuoteState quoteState, ArchiveQuotesSuccess action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;
@@ -277,7 +277,7 @@ QuoteState _archiveQuoteSuccess(
 }
 
 QuoteState _archiveQuoteFailure(
-    QuoteState quoteState, ArchiveQuoteFailure action) {
+    QuoteState quoteState, ArchiveQuotesFailure action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;
@@ -286,7 +286,7 @@ QuoteState _archiveQuoteFailure(
 }
 
 QuoteState _deleteQuoteRequest(
-    QuoteState quoteState, DeleteQuoteRequest action) {
+    QuoteState quoteState, DeleteQuotesRequest action) {
   final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
 
   for (int i = 0; i < quotes.length; i++) {
@@ -302,7 +302,7 @@ QuoteState _deleteQuoteRequest(
 }
 
 QuoteState _deleteQuoteSuccess(
-    QuoteState quoteState, DeleteQuoteSuccess action) {
+    QuoteState quoteState, DeleteQuotesSuccess action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;
@@ -311,7 +311,7 @@ QuoteState _deleteQuoteSuccess(
 }
 
 QuoteState _deleteQuoteFailure(
-    QuoteState quoteState, DeleteQuoteFailure action) {
+    QuoteState quoteState, DeleteQuotesFailure action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;
@@ -320,7 +320,7 @@ QuoteState _deleteQuoteFailure(
 }
 
 QuoteState _restoreQuoteRequest(
-    QuoteState quoteState, RestoreQuoteRequest action) {
+    QuoteState quoteState, RestoreQuotesRequest action) {
   final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
 
   for (int i = 0; i < quotes.length; i++) {
@@ -336,7 +336,7 @@ QuoteState _restoreQuoteRequest(
 }
 
 QuoteState _restoreQuoteSuccess(
-    QuoteState quoteState, RestoreQuoteSuccess action) {
+    QuoteState quoteState, RestoreQuotesSuccess action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;
@@ -345,7 +345,7 @@ QuoteState _restoreQuoteSuccess(
 }
 
 QuoteState _restoreQuoteFailure(
-    QuoteState quoteState, RestoreQuoteFailure action) {
+    QuoteState quoteState, RestoreQuotesFailure action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;

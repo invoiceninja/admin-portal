@@ -195,7 +195,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
     }
     if (object.archivedAt != null) {
       result
-        ..add('archived_at')
+        ..add('deleted_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -335,7 +335,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'archived_at':
+        case 'deleted_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -413,7 +413,7 @@ class _$VendorContactEntitySerializer
     }
     if (object.archivedAt != null) {
       result
-        ..add('archived_at')
+        ..add('deleted_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -488,7 +488,7 @@ class _$VendorContactEntitySerializer
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'archived_at':
+        case 'deleted_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;

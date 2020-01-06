@@ -172,7 +172,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
     }
     if (object.archivedAt != null) {
       result
-        ..add('archived_at')
+        ..add('deleted_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -263,7 +263,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'archived_at':
+        case 'deleted_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;

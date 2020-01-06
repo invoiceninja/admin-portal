@@ -66,9 +66,9 @@ final editingReducer = combineReducers<InvoiceEntity>([
           .where((contact) => contact.sendInvoice)
           .map((contact) => InvitationEntity(contactId: contact.id))));
   }),
-  TypedReducer<InvoiceEntity, RestoreInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ArchiveInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, DeleteInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreInvoicesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, ArchiveInvoicesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, DeleteInvoicesSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
   TypedReducer<InvoiceEntity, AddInvoiceItems>(_addInvoiceItems),
   TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),
@@ -252,15 +252,15 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, MarkInvoicesSentSuccess>(_markInvoicesSentSuccess),
   TypedReducer<InvoiceState, MarkInvoicesPaidSuccess>(_markInvoicesPaidSuccess),
-  TypedReducer<InvoiceState, ArchiveInvoiceRequest>(_archiveInvoiceRequest),
-  TypedReducer<InvoiceState, ArchiveInvoiceSuccess>(_archiveInvoiceSuccess),
-  TypedReducer<InvoiceState, ArchiveInvoiceFailure>(_archiveInvoiceFailure),
-  TypedReducer<InvoiceState, DeleteInvoiceRequest>(_deleteInvoiceRequest),
-  TypedReducer<InvoiceState, DeleteInvoiceSuccess>(_deleteInvoiceSuccess),
-  TypedReducer<InvoiceState, DeleteInvoiceFailure>(_deleteInvoiceFailure),
-  TypedReducer<InvoiceState, RestoreInvoiceRequest>(_restoreInvoiceRequest),
-  TypedReducer<InvoiceState, RestoreInvoiceSuccess>(_restoreInvoiceSuccess),
-  TypedReducer<InvoiceState, RestoreInvoiceFailure>(_restoreInvoiceFailure),
+  TypedReducer<InvoiceState, ArchiveInvoicesRequest>(_archiveInvoiceRequest),
+  TypedReducer<InvoiceState, ArchiveInvoicesSuccess>(_archiveInvoiceSuccess),
+  TypedReducer<InvoiceState, ArchiveInvoicesFailure>(_archiveInvoiceFailure),
+  TypedReducer<InvoiceState, DeleteInvoicesRequest>(_deleteInvoiceRequest),
+  TypedReducer<InvoiceState, DeleteInvoicesSuccess>(_deleteInvoiceSuccess),
+  TypedReducer<InvoiceState, DeleteInvoicesFailure>(_deleteInvoiceFailure),
+  TypedReducer<InvoiceState, RestoreInvoicesRequest>(_restoreInvoiceRequest),
+  TypedReducer<InvoiceState, RestoreInvoicesSuccess>(_restoreInvoiceSuccess),
+  TypedReducer<InvoiceState, RestoreInvoicesFailure>(_restoreInvoiceFailure),
   TypedReducer<InvoiceState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
@@ -283,7 +283,7 @@ InvoiceState _markInvoicesPaidSuccess(
 }
 
 InvoiceState _archiveInvoiceRequest(
-    InvoiceState invoiceState, ArchiveInvoiceRequest action) {
+    InvoiceState invoiceState, ArchiveInvoicesRequest action) {
   final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
 
   for (int i = 0; i < invoices.length; i++) {
@@ -299,7 +299,7 @@ InvoiceState _archiveInvoiceRequest(
 }
 
 InvoiceState _archiveInvoiceSuccess(
-    InvoiceState invoiceState, ArchiveInvoiceSuccess action) {
+    InvoiceState invoiceState, ArchiveInvoicesSuccess action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -308,7 +308,7 @@ InvoiceState _archiveInvoiceSuccess(
 }
 
 InvoiceState _archiveInvoiceFailure(
-    InvoiceState invoiceState, ArchiveInvoiceFailure action) {
+    InvoiceState invoiceState, ArchiveInvoicesFailure action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -317,7 +317,7 @@ InvoiceState _archiveInvoiceFailure(
 }
 
 InvoiceState _deleteInvoiceRequest(
-    InvoiceState invoiceState, DeleteInvoiceRequest action) {
+    InvoiceState invoiceState, DeleteInvoicesRequest action) {
   final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
 
   for (int i = 0; i < invoices.length; i++) {
@@ -333,7 +333,7 @@ InvoiceState _deleteInvoiceRequest(
 }
 
 InvoiceState _deleteInvoiceSuccess(
-    InvoiceState invoiceState, DeleteInvoiceSuccess action) {
+    InvoiceState invoiceState, DeleteInvoicesSuccess action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -342,7 +342,7 @@ InvoiceState _deleteInvoiceSuccess(
 }
 
 InvoiceState _deleteInvoiceFailure(
-    InvoiceState invoiceState, DeleteInvoiceFailure action) {
+    InvoiceState invoiceState, DeleteInvoicesFailure action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -351,7 +351,7 @@ InvoiceState _deleteInvoiceFailure(
 }
 
 InvoiceState _restoreInvoiceRequest(
-    InvoiceState invoiceState, RestoreInvoiceRequest action) {
+    InvoiceState invoiceState, RestoreInvoicesRequest action) {
   final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
 
   for (int i = 0; i < invoices.length; i++) {
@@ -367,7 +367,7 @@ InvoiceState _restoreInvoiceRequest(
 }
 
 InvoiceState _restoreInvoiceSuccess(
-    InvoiceState invoiceState, RestoreInvoiceSuccess action) {
+    InvoiceState invoiceState, RestoreInvoicesSuccess action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -376,7 +376,7 @@ InvoiceState _restoreInvoiceSuccess(
 }
 
 InvoiceState _restoreInvoiceFailure(
-    InvoiceState invoiceState, RestoreInvoiceFailure action) {
+    InvoiceState invoiceState, RestoreInvoicesFailure action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;

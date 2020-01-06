@@ -24,9 +24,9 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<PaymentEntity>([
   TypedReducer<PaymentEntity, SavePaymentSuccess>(_updateEditing),
   TypedReducer<PaymentEntity, AddPaymentSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, RestorePaymentSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, ArchivePaymentSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, DeletePaymentSuccess>(_updateEditing),
+  TypedReducer<PaymentEntity, RestorePaymentsSuccess>(_updateEditing),
+  TypedReducer<PaymentEntity, ArchivePaymentsSuccess>(_updateEditing),
+  TypedReducer<PaymentEntity, DeletePaymentsSuccess>(_updateEditing),
   TypedReducer<PaymentEntity, EditPayment>(_updateEditing),
   TypedReducer<PaymentEntity, UpdatePayment>((payment, action) {
     return action.payment.rebuild((b) => b..isChanged = true);
@@ -157,19 +157,19 @@ final paymentsReducer = combineReducers<PaymentState>([
   TypedReducer<PaymentState, AddPaymentSuccess>(_addPayment),
   TypedReducer<PaymentState, LoadPaymentsSuccess>(_setLoadedPayments),
   TypedReducer<PaymentState, LoadPaymentSuccess>(_setLoadedPayment),
-  TypedReducer<PaymentState, ArchivePaymentRequest>(_archivePaymentRequest),
-  TypedReducer<PaymentState, ArchivePaymentSuccess>(_archivePaymentSuccess),
-  TypedReducer<PaymentState, ArchivePaymentFailure>(_archivePaymentFailure),
-  TypedReducer<PaymentState, DeletePaymentRequest>(_deletePaymentRequest),
-  TypedReducer<PaymentState, DeletePaymentSuccess>(_deletePaymentSuccess),
-  TypedReducer<PaymentState, DeletePaymentFailure>(_deletePaymentFailure),
-  TypedReducer<PaymentState, RestorePaymentRequest>(_restorePaymentRequest),
-  TypedReducer<PaymentState, RestorePaymentSuccess>(_restorePaymentSuccess),
-  TypedReducer<PaymentState, RestorePaymentFailure>(_restorePaymentFailure),
+  TypedReducer<PaymentState, ArchivePaymentsRequest>(_archivePaymentRequest),
+  TypedReducer<PaymentState, ArchivePaymentsSuccess>(_archivePaymentSuccess),
+  TypedReducer<PaymentState, ArchivePaymentsFailure>(_archivePaymentFailure),
+  TypedReducer<PaymentState, DeletePaymentsRequest>(_deletePaymentRequest),
+  TypedReducer<PaymentState, DeletePaymentsSuccess>(_deletePaymentSuccess),
+  TypedReducer<PaymentState, DeletePaymentsFailure>(_deletePaymentFailure),
+  TypedReducer<PaymentState, RestorePaymentsRequest>(_restorePaymentRequest),
+  TypedReducer<PaymentState, RestorePaymentsSuccess>(_restorePaymentSuccess),
+  TypedReducer<PaymentState, RestorePaymentsFailure>(_restorePaymentFailure),
 ]);
 
 PaymentState _archivePaymentRequest(
-    PaymentState paymentState, ArchivePaymentRequest action) {
+    PaymentState paymentState, ArchivePaymentsRequest action) {
   final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
 
   for (int i = 0; i < payments.length; i++) {
@@ -184,7 +184,7 @@ PaymentState _archivePaymentRequest(
 }
 
 PaymentState _archivePaymentSuccess(
-    PaymentState paymentState, ArchivePaymentSuccess action) {
+    PaymentState paymentState, ArchivePaymentsSuccess action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -193,7 +193,7 @@ PaymentState _archivePaymentSuccess(
 }
 
 PaymentState _archivePaymentFailure(
-    PaymentState paymentState, ArchivePaymentFailure action) {
+    PaymentState paymentState, ArchivePaymentsFailure action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -202,7 +202,7 @@ PaymentState _archivePaymentFailure(
 }
 
 PaymentState _deletePaymentRequest(
-    PaymentState paymentState, DeletePaymentRequest action) {
+    PaymentState paymentState, DeletePaymentsRequest action) {
   final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
 
   for (int i = 0; i < payments.length; i++) {
@@ -218,7 +218,7 @@ PaymentState _deletePaymentRequest(
 }
 
 PaymentState _deletePaymentSuccess(
-    PaymentState paymentState, DeletePaymentSuccess action) {
+    PaymentState paymentState, DeletePaymentsSuccess action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -227,7 +227,7 @@ PaymentState _deletePaymentSuccess(
 }
 
 PaymentState _deletePaymentFailure(
-    PaymentState paymentState, DeletePaymentFailure action) {
+    PaymentState paymentState, DeletePaymentsFailure action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -236,7 +236,7 @@ PaymentState _deletePaymentFailure(
 }
 
 PaymentState _restorePaymentRequest(
-    PaymentState paymentState, RestorePaymentRequest action) {
+    PaymentState paymentState, RestorePaymentsRequest action) {
   final payments = action.paymentIds.map((id) => paymentState.map[id]).toList();
 
   for (int i = 0; i < payments.length; i++) {
@@ -252,7 +252,7 @@ PaymentState _restorePaymentRequest(
 }
 
 PaymentState _restorePaymentSuccess(
-    PaymentState paymentState, RestorePaymentSuccess action) {
+    PaymentState paymentState, RestorePaymentsSuccess action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -261,7 +261,7 @@ PaymentState _restorePaymentSuccess(
 }
 
 PaymentState _restorePaymentFailure(
-    PaymentState paymentState, RestorePaymentFailure action) {
+    PaymentState paymentState, RestorePaymentsFailure action) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;

@@ -143,59 +143,59 @@ class SavePaymentFailure implements StopSaving {
   final Object error;
 }
 
-class ArchivePaymentRequest implements StartSaving {
-  ArchivePaymentRequest(this.completer, this.paymentIds);
+class ArchivePaymentsRequest implements StartSaving {
+  ArchivePaymentsRequest(this.completer, this.paymentIds);
 
   final Completer completer;
   final List<String> paymentIds;
 }
 
-class ArchivePaymentSuccess implements StopSaving, PersistData {
-  ArchivePaymentSuccess(this.payments);
+class ArchivePaymentsSuccess implements StopSaving, PersistData {
+  ArchivePaymentsSuccess(this.payments);
 
   final List<PaymentEntity> payments;
 }
 
-class ArchivePaymentFailure implements StopSaving {
-  ArchivePaymentFailure(this.payments);
+class ArchivePaymentsFailure implements StopSaving {
+  ArchivePaymentsFailure(this.payments);
 
   final List<PaymentEntity> payments;
 }
 
-class DeletePaymentRequest implements StartSaving {
-  DeletePaymentRequest(this.completer, this.paymentIds);
+class DeletePaymentsRequest implements StartSaving {
+  DeletePaymentsRequest(this.completer, this.paymentIds);
 
   final Completer completer;
   final List<String> paymentIds;
 }
 
-class DeletePaymentSuccess implements StopSaving, PersistData {
-  DeletePaymentSuccess(this.payments);
+class DeletePaymentsSuccess implements StopSaving, PersistData {
+  DeletePaymentsSuccess(this.payments);
 
   final List<PaymentEntity> payments;
 }
 
-class DeletePaymentFailure implements StopSaving {
-  DeletePaymentFailure(this.payments);
+class DeletePaymentsFailure implements StopSaving {
+  DeletePaymentsFailure(this.payments);
 
   final List<PaymentEntity> payments;
 }
 
-class RestorePaymentRequest implements StartSaving {
-  RestorePaymentRequest(this.completer, this.paymentIds);
+class RestorePaymentsRequest implements StartSaving {
+  RestorePaymentsRequest(this.completer, this.paymentIds);
 
   final Completer completer;
   final List<String> paymentIds;
 }
 
-class RestorePaymentSuccess implements StopSaving, PersistData {
-  RestorePaymentSuccess(this.payments);
+class RestorePaymentsSuccess implements StopSaving, PersistData {
+  RestorePaymentsSuccess(this.payments);
 
   final List<PaymentEntity> payments;
 }
 
-class RestorePaymentFailure implements StopSaving {
-  RestorePaymentFailure(this.payments);
+class RestorePaymentsFailure implements StopSaving {
+  RestorePaymentsFailure(this.payments);
 
   final List<PaymentEntity> payments;
 }
@@ -295,17 +295,17 @@ void handlePaymentAction(
           payment));
       break;
     case EntityAction.restore:
-      store.dispatch(RestorePaymentRequest(
+      store.dispatch(RestorePaymentsRequest(
           snackBarCompleter<Null>(context, localization.restoredPayment),
           paymentIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchivePaymentRequest(
+      store.dispatch(ArchivePaymentsRequest(
           snackBarCompleter<Null>(context, localization.archivedPayment),
           paymentIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeletePaymentRequest(
+      store.dispatch(DeletePaymentsRequest(
           snackBarCompleter<Null>(context, localization.deletedPayment),
           paymentIds));
       break;

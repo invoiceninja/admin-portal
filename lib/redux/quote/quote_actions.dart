@@ -236,62 +236,62 @@ class MarkSentQuoteFailure implements StopSaving {
   final InvoiceEntity quote;
 }
 
-class ArchiveQuoteRequest implements StartSaving {
-  ArchiveQuoteRequest(this.completer, this.quoteIds);
+class ArchiveQuotesRequest implements StartSaving {
+  ArchiveQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
 
   final List<String> quoteIds;
 }
 
-class ArchiveQuoteSuccess implements StopSaving, PersistData {
-  ArchiveQuoteSuccess(this.quotes);
+class ArchiveQuotesSuccess implements StopSaving, PersistData {
+  ArchiveQuotesSuccess(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
 
-class ArchiveQuoteFailure implements StopSaving {
-  ArchiveQuoteFailure(this.quotes);
+class ArchiveQuotesFailure implements StopSaving {
+  ArchiveQuotesFailure(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
 
-class DeleteQuoteRequest implements StartSaving {
-  DeleteQuoteRequest(this.completer, this.quoteIds);
+class DeleteQuotesRequest implements StartSaving {
+  DeleteQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
 
   final List<String> quoteIds;
 }
 
-class DeleteQuoteSuccess implements StopSaving, PersistData {
-  DeleteQuoteSuccess(this.quotes);
+class DeleteQuotesSuccess implements StopSaving, PersistData {
+  DeleteQuotesSuccess(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
 
-class DeleteQuoteFailure implements StopSaving {
-  DeleteQuoteFailure(this.quotes);
+class DeleteQuotesFailure implements StopSaving {
+  DeleteQuotesFailure(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
 
-class RestoreQuoteRequest implements StartSaving {
-  RestoreQuoteRequest(this.completer, this.quoteIds);
+class RestoreQuotesRequest implements StartSaving {
+  RestoreQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
 
   final List<String> quoteIds;
 }
 
-class RestoreQuoteSuccess implements StopSaving, PersistData {
-  RestoreQuoteSuccess(this.quotes);
+class RestoreQuotesSuccess implements StopSaving, PersistData {
+  RestoreQuotesSuccess(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
 
-class RestoreQuoteFailure implements StopSaving {
-  RestoreQuoteFailure(this.quotes);
+class RestoreQuotesFailure implements StopSaving {
+  RestoreQuotesFailure(this.quotes);
 
   final List<InvoiceEntity> quotes;
 }
@@ -443,17 +443,17 @@ Future handleQuoteAction(
       createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreQuoteRequest(
+      store.dispatch(RestoreQuotesRequest(
           snackBarCompleter<Null>(context, localization.restoredQuote),
           quoteIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveQuoteRequest(
+      store.dispatch(ArchiveQuotesRequest(
           snackBarCompleter<Null>(context, localization.archivedQuote),
           quoteIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteQuoteRequest(
+      store.dispatch(DeleteQuotesRequest(
           snackBarCompleter<Null>(context, localization.deletedQuote),
           quoteIds));
       break;

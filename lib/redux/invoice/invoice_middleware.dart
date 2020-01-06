@@ -44,9 +44,9 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, LoadInvoices>(loadInvoices),
     TypedMiddleware<AppState, LoadInvoice>(loadInvoice),
     TypedMiddleware<AppState, SaveInvoiceRequest>(saveInvoice),
-    TypedMiddleware<AppState, ArchiveInvoiceRequest>(archiveInvoice),
-    TypedMiddleware<AppState, DeleteInvoiceRequest>(deleteInvoice),
-    TypedMiddleware<AppState, RestoreInvoiceRequest>(restoreInvoice),
+    TypedMiddleware<AppState, ArchiveInvoicesRequest>(archiveInvoice),
+    TypedMiddleware<AppState, DeleteInvoicesRequest>(deleteInvoice),
+    TypedMiddleware<AppState, RestoreInvoicesRequest>(restoreInvoice),
     TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
     TypedMiddleware<AppState, MarkInvoicesSentRequest>(markInvoiceSent),
     TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
@@ -138,7 +138,7 @@ Middleware<AppState> _showEmailInvoice() {
 
 Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveInvoiceRequest;
+    final action = dynamicAction as ArchiveInvoicesRequest;
     final prevInvoices = action.invoiceIds
         .map((id) => store.state.invoiceState.map[id])
         .toList();
@@ -146,13 +146,13 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
         .bulkAction(
             store.state.credentials, action.invoiceIds, EntityAction.archive)
         .then((List<InvoiceEntity> invoices) {
-      store.dispatch(ArchiveInvoiceSuccess(invoices));
+      store.dispatch(ArchiveInvoicesSuccess(invoices));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveInvoiceFailure(prevInvoices));
+      store.dispatch(ArchiveInvoicesFailure(prevInvoices));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -164,7 +164,7 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteInvoiceRequest;
+    final action = dynamicAction as DeleteInvoicesRequest;
     final prevInvoices = action.invoiceIds
         .map((id) => store.state.invoiceState.map[id])
         .toList();
@@ -172,14 +172,14 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
         .bulkAction(
             store.state.credentials, action.invoiceIds, EntityAction.delete)
         .then((List<InvoiceEntity> invoices) {
-      store.dispatch(DeleteInvoiceSuccess(invoices));
+      store.dispatch(DeleteInvoicesSuccess(invoices));
       store.dispatch(LoadClient(clientId: invoices.first.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteInvoiceFailure(prevInvoices));
+      store.dispatch(DeleteInvoicesFailure(prevInvoices));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -191,7 +191,7 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
 
 Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreInvoiceRequest;
+    final action = dynamicAction as RestoreInvoicesRequest;
     final prevInvoices = action.invoiceIds
         .map((id) => store.state.invoiceState.map[id])
         .toList();
@@ -199,14 +199,14 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
         .bulkAction(
             store.state.credentials, action.invoiceIds, EntityAction.restore)
         .then((List<InvoiceEntity> invoices) {
-      store.dispatch(RestoreInvoiceSuccess(invoices));
+      store.dispatch(RestoreInvoicesSuccess(invoices));
       store.dispatch(LoadClient(clientId: invoices.first.clientId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreInvoiceFailure(prevInvoices));
+      store.dispatch(RestoreInvoicesFailure(prevInvoices));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

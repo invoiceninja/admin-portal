@@ -168,7 +168,7 @@ abstract class BaseEntity implements SelectableEntity {
   int get updatedAt;
 
   @nullable
-  @BuiltValueField(wireName: 'archived_at')
+  @BuiltValueField(wireName: 'deleted_at')
   int get archivedAt;
 
   @nullable

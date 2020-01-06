@@ -31,9 +31,9 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, UpdateProduct>((product, action) {
     return action.product.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ProductEntity, RestoreProductSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, ArchiveProductSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, DeleteProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, RestoreProductsSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, ArchiveProductsSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, DeleteProductsSuccess>(_updateEditing),
   TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
   TypedReducer<ProductEntity, DiscardChanges>(_clearEditing),
 ]);
@@ -157,19 +157,19 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
-  TypedReducer<ProductState, ArchiveProductRequest>(_archiveProductRequest),
-  TypedReducer<ProductState, ArchiveProductSuccess>(_archiveProductSuccess),
-  TypedReducer<ProductState, ArchiveProductFailure>(_archiveProductFailure),
-  TypedReducer<ProductState, DeleteProductRequest>(_deleteProductRequest),
-  TypedReducer<ProductState, DeleteProductSuccess>(_deleteProductSuccess),
-  TypedReducer<ProductState, DeleteProductFailure>(_deleteProductFailure),
-  TypedReducer<ProductState, RestoreProductRequest>(_restoreProductRequest),
-  TypedReducer<ProductState, RestoreProductSuccess>(_restoreProductSuccess),
-  TypedReducer<ProductState, RestoreProductFailure>(_restoreProductFailure),
+  TypedReducer<ProductState, ArchiveProductsRequest>(_archiveProductRequest),
+  TypedReducer<ProductState, ArchiveProductsSuccess>(_archiveProductSuccess),
+  TypedReducer<ProductState, ArchiveProductsFailure>(_archiveProductFailure),
+  TypedReducer<ProductState, DeleteProductsRequest>(_deleteProductRequest),
+  TypedReducer<ProductState, DeleteProductsSuccess>(_deleteProductSuccess),
+  TypedReducer<ProductState, DeleteProductsFailure>(_deleteProductFailure),
+  TypedReducer<ProductState, RestoreProductsRequest>(_restoreProductRequest),
+  TypedReducer<ProductState, RestoreProductsSuccess>(_restoreProductSuccess),
+  TypedReducer<ProductState, RestoreProductsFailure>(_restoreProductFailure),
 ]);
 
 ProductState _archiveProductRequest(
-    ProductState productState, ArchiveProductRequest action) {
+    ProductState productState, ArchiveProductsRequest action) {
   final products = action.productIds.map((id) => productState.map[id]).toList();
 
   for (int i = 0; i < products.length; i++) {
@@ -184,7 +184,7 @@ ProductState _archiveProductRequest(
 }
 
 ProductState _archiveProductSuccess(
-    ProductState productState, ArchiveProductSuccess action) {
+    ProductState productState, ArchiveProductsSuccess action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;
@@ -193,7 +193,7 @@ ProductState _archiveProductSuccess(
 }
 
 ProductState _archiveProductFailure(
-    ProductState productState, ArchiveProductFailure action) {
+    ProductState productState, ArchiveProductsFailure action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;
@@ -202,7 +202,7 @@ ProductState _archiveProductFailure(
 }
 
 ProductState _deleteProductRequest(
-    ProductState productState, DeleteProductRequest action) {
+    ProductState productState, DeleteProductsRequest action) {
   final products = action.productIds.map((id) => productState.map[id]).toList();
 
   for (int i = 0; i < products.length; i++) {
@@ -218,7 +218,7 @@ ProductState _deleteProductRequest(
 }
 
 ProductState _deleteProductSuccess(
-    ProductState productState, DeleteProductSuccess action) {
+    ProductState productState, DeleteProductsSuccess action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;
@@ -227,7 +227,7 @@ ProductState _deleteProductSuccess(
 }
 
 ProductState _deleteProductFailure(
-    ProductState productState, DeleteProductFailure action) {
+    ProductState productState, DeleteProductsFailure action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;
@@ -236,7 +236,7 @@ ProductState _deleteProductFailure(
 }
 
 ProductState _restoreProductRequest(
-    ProductState productState, RestoreProductRequest action) {
+    ProductState productState, RestoreProductsRequest action) {
   final products = action.productIds.map((id) => productState.map[id]).toList();
 
   for (int i = 0; i < products.length; i++) {
@@ -252,7 +252,7 @@ ProductState _restoreProductRequest(
 }
 
 ProductState _restoreProductSuccess(
-    ProductState productState, RestoreProductSuccess action) {
+    ProductState productState, RestoreProductsSuccess action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;
@@ -261,7 +261,7 @@ ProductState _restoreProductSuccess(
 }
 
 ProductState _restoreProductFailure(
-    ProductState productState, RestoreProductFailure action) {
+    ProductState productState, RestoreProductsFailure action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;

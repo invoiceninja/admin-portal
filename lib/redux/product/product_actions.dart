@@ -105,59 +105,59 @@ class SaveProductFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveProductRequest implements StartSaving {
-  ArchiveProductRequest(this.completer, this.productIds);
+class ArchiveProductsRequest implements StartSaving {
+  ArchiveProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
   final List<String> productIds;
 }
 
-class ArchiveProductSuccess implements StopSaving, PersistData {
-  ArchiveProductSuccess(this.products);
+class ArchiveProductsSuccess implements StopSaving, PersistData {
+  ArchiveProductsSuccess(this.products);
 
   final List<ProductEntity> products;
 }
 
-class ArchiveProductFailure implements StopSaving {
-  ArchiveProductFailure(this.products);
+class ArchiveProductsFailure implements StopSaving {
+  ArchiveProductsFailure(this.products);
 
   final List<ProductEntity> products;
 }
 
-class DeleteProductRequest implements StartSaving {
-  DeleteProductRequest(this.completer, this.productIds);
+class DeleteProductsRequest implements StartSaving {
+  DeleteProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
   final List<String> productIds;
 }
 
-class DeleteProductSuccess implements StopSaving, PersistData {
-  DeleteProductSuccess(this.products);
+class DeleteProductsSuccess implements StopSaving, PersistData {
+  DeleteProductsSuccess(this.products);
 
   final List<ProductEntity> products;
 }
 
-class DeleteProductFailure implements StopSaving {
-  DeleteProductFailure(this.products);
+class DeleteProductsFailure implements StopSaving {
+  DeleteProductsFailure(this.products);
 
   final List<ProductEntity> products;
 }
 
-class RestoreProductRequest implements StartSaving {
-  RestoreProductRequest(this.completer, this.productIds);
+class RestoreProductsRequest implements StartSaving {
+  RestoreProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
   final List<String> productIds;
 }
 
-class RestoreProductSuccess implements StopSaving, PersistData {
-  RestoreProductSuccess(this.products);
+class RestoreProductsSuccess implements StopSaving, PersistData {
+  RestoreProductsSuccess(this.products);
 
   final List<ProductEntity> products;
 }
 
-class RestoreProductFailure implements StopSaving {
-  RestoreProductFailure(this.products);
+class RestoreProductsFailure implements StopSaving {
+  RestoreProductsFailure(this.products);
 
   final List<ProductEntity> products;
 }
@@ -239,17 +239,17 @@ void handleProductAction(
       createEntity(context: context, entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreProductRequest(
+      store.dispatch(RestoreProductsRequest(
           snackBarCompleter<Null>(context, localization.restoredProduct),
           productIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveProductRequest(
+      store.dispatch(ArchiveProductsRequest(
           snackBarCompleter<Null>(context, localization.archivedProduct),
           productIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteProductRequest(
+      store.dispatch(DeleteProductsRequest(
           snackBarCompleter<Null>(context, localization.deletedProduct),
           productIds));
       break;

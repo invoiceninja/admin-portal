@@ -41,9 +41,9 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
     TypedMiddleware<AppState, LoadQuote>(loadQuote),
     TypedMiddleware<AppState, SaveQuoteRequest>(saveQuote),
-    TypedMiddleware<AppState, ArchiveQuoteRequest>(archiveQuote),
-    TypedMiddleware<AppState, DeleteQuoteRequest>(deleteQuote),
-    TypedMiddleware<AppState, RestoreQuoteRequest>(restoreQuote),
+    TypedMiddleware<AppState, ArchiveQuotesRequest>(archiveQuote),
+    TypedMiddleware<AppState, DeleteQuotesRequest>(deleteQuote),
+    TypedMiddleware<AppState, RestoreQuotesRequest>(restoreQuote),
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
     TypedMiddleware<AppState, MarkSentQuoteRequest>(markSentQuote),
   ];
@@ -134,20 +134,20 @@ Middleware<AppState> _showEmailQuote() {
 
 Middleware<AppState> _archiveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveQuoteRequest;
+    final action = dynamicAction as ArchiveQuotesRequest;
     final prevQuotes =
         action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
     repository
         .bulkAction(
             store.state.credentials, action.quoteIds, EntityAction.archive)
         .then((List<InvoiceEntity> quotes) {
-      store.dispatch(ArchiveQuoteSuccess(quotes));
+      store.dispatch(ArchiveQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveQuoteFailure(prevQuotes));
+      store.dispatch(ArchiveQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -159,7 +159,7 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
 
 Middleware<AppState> _deleteQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteQuoteRequest;
+    final action = dynamicAction as DeleteQuotesRequest;
     final prevQuotes =
         action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
@@ -167,13 +167,13 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
         .bulkAction(
             store.state.credentials, action.quoteIds, EntityAction.delete)
         .then((List<InvoiceEntity> quotes) {
-      store.dispatch(DeleteQuoteSuccess(quotes));
+      store.dispatch(DeleteQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteQuoteFailure(prevQuotes));
+      store.dispatch(DeleteQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -185,7 +185,7 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
 
 Middleware<AppState> _restoreQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreQuoteRequest;
+    final action = dynamicAction as RestoreQuotesRequest;
     final prevQuotes =
         action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
@@ -193,13 +193,13 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
         .bulkAction(
             store.state.credentials, action.quoteIds, EntityAction.restore)
         .then((List<InvoiceEntity> quotes) {
-      store.dispatch(RestoreQuoteSuccess(quotes));
+      store.dispatch(RestoreQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreQuoteFailure(prevQuotes));
+      store.dispatch(RestoreQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

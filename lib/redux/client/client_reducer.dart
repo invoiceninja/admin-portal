@@ -63,10 +63,10 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, RestoreClientSuccess>((clients, action) {
     return action.clients[0];
   }),
-  TypedReducer<ClientEntity, ArchiveClientSuccess>((clients, action) {
+  TypedReducer<ClientEntity, ArchiveClientsSuccess>((clients, action) {
     return action.clients[0];
   }),
-  TypedReducer<ClientEntity, DeleteClientSuccess>((clients, action) {
+  TypedReducer<ClientEntity, DeleteClientsSuccess>((clients, action) {
     return action.clients[0];
   }),
   TypedReducer<ClientEntity, EditClient>((client, action) {
@@ -211,19 +211,19 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientSuccess>(_setLoadedClient),
-  TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
-  TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
-  TypedReducer<ClientState, ArchiveClientFailure>(_archiveClientFailure),
-  TypedReducer<ClientState, DeleteClientRequest>(_deleteClientRequest),
-  TypedReducer<ClientState, DeleteClientSuccess>(_deleteClientSuccess),
-  TypedReducer<ClientState, DeleteClientFailure>(_deleteClientFailure),
-  TypedReducer<ClientState, RestoreClientRequest>(_restoreClientRequest),
+  TypedReducer<ClientState, ArchiveClientsRequest>(_archiveClientRequest),
+  TypedReducer<ClientState, ArchiveClientsSuccess>(_archiveClientSuccess),
+  TypedReducer<ClientState, ArchiveClientsFailure>(_archiveClientFailure),
+  TypedReducer<ClientState, DeleteClientsRequest>(_deleteClientRequest),
+  TypedReducer<ClientState, DeleteClientsSuccess>(_deleteClientSuccess),
+  TypedReducer<ClientState, DeleteClientsFailure>(_deleteClientFailure),
+  TypedReducer<ClientState, RestoreClientsRequest>(_restoreClientRequest),
   TypedReducer<ClientState, RestoreClientSuccess>(_restoreClientSuccess),
   TypedReducer<ClientState, RestoreClientFailure>(_restoreClientFailure),
 ]);
 
 ClientState _archiveClientRequest(
-    ClientState clientState, ArchiveClientRequest action) {
+    ClientState clientState, ArchiveClientsRequest action) {
   final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
   for (int i = 0; i < clients.length; i++) {
@@ -238,7 +238,7 @@ ClientState _archiveClientRequest(
 }
 
 ClientState _archiveClientSuccess(
-    ClientState clientState, ArchiveClientSuccess action) {
+    ClientState clientState, ArchiveClientsSuccess action) {
   return clientState.rebuild((b) {
     for (final client in action.clients) {
       b.map[client.id] = client;
@@ -247,7 +247,7 @@ ClientState _archiveClientSuccess(
 }
 
 ClientState _archiveClientFailure(
-    ClientState clientState, ArchiveClientFailure action) {
+    ClientState clientState, ArchiveClientsFailure action) {
   return clientState.rebuild((b) {
     for (final client in action.clients) {
       b.map[client.id] = client;
@@ -256,7 +256,7 @@ ClientState _archiveClientFailure(
 }
 
 ClientState _deleteClientRequest(
-    ClientState clientState, DeleteClientRequest action) {
+    ClientState clientState, DeleteClientsRequest action) {
   final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
   for (int i = 0; i < clients.length; i++) {
@@ -272,7 +272,7 @@ ClientState _deleteClientRequest(
 }
 
 ClientState _deleteClientSuccess(
-    ClientState clientState, DeleteClientSuccess action) {
+    ClientState clientState, DeleteClientsSuccess action) {
   return clientState.rebuild((b) {
     for (final client in action.clients) {
       b.map[client.id] = client;
@@ -281,7 +281,7 @@ ClientState _deleteClientSuccess(
 }
 
 ClientState _deleteClientFailure(
-    ClientState clientState, DeleteClientFailure action) {
+    ClientState clientState, DeleteClientsFailure action) {
   return clientState.rebuild((b) {
     for (final client in action.clients) {
       b.map[client.id] = client;
@@ -290,7 +290,7 @@ ClientState _deleteClientFailure(
 }
 
 ClientState _restoreClientRequest(
-    ClientState clientState, RestoreClientRequest action) {
+    ClientState clientState, RestoreClientsRequest action) {
   final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
   for (int i = 0; i < clients.length; i++) {

@@ -300,7 +300,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
     }
     if (object.archivedAt != null) {
       result
-        ..add('archived_at')
+        ..add('deleted_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -527,7 +527,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'archived_at':
+        case 'deleted_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -780,7 +780,7 @@ class _$InvitationEntitySerializer
     }
     if (object.archivedAt != null) {
       result
-        ..add('archived_at')
+        ..add('deleted_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -855,7 +855,7 @@ class _$InvitationEntitySerializer
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'archived_at':
+        case 'deleted_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
