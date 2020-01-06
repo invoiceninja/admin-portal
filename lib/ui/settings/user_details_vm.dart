@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -40,18 +41,42 @@ class UserDetailsVM {
     final state = store.state;
 
     return UserDetailsVM(
-        state: state,
-        user: state.uiState.settingsUIState.user,
-        onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
-        onSavePressed: (context) {
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).savedSettings);
-          completer.future.then((_) {
-            AppBuilder.of(context).rebuild();
-          });
-          store.dispatch(SaveUserSettingsRequest(
-              completer: completer, user: state.uiState.settingsUIState.user));
+      state: state,
+      user: state.uiState.settingsUIState.user,
+      onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
+      onSavePressed: (context) {
+        print(
+            'hasRecentlyEnteredPassword: ${state.authState.hasRecentlyEnteredPassword}');
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).savedSettings);
+        completer.future.then((_) {
+          AppBuilder.of(context).rebuild();
         });
+        if (state.authState.hasRecentlyEnteredPassword) {
+          store.dispatch(
+            SaveUserSettingsRequest(
+              completer: completer,
+              user: state.uiState.settingsUIState.user,
+            ),
+          );
+        } else {
+          passwordCallback(
+              context: context,
+              callback: (password) {
+                print('PASSWORD: password');
+                /*
+                store.dispatch(
+                  SaveUserSettingsRequest(
+                    completer: completer,
+                    user: state.uiState.settingsUIState.user,
+                    password: password,
+                  ),
+                );
+                 */
+              });
+        }
+      },
+    );
   }
 
   final AppState state;

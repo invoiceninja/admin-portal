@@ -14,6 +14,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       secret: '',
       isAuthenticated: false,
       isInitialized: false,
+      hasRecentlyEnteredPassword: false,
     );
   }
 
@@ -30,6 +31,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
   bool get isInitialized;
 
   bool get isAuthenticated;
+
+  bool get hasRecentlyEnteredPassword;
 
   bool get isHosted => cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl;
 

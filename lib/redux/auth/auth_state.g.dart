@@ -35,6 +35,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'isAuthenticated',
       serializers.serialize(object.isAuthenticated,
           specifiedType: const FullType(bool)),
+      'hasRecentlyEnteredPassword',
+      serializers.serialize(object.hasRecentlyEnteredPassword,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -75,6 +78,10 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.isAuthenticated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'hasRecentlyEnteredPassword':
+          result.hasRecentlyEnteredPassword = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -95,6 +102,8 @@ class _$AuthState extends AuthState {
   final bool isInitialized;
   @override
   final bool isAuthenticated;
+  @override
+  final bool hasRecentlyEnteredPassword;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
@@ -105,7 +114,8 @@ class _$AuthState extends AuthState {
       this.url,
       this.secret,
       this.isInitialized,
-      this.isAuthenticated})
+      this.isAuthenticated,
+      this.hasRecentlyEnteredPassword})
       : super._() {
     if (email == null) {
       throw new BuiltValueNullFieldError('AuthState', 'email');
@@ -125,6 +135,10 @@ class _$AuthState extends AuthState {
     if (isAuthenticated == null) {
       throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
     }
+    if (hasRecentlyEnteredPassword == null) {
+      throw new BuiltValueNullFieldError(
+          'AuthState', 'hasRecentlyEnteredPassword');
+    }
   }
 
   @override
@@ -143,7 +157,8 @@ class _$AuthState extends AuthState {
         url == other.url &&
         secret == other.secret &&
         isInitialized == other.isInitialized &&
-        isAuthenticated == other.isAuthenticated;
+        isAuthenticated == other.isAuthenticated &&
+        hasRecentlyEnteredPassword == other.hasRecentlyEnteredPassword;
   }
 
   @override
@@ -151,11 +166,13 @@ class _$AuthState extends AuthState {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, email.hashCode), password.hashCode),
-                    url.hashCode),
-                secret.hashCode),
-            isInitialized.hashCode),
-        isAuthenticated.hashCode));
+                $jc(
+                    $jc($jc($jc(0, email.hashCode), password.hashCode),
+                        url.hashCode),
+                    secret.hashCode),
+                isInitialized.hashCode),
+            isAuthenticated.hashCode),
+        hasRecentlyEnteredPassword.hashCode));
   }
 
   @override
@@ -166,7 +183,8 @@ class _$AuthState extends AuthState {
           ..add('url', url)
           ..add('secret', secret)
           ..add('isInitialized', isInitialized)
-          ..add('isAuthenticated', isAuthenticated))
+          ..add('isAuthenticated', isAuthenticated)
+          ..add('hasRecentlyEnteredPassword', hasRecentlyEnteredPassword))
         .toString();
   }
 }
@@ -200,6 +218,11 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   set isAuthenticated(bool isAuthenticated) =>
       _$this._isAuthenticated = isAuthenticated;
 
+  bool _hasRecentlyEnteredPassword;
+  bool get hasRecentlyEnteredPassword => _$this._hasRecentlyEnteredPassword;
+  set hasRecentlyEnteredPassword(bool hasRecentlyEnteredPassword) =>
+      _$this._hasRecentlyEnteredPassword = hasRecentlyEnteredPassword;
+
   AuthStateBuilder();
 
   AuthStateBuilder get _$this {
@@ -210,6 +233,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _secret = _$v.secret;
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
+      _hasRecentlyEnteredPassword = _$v.hasRecentlyEnteredPassword;
       _$v = null;
     }
     return this;
@@ -237,7 +261,8 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             url: url,
             secret: secret,
             isInitialized: isInitialized,
-            isAuthenticated: isAuthenticated);
+            isAuthenticated: isAuthenticated,
+            hasRecentlyEnteredPassword: hasRecentlyEnteredPassword);
     replace(_$result);
     return _$result;
   }
