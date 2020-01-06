@@ -245,7 +245,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
     }
     if (object.archivedAt != null) {
       result
-        ..add('deleted_at')
+        ..add('archived_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -412,7 +412,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'deleted_at':
+        case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
@@ -477,7 +477,7 @@ class _$ExpenseCategoryEntitySerializer
     }
     if (object.archivedAt != null) {
       result
-        ..add('deleted_at')
+        ..add('archived_at')
         ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
@@ -536,7 +536,7 @@ class _$ExpenseCategoryEntitySerializer
           result.updatedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
-        case 'deleted_at':
+        case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
