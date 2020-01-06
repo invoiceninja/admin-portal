@@ -25,9 +25,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<TaxRateEntity>([
   TypedReducer<TaxRateEntity, SaveTaxRateSuccess>(_updateEditing),
   TypedReducer<TaxRateEntity, AddTaxRateSuccess>(_updateEditing),
-  TypedReducer<TaxRateEntity, RestoreTaxRateSuccess>(_updateEditing),
-  TypedReducer<TaxRateEntity, ArchiveTaxRateSuccess>(_updateEditing),
-  TypedReducer<TaxRateEntity, DeleteTaxRateSuccess>(_updateEditing),
+  TypedReducer<TaxRateEntity, RestoreTaxRatesSuccess>((taxRates, action) {
+    return action.taxRates[0];
+  }),
+  TypedReducer<TaxRateEntity, ArchiveTaxRatesSuccess>((taxRates, action) {
+    return action.taxRates[0];
+  }),
+  TypedReducer<TaxRateEntity, DeleteTaxRatesSuccess>((taxRates, action) {
+    return action.taxRates[0];
+  }),
   TypedReducer<TaxRateEntity, EditTaxRate>(_updateEditing),
   TypedReducer<TaxRateEntity, UpdateTaxRate>((taxRate, action) {
     return action.taxRate.rebuild((b) => b..isChanged = true);
@@ -138,13 +144,13 @@ final taxRatesReducer = combineReducers<TaxRateState>([
   TypedReducer<TaxRateState, LoadTaxRateSuccess>(_setLoadedTaxRate),
   TypedReducer<TaxRateState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaxRateState, ArchiveTaxRateRequest>(_archiveTaxRateRequest),
-  TypedReducer<TaxRateState, ArchiveTaxRateSuccess>(_archiveTaxRateSuccess),
+  TypedReducer<TaxRateState, ArchiveTaxRatesSuccess>(_archiveTaxRateSuccess),
   TypedReducer<TaxRateState, ArchiveTaxRateFailure>(_archiveTaxRateFailure),
   TypedReducer<TaxRateState, DeleteTaxRateRequest>(_deleteTaxRateRequest),
-  TypedReducer<TaxRateState, DeleteTaxRateSuccess>(_deleteTaxRateSuccess),
+  TypedReducer<TaxRateState, DeleteTaxRatesSuccess>(_deleteTaxRateSuccess),
   TypedReducer<TaxRateState, DeleteTaxRateFailure>(_deleteTaxRateFailure),
   TypedReducer<TaxRateState, RestoreTaxRateRequest>(_restoreTaxRateRequest),
-  TypedReducer<TaxRateState, RestoreTaxRateSuccess>(_restoreTaxRateSuccess),
+  TypedReducer<TaxRateState, RestoreTaxRatesSuccess>(_restoreTaxRateSuccess),
   TypedReducer<TaxRateState, RestoreTaxRateFailure>(_restoreTaxRateFailure),
 ]);
 
@@ -164,7 +170,7 @@ TaxRateState _archiveTaxRateRequest(
 }
 
 TaxRateState _archiveTaxRateSuccess(
-    TaxRateState taxRateState, ArchiveTaxRateSuccess action) {
+    TaxRateState taxRateState, ArchiveTaxRatesSuccess action) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;
@@ -198,7 +204,7 @@ TaxRateState _deleteTaxRateRequest(
 }
 
 TaxRateState _deleteTaxRateSuccess(
-    TaxRateState taxRateState, DeleteTaxRateSuccess action) {
+    TaxRateState taxRateState, DeleteTaxRatesSuccess action) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;
@@ -232,7 +238,7 @@ TaxRateState _restoreTaxRateRequest(
 }
 
 TaxRateState _restoreTaxRateSuccess(
-    TaxRateState taxRateState, RestoreTaxRateSuccess action) {
+    TaxRateState taxRateState, RestoreTaxRatesSuccess action) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;

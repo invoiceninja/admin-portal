@@ -26,9 +26,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<StubEntity>([
   TypedReducer<StubEntity, SaveStubSuccess>(_updateEditing),
   TypedReducer<StubEntity, AddStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, RestoreStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, ArchiveStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, DeleteStubSuccess>(_updateEditing),
+  TypedReducer<StubEntity, RestoreStubSuccess>((stubs, action) {
+                                                   return action.stubs[0];
+                                                 }),
+  TypedReducer<StubEntity, ArchiveStubSuccess>((stubs, action) {
+                                                  return action.stubs[0];
+                                                }),
+  TypedReducer<StubEntity, DeleteStubSuccess>((stubs, action) {
+                                                 return action.stubs[0];
+                                               }),
   TypedReducer<StubEntity, EditStub>(_updateEditing),
   TypedReducer<StubEntity, UpdateStub>((stub, action) {
    return action.stub.rebuild((b) => b..isChanged = true);

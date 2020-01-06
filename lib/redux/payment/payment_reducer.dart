@@ -24,9 +24,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<PaymentEntity>([
   TypedReducer<PaymentEntity, SavePaymentSuccess>(_updateEditing),
   TypedReducer<PaymentEntity, AddPaymentSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, RestorePaymentsSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, ArchivePaymentsSuccess>(_updateEditing),
-  TypedReducer<PaymentEntity, DeletePaymentsSuccess>(_updateEditing),
+  TypedReducer<PaymentEntity, RestorePaymentsSuccess>((payments, action) {
+    return action.payments[0];
+  }),
+  TypedReducer<PaymentEntity, ArchivePaymentsSuccess>((payments, action) {
+    return action.payments[0];
+  }),
+  TypedReducer<PaymentEntity, DeletePaymentsSuccess>((payments, action) {
+    return action.payments[0];
+  }),
   TypedReducer<PaymentEntity, EditPayment>(_updateEditing),
   TypedReducer<PaymentEntity, UpdatePayment>((payment, action) {
     return action.payment.rebuild((b) => b..isChanged = true);

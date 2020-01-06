@@ -62,9 +62,15 @@ final editingReducer = combineReducers<InvoiceEntity>([
       ..invitations.addAll(client.contacts
           .map((contact) => InvitationEntity(contactId: contact.id))));
   }),
-  TypedReducer<InvoiceEntity, RestoreQuotesSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ArchiveQuotesSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, DeleteQuotesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
+  TypedReducer<InvoiceEntity, ArchiveQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
+  TypedReducer<InvoiceEntity, DeleteQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
   TypedReducer<InvoiceEntity, AddQuoteItem>(_addQuoteItem),
   TypedReducer<InvoiceEntity, AddQuoteItems>(_addQuoteItems),
   TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),

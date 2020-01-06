@@ -40,9 +40,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<ProjectEntity>([
   TypedReducer<ProjectEntity, SaveProjectSuccess>(_updateEditing),
   TypedReducer<ProjectEntity, AddProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, RestoreProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, ArchiveProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, DeleteProjectSuccess>(_updateEditing),
+  TypedReducer<ProjectEntity, RestoreProjectSuccess>((projects, action) {
+    return action.projects[0];
+  }),
+  TypedReducer<ProjectEntity, ArchiveProjectSuccess>((projects, action) {
+    return action.projects[0];
+  }),
+  TypedReducer<ProjectEntity, DeleteProjectSuccess>((projects, action) {
+    return action.projects[0];
+  }),
   TypedReducer<ProjectEntity, EditProject>(_updateEditing),
   TypedReducer<ProjectEntity, UpdateProject>((project, action) {
     return action.project.rebuild((b) => b..isChanged = true);

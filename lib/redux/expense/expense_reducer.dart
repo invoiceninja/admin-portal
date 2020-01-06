@@ -24,9 +24,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<ExpenseEntity>([
   TypedReducer<ExpenseEntity, SaveExpenseSuccess>(_updateEditing),
   TypedReducer<ExpenseEntity, AddExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, RestoreExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, ArchiveExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, DeleteExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity, RestoreExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
+  TypedReducer<ExpenseEntity, ArchiveExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
+  TypedReducer<ExpenseEntity, DeleteExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
   TypedReducer<ExpenseEntity, EditExpense>(_updateEditing),
   TypedReducer<ExpenseEntity, UpdateExpense>((expense, action) {
     return action.expense.rebuild((b) => b..isChanged = true);

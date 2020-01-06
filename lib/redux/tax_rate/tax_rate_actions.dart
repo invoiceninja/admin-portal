@@ -148,8 +148,8 @@ class ArchiveTaxRateRequest implements StartSaving {
   final List<String> taxRateIds;
 }
 
-class ArchiveTaxRateSuccess implements StopSaving, PersistData {
-  ArchiveTaxRateSuccess(this.taxRates);
+class ArchiveTaxRatesSuccess implements StopSaving, PersistData {
+  ArchiveTaxRatesSuccess(this.taxRates);
 
   final List<TaxRateEntity> taxRates;
 }
@@ -167,8 +167,8 @@ class DeleteTaxRateRequest implements StartSaving {
   final List<String> taxRateIds;
 }
 
-class DeleteTaxRateSuccess implements StopSaving, PersistData {
-  DeleteTaxRateSuccess(this.taxRates);
+class DeleteTaxRatesSuccess implements StopSaving, PersistData {
+  DeleteTaxRatesSuccess(this.taxRates);
 
   final List<TaxRateEntity> taxRates;
 }
@@ -186,8 +186,8 @@ class RestoreTaxRateRequest implements StartSaving {
   final List<String> taxRateIds;
 }
 
-class RestoreTaxRateSuccess implements StopSaving, PersistData {
-  RestoreTaxRateSuccess(this.taxRates);
+class RestoreTaxRatesSuccess implements StopSaving, PersistData {
+  RestoreTaxRatesSuccess(this.taxRates);
 
   final List<TaxRateEntity> taxRates;
 }

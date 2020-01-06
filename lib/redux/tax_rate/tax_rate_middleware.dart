@@ -112,7 +112,7 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
         .bulkAction(
             store.state.credentials, action.taxRateIds, EntityAction.archive)
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(ArchiveTaxRateSuccess(taxRates));
+      store.dispatch(ArchiveTaxRatesSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -139,7 +139,7 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
         .bulkAction(
             store.state.credentials, action.taxRateIds, EntityAction.delete)
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(DeleteTaxRateSuccess(taxRates));
+      store.dispatch(DeleteTaxRatesSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -166,7 +166,7 @@ Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
         .bulkAction(
             store.state.credentials, action.taxRateIds, EntityAction.restore)
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(RestoreTaxRateSuccess(taxRates));
+      store.dispatch(RestoreTaxRatesSuccess(taxRates));
       if (action.completer != null) {
         action.completer.complete(null);
       }

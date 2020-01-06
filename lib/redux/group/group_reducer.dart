@@ -25,9 +25,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<GroupEntity>([
   TypedReducer<GroupEntity, SaveGroupSuccess>(_updateEditing),
   TypedReducer<GroupEntity, AddGroupSuccess>(_updateEditing),
-  TypedReducer<GroupEntity, RestoreGroupSuccess>(_updateEditing),
-  TypedReducer<GroupEntity, ArchiveGroupSuccess>(_updateEditing),
-  TypedReducer<GroupEntity, DeleteGroupSuccess>(_updateEditing),
+  TypedReducer<GroupEntity, RestoreGroupSuccess>((groups, action) {
+    return action.groups[0];
+  }),
+  TypedReducer<GroupEntity, ArchiveGroupSuccess>((groups, action) {
+    return action.groups[0];
+  }),
+  TypedReducer<GroupEntity, DeleteGroupSuccess>((groups, action) {
+    return action.groups[0];
+  }),
   TypedReducer<GroupEntity, EditGroup>(_updateEditing),
   TypedReducer<GroupEntity, UpdateGroup>((group, action) {
     return action.group.rebuild((b) => b..isChanged = true);

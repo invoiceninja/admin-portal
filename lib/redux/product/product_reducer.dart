@@ -31,9 +31,15 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, UpdateProduct>((product, action) {
     return action.product.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ProductEntity, RestoreProductsSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, ArchiveProductsSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, DeleteProductsSuccess>(_updateEditing),
+  TypedReducer<ProductEntity, RestoreProductsSuccess>((products, action) {
+    return action.products[0];
+  }),
+  TypedReducer<ProductEntity, ArchiveProductsSuccess>((products, action) {
+    return action.products[0];
+  }),
+  TypedReducer<ProductEntity, DeleteProductsSuccess>((products, action) {
+    return action.products[0];
+  }),
   TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
   TypedReducer<ProductEntity, DiscardChanges>(_clearEditing),
 ]);

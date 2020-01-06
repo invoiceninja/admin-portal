@@ -24,9 +24,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<UserEntity>([
   TypedReducer<UserEntity, SaveUserSuccess>(_updateEditing),
   TypedReducer<UserEntity, AddUserSuccess>(_updateEditing),
-  TypedReducer<UserEntity, RestoreUserSuccess>(_updateEditing),
-  TypedReducer<UserEntity, ArchiveUserSuccess>(_updateEditing),
-  TypedReducer<UserEntity, DeleteUserSuccess>(_updateEditing),
+  TypedReducer<UserEntity, RestoreUserSuccess>((users, action) {
+    return action.users[0];
+  }),
+  TypedReducer<UserEntity, ArchiveUserSuccess>((users, action) {
+    return action.users[0];
+  }),
+  TypedReducer<UserEntity, DeleteUserSuccess>((users, action) {
+    return action.users[0];
+  }),
   TypedReducer<UserEntity, EditUser>(_updateEditing),
   TypedReducer<UserEntity, UpdateUser>((user, action) {
     return action.user.rebuild((b) => b..isChanged = true);

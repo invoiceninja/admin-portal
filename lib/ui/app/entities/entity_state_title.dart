@@ -13,10 +13,6 @@ class EntityStateTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    print('## Build');
-    print('## Archivd At: ${entity.archivedAt}');
-    print('## isDeleted: ${entity.isDeleted}');
-
     final state = entity.entityState;
 
     if (state == kEntityStateActive) {

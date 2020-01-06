@@ -52,9 +52,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<VendorEntity>([
   TypedReducer<VendorEntity, SaveVendorSuccess>(_updateEditing),
   TypedReducer<VendorEntity, AddVendorSuccess>(_updateEditing),
-  TypedReducer<VendorEntity, RestoreVendorSuccess>(_updateEditing),
-  TypedReducer<VendorEntity, ArchiveVendorSuccess>(_updateEditing),
-  TypedReducer<VendorEntity, DeleteVendorSuccess>(_updateEditing),
+  TypedReducer<VendorEntity, RestoreVendorSuccess>((vendors, action) {
+    return action.vendors[0];
+  }),
+  TypedReducer<VendorEntity, ArchiveVendorSuccess>((vendors, action) {
+    return action.vendors[0];
+  }),
+  TypedReducer<VendorEntity, DeleteVendorSuccess>((vendors, action) {
+    return action.vendors[0];
+  }),
   TypedReducer<VendorEntity, EditVendor>(_updateEditing),
   TypedReducer<VendorEntity, UpdateVendor>((vendor, action) {
     return action.vendor.rebuild((b) => b..isChanged = true);

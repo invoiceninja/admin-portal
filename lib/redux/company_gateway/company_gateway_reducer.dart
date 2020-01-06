@@ -27,11 +27,17 @@ final editingReducer = combineReducers<CompanyGatewayEntity>([
   TypedReducer<CompanyGatewayEntity, SaveCompanyGatewaySuccess>(_updateEditing),
   TypedReducer<CompanyGatewayEntity, AddCompanyGatewaySuccess>(_updateEditing),
   TypedReducer<CompanyGatewayEntity, RestoreCompanyGatewaySuccess>(
-      _updateEditing),
+      (companyGateways, action) {
+    return action.companyGateways[0];
+  }),
   TypedReducer<CompanyGatewayEntity, ArchiveCompanyGatewaySuccess>(
-      _updateEditing),
+      (companyGateways, action) {
+    return action.companyGateways[0];
+  }),
   TypedReducer<CompanyGatewayEntity, DeleteCompanyGatewaySuccess>(
-      _updateEditing),
+      (companyGateways, action) {
+    return action.companyGateways[0];
+  }),
   TypedReducer<CompanyGatewayEntity, EditCompanyGateway>(_updateEditing),
   TypedReducer<CompanyGatewayEntity, UpdateCompanyGateway>(
       (companyGateway, action) {

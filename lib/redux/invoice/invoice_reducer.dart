@@ -66,9 +66,15 @@ final editingReducer = combineReducers<InvoiceEntity>([
           .where((contact) => contact.sendInvoice)
           .map((contact) => InvitationEntity(contactId: contact.id))));
   }),
-  TypedReducer<InvoiceEntity, RestoreInvoicesSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ArchiveInvoicesSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, DeleteInvoicesSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, RestoreInvoicesSuccess>((invoices, action) {
+    return action.invoices[0];
+  }),
+  TypedReducer<InvoiceEntity, ArchiveInvoicesSuccess>((invoices, action) {
+    return action.invoices[0];
+  }),
+  TypedReducer<InvoiceEntity, DeleteInvoicesSuccess>((invoices, action) {
+    return action.invoices[0];
+  }),
   TypedReducer<InvoiceEntity, AddInvoiceItem>(_addInvoiceItem),
   TypedReducer<InvoiceEntity, AddInvoiceItems>(_addInvoiceItems),
   TypedReducer<InvoiceEntity, DeleteInvoiceItem>(_removeInvoiceItem),

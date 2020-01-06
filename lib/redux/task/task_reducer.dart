@@ -33,9 +33,15 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, SaveTaskSuccess>(_updateEditing),
   TypedReducer<TaskEntity, AddTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, RestoreTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, ArchiveTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, DeleteTaskSuccess>(_updateEditing),
+  TypedReducer<TaskEntity, RestoreTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
+  TypedReducer<TaskEntity, ArchiveTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
+  TypedReducer<TaskEntity, DeleteTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
   TypedReducer<TaskEntity, EditTask>(_updateEditing),
   TypedReducer<TaskEntity, UpdateTask>((task, action) {
     return action.task.rebuild((b) => b..isChanged = true);
