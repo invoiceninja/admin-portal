@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({BuildContext context, String message}) {
@@ -68,23 +69,23 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Dialog(
-      child: Column(children: <Widget>[
-        Row(
-          children: <Widget>[
-            Expanded(
-                child: TextField(
-              onChanged: (value) => _password = value,
-              obscureText: true,
-              onSubmitted: (value) => _submit(),
-            )),
-            RaisedButton(
-              child: Text(localization.save),
-              onPressed: () => _submit(),
-            )
-          ],
-        )
-      ]),
+    return AlertDialog(
+      title: Text(localization.verifyPassword),
+      content: TextField(
+        onChanged: (value) => _password = value,
+        obscureText: true,
+        onSubmitted: (value) => _submit(),
+      ),
+      actions: <Widget>[
+        SaveCancelButtons(
+          onSavePressed: (context) {
+
+          },
+          onCancelPressed: (context) {
+            Navigator.pop(context);
+          },
+        ),
+      ],
     );
   }
 }

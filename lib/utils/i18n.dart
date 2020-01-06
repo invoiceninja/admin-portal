@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received': 'We have received your message and will try to respond promptly.',
@@ -15929,6 +15930,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get applied =>
       _localizedValues[localeCode]['applied'];
+
+  String get verifyPassword =>
+      _localizedValues[localeCode]['verify_password'];
 
 
   String lookup(String key) {
