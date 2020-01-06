@@ -315,6 +315,13 @@ abstract class PaymentableEntity extends Object
     );
   }
 
+  factory PaymentableEntity.fromInvoice(InvoiceEntity invoice) {
+    return PaymentableEntity(
+      invoiceId: invoice.id,
+      amount: invoice.balance,
+    );
+  }
+
   PaymentableEntity._();
 
   @BuiltValueField(wireName: 'invoice_id')

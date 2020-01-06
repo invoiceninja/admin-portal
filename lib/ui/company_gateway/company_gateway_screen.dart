@@ -58,10 +58,10 @@ class CompanyGatewayScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.companyGatewayListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final companyGateways = viewModel.companyGatewayList
+                    final companyGateways = listUIState.selectedIds
                         .map<CompanyGatewayEntity>((companyGatewayId) =>
                             viewModel.companyGatewayMap[companyGatewayId])
                         .toList();

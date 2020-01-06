@@ -66,10 +66,10 @@ class PaymentScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.paymentListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final payments = viewModel.paymentList
+                    final payments = listUIState.selectedIds
                         .map<PaymentEntity>(
                             (paymentId) => viewModel.paymentMap[paymentId])
                         .toList();

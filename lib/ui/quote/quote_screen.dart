@@ -70,10 +70,10 @@ class QuoteScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.quoteListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final quotes = viewModel.quoteList
+                    final quotes = listUIState.selectedIds
                         .map<InvoiceEntity>(
                             (quoteId) => viewModel.quoteMap[quoteId])
                         .toList();

@@ -67,10 +67,10 @@ class StubScreen extends StatelessWidget {
                         if (viewModel.isInMultiselect)
                           SaveCancelButtons(
                             saveLabel: localization.done,
-                            onSavePressed: state.stubListState.selectedIds.isEmpty
+                            onSavePressed: listUIState.selectedIds.isEmpty
                                 ? null
                                 : (context) async {
-                                    final stubs = viewModel.stubList
+                                    final stubs = listUIState.selectedIds
                                         .map<StubEntity>(
                                             (stubId) => viewModel.stubMap[stubId])
                                         .toList();

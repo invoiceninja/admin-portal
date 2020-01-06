@@ -68,10 +68,10 @@ class ProjectScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.projectListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final projects = viewModel.projectList
+                    final projects = listUIState.selectedIds
                         .map<ProjectEntity>(
                             (projectId) => viewModel.projectMap[projectId])
                         .toList();

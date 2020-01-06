@@ -70,10 +70,10 @@ class ExpenseScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.expenseListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final expenses = viewModel.expenseList
+                    final expenses = listUIState.selectedIds
                         .map<ExpenseEntity>(
                             (expenseId) => viewModel.expenseMap[expenseId])
                         .toList();

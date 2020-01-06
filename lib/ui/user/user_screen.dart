@@ -73,10 +73,10 @@ class UserScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.userListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final users = viewModel.userList
+                    final users = listUIState.selectedIds
                         .map<UserEntity>((userId) => viewModel.userMap[userId])
                         .toList();
 

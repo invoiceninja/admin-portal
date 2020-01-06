@@ -418,7 +418,7 @@ abstract class InvoiceEntity extends Object
 
     if (!isDeleted) {
       if (userCompany.canEditEntity(this)) {
-        if (includeEdit) {
+        if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
 
@@ -439,7 +439,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (invitations.isNotEmpty) {
+      if (invitations.isNotEmpty && !multiselect) {
         if (includeEdit) {
           actions.add(EntityAction.pdf);
         }
@@ -451,7 +451,7 @@ abstract class InvoiceEntity extends Object
       actions.add(null);
     }
 
-    if (userCompany.canCreate(EntityType.invoice)) {
+    if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
       actions.add(EntityAction.cloneToInvoice);
       actions.add(EntityAction.cloneToQuote);
       actions.add(null);
@@ -541,13 +541,6 @@ abstract class InvoiceEntity extends Object
 
   String get invitationDownloadLink =>
       invitations.isEmpty ? '' : invitations.first.downloadLink;
-
-  PaymentEntity createPayment(AppState state) {
-    return PaymentEntity(state: state).rebuild((b) => b
-      ..clientId = clientId
-      ..paymentables.add(PaymentableEntity(invoiceId: id, amount: balance))
-      ..amount = balance);
-  }
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }

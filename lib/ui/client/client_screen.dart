@@ -69,10 +69,10 @@ class ClientScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.clientListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final clients = viewModel.clientList
+                    final clients = listUIState.selectedIds
                         .map<ClientEntity>(
                             (clientId) => viewModel.clientMap[clientId])
                         .toList();

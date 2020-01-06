@@ -68,10 +68,10 @@ class ProductScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.productListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final products = viewModel.productList
+                    final products = listUIState.selectedIds
                         .map<ProductEntity>(
                             (productId) => viewModel.productMap[productId])
                         .toList();

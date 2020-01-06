@@ -71,10 +71,10 @@ class GroupSettingsScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.groupListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final groups = viewModel.groupList
+                    final groups = listUIState.selectedIds
                         .map<GroupEntity>(
                             (groupId) => viewModel.groupMap[groupId])
                         .toList();

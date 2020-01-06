@@ -71,10 +71,10 @@ class TaxRateSettingsScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.taxRateListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final taxRates = viewModel.taxRateList
+                    final taxRates = listUIState.selectedIds
                         .map<TaxRateEntity>(
                             (taxRateId) => viewModel.taxRateMap[taxRateId])
                         .toList();

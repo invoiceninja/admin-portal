@@ -70,10 +70,10 @@ class DocumentScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.documentListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final documents = viewModel.documentList
+                    final documents = listUIState.selectedIds
                         .map<DocumentEntity>(
                             (documentId) => viewModel.documentMap[documentId])
                         .toList();

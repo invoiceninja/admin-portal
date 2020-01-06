@@ -372,16 +372,6 @@ class FilterInvoicesByCustom4 implements PersistUI {
 
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          invoices.length == 1,
-      'Cannot perform this action on more than one invoice');
-
   if (invoices.isEmpty) {
     return;
   }
@@ -437,7 +427,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(context: context, entity: invoice.clone); // TODO fix this
       break;
     case EntityAction.newPayment:
-      createEntity(context: context, entity: invoice.createPayment(state));
+      createEntity(
+          context: context,
+          entity: PaymentEntity(state: state).rebuild((b) => b
+            ..clientId = invoice.clientId
+            ..invoices.addAll(invoices
+                .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+                .toList())));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoiceRequest(

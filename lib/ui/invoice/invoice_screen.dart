@@ -70,10 +70,10 @@ class InvoiceScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.invoiceListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final invoices = viewModel.invoiceList
+                    final invoices = listUIState.selectedIds
                         .map<InvoiceEntity>(
                             (invoiceId) => viewModel.invoiceMap[invoiceId])
                         .toList();

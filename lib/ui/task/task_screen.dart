@@ -69,10 +69,10 @@ class TaskScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.taskListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final tasks = viewModel.taskList
+                    final tasks = listUIState.selectedIds
                         .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
                         .toList();
 

@@ -68,10 +68,10 @@ class VendorScreen extends StatelessWidget {
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
-            onSavePressed: state.vendorListState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds.isEmpty
                 ? null
                 : (context) async {
-                    final vendors = viewModel.vendorList
+                    final vendors = listUIState.selectedIds
                         .map<VendorEntity>(
                             (vendorId) => viewModel.vendorMap[vendorId])
                         .toList();
