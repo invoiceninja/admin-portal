@@ -55,7 +55,7 @@ class WebClient {
           fileIndex: fileIndex, data: data);
     } else {
       response = await http.Client()
-          .post(url, body: data, headers: _getHeaders(token, secret))
+          .post(url, body: data, headers: _getHeaders(token, secret: secret))
           .timeout(const Duration(seconds: 30));
     }
 
@@ -65,7 +65,10 @@ class WebClient {
   }
 
   Future<dynamic> put(String url, String token,
-      {dynamic data, String filePath, String fileIndex = 'file'}) async {
+      {dynamic data,
+      String filePath,
+      String fileIndex = 'file',
+      String password}) async {
     url = _checkUrl(url);
     print('PUT: $url');
     debugPrint('Data: $data', wrapWidth: 1000);
@@ -79,7 +82,7 @@ class WebClient {
       response = await http.Client().put(
         url,
         body: data,
-        headers: _getHeaders(token),
+        headers: _getHeaders(token, password: password),
       );
     }
 
@@ -119,12 +122,24 @@ String _checkUrl(String url) {
   return url;
 }
 
-Map<String, String> _getHeaders(String token, [String secret]) => {
-      'X-API-Secret': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
-      'X-API-Token': token,
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-    };
+Map<String, String> _getHeaders(String token,
+    {String secret, String password}) {
+  final headers = {
+    'X-API-Secret': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/json',
+  };
+
+  if (token != null && token.isNotEmpty) {
+    headers['X-API-Token'] = token;
+  }
+
+  if (password != null && password.isNotEmpty) {
+    headers['X-API-PASSWORD'] = password;
+  }
+
+  return headers;
+}
 
 void _checkResponse(http.Response response) {
   if (Config.DEMO_MODE) {

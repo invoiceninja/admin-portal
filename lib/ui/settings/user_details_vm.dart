@@ -63,8 +63,6 @@ class UserDetailsVM {
           passwordCallback(
               context: context,
               callback: (password) {
-                print('PASSWORD: password');
-                /*
                 store.dispatch(
                   SaveUserSettingsRequest(
                     completer: completer,
@@ -72,7 +70,6 @@ class UserDetailsVM {
                     password: password,
                   ),
                 );
-                 */
               });
         }
       },

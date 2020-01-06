@@ -88,7 +88,7 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
     final action = dynamicAction as SaveUserSettingsRequest;
 
     settingsRepository
-        .saveUser(store.state.credentials, action.user)
+        .saveUser(store.state.credentials, action.user, action.password)
         .then((user) {
       store.dispatch(SaveUserSettingsSuccess(user));
       action.completer.complete();
