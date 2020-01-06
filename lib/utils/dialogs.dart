@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -60,6 +59,7 @@ class PasswordConfirmation extends StatefulWidget {
 
 class _PasswordConfirmationState extends State<PasswordConfirmation> {
   String _password;
+  bool _isPasswordObscured = true;
 
   void _submit() {
     widget.callback(_password);
@@ -73,13 +73,29 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       title: Text(localization.verifyPassword),
       content: TextField(
         onChanged: (value) => _password = value,
-        obscureText: true,
+        obscureText: _isPasswordObscured,
+        decoration: InputDecoration(
+          labelText: localization.password,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _isPasswordObscured
+                  ? Icons.visibility
+                  : Icons.visibility_off,
+            ),
+            onPressed: () {
+              setState(() {
+                _isPasswordObscured = !_isPasswordObscured;
+              });
+            },
+          ),
+        ),
         onSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
         SaveCancelButtons(
           onSavePressed: (context) {
-
+            Navigator.pop(context);
+            widget.callback(_password);
           },
           onCancelPressed: (context) {
             Navigator.pop(context);
