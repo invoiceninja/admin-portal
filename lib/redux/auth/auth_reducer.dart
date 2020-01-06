@@ -9,6 +9,7 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, OAuthLoginRequest>(oauthLoginRequestReducer),
   TypedReducer<AuthState, UserSignUpRequest>(userSignUpRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
+  TypedReducer<AuthState, UserVerifiedPassword>(userVerifiedPasswordReducer),
 ]);
 
 AuthState userSignUpRequestReducer(
@@ -47,4 +48,10 @@ AuthState userLoginSuccessReducer(
   return authState.rebuild((b) => b
     ..isAuthenticated = true
     ..password = '');
+}
+
+AuthState userVerifiedPasswordReducer(
+    AuthState authState, UserVerifiedPassword action) {
+  return authState.rebuild(
+      (b) => b..lastEnteredPasswordAt = DateTime.now().millisecondsSinceEpoch);
 }

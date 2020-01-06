@@ -120,3 +120,5 @@ class UserSignUpRequest implements StartLoading {
   final String oauthId;
   final String secret;
 }
+
+class UserVerifiedPassword {}

@@ -14,7 +14,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       secret: '',
       isAuthenticated: false,
       isInitialized: false,
-      hasRecentlyEnteredPassword: false,
+      lastEnteredPasswordAt: 0,
     );
   }
 
@@ -32,7 +32,16 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   bool get isAuthenticated;
 
-  bool get hasRecentlyEnteredPassword;
+  int get lastEnteredPasswordAt;
+
+  bool get hasRecentlyEnteredPassword {
+    if (lastEnteredPasswordAt == 0) {
+      return false;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastEnteredPasswordAt <
+        kMillisecondsToReenterPassword;
+  }
 
   bool get isHosted => cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl;
 

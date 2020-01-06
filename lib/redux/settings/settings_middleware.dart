@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
@@ -95,6 +96,9 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserSettingsFailure(error));
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       action.completer.completeError(error);
     });
 

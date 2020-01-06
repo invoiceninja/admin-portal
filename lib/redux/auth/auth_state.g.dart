@@ -35,9 +35,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'isAuthenticated',
       serializers.serialize(object.isAuthenticated,
           specifiedType: const FullType(bool)),
-      'hasRecentlyEnteredPassword',
-      serializers.serialize(object.hasRecentlyEnteredPassword,
-          specifiedType: const FullType(bool)),
+      'lastEnteredPasswordAt',
+      serializers.serialize(object.lastEnteredPasswordAt,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -78,9 +78,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.isAuthenticated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'hasRecentlyEnteredPassword':
-          result.hasRecentlyEnteredPassword = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'lastEnteredPasswordAt':
+          result.lastEnteredPasswordAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -103,7 +103,7 @@ class _$AuthState extends AuthState {
   @override
   final bool isAuthenticated;
   @override
-  final bool hasRecentlyEnteredPassword;
+  final int lastEnteredPasswordAt;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
@@ -115,7 +115,7 @@ class _$AuthState extends AuthState {
       this.secret,
       this.isInitialized,
       this.isAuthenticated,
-      this.hasRecentlyEnteredPassword})
+      this.lastEnteredPasswordAt})
       : super._() {
     if (email == null) {
       throw new BuiltValueNullFieldError('AuthState', 'email');
@@ -135,9 +135,8 @@ class _$AuthState extends AuthState {
     if (isAuthenticated == null) {
       throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
     }
-    if (hasRecentlyEnteredPassword == null) {
-      throw new BuiltValueNullFieldError(
-          'AuthState', 'hasRecentlyEnteredPassword');
+    if (lastEnteredPasswordAt == null) {
+      throw new BuiltValueNullFieldError('AuthState', 'lastEnteredPasswordAt');
     }
   }
 
@@ -158,7 +157,7 @@ class _$AuthState extends AuthState {
         secret == other.secret &&
         isInitialized == other.isInitialized &&
         isAuthenticated == other.isAuthenticated &&
-        hasRecentlyEnteredPassword == other.hasRecentlyEnteredPassword;
+        lastEnteredPasswordAt == other.lastEnteredPasswordAt;
   }
 
   @override
@@ -172,7 +171,7 @@ class _$AuthState extends AuthState {
                     secret.hashCode),
                 isInitialized.hashCode),
             isAuthenticated.hashCode),
-        hasRecentlyEnteredPassword.hashCode));
+        lastEnteredPasswordAt.hashCode));
   }
 
   @override
@@ -184,7 +183,7 @@ class _$AuthState extends AuthState {
           ..add('secret', secret)
           ..add('isInitialized', isInitialized)
           ..add('isAuthenticated', isAuthenticated)
-          ..add('hasRecentlyEnteredPassword', hasRecentlyEnteredPassword))
+          ..add('lastEnteredPasswordAt', lastEnteredPasswordAt))
         .toString();
   }
 }
@@ -218,10 +217,10 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   set isAuthenticated(bool isAuthenticated) =>
       _$this._isAuthenticated = isAuthenticated;
 
-  bool _hasRecentlyEnteredPassword;
-  bool get hasRecentlyEnteredPassword => _$this._hasRecentlyEnteredPassword;
-  set hasRecentlyEnteredPassword(bool hasRecentlyEnteredPassword) =>
-      _$this._hasRecentlyEnteredPassword = hasRecentlyEnteredPassword;
+  int _lastEnteredPasswordAt;
+  int get lastEnteredPasswordAt => _$this._lastEnteredPasswordAt;
+  set lastEnteredPasswordAt(int lastEnteredPasswordAt) =>
+      _$this._lastEnteredPasswordAt = lastEnteredPasswordAt;
 
   AuthStateBuilder();
 
@@ -233,7 +232,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _secret = _$v.secret;
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
-      _hasRecentlyEnteredPassword = _$v.hasRecentlyEnteredPassword;
+      _lastEnteredPasswordAt = _$v.lastEnteredPasswordAt;
       _$v = null;
     }
     return this;
@@ -262,7 +261,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             secret: secret,
             isInitialized: isInitialized,
             isAuthenticated: isAuthenticated,
-            hasRecentlyEnteredPassword: hasRecentlyEnteredPassword);
+            lastEnteredPasswordAt: lastEnteredPasswordAt);
     replace(_$result);
     return _$result;
   }
