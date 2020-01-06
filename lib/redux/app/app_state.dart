@@ -387,7 +387,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Color: $accentColor, User Settings: ${user?.userCompany?.settings}';
     //return 'Line items: ${invoiceUIState.editing.lineItems.map((item) => item.productKey)}';
     //return 'Settings: ${uiState.settingsUIState.settings}';
-    return 'Payment: ${uiState.paymentUIState.editing.paymentables}';
+    //return 'Payment: ${uiState.paymentUIState.editing.paymentables}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

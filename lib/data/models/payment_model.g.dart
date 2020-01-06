@@ -144,6 +144,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.paymentables,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'invoices',
+      serializers.serialize(object.invoices,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentableEntity)])),
     ];
     if (object.number != null) {
       result
@@ -368,6 +372,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'paymentables':
           result.paymentables.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentableEntity)]))
+              as BuiltList<dynamic>);
+          break;
+        case 'invoices':
+          result.invoices.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentableEntity)]))
               as BuiltList<dynamic>);
@@ -712,6 +722,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
+  final BuiltList<PaymentableEntity> invoices;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -753,6 +765,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.projectId,
       this.vendorId,
       this.paymentables,
+      this.invoices,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -786,6 +799,9 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (paymentables == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentables');
+    }
+    if (invoices == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'invoices');
     }
   }
 
@@ -821,6 +837,7 @@ class _$PaymentEntity extends PaymentEntity {
         projectId == other.projectId &&
         vendorId == other.vendorId &&
         paymentables == other.paymentables &&
+        invoices == other.invoices &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -851,18 +868,18 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode),
-                                                                                privateNotes.hashCode),
-                                                                            customValue1.hashCode),
-                                                                        customValue2.hashCode),
-                                                                    customValue3.hashCode),
-                                                                customValue4.hashCode),
-                                                            exchangeRate.hashCode),
-                                                        exchangeCurrencyId.hashCode),
-                                                    isManual.hashCode),
-                                                projectId.hashCode),
-                                            vendorId.hashCode),
-                                        paymentables.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode), privateNotes.hashCode),
+                                                                                customValue1.hashCode),
+                                                                            customValue2.hashCode),
+                                                                        customValue3.hashCode),
+                                                                    customValue4.hashCode),
+                                                                exchangeRate.hashCode),
+                                                            exchangeCurrencyId.hashCode),
+                                                        isManual.hashCode),
+                                                    projectId.hashCode),
+                                                vendorId.hashCode),
+                                            paymentables.hashCode),
+                                        invoices.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -897,6 +914,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
           ..add('paymentables', paymentables)
+          ..add('invoices', invoices)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1001,6 +1019,12 @@ class PaymentEntityBuilder
   set paymentables(ListBuilder<PaymentableEntity> paymentables) =>
       _$this._paymentables = paymentables;
 
+  ListBuilder<PaymentableEntity> _invoices;
+  ListBuilder<PaymentableEntity> get invoices =>
+      _$this._invoices ??= new ListBuilder<PaymentableEntity>();
+  set invoices(ListBuilder<PaymentableEntity> invoices) =>
+      _$this._invoices = invoices;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1060,6 +1084,7 @@ class PaymentEntityBuilder
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
       _paymentables = _$v.paymentables?.toBuilder();
+      _invoices = _$v.invoices?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1113,6 +1138,7 @@ class PaymentEntityBuilder
               projectId: projectId,
               vendorId: vendorId,
               paymentables: paymentables.build(),
+              invoices: invoices.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1126,6 +1152,8 @@ class PaymentEntityBuilder
       try {
         _$failedField = 'paymentables';
         paymentables.build();
+        _$failedField = 'invoices';
+        invoices.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PaymentEntity', _$failedField, e.toString());

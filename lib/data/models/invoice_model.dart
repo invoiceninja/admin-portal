@@ -544,8 +544,8 @@ abstract class InvoiceEntity extends Object
 
   PaymentEntity createPayment(AppState state) {
     return PaymentEntity(state: state).rebuild((b) => b
-      ..invoiceId = id
       ..clientId = clientId
+      ..paymentables.add(PaymentableEntity(invoiceId: id, amount: balance))
       ..amount = balance);
   }
 

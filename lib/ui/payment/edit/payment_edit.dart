@@ -90,7 +90,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final payment = viewModel.payment;
     final localization = AppLocalization.of(context);
 
-    final paymentables = payment.paymentables.toList();
+    final paymentables = payment.invoices.toList();
     if (paymentables.where((paymentable) => paymentable.isEmpty).isEmpty) {
       paymentables.add(PaymentableEntity());
     }
@@ -267,12 +267,12 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     PaymentEntity payment;
 
-    if (widget.index == widget.viewModel.payment.paymentables.length) {
-      payment = widget.viewModel.payment
-          .rebuild((b) => b..paymentables.add(paymentable));
+    if (widget.index == widget.viewModel.payment.invoices.length) {
+      payment =
+          widget.viewModel.payment.rebuild((b) => b..invoices.add(paymentable));
     } else {
       payment = widget.viewModel.payment
-          .rebuild((b) => b..paymentables[widget.index] = paymentable);
+          .rebuild((b) => b..invoices[widget.index] = paymentable);
     }
 
     if (clientId != null) {
@@ -330,7 +330,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               ? null
               : () {
                   viewModel.onChanged(payment
-                      .rebuild((b) => b..paymentables.removeAt(widget.index)));
+                      .rebuild((b) => b..invoices.removeAt(widget.index)));
                 },
         ),
       ],
