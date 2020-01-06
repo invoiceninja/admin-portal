@@ -311,7 +311,6 @@ abstract class PaymentableEntity extends Object
       id: id ?? BaseEntity.nextId,
       invoiceId: invoiceId ?? '',
       amount: amount ?? 0,
-      createdAt: DateTime.now().microsecondsSinceEpoch,
     );
   }
 
@@ -328,9 +327,6 @@ abstract class PaymentableEntity extends Object
   String get invoiceId;
 
   double get amount;
-
-  @nullable
-  int get createdAt;
 
   bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
 

@@ -150,7 +150,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 for (var index = 0; index < paymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__paymentable_${index}_${paymentables[index].createdAt}__'),
+                        '__paymentable_${index}_${paymentables[index].id}__'),
                     viewModel: viewModel,
                     paymentable: paymentables[index],
                     index: index,
