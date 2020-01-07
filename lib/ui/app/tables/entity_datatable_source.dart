@@ -15,8 +15,10 @@ class EntityDataTableSource extends DataTableSource {
       @required this.entityMap,
       @required this.entityPresenter,
       @required this.columnFields,
+      @required this.entityType,
       @required this.onTap});
 
+  EntityType entityType;
   BuildContext context;
   List<String> entityList;
   EntityPresenter entityPresenter;
@@ -40,18 +42,31 @@ class EntityDataTableSource extends DataTableSource {
     final entity = entityMap[entityList[index]];
     entityPresenter.initialize(entity: entity, context: context);
 
-    return DataRow(cells: [
-      DataCell(ActionMenuButton(
-        entityActions: entity.getActions(
-            userCompany: state.userCompany, includeEdit: true),
-        isSaving: false,
-        entity: entity,
-        onSelected: (context, action) =>
-            handleEntityAction(context, entity, action),
-      )),
-      ...columnFields.map((field) => DataCell(
-          Text(entityPresenter.getField(field)),
-          onTap: () => onTap(entity)))
-    ]);
+    final listState = state.getListState(entityType);
+
+    return DataRow(
+      selected: false,
+      onSelectChanged: listState.isInMultiselect() ? (value) {
+        print('onSelectChanged: $value');
+      } : null,
+      cells: [
+        DataCell(
+          ActionMenuButton(
+            entityActions: entity.getActions(
+                userCompany: state.userCompany, includeEdit: true),
+            isSaving: false,
+            entity: entity,
+            onSelected: (context, action) =>
+                handleEntityAction(context, entity, action),
+          ),
+        ),
+        ...columnFields.map(
+          (field) => DataCell(
+            Text(entityPresenter.getField(field)),
+            onTap: () => onTap(entity),
+          ),
+        )
+      ],
+    );
   }
 }

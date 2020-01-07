@@ -106,6 +106,9 @@ class _ProductListState extends State<ProductList> {
             child: Padding(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
+            onSelectAll: (value) {
+              print('onSelectAll: $value');
+            },
             columns: [
               DataColumn(label: SizedBox()),
               ...viewModel.columnFields.map((field) => DataColumn(
@@ -143,6 +146,7 @@ class _ProductListState extends State<ProductList> {
 
     dataTableSource = EntityDataTableSource(
         context: context,
+        entityType: EntityType.product,
         columnFields: viewModel.columnFields,
         entityList: viewModel.productList,
         entityMap: viewModel.productMap,

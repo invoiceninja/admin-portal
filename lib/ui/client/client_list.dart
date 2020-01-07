@@ -144,6 +144,7 @@ class _ClientListState extends State<ClientList> {
 
     dataTableSource = EntityDataTableSource(
         context: context,
+        entityType: EntityType.client,
         columnFields: viewModel.columnFields,
         entityList: viewModel.clientList,
         entityMap: viewModel.clientMap,
