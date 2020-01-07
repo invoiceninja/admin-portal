@@ -45,6 +45,8 @@ class ProductFields {
   static const String isDeleted = 'isDeleted';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
+  static const String customValue3 = 'customValue3';
+  static const String customValue4 = 'customValue4';
 }
 
 abstract class ProductEntity extends Object

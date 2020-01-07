@@ -151,6 +151,12 @@ abstract class SelectableEntity {
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 }
 
+class EntityFields {
+  static const String id = 'id';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+}
+
 abstract class BaseEntity implements SelectableEntity {
   static int counter = 0;
 

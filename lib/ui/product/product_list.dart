@@ -12,6 +12,8 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/product_presenter.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable_source.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -50,8 +52,8 @@ class _ProductListState extends State<ProductList> {
     final state = store.state;
     final productList = widget.viewModel.productList;
 
-    dataTableSource.productList = widget.viewModel.productList;
-    dataTableSource.productMap = widget.viewModel.productMap;
+    dataTableSource.entityList = widget.viewModel.productList;
+    dataTableSource.entityMap = widget.viewModel.productMap;
 
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
@@ -157,82 +159,14 @@ class _ProductListState extends State<ProductList> {
   @override
   void initState() {
     super.initState();
-    dataTableSource = ProductDataTableSource(
+    dataTableSource = EntityDataTableSource(
         context: context,
-        productList: widget.viewModel.productList,
-        productMap: widget.viewModel.productMap,
+        entityList: widget.viewModel.productList,
+        entityMap: widget.viewModel.productMap,
+        entityPresenter: ProductPresenter(),
         onTap: (ProductEntity product) =>
             widget.viewModel.onProductTap(context, product));
   }
 
-  List<DataRow> getDataTableRows(
-      BuildContext context, ProductListVM viewModel) {
-    final products = viewModel.productList
-        .map((productId) => viewModel.productMap[productId])
-        .toList();
-
-    return products.map((product) {
-      // TODO: Re-implement
-      final onTap = () => viewModel.onProductTap(context, product);
-
-      return DataRow(cells: [
-        DataCell(FlatButton(
-          child: Text(
-            AppLocalization.of(context).edit,
-          ),
-          onPressed: () {
-            editEntity(context: context, entity: product);
-          },
-        )),
-        DataCell(Text(product.productKey), onTap: onTap),
-        DataCell(Text(product.price.toString()), onTap: onTap),
-        DataCell(Text(product.cost.toString()), onTap: onTap),
-        DataCell(Text(product.quantity.toString()), onTap: onTap),
-      ]);
-    }).toList();
-  }
-
-  ProductDataTableSource dataTableSource;
-}
-
-class ProductDataTableSource extends DataTableSource {
-  ProductDataTableSource(
-      {@required this.context,
-      @required this.productList,
-      @required this.productMap,
-      @required this.onTap});
-
-  @override
-  DataRow getRow(int index) {
-    final state = StoreProvider.of<AppState>(context).state;
-    final product = productMap[productList[index]];
-    return DataRow(cells: [
-      DataCell(ActionMenuButton(
-        entityActions: product.getActions(
-            userCompany: state.userCompany, includeEdit: true),
-        isSaving: false,
-        entity: product,
-        onSelected: (context, action) =>
-            handleProductAction(context, [product], action),
-      )),
-      DataCell(Text(product.productKey), onTap: () => onTap(product)),
-      DataCell(Text(product.price.toString()), onTap: () => onTap(product)),
-      DataCell(Text(product.cost.toString()), onTap: () => onTap(product)),
-      DataCell(Text(product.quantity.toString()), onTap: () => onTap(product)),
-    ]);
-  }
-
-  @override
-  int get selectedRowCount => 0;
-
-  @override
-  bool get isRowCountApproximate => false;
-
-  @override
-  int get rowCount => productList.length;
-
-  BuildContext context;
-  List<String> productList;
-  BuiltMap<String, ProductEntity> productMap;
-  final Function(ProductEntity product) onTap;
+  EntityDataTableSource dataTableSource;
 }
