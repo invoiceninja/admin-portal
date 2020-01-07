@@ -2,8 +2,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/product_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
@@ -33,26 +33,26 @@ class EntityDataTableSource extends DataTableSource {
   @override
   DataRow getRow(int index) {
     final state = StoreProvider.of<AppState>(context).state;
-    final product = entityMap[entityList[index]];
-    entityPresenter.initialize(entity: product, context: context);
+    final entity = entityMap[entityList[index]];
+    entityPresenter.initialize(entity: entity, context: context);
 
     return DataRow(cells: [
       DataCell(ActionMenuButton(
-        entityActions: product.getActions(
+        entityActions: entity.getActions(
             userCompany: state.userCompany, includeEdit: true),
         isSaving: false,
-        entity: product,
+        entity: entity,
         onSelected: (context, action) =>
-            handleProductAction(context, [product], action),
+            handleEntityAction(context, entity, action),
       )),
       DataCell(Text(entityPresenter.getField(ProductFields.productKey)),
-          onTap: () => onTap(product)),
+          onTap: () => onTap(entity)),
       DataCell(Text(entityPresenter.getField(ProductFields.price)),
-          onTap: () => onTap(product)),
+          onTap: () => onTap(entity)),
       DataCell(Text(entityPresenter.getField(ProductFields.cost)),
-          onTap: () => onTap(product)),
+          onTap: () => onTap(entity)),
       DataCell(Text(entityPresenter.getField(ProductFields.quantity)),
-          onTap: () => onTap(product)),
+          onTap: () => onTap(entity)),
     ]);
   }
 }
