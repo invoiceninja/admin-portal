@@ -45,10 +45,12 @@ class EntityDataTableSource extends DataTableSource {
     final listState = state.getListState(entityType);
 
     return DataRow(
-      selected: false,
-      onSelectChanged: listState.isInMultiselect() ? (value) {
-        print('onSelectChanged: $value');
-      } : null,
+      selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
+      onSelectChanged: listState.isInMultiselect()
+          ? (value) {
+              print('onSelectChanged: $value');
+            }
+          : null,
       cells: [
         DataCell(
           ActionMenuButton(
