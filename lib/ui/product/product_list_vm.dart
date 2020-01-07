@@ -67,7 +67,7 @@ class ProductListVM {
       isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
-        if (state.productListState.isInMultiselect()) {
+        if (store.state.productListState.isInMultiselect()) {
           handleProductAction(
               context, [product], EntityAction.toggleMultiselect);
         } else {

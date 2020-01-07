@@ -388,7 +388,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Line items: ${invoiceUIState.editing.lineItems.map((item) => item.productKey)}';
     //return 'Settings: ${uiState.settingsUIState.settings}';
     //return 'Payment: ${uiState.paymentUIState.editing.paymentables}';
-    return 'isAuthenticated: ${authState.isAuthenticated}';
+    //return 'isAuthenticated: ${authState.isAuthenticated}';
+    return 'MultiSelect: ${productListState.isInMultiselect()} SelectedIds: ${productListState.selectedIds}';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
