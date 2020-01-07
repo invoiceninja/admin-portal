@@ -150,6 +150,7 @@ class _ClientListState extends State<ClientList> {
 
     dataTableSource = EntityDataTableSource(
         context: context,
+        editingId: viewModel.state.clientUIState.editing.id,
         entityType: EntityType.client,
         columnFields: viewModel.columnFields,
         entityList: viewModel.clientList,

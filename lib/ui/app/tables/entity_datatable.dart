@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 class EntityDataTableSource extends DataTableSource {
   EntityDataTableSource(
       {@required this.context,
+      @required this.editingId,
       @required this.entityList,
       @required this.entityMap,
       @required this.entityPresenter,
@@ -18,6 +19,7 @@ class EntityDataTableSource extends DataTableSource {
       @required this.onTap});
 
   EntityType entityType;
+  String editingId;
   BuildContext context;
   List<String> entityList;
   EntityPresenter entityPresenter;
@@ -42,6 +44,7 @@ class EntityDataTableSource extends DataTableSource {
     entityPresenter.initialize(entity: entity, context: context);
 
     final listState = state.getListState(entityType);
+    final uIState = state.getUIState(entityType);
 
     return DataRow(
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
@@ -53,16 +56,29 @@ class EntityDataTableSource extends DataTableSource {
           : null,
       cells: [
         if (!listState.isInMultiselect())
-          DataCell(
-            ActionMenuButton(
-              entityActions: entity.getActions(
-                  userCompany: state.userCompany, includeEdit: true),
-              isSaving: false,
-              entity: entity,
-              onSelected: (context, action) =>
-                  handleEntityAction(context, entity, action),
-            ),
-          ),
+          DataCell(Row(
+            children: <Widget>[
+              Text(
+                '•',
+                style: TextStyle(
+                    color: (state.uiState.isEditing
+                        ? entity.id == editingId
+                        : entity.id == uIState.selectedId)
+                            ? Theme.of(context).accentColor
+                            : Colors.transparent,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+              ActionMenuButton(
+                entityActions: entity.getActions(
+                    userCompany: state.userCompany, includeEdit: true),
+                isSaving: false,
+                entity: entity,
+                onSelected: (context, action) =>
+                    handleEntityAction(context, entity, action),
+              ),
+            ],
+          )),
         ...columnFields.map(
           (field) => DataCell(
             Text(entityPresenter.getField(field)),

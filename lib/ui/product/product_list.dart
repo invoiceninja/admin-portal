@@ -42,6 +42,7 @@ class _ProductListState extends State<ProductList> {
     dataTableSource = EntityDataTableSource(
         context: context,
         entityType: EntityType.product,
+        editingId: viewModel.state.productUIState.editing.id,
         columnFields: viewModel.columnFields,
         entityList: viewModel.productList,
         entityMap: viewModel.productMap,
@@ -54,8 +55,10 @@ class _ProductListState extends State<ProductList> {
   void didUpdateWidget(ProductList oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    dataTableSource.entityList = widget.viewModel.productList;
-    dataTableSource.entityMap = widget.viewModel.productMap;
+    final viewModel = widget.viewModel;
+    dataTableSource.editingId = viewModel.state.productUIState.editing.id;
+    dataTableSource.entityList = viewModel.productList;
+    dataTableSource.entityMap = viewModel.productMap;
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
