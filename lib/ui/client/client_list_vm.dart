@@ -42,6 +42,7 @@ class ClientListVM {
     @required this.filter,
     @required this.onClientTap,
     @required this.onRefreshed,
+    @required this.columnFields,
     @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
@@ -58,6 +59,7 @@ class ClientListVM {
   final Function(BuildContext, List<ClientEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> columnFields;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -92,6 +94,7 @@ class ClientListVM {
           context: context,
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
+      columnFields: state.userCompany.getTableColumns(EntityType.client),
     );
   }
 }
