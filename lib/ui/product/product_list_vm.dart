@@ -70,7 +70,7 @@ class ProductListVM {
         viewEntity(context: context, entity: product);
       },
       onRefreshed: (context) => _handleRefresh(context),
-      columnFields: ProductPresenter.getFields(state.userCompany),
+      columnFields: ProductPresenter.getTableFields(state.userCompany),
     );
   }
 

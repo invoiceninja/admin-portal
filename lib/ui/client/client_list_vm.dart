@@ -95,7 +95,7 @@ class ClientListVM {
           context: context,
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
-      columnFields: ClientPresenter.getFields(state.userCompany),
+      columnFields: ClientPresenter.getTableFields(state.userCompany),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ProductPresenter extends EntityPresenter {
-  static List<String> getFields(UserCompanyEntity userCompany) {
+  static List<String> getTableFields(UserCompanyEntity userCompany) {
     final company = userCompany.company;
 
     return [
