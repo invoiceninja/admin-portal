@@ -81,5 +81,8 @@ final lastErrorReducer = combineReducers<String>([
   TypedReducer<String, LoadExpensesFailure>((state, action) {
     return '${action.error}';
   }),
+  TypedReducer<String, RefreshDataFailure>((state, action) {
+    return '${action.error}';
+  }),
   // TODO add to starter.sh
 ]);

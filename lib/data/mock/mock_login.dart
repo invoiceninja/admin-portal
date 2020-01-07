@@ -26,6 +26,11 @@ const dynamic kMockLogin = '''
                 "company_key": "rnrK2qYyitKPs9xxf78edGQxYhyeoLDKVvcwuqqw1ZLRpGXlxNPciocwxMavFqxe",
                 "update_products": false,
                 "fill_products": true,
+                "enable_product_cost": false,
+                "enable_product_quantity": true,
+                "enable_invoice_quantity": true,
+                "default_quantity": true,
+                "show_product_details": true,
                 "convert_products": false,
                 "custom_surcharge_taxes1": false,
                 "custom_surcharge_taxes2": false,
@@ -229,8 +234,12 @@ const dynamic kMockLogin = '''
                     "settings":{}                    
                    }
                 ],
-                "company_gateways": [
-                ]
+                "company_gateways": [],
+                "clients": [],
+                "products": [],
+                "invoices": [],
+                "payments": [],
+                "quotes": []
             },
             "token": {
                 "token": "d2oWWAP4POflJAVLELCthSF5G94D0f3kRb0tjyF6uGY8LGgR1qIbJxffI8OwEHXS",

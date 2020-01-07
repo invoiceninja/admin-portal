@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -7,11 +8,13 @@ class SaveCancelButtons extends StatelessWidget {
     this.onSavePressed,
     this.onCancelPressed,
     this.saveLabel,
+    this.cancelLabel,
     this.isSaving = false,
   });
 
   final bool isSaving;
   final String saveLabel;
+  final String cancelLabel;
   final Function(BuildContext) onCancelPressed;
   final Function(BuildContext) onSavePressed;
 
@@ -25,12 +28,13 @@ class SaveCancelButtons extends StatelessWidget {
           Builder(builder: (BuildContext context) {
             return FlatButton(
               child: Text(
-                localization.cancel,
+                cancelLabel ?? localization.cancel,
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () => onCancelPressed(context),
             );
           }),
+        SizedBox(width: 10),
         Builder(builder: (BuildContext context) {
           return ActionFlatButton(
             tooltip: saveLabel ?? localization.save,

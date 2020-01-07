@@ -202,7 +202,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       if (action.completer != null) {
         action.completer.completeError(error);
       }
-      store.dispatch(UserLoginFailure(error));
+      store.dispatch(RefreshDataFailure(error));
     });
 
     next(action);

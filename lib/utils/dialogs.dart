@@ -93,10 +93,12 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       ),
       actions: <Widget>[
         SaveCancelButtons(
+          saveLabel: localization.save.toUpperCase(),
           onSavePressed: (context) {
             Navigator.pop(context);
             widget.callback(_password);
           },
+          cancelLabel: localization.cancel.toUpperCase(),
           onCancelPressed: (context) {
             Navigator.pop(context);
           },

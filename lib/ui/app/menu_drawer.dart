@@ -375,10 +375,12 @@ class SidebarFooter extends StatelessWidget {
                       return StateInspector();
                     }),
               ),
+            /*
             IconButton(
               icon: Icon(Icons.filter),
               onPressed: () => viewPdf(InvoiceEntity(), context),
             ),
+             */
             if (state.lastError.isNotEmpty && !kReleaseMode)
               IconButton(
                 icon: Icon(

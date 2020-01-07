@@ -111,6 +111,11 @@ class RefreshData {
   final bool loadCompanies;
 }
 
+class RefreshDataFailure {
+  const RefreshDataFailure(this.error);
+  final dynamic error;
+}
+
 class ClearLastError {}
 
 class DiscardChanges {}
