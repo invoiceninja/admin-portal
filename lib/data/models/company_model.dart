@@ -605,25 +605,6 @@ abstract class UserCompanyEntity
     }
   }
 
-  List<String> getTableColumns(EntityType entityType) {
-    switch (entityType) {
-      case EntityType.client:
-        return [
-          ClientFields.name,
-        ];
-      case EntityType.product:
-        return [
-          ProductFields.productKey,
-          ProductFields.notes,
-          if (company.enableProductCost) ProductFields.cost,
-          ProductFields.price,
-          if (company.enableProductQuantity) ProductFields.quantity,
-        ];
-      default:
-        return [];
-    }
-  }
-
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
 }

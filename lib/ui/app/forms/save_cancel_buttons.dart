@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_flat_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 

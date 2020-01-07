@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter_redux/flutter_redux.dart';

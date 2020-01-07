@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/client_presenter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -94,7 +95,7 @@ class ClientListVM {
           context: context,
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
-      columnFields: state.userCompany.getTableColumns(EntityType.client),
+      columnFields: ClientPresenter.getFields(state.userCompany),
     );
   }
 }
