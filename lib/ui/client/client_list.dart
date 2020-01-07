@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/client_presenter.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable_source.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -98,27 +98,33 @@ class _ClientListState extends State<ClientList> {
                     );
                   }
                 },
-                isChecked:
-                isInMultiselect && listUIState.isSelected(client.id),
+                isChecked: isInMultiselect && listUIState.isSelected(client.id),
               );
             });
       } else {
         return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: PaginatedDataTable(
-                columns: [
-                  DataColumn(label: SizedBox()),
-                  ...viewModel.columnFields.map((field) => DataColumn(
-                      label: Text(AppLocalization.of(context).lookup(field)),
-                      numeric: EntityPresenter.isFieldNumeric(field),
-                      onSort: (int columnIndex, bool ascending) =>
-                          store.dispatch(SortClients(field)))),
-                ],
-                source: dataTableSource,
-                header: SizedBox(),
+          padding: const EdgeInsets.all(12),
+          child: PaginatedDataTable(
+            columns: [
+              if (!listUIState.isInMultiselect())
+                DataColumn(
+                  label: SizedBox(),
+                ),
+              ...viewModel.columnFields.map(
+                (field) => DataColumn(
+                  label: Text(AppLocalization.of(context).lookup(field)),
+                  numeric: EntityPresenter.isFieldNumeric(field),
+                  onSort: (int columnIndex, bool ascending) => store.dispatch(
+                    SortClients(field),
+                  ),
+                ),
               ),
-            ));
+            ],
+            source: dataTableSource,
+            header: SizedBox(),
+          ),
+        ));
       }
     };
 
@@ -149,8 +155,7 @@ class _ClientListState extends State<ClientList> {
         entityList: viewModel.clientList,
         entityMap: viewModel.clientMap,
         entityPresenter: ClientPresenter(),
-        onTap: (BaseEntity client) =>
-            viewModel.onClientTap(context, client));
+        onTap: (BaseEntity client) => viewModel.onClientTap(context, client));
   }
 
   EntityDataTableSource dataTableSource;

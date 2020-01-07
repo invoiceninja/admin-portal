@@ -53,16 +53,17 @@ class EntityDataTableSource extends DataTableSource {
             }
           : null,
       cells: [
-        DataCell(
-          ActionMenuButton(
-            entityActions: entity.getActions(
-                userCompany: state.userCompany, includeEdit: true),
-            isSaving: false,
-            entity: entity,
-            onSelected: (context, action) =>
-                handleEntityAction(context, entity, action),
+        if (!listState.isInMultiselect())
+          DataCell(
+            ActionMenuButton(
+              entityActions: entity.getActions(
+                  userCompany: state.userCompany, includeEdit: true),
+              isSaving: false,
+              entity: entity,
+              onSelected: (context, action) =>
+                  handleEntityAction(context, entity, action),
+            ),
           ),
-        ),
         ...columnFields.map(
           (field) => DataCell(
             Text(entityPresenter.getField(field)),

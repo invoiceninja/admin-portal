@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/product_presenter.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable_source.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
@@ -111,7 +111,7 @@ class _ProductListState extends State<ProductList> {
               print('onSelectAll: $value');
             },
             columns: [
-              DataColumn(label: SizedBox()),
+              if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
               ...viewModel.columnFields.map((field) => DataColumn(
                   label: Text(AppLocalization.of(context).lookup(field)),
                   numeric: EntityPresenter.isFieldNumeric(field),
