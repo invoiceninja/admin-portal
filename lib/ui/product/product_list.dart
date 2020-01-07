@@ -55,6 +55,8 @@ class _ProductListState extends State<ProductList> {
     super.didUpdateWidget(oldWidget);
 
     dataTableSource.entityList = widget.viewModel.productList;
+    dataTableSource.entityMap = widget.viewModel.productMap;
+
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
   }
