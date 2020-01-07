@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/product_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
-import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -108,7 +107,14 @@ class _ProductListState extends State<ProductList> {
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
             onSelectAll: (value) {
-              print('onSelectAll: $value');
+              final products = viewModel.productList
+                  .map<ProductEntity>(
+                      (productId) => viewModel.productMap[productId])
+                  .where(
+                      (product) => value != listUIState.isSelected(product.id))
+                  .toList();
+              handleProductAction(
+                  context, products, EntityAction.toggleMultiselect);
             },
             columns: [
               if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),

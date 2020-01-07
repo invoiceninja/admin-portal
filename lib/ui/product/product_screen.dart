@@ -46,7 +46,6 @@ class ProductScreen extends StatelessWidget {
             .map<ProductEntity>((productId) => viewModel.productMap[productId])
             .where((product) => value != listUIState.isSelected(product.id))
             .toList();
-
         handleProductAction(context, products, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
