@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -7,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -35,24 +33,19 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
-    if (!widget.viewModel.isLoaded) {
-      return widget.viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (widget.viewModel.productList.isEmpty) {
+    final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final listUIState = state.uiState.productUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final isList = state.prefState.moduleLayout == ModuleLayout.list;
+    final productList = viewModel.productList;
+
+    if (!viewModel.isLoaded) {
+      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
+    } else if (productList.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
-
-    return _buildListView(context);
-  }
-
-  Widget _buildListView(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final listUIState = store.state.uiState.productUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final isList = store.state.prefState.moduleLayout == ModuleLayout.list;
-    final localization = AppLocalization.of(context);
-    final state = store.state;
-    final viewModel = widget.viewModel;
-    final productList = viewModel.productList;
 
     dataTableSource.entityList = viewModel.productList;
     dataTableSource.entityMap = viewModel.productMap;
@@ -71,36 +64,37 @@ class _ProductListState extends State<ProductList> {
       if (isList) {
         return ListView.separated(
             separatorBuilder: (context, index) => ListDivider(),
-            itemCount: widget.viewModel.productList.length,
+            itemCount: viewModel.productList.length,
             itemBuilder: (BuildContext context, index) {
-              final productId = widget.viewModel.productList[index];
-              final product = widget.viewModel.productMap[productId];
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [product],
-                    context: context,
-                  );
+              final productId = viewModel.productList[index];
+              final product = viewModel.productMap[productId];
 
               return ProductListItem(
-                userCompany: widget.viewModel.state.userCompany,
-                filter: widget.viewModel.filter,
+                userCompany: viewModel.state.userCompany,
+                filter: viewModel.filter,
                 product: product,
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
-                    showDialog();
+                    showEntityActionsDialog(
+                      entities: [product],
+                      context: context,
+                    );
                   } else {
                     handleProductAction(context, [product], action);
                   }
                 },
-                onTap: () => widget.viewModel.onProductTap(context, product),
+                onTap: () => viewModel.onProductTap(context, product),
                 onLongPress: () async {
                   final longPressIsSelection =
-                      store.state.prefState.longPressSelectionIsDefault ?? true;
+                      state.prefState.longPressSelectionIsDefault ?? true;
                   if (longPressIsSelection && !isInMultiselect) {
                     handleProductAction(
                         context, [product], EntityAction.toggleMultiselect);
                   } else {
-                    showDialog();
+                    showEntityActionsDialog(
+                      entities: [product],
+                      context: context,
+                    );
                   }
                 },
                 isChecked:
@@ -108,18 +102,17 @@ class _ProductListState extends State<ProductList> {
               );
             });
       } else {
-        final sortFn = (String field) => store.dispatch(SortProducts(field));
-
         return SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
             columns: [
               DataColumn(label: SizedBox()),
-              ...widget.viewModel.columnFields.map((field) => DataColumn(
-                  label: Text(localization.lookup(field)),
+              ...viewModel.columnFields.map((field) => DataColumn(
+                  label: Text(AppLocalization.of(context).lookup(field)),
                   numeric: EntityPresenter.isFieldNumeric(field),
-                  onSort: (int columnIndex, bool ascending) => sortFn(field))),
+                  onSort: (int columnIndex, bool ascending) =>
+                      store.dispatch(SortProducts(field)))),
             ],
             source: dataTableSource,
             header: SizedBox(),
@@ -129,7 +122,7 @@ class _ProductListState extends State<ProductList> {
     };
 
     return RefreshIndicator(
-      onRefresh: () => widget.viewModel.onRefreshed(context),
+      onRefresh: () => viewModel.onRefreshed(context),
       child: listOrTable(),
     );
   }
