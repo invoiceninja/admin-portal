@@ -31,6 +31,33 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  EntityDataTableSource dataTableSource;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final viewModel = widget.viewModel;
+
+    dataTableSource = EntityDataTableSource(
+        context: context,
+        entityType: EntityType.product,
+        columnFields: viewModel.columnFields,
+        entityList: viewModel.productList,
+        entityMap: viewModel.productMap,
+        entityPresenter: ProductPresenter(),
+        onTap: (BaseEntity product) =>
+            viewModel.onProductTap(context, product));
+  }
+
+  @override
+  void didUpdateWidget(ProductList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    dataTableSource.notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -136,31 +163,4 @@ class _ProductListState extends State<ProductList> {
       child: listOrTable(),
     );
   }
-
-  @override
-  void didUpdateWidget(ProductList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    dataTableSource.notifyListeners();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-
-    dataTableSource = EntityDataTableSource(
-        context: context,
-        entityType: EntityType.product,
-        columnFields: viewModel.columnFields,
-        entityList: viewModel.productList,
-        entityMap: viewModel.productMap,
-        entityPresenter: ProductPresenter(),
-        onTap: (BaseEntity product) =>
-            viewModel.onProductTap(context, product));
-  }
-
-  EntityDataTableSource dataTableSource;
 }
