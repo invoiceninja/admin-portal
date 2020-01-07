@@ -43,7 +43,7 @@ class ListScaffold extends StatelessWidget {
     final state = store.state;
 
     Widget leadingWidget;
-    if (showCheckbox) {
+    if (showCheckbox && state.prefState.isModuleList) {
       leadingWidget = Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           onChanged: onCheckboxChanged,
