@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -12,11 +13,12 @@ class ProductPresenter extends EntityPresenter {
       if (company.enableProductCost) ProductFields.cost,
       ProductFields.price,
       if (company.enableProductQuantity) ProductFields.quantity,
+      EntityFields.state,
     ];
   }
 
   @override
-  String getField(String field) {
+  String getField({String field, BuildContext context}) {
     final product = entity as ProductEntity;
 
     switch (field) {
@@ -35,6 +37,6 @@ class ProductPresenter extends EntityPresenter {
             formatNumberType: FormatNumberType.double);
     }
 
-    return super.getField(field);
+    return super.getField(field: field, context: context);
   }
 }

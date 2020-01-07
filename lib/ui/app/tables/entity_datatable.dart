@@ -62,10 +62,10 @@ class EntityDataTableSource extends DataTableSource {
                 '•',
                 style: TextStyle(
                     color: (state.uiState.isEditing
-                        ? entity.id == editingId
-                        : entity.id == uIState.selectedId)
-                            ? Theme.of(context).accentColor
-                            : Colors.transparent,
+                            ? entity.id == editingId
+                            : entity.id == uIState.selectedId)
+                        ? Theme.of(context).accentColor
+                        : Colors.transparent,
                     fontSize: 30,
                     fontWeight: FontWeight.bold),
               ),
@@ -81,7 +81,7 @@ class EntityDataTableSource extends DataTableSource {
           )),
         ...columnFields.map(
           (field) => DataCell(
-            Text(entityPresenter.getField(field)),
+            Text(entityPresenter.getField(field: field, context: context)),
             onTap: () => onTap(entity),
           ),
         )

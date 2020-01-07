@@ -153,8 +153,9 @@ abstract class SelectableEntity {
 
 class EntityFields {
   static const String id = 'id';
-  static const String createdAt = 'created_at';
-  static const String updatedAt = 'updated_at';
+  static const String createdAt = 'createdAt';
+  static const String updatedAt = 'updatedAt';
+  static const String state = 'entityState';
 }
 
 abstract class BaseEntity implements SelectableEntity {

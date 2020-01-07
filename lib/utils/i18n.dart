@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'entity_state': 'State',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
@@ -15933,6 +15934,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get verifyPassword =>
       _localizedValues[localeCode]['verify_password'];
+
+  String get entityState =>
+      _localizedValues[localeCode]['entity_state'];
 
 
   String lookup(String key) {
