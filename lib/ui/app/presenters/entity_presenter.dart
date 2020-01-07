@@ -25,4 +25,13 @@ class EntityPresenter {
 
     return 'Error: $field not found';
   }
+
+  static bool isFieldNumeric(String field) => [
+        'cost',
+        'price',
+        'amount',
+        'total',
+        'balance',
+        'quantity'
+      ].contains(field);
 }

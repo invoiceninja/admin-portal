@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/product_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable_source.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
@@ -50,10 +51,11 @@ class _ProductListState extends State<ProductList> {
     final isList = store.state.prefState.moduleLayout == ModuleLayout.list;
     final localization = AppLocalization.of(context);
     final state = store.state;
-    final productList = widget.viewModel.productList;
+    final viewModel = widget.viewModel;
+    final productList = viewModel.productList;
 
-    dataTableSource.entityList = widget.viewModel.productList;
-    dataTableSource.entityMap = widget.viewModel.productMap;
+    dataTableSource.entityList = viewModel.productList;
+    dataTableSource.entityMap = viewModel.productMap;
 
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
@@ -116,8 +118,7 @@ class _ProductListState extends State<ProductList> {
               DataColumn(label: SizedBox()),
               ...widget.viewModel.columnFields.map((field) => DataColumn(
                   label: Text(localization.lookup(field)),
-                  numeric: ['cost', 'price', 'amount', 'total', 'balance']
-                      .contains(field),
+                  numeric: EntityPresenter.isFieldNumeric(field),
                   onSort: (int columnIndex, bool ascending) => sortFn(field))),
             ],
             source: dataTableSource,
@@ -144,14 +145,17 @@ class _ProductListState extends State<ProductList> {
   @override
   void initState() {
     super.initState();
+
+    final viewModel = widget.viewModel;
+
     dataTableSource = EntityDataTableSource(
         context: context,
-        columnFields: widget.viewModel.columnFields,
-        entityList: widget.viewModel.productList,
-        entityMap: widget.viewModel.productMap,
+        columnFields: viewModel.columnFields,
+        entityList: viewModel.productList,
+        entityMap: viewModel.productMap,
         entityPresenter: ProductPresenter(),
         onTap: (ProductEntity product) =>
-            widget.viewModel.onProductTap(context, product));
+            viewModel.onProductTap(context, product));
   }
 
   EntityDataTableSource dataTableSource;
