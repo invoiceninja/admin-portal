@@ -54,6 +54,7 @@ class _ProductListState extends State<ProductList> {
   void didUpdateWidget(ProductList oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    dataTableSource.entityList = widget.viewModel.productList;
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
   }
@@ -73,9 +74,6 @@ class _ProductListState extends State<ProductList> {
     } else if (productList.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
-
-    dataTableSource.entityList = viewModel.productList;
-    dataTableSource.entityMap = viewModel.productMap;
 
     if (isNotMobile(context) &&
         productList.isNotEmpty &&
