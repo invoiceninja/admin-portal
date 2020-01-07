@@ -25,7 +25,7 @@ class EntityDataTableSource extends DataTableSource {
   BuiltMap<String, BaseEntity> entityMap;
   List<String> columnFields;
 
-  final Function(ProductEntity product) onTap;
+  final Function(BaseEntity entity) onTap;
 
   @override
   int get selectedRowCount => 0;
@@ -48,7 +48,8 @@ class EntityDataTableSource extends DataTableSource {
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged: listState.isInMultiselect()
           ? (value) {
-              print('onSelectChanged: $value');
+              print('onSelectChanged');
+              onTap(entity);
             }
           : null,
       cells: [

@@ -54,9 +54,7 @@ class ProductListItem extends StatelessWidget {
       entity: product,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: onTap,
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

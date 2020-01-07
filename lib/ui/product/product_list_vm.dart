@@ -67,7 +67,12 @@ class ProductListVM {
       isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
-        viewEntity(context: context, entity: product);
+        if (state.productListState.isInMultiselect()) {
+          handleProductAction(
+              context, [product], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: product);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       columnFields: ProductPresenter.getTableFields(state.userCompany),
