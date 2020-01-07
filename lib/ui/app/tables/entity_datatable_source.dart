@@ -13,12 +13,14 @@ class EntityDataTableSource extends DataTableSource {
       @required this.entityList,
       @required this.entityMap,
       @required this.entityPresenter,
+      @required this.columnFields,
       @required this.onTap});
 
   BuildContext context;
   List<String> entityList;
   EntityPresenter entityPresenter;
   BuiltMap<String, ProductEntity> entityMap;
+  List<String> columnFields;
   final Function(ProductEntity product) onTap;
 
   @override
@@ -45,14 +47,9 @@ class EntityDataTableSource extends DataTableSource {
         onSelected: (context, action) =>
             handleEntityAction(context, entity, action),
       )),
-      DataCell(Text(entityPresenter.getField(ProductFields.productKey)),
-          onTap: () => onTap(entity)),
-      DataCell(Text(entityPresenter.getField(ProductFields.price)),
-          onTap: () => onTap(entity)),
-      DataCell(Text(entityPresenter.getField(ProductFields.cost)),
-          onTap: () => onTap(entity)),
-      DataCell(Text(entityPresenter.getField(ProductFields.quantity)),
-          onTap: () => onTap(entity)),
+      ...columnFields.map((field) => DataCell(
+          Text(entityPresenter.getField(field)),
+          onTap: () => onTap(entity)))
     ]);
   }
 }

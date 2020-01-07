@@ -127,7 +127,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'show_product_details')
   bool get showProductDetails;
 
-
   // TODO remove this
   @nullable
   String get plan;
@@ -606,6 +605,21 @@ abstract class UserCompanyEntity
     }
   }
 
+  List<String> getTableColumns(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.product:
+        return [
+          ProductFields.productKey,
+          ProductFields.notes,
+          if (company.enableProductCost) ProductFields.cost,
+          ProductFields.price,
+          if (company.enableProductQuantity) ProductFields.quantity,
+        ];
+      default:
+        return [];
+    }
+  }
+
   static Serializer<UserCompanyEntity> get serializer =>
       _$userCompanyEntitySerializer;
 }
@@ -615,6 +629,7 @@ abstract class UserSettingsEntity
   factory UserSettingsEntity() {
     return _$UserSettingsEntity._(
       accentColor: kDefaultAccentColor,
+      tableFields: BuiltMap<String, BuiltList<String>>(),
     );
   }
 
@@ -623,6 +638,10 @@ abstract class UserSettingsEntity
   @nullable
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
+
+  @nullable
+  @BuiltValueField(wireName: 'table_fields')
+  BuiltMap<String, BuiltList<String>> get tableFields;
 
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;

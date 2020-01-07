@@ -10,6 +10,8 @@ class ProductPresenter extends EntityPresenter {
     switch (field) {
       case ProductFields.productKey:
         return product.productKey;
+      case ProductFields.notes:
+        return product.notes;
       case ProductFields.cost:
         return formatNumber(product.cost, context,
             formatNumberType: FormatNumberType.money);

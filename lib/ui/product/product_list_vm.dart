@@ -41,6 +41,7 @@ class ProductListVM {
     @required this.isLoaded,
     @required this.onProductTap,
     @required this.onRefreshed,
+    @required this.columnFields,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
@@ -57,17 +58,19 @@ class ProductListVM {
     final state = store.state;
 
     return ProductListVM(
-        state: state,
-        productList: memoizedFilteredProductList(state.productState.map,
-            state.productState.list, state.productListState),
-        productMap: state.productState.map,
-        isLoading: state.isLoading,
-        isLoaded: state.productState.isLoaded,
-        filter: state.productUIState.listUIState.filter,
-        onProductTap: (context, product) {
-          viewEntity(context: context, entity: product);
-        },
-        onRefreshed: (context) => _handleRefresh(context));
+      state: state,
+      productList: memoizedFilteredProductList(state.productState.map,
+          state.productState.list, state.productListState),
+      productMap: state.productState.map,
+      isLoading: state.isLoading,
+      isLoaded: state.productState.isLoaded,
+      filter: state.productUIState.listUIState.filter,
+      onProductTap: (context, product) {
+        viewEntity(context: context, entity: product);
+      },
+      onRefreshed: (context) => _handleRefresh(context),
+      columnFields: state.userCompany.getTableColumns(EntityType.product),
+    );
   }
 
   final AppState state;
@@ -78,4 +81,5 @@ class ProductListVM {
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
+  final List<String> columnFields;
 }

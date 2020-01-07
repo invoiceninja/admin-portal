@@ -863,6 +863,15 @@ class _$UserSettingsEntitySerializer
         ..add(serializers.serialize(object.accentColor,
             specifiedType: const FullType(String)));
     }
+    if (object.tableFields != null) {
+      result
+        ..add('table_fields')
+        ..add(serializers.serialize(object.tableFields,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(BuiltList, const [const FullType(String)])
+            ])));
+    }
     return result;
   }
 
@@ -881,6 +890,13 @@ class _$UserSettingsEntitySerializer
         case 'accent_color':
           result.accentColor = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'table_fields':
+          result.tableFields.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])) as BuiltMap<dynamic, dynamic>);
           break;
       }
     }
@@ -3802,12 +3818,14 @@ class UserCompanyEntityBuilder
 class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   final String accentColor;
+  @override
+  final BuiltMap<String, BuiltList<String>> tableFields;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
       (new UserSettingsEntityBuilder()..update(updates)).build();
 
-  _$UserSettingsEntity._({this.accentColor}) : super._();
+  _$UserSettingsEntity._({this.accentColor, this.tableFields}) : super._();
 
   @override
   UserSettingsEntity rebuild(
@@ -3821,18 +3839,21 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UserSettingsEntity && accentColor == other.accentColor;
+    return other is UserSettingsEntity &&
+        accentColor == other.accentColor &&
+        tableFields == other.tableFields;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, accentColor.hashCode));
+    return $jf($jc($jc(0, accentColor.hashCode), tableFields.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
-          ..add('accentColor', accentColor))
+          ..add('accentColor', accentColor)
+          ..add('tableFields', tableFields))
         .toString();
   }
 }
@@ -3845,11 +3866,18 @@ class UserSettingsEntityBuilder
   String get accentColor => _$this._accentColor;
   set accentColor(String accentColor) => _$this._accentColor = accentColor;
 
+  MapBuilder<String, BuiltList<String>> _tableFields;
+  MapBuilder<String, BuiltList<String>> get tableFields =>
+      _$this._tableFields ??= new MapBuilder<String, BuiltList<String>>();
+  set tableFields(MapBuilder<String, BuiltList<String>> tableFields) =>
+      _$this._tableFields = tableFields;
+
   UserSettingsEntityBuilder();
 
   UserSettingsEntityBuilder get _$this {
     if (_$v != null) {
       _accentColor = _$v.accentColor;
+      _tableFields = _$v.tableFields?.toBuilder();
       _$v = null;
     }
     return this;
@@ -3870,8 +3898,22 @@ class UserSettingsEntityBuilder
 
   @override
   _$UserSettingsEntity build() {
-    final _$result =
-        _$v ?? new _$UserSettingsEntity._(accentColor: accentColor);
+    _$UserSettingsEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$UserSettingsEntity._(
+              accentColor: accentColor, tableFields: _tableFields?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'tableFields';
+        _tableFields?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserSettingsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

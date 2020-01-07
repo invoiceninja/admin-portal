@@ -114,25 +114,11 @@ class _ProductListState extends State<ProductList> {
           child: PaginatedDataTable(
             columns: [
               DataColumn(label: SizedBox()),
-              DataColumn(
-                  label: Text(localization.name),
-                  onSort: (int columnIndex, bool ascending) =>
-                      sortFn(ProductFields.productKey)),
-              DataColumn(
-                  label: Text(localization.price),
-                  numeric: true,
-                  onSort: (int columnIndex, bool ascending) =>
-                      sortFn(ProductFields.price)),
-              DataColumn(
-                  label: Text(localization.cost),
-                  numeric: true,
-                  onSort: (int columnIndex, bool ascending) =>
-                      sortFn(ProductFields.cost)),
-              DataColumn(
-                  label: Text(localization.quantity),
-                  numeric: true,
-                  onSort: (int columnIndex, bool ascending) =>
-                      sortFn(ProductFields.quantity)),
+              ...widget.viewModel.columnFields.map((field) => DataColumn(
+                  label: Text(localization.lookup(field)),
+                  numeric: ['cost', 'price', 'amount', 'total', 'balance']
+                      .contains(field),
+                  onSort: (int columnIndex, bool ascending) => sortFn(field))),
             ],
             source: dataTableSource,
             header: SizedBox(),
@@ -151,7 +137,6 @@ class _ProductListState extends State<ProductList> {
   void didUpdateWidget(ProductList oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // The PaginatedDataTable does not update dynamically without this
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
   }
@@ -161,6 +146,7 @@ class _ProductListState extends State<ProductList> {
     super.initState();
     dataTableSource = EntityDataTableSource(
         context: context,
+        columnFields: widget.viewModel.columnFields,
         entityList: widget.viewModel.productList,
         entityMap: widget.viewModel.productMap,
         entityPresenter: ProductPresenter(),
