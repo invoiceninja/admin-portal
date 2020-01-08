@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -48,6 +49,7 @@ class EntityListVM {
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.tableColumns,
   });
 
   final AppState state;
@@ -63,6 +65,7 @@ class EntityListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> tableColumns;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -81,6 +84,7 @@ class InvoiceListVM extends EntityListVM {
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    List<String> tableColumns,
   }) : super(
           state: state,
           user: user,
@@ -95,6 +99,7 @@ class InvoiceListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
+          tableColumns: tableColumns,
         );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -137,6 +142,7 @@ class InvoiceListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> invoices,
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
+      tableColumns: InvoicePresenter.getTableFields(state.userCompany),
     );
   }
 }

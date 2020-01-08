@@ -111,7 +111,7 @@ class _ClientListState extends State<ClientList> {
                 DataColumn(
                   label: SizedBox(),
                 ),
-              ...viewModel.columnFields.map(
+              ...viewModel.tableColumns.map(
                 (field) => DataColumn(
                   label: Text(AppLocalization.of(context).lookup(field)),
                   numeric: EntityPresenter.isFieldNumeric(field),
@@ -152,7 +152,7 @@ class _ClientListState extends State<ClientList> {
         context: context,
         editingId: viewModel.state.clientUIState.editing.id,
         entityType: EntityType.client,
-        columnFields: viewModel.columnFields,
+        tableColumns: viewModel.tableColumns,
         entityList: viewModel.clientList,
         entityMap: viewModel.clientMap,
         entityPresenter: ClientPresenter(),

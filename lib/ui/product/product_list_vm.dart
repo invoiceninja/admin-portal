@@ -42,7 +42,7 @@ class ProductListVM {
     @required this.isLoaded,
     @required this.onProductTap,
     @required this.onRefreshed,
-    @required this.columnFields,
+    @required this.tableColumns,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
@@ -75,7 +75,7 @@ class ProductListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      columnFields: ProductPresenter.getTableFields(state.userCompany),
+      tableColumns: ProductPresenter.getTableFields(state.userCompany),
     );
   }
 
@@ -87,5 +87,5 @@ class ProductListVM {
   final bool isLoaded;
   final Function(BuildContext, ProductEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
-  final List<String> columnFields;
+  final List<String> tableColumns;
 }

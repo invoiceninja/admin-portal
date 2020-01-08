@@ -43,7 +43,7 @@ class _ProductListState extends State<ProductList> {
         context: context,
         entityType: EntityType.product,
         editingId: viewModel.state.productUIState.editing.id,
-        columnFields: viewModel.columnFields,
+        tableColumns: viewModel.tableColumns,
         entityList: viewModel.productList,
         entityMap: viewModel.productMap,
         entityPresenter: ProductPresenter(),
@@ -148,7 +148,7 @@ class _ProductListState extends State<ProductList> {
             },
             columns: [
               if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
-              ...viewModel.columnFields.map((field) => DataColumn(
+              ...viewModel.tableColumns.map((field) => DataColumn(
                   label: Text(AppLocalization.of(context).lookup(field)),
                   numeric: EntityPresenter.isFieldNumeric(field),
                   onSort: (int columnIndex, bool ascending) =>

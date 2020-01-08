@@ -50,6 +50,7 @@ class QuoteListVM extends EntityListVM {
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    List<String> tableColumns,
   }) : super(
           state: state,
           user: user,
@@ -64,6 +65,7 @@ class QuoteListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
+          tableColumns: tableColumns,
         );
 
   static QuoteListVM fromStore(Store<AppState> store) {

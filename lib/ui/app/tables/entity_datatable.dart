@@ -14,7 +14,7 @@ class EntityDataTableSource extends DataTableSource {
       @required this.entityList,
       @required this.entityMap,
       @required this.entityPresenter,
-      @required this.columnFields,
+      @required this.tableColumns,
       @required this.entityType,
       @required this.onTap});
 
@@ -24,7 +24,7 @@ class EntityDataTableSource extends DataTableSource {
   List<String> entityList;
   EntityPresenter entityPresenter;
   BuiltMap<String, BaseEntity> entityMap;
-  List<String> columnFields;
+  List<String> tableColumns;
 
   final Function(BaseEntity entity) onTap;
 
@@ -79,7 +79,7 @@ class EntityDataTableSource extends DataTableSource {
               ),
             ],
           )),
-        ...columnFields.map(
+        ...tableColumns.map(
           (field) => DataCell(
             Text(entityPresenter.getField(field: field, context: context)),
             onTap: () => onTap(entity),
