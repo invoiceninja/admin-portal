@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -42,6 +43,7 @@ class VendorListVM {
     @required this.onVendorTap,
     @required this.listState,
     @required this.onRefreshed,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -77,6 +79,7 @@ class VendorListVM {
         viewEntity(context: context, entity: vendor);
       },
       onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: VendorPresenter.getTableFields(state.userCompany),
     );
   }
 
@@ -91,4 +94,5 @@ class VendorListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> tableColumns;
 }

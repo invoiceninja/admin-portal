@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/expense_presenter.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -43,6 +44,7 @@ class ExpenseListVM {
     @required this.onExpenseTap,
     @required this.listState,
     @required this.onRefreshed,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -87,6 +89,7 @@ class ExpenseListVM {
             entityType: EntityType.expense);
       },
       onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: ExpensePresenter.getTableFields(state.userCompany),
     );
   }
 
@@ -102,4 +105,5 @@ class ExpenseListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> tableColumns;
 }

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/project_presenter.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -44,6 +45,7 @@ class ProjectListVM {
     @required this.isLoaded,
     @required this.onProjectTap,
     @required this.onRefreshed,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -84,6 +86,7 @@ class ProjectListVM {
         viewEntity(context: context, entity: project);
       },
       onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: ProjectPresenter.getTableFields(state.userCompany),
     );
   }
 
@@ -99,4 +102,5 @@ class ProjectListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> tableColumns;
 }

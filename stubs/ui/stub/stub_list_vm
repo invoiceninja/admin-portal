@@ -45,6 +45,7 @@ class StubListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -99,5 +100,5 @@ class StubListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
+  final List<String> tableColumns;
 }
