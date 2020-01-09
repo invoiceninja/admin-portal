@@ -50,7 +50,7 @@ class _InvoiceViewState extends State<InvoiceView>
     return ViewScaffold(
       entity: invoice,
       title:
-          '${localization.invoice} ${invoice.number ?? '• ${localization.pending}'}',
+          '${invoice.number ?? '• ${localization.pending}'}',
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [

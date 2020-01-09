@@ -56,9 +56,7 @@ class _PaymentViewState extends State<PaymentView> {
 
     return ViewScaffold(
       entity: payment,
-      title: payment.transactionReference.isNotEmpty
-          ? payment.transactionReference
-          : localization.payment,
+      title: payment.number,
       body: Builder(
         builder: (BuildContext context) {
           return ListView(
