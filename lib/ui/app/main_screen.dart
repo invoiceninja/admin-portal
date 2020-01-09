@@ -144,109 +144,6 @@ class MainScreen extends StatelessWidget {
             ],
             Expanded(child: screen),
           ]);
-
-          /*
-          int mainIndex = 0;
-          
-          // TODO use constants array to lookup index
-          if (mainRoute == EntityType.client.name) {
-            mainIndex = 1;
-          } else if (mainRoute == EntityType.product.name) {
-            mainIndex = 2;
-          } else if (mainRoute == EntityType.invoice.name) {
-            mainIndex = 3;
-          } else if (mainRoute == EntityType.payment.name) {
-            mainIndex = 4;
-          } else if (mainRoute == EntityType.quote.name) {
-            mainIndex = 5;
-          } else if (mainRoute == EntityType.project.name) {
-            mainIndex = 6;
-          } else if (mainRoute == EntityType.task.name) {
-            mainIndex = 7;
-          } else if (mainRoute == EntityType.vendor.name) {
-            mainIndex = 8;
-          } else if (mainRoute == EntityType.expense.name) {
-            mainIndex = 9;
-          } else if (mainRoute == 'settings') {
-            mainIndex = 10;
-          }
-
-          return Row(
-            children: <Widget>[
-              if (uiState.isMenuVisible) AppDrawerBuilder(),
-              if (uiState.isMenuVisible)
-                VerticalDivider(width: isDarkMode(context) ? 1 : .5),
-              Expanded(
-                child: IndexedStack(
-                  index: mainIndex,
-                  children: <Widget>[
-                    DashboardScreen(),
-                    EntityScreens(
-                        entityType: EntityType.client,
-                        listWidget: ClientScreenBuilder(),
-                        viewWidget: ClientViewScreen(),
-                        editWidget: ClientEditScreen()),
-                    EntityScreens(
-                      entityType: EntityType.product,
-                      listWidget: ProductScreenBuilder(),
-                      viewWidget: ProductViewScreen(),
-                      editWidget: ProductEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.invoice,
-                      listWidget: InvoiceScreenBuilder(),
-                      viewWidget: InvoiceViewScreen(),
-                      editWidget: InvoiceEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.payment,
-                      listWidget: PaymentScreenBuilder(),
-                      viewWidget: PaymentViewScreen(),
-                      editWidget: PaymentEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.quote,
-                      listWidget: QuoteScreenBuilder(),
-                      viewWidget: QuoteViewScreen(),
-                      editWidget: QuoteEditScreen(),
-                    ),
-                    SizedBox(),
-                    SizedBox(),
-                    SizedBox(),
-                    SizedBox(),
-                    /*
-                    EntityScreens(
-                      entityType: EntityType.project,
-                      listWidget: ProjectScreenBuilder(),
-                      viewWidget: ProjectViewScreen(),
-                      editWidget: ProjectEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.task,
-                      listWidget: TaskScreenBuilder(),
-                      viewWidget: TaskViewScreen(),
-                      editWidget: TaskEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.vendor,
-                      listWidget: VendorScreenBuilder(),
-                      viewWidget: VendorViewScreen(),
-                      editWidget: VendorEditScreen(),
-                    ),
-                    EntityScreens(
-                      entityType: EntityType.expense,
-                      listWidget: ExpenseScreenBuilder(),
-                      viewWidget: ExpenseViewScreen(),
-                      editWidget: ExpenseEditScreen(),
-                    ),
-                     */
-                    SettingsScreens(),
-                  ],
-                ),
-              ),
-            ],
-          );          
-           */
         });
   }
 }
@@ -395,25 +292,40 @@ class EntityScreens extends StatelessWidget {
     final prefState = state.prefState;
     final subRoute = uiState.subRoute;
     final entityUIState = state.getUIState(entityType);
+    final isPreviewVisible = prefState.isPreviewVisible;
+    final isPreviewShown =
+        isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
+    int listFlex = 3;
+    int previewFlex = 2;
+
+    if (prefState.isModuleList) {
+      listFlex = 2;
+      previewFlex = 3;
+    } else if (!isPreviewShown) {
+      listFlex = 5;
+    }
+    print('route: ${uiState.mainRoute}');
+    print('subroute: $subRoute');
     return Row(
       children: <Widget>[
         Expanded(
           child: listWidget,
-          flex: state.prefState.isModuleList ? 2 : 3,
+          flex: listFlex,
         ),
         _CustomDivider(),
-        Expanded(
-          flex: state.prefState.isModuleList ? 3 : 2,
-          child: subRoute == 'email'
-              ? emailWidget
-              : subRoute == 'edit'
-                  ? editWidget
-                  : (entityUIState.selectedId ?? '').isNotEmpty
-                      ? viewWidget
-                      : BlankScreen(
-                          AppLocalization.of(context).noRecordSelected),
-        ),
+        if (prefState.isModuleList || isPreviewShown)
+          Expanded(
+            flex: previewFlex,
+            child: subRoute == 'email'
+                ? emailWidget
+                : subRoute == 'edit'
+                    ? editWidget
+                    : (entityUIState.selectedId ?? '').isNotEmpty
+                        ? viewWidget
+                        : BlankScreen(
+                            AppLocalization.of(context).noRecordSelected),
+          ),
         if (prefState.showHistory) ...[
           _CustomDivider(),
           HistoryDrawerBuilder(),
