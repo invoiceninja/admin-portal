@@ -118,7 +118,9 @@ class ListScaffold extends StatelessWidget {
                 )
             ],
           ),
-          body: body,
+          body: ClipRect(
+            child: body,
+          ),
           bottomNavigationBar: bottomNavigationBar,
           floatingActionButton: floatingActionButton,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

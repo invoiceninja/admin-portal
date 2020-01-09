@@ -305,8 +305,7 @@ class EntityScreens extends StatelessWidget {
     } else if (!isPreviewShown) {
       listFlex = 5;
     }
-    print('route: ${uiState.mainRoute}');
-    print('subroute: $subRoute');
+
     return Row(
       children: <Widget>[
         Expanded(
