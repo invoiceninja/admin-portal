@@ -422,20 +422,20 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.edit);
         }
 
-        if (!isSent) {
-          actions.add(EntityAction.markSent);
-        }
-
-        if (!isPaid) {
-          actions.add(EntityAction.markPaid);
-        }
-
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.sendEmail);
         }
 
         if (userCompany.canCreate(EntityType.payment) && isUnpaid) {
           actions.add(EntityAction.newPayment);
+        }
+
+        if (!isSent) {
+          actions.add(EntityAction.markSent);
+        }
+
+        if (!isPaid) {
+          actions.add(EntityAction.markPaid);
         }
       }
 

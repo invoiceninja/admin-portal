@@ -130,7 +130,12 @@ class InvoiceListVM extends EntityListVM {
       isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
       filter: state.invoiceListState.filter,
       onInvoiceTap: (context, invoice) {
-        viewEntity(context: context, entity: invoice);
+        if (store.state.invoiceListState.isInMultiselect()) {
+          handleInvoiceAction(
+              context, [invoice], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: invoice);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () =>

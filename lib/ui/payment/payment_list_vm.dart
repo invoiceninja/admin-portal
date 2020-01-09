@@ -80,7 +80,12 @@ class PaymentListVM {
       filter: state.paymentUIState.listUIState.filter,
       listState: state.paymentListState,
       onPaymentTap: (context, payment) {
-        viewEntity(context: context, entity: payment);
+        if (store.state.invoiceListState.isInMultiselect()) {
+          handlePaymentAction(
+              context, [payment], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: payment);
+        }
       },
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterPaymentsByEntity()),
