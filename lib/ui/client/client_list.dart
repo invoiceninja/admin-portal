@@ -31,6 +31,39 @@ class ClientList extends StatefulWidget {
 }
 
 class _ClientListState extends State<ClientList> {
+  EntityDataTableSource dataTableSource;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final viewModel = widget.viewModel;
+
+    dataTableSource = EntityDataTableSource(
+        context: context,
+        entityType: EntityType.client,
+        editingId: viewModel.state.clientUIState.editing.id,
+        tableColumns: viewModel.tableColumns,
+        entityList: viewModel.clientList,
+        entityMap: viewModel.clientMap,
+        entityPresenter: ClientPresenter(),
+        onTap: (BaseEntity client) =>
+            viewModel.onClientTap(context, client));
+  }
+
+  @override
+  void didUpdateWidget(ClientList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final viewModel = widget.viewModel;
+    dataTableSource.editingId = viewModel.state.clientUIState.editing.id;
+    dataTableSource.entityList = viewModel.clientList;
+    dataTableSource.entityMap = viewModel.clientMap;
+
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    dataTableSource.notifyListeners();
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -46,9 +79,6 @@ class _ClientListState extends State<ClientList> {
     } else if (clientList.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
-
-    dataTableSource.entityList = viewModel.clientList;
-    dataTableSource.entityMap = viewModel.clientMap;
 
     if (isNotMobile(context) &&
         clientList.isNotEmpty &&
@@ -70,8 +100,7 @@ class _ClientListState extends State<ClientList> {
               final client = viewModel.clientMap[clientId];
 
               return ClientListItem(
-                //userCompany: viewModel.state.userCompany,
-                user: state.user,
+                user: viewModel.state.user,
                 filter: viewModel.filter,
                 client: client,
                 onEntityAction: (EntityAction action) {
@@ -98,33 +127,37 @@ class _ClientListState extends State<ClientList> {
                     );
                   }
                 },
-                isChecked: isInMultiselect && listUIState.isSelected(client.id),
+                isChecked:
+                isInMultiselect && listUIState.isSelected(client.id),
               );
             });
       } else {
         return SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: PaginatedDataTable(
-            columns: [
-              if (!listUIState.isInMultiselect())
-                DataColumn(
-                  label: SizedBox(),
-                ),
-              ...viewModel.tableColumns.map(
-                (field) => DataColumn(
-                  label: Text(AppLocalization.of(context).lookup(field)),
-                  numeric: EntityPresenter.isFieldNumeric(field),
-                  onSort: (int columnIndex, bool ascending) => store.dispatch(
-                    SortClients(field),
-                  ),
-                ),
+              padding: const EdgeInsets.all(12),
+              child: PaginatedDataTable(
+                onSelectAll: (value) {
+                  final clients = viewModel.clientList
+                      .map<ClientEntity>(
+                          (clientId) => viewModel.clientMap[clientId])
+                      .where(
+                          (client) => value != listUIState.isSelected(client.id))
+                      .toList();
+                  handleClientAction(
+                      context, clients, EntityAction.toggleMultiselect);
+                },
+                columns: [
+                  if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
+                  ...viewModel.tableColumns.map((field) => DataColumn(
+                      label: Text(AppLocalization.of(context).lookup(field)),
+                      numeric: EntityPresenter.isFieldNumeric(field),
+                      onSort: (int columnIndex, bool ascending) =>
+                          store.dispatch(SortClients(field)))),
+                ],
+                source: dataTableSource,
+                header: SizedBox(),
               ),
-            ],
-            source: dataTableSource,
-            header: SizedBox(),
-          ),
-        ));
+            ));
       }
     };
 
@@ -133,31 +166,4 @@ class _ClientListState extends State<ClientList> {
       child: listOrTable(),
     );
   }
-
-  @override
-  void didUpdateWidget(ClientList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    dataTableSource.notifyListeners();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-
-    dataTableSource = EntityDataTableSource(
-        context: context,
-        editingId: viewModel.state.clientUIState.editing.id,
-        entityType: EntityType.client,
-        tableColumns: viewModel.tableColumns,
-        entityList: viewModel.clientList,
-        entityMap: viewModel.clientMap,
-        entityPresenter: ClientPresenter(),
-        onTap: (BaseEntity client) => viewModel.onClientTap(context, client));
-  }
-
-  EntityDataTableSource dataTableSource;
 }

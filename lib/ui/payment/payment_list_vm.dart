@@ -35,6 +35,7 @@ class PaymentListBuilder extends StatelessWidget {
 
 class PaymentListVM {
   PaymentListVM({
+    @required this.state,
     @required this.user,
     @required this.paymentList,
     @required this.paymentMap,
@@ -64,6 +65,7 @@ class PaymentListVM {
     final state = store.state;
 
     return PaymentListVM(
+      state: state,
       user: state.user,
       paymentList: memoizedFilteredPaymentList(
           state.paymentState.map,
@@ -91,6 +93,7 @@ class PaymentListVM {
     );
   }
 
+  final AppState state;
   final UserEntity user;
   final ListUIState listState;
   final List<String> paymentList;
