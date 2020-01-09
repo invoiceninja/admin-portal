@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({
@@ -144,6 +145,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(
         entity: expense,
         title: expense.publicNotes.isNotEmpty

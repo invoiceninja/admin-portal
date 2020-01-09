@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
@@ -37,21 +39,30 @@ List<Middleware<AppState>> createStoreStubsMiddleware([
 }
 
 Middleware<AppState> _editStub() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
-    final stub =
-        await Navigator.of(action.context).pushNamed(StubEditScreen.route);
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
 
-    if (action.completer != null && stub != null) {
-      action.completer.complete(stub);
+
+    store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
+
+    if (isMobile(action.context)) {
+        final stub =
+            await Navigator.of(action.context).pushNamed(StubEditScreen.route);
+
+        if (action.completer != null && stub != null) {
+          action.completer.complete(stub);
+        }
     }
   };
 }
 
 Middleware<AppState> _viewStub() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) async {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
@@ -60,7 +71,7 @@ Middleware<AppState> _viewStub() {
 }
 
 Middleware<AppState> _viewStubList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubScreen.route));
@@ -70,7 +81,7 @@ Middleware<AppState> _viewStubList() {
 }
 
 Middleware<AppState> _archiveStub(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -93,7 +104,7 @@ Middleware<AppState> _archiveStub(StubRepository repository) {
 }
 
 Middleware<AppState> _deleteStub(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -116,7 +127,7 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
 }
 
 Middleware<AppState> _restoreStub(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final origStub = store.state.stubState.map[action.stubId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -139,7 +150,7 @@ Middleware<AppState> _restoreStub(StubRepository repository) {
 }
 
 Middleware<AppState> _saveStub(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.stub)
@@ -161,7 +172,7 @@ Middleware<AppState> _saveStub(StubRepository repository) {
 }
 
 Middleware<AppState> _loadStub(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -191,7 +202,7 @@ Middleware<AppState> _loadStub(StubRepository repository) {
 }
 
 Middleware<AppState> _loadStubs(StubRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final AppState state = store.state;
 
     if (!state.stubState.isStale && !action.force) {

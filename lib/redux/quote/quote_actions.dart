@@ -13,25 +13,33 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:flutter/material.dart';
 
 class ViewQuoteList implements PersistUI {
-  ViewQuoteList(this.context);
+  ViewQuoteList({this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewQuote implements PersistUI {
-  ViewQuote({this.quoteId, this.context});
+  ViewQuote({this.quoteId, this.context, this.force = false});
 
   final int quoteId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditQuote implements PersistUI {
-  EditQuote({this.quote, this.context, this.completer, this.quoteItem});
+  EditQuote(
+      {this.quote,
+      this.context,
+      this.completer,
+      this.quoteItem,
+      this.force = false});
 
   final InvoiceEntity quote;
   final InvoiceItemEntity quoteItem;
   final BuildContext context;
   final Completer completer;
+  final bool force;
 }
 
 class ShowEmailQuote {

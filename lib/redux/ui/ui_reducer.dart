@@ -24,11 +24,20 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
+  final currentRoute = currentRouteReducer(state.currentRoute, action);
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
-    ..currentRoute = currentRouteReducer(state.currentRoute, action)
+    ..layout = layoutReducer(state.layout, action)
+    ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
+    ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
+    ..previousRoute = state.currentRoute == currentRoute
+        ? state.previousRoute
+        : state.currentRoute.contains('/edit')
+            ? state.previousRoute
+            : state.currentRoute
+    ..currentRoute = currentRoute
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
     ..requireAuthentication =
@@ -51,12 +60,36 @@ UIState uiReducer(UIState state, dynamic action) {
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action)));
 }
 
+Reducer<bool> menuVisibleReducer = combineReducers([
+  TypedReducer<bool, UpdateSidebar>(updateMenuVisible),
+]);
+
+bool updateMenuVisible(bool value, UpdateSidebar action) {
+  return action.sidebar == AppSidebar.menu ? !value : value;
+}
+
+Reducer<bool> historyVisibleReducer = combineReducers([
+  TypedReducer<bool, UpdateSidebar>(updateHistoryVisible),
+]);
+
+bool updateHistoryVisible(bool value, UpdateSidebar action) {
+  return action.sidebar == AppSidebar.history ? !value : value;
+}
+
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>(updateFilter),
 ]);
 
 String updateFilter(String filter, FilterCompany action) {
   return action.filter;
+}
+
+Reducer<AppLayout> layoutReducer = combineReducers([
+  TypedReducer<AppLayout, UpdateLayout>(updateLayout),
+]);
+
+AppLayout updateLayout(AppLayout layout, UpdateLayout action) {
+  return action.layout;
 }
 
 Reducer<bool> emailPaymentReducer = combineReducers([
@@ -109,6 +142,15 @@ Reducer<String> currentRouteReducer = combineReducers([
 String updateCurrentRouteReducer(
     String currentRoute, UpdateCurrentRoute action) {
   return action.route;
+}
+
+Reducer<String> previousRouteReducer = combineReducers([
+  TypedReducer<String, UpdateCurrentRoute>(updatePreviousRouteReducer),
+]);
+
+String updatePreviousRouteReducer(
+    String currentRoute, UpdateCurrentRoute action) {
+  return currentRoute;
 }
 
 Reducer<int> selectedCompanyIndexReducer = combineReducers([

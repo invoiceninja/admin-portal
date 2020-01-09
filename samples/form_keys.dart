@@ -1,6 +1,7 @@
 // https://hillelcoren.com/2018/06/12/flutter-complex-forms-with-multiple-tabs-and-relationships/
 
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 // Sample entity classes
 class ClientEntity {
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title: Text('Client Form'),
           actions: <Widget>[
             IconButton(

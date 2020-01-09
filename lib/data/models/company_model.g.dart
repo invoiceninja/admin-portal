@@ -31,6 +31,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           specifiedType: const FullType(String)),
       'plan',
       serializers.serialize(object.plan, specifiedType: const FullType(String)),
+      'account_key',
+      serializers.serialize(object.companyKey,
+          specifiedType: const FullType(String)),
       'logo_url',
       serializers.serialize(object.logoUrl,
           specifiedType: const FullType(String)),
@@ -275,6 +278,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'plan':
           result.plan = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'account_key':
+          result.companyKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'logo_url':
@@ -775,6 +782,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String plan;
   @override
+  final String companyKey;
+  @override
   final String logoUrl;
   @override
   final String appUrl;
@@ -906,6 +915,7 @@ class _$CompanyEntity extends CompanyEntity {
       {this.name,
       this.token,
       this.plan,
+      this.companyKey,
       this.logoUrl,
       this.appUrl,
       this.companyCurrencyId,
@@ -977,6 +987,9 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (plan == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'plan');
+    }
+    if (companyKey == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
     }
     if (logoUrl == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'logoUrl');
@@ -1177,6 +1190,7 @@ class _$CompanyEntity extends CompanyEntity {
         name == other.name &&
         token == other.token &&
         plan == other.plan &&
+        companyKey == other.companyKey &&
         logoUrl == other.logoUrl &&
         appUrl == other.appUrl &&
         companyCurrencyId == other.companyCurrencyId &&
@@ -1261,7 +1275,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), userMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), token.hashCode), plan.hashCode), companyKey.hashCode), logoUrl.hashCode), appUrl.hashCode), companyCurrencyId.hashCode), timezoneId.hashCode), countryId.hashCode), dateFormatId.hashCode), datetimeFormatId.hashCode), defaultInvoiceTerms.hashCode), enableInvoiceTaxes.hashCode), enableInvoiceItemTaxes.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), languageId.hashCode), defaultInvoiceFooter.hashCode), showInvoiceItemTaxes.hashCode), enableMilitaryTime.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultQuoteTerms.hashCode), showCurrencyCode.hashCode), enableSecondTaxRate.hashCode), startOfWeek.hashCode), financialYearStart.hashCode), enabledModules.hashCode), defaultPaymentTerms.hashCode), defaultPaymentTypeId.hashCode), defaultTaskRate.hashCode), enableInclusiveTaxes.hashCode), convertProductExchangeRate.hashCode), enableCustomInvoiceTaxes1.hashCode), enableCustomInvoiceTaxes2.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), userMap.hashCode), user.hashCode), customFields.hashCode), customPaymentTerms.hashCode),
                                                                                 invoiceFields.hashCode),
                                                                             emailFooter.hashCode),
                                                                         emailSubjectInvoice.hashCode),
@@ -1289,6 +1303,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('name', name)
           ..add('token', token)
           ..add('plan', plan)
+          ..add('companyKey', companyKey)
           ..add('logoUrl', logoUrl)
           ..add('appUrl', appUrl)
           ..add('companyCurrencyId', companyCurrencyId)
@@ -1370,6 +1385,10 @@ class CompanyEntityBuilder
   String _plan;
   String get plan => _$this._plan;
   set plan(String plan) => _$this._plan = plan;
+
+  String _companyKey;
+  String get companyKey => _$this._companyKey;
+  set companyKey(String companyKey) => _$this._companyKey = companyKey;
 
   String _logoUrl;
   String get logoUrl => _$this._logoUrl;
@@ -1687,6 +1706,7 @@ class CompanyEntityBuilder
       _name = _$v.name;
       _token = _$v.token;
       _plan = _$v.plan;
+      _companyKey = _$v.companyKey;
       _logoUrl = _$v.logoUrl;
       _appUrl = _$v.appUrl;
       _companyCurrencyId = _$v.companyCurrencyId;
@@ -1776,6 +1796,7 @@ class CompanyEntityBuilder
               name: name,
               token: token,
               plan: plan,
+              companyKey: companyKey,
               logoUrl: logoUrl,
               appUrl: appUrl,
               companyCurrencyId: companyCurrencyId,

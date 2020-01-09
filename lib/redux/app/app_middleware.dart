@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
@@ -13,9 +14,14 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
@@ -110,6 +116,8 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       company4Repository,
       company5Repository);
 
+  final viewMainScreen = _createViewMainScreen();
+
   return [
     TypedMiddleware<AppState, UserLogout>(deleteState),
     TypedMiddleware<AppState, LoadStateRequest>(loadState),
@@ -118,6 +126,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
+    TypedMiddleware<AppState, ViewMainScreen>(viewMainScreen),
   ];
 }
 
@@ -140,7 +149,9 @@ Middleware<AppState> _createLoadState(
   CompanyState company4State;
   CompanyState company5State;
 
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as LoadStateRequest;
     try {
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
@@ -182,15 +193,24 @@ Middleware<AppState> _createLoadState(
       if (uiState.currentRoute != LoginScreen.route &&
           authState.url.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
-        bool isFirst = true;
-        _getRoutes(appState).forEach((route) {
-          if (isFirst) {
-            navigator.pushReplacementNamed(route);
-          } else {
-            navigator.pushNamed(route);
-          }
-          isFirst = false;
-        });
+        final routes = _getRoutes(appState);
+        if (uiState.layout == AppLayout.mobile) {
+          bool isFirst = true;
+          routes.forEach((route) {
+            if (isFirst) {
+              navigator.pushReplacementNamed(route);
+            } else {
+              navigator.pushNamed(route);
+            }
+            isFirst = false;
+          });
+        } else {
+          store.dispatch(
+              UpdateCurrentRoute(routes.isEmpty ? '/dashboard' : routes.last));
+          store.dispatch(ViewMainScreen(action.context));
+        }
+      } else {
+        throw 'Unknown page';
       }
     } catch (error) {
       print(error);
@@ -201,7 +221,11 @@ Middleware<AppState> _createLoadState(
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          store.dispatch(ViewDashboard(action.context));
+          if (uiState.layout == AppLayout.mobile) {
+            store.dispatch(ViewDashboard(context: action.context));
+          } else {
+            store.dispatch(ViewMainScreen(action.context));
+          }
         }).catchError((Object error) {
           store.dispatch(UserLogout());
           store.dispatch(LoadUserLogin(action.context));
@@ -238,7 +262,8 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (!['dashboard', 'settings'].contains(part) && entityType == null) {
+      if (!['main', 'dashboard', 'settings'].contains(part) &&
+          entityType == null) {
         entityType = EntityType.valueOf(part);
       }
 
@@ -261,11 +286,12 @@ Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserLoginSuccess;
+
     next(action);
 
     final state = store.state;
-
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
     staticRepository.saveStaticState(state.staticState);
@@ -278,7 +304,9 @@ Middleware<AppState> _createUserLoggedIn(
 }
 
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistUI;
+
     next(action);
 
     uiRepository.saveUIState(store.state.uiState);
@@ -286,7 +314,9 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 }
 
 Middleware<AppState> _createAccountLoaded() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as LoadAccountSuccess;
     final dynamic data = action.loginResponse;
     store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
 
@@ -313,7 +343,9 @@ Middleware<AppState> _createAccountLoaded() {
 
 Middleware<AppState> _createPersistStatic(
     PersistenceRepository staticRepository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistStatic;
+
     // first process the action so the data is in the state
     next(action);
 
@@ -328,8 +360,9 @@ Middleware<AppState> _createPersistData(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    // first process the action so the data is in the state
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistData;
+
     next(action);
 
     final AppState state = store.state;
@@ -364,7 +397,8 @@ Middleware<AppState> _createDeleteState(
   PersistenceRepository company4Repository,
   PersistenceRepository company5Repository,
 ) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
@@ -374,6 +408,7 @@ Middleware<AppState> _createDeleteState(
     company4Repository.delete();
     company5Repository.delete();
 
+    final action = dynamicAction as UserLogout;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     for (int i = 0; i < 5; i++) {
@@ -381,6 +416,19 @@ Middleware<AppState> _createDeleteState(
     }
 
     next(action);
+  };
+}
+
+Middleware<AppState> _createViewMainScreen() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewMainScreen;
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        MainScreen.route, (Route<dynamic> route) => false);
   };
 }
 
@@ -397,3 +445,24 @@ void _setLastLoadWasSuccesfull() async {
   prefs.setBool('initialized', true);
 }
 */
+
+bool hasChanges({Store<AppState> store, BuildContext context, bool force}) {
+  if (context == null) {
+    print('WARNING: context is null in hasChanges');
+    return false;
+  } else if (force == null) {
+    print('WARNING: force is null in hasChanges');
+    return false;
+  }
+
+  if (store.state.hasChanges() && !isMobile(context) && !force) {
+    showDialog<MessageDialog>(
+        context: context,
+        builder: (BuildContext context) {
+          return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
+        });
+    return true;
+  } else {
+    return false;
+  }
+}

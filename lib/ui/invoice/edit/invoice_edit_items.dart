@@ -1,7 +1,9 @@
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -186,12 +188,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context)
-            .viewInsets
-            .bottom, // stay clear of the keyboard
-      ),
+    return ResponsivePadding(
       child: SingleChildScrollView(
         child: FormCard(
           children: <Widget>[
@@ -221,20 +218,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 ),
               ],
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.product,
               controller: _productKeyController,
-              decoration: InputDecoration(
-                labelText: localization.product,
-              ),
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
+              label: localization.description,
               controller: _notesController,
               maxLines: 4,
-              decoration: InputDecoration(
-                labelText: localization.description,
-              ),
             ),
             CustomField(
               controller: _custom1Controller,
@@ -246,31 +237,25 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               labelText: company.getCustomFieldLabel(CustomFieldType.product2),
               options: company.getCustomFieldValues(CustomFieldType.product2),
             ),
-            TextFormField(
+            DecoratedFormField(
+              label: localization.unitCost,
               controller: _costController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: localization.unitCost,
-              ),
             ),
             company.hasInvoiceField('quantity')
-                ? TextFormField(
+                ? DecoratedFormField(
+                    label: localization.quantity,
                     controller: _qtyController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
-                    decoration: InputDecoration(
-                      labelText: localization.quantity,
-                    ),
                   )
                 : Container(),
             company.hasInvoiceField('discount')
-                ? TextFormField(
+                ? DecoratedFormField(
+                    label: localization.discount,
                     controller: _discountController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
-                    decoration: InputDecoration(
-                      labelText: localization.discount,
-                    ),
                   )
                 : Container(),
             company.enableInvoiceItemTaxes

@@ -268,7 +268,7 @@ abstract class ExpenseEntity extends Object
       return true;
     }
 
-    if (transactionReference.toLowerCase().contains(transactionReference)) {
+    if (transactionReference.toLowerCase().contains(filter)) {
       return true;
     }
 

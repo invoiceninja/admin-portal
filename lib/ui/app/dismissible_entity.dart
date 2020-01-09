@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DismissibleEntity extends StatelessWidget {
@@ -11,11 +12,13 @@ class DismissibleEntity extends StatelessWidget {
     @required this.entity,
     @required this.child,
     @required this.onEntityAction,
+    @required this.isSelected,
   });
 
   final UserEntity user;
   final BaseEntity entity;
   final Widget child;
+  final bool isSelected;
   final Function(EntityAction entityAction) onEntityAction;
 
   @override
@@ -31,7 +34,6 @@ class DismissibleEntity extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Slidable(
-      child: child,
       delegate: SlidableDrawerDelegate(),
       key: Key(entity.entityKey + Random().nextInt(100000).toString()),
       actions: <Widget>[
@@ -54,7 +56,7 @@ class DismissibleEntity extends StatelessWidget {
           caption: localization.more,
           color: Colors.black45,
           foregroundColor: Colors.white,
-          icon: Icons.more_horiz,
+          icon: Icons.more_vert,
           onTap: () => onEntityAction(EntityAction.more),
         ),
       ],
@@ -75,6 +77,10 @@ class DismissibleEntity extends StatelessWidget {
                 onTap: () => onEntityAction(EntityAction.delete),
               ),
       ],
+      child: SelectedIndicator(
+        isSelected: isSelected,
+        child: child,
+      ),
     );
   }
 }

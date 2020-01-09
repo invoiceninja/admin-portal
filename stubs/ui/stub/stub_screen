@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
@@ -22,66 +23,56 @@ class StubScreen extends StatelessWidget {
     final user = company.user;
     final localization = AppLocalization.of(context);
 
-    return WillPopScope(
-      onWillPop: () async {
-        store.dispatch(ViewDashboard(context));
-        return false;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: ListFilter(
-            key: ValueKey(state.stubListState.filterClearedAt),
-            entityType: EntityType.stub,
-            onFilterChanged: (value) {
-              store.dispatch(FilterStubs(value));
-            },
-          ),
-          actions: [
-            ListFilterButton(
-              entityType: EntityType.stub,
-              onFilterPressed: (String value) {
-                store.dispatch(FilterStubs(value));
-              },
-            ),
-          ],
-        ),
-        drawer: AppDrawerBuilder(),
-        body: StubListBuilder(),
-        bottomNavigationBar: AppBottomBar(
-          entityType: EntityType.stub,
-          onSelectedSortField: (value) => store.dispatch(SortStubs(value)),
-          customValues1: company.getCustomFieldValues(CustomFieldType.stub1,
-              excludeBlank: true),
-          customValues2: company.getCustomFieldValues(CustomFieldType.stub2,
-              excludeBlank: true),
-          onSelectedCustom1: (value) =>
-              store.dispatch(FilterStubsByCustom1(value)),
-          onSelectedCustom2: (value) =>
-              store.dispatch(FilterStubsByCustom2(value)),
-          sortFields: [
-            StubFields.updatedAt,
-          ],
-          onSelectedState: (EntityState state, value) {
-            store.dispatch(FilterStubsByState(state));
-          },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: user.canCreate(EntityType.stub)
-            ? FloatingActionButton(
-                //key: Key(StubKeys.stubScreenFABKeyString),
-                backgroundColor: Theme.of(context).primaryColorDark,
-                onPressed: () {
-                  store.dispatch(
-                      EditStub(stub: StubEntity(), context: context));
-                },
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                tooltip: localization.newStub,
-              )
-            : null,
-      ),
-    );
+    return AppScaffold(
+                     appBarTitle: ListFilter(
+                       key: ValueKey(state.stubListState.filterClearedAt),
+                       entityType: EntityType.stub,
+                       onFilterChanged: (value) {
+                         store.dispatch(FilterStubs(value));
+                       },
+                     ),
+                     appBarActions: [
+                       ListFilterButton(
+                         entityType: EntityType.stub,
+                         onFilterPressed: (String value) {
+                           store.dispatch(FilterStubs(value));
+                         },
+                       ),
+                     ],
+                   body: StubListBuilder(),
+                   bottomNavigationBar: AppBottomBar(
+                     entityType: EntityType.stub,
+                     onSelectedSortField: (value) => store.dispatch(SortStubs(value)),
+                     customValues1: company.getCustomFieldValues(CustomFieldType.stub1,
+                         excludeBlank: true),
+                     customValues2: company.getCustomFieldValues(CustomFieldType.stub2,
+                         excludeBlank: true),
+                     onSelectedCustom1: (value) =>
+                         store.dispatch(FilterStubsByCustom1(value)),
+                     onSelectedCustom2: (value) =>
+                         store.dispatch(FilterStubsByCustom2(value)),
+                     sortFields: [
+                       StubFields.updatedAt,
+                     ],
+                     onSelectedState: (EntityState state, value) {
+                       store.dispatch(FilterStubsByState(state));
+                     },
+                   ),
+                   floatingActionButton: user.canCreate(EntityType.stub)
+                       ? FloatingActionButton(
+                           //key: Key(StubKeys.stubScreenFABKeyString),
+                           backgroundColor: Theme.of(context).primaryColorDark,
+                           onPressed: () {
+                             store.dispatch(
+                                 EditStub(stub: StubEntity(), context: context));
+                           },
+                           child: Icon(
+                             Icons.add,
+                             color: Colors.white,
+                           ),
+                           tooltip: localization.newStub,
+                         )
+                       : null,
+                 );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -13,6 +14,27 @@ class AuthRepository {
   });
 
   final WebClient webClient;
+
+  Future<LoginResponseData> signUp({
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+    String platform,
+  }) async {
+    final credentials = {
+      'first_name': firstName,
+      'last_name': lastName,
+      'token_name': 'invoice-ninja-$platform-app',
+      'api_secret': Config.API_SECRET,
+      'email': email,
+      'password': password,
+    };
+
+    final url = formatApiUrl(kAppUrl) + '/register';
+
+    return sendRequest(url: url, data: credentials);
+  }
 
   Future<LoginResponseData> login(
       {String email,
@@ -29,7 +51,7 @@ class AuthRepository {
       'one_time_password': oneTimePassword,
     };
 
-    url = formatApiUrlMachine(url) + '/login';
+    url = formatApiUrl(url) + '/login';
 
     return sendRequest(url: url, data: credentials);
   }
@@ -42,7 +64,7 @@ class AuthRepository {
       'token': token,
       'provider': 'google',
     };
-    url = formatApiUrlMachine(url) + '/oauth_login';
+    url = formatApiUrl(url) + '/oauth_login';
 
     return sendRequest(url: url, data: credentials);
   }
@@ -53,7 +75,7 @@ class AuthRepository {
       'token_name': 'invoice-ninja-$platform-app',
     };
 
-    url = formatApiUrlMachine(url) + '/refresh';
+    url = formatApiUrl(url) + '/refresh';
 
     return sendRequest(url: url, data: credentials, token: token);
   }

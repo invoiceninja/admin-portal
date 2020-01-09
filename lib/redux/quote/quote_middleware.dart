@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
@@ -46,40 +48,65 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
 }
 
 Middleware<AppState> _viewQuote() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewQuote;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-    await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+
+    if (isMobile(action.context)) {
+      await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewQuoteList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewQuoteList;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        QuoteScreen.route, (Route<dynamic> route) => false);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          QuoteScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _editQuote() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditQuote;
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
-    final quote =
-        await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
 
-    if (action.completer != null && quote != null) {
-      action.completer.complete(quote);
+    if (isMobile(action.context)) {
+      final quote =
+          await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
+
+      if (action.completer != null && quote != null) {
+        action.completer.complete(quote);
+      }
     }
   };
 }
 
 Middleware<AppState> _showEmailQuote() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ShowEmailQuote;
+
     next(action);
 
     final emailWasSent =
@@ -92,7 +119,8 @@ Middleware<AppState> _showEmailQuote() {
 }
 
 Middleware<AppState> _archiveQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
@@ -115,7 +143,8 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _deleteQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
@@ -138,7 +167,8 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _restoreQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
@@ -161,7 +191,8 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _convertQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ConvertQuote;
     final quote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, quote,
@@ -180,7 +211,8 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _markSentQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MarkSentQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origQuote,
@@ -203,7 +235,8 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _emailQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as EmailQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
         .emailQuote(store.state.selectedCompany, store.state.authState,
@@ -226,7 +259,8 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _saveQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveQuoteRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.quote)
@@ -248,7 +282,8 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _loadQuote(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadQuote;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -281,7 +316,8 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
 }
 
 Middleware<AppState> _loadQuotes(QuoteRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadQuotes;
     final AppState state = store.state;
 
     if (!state.quoteState.isStale && !action.force) {

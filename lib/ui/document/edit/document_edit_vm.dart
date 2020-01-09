@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -74,11 +75,13 @@ class DocumentEditVM {
         return completer.future.then((_) {
           return completer.future.then((savedDocument) {
             store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-            if (document.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(DocumentViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedDocument);
+            if (isMobile(context)) {
+              if (document.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(DocumentViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedDocument);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(

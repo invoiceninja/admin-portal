@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -48,6 +49,7 @@ class ExpenseEditVM {
     @required this.isSaving,
     @required this.origExpense,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
     @required this.onAddClientPressed,
@@ -75,13 +77,24 @@ class ExpenseEditVM {
               expense.isNew ? ExpenseScreen.route : ExpenseViewScreen.route));
         }
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditExpense(
+            expense: ExpenseEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+            }),
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -90,11 +103,17 @@ class ExpenseEditVM {
       },
       onAddVendorPressed: (context, completer) {
         store.dispatch(EditVendor(
-            vendor: VendorEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+          vendor: VendorEntity(),
+          context: context,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+            }),
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -109,11 +128,13 @@ class ExpenseEditVM {
         return completer.future.then((_) {
           return completer.future.then((savedExpense) {
             store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-            if (expense.isNew) {
-              Navigator.of(context)
-                  .pushReplacementNamed(ExpenseViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedExpense);
+            if (isMobile(context)) {
+              if (expense.isNew) {
+                Navigator.of(context)
+                    .pushReplacementNamed(ExpenseViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedExpense);
+              }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
@@ -139,6 +160,7 @@ class ExpenseEditVM {
   final CompanyEntity company;
   final Function(ExpenseEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart'
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
@@ -125,6 +126,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         documentState.map, viewModel.state.expenseState.map, invoice);
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(
         entity: invoice,
         title:

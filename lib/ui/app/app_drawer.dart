@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
+import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -8,15 +13,13 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
-import 'package:invoiceninja_flutter/utils/keys.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:redux/redux.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -55,22 +58,16 @@ class AppDrawer extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-                width: 30,
+                width: 32,
                 height: 30,
               )
             : company.logoUrl != null && company.logoUrl.isNotEmpty
-                ? CachedNetworkImage(
-                    width: 30,
+                ? CachedImage(
+                    width: 32,
                     height: 30,
-                    key: ValueKey(company.logoUrl),
-                    imageUrl: company.logoUrl,
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Image.asset(
-                        'assets/images/logo.png',
-                        width: 30,
-                        height: 30),
+                    url: company.logoUrl,
                   )
-                : Image.asset('assets/images/logo.png', width: 30, height: 30),
+                : Image.asset('assets/images/logo.png', width: 32, height: 30),
         SizedBox(width: 28, height: 50),
         Expanded(
           child: Column(
@@ -103,20 +100,13 @@ class AppDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     company.logoUrl != null && company.logoUrl.isNotEmpty
-                        ? CachedNetworkImage(
-                            width: 30,
+                        ? CachedImage(
+                            width: 32,
                             height: 30,
-                            key: ValueKey(company.logoUrl),
-                            imageUrl: company.logoUrl,
-                            placeholder: (context, url) =>
-                                CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Image.asset(
-                                'assets/images/logo.png',
-                                width: 30,
-                                height: 30),
+                            url: company.logoUrl,
                           )
                         : Image.asset('assets/images/logo.png',
-                            width: 30, height: 30),
+                            width: 32, height: 30),
                     SizedBox(width: 28),
                     Expanded(
                       child: Column(
@@ -150,191 +140,220 @@ class AppDrawer extends StatelessWidget {
     final enableDarkMode = state.uiState.enableDarkMode;
     final localization = AppLocalization.of(context);
 
-    final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle =
-        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
-
     return Drawer(
-      child: ListView(
-        children: <Widget>[
-          Container(
-              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-              color: enableDarkMode ? Colors.white10 : Colors.grey[200],
-              child: viewModel.companies.length > 1 && !viewModel.isLoading
-                  ? _multipleCompanies
-                  : _singleCompany),
-          DrawerTile(
-            company: company,
-            icon: FontAwesomeIcons.tachometerAlt,
-            title: localization.dashboard,
-            onTap: () => store.dispatch(ViewDashboard(context)),
-          ),
-          DrawerTile(
-            key: Key(ClientKeys.drawer),
-            company: company,
-            entityType: EntityType.client,
-            icon: getEntityIcon(EntityType.client),
-            title: localization.clients,
-            onTap: () => store.dispatch(ViewClientList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditClient(client: ClientEntity(), context: context));
-            },
-          ),
-          DrawerTile(
-            key: Key(ProductKeys.drawer),
-            company: company,
-            entityType: EntityType.product,
-            icon: getEntityIcon(EntityType.product),
-            title: localization.products,
-            onTap: () {
-              store.dispatch(ViewProductList(context));
-            },
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditProduct(product: ProductEntity(), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.invoice,
-            icon: getEntityIcon(EntityType.invoice),
-            title: localization.invoices,
-            onTap: () => store.dispatch(ViewInvoiceList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditInvoice(
-                  invoice: InvoiceEntity(company: company), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.payment,
-            icon: getEntityIcon(EntityType.payment),
-            title: localization.payments,
-            onTap: () => store.dispatch(ViewPaymentList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditPayment(
-                  payment: PaymentEntity(company: company), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.quote,
-            icon: getEntityIcon(EntityType.quote),
-            title: localization.quotes,
-            onTap: () => store.dispatch(ViewQuoteList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditQuote(
-                  quote: InvoiceEntity(isQuote: true), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.project,
-            icon: getEntityIcon(EntityType.project),
-            title: localization.projects,
-            onTap: () => store.dispatch(ViewProjectList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditProject(project: ProjectEntity(), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.task,
-            icon: getEntityIcon(EntityType.task),
-            title: localization.tasks,
-            onTap: () => store.dispatch(ViewTaskList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditTask(
-                  task: TaskEntity(isRunning: state.uiState.autoStartTasks),
-                  context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.vendor,
-            icon: getEntityIcon(EntityType.vendor),
-            title: localization.vendors,
-            onTap: () => store.dispatch(ViewVendorList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(
-                  EditVendor(vendor: VendorEntity(), context: context));
-            },
-          ),
-          DrawerTile(
-            company: company,
-            entityType: EntityType.expense,
-            icon: getEntityIcon(EntityType.expense),
-            title: localization.expenses,
-            onTap: () => store.dispatch(ViewExpenseList(context)),
-            onCreateTap: () {
-              navigator.pop();
-              store.dispatch(EditExpense(
-                  expense:
-                      ExpenseEntity(company: company, uiState: state.uiState),
-                  context: context));
-            },
-          ),
-          // STARTER: menu - do not remove comment
-          DrawerTile(
-            key: Key(SettingsKeys.drawer),
-            company: company,
-            icon: FontAwesomeIcons.cog,
-            title: localization.settings,
-            onTap: () {
-              navigator.pop();
-              navigator.pushNamed(SettingsScreen.route);
-            },
-          ),
-          AboutListTile(
-            icon: Icon(FontAwesomeIcons.info, size: 22.0),
-            applicationName: 'Invoice Ninja',
-            applicationIcon: Image.asset(
-              'assets/images/logo.png',
-              width: 40.0,
-              height: 40.0,
-            ),
-            applicationVersion:
-                'Version: $kAppVersion',
-            applicationLegalese: '© 2018 Invoice Ninja',
-            aboutBoxChildren: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.thankYouForUsingOurApp +
-                            '\n\n' +
-                            localization.ifYouLikeIt,
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            // Hide options while refreshing data
+            company.token.isEmpty
+                ? Container(
+                    padding: EdgeInsets.only(top: 40),
+                    child: CircularProgressIndicator(),
+                  )
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                    color: enableDarkMode ? Colors.white10 : Colors.grey[200],
+                    child:
+                        viewModel.companies.length > 1 && !viewModel.isLoading
+                            ? _multipleCompanies
+                            : _singleCompany),
+            company.token.isEmpty
+                ? SizedBox()
+                : Expanded(
+                    child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      if (Platform.isIOS &&
+                          isHosted(context) &&
+                          !isPaidAccount(context))
+                        Material(
+                          color: Colors.green,
+                          child: ListTile(
+                            leading: Icon(
+                              FontAwesomeIcons.superpowers,
+                              color: Colors.white,
+                            ),
+                            title: Text(localization.upgrade,
+                                style: TextStyle(color: Colors.white)),
+                            onTap: () => showDialog<UpgradeDialog>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return UpgradeDialog();
+                                }),
+                          ),
+                        ),
+                      DrawerTile(
+                        company: company,
+                        icon: FontAwesomeIcons.tachometerAlt,
+                        title: localization.dashboard,
+                        onTap: () =>
+                            store.dispatch(ViewDashboard(context: context)),
                       ),
-                      _LinkTextSpan(
-                        style: linkStyle,
-                        url: getAppURL(context),
-                        text: ' ' + localization.clickHere + ' ',
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.client,
+                        icon: getEntityIcon(EntityType.client),
+                        title: localization.clients,
+                        onTap: () =>
+                            store.dispatch(ViewClientList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditClient(
+                              client: ClientEntity(), context: context));
+                        },
                       ),
-                      TextSpan(
-                        style: aboutTextStyle,
-                        text: localization.toRateIt,
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.product,
+                        icon: getEntityIcon(EntityType.product),
+                        title: localization.products,
+                        onTap: () {
+                          store.dispatch(ViewProductList(context: context));
+                        },
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditProduct(
+                              product: ProductEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.invoice,
+                        icon: getEntityIcon(EntityType.invoice),
+                        title: localization.invoices,
+                        onTap: () =>
+                            store.dispatch(ViewInvoiceList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditInvoice(
+                              invoice: InvoiceEntity(company: company),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.payment,
+                        icon: getEntityIcon(EntityType.payment),
+                        title: localization.payments,
+                        onTap: () =>
+                            store.dispatch(ViewPaymentList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditPayment(
+                              payment: PaymentEntity(company: company),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.quote,
+                        icon: getEntityIcon(EntityType.quote),
+                        title: localization.quotes,
+                        onTap: () =>
+                            store.dispatch(ViewQuoteList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditQuote(
+                              quote: InvoiceEntity(isQuote: true),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.project,
+                        icon: getEntityIcon(EntityType.project),
+                        title: localization.projects,
+                        onTap: () =>
+                            store.dispatch(ViewProjectList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditProject(
+                              project: ProjectEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.task,
+                        icon: getEntityIcon(EntityType.task),
+                        title: localization.tasks,
+                        onTap: () =>
+                            store.dispatch(ViewTaskList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditTask(
+                              task: TaskEntity(
+                                  isRunning: state.uiState.autoStartTasks),
+                              context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.vendor,
+                        icon: getEntityIcon(EntityType.vendor),
+                        title: localization.vendors,
+                        onTap: () =>
+                            store.dispatch(ViewVendorList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditVendor(
+                              vendor: VendorEntity(), context: context));
+                        },
+                      ),
+                      DrawerTile(
+                        company: company,
+                        entityType: EntityType.expense,
+                        icon: getEntityIcon(EntityType.expense),
+                        title: localization.expenses,
+                        onTap: () =>
+                            store.dispatch(ViewExpenseList(context: context)),
+                        onCreateTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(EditExpense(
+                              expense: ExpenseEntity(
+                                  company: company, uiState: state.uiState),
+                              context: context));
+                        },
+                      ),
+                      // STARTER: menu - do not remove comment
+                      DrawerTile(
+                        company: company,
+                        icon: FontAwesomeIcons.cog,
+                        title: localization.settings,
+                        onTap: () {
+                          if (isMobile(context)) {
+                            navigator.pop();
+                          }
+                          store.dispatch(ViewSettings(context: context));
+                        },
                       ),
                     ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+                  )),
+            Align(
+              child: SidebarFooter(),
+              alignment: Alignment(0, 1),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -342,14 +361,13 @@ class AppDrawer extends StatelessWidget {
 
 class DrawerTile extends StatelessWidget {
   const DrawerTile({
-    Key key,
     @required this.company,
     @required this.icon,
     @required this.title,
     @required this.onTap,
     this.onCreateTap,
     this.entityType,
-  }) : super(key: key);
+  });
 
   final CompanyEntity company;
   final EntityType entityType;
@@ -360,6 +378,8 @@ class DrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
     final user = company.user;
 
     if (entityType != null && !user.canViewOrCreate(entityType)) {
@@ -368,29 +388,28 @@ class DrawerTile extends StatelessWidget {
       return Container();
     }
 
-    return ListTile(
-      dense: true,
-      leading: Icon(icon, size: 22.0, key: ValueKey(title)),
-      title: Tooltip(message: title, child: Text(title)),
-      onTap: onTap,
-      trailing: onCreateTap == null || !user.canCreate(entityType)
-          ? null
-          : IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: onCreateTap,
-            ),
+    final localization = AppLocalization.of(context);
+    final route = title == localization.dashboard
+        ? 'dashboard'
+        : title == localization.settings ? 'settings' : entityType.name;
+
+    return SelectedIndicator(
+      isSelected: uiState.containsRoute(route),
+      child: ListTile(
+        dense: true,
+        leading: Icon(icon, size: 22.0),
+        title: Tooltip(message: title, child: Text(title)),
+        onTap: onTap,
+        trailing: onCreateTap == null || !user.canCreate(entityType)
+            ? null
+            : IconButton(
+                icon: Icon(Icons.add_circle_outline),
+                onPressed: onCreateTap,
+              ),
+      ),
     );
   }
 }
-
-/*
-'recurring_invoices' => 'files-o',
-'credits' => 'credit-card',
-'proposals' => 'th-large',
-'tasks' => 'clock-o',
-'expenses' => 'file-image-o',
-'vendors' => 'building',
-*/
 
 class _LinkTextSpan extends TextSpan {
   _LinkTextSpan({TextStyle style, String url, String text})
@@ -401,4 +420,90 @@ class _LinkTextSpan extends TextSpan {
               ..onTap = () {
                 launch(url, forceSafariVC: false);
               });
+}
+
+class SidebarFooter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final ThemeData themeData = Theme.of(context);
+    final TextStyle aboutTextStyle = themeData.textTheme.body2;
+    final TextStyle linkStyle =
+        themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+
+    void showAbout() {
+      showAboutDialog(
+        context: context,
+        applicationName: 'Invoice Ninja',
+        applicationIcon: Image.asset(
+          'assets/images/logo.png',
+          width: 40.0,
+          height: 40.0,
+        ),
+        applicationVersion: 'Version: $kAppVersion',
+        applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 24.0),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    style: aboutTextStyle,
+                    text: localization.thankYouForUsingOurApp +
+                        '\n\n' +
+                        localization.ifYouLikeIt,
+                  ),
+                  _LinkTextSpan(
+                    style: linkStyle,
+                    url: getAppURL(context),
+                    text: ' ' + localization.clickHere + ' ',
+                  ),
+                  TextSpan(
+                    style: aboutTextStyle,
+                    text: localization.toRateIt,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return Container(
+      color: Theme.of(context).bottomAppBarColor,
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.mail),
+            onPressed: () => launch('https://www.invoiceninja.com/contact'),
+          ),
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () => launch('https://docs.invoiceninja.com'),
+          ),
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            onPressed: () => showAbout(),
+          ),
+          if (!Platform.isIOS &&
+              isHosted(context) &&
+              !isPaidAccount(context)) ...[
+            Spacer(),
+            FlatButton(
+              child: Text(localization.upgrade),
+              color: Colors.green,
+              onPressed: () => showDialog<UpgradeDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return UpgradeDialog();
+                  }),
+            ),
+            SizedBox(width: 14)
+          ],
+        ],
+      ),
+    );
+  }
 }

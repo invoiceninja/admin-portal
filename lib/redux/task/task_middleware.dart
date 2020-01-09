@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -38,41 +40,73 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 }
 
 Middleware<AppState> _editTask() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditTask;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
-    final task =
-        await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
 
-    if (action.completer != null && task != null) {
-      action.completer.complete(task);
+    if (isMobile(action.context)) {
+      final task =
+          await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
+
+      if (action.completer != null && task != null) {
+        action.completer.complete(task);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewTask() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewTask;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-    Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewTaskList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewTaskList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        TaskScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          TaskScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _archiveTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -95,7 +129,8 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _deleteTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -118,7 +153,8 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _restoreTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreTaskRequest;
     final origTask = store.state.taskState.map[action.taskId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState, origTask,
@@ -141,7 +177,8 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _saveTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveTaskRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.task)
@@ -163,7 +200,8 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _loadTask(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadTask;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -193,7 +231,8 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
 }
 
 Middleware<AppState> _loadTasks(TaskRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadTasks;
     final AppState state = store.state;
 
     if (!state.taskState.isStale && !action.force) {

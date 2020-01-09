@@ -14,16 +14,22 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 
 class ViewTaskList implements PersistUI {
-  ViewTaskList(this.context);
+  ViewTaskList({@required this.context, this.force = false});
 
   final BuildContext context;
+  final bool force;
 }
 
 class ViewTask implements PersistUI {
-  ViewTask({this.taskId, this.context});
+  ViewTask({
+    @required this.taskId,
+    @required this.context,
+    this.force = false,
+  });
 
   final int taskId;
   final BuildContext context;
+  final bool force;
 }
 
 class EditTask implements PersistUI {
@@ -32,7 +38,7 @@ class EditTask implements PersistUI {
       this.taskTime,
       this.context,
       this.completer,
-      this.trackRoute = true,
+      this.force = false,
       this.taskTimeIndex});
 
   final int taskTimeIndex;
@@ -40,7 +46,7 @@ class EditTask implements PersistUI {
   final TaskTime taskTime;
   final BuildContext context;
   final Completer completer;
-  final bool trackRoute;
+  final bool force;
 }
 
 class UpdateTask implements PersistUI {

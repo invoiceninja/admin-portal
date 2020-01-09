@@ -42,6 +42,9 @@ class ExpenseListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
+    final uiState = state.uiState;
+    final expenseUIState = uiState.expenseUIState;
+
     final filterMatch = filter != null && filter.isNotEmpty
         ? expense.matchesFilterValue(filter)
         : null;
@@ -77,6 +80,10 @@ class ExpenseListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
+      isSelected: expense.id ==
+          (uiState.isEditing
+              ? expenseUIState.editing.id
+              : expenseUIState.selectedId),
       user: user,
       entity: expense,
       onEntityAction: onEntityAction,

@@ -7,6 +7,7 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLoginLoaded>(userLoginLoadedReducer),
   TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
   TypedReducer<AuthState, OAuthLoginRequest>(oauthLoginRequestReducer),
+  TypedReducer<AuthState, UserSignUpRequest>(userSignUpRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
   TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
   TypedReducer<AuthState, ClearAuthError>(clearAuthErrorReducer),
@@ -14,6 +15,13 @@ Reducer<AuthState> authReducer = combineReducers([
 
 AuthState clearAuthErrorReducer(AuthState authState, ClearAuthError action) {
   return authState.rebuild((b) => b..error = null);
+}
+
+AuthState userSignUpRequestReducer(
+    AuthState authState, UserSignUpRequest action) {
+  return authState.rebuild((b) => b
+    ..url = ''
+    ..secret = '');
 }
 
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
@@ -28,7 +36,7 @@ AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
-    ..url = formatApiUrlMachine(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret
     ..email = action.email
     ..password = action.password);
@@ -38,7 +46,7 @@ AuthState oauthLoginRequestReducer(
     AuthState authState, OAuthLoginRequest action) {
   return authState.rebuild((b) => b
     ..error = null
-    ..url = formatApiUrlMachine(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret);
 }
 

@@ -12,6 +12,10 @@ class WebClient {
 
   String _checkUrl(String url) {
     if (!url.startsWith('http')) {
+      if (!url.contains('/api/v1')) {
+        url = '/api/v1' + url;
+      }
+
       url = kAppUrl + url;
     }
 
@@ -109,7 +113,7 @@ class WebClient {
           .timeout(const Duration(seconds: 30));
     }
 
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');
@@ -141,7 +145,7 @@ class WebClient {
       },
     );
 
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');
@@ -170,7 +174,7 @@ class WebClient {
       },
     );
 
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
 
     if (response.statusCode >= 300) {
       print('==== FAILED ====');

@@ -15,31 +15,31 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 ]) {
   final loginInit = _createLoginInit();
   final loginRequest = _createLoginRequest(repository);
+  final signUpRequest = _createSignUpRequest(repository);
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
 
   return [
     TypedMiddleware<AppState, LoadUserLogin>(loginInit),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
+    TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
   ];
 }
 
-void _saveAuthLocal(dynamic action) async {
+void _saveAuthLocal(
+    {String email = '', String url = '', String secret = ''}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, action.email ?? '');
-
-  if (formatApiUrlReadable(action.url) != kAppUrl) {
-    prefs.setString(kSharedPrefUrl, formatApiUrlMachine(action.url));
-    prefs.setString(kSharedPrefSecret, action.secret);
-  }
+  prefs.setString(kSharedPrefEmail, email ?? '');
+  prefs.setString(kSharedPrefUrl, formatApiUrl(url));
+  prefs.setString(kSharedPrefSecret, secret);
 }
 
-void _loadAuthLocal(Store<AppState> store, dynamic action) async {
+void _loadAuthLocal(Store<AppState> store) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = prefs.getString(kSharedPrefEmail) ?? '';
-  final String url = formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? '');
+  final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
   store.dispatch(UserLoginLoaded(email, url, secret));
 
@@ -55,8 +55,10 @@ void _loadAuthLocal(Store<AppState> store, dynamic action) async {
 }
 
 Middleware<AppState> _createLoginInit() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
-    _loadAuthLocal(store, action);
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadUserLogin;
+
+    _loadAuthLocal(store);
 
     Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
 
@@ -65,7 +67,9 @@ Middleware<AppState> _createLoginInit() {
 }
 
 Middleware<AppState> _createLoginRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserLoginRequest;
+
     repository
         .login(
             email: action.email,
@@ -75,7 +79,11 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
             platform: action.platform,
             oneTimePassword: action.oneTimePassword)
         .then((data) {
-      _saveAuthLocal(action);
+      _saveAuthLocal(
+        email: action.email,
+        secret: action.secret,
+        url: action.url,
+      );
 
       if (_isVersionSupported(data.version)) {
         store.dispatch(LoadAccountSuccess(
@@ -91,7 +99,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         message = 'Please check the URL is correct';
       } else if (message.toLowerCase().contains('credentials')) {
         message += ', please confirm your credentials in the web app';
-      } else if (message.contains('404')){
+      } else if (message.contains('404')) {
         message += ', you may need to add /public to the URL';
       }
       store.dispatch(UserLoginFailure(message));
@@ -101,8 +109,36 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
   };
 }
 
+Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as UserSignUpRequest;
+
+    repository
+        .signUp(
+      email: action.email,
+      password: action.password,
+      platform: action.platform,
+      firstName: action.firstName,
+      lastName: action.lastName,
+    )
+        .then((data) {
+      _saveAuthLocal(email: action.email, secret: '', url: '');
+
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UserLoginFailure(error));
+    });
+
+    next(action);
+  };
+}
+
 Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as OAuthLoginRequest;
+
     repository
         .oauthLogin(
             token: action.token,
@@ -110,7 +146,11 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
             secret: action.secret,
             platform: action.platform)
         .then((data) {
-      _saveAuthLocal(action);
+      _saveAuthLocal(
+        email: action.email,
+        secret: action.secret,
+        url: action.url,
+      );
 
       if (_isVersionSupported(data.version)) {
         store.dispatch(LoadAccountSuccess(
@@ -129,14 +169,17 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
 }
 
 Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as RefreshData;
+
     next(action);
 
-    _loadAuthLocal(store, action);
+    _loadAuthLocal(store);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String url =
-        formatApiUrlMachine(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     final String token = prefs.getString(getCompanyTokenKey());
 
     repository

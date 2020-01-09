@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
@@ -33,6 +33,7 @@ class ProjectEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return ProjectEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.project.id),
         );
       },
     );
@@ -49,6 +50,7 @@ class ProjectEditVM {
     @required this.isSaving,
     @required this.origProject,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.onBackPressed,
     @required this.isLoading,
   });
@@ -73,13 +75,28 @@ class ProjectEditVM {
               project.isNew ? ProjectScreen.route : ProjectViewScreen.route));
         }
       },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(EditProject(
+            project: ProjectEntity(), context: context, force: true));
+        if (state.projectUIState.cancelCompleter != null) {
+          state.projectUIState.cancelCompleter.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
+      },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+            }),
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -92,17 +109,13 @@ class ProjectEditVM {
         store.dispatch(
             SaveProjectRequest(completer: completer, project: project));
         return completer.future.then((savedProject) {
-          if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-          }
-          if (project.isNew) {
-            if ([
-              TaskEditScreen.route,
-            ].contains(store.state.uiState.currentRoute)) {
-              Navigator.of(context).pop(savedProject);
-            } else {
+          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
+          if (isMobile(context)) {
+            if (project.isNew && state.projectUIState.saveCompleter == null) {
               Navigator.of(context)
                   .pushReplacementNamed(ProjectViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedProject);
             }
           } else {
             Navigator.of(context).pop(savedProject);
@@ -122,6 +135,7 @@ class ProjectEditVM {
   final CompanyEntity company;
   final Function(ProjectEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final bool isSaving;
   final ProjectEntity origProject;
   final Function onBackPressed;

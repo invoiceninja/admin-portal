@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -17,6 +18,8 @@ class QuoteEditScreen extends StatelessWidget {
   const QuoteEditScreen({Key key}) : super(key: key);
 
   static const String route = '/quote/edit';
+
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class QuoteEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
+          formKey: _formKey,
         );
       },
     );
@@ -44,6 +48,7 @@ class QuoteEditVM extends EntityEditVM {
     Function(List<InvoiceItemEntity>, int) onItemsAdded,
     Function onBackPressed,
     bool isSaving,
+    Function(BuildContext) onCancelPressed,
   }) : super(
           state: state,
           company: company,
@@ -54,6 +59,7 @@ class QuoteEditVM extends EntityEditVM {
           onItemsAdded: onItemsAdded,
           onBackPressed: onBackPressed,
           isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
         );
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
@@ -77,10 +83,12 @@ class QuoteEditVM extends EntityEditVM {
         store.dispatch(SaveQuoteRequest(completer: completer, quote: quote));
         return completer.future.then((savedQuote) {
           store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-          if (quote.isNew) {
-            Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
-          } else {
-            Navigator.of(context).pop(savedQuote);
+          if (isMobile(context)) {
+            if (quote.isNew) {
+              Navigator.of(context).pushReplacementNamed(QuoteViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedQuote);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
@@ -95,6 +103,11 @@ class QuoteEditVM extends EntityEditVM {
           store.dispatch(EditQuoteItem(items[0]));
         }
         store.dispatch(AddQuoteItems(items));
+      },
+      onCancelPressed: (BuildContext context) {
+        store.dispatch(
+            EditQuote(quote: InvoiceEntity(), context: context, force: true));
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
     );
   }

@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskEdit extends StatefulWidget {
   const TaskEdit({
@@ -67,9 +68,18 @@ class _TaskEditState extends State<TaskEdit>
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: isMobile(context),
           title:
               Text(task.isNew ? localization.newTask : localization.editTask),
           actions: <Widget>[
+            if (!isMobile(context))
+              FlatButton(
+                child: Text(
+                  localization.cancel,
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () => viewModel.onCancelPressed(context),
+              ),
             ActionIconButton(
               icon: Icons.cloud_upload,
               tooltip: localization.save,
@@ -101,6 +111,7 @@ class _TaskEditState extends State<TaskEdit>
         body: Form(
           key: _formKey,
           child: TabBarView(
+            key: ValueKey(viewModel.task.id),
             controller: _controller,
             children: <Widget>[
               TaskEditDetailsScreen(),

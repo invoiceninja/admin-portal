@@ -32,6 +32,9 @@ class PaymentListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final uiState = state.uiState;
+    final paymentUIState = uiState.paymentUIState;
+
     final invoice = paymentInvoiceSelector(payment.id, state);
     final client = paymentClientSelector(payment.id, state);
 
@@ -45,6 +48,10 @@ class PaymentListItem extends StatelessWidget {
             formatDate(invoice.invoiceDate, context);
 
     return DismissibleEntity(
+      isSelected: payment.id ==
+          (uiState.isEditing
+              ? paymentUIState.editing.id
+              : paymentUIState.selectedId),
       user: user,
       entity: payment,
       onEntityAction: onEntityAction,

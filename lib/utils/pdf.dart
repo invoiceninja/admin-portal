@@ -10,6 +10,18 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
+  final localization = AppLocalization.of(context);
+  if (Platform.isIOS) {
+    if (await canLaunch(invoice.invitationBorderlessLink)) {
+      await launch(invoice.invitationBorderlessLink,
+          forceSafariVC: true, forceWebView: true);
+    } else {
+      throw localization.anErrorOccurred;
+    }
+
+    return;
+  }
+
   showDialog<Scaffold>(
       context: context,
       builder: (BuildContext context) {
@@ -21,7 +33,10 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
                 : localization.invoice + ' ' + invoice.invoiceNumber),
             actions: <Widget>[
               FlatButton(
-                child: Text(localization.download),
+                child: Text(
+                  localization.download,
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   launch(invoice.invitationDownloadLink,
                       forceSafariVC: false, forceWebView: false);

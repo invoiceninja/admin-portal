@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({
@@ -123,6 +124,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final product = viewModel.product;
 
     return AppBar(
+      automaticallyImplyLeading: isMobile(context),
       title: EntityStateTitle(entity: product),
       actions: [
         user.canEditEntity(product)

@@ -98,7 +98,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterInvoicesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewInvoiceList(context));
+              store.dispatch(ViewInvoiceList(context: context));
             }
             break;
           case EntityType.quote:
@@ -111,7 +111,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterQuotesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewQuoteList(context));
+              store.dispatch(ViewQuoteList(context: context));
             }
             break;
           case EntityType.payment:
@@ -123,7 +123,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterPaymentsByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewPaymentList(context));
+              store.dispatch(ViewPaymentList(context: context));
             }
             break;
           case EntityType.project:
@@ -135,7 +135,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterProjectsByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewProjectList(context));
+              store.dispatch(ViewProjectList(context: context));
             }
             break;
           case EntityType.task:
@@ -147,7 +147,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterTasksByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewTaskList(context));
+              store.dispatch(ViewTaskList(context: context));
             }
             break;
           case EntityType.expense:
@@ -161,7 +161,7 @@ class ClientViewVM {
             } else {
               store.dispatch(FilterExpensesByEntity(
                   entityId: client.id, entityType: EntityType.client));
-              store.dispatch(ViewExpenseList(context));
+              store.dispatch(ViewExpenseList(context: context));
             }
             break;
         }

@@ -5,8 +5,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
+import 'package:invoiceninja_flutter/ui/task/edit/task_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -63,11 +65,17 @@ class TaskEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         store.dispatch(EditClient(
-            client: ClientEntity(),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+          client: ClientEntity(),
+          context: context,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
+            }),
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdClient,
@@ -76,12 +84,18 @@ class TaskEditDetailsVM {
       },
       onAddProjectPressed: (context, completer) {
         store.dispatch(EditProject(
-            project: ProjectEntity()
-                .rebuild((b) => b..clientId = task.clientId ?? 0),
-            context: context,
-            completer: completer,
-            trackRoute: false));
+          project:
+              ProjectEntity().rebuild((b) => b..clientId = task.clientId ?? 0),
+          context: context,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
+            }),
+          force: true,
+        ));
         completer.future.then((SelectableEntity client) {
+          store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
             message: AppLocalization.of(context).createdProject,

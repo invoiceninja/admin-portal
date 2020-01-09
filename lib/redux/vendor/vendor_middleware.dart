@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -39,44 +41,73 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
 }
 
 Middleware<AppState> _editVendor() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    next(action);
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as EditVendor;
 
-    if (action.trackRoute) {
-      store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
     }
 
-    final vendor =
-        await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
+    next(action);
 
-    if (action.completer != null && vendor != null) {
-      action.completer.complete(vendor);
+    store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
+
+    if (isMobile(action.context)) {
+      final vendor =
+          await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
+
+      if (action.completer != null && vendor != null) {
+        action.completer.complete(vendor);
+      }
     }
   };
 }
 
 Middleware<AppState> _viewVendor() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewVendor;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-    Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+    }
   };
 }
 
 Middleware<AppState> _viewVendorList() {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ViewVendorList;
+
+    if (hasChanges(
+        store: store, context: action.context, force: action.force)) {
+      return;
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        VendorScreen.route, (Route<dynamic> route) => false);
+    if (isMobile(action.context)) {
+      Navigator.of(action.context).pushNamedAndRemoveUntil(
+          VendorScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
 Middleware<AppState> _archiveVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ArchiveVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -99,7 +130,8 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _deleteVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as DeleteVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -122,7 +154,8 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _restoreVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RestoreVendorRequest;
     final origVendor = store.state.vendorState.map[action.vendorId];
     repository
         .saveData(store.state.selectedCompany, store.state.authState,
@@ -145,7 +178,8 @@ Middleware<AppState> _restoreVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _saveVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveVendorRequest;
     repository
         .saveData(
             store.state.selectedCompany, store.state.authState, action.vendor)
@@ -155,7 +189,13 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
       } else {
         store.dispatch(SaveVendorSuccess(vendor));
       }
+
       action.completer.complete(vendor);
+
+      final vendorUIState = store.state.vendorUIState;
+      if (vendorUIState.saveCompleter != null) {
+        vendorUIState.saveCompleter.complete(vendor);
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveVendorFailure(error));
@@ -167,7 +207,8 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _loadVendor(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadVendor;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -203,7 +244,8 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
 }
 
 Middleware<AppState> _loadVendors(VendorRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadVendors;
     final AppState state = store.state;
 
     if (!state.vendorState.isStale && !action.force) {
