@@ -94,11 +94,6 @@ class CompanyGatewayListVM {
         } else {
           viewEntity(context: context, entity: companyGateway);
         }
-
-        viewEntityById(
-            context: context,
-            entityId: companyGateway.id,
-            entityType: EntityType.companyGateway);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onRemovePressed: (gatewayId) {
