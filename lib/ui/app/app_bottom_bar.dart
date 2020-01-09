@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
@@ -288,21 +289,30 @@ class _AppBottomBarState extends State<AppBottomBar> {
         child: Row(
           children: <Widget>[
             IconButton(
-              tooltip: AppLocalization.of(context).switchListTable,
+              tooltip: localization.switchListTable,
               icon: Icon(isList ? Icons.table_chart : Icons.view_list),
               onPressed: () {
                 store.dispatch(SwitchListTableLayout());
               },
             ),
-            if (widget.sortFields.isNotEmpty)
+            if (isList && widget.sortFields.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).sort,
+                tooltip: localization.sort,
                 icon: Icon(Icons.sort_by_alpha),
                 onPressed: _showSortSheet,
               ),
+            if (!isList && isNotMobile(context))
+              IconButton(
+                tooltip: localization.preview,
+                icon: Icon(Icons.chrome_reader_mode),
+                onPressed: () {
+                  store.dispatch(UserSettingsChanged(
+                      isPreviewVisible: !state.prefState.isPreviewVisible));
+                },
+              ),
             IconButton(
               key: Key(localization.filter),
-              tooltip: AppLocalization.of(context).filter,
+              tooltip: localization.filter,
               icon: Icon(Icons.filter_list),
               onPressed: _showFilterStateSheet,
               color: store.state.getListState(widget.entityType).hasStateFilters
@@ -311,7 +321,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             ),
             if (widget.statuses.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).filter,
+                tooltip: localization.filter,
                 icon: Icon(Icons.filter),
                 onPressed: _showFilterStatusSheet,
                 color:
@@ -321,7 +331,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             if (widget.customValues1.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).filter,
+                tooltip: localization.filter,
                 icon: Icon(Icons.looks_one),
                 onPressed: _showFilterCustom1Sheet,
                 color: store.state
@@ -332,7 +342,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             if (widget.customValues2.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).filter,
+                tooltip: localization.filter,
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom2Sheet,
                 color: store.state
@@ -343,7 +353,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             if (widget.customValues3.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).filter,
+                tooltip: localization.filter,
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom3Sheet,
                 color: store.state
@@ -354,7 +364,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             if (widget.customValues4.isNotEmpty)
               IconButton(
-                tooltip: AppLocalization.of(context).filter,
+                tooltip: localization.filter,
                 icon: Icon(Icons.looks_two),
                 onPressed: _showFilterCustom4Sheet,
                 color: store.state

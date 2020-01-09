@@ -12,6 +12,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.list,
+      isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.visible,
       isMenuVisible: true,
@@ -38,6 +39,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   AppSidebarMode get menuSidebarMode;
 
   AppSidebarMode get historySidebarMode;
+
+  bool get isPreviewVisible;
 
   bool get isMenuVisible;
 

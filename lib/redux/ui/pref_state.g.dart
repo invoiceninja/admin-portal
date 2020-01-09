@@ -127,6 +127,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'historySidebarMode',
       serializers.serialize(object.historySidebarMode,
           specifiedType: const FullType(AppSidebarMode)),
+      'isPreviewVisible',
+      serializers.serialize(object.isPreviewVisible,
+          specifiedType: const FullType(bool)),
       'isMenuVisible',
       serializers.serialize(object.isMenuVisible,
           specifiedType: const FullType(bool)),
@@ -186,6 +189,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'historySidebarMode':
           result.historySidebarMode = serializers.deserialize(value,
               specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
+          break;
+        case 'isPreviewVisible':
+          result.isPreviewVisible = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isMenuVisible':
           result.isMenuVisible = serializers.deserialize(value,
@@ -410,6 +417,8 @@ class _$PrefState extends PrefState {
   @override
   final AppSidebarMode historySidebarMode;
   @override
+  final bool isPreviewVisible;
+  @override
   final bool isMenuVisible;
   @override
   final bool isHistoryVisible;
@@ -436,6 +445,7 @@ class _$PrefState extends PrefState {
       this.moduleLayout,
       this.menuSidebarMode,
       this.historySidebarMode,
+      this.isPreviewVisible,
       this.isMenuVisible,
       this.isHistoryVisible,
       this.enableDarkMode,
@@ -457,6 +467,9 @@ class _$PrefState extends PrefState {
     }
     if (historySidebarMode == null) {
       throw new BuiltValueNullFieldError('PrefState', 'historySidebarMode');
+    }
+    if (isPreviewVisible == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'isPreviewVisible');
     }
     if (isMenuVisible == null) {
       throw new BuiltValueNullFieldError('PrefState', 'isMenuVisible');
@@ -503,6 +516,7 @@ class _$PrefState extends PrefState {
         moduleLayout == other.moduleLayout &&
         menuSidebarMode == other.menuSidebarMode &&
         historySidebarMode == other.historySidebarMode &&
+        isPreviewVisible == other.isPreviewVisible &&
         isMenuVisible == other.isMenuVisible &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
@@ -527,10 +541,14 @@ class _$PrefState extends PrefState {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, appLayout.hashCode),
-                                                    moduleLayout.hashCode),
-                                                menuSidebarMode.hashCode),
-                                            historySidebarMode.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            appLayout.hashCode),
+                                                        moduleLayout.hashCode),
+                                                    menuSidebarMode.hashCode),
+                                                historySidebarMode.hashCode),
+                                            isPreviewVisible.hashCode),
                                         isMenuVisible.hashCode),
                                     isHistoryVisible.hashCode),
                                 enableDarkMode.hashCode),
@@ -549,6 +567,7 @@ class _$PrefState extends PrefState {
           ..add('moduleLayout', moduleLayout)
           ..add('menuSidebarMode', menuSidebarMode)
           ..add('historySidebarMode', historySidebarMode)
+          ..add('isPreviewVisible', isPreviewVisible)
           ..add('isMenuVisible', isMenuVisible)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
@@ -583,6 +602,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   AppSidebarMode get historySidebarMode => _$this._historySidebarMode;
   set historySidebarMode(AppSidebarMode historySidebarMode) =>
       _$this._historySidebarMode = historySidebarMode;
+
+  bool _isPreviewVisible;
+  bool get isPreviewVisible => _$this._isPreviewVisible;
+  set isPreviewVisible(bool isPreviewVisible) =>
+      _$this._isPreviewVisible = isPreviewVisible;
 
   bool _isMenuVisible;
   bool get isMenuVisible => _$this._isMenuVisible;
@@ -637,6 +661,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _moduleLayout = _$v.moduleLayout;
       _menuSidebarMode = _$v.menuSidebarMode;
       _historySidebarMode = _$v.historySidebarMode;
+      _isPreviewVisible = _$v.isPreviewVisible;
       _isMenuVisible = _$v.isMenuVisible;
       _isHistoryVisible = _$v.isHistoryVisible;
       _enableDarkMode = _$v.enableDarkMode;
@@ -674,6 +699,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               moduleLayout: moduleLayout,
               menuSidebarMode: menuSidebarMode,
               historySidebarMode: historySidebarMode,
+              isPreviewVisible: isPreviewVisible,
               isMenuVisible: isMenuVisible,
               isHistoryVisible: isHistoryVisible,
               enableDarkMode: enableDarkMode,

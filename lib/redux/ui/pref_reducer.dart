@@ -31,6 +31,7 @@ PrefState prefReducer(
         companyPrefReducer(state.companyPrefs[selectedCompanyIndex], action)
     ..appLayout = layoutReducer(state.appLayout, action)
     ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
+    ..isPreviewVisible = isPreviewVisibleReducer(state.isPreviewVisible, action)
     ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
     ..historySidebarMode =
         historySidebarReducer(state.historySidebarMode, action)
@@ -141,6 +142,13 @@ Reducer<bool> autoStartTasksReducer = combineReducers([
     return action.autoStartTasks ?? autoStartTasks;
   }),
 ]);
+
+Reducer<bool> isPreviewVisibleReducer = combineReducers([
+  TypedReducer<bool, UserSettingsChanged>((isPreviewVisible, action) {
+    return action.isPreviewVisible ?? isPreviewVisible;
+  }),
+]);
+
 
 Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
   TypedReducer<bool, UserSettingsChanged>((addDocumentsToInvoice, action) {

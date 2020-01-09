@@ -76,6 +76,7 @@ class UserSettingsChanged implements PersistPrefs {
     this.autoStartTasks,
     this.longPressSelectionIsDefault,
     this.addDocumentsToInvoice,
+    this.isPreviewVisible,
     this.accentColor,
     this.menuMode,
     this.historyMode,
@@ -90,6 +91,7 @@ class UserSettingsChanged implements PersistPrefs {
   final bool emailPayment;
   final bool requireAuthentication;
   final bool autoStartTasks;
+  final bool isPreviewVisible;
   final bool addDocumentsToInvoice;
   final String accentColor;
 }
