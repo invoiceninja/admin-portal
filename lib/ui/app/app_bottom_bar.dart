@@ -283,11 +283,21 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
       final isList = prefState.moduleLayout == ModuleLayout.list;
+      final listState = state.getListState(widget.entityType);
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: Row(
           children: <Widget>[
+            IconButton(
+              tooltip: localization.multiselect,
+              icon: Icon(listState.isInMultiselect()
+                  ? Icons.check_box_outline_blank
+                  : Icons.check_box),
+              onPressed: () {
+                //
+              },
+            ),
             IconButton(
               tooltip: localization.switchListTable,
               icon: Icon(isList ? Icons.table_chart : Icons.view_list),

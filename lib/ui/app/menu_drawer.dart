@@ -353,19 +353,19 @@ class SidebarFooter extends StatelessWidget {
               onPressed: () => _showContactUs(context),
             ),
             IconButton(
-              icon: Icon(Icons.help_outline),
-              onPressed: () => launch('https://docs.invoiceninja.com'),
-            ),
-            IconButton(
               icon: Icon(Icons.forum),
               onPressed: () =>
                   launch('https://www.invoiceninja.com/forums/forum/support'),
             ),
             IconButton(
+              icon: Icon(Icons.help_outline),
+              onPressed: () => launch('https://docs.invoiceninja.com'),
+            ),
+            IconButton(
               icon: Icon(Icons.info_outline),
               onPressed: () => _showAbout(context),
             ),
-            if (kDebugMode)
+            if (false && kDebugMode)
               IconButton(
                 icon: Icon(Icons.memory),
                 onPressed: () => showDialog<StateInspector>(
