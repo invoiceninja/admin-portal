@@ -14,7 +14,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       moduleLayout: ModuleLayout.list,
       isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
-      historySidebarMode: AppSidebarMode.visible,
+      historySidebarMode: AppSidebarMode.float,
       isMenuVisible: true,
       isHistoryVisible: false,
       enableDarkMode: true,
