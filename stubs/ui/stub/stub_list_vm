@@ -79,7 +79,12 @@ class StubListVM {
           entityId: state.stubListState.filterEntityId,
           entityType: state.stubListState.filterEntityType),
         onStubTap: (context, stub) {
-          store.dispatch(ViewStub(stubId: stub.id, context: context));
+          if (store.state.stubListState.isInMultiselect()) {
+            handleStubAction(
+                context, [stub], EntityAction.toggleMultiselect);
+          } else {
+            viewEntity(context: context, entity: stub);
+          }
         },
       onEntityAction:
           (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>

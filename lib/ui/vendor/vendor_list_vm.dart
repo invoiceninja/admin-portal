@@ -76,7 +76,12 @@ class VendorListVM {
           entityId: state.vendorListState.filterEntityId,
           entityType: state.vendorListState.filterEntityType),
       onVendorTap: (context, vendor) {
-        viewEntity(context: context, entity: vendor);
+        if (store.state.productListState.isInMultiselect()) {
+          handleVendorAction(
+              context, [vendor], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: vendor);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: VendorPresenter.getTableFields(state.userCompany),

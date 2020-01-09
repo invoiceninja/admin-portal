@@ -88,6 +88,13 @@ class CompanyGatewayListVM {
           entityId: state.companyGatewayListState.filterEntityId,
           entityType: state.companyGatewayListState.filterEntityType),
       onCompanyGatewayTap: (context, companyGateway) {
+        if (store.state.productListState.isInMultiselect()) {
+          handleCompanyGatewayAction(
+              context, [companyGateway], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: companyGateway);
+        }
+
         viewEntityById(
             context: context,
             entityId: companyGateway.id,

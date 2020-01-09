@@ -83,7 +83,12 @@ class ProjectListVM {
           entityId: state.projectListState.filterEntityId,
           entityType: state.projectListState.filterEntityType),
       onProjectTap: (context, project) {
-        viewEntity(context: context, entity: project);
+        if (store.state.productListState.isInMultiselect()) {
+          handleProjectAction(
+              context, [project], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: project);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: ProjectPresenter.getTableFields(state.userCompany),

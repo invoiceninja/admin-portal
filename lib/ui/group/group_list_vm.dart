@@ -76,7 +76,12 @@ class GroupListVM {
           entityId: state.groupListState.filterEntityId,
           entityType: state.groupListState.filterEntityType),
       onGroupTap: (context, group) {
-        viewEntity(context: context, entity: group);
+        if (store.state.productListState.isInMultiselect()) {
+          handleGroupAction(
+              context, [group], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: group);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
     );

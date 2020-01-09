@@ -83,10 +83,12 @@ class ExpenseListVM {
           entityId: state.expenseListState.filterEntityId,
           entityType: state.expenseListState.filterEntityType),
       onExpenseTap: (context, expense) {
-        viewEntityById(
-            context: context,
-            entityId: expense.id,
-            entityType: EntityType.expense);
+        if (store.state.productListState.isInMultiselect()) {
+          handleExpenseAction(
+              context, [expense], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: expense);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: ExpensePresenter.getTableFields(state.userCompany),
