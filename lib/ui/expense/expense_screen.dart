@@ -83,8 +83,8 @@ class ExpenseScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearExpenseMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearExpenseMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

@@ -76,8 +76,7 @@ class UserListVM {
           entityType: state.userListState.filterEntityType),
       onUserTap: (context, user) {
         if (store.state.userListState.isInMultiselect()) {
-          handleUserAction(
-              context, [user], EntityAction.toggleMultiselect);
+          handleUserAction(context, [user], EntityAction.toggleMultiselect);
         } else {
           viewEntity(context: context, entity: user);
         }

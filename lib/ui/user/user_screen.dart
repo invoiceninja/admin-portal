@@ -85,8 +85,8 @@ class UserScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearUserMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearUserMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

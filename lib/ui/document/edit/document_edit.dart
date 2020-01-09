@@ -72,9 +72,8 @@ class _DocumentEditState extends State<DocumentEdit> {
 
     return EditScaffold(
       entity: document,
-      title: document.isNew
-          ? localization.newDocument
-          : localization.editDocument,
+      title:
+          document.isNew ? localization.newDocument : localization.editDocument,
       onSavePressed: (context) {
         if (!_formKey.currentState.validate()) {
           return;

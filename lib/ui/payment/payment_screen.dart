@@ -75,12 +75,12 @@ class PaymentScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: payments,
-                        context: context,
-                        multiselect: true,
+                      entities: payments,
+                      context: context,
+                      multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearPaymentMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearPaymentMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

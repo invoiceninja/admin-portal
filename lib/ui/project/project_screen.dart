@@ -81,8 +81,8 @@ class ProjectScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearProjectMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearProjectMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

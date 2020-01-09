@@ -82,8 +82,8 @@ class ClientScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearClientMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearClientMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

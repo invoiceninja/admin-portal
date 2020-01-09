@@ -178,9 +178,6 @@ abstract class ProjectEntity extends Object
       return true;
     }
 
-
-
-
     return name.toLowerCase().contains(filter);
   }
 

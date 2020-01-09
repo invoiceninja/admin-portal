@@ -45,7 +45,7 @@ class _ExpenseViewState extends State<ExpenseView>
     final expense = viewModel.expense;
     final documentState = viewModel.state.documentState;
     final documents =
-    memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
+        memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
 
     return ViewScaffold(
       entity: expense,

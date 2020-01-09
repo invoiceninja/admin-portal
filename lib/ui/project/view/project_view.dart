@@ -37,7 +37,7 @@ class _ProjectViewState extends State<ProjectView> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 1),
-            (Timer timer) => mounted ? setState(() => false) : false);
+        (Timer timer) => mounted ? setState(() => false) : false);
   }
 
   @override
@@ -92,9 +92,7 @@ class _ProjectViewState extends State<ProjectView> {
                     showSeconds: false),
               ),
               Material(
-                color: Theme
-                    .of(context)
-                    .canvasColor,
+                color: Theme.of(context).canvasColor,
                 child: ListTile(
                   title: EntityStateTitle(entity: client),
                   leading: Icon(FontAwesomeIcons.users, size: 18.0),
@@ -104,9 +102,7 @@ class _ProjectViewState extends State<ProjectView> {
                 ),
               ),
               Container(
-                color: Theme
-                    .of(context)
-                    .backgroundColor,
+                color: Theme.of(context).backgroundColor,
                 height: 12.0,
               ),
               EntityListTile(
@@ -116,13 +112,11 @@ class _ProjectViewState extends State<ProjectView> {
                 onLongPress: () =>
                     viewModel.onTasksPressed(context, longPress: true),
                 subtitle: memoizedTaskStatsForProject(
-                    project.id, viewModel.state.taskState.map)
+                        project.id, viewModel.state.taskState.map)
                     .present(localization.active, localization.archived),
               ),
               Container(
-                color: Theme
-                    .of(context)
-                    .backgroundColor,
+                color: Theme.of(context).backgroundColor,
                 height: 12.0,
               ),
             ];
@@ -132,9 +126,7 @@ class _ProjectViewState extends State<ProjectView> {
               widgets.addAll([
                 IconMessage(project.privateNotes),
                 Container(
-                  color: Theme
-                      .of(context)
-                      .backgroundColor,
+                  color: Theme.of(context).backgroundColor,
                   height: 12.0,
                 ),
               ]);
@@ -157,9 +149,7 @@ class _ProjectViewState extends State<ProjectView> {
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'project_view_fab',
-        backgroundColor: Theme
-            .of(context)
-            .primaryColorDark,
+        backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () => viewModel.onAddTaskPressed(context),
         child: Icon(
           Icons.add,

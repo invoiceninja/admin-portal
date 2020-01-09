@@ -46,9 +46,7 @@ class _VendorEditState extends State<VendorEdit>
 
     return EditScaffold(
       entity: vendor,
-      title: vendor.isNew
-          ? localization.newVendor
-          : localization.editVendor,
+      title: vendor.isNew ? localization.newVendor : localization.editVendor,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         if (!_formKey.currentState.validate()) {

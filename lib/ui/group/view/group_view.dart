@@ -46,7 +46,8 @@ class _GroupViewState extends State<GroupView> {
             child: ElevatedButton(
               label: localization.configureSettings.toUpperCase(),
               icon: Icons.settings,
-              onPressed: () => handleGroupAction(context, [group], EntityAction.settings),
+              onPressed: () =>
+                  handleGroupAction(context, [group], EntityAction.settings),
             ),
           ),
           Container(
@@ -59,8 +60,8 @@ class _GroupViewState extends State<GroupView> {
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),
             subtitle:
-            memoizedClientStatsForGroup(state.clientState.map, group.id)
-                .present(localization.active, localization.archived),
+                memoizedClientStatsForGroup(state.clientState.map, group.id)
+                    .present(localization.active, localization.archived),
           ),
           Container(
             color: Theme.of(context).backgroundColor,

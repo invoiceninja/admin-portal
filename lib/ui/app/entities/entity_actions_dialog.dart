@@ -20,11 +20,12 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-Future<void> showEntityActionsDialog({@required BuildContext context,
-  @required List<BaseEntity> entities,
-  ClientEntity client,
-  Completer completer,
-  bool multiselect = false}) async {
+Future<void> showEntityActionsDialog(
+    {@required BuildContext context,
+    @required List<BaseEntity> entities,
+    ClientEntity client,
+    Completer completer,
+    bool multiselect = false}) async {
   if (entities == null) {
     return;
   }
@@ -32,9 +33,7 @@ Future<void> showEntityActionsDialog({@required BuildContext context,
   showDialog<String>(
       context: context,
       builder: (BuildContext dialogContext) {
-        final state = StoreProvider
-            .of<AppState>(context)
-            .state;
+        final state = StoreProvider.of<AppState>(context).state;
         final actions = <Widget>[];
 
         actions.addAll(entities[0]

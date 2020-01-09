@@ -68,9 +68,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
 
     return EditScaffold(
       entity: invoice,
-      title: invoice.isNew
-          ? localization.newInvoice
-          : localization.editInvoice,
+      title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         if (!widget.formKey.currentState.validate()) {
@@ -82,37 +80,37 @@ class _InvoiceEditState extends State<InvoiceEdit>
       appBarBottom: state.prefState.isDesktop
           ? null
           : TabBar(
-        controller: _controller,
-        //isScrollable: true,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.items,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-        ],
-      ),
+              controller: _controller,
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.contacts,
+                ),
+                Tab(
+                  text: localization.items,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+              ],
+            ),
       body: Form(
         key: widget.formKey,
         child: state.prefState.isDesktop
             ? InvoiceEditDetailsScreen()
             : TabBarView(
-          key: ValueKey('__invoice_${viewModel.invoice.id}__'),
-          controller: _controller,
-          children: <Widget>[
-            InvoiceEditDetailsScreen(),
-            InvoiceEditContactsScreen(),
-            InvoiceEditItemsScreen(),
-            InvoiceEditNotesScreen(),
-          ],
-        ),
+                key: ValueKey('__invoice_${viewModel.invoice.id}__'),
+                controller: _controller,
+                children: <Widget>[
+                  InvoiceEditDetailsScreen(),
+                  InvoiceEditContactsScreen(),
+                  InvoiceEditItemsScreen(),
+                  InvoiceEditNotesScreen(),
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColor,
@@ -140,8 +138,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   excluded: invoice.lineItems
                       .where((item) => item.isTask || item.isExpense)
                       .map((item) => item.isTask
-                      ? viewModel.state.taskState.map[item.taskId]
-                      : viewModel.state.expenseState.map[item.expenseId])
+                          ? viewModel.state.taskState.map[item.taskId]
+                          : viewModel.state.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {

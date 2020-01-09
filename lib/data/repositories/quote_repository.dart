@@ -31,8 +31,7 @@ class QuoteRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url = credentials.url +
-        '/quotes?include=invitations';
+    String url = credentials.url + '/quotes?include=invitations';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';

@@ -85,8 +85,7 @@ class ClientListVM {
       filter: state.clientListState.filter,
       onClientTap: (context, client) {
         if (store.state.clientListState.isInMultiselect()) {
-          handleClientAction(
-              context, [client], EntityAction.toggleMultiselect);
+          handleClientAction(context, [client], EntityAction.toggleMultiselect);
         } else {
           viewEntity(context: context, entity: client);
         }

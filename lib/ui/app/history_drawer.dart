@@ -137,7 +137,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
         subtitle: Text(localization.lookup('${history.entityType}')),
         // TODO this needs to be localized
         trailing: LiveText(
-              () => timeago.format(history.dateTime, locale: 'en_short'),
+          () => timeago.format(history.dateTime, locale: 'en_short'),
           duration: Duration(minutes: 1),
         ),
         /*

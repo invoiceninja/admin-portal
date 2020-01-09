@@ -84,8 +84,8 @@ class GroupSettingsScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearGroupMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearGroupMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

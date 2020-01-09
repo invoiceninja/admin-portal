@@ -80,12 +80,12 @@ class TaxRateSettingsScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: taxRates,
-                        context: context,
-                        multiselect: true,
+                      entities: taxRates,
+                      context: context,
+                      multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearTaxRateMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearTaxRateMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

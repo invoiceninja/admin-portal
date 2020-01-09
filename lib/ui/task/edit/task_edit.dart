@@ -71,9 +71,7 @@ class _TaskEditState extends State<TaskEdit>
 
     return EditScaffold(
       entity: task,
-      title: task.isNew
-          ? localization.newTask
-          : localization.editTask,
+      title: task.isNew ? localization.newTask : localization.editTask,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         if (!_formKey.currentState.validate()) {

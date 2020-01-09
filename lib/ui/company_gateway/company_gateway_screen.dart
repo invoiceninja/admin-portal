@@ -67,9 +67,9 @@ class CompanyGatewayScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: companyGateways,
-                        context: context,
-                        multiselect: true,
+                      entities: companyGateways,
+                      context: context,
+                      multiselect: true,
                       completer: Completer<Null>()
                         ..future.then((_) =>
                             store.dispatch(ClearCompanyGatewayMultiselect())),

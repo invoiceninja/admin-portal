@@ -423,7 +423,6 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
-
   EntityType get entityType {
     if (['1', '2', '3', '26'].contains(activityTypeId)) {
       return EntityType.client;

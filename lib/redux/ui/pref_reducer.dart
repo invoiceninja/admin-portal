@@ -267,8 +267,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
 ]);
 
 CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..historyList.replace(historyReducer(state.historyList, action)));
+  return state.rebuild(
+      (b) => b..historyList.replace(historyReducer(state.historyList, action)));
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([

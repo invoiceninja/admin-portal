@@ -9,17 +9,59 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_item.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class StubList extends StatelessWidget {
+class StubList extends StatefulWidget {
   const StubList({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
 
   final StubListVM viewModel;
+
+  @override
+  _StubListState createState() => _StubListState();
+}
+
+class _StubListState extends State<StubList> {
+
+  EntityDataTableSource dataTableSource;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final viewModel = widget.viewModel;
+
+    dataTableSource = EntityDataTableSource(
+        context: context,
+        entityType: EntityType.stub,
+        editingId: viewModel.state.stubUIState.editing.id,
+        tableColumns: viewModel.tableColumns,
+        entityList: viewModel.stubList,
+        entityMap: viewModel.stubMap,
+        entityPresenter: StubPresenter(),
+        onTap: (BaseEntity stub) =>
+            viewModel.onStubTap(context, stub));
+  }
+
+  @override
+  void didUpdateWidget(StubList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final viewModel = widget.viewModel;
+    dataTableSource.editingId = viewModel.state.stubUIState.editing.id;
+    dataTableSource.entityList = viewModel.stubList;
+    dataTableSource.entityMap = viewModel.stubMap;
+
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    dataTableSource.notifyListeners();
+  }
+
 
   @override
   Widget build(BuildContext context) {

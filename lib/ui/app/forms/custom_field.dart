@@ -79,7 +79,7 @@ class _CustomFieldState extends State<CustomField> {
             }
           },
           value: widget.value == null ? null : widget.value == kSwitchValueYes,
-          label: widget.hideFieldLabel ? '': fieldLabel,
+          label: widget.hideFieldLabel ? '' : fieldLabel,
           enabledLabel: localization.yes,
           disabledLabel: localization.no,
         );

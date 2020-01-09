@@ -94,7 +94,6 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'update_details')
   bool get updateDetails;
 
-
   @BuiltValueField(wireName: 'fees_and_limits')
   BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
 

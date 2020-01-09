@@ -66,7 +66,8 @@ class PaymentRepository {
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
-      var url = '${credentials.url}/payments/${payment.id}?include=paymentables';
+      var url =
+          '${credentials.url}/payments/${payment.id}?include=paymentables';
       if (sendEmail) {
         url += '&email_receipt=true';
       }

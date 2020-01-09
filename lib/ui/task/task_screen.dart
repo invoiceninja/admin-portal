@@ -81,8 +81,8 @@ class TaskScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearTaskMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearTaskMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

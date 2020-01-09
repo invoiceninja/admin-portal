@@ -60,9 +60,8 @@ class _GroupEditState extends State<GroupEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final group = widget.viewModel.group.rebuild((b) => b
-        ..name = _nameController.text.trim()
-      );
+      final group = widget.viewModel.group
+          .rebuild((b) => b..name = _nameController.text.trim());
       if (group != widget.viewModel.group) {
         widget.viewModel.onChanged(group);
       }

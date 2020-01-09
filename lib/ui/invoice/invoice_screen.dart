@@ -79,12 +79,12 @@ class InvoiceScreen extends StatelessWidget {
                         .toList();
 
                     await showEntityActionsDialog(
-                        entities: invoices,
-                        context: context,
-                        multiselect: true,
+                      entities: invoices,
+                      context: context,
+                      multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then((_) =>
-                            store.dispatch(ClearInvoiceMultiselect())),
+                        ..future.then(
+                            (_) => store.dispatch(ClearInvoiceMultiselect())),
                     );
                   },
             onCancelPressed: (context) =>

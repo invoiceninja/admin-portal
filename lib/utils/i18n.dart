@@ -18,7 +18,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
-      'your_message_has_been_received': 'We have received your message and will try to respond promptly.',
+      'your_message_has_been_received':
+          'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
@@ -15929,15 +15930,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get includeRecentErrors =>
       _localizedValues[localeCode]['include_recent_errors'];
 
-  String get applied =>
-      _localizedValues[localeCode]['applied'];
+  String get applied => _localizedValues[localeCode]['applied'];
 
-  String get verifyPassword =>
-      _localizedValues[localeCode]['verify_password'];
+  String get verifyPassword => _localizedValues[localeCode]['verify_password'];
 
-  String get entityState =>
-      _localizedValues[localeCode]['entity_state'];
-
+  String get entityState => _localizedValues[localeCode]['entity_state'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

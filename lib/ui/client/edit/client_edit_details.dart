@@ -93,8 +93,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim()
-      );
+        ..customValue4 = _custom4Controller.text.trim());
       if (client != viewModel.client) {
         viewModel.onChanged(client);
       }

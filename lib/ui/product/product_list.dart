@@ -71,7 +71,6 @@ class _ProductListState extends State<ProductList> {
     final state = viewModel.state;
     final listUIState = state.uiState.productUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final isList = state.prefState.moduleLayout == ModuleLayout.list;
     final productList = viewModel.productList;
 
     if (!viewModel.isLoaded) {
@@ -91,7 +90,7 @@ class _ProductListState extends State<ProductList> {
     }
 
     final listOrTable = () {
-      if (isList) {
+      if (state.prefState.moduleLayout == ModuleLayout.list) {
         return ListView.separated(
             separatorBuilder: (context, index) => ListDivider(),
             itemCount: viewModel.productList.length,

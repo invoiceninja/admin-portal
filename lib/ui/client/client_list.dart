@@ -47,8 +47,7 @@ class _ClientListState extends State<ClientList> {
         entityList: viewModel.clientList,
         entityMap: viewModel.clientMap,
         entityPresenter: ClientPresenter(),
-        onTap: (BaseEntity client) =>
-            viewModel.onClientTap(context, client));
+        onTap: (BaseEntity client) => viewModel.onClientTap(context, client));
   }
 
   @override
@@ -127,37 +126,35 @@ class _ClientListState extends State<ClientList> {
                     );
                   }
                 },
-                isChecked:
-                isInMultiselect && listUIState.isSelected(client.id),
+                isChecked: isInMultiselect && listUIState.isSelected(client.id),
               );
             });
       } else {
         return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: PaginatedDataTable(
-                onSelectAll: (value) {
-                  final clients = viewModel.clientList
-                      .map<ClientEntity>(
-                          (clientId) => viewModel.clientMap[clientId])
-                      .where(
-                          (client) => value != listUIState.isSelected(client.id))
-                      .toList();
-                  handleClientAction(
-                      context, clients, EntityAction.toggleMultiselect);
-                },
-                columns: [
-                  if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
-                  ...viewModel.tableColumns.map((field) => DataColumn(
-                      label: Text(AppLocalization.of(context).lookup(field)),
-                      numeric: EntityPresenter.isFieldNumeric(field),
-                      onSort: (int columnIndex, bool ascending) =>
-                          store.dispatch(SortClients(field)))),
-                ],
-                source: dataTableSource,
-                header: SizedBox(),
-              ),
-            ));
+          padding: const EdgeInsets.all(12),
+          child: PaginatedDataTable(
+            onSelectAll: (value) {
+              final clients = viewModel.clientList
+                  .map<ClientEntity>(
+                      (clientId) => viewModel.clientMap[clientId])
+                  .where((client) => value != listUIState.isSelected(client.id))
+                  .toList();
+              handleClientAction(
+                  context, clients, EntityAction.toggleMultiselect);
+            },
+            columns: [
+              if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
+              ...viewModel.tableColumns.map((field) => DataColumn(
+                  label: Text(AppLocalization.of(context).lookup(field)),
+                  numeric: EntityPresenter.isFieldNumeric(field),
+                  onSort: (int columnIndex, bool ascending) =>
+                      store.dispatch(SortClients(field)))),
+            ],
+            source: dataTableSource,
+            header: SizedBox(),
+          ),
+        ));
       }
     };
 

@@ -45,9 +45,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
 
     return EditScaffold(
       entity: expense,
-      title: expense.isNew
-          ? localization.newExpense
-          : localization.editExpense,
+      title: expense.isNew ? localization.newExpense : localization.editExpense,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         if (!_formKey.currentState.validate()) {
