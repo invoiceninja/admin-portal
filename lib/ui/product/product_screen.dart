@@ -115,6 +115,13 @@ class ProductScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterProductsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.productListState.isInMultiselect()) {
+            store.dispatch(ClearProductMultiselect());
+          } else {
+            store.dispatch(StartProductMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.product)
           ? FloatingActionButton(

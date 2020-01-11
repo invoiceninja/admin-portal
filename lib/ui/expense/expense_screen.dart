@@ -137,6 +137,13 @@ class ExpenseScreen extends StatelessWidget {
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterExpensesByStatus(status));
         },
+        onCheckboxPressed: () {
+          if (store.state.expenseListState.isInMultiselect()) {
+            store.dispatch(ClearExpenseMultiselect());
+          } else {
+            store.dispatch(StartExpenseMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.expense)
           ? FloatingActionButton(

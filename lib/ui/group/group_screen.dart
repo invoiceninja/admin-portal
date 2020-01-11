@@ -110,6 +110,13 @@ class GroupSettingsScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterGroupsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.groupListState.isInMultiselect()) {
+            store.dispatch(ClearGroupMultiselect());
+          } else {
+            store.dispatch(StartGroupMultiselect());
+          }
+        },
       ),
       floatingActionButton: state.userCompany.canCreate(EntityType.group)
           ? FloatingActionButton(

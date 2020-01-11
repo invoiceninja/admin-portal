@@ -152,6 +152,13 @@ class InvoiceScreen extends StatelessWidget {
               ..name = localization.pastDue,
           ),
         ],
+        onCheckboxPressed: () {
+          if (store.state.invoiceListState.isInMultiselect()) {
+            store.dispatch(ClearInvoiceMultiselect());
+          } else {
+            store.dispatch(StartInvoiceMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.invoice)
           ? FloatingActionButton(

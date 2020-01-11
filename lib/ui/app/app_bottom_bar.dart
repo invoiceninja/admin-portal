@@ -12,10 +12,11 @@ import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
   const AppBottomBar({
-    this.sortFields = const [],
-    this.onSelectedSortField,
-    this.entityType,
-    this.onSelectedState,
+    @required this.sortFields,
+    @required this.onSelectedSortField,
+    @required this.entityType,
+    @required this.onSelectedState,
+    @required this.onCheckboxPressed,
     this.onSelectedStatus,
     this.onSelectedCustom1,
     this.onSelectedCustom2,
@@ -31,6 +32,7 @@ class AppBottomBar extends StatefulWidget {
   final EntityType entityType;
   final List<String> sortFields;
   final List<EntityStatus> statuses;
+  final Function onCheckboxPressed;
   final Function(String) onSelectedSortField;
   final Function(EntityState, bool) onSelectedState;
   final Function(EntityStatus, bool) onSelectedStatus;
@@ -291,12 +293,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
           children: <Widget>[
             IconButton(
               tooltip: localization.multiselect,
-              icon: Icon(listState.isInMultiselect()
-                  ? Icons.check_box_outline_blank
-                  : Icons.check_box),
-              onPressed: () {
-                //
-              },
+              icon: Icon(Icons.check_box),
+              onPressed: () => widget.onCheckboxPressed(),
             ),
             IconButton(
               tooltip: localization.switchListTable,

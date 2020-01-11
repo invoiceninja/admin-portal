@@ -115,6 +115,13 @@ class PaymentScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPaymentsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.paymentListState.isInMultiselect()) {
+            store.dispatch(ClearPaymentMultiselect());
+          } else {
+            store.dispatch(StartPaymentMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.payment)
           ? FloatingActionButton(

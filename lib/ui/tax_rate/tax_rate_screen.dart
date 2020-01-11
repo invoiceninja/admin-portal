@@ -102,6 +102,13 @@ class TaxRateSettingsScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTaxRatesByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.taxRateListState.isInMultiselect()) {
+            store.dispatch(ClearTaxRateMultiselect());
+          } else {
+            store.dispatch(StartTaxRateMultiselect());
+          }
+        },
       ),
       floatingActionButton: state.userCompany.canCreate(EntityType.taxRate)
           ? FloatingActionButton(

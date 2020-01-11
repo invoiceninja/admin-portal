@@ -135,6 +135,13 @@ class TaskScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTasksByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.taskListState.isInMultiselect()) {
+            store.dispatch(ClearTaskMultiselect());
+          } else {
+            store.dispatch(StartTaskMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.task)
           ? FloatingActionButton(

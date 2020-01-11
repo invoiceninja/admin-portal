@@ -116,6 +116,13 @@ class ProjectScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterProjectsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.projectListState.isInMultiselect()) {
+            store.dispatch(ClearProjectMultiselect());
+          } else {
+            store.dispatch(StartProjectMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.project)
           ? FloatingActionButton(

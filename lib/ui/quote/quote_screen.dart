@@ -145,6 +145,13 @@ class QuoteScreen extends StatelessWidget {
               ..name = localization.expired,
           ),
         ],
+        onCheckboxPressed: () {
+          if (store.state.quoteListState.isInMultiselect()) {
+            store.dispatch(ClearQuoteMultiselect());
+          } else {
+            store.dispatch(StartQuoteMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(

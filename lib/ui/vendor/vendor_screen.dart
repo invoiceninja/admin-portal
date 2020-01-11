@@ -116,6 +116,13 @@ class VendorScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterVendorsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.vendorListState.isInMultiselect()) {
+            store.dispatch(ClearVendorMultiselect());
+          } else {
+            store.dispatch(StartVendorMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.vendor)
           ? FloatingActionButton(

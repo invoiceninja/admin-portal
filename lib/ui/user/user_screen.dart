@@ -109,6 +109,13 @@ class UserScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterUsersByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.userListState.isInMultiselect()) {
+            store.dispatch(ClearUserMultiselect());
+          } else {
+            store.dispatch(StartUserMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.user)
           ? FloatingActionButton(

@@ -109,6 +109,13 @@ class DocumentScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterDocumentsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.documentListState.isInMultiselect()) {
+            store.dispatch(ClearDocumentMultiselect());
+          } else {
+            store.dispatch(StartDocumentMultiselect());
+          }
+        },
       ),
       floatingActionButton: userCompany.canCreate(EntityType.document)
           ? FloatingActionButton(

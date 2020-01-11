@@ -104,6 +104,13 @@ class ClientScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterClientsByState(state));
         },
+        onCheckboxPressed: () {
+          if (store.state.clientListState.isInMultiselect()) {
+            store.dispatch(ClearClientMultiselect());
+          } else {
+            store.dispatch(StartClientMultiselect());
+          }
+        },
         customValues1: company.getCustomFieldValues(CustomFieldType.client1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.client2,

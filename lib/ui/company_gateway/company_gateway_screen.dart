@@ -86,6 +86,8 @@ class CompanyGatewayScreen extends StatelessWidget {
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
+        sortFields: [],
+        onSelectedSortField: null,
         entityType: EntityType.companyGateway,
         onSelectedCustom1: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom1(value)),
@@ -97,6 +99,13 @@ class CompanyGatewayScreen extends StatelessWidget {
             store.dispatch(FilterCompanyGatewaysByCustom4(value)),
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterCompanyGatewaysByState(state));
+        },
+        onCheckboxPressed: () {
+          if (store.state.companyGatewayListState.isInMultiselect()) {
+            store.dispatch(ClearCompanyGatewayMultiselect());
+          } else {
+            store.dispatch(StartCompanyGatewayMultiselect());
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(
