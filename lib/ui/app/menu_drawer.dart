@@ -572,7 +572,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       actions: <Widget>[
         if (_isSaving)
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(12),
             child: CircularProgressIndicator(),
           ),
         if (!_isSaving)
