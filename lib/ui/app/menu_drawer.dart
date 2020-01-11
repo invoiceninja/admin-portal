@@ -543,7 +543,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
             state.credentials.token,
             data: json.encode({
               'message': _message,
-              'include_logs': _includeLogs ? 'true' : 'false',
+              'send_logs': _includeLogs ? 'true' : '',
             }))
         .then((dynamic response) async {
       setState(() => _isSaving = false);
