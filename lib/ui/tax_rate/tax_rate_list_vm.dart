@@ -76,7 +76,7 @@ class TaxRateListVM {
           entityId: state.taxRateListState.filterEntityId,
           entityType: state.taxRateListState.filterEntityType),
       onTaxRateTap: (context, taxRate) {
-        if (store.state.productListState.isInMultiselect()) {
+        if (store.state.taxRateListState.isInMultiselect()) {
           handleTaxRateAction(
               context, [taxRate], EntityAction.toggleMultiselect);
         } else {

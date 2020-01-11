@@ -83,7 +83,7 @@ class ExpenseListVM {
           entityId: state.expenseListState.filterEntityId,
           entityType: state.expenseListState.filterEntityType),
       onExpenseTap: (context, expense) {
-        if (store.state.productListState.isInMultiselect()) {
+        if (store.state.expenseListState.isInMultiselect()) {
           handleExpenseAction(
               context, [expense], EntityAction.toggleMultiselect);
         } else {

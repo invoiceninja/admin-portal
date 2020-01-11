@@ -85,7 +85,7 @@ class TaskListVM {
           entityId: state.taskListState.filterEntityId,
           entityType: state.taskListState.filterEntityType),
       onTaskTap: (context, task) {
-        if (store.state.productListState.isInMultiselect()) {
+        if (store.state.taskListState.isInMultiselect()) {
           handleTaskAction(context, [task], EntityAction.toggleMultiselect);
         } else {
           viewEntity(context: context, entity: task);

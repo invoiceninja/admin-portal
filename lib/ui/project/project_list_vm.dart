@@ -83,7 +83,7 @@ class ProjectListVM {
           entityId: state.projectListState.filterEntityId,
           entityType: state.projectListState.filterEntityType),
       onProjectTap: (context, project) {
-        if (store.state.productListState.isInMultiselect()) {
+        if (store.state.projectListState.isInMultiselect()) {
           handleProjectAction(
               context, [project], EntityAction.toggleMultiselect);
         } else {
