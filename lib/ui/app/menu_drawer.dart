@@ -527,6 +527,38 @@ class ContactUsDialog extends StatefulWidget {
 class _ContactUsDialogState extends State<ContactUsDialog> {
   String _message = '';
   bool _includeLogs = false;
+  bool _isSaving = false;
+
+  void _sendMessage() {
+    if (_message.isEmpty) {
+      return;
+    }
+
+    final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+
+    setState(() => _isSaving = true);
+    WebClient()
+        .post(state.credentials.url + '/support/messages/send',
+            state.credentials.token,
+            data: json.encode({
+              'message': _message,
+              'include_logs': _includeLogs ? 'true' : 'false',
+            }))
+        .then((dynamic response) async {
+      setState(() => _isSaving = false);
+      await showDialog<MessageDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return MessageDialog(localization.yourMessageHasBeenReceived);
+          });
+      Navigator.pop(context);
+    }).catchError((dynamic error) {
+      print('error: $error');
+      setState(() => _isSaving = false);
+      showErrorDialog(context: context, message: '$error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -538,35 +570,21 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       contentPadding: EdgeInsets.all(25),
       title: Text(localization.contactUs),
       actions: <Widget>[
-        FlatButton(
-          child: Text(localization.cancel.toUpperCase()),
-          onPressed: () => Navigator.pop(context),
-        ),
-        FlatButton(
-          child: Text(localization.send.toUpperCase()),
-          onPressed: () {
-            Navigator.pop(context);
-            if (_message.isNotEmpty) {
-              WebClient()
-                  .post(state.credentials.url + '/support/messages/send',
-                      state.credentials.token,
-                      data: json.encode({
-                        'message': _message,
-                        'include_logs': _includeLogs ? 'true' : 'false',
-                      }))
-                  .then((dynamic response) {
-                showDialog<MessageDialog>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return MessageDialog(
-                          localization.yourMessageHasBeenReceived);
-                    });
-              }).catchError((dynamic error) {
-                showErrorDialog(context: context, message: '$error');
-              });
-            }
-          },
-        ),
+        if (_isSaving)
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: CircularProgressIndicator(),
+          ),
+        if (!_isSaving)
+          FlatButton(
+            child: Text(localization.cancel.toUpperCase()),
+            onPressed: () => Navigator.pop(context),
+          ),
+        if (!_isSaving)
+          FlatButton(
+            child: Text(localization.send.toUpperCase()),
+            onPressed: () => _sendMessage(),
+          ),
       ],
       content: SingleChildScrollView(
         child: Container(
