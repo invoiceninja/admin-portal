@@ -80,7 +80,7 @@ class PaymentListVM {
       filter: state.paymentUIState.listUIState.filter,
       listState: state.paymentListState,
       onPaymentTap: (context, payment) {
-        if (store.state.invoiceListState.isInMultiselect()) {
+        if (store.state.paymentListState.isInMultiselect()) {
           handlePaymentAction(
               context, [payment], EntityAction.toggleMultiselect);
         } else {
