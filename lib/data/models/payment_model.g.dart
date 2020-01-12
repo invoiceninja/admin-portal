@@ -148,6 +148,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.invoices,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'credits',
+      serializers.serialize(object.credits,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentableEntity)])),
     ];
     if (object.number != null) {
       result
@@ -382,6 +386,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
                       BuiltList, const [const FullType(PaymentableEntity)]))
               as BuiltList<dynamic>);
           break;
+        case 'credits':
+          result.credits.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentableEntity)]))
+              as BuiltList<dynamic>);
+          break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -435,6 +445,9 @@ class _$PaymentableEntitySerializer
       'invoice_id',
       serializers.serialize(object.invoiceId,
           specifiedType: const FullType(String)),
+      'credit_id',
+      serializers.serialize(object.creditId,
+          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -462,6 +475,10 @@ class _$PaymentableEntitySerializer
       switch (key) {
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'credit_id':
+          result.creditId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'amount':
@@ -714,6 +731,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final BuiltList<PaymentableEntity> invoices;
   @override
+  final BuiltList<PaymentableEntity> credits;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -756,6 +775,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.vendorId,
       this.paymentables,
       this.invoices,
+      this.credits,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -793,6 +813,9 @@ class _$PaymentEntity extends PaymentEntity {
     if (invoices == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'invoices');
     }
+    if (credits == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'credits');
+    }
   }
 
   @override
@@ -828,6 +851,7 @@ class _$PaymentEntity extends PaymentEntity {
         vendorId == other.vendorId &&
         paymentables == other.paymentables &&
         invoices == other.invoices &&
+        credits == other.credits &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -858,18 +882,18 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode), privateNotes.hashCode),
-                                                                                customValue1.hashCode),
-                                                                            customValue2.hashCode),
-                                                                        customValue3.hashCode),
-                                                                    customValue4.hashCode),
-                                                                exchangeRate.hashCode),
-                                                            exchangeCurrencyId.hashCode),
-                                                        isManual.hashCode),
-                                                    projectId.hashCode),
-                                                vendorId.hashCode),
-                                            paymentables.hashCode),
-                                        invoices.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode), privateNotes.hashCode), customValue1.hashCode),
+                                                                                customValue2.hashCode),
+                                                                            customValue3.hashCode),
+                                                                        customValue4.hashCode),
+                                                                    exchangeRate.hashCode),
+                                                                exchangeCurrencyId.hashCode),
+                                                            isManual.hashCode),
+                                                        projectId.hashCode),
+                                                    vendorId.hashCode),
+                                                paymentables.hashCode),
+                                            invoices.hashCode),
+                                        credits.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -905,6 +929,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('vendorId', vendorId)
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
+          ..add('credits', credits)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1015,6 +1040,12 @@ class PaymentEntityBuilder
   set invoices(ListBuilder<PaymentableEntity> invoices) =>
       _$this._invoices = invoices;
 
+  ListBuilder<PaymentableEntity> _credits;
+  ListBuilder<PaymentableEntity> get credits =>
+      _$this._credits ??= new ListBuilder<PaymentableEntity>();
+  set credits(ListBuilder<PaymentableEntity> credits) =>
+      _$this._credits = credits;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1075,6 +1106,7 @@ class PaymentEntityBuilder
       _vendorId = _$v.vendorId;
       _paymentables = _$v.paymentables?.toBuilder();
       _invoices = _$v.invoices?.toBuilder();
+      _credits = _$v.credits?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1129,6 +1161,7 @@ class PaymentEntityBuilder
               vendorId: vendorId,
               paymentables: paymentables.build(),
               invoices: invoices.build(),
+              credits: credits.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1144,6 +1177,8 @@ class PaymentEntityBuilder
         paymentables.build();
         _$failedField = 'invoices';
         invoices.build();
+        _$failedField = 'credits';
+        credits.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'PaymentEntity', _$failedField, e.toString());
@@ -1159,6 +1194,8 @@ class _$PaymentableEntity extends PaymentableEntity {
   @override
   final String invoiceId;
   @override
+  final String creditId;
+  @override
   final double amount;
   @override
   final String id;
@@ -1167,9 +1204,13 @@ class _$PaymentableEntity extends PaymentableEntity {
           [void Function(PaymentableEntityBuilder) updates]) =>
       (new PaymentableEntityBuilder()..update(updates)).build();
 
-  _$PaymentableEntity._({this.invoiceId, this.amount, this.id}) : super._() {
+  _$PaymentableEntity._({this.invoiceId, this.creditId, this.amount, this.id})
+      : super._() {
     if (invoiceId == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'invoiceId');
+    }
+    if (creditId == null) {
+      throw new BuiltValueNullFieldError('PaymentableEntity', 'creditId');
     }
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'amount');
@@ -1189,20 +1230,24 @@ class _$PaymentableEntity extends PaymentableEntity {
     if (identical(other, this)) return true;
     return other is PaymentableEntity &&
         invoiceId == other.invoiceId &&
+        creditId == other.creditId &&
         amount == other.amount &&
         id == other.id;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, invoiceId.hashCode), amount.hashCode), id.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, invoiceId.hashCode), creditId.hashCode),
+            amount.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PaymentableEntity')
           ..add('invoiceId', invoiceId)
+          ..add('creditId', creditId)
           ..add('amount', amount)
           ..add('id', id))
         .toString();
@@ -1217,6 +1262,10 @@ class PaymentableEntityBuilder
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
+  String _creditId;
+  String get creditId => _$this._creditId;
+  set creditId(String creditId) => _$this._creditId = creditId;
+
   double _amount;
   double get amount => _$this._amount;
   set amount(double amount) => _$this._amount = amount;
@@ -1230,6 +1279,7 @@ class PaymentableEntityBuilder
   PaymentableEntityBuilder get _$this {
     if (_$v != null) {
       _invoiceId = _$v.invoiceId;
+      _creditId = _$v.creditId;
       _amount = _$v.amount;
       _id = _$v.id;
       _$v = null;
@@ -1253,7 +1303,8 @@ class PaymentableEntityBuilder
   @override
   _$PaymentableEntity build() {
     final _$result = _$v ??
-        new _$PaymentableEntity._(invoiceId: invoiceId, amount: amount, id: id);
+        new _$PaymentableEntity._(
+            invoiceId: invoiceId, creditId: creditId, amount: amount, id: id);
     replace(_$result);
     return _$result;
   }

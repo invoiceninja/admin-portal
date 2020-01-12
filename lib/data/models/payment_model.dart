@@ -84,6 +84,7 @@ abstract class PaymentEntity extends Object
       customValue4: '',
       paymentables: BuiltList<PaymentableEntity>(),
       invoices: BuiltList<PaymentableEntity>(),
+      credits: BuiltList<PaymentableEntity>(),
     );
   }
 
@@ -167,6 +168,8 @@ abstract class PaymentEntity extends Object
   BuiltList<PaymentableEntity> get paymentables;
 
   BuiltList<PaymentableEntity> get invoices;
+
+  BuiltList<PaymentableEntity> get credits;
 
   int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
     int response = 0;
@@ -308,10 +311,12 @@ abstract class PaymentEntity extends Object
 abstract class PaymentableEntity extends Object
     with SelectableEntity
     implements Built<PaymentableEntity, PaymentableEntityBuilder> {
-  factory PaymentableEntity({String id, String invoiceId, double amount}) {
+  factory PaymentableEntity(
+      {String id, String invoiceId, String creditId, double amount}) {
     return _$PaymentableEntity._(
       id: id ?? BaseEntity.nextId,
       invoiceId: invoiceId ?? '',
+      creditId: creditId ?? '',
       amount: amount ?? 0,
     );
   }
@@ -327,6 +332,9 @@ abstract class PaymentableEntity extends Object
 
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
+
+  @BuiltValueField(wireName: 'credit_id')
+  String get creditId;
 
   double get amount;
 
