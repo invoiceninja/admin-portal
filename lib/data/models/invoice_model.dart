@@ -42,6 +42,7 @@ class InvoiceFields {
   static const String amount = 'amount';
   static const String balance = 'balance';
   static const String clientId = 'clientId';
+  static const String client = 'client';
   static const String invoiceStatusId = 'invoiceStatusId';
   static const String invoiceNumber = 'invoiceNumber';
   static const String discount = 'discount';

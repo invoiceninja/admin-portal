@@ -191,7 +191,15 @@ class _EntityListState extends State<InvoiceList> {
                       store.dispatch(SortInvoices(field)))),
             ],
             source: dataTableSource,
-            header: SizedBox(),
+            header: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FlatButton(
+                  child: Text('Edit Columns'),
+                  onPressed: () => null,
+                )
+              ],
+            ),
           ),
         ));
       }
