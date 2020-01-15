@@ -41,6 +41,7 @@ abstract class ClientItemResponse
 
 class ClientFields {
   static const String name = 'name';
+  static const String address1 = 'address1';
   static const String balance = 'balance';
   static const String vatNumber = 'vatNumber';
   static const String idNumber = 'idNumber';

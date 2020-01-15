@@ -6,6 +6,7 @@ class ClientPresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
       ClientFields.name,
+      ClientFields.address1,
       EntityFields.state,
     ];
   }
@@ -17,6 +18,8 @@ class ClientPresenter extends EntityPresenter {
     switch (field) {
       case ClientFields.name:
         return client.name;
+      case ClientFields.address1:
+        return client.address1;
     }
 
     return super.getField(field: field, context: context);
