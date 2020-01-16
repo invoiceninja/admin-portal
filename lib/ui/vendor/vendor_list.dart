@@ -173,7 +173,11 @@ class _VendorListState extends State<VendorList> {
                                                   SortVendors(field)))),
                                 ],
                                 source: dataTableSource,
-                                header: SizedBox(),
+                                header: DatatableHeader(
+                                  entityType: EntityType.vendor,
+                                  onClearPressed: widget
+                                      .viewModel.onClearEntityFilterPressed,
+                                ),
                               ),
                             )),
                 ),

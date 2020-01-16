@@ -152,7 +152,10 @@ class _ClientListState extends State<ClientList> {
                       store.dispatch(SortClients(field)))),
             ],
             source: dataTableSource,
-            header: SizedBox(),
+            header: DatatableHeader(
+              entityType: EntityType.client,
+              onClearPressed: viewModel.onClearEntityFilterPressed,
+            ),
           ),
         ));
       }

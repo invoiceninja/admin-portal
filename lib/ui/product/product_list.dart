@@ -154,7 +154,10 @@ class _ProductListState extends State<ProductList> {
                       store.dispatch(SortProducts(field)))),
             ],
             source: dataTableSource,
-            header: SizedBox(),
+            header: DatatableHeader(
+              entityType: EntityType.product,
+            ),
+
           ),
         ));
       }

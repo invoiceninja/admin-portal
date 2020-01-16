@@ -172,30 +172,30 @@ class _EntityListState extends State<InvoiceList> {
             child: Padding(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
-              onSelectAll: (value) {
-                final invoices = viewModel.invoiceList
-                    .map<InvoiceEntity>(
-                        (invoiceId) => viewModel.invoiceMap[invoiceId])
-                    .where((invoice) =>
-                        value != listUIState.isSelected(invoice.id))
-                    .toList();
-                handleInvoiceAction(
-                    context, invoices, EntityAction.toggleMultiselect);
-              },
-              columns: [
-                if (!listUIState.isInMultiselect())
-                  DataColumn(label: SizedBox()),
-                ...viewModel.tableColumns.map((field) => DataColumn(
-                    label: Text(AppLocalization.of(context).lookup(field)),
-                    numeric: EntityPresenter.isFieldNumeric(field),
-                    onSort: (int columnIndex, bool ascending) =>
-                        store.dispatch(SortInvoices(field)))),
-              ],
-              source: dataTableSource,
-              header: DatatableHeader(
-                entityType: EntityType.invoice,
-                onClearPressed: viewModel.onClearEntityFilterPressed,
-              )),
+            onSelectAll: (value) {
+              final invoices = viewModel.invoiceList
+                  .map<InvoiceEntity>(
+                      (invoiceId) => viewModel.invoiceMap[invoiceId])
+                  .where(
+                      (invoice) => value != listUIState.isSelected(invoice.id))
+                  .toList();
+              handleInvoiceAction(
+                  context, invoices, EntityAction.toggleMultiselect);
+            },
+            columns: [
+              if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
+              ...viewModel.tableColumns.map((field) => DataColumn(
+                  label: Text(AppLocalization.of(context).lookup(field)),
+                  numeric: EntityPresenter.isFieldNumeric(field),
+                  onSort: (int columnIndex, bool ascending) =>
+                      store.dispatch(SortInvoices(field)))),
+            ],
+            source: dataTableSource,
+            header: DatatableHeader(
+              entityType: EntityType.invoice,
+              onClearPressed: viewModel.onClearEntityFilterPressed,
+            ),
+          ),
         ));
       }
     };

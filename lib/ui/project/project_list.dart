@@ -189,7 +189,11 @@ class _ProjectListState extends State<ProjectList> {
                                                   SortProjects(field)))),
                                 ],
                                 source: dataTableSource,
-                                header: SizedBox(),
+                                header: DatatableHeader(
+                                  entityType: EntityType.project,
+                                  onClearPressed: widget
+                                      .viewModel.onClearEntityFilterPressed,
+                                ),
                               ),
                             )),
                 ),

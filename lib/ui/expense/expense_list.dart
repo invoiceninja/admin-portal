@@ -190,7 +190,12 @@ class _ExpenseListState extends State<ExpenseList> {
                                           store.dispatch(SortExpenses(field)))),
                             ],
                             source: dataTableSource,
-                            header: SizedBox(),
+                            header: DatatableHeader(
+                              entityType: EntityType.expense,
+                              onClearPressed: widget
+                                  .viewModel.onClearEntityFilterPressed,
+                            ),
+
                           ),
                         )),
             ),

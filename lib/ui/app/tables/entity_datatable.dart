@@ -92,7 +92,7 @@ class EntityDataTableSource extends DataTableSource {
 }
 
 class DatatableHeader extends StatelessWidget {
-  const DatatableHeader({this.entityType, this.onClearPressed});
+  const DatatableHeader({@required this.entityType, this.onClearPressed});
 
   final EntityType entityType;
   final Function() onClearPressed;
@@ -103,7 +103,7 @@ class DatatableHeader extends StatelessWidget {
     final listUIState = state.getListState(entityType);
 
     String message = '';
-    if (listUIState.filterEntityId != null) {
+    if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
       message = ListFilterMessage.getMessage(

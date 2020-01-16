@@ -186,7 +186,12 @@ class _PaymentListState extends State<PaymentList> {
                       store.dispatch(SortPayments(field)))),
             ],
             source: dataTableSource,
-            header: SizedBox(),
+            header: DatatableHeader(
+              entityType: EntityType.payment,
+              onClearPressed: widget
+                  .viewModel.onClearEntityFilterPressed,
+            ),
+
           ),
         ));
       }

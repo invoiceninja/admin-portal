@@ -185,7 +185,11 @@ class _TaskListState extends State<TaskList> {
                                                   .dispatch(SortTasks(field)))),
                                 ],
                                 source: dataTableSource,
-                                header: SizedBox(),
+                                header: DatatableHeader(
+                                  entityType: EntityType.task,
+                                  onClearPressed: widget
+                                      .viewModel.onClearEntityFilterPressed,
+                                ),
                               ),
                             )),
                 ),
