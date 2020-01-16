@@ -50,6 +50,11 @@ class PaymentFields {
   static const String paymentStatusId = 'paymentStatusId';
   static const String paymentStatus = 'paymentStatus';
 
+  static const String customValue1 = 'customValue1';
+  static const String customValue2 = 'customValue2';
+  static const String customValue3 = 'customValue3';
+  static const String customValue4 = 'customValue4';
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
@@ -192,6 +197,29 @@ abstract class PaymentEntity extends Object
         break;
       case PaymentFields.updatedAt:
         response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
+        break;
+      case PaymentFields.paymentStatus:
+        response = paymentA.statusId.compareTo(paymentB.statusId);
+        break;
+      case PaymentFields.customValue1:
+        response = paymentA.customValue1
+            .toLowerCase()
+            .compareTo(paymentB.customValue1.toLowerCase());
+        break;
+      case PaymentFields.customValue2:
+        response = paymentA.customValue2
+            .toLowerCase()
+            .compareTo(paymentB.customValue2.toLowerCase());
+        break;
+      case PaymentFields.customValue3:
+        response = paymentA.customValue3
+            .toLowerCase()
+            .compareTo(paymentB.customValue3.toLowerCase());
+        break;
+      case PaymentFields.customValue4:
+        response = paymentA.customValue4
+            .toLowerCase()
+            .compareTo(paymentB.customValue4.toLowerCase());
         break;
     }
 
