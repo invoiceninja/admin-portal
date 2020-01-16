@@ -55,6 +55,10 @@ class ClientFields {
   static const String phone = 'phone';
   static const String language = 'language';
   static const String currency = 'currency';
+  static const String customValue1 = 'customValue1';
+  static const String customValue2 = 'customValue2';
+  static const String customValue3 = 'customValue3';
+  static const String customValue4 = 'customValue4';
 }
 
 abstract class ClientEntity extends Object
@@ -311,6 +315,32 @@ abstract class ClientEntity extends Object
         break;
       case ClientFields.updatedAt:
         response = clientA.updatedAt.compareTo(clientB.updatedAt);
+        break;
+      case ClientFields.idNumber:
+        response = clientA.idNumber.compareTo(clientB.idNumber);
+        break;
+      case ClientFields.createdAt:
+        response = clientA.createdAt.compareTo(clientB.createdAt);
+        break;
+      case ClientFields.customValue1:
+        response = clientA.customValue1
+            .toLowerCase()
+            .compareTo(clientB.customValue1.toLowerCase());
+        break;
+      case ClientFields.customValue2:
+        response = clientA.customValue2
+            .toLowerCase()
+            .compareTo(clientB.customValue2.toLowerCase());
+        break;
+      case ClientFields.customValue3:
+        response = clientA.customValue3
+            .toLowerCase()
+            .compareTo(clientB.customValue3.toLowerCase());
+        break;
+      case ClientFields.customValue4:
+        response = clientA.customValue4
+            .toLowerCase()
+            .compareTo(clientB.customValue4.toLowerCase());
         break;
     }
 

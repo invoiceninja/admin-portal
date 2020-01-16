@@ -158,11 +158,39 @@ abstract class ProductEntity extends Object
     final ProductEntity productB = sortAscending ? product : this;
 
     switch (sortField) {
+      case ProductFields.price:
+        response = productA.price.compareTo(productB.price);
+        break;
       case ProductFields.cost:
         response = productA.cost.compareTo(productB.cost);
         break;
       case ProductFields.updatedAt:
         response = productA.updatedAt.compareTo(productB.updatedAt);
+        break;
+      case ProductFields.notes:
+        response = productA.notes
+            .toLowerCase()
+            .compareTo(productB.notes.toLowerCase());
+        break;
+      case ProductFields.customValue1:
+        response = productA.customValue1
+            .toLowerCase()
+            .compareTo(productB.customValue1.toLowerCase());
+        break;
+      case ProductFields.customValue2:
+        response = productA.customValue2
+            .toLowerCase()
+            .compareTo(productB.customValue2.toLowerCase());
+        break;
+      case ProductFields.customValue3:
+        response = productA.customValue3
+            .toLowerCase()
+            .compareTo(productB.customValue3.toLowerCase());
+        break;
+      case ProductFields.customValue4:
+        response = productA.customValue4
+            .toLowerCase()
+            .compareTo(productB.customValue4.toLowerCase());
         break;
     }
 
