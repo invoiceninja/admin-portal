@@ -61,6 +61,11 @@ class InvoiceFields {
   static const String startDate = 'startDate';
   static const String endDate = 'endDate';
 
+  static const String customValue1 = 'customValue1';
+  static const String customValue2 = 'customValue2';
+  static const String customValue3 = 'customValue3';
+  static const String customValue4 = 'customValue4';
+
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
@@ -332,6 +337,33 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.invoiceDate:
       case QuoteFields.quoteDate:
         response = invoiceA.date.compareTo(invoiceB.date);
+        break;
+      case InvoiceFields.balance:
+        response = invoiceA.balance.compareTo(invoiceB.balance);
+        break;
+      case InvoiceFields.dueDate:
+      case QuoteFields.validUntil:
+        response = invoiceA.dueDate.compareTo(invoiceB.dueDate);
+        break;
+      case InvoiceFields.customValue1:
+        response = invoiceA.customValue1
+            .toLowerCase()
+            .compareTo(invoiceB.customValue1.toLowerCase());
+        break;
+      case InvoiceFields.customValue2:
+        response = invoiceA.customValue2
+            .toLowerCase()
+            .compareTo(invoiceB.customValue2.toLowerCase());
+        break;
+      case InvoiceFields.customValue3:
+        response = invoiceA.customValue3
+            .toLowerCase()
+            .compareTo(invoiceB.customValue3.toLowerCase());
+        break;
+      case InvoiceFields.customValue4:
+        response = invoiceA.customValue4
+            .toLowerCase()
+            .compareTo(invoiceB.customValue4.toLowerCase());
         break;
     }
 
