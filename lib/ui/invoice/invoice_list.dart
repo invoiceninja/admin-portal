@@ -194,6 +194,7 @@ class _EntityListState extends State<InvoiceList> {
               source: dataTableSource,
               header: DatatableHeader(
                 entityType: EntityType.invoice,
+                onClearPressed: viewModel.onClearEntityFilterPressed,
               )),
         ));
       }

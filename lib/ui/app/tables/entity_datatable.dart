@@ -92,9 +92,10 @@ class EntityDataTableSource extends DataTableSource {
 }
 
 class DatatableHeader extends StatelessWidget {
-  const DatatableHeader({this.entityType});
+  const DatatableHeader({this.entityType, this.onClearPressed});
 
   final EntityType entityType;
+  final Function() onClearPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +114,26 @@ class DatatableHeader extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        if (listUIState.filterEntityId != null)
-          Text(
-            message,
-            style: Theme.of(context)
-                .textTheme
-                .subhead
-                .copyWith(color: Colors.orangeAccent),
+        if (listUIState.filterEntityId != null) ...[
+          FlatButton(
+            child: Text(
+              message,
+              style: Theme.of(context)
+                  .textTheme
+                  .subhead
+                  .copyWith(color: Colors.orangeAccent),
+            ),
+            onPressed: () => viewEntityById(
+              context: context,
+              entityId: listUIState.filterEntityId,
+              entityType: listUIState.filterEntityType,
+            ),
+          ),
+          IconButton(
+            onPressed: onClearPressed,
+            icon: Icon(Icons.clear),
           )
+        ]
       ],
     );
   }
