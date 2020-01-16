@@ -17,34 +17,39 @@ class ListFilterMessage extends StatelessWidget {
   final Function(BuildContext) onPressed;
   final Function() onClearPressed;
 
-  @override
-  Widget build(BuildContext context) {
+  static String getMessage(
+      {BuildContext context, EntityType filterEntityType, BaseEntity entity}) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
-
-    final filteredEntity = state.getEntityMap(filterEntityType)[filterEntityId];
-    String filteredMessage;
+    String message;
 
     switch (filterEntityType) {
       case EntityType.group:
-        filteredMessage = localization.filteredByGroup;
+        return localization.filteredByGroup;
         break;
       case EntityType.invoice:
-        filteredMessage = localization.filteredByInvoice;
+        message = localization.filteredByInvoice;
         break;
       case EntityType.client:
-        filteredMessage = localization.filteredByClient;
+        message = localization.filteredByClient;
         break;
       case EntityType.user:
-        filteredMessage = localization.filteredByUser;
+        message = localization.filteredByUser;
         break;
       case EntityType.project:
-        filteredMessage = localization.filteredByProject;
+        message = localization.filteredByProject;
         break;
       case EntityType.vendor:
-        filteredMessage = localization.filteredByVendor;
+        message = localization.filteredByVendor;
         break;
     }
+
+    return '$message: ${entity?.listDisplayName ?? ''}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final filteredEntity = state.getEntityMap(filterEntityType)[filterEntityId];
 
     return Material(
       color: Colors.orangeAccent,
@@ -56,7 +61,10 @@ class ListFilterMessage extends StatelessWidget {
             SizedBox(width: 18.0),
             Expanded(
               child: Text(
-                '$filteredMessage: ${filteredEntity?.listDisplayName ?? ''}',
+                ListFilterMessage.getMessage(
+                    context: context,
+                    entity: filteredEntity,
+                    filterEntityType: filterEntityType),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,

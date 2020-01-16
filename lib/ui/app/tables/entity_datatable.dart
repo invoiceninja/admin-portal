@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class EntityDataTableSource extends DataTableSource {
@@ -85,6 +86,29 @@ class EntityDataTableSource extends DataTableSource {
             onTap: () => onTap(entity),
           ),
         )
+      ],
+    );
+  }
+}
+
+class DatatableHeader extends StatelessWidget {
+  const DatatableHeader({this.entityType});
+
+  final EntityType entityType;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final listUIState = state.getListState(entityType);
+    final entity = state
+        .getEntityMap(listUIState.filterEntityType)[listUIState.filterEntityId];
+    return Row(
+      children: <Widget>[
+        if (listUIState.filterEntityId != null)
+          Text(ListFilterMessage.getMessage(
+              context: context,
+              filterEntityType: listUIState.filterEntityType,
+              entity: entity))
       ],
     );
   }
