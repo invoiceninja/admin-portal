@@ -40,12 +40,15 @@ class PaymentFields {
   static const String transactionReference = 'transactionReference';
   static const String paymentDate = 'paymentDate';
   static const String paymentTypeId = 'paymentTypeId';
+  static const String client = 'client';
+  static const String clientId = 'clientId';
   static const String invoiceId = 'invoiceId';
   static const String invoiceNumber = 'invoiceNumber';
   static const String privateNotes = 'privateNotes';
   static const String exchangeRate = 'exchangeRate';
   static const String exchangeCurrencyId = 'exchangeCurrencyId';
   static const String paymentStatusId = 'paymentStatusId';
+  static const String paymentStatus = 'paymentStatus';
 
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
@@ -330,9 +333,11 @@ abstract class PaymentableEntity extends Object
 
   PaymentableEntity._();
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
+  @nullable
   @BuiltValueField(wireName: 'credit_id')
   String get creditId;
 

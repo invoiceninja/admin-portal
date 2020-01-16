@@ -442,16 +442,22 @@ class _$PaymentableEntitySerializer
   Iterable<Object> serialize(Serializers serializers, PaymentableEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(String)),
-      'credit_id',
-      serializers.serialize(object.creditId,
-          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
     ];
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.creditId != null) {
+      result
+        ..add('credit_id')
+        ..add(serializers.serialize(object.creditId,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -1206,12 +1212,6 @@ class _$PaymentableEntity extends PaymentableEntity {
 
   _$PaymentableEntity._({this.invoiceId, this.creditId, this.amount, this.id})
       : super._() {
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('PaymentableEntity', 'invoiceId');
-    }
-    if (creditId == null) {
-      throw new BuiltValueNullFieldError('PaymentableEntity', 'creditId');
-    }
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'amount');
     }

@@ -39,6 +39,7 @@ abstract class QuoteItemResponse
 class QuoteFields {
   static const String amount = 'amount';
   static const String balance = 'balance';
+  static const String client = 'client';
   static const String clientId = 'clientId';
   static const String quoteStatusId = 'quoteStatusId';
   static const String quoteNumber = 'quoteNumber';
