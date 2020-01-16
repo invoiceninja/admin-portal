@@ -19,7 +19,20 @@ const dynamic kMockLogin = '''
                 "deleted_at": null,
                 "phone": "",
                 "email_verified_at": null,
-                "signature": ""
+                "signature": "",
+                "company_user": {
+                    "permissions": "",
+                    "settings": {
+                        "User": {
+                            "per_page": 25
+                        }
+                    },
+                    "is_owner": true,
+                    "is_admin": true,
+                    "is_locked": false,
+                    "updated_at": 1579200386,
+                    "archived_at": 0
+                }
             },
              "company": {
                 "id": "yJrb2KdWLD",
@@ -211,7 +224,20 @@ const dynamic kMockLogin = '''
                         "deleted_at": null,
                         "phone": "",
                         "email_verified_at": null,
-                        "signature": ""
+                        "signature": "",
+                        "company_user": {
+                            "permissions": "",
+                            "settings": {
+                                "User": {
+                                    "per_page": 25
+                                }
+                            },
+                            "is_owner": true,
+                            "is_admin": true,
+                            "is_locked": false,
+                            "updated_at": 1579200386,
+                            "archived_at": 0
+                        }
                     },
                     {
                         "id": "MVyb8mdvA8",
@@ -223,7 +249,20 @@ const dynamic kMockLogin = '''
                         "deleted_at": null,
                         "phone": "",
                         "email_verified_at": null,
-                        "signature": ""
+                        "signature": "",
+                        "company_user": {
+                            "permissions": "",
+                            "settings": {
+                                "User": {
+                                    "per_page": 25
+                                }
+                            },
+                            "is_owner": true,
+                            "is_admin": true,
+                            "is_locked": false,
+                            "updated_at": 1579200386,
+                            "archived_at": 0
+                        }
                     }
                 ],
                 "tax_rates": [],
