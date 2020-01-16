@@ -207,7 +207,7 @@ String convertDateTimeToSqlDate([DateTime date]) {
 }
 
 DateTime convertTimestampToDate(int timestamp) =>
-    DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000);
 
 String convertTimestampToDateString(int timestamp) =>
     convertTimestampToDate(timestamp).toIso8601String();

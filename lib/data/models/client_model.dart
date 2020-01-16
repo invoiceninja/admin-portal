@@ -51,6 +51,7 @@ class ClientFields {
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
   static const String contact = 'contact';
+  static const String contactEmail = 'contactEmail';
   static const String phone = 'phone';
   static const String language = 'language';
   static const String currency = 'currency';
@@ -275,6 +276,10 @@ abstract class ClientEntity extends Object
     });
     return template;
   }
+
+  ContactEntity get primaryContact =>
+      contacts.firstWhere((contact) => contact.isPrimary,
+          orElse: () => ContactEntity());
 
   String getPaymentTerm(String netLabel) {
     if (settings.defaultPaymentTerms == 0 ||

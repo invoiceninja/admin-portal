@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'contact_email': 'Email',
       'multiselect': 'Multiselect',
       'entity_state': 'State',
       'verify_password': 'Verify Password',
@@ -15938,6 +15939,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get entityState => _localizedValues[localeCode]['entity_state'];
 
   String get multiselect => _localizedValues[localeCode]['multiselect'];
+
+  String get contactEmail => _localizedValues[localeCode]['contact_email'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
