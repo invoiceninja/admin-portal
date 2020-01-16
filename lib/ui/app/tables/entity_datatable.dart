@@ -100,15 +100,27 @@ class DatatableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final listUIState = state.getListState(entityType);
-    final entity = state
-        .getEntityMap(listUIState.filterEntityType)[listUIState.filterEntityId];
+
+    String message = '';
+    if (listUIState.filterEntityId != null) {
+      final entity = state.getEntityMap(
+          listUIState.filterEntityType)[listUIState.filterEntityId];
+      message = ListFilterMessage.getMessage(
+          context: context,
+          filterEntityType: listUIState.filterEntityType,
+          entity: entity);
+    }
+
     return Row(
       children: <Widget>[
         if (listUIState.filterEntityId != null)
-          Text(ListFilterMessage.getMessage(
-              context: context,
-              filterEntityType: listUIState.filterEntityType,
-              entity: entity))
+          Text(
+            message,
+            style: Theme.of(context)
+                .textTheme
+                .subhead
+                .copyWith(color: Colors.orangeAccent),
+          )
       ],
     );
   }
