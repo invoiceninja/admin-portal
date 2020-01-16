@@ -103,64 +103,51 @@ class _PaymentListState extends State<PaymentList> {
               onClearPressed: viewModel.onClearEntityFilterPressed,
             ),
           Expanded(
-            child: !viewModel.isLoaded
-                ? LoadingIndicator()
-                : RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: viewModel.paymentList.isEmpty
-                        ? HelpText(AppLocalization.of(context).noRecordsFound)
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => ListDivider(),
-                            itemCount: viewModel.paymentList.length,
-                            itemBuilder: (BuildContext context, index) {
-                              final paymentId = viewModel.paymentList[index];
-                              final payment = state.paymentState.map[paymentId];
-                              final client =
-                                  state.clientState.map[payment.clientId] ??
-                                      ClientEntity(id: payment.clientId);
+              child: ListView.separated(
+            shrinkWrap: true,
+            separatorBuilder: (context, index) => ListDivider(),
+            itemCount: viewModel.paymentList.length,
+            itemBuilder: (BuildContext context, index) {
+              final paymentId = viewModel.paymentList[index];
+              final payment = state.paymentState.map[paymentId];
+              final client = state.clientState.map[payment.clientId] ??
+                  ClientEntity(id: payment.clientId);
 
-                              void showDialog() => showEntityActionsDialog(
-                                    entities: [payment],
-                                    context: context,
-                                    client: client,
-                                  );
+              void showDialog() => showEntityActionsDialog(
+                    entities: [payment],
+                    context: context,
+                    client: client,
+                  );
 
-                              ClientEntity(id: payment.clientId);
+              ClientEntity(id: payment.clientId);
 
-                              return PaymentListItem(
-                                user: viewModel.user,
-                                filter: viewModel.filter,
-                                payment: payment,
-                                onTap: () =>
-                                    viewModel.onPaymentTap(context, payment),
-                                onEntityAction: (EntityAction action) {
-                                  if (action == EntityAction.more) {
-                                    showDialog();
-                                  } else {
-                                    handlePaymentAction(
-                                        context, [payment], action);
-                                  }
-                                },
-                                onLongPress: () async {
-                                  final longPressIsSelection = state.prefState
-                                          .longPressSelectionIsDefault ??
-                                      true;
-                                  if (longPressIsSelection &&
-                                      !isInMultiselect) {
-                                    handlePaymentAction(context, [payment],
-                                        EntityAction.toggleMultiselect);
-                                  } else {
-                                    showDialog();
-                                  }
-                                },
-                                isChecked: isInMultiselect &&
-                                    listUIState.isSelected(payment.id),
-                              );
-                            },
-                          ),
-                  ),
-          ),
+              return PaymentListItem(
+                user: viewModel.user,
+                filter: viewModel.filter,
+                payment: payment,
+                onTap: () => viewModel.onPaymentTap(context, payment),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handlePaymentAction(context, [payment], action);
+                  }
+                },
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handlePaymentAction(
+                        context, [payment], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked:
+                    isInMultiselect && listUIState.isSelected(payment.id),
+              );
+            },
+          )),
         ]);
       } else {
         return SingleChildScrollView(
@@ -188,10 +175,8 @@ class _PaymentListState extends State<PaymentList> {
             source: dataTableSource,
             header: DatatableHeader(
               entityType: EntityType.payment,
-              onClearPressed: widget
-                  .viewModel.onClearEntityFilterPressed,
+              onClearPressed: widget.viewModel.onClearEntityFilterPressed,
             ),
-
           ),
         ));
       }
