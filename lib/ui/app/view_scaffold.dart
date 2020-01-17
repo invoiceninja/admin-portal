@@ -51,7 +51,9 @@ class ViewScaffold extends StatelessWidget {
                       : store.dispatch(
                           UpdateCurrentRoute(state.uiState.previousRoute)),
                 )
-              : Icon(getEntityIcon(entity.entityType)),
+              : isMobile(context)
+                  ? null
+                  : Icon(getEntityIcon(entity.entityType)),
           automaticallyImplyLeading: isMobile(context) && !isSettings,
           title: EntityStateTitle(
             entity: entity,
