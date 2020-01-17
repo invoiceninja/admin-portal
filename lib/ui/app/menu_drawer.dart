@@ -240,7 +240,7 @@ class MenuDrawer extends StatelessWidget {
   }
 }
 
-class DrawerTile extends StatelessWidget {
+class DrawerTile extends StatefulWidget {
   const DrawerTile({
     @required this.company,
     @required this.icon,
@@ -260,6 +260,13 @@ class DrawerTile extends StatelessWidget {
   final Function onCreateTap;
 
   @override
+  _DrawerTileState createState() => _DrawerTileState();
+}
+
+class _DrawerTileState extends State<DrawerTile> {
+  bool _isHovered = false;
+
+  @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -267,20 +274,23 @@ class DrawerTile extends StatelessWidget {
     final userCompany = state.userCompany;
     final NavigatorState navigator = Navigator.of(context);
 
-    if (entityType != null && !userCompany.canViewOrCreate(entityType)) {
+    if (widget.entityType != null &&
+        !userCompany.canViewOrCreate(widget.entityType)) {
       return Container();
-    } else if (!company.isModuleEnabled(entityType)) {
+    } else if (!widget.company.isModuleEnabled(widget.entityType)) {
       return Container();
     }
 
     final localization = AppLocalization.of(context);
-    final route = title == localization.dashboard
+    final route = widget.title == localization.dashboard
         ? kDashboard
-        : title == localization.settings ? kSettings : entityType.name;
+        : widget.title == localization.settings
+            ? kSettings
+            : widget.entityType.name;
 
     Widget trailingWidget;
     if (!state.prefState.isMenuCollapsed) {
-      if (title == localization.dashboard) {
+      if (widget.title == localization.dashboard) {
         trailingWidget = IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
@@ -291,34 +301,40 @@ class DrawerTile extends StatelessWidget {
                 ViewDashboard(navigator: Navigator.of(context), filter: ''));
           },
         );
-      } else if (userCompany.canCreate(entityType)) {
+      } else if (userCompany.canCreate(widget.entityType)) {
         trailingWidget = IconButton(
           icon: Icon(Icons.add_circle_outline),
           onPressed: () {
             if (isMobile(context)) {
               navigator.pop();
             }
-            createEntityByType(context: context, entityType: entityType);
+            createEntityByType(context: context, entityType: widget.entityType);
           },
         );
       }
     }
 
-    return SelectedIndicator(
-      isSelected: uiState.currentRoute.startsWith('/$route'),
-      child: ListTile(
-        dense: true,
-        leading: Icon(icon, size: 22),
-        title: state.prefState.isMenuCollapsed ? null : Text(title),
-        onTap: () => entityType != null
-            ? viewEntitiesByType(context: context, entityType: entityType)
-            : onTap(),
-        onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : entityType != null
-                ? createEntityByType(context: context, entityType: entityType)
-                : null,
-        trailing: trailingWidget,
+    return MouseRegion(
+      onEnter: (event) => setState(() => _isHovered = true),
+      onExit: (event) => setState(() => _isHovered = false),
+      child: SelectedIndicator(
+        isSelected: uiState.currentRoute.startsWith('/$route'),
+        child: ListTile(
+          dense: true,
+          leading: Icon(widget.icon, size: 22),
+          title: state.prefState.isMenuCollapsed ? null : Text(widget.title),
+          onTap: () => widget.entityType != null
+              ? viewEntitiesByType(
+                  context: context, entityType: widget.entityType)
+              : widget.onTap(),
+          onLongPress: () => widget.onLongPress != null
+              ? widget.onLongPress()
+              : widget.entityType != null
+                  ? createEntityByType(
+                      context: context, entityType: widget.entityType)
+                  : null,
+          trailing: _isHovered || isNotDesktop(context) ? trailingWidget : null,
+        ),
       ),
     );
   }

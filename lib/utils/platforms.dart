@@ -55,6 +55,8 @@ bool isTablet(BuildContext context) => getLayout(context) == AppLayout.tablet;
 
 bool isDesktop(BuildContext context) => getLayout(context) == AppLayout.desktop;
 
+bool isNotDesktop(BuildContext context) => !isDesktop(context);
+
 bool isDarkMode(BuildContext context) =>
     StoreProvider.of<AppState>(context).state.prefState.enableDarkMode;
 
