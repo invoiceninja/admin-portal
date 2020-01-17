@@ -155,7 +155,7 @@ class _LoginState extends State<LoginView> {
     final viewModel = widget.viewModel;
 
     setState(() {
-      _autoValidate = !isValid;
+      _autoValidate = !isValid ?? false;
       print('_autoValidate: $_autoValidate');
       _loginError = '';
     });
@@ -217,7 +217,7 @@ class _LoginState extends State<LoginView> {
     final viewModel = widget.viewModel;
 
     setState(() {
-      _autoValidate = !isValid;
+      _autoValidate = !isValid ?? false;
       _loginError = '';
     });
 
