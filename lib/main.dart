@@ -38,6 +38,7 @@ import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
@@ -231,6 +232,18 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     super.didChangeDependencies();
   }
 
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    print('## generateRoute: ${settings.name}, isInitial: ${settings.isInitialRoute}');
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
+      case 'main':
+        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
+      default:
+        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
@@ -283,7 +296,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   buttonColor: const Color(0xFF0D5D91),
                 ),
           title: 'Invoice Ninja',
-          routes: {
+          onGenerateRoute: isMobile(context) ? null : generateRoute,
+          routes: isNotMobile(context) ? {} : {
             LoginScreen.route: (context) => LoginScreen(),
             MainScreen.route: (context) => MainScreen(),
             DashboardScreenBuilder.route: (context) => DashboardScreenBuilder(),
