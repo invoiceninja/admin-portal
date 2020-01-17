@@ -114,6 +114,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
     if (isNotMobile(context)) {
       return TypeAheadFormField<String>(
         noItemsFoundBuilder: (context) => SizedBox(),
+        suggestionsBoxDecoration: SuggestionsBoxDecoration(
+            constraints: BoxConstraints(
+          minWidth: 300,
+        )),
         suggestionsCallback: (filter) {
           return widget.entityList
               .where((entityId) =>
@@ -132,35 +136,35 @@ class _EntityDropdownState extends State<EntityDropdown> {
           widget.onSelected(entity);
         },
         textFieldConfiguration: TextFieldConfiguration<String>(
-            controller: _textController,
-            decoration: InputDecoration(
-              labelText: widget.labelText,
-              suffix: showClear
-                  ? IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        _textController.text = '';
-                        widget.onSelected(null);
-                      },
-                    )
-                  : widget.onAddPressed != null
-                      ? IconButton(
-                          icon: Icon(Icons.add_circle_outline),
-                          tooltip: AppLocalization.of(context).createNew,
-                          onPressed: () {
-                            final Completer<SelectableEntity> completer =
-                                Completer<SelectableEntity>();
-                            widget.onAddPressed(completer);
-                            completer.future.then((entity) {
+          controller: _textController,
+          decoration: InputDecoration(
+            labelText: widget.labelText,
+            suffix: showClear
+                ? IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      _textController.text = '';
+                      widget.onSelected(null);
+                    },
+                  )
+                : widget.onAddPressed != null
+                    ? IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        tooltip: AppLocalization.of(context).createNew,
+                        onPressed: () {
+                          final Completer<SelectableEntity> completer =
+                              Completer<SelectableEntity>();
+                          widget.onAddPressed(completer);
+                          completer.future.then(
+                            (entity) {
                               widget.onSelected(entity);
-                            });
-                          },
-                        )
-                      : SizedBox(),
-            ),
-            onChanged: (value) {
-              _textController.text = value;
-            }),
+                            },
+                          );
+                        },
+                      )
+                    : SizedBox(),
+          ),
+        ),
         autoFlipDirection: true,
         //direction: AxisDirection.up,
         animationStart: 1,
