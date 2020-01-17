@@ -19,9 +19,6 @@ class QuoteEditScreen extends StatelessWidget {
 
   static const String route = '/quote/edit';
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_quoteEdit');
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteEditVM>(
@@ -31,7 +28,6 @@ class QuoteEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return QuoteEdit(
           viewModel: viewModel,
-          formKey: _formKey,
         );
       },
     );

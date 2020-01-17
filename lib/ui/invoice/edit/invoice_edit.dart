@@ -13,12 +13,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
     Key key,
-    @required this.formKey,
     @required this.viewModel,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final GlobalKey<FormState> formKey;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();
@@ -27,6 +25,9 @@ class InvoiceEdit extends StatefulWidget {
 class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_invoiceEdit');
 
   static const kDetailsScreen = 0;
   static const kContactScreen = 1;
@@ -71,7 +72,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!widget.formKey.currentState.validate()) {
+        if (!_formKey.currentState.validate()) {
           return;
         }
 
@@ -98,7 +99,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
               ],
             ),
       body: Form(
-        key: widget.formKey,
+        key: _formKey,
         child: state.prefState.isDesktop
             ? InvoiceEditDetailsScreen()
             : TabBarView(

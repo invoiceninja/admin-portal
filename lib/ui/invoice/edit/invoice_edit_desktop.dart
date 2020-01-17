@@ -41,7 +41,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
   FocusNode _focusNode;
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_invoicesEdit');
+      GlobalKey<FormState>(debugLabel: '_invoiceDesktopEdit');
 
   final _invoiceNumberController = TextEditingController();
   final _poNumberController = TextEditingController();

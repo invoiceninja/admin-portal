@@ -12,12 +12,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class QuoteEdit extends StatefulWidget {
   const QuoteEdit({
     Key key,
-    @required this.formKey,
     @required this.viewModel,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final GlobalKey<FormState> formKey;
 
   @override
   _QuoteEditState createState() => _QuoteEditState();
@@ -26,6 +24,10 @@ class QuoteEdit extends StatefulWidget {
 class _QuoteEditState extends State<QuoteEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
+
+  static final GlobalKey<FormState> _formKey =
+  GlobalKey<FormState>(debugLabel: '_quoteEdit');
+
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
@@ -69,7 +71,7 @@ class _QuoteEditState extends State<QuoteEdit>
       title: invoice.isNew ? localization.newQuote : localization.editQuote,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!widget.formKey.currentState.validate()) {
+        if (!_formKey.currentState.validate()) {
           return;
         }
 
@@ -93,7 +95,7 @@ class _QuoteEditState extends State<QuoteEdit>
               ],
             ),
       body: Form(
-        key: widget.formKey,
+        key: _formKey,
         child: state.prefState.isDesktop
             ? QuoteEditDetailsScreen()
             : TabBarView(
