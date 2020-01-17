@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
-        onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
+        //onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
           final uiState = store.state.uiState;
           final prefState = store.state.prefState;
