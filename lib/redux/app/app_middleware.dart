@@ -182,10 +182,6 @@ Middleware<AppState> _createLoadState(
       NextDispatcher next) async {
     final action = dynamicAction as LoadStateRequest;
     try {
-      if (kIsWeb) {
-        throw 'Local storage not yet supported on web';
-      }
-
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
       prefs.setString(kSharedPrefAppVersion, kAppVersion);
@@ -245,8 +241,8 @@ Middleware<AppState> _createLoadState(
       print('Load state error: $error');
 
       String token;
-      if (kIsWeb) {
-        token = Config.DEMO_MODE ? 'DEMO' : '';
+      if (Config.DEMO_MODE) {
+        token = 'DEMO';
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         token = prefs.getString(kSharedPrefToken) ?? '';
@@ -328,14 +324,12 @@ Middleware<AppState> _createUserLoggedIn(
 
     next(action);
 
-    if (!kIsWeb) {
-      final state = store.state;
-      authRepository.saveAuthState(state.authState);
-      uiRepository.saveUIState(state.uiState);
-      staticRepository.saveStaticState(state.staticState);
-      for (var i = 0; i < state.userCompanyStates.length; i++) {
-        companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
-      }
+    final state = store.state;
+    authRepository.saveAuthState(state.authState);
+    uiRepository.saveUIState(state.uiState);
+    staticRepository.saveStaticState(state.staticState);
+    for (var i = 0; i < state.userCompanyStates.length; i++) {
+      companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
     }
   };
 }
@@ -350,10 +344,6 @@ Middleware<AppState> _createPersistData(
     final action = dynamicAction as PersistData;
 
     next(action);
-
-    if (kIsWeb) {
-      return;
-    }
 
     _persistDataDebouncer.run(() {
       final AppState state = store.state;
@@ -373,10 +363,6 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    if (kIsWeb) {
-      return;
-    }
-
     _persistUIDebouncer.run(() {
       uiRepository.saveUIState(store.state.uiState);
     });
@@ -388,10 +374,6 @@ Middleware<AppState> _createPersistPrefs() {
     final action = dynamicAction as PersistPrefs;
 
     next(action);
-
-    if (kIsWeb) {
-      return;
-    }
 
     final string =
         serializers.serializeWith(PrefState.serializer, store.state.prefState);
@@ -413,7 +395,7 @@ Middleware<AppState> _createAccountLoaded() {
       for (int i = 0; i < response.userCompanies.length; i++) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
-        if (i == 0 && !kIsWeb) {
+        if (i == 0) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString(kSharedPrefToken, userCompany.token.token);
         }
@@ -453,10 +435,6 @@ Middleware<AppState> _createPersistStatic(
     // first process the action so the data is in the state
     next(action);
 
-    if (kIsWeb) {
-      return;
-    }
-
     staticRepository.saveStaticState(store.state.staticState);
   };
 }
@@ -468,10 +446,6 @@ Middleware<AppState> _createDeleteState(
   List<PersistenceRepository> companyRepositories,
 ) {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-    if (kIsWeb) {
-      next(action);
-      return;
-    }
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();

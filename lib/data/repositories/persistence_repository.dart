@@ -25,6 +25,7 @@ class PersistenceRepository {
         (b) => b..company.replace(state.company.rebuild((b) => b..token = '')));
      */
     final data = serializers.serializeWith(UserCompanyState.serializer, state);
+
     return await fileStorage.save(json.encode(data));
   }
 

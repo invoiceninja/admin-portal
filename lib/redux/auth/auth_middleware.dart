@@ -34,10 +34,6 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 
 void _saveAuthLocal(
     {String email = '', String url = '', String secret = ''}) async {
-  if (kIsWeb) {
-    return;
-  }
-
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
@@ -184,11 +180,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     String url;
     String token;
 
-    if (!kIsWeb) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-      token = prefs.getString(kSharedPrefToken);
-    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+    token = prefs.getString(kSharedPrefToken);
 
     repository
         .refresh(url: url, token: token, platform: action.platform)

@@ -142,7 +142,7 @@ bool get _isInDebugMode {
 }
 
 Future<AppState> _initialState(bool isTesting) async {
-  final prefs = kIsWeb ? null : await SharedPreferences.getInstance();
+  final prefs = await SharedPreferences.getInstance();
   final prefString = prefs?.getString(kSharedPrefs);
 
   var prefState = PrefState();
