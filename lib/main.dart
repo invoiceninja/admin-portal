@@ -232,13 +232,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     super.didChangeDependencies();
   }
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
+  Route<dynamic> generateRoute(RouteSettings settings) {
+    /*
     print('## generateRoute: ${settings.name}, isInitial: ${settings.isInitialRoute}');
+    print('## pathname: ${html5.window.location.pathname} hash: ${html5.window.location.hash}, href: ${html5.window.location.href}');
+    html5.window.history.replaceState(null, settings.name, '/#${settings.name}');
+    widget.store.dispatch(UpdateCurrentRoute(settings.name));
+    */
     switch (settings.name) {
-      case '/':
-        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
-      case 'main':
-        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
+      case '/login':
+        return MaterialPageRoute<dynamic>(builder: (_) => LoginScreen());
       default:
         return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
     }
@@ -246,6 +249,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
@@ -295,9 +299,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   backgroundColor: Colors.grey.shade200,
                   buttonColor: const Color(0xFF0D5D91),
                 ),
-          title: 'Invoice Ninja',
+          title: 'invoicing.co',
           onGenerateRoute: isMobile(context) ? null : generateRoute,
-          routes: isNotMobile(context) ? {} : {
+          routes: isMobile(context) ? {
             LoginScreen.route: (context) => LoginScreen(),
             MainScreen.route: (context) => MainScreen(),
             DashboardScreenBuilder.route: (context) => DashboardScreenBuilder(),
@@ -377,7 +381,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                 CreditCardsAndBanksScreen(),
             DataVisualizationsScreen.route: (context) =>
                 DataVisualizationsScreen(),
-          },
+          } : {},
         );
       }),
     );

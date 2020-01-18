@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/debug/state_inspector.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -381,7 +380,8 @@ class SidebarFooter extends StatelessWidget {
               icon: Icon(Icons.info_outline),
               onPressed: () => _showAbout(context),
             ),
-            if (false && kDebugMode)
+            /*
+            if (kDebugMode)
               IconButton(
                 icon: Icon(Icons.memory),
                 onPressed: () => showDialog<StateInspector>(
@@ -390,6 +390,7 @@ class SidebarFooter extends StatelessWidget {
                       return StateInspector();
                     }),
               ),
+             */
             /*
             IconButton(
               icon: Icon(Icons.filter),

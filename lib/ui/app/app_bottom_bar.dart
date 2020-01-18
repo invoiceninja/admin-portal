@@ -285,7 +285,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
       final isList = prefState.moduleLayout == ModuleLayout.list;
-      final listState = state.getListState(widget.entityType);
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
