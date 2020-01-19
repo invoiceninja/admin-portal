@@ -4,8 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -143,9 +141,11 @@ class MainScreen extends StatelessWidget {
         onWillPop: () async {
           final state = store.state;
           final historyList = state.historyList;
-          final editingOrSettings = state.uiState.isEditing || state.uiState.isInSettings;
+          final editingOrSettings =
+              state.uiState.isEditing || state.uiState.isInSettings;
 
-          if (historyList.isEmpty || historyList.length == 1 && !editingOrSettings) {
+          if (historyList.isEmpty ||
+              historyList.length == 1 && !editingOrSettings) {
             return false;
           }
 
@@ -158,7 +158,8 @@ class MainScreen extends StatelessWidget {
           viewEntityById(
               entityType: history.entityType,
               entityId: history.id,
-              context: context);
+              context: context,
+              showError: false);
 
           return false;
         },

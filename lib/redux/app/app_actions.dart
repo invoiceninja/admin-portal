@@ -117,6 +117,7 @@ class RefreshData {
 
 class RefreshDataFailure {
   const RefreshDataFailure(this.error);
+
   final dynamic error;
 }
 
@@ -304,14 +305,17 @@ void viewEntityById(
     {BuildContext context,
     String entityId,
     EntityType entityType,
-    bool force = false}) {
+    bool force = false,
+    bool showError = true}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
 
   if (!store.state.getEntityMap(entityType).containsKey(entityId)) {
-    showErrorDialog(
-        context: context,
-        message: AppLocalization.of(context).failedToFindRecord);
+    if (showError) {
+      showErrorDialog(
+          context: context,
+          message: AppLocalization.of(context).failedToFindRecord);
+    }
     return;
   }
 
