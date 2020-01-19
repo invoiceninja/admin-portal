@@ -120,14 +120,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltList<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList;
 
-  bool shouldSelectEntity(EntityType entityType) {
+  bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
     final entityList = getEntityList(entityType);
     final entityUIState = getUIState(entityType);
+
     if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
       return false;
     }
 
-    if (!entityList.contains(entityUIState.selectedId)) {
+    if (entityUIState.selectedId == null && !hasRecords) {
+      return false;
+    } else if (!entityList.contains(entityUIState.selectedId)) {
       return true;
     } else if (historyList.isEmpty ||
         !historyList.first.isEqualTo(

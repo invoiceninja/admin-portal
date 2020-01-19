@@ -79,7 +79,7 @@ class _ProjectListState extends State<ProjectList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.project)) {
+    if (state.shouldSelectEntity(entityType: EntityType.project, hasRecords: projectList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.project,

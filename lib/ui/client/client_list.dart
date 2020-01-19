@@ -78,7 +78,8 @@ class _ClientListState extends State<ClientList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.client)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.client, hasRecords: clientList.isNotEmpty)) {
       viewEntityById(
         context: context,
         entityType: EntityType.client,

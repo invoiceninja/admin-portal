@@ -72,7 +72,7 @@ class _TaskListState extends State<TaskList> {
     final isInMultiselect = listUIState.isInMultiselect();
     final taskList = widget.viewModel.taskList;
 
-    if (state.shouldSelectEntity(EntityType.task)) {
+    if (state.shouldSelectEntity(entityType: EntityType.task, hasRecords: taskList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.task,

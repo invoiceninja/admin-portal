@@ -141,17 +141,18 @@ class MainScreen extends StatelessWidget {
         onWillPop: () async {
           final state = store.state;
           final historyList = state.historyList;
-          final editingOrSettings =
-              state.uiState.isEditing || state.uiState.isInSettings;
+          final notViewingEntity = state.uiState.isEditing ||
+              state.uiState.isInSettings ||
+              (historyList[0].entityType.toString() != state.uiState.mainRoute);
 
           if (historyList.isEmpty ||
-              historyList.length == 1 && !editingOrSettings) {
+              historyList.length == 1 && !notViewingEntity) {
             return false;
           }
 
-          final history = historyList[editingOrSettings ? 0 : 1];
+          final history = historyList[notViewingEntity ? 0 : 1];
 
-          if (!editingOrSettings) {
+          if (!notViewingEntity) {
             store.dispatch(PopLastHistory());
           }
 

@@ -82,7 +82,8 @@ class _EntityListState extends State<InvoiceList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.invoice)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.invoice, hasRecords: invoiceList.isNotEmpty)) {
       viewEntityById(
         context: context,
         entityType: EntityType.invoice,

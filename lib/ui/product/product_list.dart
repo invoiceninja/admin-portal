@@ -78,7 +78,8 @@ class _ProductListState extends State<ProductList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.product)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.product, hasRecords: productList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.product,

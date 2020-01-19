@@ -94,7 +94,8 @@ class _ExpenseListState extends State<ExpenseList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.expense)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.expense, hasRecords: expenseList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.expense,
@@ -195,10 +196,9 @@ class _ExpenseListState extends State<ExpenseList> {
                             source: dataTableSource,
                             header: DatatableHeader(
                               entityType: EntityType.expense,
-                              onClearPressed: widget
-                                  .viewModel.onClearEntityFilterPressed,
+                              onClearPressed:
+                                  widget.viewModel.onClearEntityFilterPressed,
                             ),
-
                           ),
                         )),
             ),

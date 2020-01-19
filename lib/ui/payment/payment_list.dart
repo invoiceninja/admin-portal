@@ -81,7 +81,8 @@ class _PaymentListState extends State<PaymentList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.payment)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.payment, hasRecords: paymentList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.payment,

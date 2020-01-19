@@ -77,7 +77,8 @@ class _VendorListState extends State<VendorList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(EntityType.vendor)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.vendor, hasRecords: vendorList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.vendor,

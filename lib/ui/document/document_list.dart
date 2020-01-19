@@ -29,7 +29,8 @@ class DocumentList extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final documentList = viewModel.documentList;
 
-    if (state.shouldSelectEntity(EntityType.document)) {
+    if (state.shouldSelectEntity(
+        entityType: EntityType.document, hasRecords: documentList.isNotEmpty)) {
       viewEntityById(
           context: context,
           entityType: EntityType.document,
