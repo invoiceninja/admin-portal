@@ -79,15 +79,33 @@ class _ClientListState extends State<ClientList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (isNotMobile(context) &&
-        clientList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !clientList.contains(state.clientUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.client)) {
       viewEntityById(
           context: context,
           entityType: EntityType.client,
           entityId: clientList.first);
     }
+
+    /*
+    if (isNotMobile(context) &&
+        clientList.isNotEmpty &&
+        !state.uiState.isEditing) {
+      if (!clientList.contains(state.clientUIState.selectedId)) {
+        viewEntityById(
+            context: context,
+            entityType: EntityType.client,
+            entityId: clientList.first);
+      } else if (state.historyList.isEmpty ||
+          !state.historyList.first.isEqualTo(
+              entityType: EntityType.client,
+              entityId: state.clientUIState.selectedId)) {
+        viewEntityById(
+            context: context,
+            entityType: EntityType.client,
+            entityId: clientList.first);
+      }
+    }
+    */
 
     final listOrTable = () {
       if (isList) {

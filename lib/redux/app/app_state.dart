@@ -46,6 +46,7 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 part 'app_state.g.dart';
 
@@ -120,6 +121,24 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltList<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList;
 
+  bool shouldSelectEntity(EntityType entityType) {
+    final entityList = getEntityList(entityType);
+    final entityUIState = getUIState(entityType);
+    if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
+      return false;
+    }
+
+    if (!entityList.contains(entityUIState.selectedId)) {
+      return true;
+    } else if (historyList.isEmpty ||
+        !historyList.first.isEqualTo(
+            entityType: entityType, entityId: entityUIState.selectedId)) {
+      return true;
+    }
+
+    return false;
+  }
+
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:
@@ -172,6 +191,42 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return staticState.dateFormatMap;
       case EntityType.timezone:
         return staticState.timezoneMap;
+      default:
+        return null;
+    }
+  }
+
+  BuiltList<String> getEntityList(EntityType type) {
+    switch (type) {
+      case EntityType.product:
+        return productState.list;
+      case EntityType.client:
+        return clientState.list;
+      case EntityType.invoice:
+        return invoiceState.list;
+      // STARTER: states switch - do not remove comment
+      case EntityType.user:
+        return userState.list;
+      case EntityType.taxRate:
+        return taxRateState.list;
+      case EntityType.companyGateway:
+        return companyGatewayState.list;
+      case EntityType.group:
+        return groupState.list;
+      case EntityType.document:
+        return documentState.list;
+      case EntityType.expense:
+        return expenseState.list;
+      case EntityType.vendor:
+        return vendorState.list;
+      case EntityType.task:
+        return taskState.list;
+      case EntityType.project:
+        return projectState.list;
+      case EntityType.payment:
+        return paymentState.list;
+      case EntityType.quote:
+        return quoteState.list;
       default:
         return null;
     }

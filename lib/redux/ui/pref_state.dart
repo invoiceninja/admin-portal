@@ -192,7 +192,10 @@ abstract class HistoryRecord
   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(timestamp);
 
   bool matchesRecord(HistoryRecord record) =>
-      record.id == id && record.entityType == entityType;
+      isEqualTo(entityId: record.id, entityType: record.entityType);
+
+  bool isEqualTo({EntityType entityType, String entityId}) =>
+      entityType == this.entityType && entityId == id;
 
   static Serializer<HistoryRecord> get serializer => _$historyRecordSerializer;
 }

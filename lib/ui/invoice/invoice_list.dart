@@ -83,6 +83,14 @@ class _EntityListState extends State<InvoiceList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
+    if (state.shouldSelectEntity(EntityType.invoice)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.invoice,
+          entityId: invoiceList.first);
+    }
+
+    /*
     if (isNotMobile(context) &&
         invoiceList.isNotEmpty &&
         !state.uiState.isEditing &&
@@ -92,6 +100,8 @@ class _EntityListState extends State<InvoiceList> {
           entityType: EntityType.invoice,
           entityId: invoiceList.first);
     }
+    */
+
 
     final listOrTable = () {
       if (isList) {
