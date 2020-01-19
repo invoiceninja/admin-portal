@@ -95,7 +95,10 @@ class EntityDataTableSource extends DataTableSource {
 }
 
 class DatatableHeader extends StatelessWidget {
-  const DatatableHeader({@required this.entityType, this.onClearPressed});
+  const DatatableHeader({
+    @required this.entityType,
+    @required this.onClearPressed,
+  });
 
   final EntityType entityType;
   final Function() onClearPressed;
@@ -105,11 +108,11 @@ class DatatableHeader extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final listUIState = state.getListState(entityType);
 
-    String message = '';
+    Widget message;
     if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
-      message = ListFilterMessage.getMessage(
+      message = ListFilterMessage.getFilterListTile(
           context: context,
           filterEntityType: listUIState.filterEntityType,
           entity: entity);
@@ -117,8 +120,19 @@ class DatatableHeader extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        if (listUIState.filterEntityId != null) ...[
+        if (message != null) ...[
+          Flexible(child: FlatButton(
+            child: message,
+            onPressed: () => viewEntityById(
+              context: context,
+              entityId: listUIState.filterEntityId,
+              entityType: listUIState.filterEntityType,
+            ),
+          )),
+          /*
           FlatButton(
+            child: message,
+            /*
             child: Text(
               message,
               style: Theme.of(context)
@@ -126,16 +140,14 @@ class DatatableHeader extends StatelessWidget {
                   .subhead
                   .copyWith(color: Colors.orangeAccent),
             ),
-            onPressed: () => viewEntityById(
-              context: context,
-              entityId: listUIState.filterEntityId,
-              entityType: listUIState.filterEntityType,
-            ),
+             */
           ),
+           */
           IconButton(
             onPressed: onClearPressed,
             icon: Icon(Icons.clear),
-          )
+          ),
+          Expanded(child: SizedBox()),
         ]
       ],
     );

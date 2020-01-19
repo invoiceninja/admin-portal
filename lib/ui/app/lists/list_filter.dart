@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ListFilterMessage extends StatelessWidget {
@@ -17,33 +18,16 @@ class ListFilterMessage extends StatelessWidget {
   final Function(BuildContext) onPressed;
   final Function() onClearPressed;
 
-  static String getMessage(
+  static Widget getFilterListTile(
       {BuildContext context, EntityType filterEntityType, BaseEntity entity}) {
     final localization = AppLocalization.of(context);
-    String message;
 
-    switch (filterEntityType) {
-      case EntityType.group:
-        return localization.filteredByGroup;
-        break;
-      case EntityType.invoice:
-        message = localization.filteredByInvoice;
-        break;
-      case EntityType.client:
-        message = localization.filteredByClient;
-        break;
-      case EntityType.user:
-        message = localization.filteredByUser;
-        break;
-      case EntityType.project:
-        message = localization.filteredByProject;
-        break;
-      case EntityType.vendor:
-        message = localization.filteredByVendor;
-        break;
-    }
-
-    return '$message: ${entity?.listDisplayName ?? ''}';
+    return ListTile(
+      leading: Icon(getEntityIcon(filterEntityType)),
+      title: Text(localization.filteredBy
+          .replaceFirst(':value', entity.listDisplayName)),
+      subtitle: Text(localization.lookup(filterEntityType.toString())),
+    );
   }
 
   @override
@@ -60,6 +44,11 @@ class ListFilterMessage extends StatelessWidget {
           children: <Widget>[
             SizedBox(width: 18.0),
             Expanded(
+              child: ListFilterMessage.getFilterListTile(
+                  context: context,
+                  entity: filteredEntity,
+                  filterEntityType: filterEntityType),
+              /*
               child: Text(
                 ListFilterMessage.getMessage(
                     context: context,
@@ -71,6 +60,7 @@ class ListFilterMessage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+               */
             ),
             IconButton(
               icon: Icon(

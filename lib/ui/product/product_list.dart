@@ -153,6 +153,7 @@ class _ProductListState extends State<ProductList> {
             source: dataTableSource,
             header: DatatableHeader(
               entityType: EntityType.product,
+              onClearPressed: null,
             ),
           ),
         ));
