@@ -57,29 +57,32 @@ class EntityDataTableSource extends DataTableSource {
           : null,
       cells: [
         if (!listState.isInMultiselect())
-          DataCell(Row(
-            children: <Widget>[
-              Text(
-                '•',
-                style: TextStyle(
-                    color: (state.uiState.isEditing
-                            ? entity.id == editingId
-                            : entity.id == uIState.selectedId)
-                        ? Theme.of(context).accentColor
-                        : Colors.transparent,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
-              ActionMenuButton(
-                entityActions: entity.getActions(
-                    userCompany: state.userCompany, includeEdit: true),
-                isSaving: false,
-                entity: entity,
-                onSelected: (context, action) =>
-                    handleEntityAction(context, entity, action),
-              ),
-            ],
-          )),
+          DataCell(
+            Row(
+              children: <Widget>[
+                Text(
+                  '•',
+                  style: TextStyle(
+                      color: (state.uiState.isEditing
+                              ? entity.id == editingId
+                              : entity.id == uIState.selectedId)
+                          ? Theme.of(context).accentColor
+                          : Colors.transparent,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+                ActionMenuButton(
+                  entityActions: entity.getActions(
+                      userCompany: state.userCompany, includeEdit: true),
+                  isSaving: false,
+                  entity: entity,
+                  onSelected: (context, action) =>
+                      handleEntityAction(context, entity, action),
+                ),
+              ],
+            ),
+            onTap: () => onTap(entity),
+          ),
         ...tableColumns.map(
           (field) => DataCell(
             Text(entityPresenter.getField(field: field, context: context)),
