@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectList extends StatefulWidget {
   const ProjectList({
@@ -73,10 +72,7 @@ class _ProjectListState extends State<ProjectList> {
     final isInMultiselect = listState.isInMultiselect();
     final projectList = widget.viewModel.projectList;
 
-    if (isNotMobile(context) &&
-        projectList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !projectList.contains(state.projectUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.project)) {
       viewEntityById(
           context: context,
           entityType: EntityType.project,

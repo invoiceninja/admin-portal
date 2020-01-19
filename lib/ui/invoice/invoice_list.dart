@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceList extends StatefulWidget {
   const InvoiceList({
@@ -89,19 +88,6 @@ class _EntityListState extends State<InvoiceList> {
           entityType: EntityType.invoice,
           entityId: invoiceList.first);
     }
-
-    /*
-    if (isNotMobile(context) &&
-        invoiceList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !invoiceList.contains(state.invoiceUIState.selectedId)) {
-      viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: invoiceList.first);
-    }
-    */
-
 
     final listOrTable = () {
       if (isList) {

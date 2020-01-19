@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_item.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentList extends StatelessWidget {
   const DocumentList({
@@ -30,9 +29,7 @@ class DocumentList extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final documentList = viewModel.documentList;
 
-    if (isNotMobile(context) &&
-        documentList.isNotEmpty &&
-        !documentList.contains(state.documentUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.document)) {
       viewEntityById(
           context: context,
           entityType: EntityType.document,

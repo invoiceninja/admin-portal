@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentList extends StatefulWidget {
   const PaymentList({
@@ -82,10 +81,7 @@ class _PaymentListState extends State<PaymentList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (isNotMobile(context) &&
-        paymentList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !paymentList.contains(state.paymentUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.payment)) {
       viewEntityById(
           context: context,
           entityType: EntityType.payment,

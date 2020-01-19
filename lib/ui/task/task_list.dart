@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskList extends StatefulWidget {
   const TaskList({
@@ -73,10 +72,7 @@ class _TaskListState extends State<TaskList> {
     final isInMultiselect = listUIState.isInMultiselect();
     final taskList = widget.viewModel.taskList;
 
-    if (isNotMobile(context) &&
-        taskList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !taskList.contains(state.taskUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.task)) {
       viewEntityById(
           context: context,
           entityType: EntityType.task,

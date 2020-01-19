@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientList extends StatefulWidget {
   const ClientList({
@@ -85,27 +84,6 @@ class _ClientListState extends State<ClientList> {
           entityType: EntityType.client,
           entityId: clientList.first);
     }
-
-    /*
-    if (isNotMobile(context) &&
-        clientList.isNotEmpty &&
-        !state.uiState.isEditing) {
-      if (!clientList.contains(state.clientUIState.selectedId)) {
-        viewEntityById(
-            context: context,
-            entityType: EntityType.client,
-            entityId: clientList.first);
-      } else if (state.historyList.isEmpty ||
-          !state.historyList.first.isEqualTo(
-              entityType: EntityType.client,
-              entityId: state.clientUIState.selectedId)) {
-        viewEntityById(
-            context: context,
-            entityType: EntityType.client,
-            entityId: clientList.first);
-      }
-    }
-    */
 
     final listOrTable = () {
       if (isList) {

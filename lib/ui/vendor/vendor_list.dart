@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorList extends StatefulWidget {
   const VendorList({
@@ -71,10 +70,7 @@ class _VendorListState extends State<VendorList> {
     final isInMultiselect = listUIState.isInMultiselect();
     final vendorList = widget.viewModel.vendorList;
 
-    if (isNotMobile(context) &&
-        vendorList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !vendorList.contains(state.vendorUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.vendor)) {
       viewEntityById(
           context: context,
           entityType: EntityType.vendor,

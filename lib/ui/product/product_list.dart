@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({
@@ -79,10 +78,7 @@ class _ProductListState extends State<ProductList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (isNotMobile(context) &&
-        productList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !productList.contains(state.productUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.product)) {
       viewEntityById(
           context: context,
           entityType: EntityType.product,

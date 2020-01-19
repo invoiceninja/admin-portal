@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseList extends StatefulWidget {
   const ExpenseList({
@@ -88,10 +87,7 @@ class _ExpenseListState extends State<ExpenseList> {
     final isInMultiselect = listUIState.isInMultiselect();
     final expenseList = widget.viewModel.expenseList;
 
-    if (isNotMobile(context) &&
-        expenseList.isNotEmpty &&
-        !state.uiState.isEditing &&
-        !expenseList.contains(state.expenseUIState.selectedId)) {
+    if (state.shouldSelectEntity(EntityType.expense)) {
       viewEntityById(
           context: context,
           entityType: EntityType.expense,
