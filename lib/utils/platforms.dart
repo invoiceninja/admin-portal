@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -33,10 +34,11 @@ String getAppURL(BuildContext context) =>
     isAndroid(context) ? kGoogleStoreUrl : kAppleStoreUrl;
 
 AppLayout calculateLayout(BuildContext context) {
-  final size = MediaQuery.of(context).size.shortestSide;
+  final size = MediaQuery.of(context).size.width;
+
   if (size < kMobileLayoutWidth) {
     return AppLayout.mobile;
-  } else if (size > kTabletLayoutWidth) {
+  } else if (size > kTabletLayoutWidth || kIsWeb) {
     return AppLayout.desktop;
   } else {
     return AppLayout.tablet;

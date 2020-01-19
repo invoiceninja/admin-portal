@@ -288,6 +288,15 @@ CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
+  TypedReducer<BuiltList<HistoryRecord>, PopLastHistory>(
+    (historyList, action) {
+      if (historyList.isEmpty) {
+        return historyList;
+      } else {
+        return historyList.rebuild((b) => b..removeAt(0));
+      }
+    },
+  ),
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),

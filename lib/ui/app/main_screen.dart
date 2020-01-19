@@ -2,7 +2,9 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -139,7 +141,25 @@ class MainScreen extends StatelessWidget {
 
       return WillPopScope(
         onWillPop: () async {
-          store.dispatch(UpdateCurrentRoute(store.state.uiState.previousRoute));
+          final state = store.state;
+          final historyList = state.historyList;
+          final editingOrSettings = state.uiState.isEditing || state.uiState.isInSettings;
+
+          if (historyList.isEmpty || historyList.length == 1 && !editingOrSettings) {
+            return false;
+          }
+
+          final history = historyList[editingOrSettings ? 0 : 1];
+
+          if (!editingOrSettings) {
+            store.dispatch(PopLastHistory());
+          }
+
+          viewEntityById(
+              entityType: history.entityType,
+              entityId: history.id,
+              context: context);
+
           return false;
         },
         child: Row(children: <Widget>[

@@ -91,6 +91,8 @@ class LoginVM {
     );
 
     void _handleLogin(BuildContext context) {
+      print('## _handleLogin: layout: ${calculateLayout(context)}');
+
       store.dispatch(UserSettingsChanged(layout: calculateLayout(context)));
       AppBuilder.of(context).rebuild();
 

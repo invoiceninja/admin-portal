@@ -42,6 +42,8 @@ class RefreshClient {
 
 class SwitchListTableLayout implements PersistUI, PersistPrefs {}
 
+class PopLastHistory {}
+
 class ViewMainScreen {
   ViewMainScreen({this.navigator, this.addDelay = false});
 

@@ -53,13 +53,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   int get selectedCompanyIndex;
 
-  List<String> get history;
+  String get currentRoute;
 
-  String get currentRoute => history.last;
-
-  String get previousRoute => (history.isEmpty || history.length == 1)
-      ? null
-      : history[history.length - 1];
+  String get previousRoute;
 
   @nullable
   String get filter;
@@ -127,4 +123,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing => currentRoute.endsWith('edit');
+
+  bool get isInSettings => currentRoute.contains('settings');
 }
