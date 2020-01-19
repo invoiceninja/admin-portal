@@ -50,7 +50,7 @@ class _ListFilterState extends State<ListFilter> {
             ? Text('${widget.title ?? ''}')
             : Container(
                 padding: const EdgeInsets.only(left: 8.0),
-                height: 38.0,
+                height: 44,
                 margin: EdgeInsets.only(bottom: 2.0),
                 decoration: BoxDecoration(
                     color: widget.filter != null && widget.filter.isNotEmpty
