@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
@@ -52,9 +53,13 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   int get selectedCompanyIndex;
 
-  String get currentRoute;
+  List<String> get history;
 
-  String get previousRoute;
+  String get currentRoute => history.last;
+
+  String get previousRoute => (history.isEmpty || history.length == 1)
+      ? null
+      : history[history.length - 1];
 
   @nullable
   String get filter;
