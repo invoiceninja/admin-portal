@@ -74,7 +74,7 @@ class _ProductListState extends State<ProductList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (productList.isEmpty) {
+    } else if (viewModel.productMap.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
@@ -82,7 +82,7 @@ class _ProductListState extends State<ProductList> {
       viewEntityById(
           context: context,
           entityType: EntityType.product,
-          entityId: productList.first);
+          entityId: productList.isEmpty ? null : productList.first);
     }
 
     final listOrTable = () {
@@ -153,7 +153,6 @@ class _ProductListState extends State<ProductList> {
             header: DatatableHeader(
               entityType: EntityType.product,
             ),
-
           ),
         ));
       }

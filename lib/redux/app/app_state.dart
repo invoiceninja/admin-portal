@@ -444,7 +444,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Payment: ${uiState.paymentUIState.editing.paymentables}';
     //return 'isAuthenticated: ${authState.isAuthenticated}';
     //return 'MultiSelect: ${productListState.isInMultiselect()} SelectedIds: ${productListState.selectedIds}';
-    return 'History: $historyList';
+    //return 'History: $historyList';
     return 'Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

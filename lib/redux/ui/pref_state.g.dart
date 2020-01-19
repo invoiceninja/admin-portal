@@ -363,8 +363,6 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
   Iterable<Object> serialize(Serializers serializers, HistoryRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'entityType',
       serializers.serialize(object.entityType,
           specifiedType: const FullType(EntityType)),
@@ -372,7 +370,12 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
       serializers.serialize(object.timestamp,
           specifiedType: const FullType(int)),
     ];
-
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -833,9 +836,6 @@ class _$HistoryRecord extends HistoryRecord {
       (new HistoryRecordBuilder()..update(updates)).build();
 
   _$HistoryRecord._({this.id, this.entityType, this.timestamp}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('HistoryRecord', 'id');
-    }
     if (entityType == null) {
       throw new BuiltValueNullFieldError('HistoryRecord', 'entityType');
     }

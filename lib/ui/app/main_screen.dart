@@ -156,11 +156,10 @@ class MainScreen extends StatelessWidget {
           }
 
           viewEntityById(
-              entityType: history.entityType,
-              entityId: history.id,
-              context: context,
-              showError:
-                  false); // in case the history record has since been deleted
+            entityType: history.entityType,
+            entityId: history.id,
+            context: context,
+          );
 
           return false;
         },

@@ -68,15 +68,22 @@ class _ProjectListState extends State<ProjectList> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final viewModel = widget.viewModel;
     final listState = widget.viewModel.listState;
     final isInMultiselect = listState.isInMultiselect();
     final projectList = widget.viewModel.projectList;
+
+    if (!viewModel.isLoaded) {
+      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
+    } else if (viewModel.projectMap.isEmpty) {
+      return HelpText(AppLocalization.of(context).noRecordsFound);
+    }
 
     if (state.shouldSelectEntity(EntityType.project)) {
       viewEntityById(
           context: context,
           entityType: EntityType.project,
-          entityId: projectList.first);
+          entityId: projectList.isEmpty ? null : projectList.first);
     }
 
     return Column(
@@ -93,7 +100,7 @@ class _ProjectListState extends State<ProjectList> {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => widget.viewModel.onRefreshed(context),
-                  child: widget.viewModel.projectList.isEmpty
+                  child: widget.viewModel.projectMap.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : state.prefState.moduleLayout == ModuleLayout.list
                           ? ListView.separated(

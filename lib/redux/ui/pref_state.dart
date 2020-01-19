@@ -183,6 +183,7 @@ abstract class HistoryRecord
 
   HistoryRecord._();
 
+  @nullable
   String get id;
 
   EntityType get entityType;

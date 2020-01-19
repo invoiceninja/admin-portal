@@ -301,21 +301,20 @@ void viewEntitiesByType({
   }
 }
 
-void viewEntityById(
-    {BuildContext context,
-    String entityId,
-    EntityType entityType,
-    bool force = false,
-    bool showError = true}) {
+void viewEntityById({
+  BuildContext context,
+  String entityId,
+  EntityType entityType,
+  bool force = false,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
 
-  if (!store.state.getEntityMap(entityType).containsKey(entityId)) {
-    if (showError) {
-      showErrorDialog(
-          context: context,
-          message: AppLocalization.of(context).failedToFindRecord);
-    }
+  if (entityId != null &&
+      !store.state.getEntityMap(entityType).containsKey(entityId)) {
+    showErrorDialog(
+        context: context,
+        message: AppLocalization.of(context).failedToFindRecord);
     return;
   }
 

@@ -85,13 +85,20 @@ class _ExpenseListState extends State<ExpenseList> {
     final store = StoreProvider.of<AppState>(context);
     final listUIState = store.state.uiState.expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final expenseList = widget.viewModel.expenseList;
+    final viewModel = widget.viewModel;
+    final expenseList = viewModel.expenseList;
+
+    if (!viewModel.isLoaded) {
+      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
+    } else if (viewModel.expenseMap.isEmpty) {
+      return HelpText(AppLocalization.of(context).noRecordsFound);
+    }
 
     if (state.shouldSelectEntity(EntityType.expense)) {
       viewEntityById(
           context: context,
           entityType: EntityType.expense,
-          entityId: expenseList.first);
+          entityId: expenseList.isEmpty ? null : expenseList.first);
     }
 
     widgets.add(Expanded(
@@ -99,7 +106,7 @@ class _ExpenseListState extends State<ExpenseList> {
           ? LoadingIndicator()
           : RefreshIndicator(
               onRefresh: () => widget.viewModel.onRefreshed(context),
-              child: widget.viewModel.expenseList.isEmpty
+              child: widget.viewModel.expenseMap.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
                   : state.prefState.moduleLayout == ModuleLayout.list
                       ? ListView.separated(

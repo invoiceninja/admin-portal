@@ -78,15 +78,16 @@ class _EntityListState extends State<InvoiceList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (invoiceList.isEmpty) {
+    } else if (viewModel.invoiceMap.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
     if (state.shouldSelectEntity(EntityType.invoice)) {
       viewEntityById(
-          context: context,
-          entityType: EntityType.invoice,
-          entityId: invoiceList.first);
+        context: context,
+        entityType: EntityType.invoice,
+        entityId: invoiceList.isEmpty ? null : invoiceList.first,
+      );
     }
 
     final listOrTable = () {

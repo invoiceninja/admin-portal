@@ -66,15 +66,22 @@ class _VendorListState extends State<VendorList> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final listUIState = store.state.uiState.vendorUIState.listUIState;
+    final viewModel = widget.viewModel;
+    final listUIState = state.uiState.vendorUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final vendorList = widget.viewModel.vendorList;
+    final vendorList = viewModel.vendorList;
+
+    if (!viewModel.isLoaded) {
+      return viewModel.isLoading ? LoadingIndicator() : SizedBox();
+    } else if (viewModel.vendorMap.isEmpty) {
+      return HelpText(AppLocalization.of(context).noRecordsFound);
+    }
 
     if (state.shouldSelectEntity(EntityType.vendor)) {
       viewEntityById(
           context: context,
           entityType: EntityType.vendor,
-          entityId: vendorList.first);
+          entityId: vendorList.isEmpty ? null : vendorList.first);
     }
 
     return Column(
@@ -84,7 +91,7 @@ class _VendorListState extends State<VendorList> {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => widget.viewModel.onRefreshed(context),
-                  child: widget.viewModel.vendorList.isEmpty
+                  child: widget.viewModel.vendorMap.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : state.prefState.moduleLayout == ModuleLayout.list
                           ? ListView.separated(

@@ -33,7 +33,7 @@ class DocumentList extends StatelessWidget {
       viewEntityById(
           context: context,
           entityType: EntityType.document,
-          entityId: documentList.first);
+          entityId: documentList.isEmpty ? null : documentList.first);
     }
 
     /*
@@ -51,7 +51,7 @@ class DocumentList extends StatelessWidget {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.documentList.isEmpty
+                  child: viewModel.documentMap.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ListView.separated(
                           shrinkWrap: true,

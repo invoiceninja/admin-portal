@@ -77,7 +77,7 @@ class _PaymentListState extends State<PaymentList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (paymentList.isEmpty) {
+    } else if (viewModel.paymentMap.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
@@ -85,7 +85,7 @@ class _PaymentListState extends State<PaymentList> {
       viewEntityById(
           context: context,
           entityType: EntityType.payment,
-          entityId: paymentList.first);
+          entityId: paymentList.isEmpty ? null : paymentList.first);
     }
 
     final listOrTable = () {

@@ -391,7 +391,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
 BuiltList<HistoryRecord> _addToHistory(
     BuiltList<HistoryRecord> list, HistoryRecord record) {
   // don't track new records
-  if (record.id.startsWith('-')) {
+  if (record.id == null || record.id.startsWith('-')) {
     return list;
   }
 

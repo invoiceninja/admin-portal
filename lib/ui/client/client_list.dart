@@ -74,15 +74,16 @@ class _ClientListState extends State<ClientList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (clientList.isEmpty) {
+    } else if (viewModel.clientMap.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
     if (state.shouldSelectEntity(EntityType.client)) {
       viewEntityById(
-          context: context,
-          entityType: EntityType.client,
-          entityId: clientList.first);
+        context: context,
+        entityType: EntityType.client,
+        entityId: clientList.isEmpty ? null : clientList.first,
+      );
     }
 
     final listOrTable = () {

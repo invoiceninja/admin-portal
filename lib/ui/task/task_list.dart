@@ -76,7 +76,7 @@ class _TaskListState extends State<TaskList> {
       viewEntityById(
           context: context,
           entityType: EntityType.task,
-          entityId: taskList.first);
+          entityId: taskList.isEmpty ? null : taskList.first);
     }
 
     return Column(
@@ -93,7 +93,7 @@ class _TaskListState extends State<TaskList> {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => widget.viewModel.onRefreshed(context),
-                  child: widget.viewModel.taskList.isEmpty
+                  child: widget.viewModel.taskMap.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : state.prefState.moduleLayout == ModuleLayout.list
                           ? ListView.separated(
