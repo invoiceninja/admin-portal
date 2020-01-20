@@ -112,41 +112,22 @@ class DatatableHeader extends StatelessWidget {
     if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
-      message = ListFilterMessage.getFilterListTile(
+      message = FilterListTile(
+        onPressed: (context) => viewEntityById(
           context: context,
-          filterEntityType: listUIState.filterEntityType,
-          entity: entity);
+          entityId: listUIState.filterEntityId,
+          entityType: listUIState.filterEntityType,
+        ),
+        onClearPressed: onClearPressed,
+        entityType: listUIState.filterEntityType,
+        entity: entity,
+      );
     }
 
     return Row(
       children: <Widget>[
         if (message != null) ...[
-          Flexible(child: FlatButton(
-            child: message,
-            onPressed: () => viewEntityById(
-              context: context,
-              entityId: listUIState.filterEntityId,
-              entityType: listUIState.filterEntityType,
-            ),
-          )),
-          /*
-          FlatButton(
-            child: message,
-            /*
-            child: Text(
-              message,
-              style: Theme.of(context)
-                  .textTheme
-                  .subhead
-                  .copyWith(color: Colors.orangeAccent),
-            ),
-             */
-          ),
-           */
-          IconButton(
-            onPressed: onClearPressed,
-            icon: Icon(Icons.clear),
-          ),
+          Flexible(child: message),
           Expanded(child: SizedBox()),
         ]
       ],
