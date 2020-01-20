@@ -146,9 +146,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
-      'currency_id',
-      serializers.serialize(object.currencyId,
-          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -166,6 +163,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -803,9 +806,6 @@ class _$VendorEntity extends VendorEntity {
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');

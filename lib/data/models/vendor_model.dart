@@ -134,6 +134,7 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
 
+  @nullable
   @BuiltValueField(wireName: 'currency_id')
   String get currencyId;
 
