@@ -186,7 +186,7 @@ class MenuDrawer extends StatelessWidget {
                           icon: getEntityIcon(EntityType.quote),
                           title: localization.quotes,
                         ),
-                        if (Config.DEMO_MODE) ...[
+                        if (true || Config.DEMO_MODE) ...[
                           DrawerTile(
                             company: company,
                             entityType: EntityType.project,
@@ -273,12 +273,14 @@ class _DrawerTileState extends State<DrawerTile> {
     final userCompany = state.userCompany;
     final NavigatorState navigator = Navigator.of(context);
 
+    /*
     if (widget.entityType != null &&
         !userCompany.canViewOrCreate(widget.entityType)) {
       return Container();
     } else if (!widget.company.isModuleEnabled(widget.entityType)) {
       return Container();
     }
+     */
 
     final localization = AppLocalization.of(context);
     final route = widget.title == localization.dashboard

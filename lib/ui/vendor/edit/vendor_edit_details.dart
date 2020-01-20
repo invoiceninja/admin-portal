@@ -52,7 +52,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     _idNumberController.text = vendor.idNumber;
     _vatNumberController.text = vendor.vatNumber;
     _websiteController.text = vendor.website;
-    _phoneController.text = vendor.workPhone;
+    _phoneController.text = vendor.phone;
     _custom1Controller.text = vendor.customValue1;
     _custom2Controller.text = vendor.customValue2;
 
@@ -80,7 +80,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
         ..idNumber = _idNumberController.text.trim()
         ..vatNumber = _vatNumberController.text.trim()
         ..website = _websiteController.text.trim()
-        ..workPhone = _phoneController.text.trim()
+        ..phone = _phoneController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim());
       if (vendor != viewModel.vendor) {

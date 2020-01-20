@@ -56,7 +56,7 @@ class WebClient {
     } else {
       response = await http.Client()
           .post(url, body: data, headers: _getHeaders(token, secret: secret))
-          .timeout(const Duration(seconds: 30));
+          .timeout(const Duration(seconds: kMaxPostSeconds));
     }
 
     _checkResponse(response);

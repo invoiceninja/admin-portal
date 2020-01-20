@@ -85,14 +85,14 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.workPhone ?? '').isNotEmpty) {
+      if ((vendor.phone ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
-          title: vendor.workPhone,
+          title: vendor.phone,
           subtitle: localization.phone,
           onTap: () => setState(() {
             _launched = _launchURL(
-                context, 'sms:' + cleanPhoneNumber(vendor.workPhone));
+                context, 'sms:' + cleanPhoneNumber(vendor.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(vendor.workPhone));
           }),
         ));

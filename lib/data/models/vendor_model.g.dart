@@ -114,12 +114,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'balance',
-      serializers.serialize(object.balance,
-          specifiedType: const FullType(double)),
-      'paid_to_date',
-      serializers.serialize(object.paidToDate,
-          specifiedType: const FullType(double)),
       'address1',
       serializers.serialize(object.address1,
           specifiedType: const FullType(String)),
@@ -137,14 +131,11 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'country_id',
       serializers.serialize(object.countryId,
           specifiedType: const FullType(String)),
-      'work_phone',
-      serializers.serialize(object.workPhone,
+      'phone',
+      serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
-          specifiedType: const FullType(String)),
-      'last_login',
-      serializers.serialize(object.lastLogin,
           specifiedType: const FullType(String)),
       'website',
       serializers.serialize(object.website,
@@ -241,14 +232,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'balance':
-          result.balance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'paid_to_date':
-          result.paidToDate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
         case 'address1':
           result.address1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -273,16 +256,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'work_phone':
-          result.workPhone = serializers.deserialize(value,
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'last_login':
-          result.lastLogin = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'website':
@@ -708,10 +687,6 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String name;
   @override
-  final double balance;
-  @override
-  final double paidToDate;
-  @override
   final String address1;
   @override
   final String address2;
@@ -724,11 +699,9 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String countryId;
   @override
-  final String workPhone;
+  final String phone;
   @override
   final String privateNotes;
-  @override
-  final String lastLogin;
   @override
   final String website;
   @override
@@ -769,17 +742,14 @@ class _$VendorEntity extends VendorEntity {
 
   _$VendorEntity._(
       {this.name,
-      this.balance,
-      this.paidToDate,
       this.address1,
       this.address2,
       this.city,
       this.state,
       this.postalCode,
       this.countryId,
-      this.workPhone,
+      this.phone,
       this.privateNotes,
-      this.lastLogin,
       this.website,
       this.vatNumber,
       this.idNumber,
@@ -801,12 +771,6 @@ class _$VendorEntity extends VendorEntity {
     if (name == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'name');
     }
-    if (balance == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'balance');
-    }
-    if (paidToDate == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'paidToDate');
-    }
     if (address1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'address1');
     }
@@ -825,14 +789,11 @@ class _$VendorEntity extends VendorEntity {
     if (countryId == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'countryId');
     }
-    if (workPhone == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'workPhone');
+    if (phone == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'phone');
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
-    }
-    if (lastLogin == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'lastLogin');
     }
     if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
@@ -875,17 +836,14 @@ class _$VendorEntity extends VendorEntity {
     if (identical(other, this)) return true;
     return other is VendorEntity &&
         name == other.name &&
-        balance == other.balance &&
-        paidToDate == other.paidToDate &&
         address1 == other.address1 &&
         address2 == other.address2 &&
         city == other.city &&
         state == other.state &&
         postalCode == other.postalCode &&
         countryId == other.countryId &&
-        workPhone == other.workPhone &&
+        phone == other.phone &&
         privateNotes == other.privateNotes &&
-        lastLogin == other.lastLogin &&
         website == other.website &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
@@ -925,9 +883,9 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode),
-                                                                                privateNotes.hashCode),
-                                                                            lastLogin.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode),
+                                                                                phone.hashCode),
+                                                                            privateNotes.hashCode),
                                                                         website.hashCode),
                                                                     vatNumber.hashCode),
                                                                 idNumber.hashCode),
@@ -951,17 +909,14 @@ class _$VendorEntity extends VendorEntity {
   String toString() {
     return (newBuiltValueToStringHelper('VendorEntity')
           ..add('name', name)
-          ..add('balance', balance)
-          ..add('paidToDate', paidToDate)
           ..add('address1', address1)
           ..add('address2', address2)
           ..add('city', city)
           ..add('state', state)
           ..add('postalCode', postalCode)
           ..add('countryId', countryId)
-          ..add('workPhone', workPhone)
+          ..add('phone', phone)
           ..add('privateNotes', privateNotes)
-          ..add('lastLogin', lastLogin)
           ..add('website', website)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
@@ -991,14 +946,6 @@ class VendorEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  double _balance;
-  double get balance => _$this._balance;
-  set balance(double balance) => _$this._balance = balance;
-
-  double _paidToDate;
-  double get paidToDate => _$this._paidToDate;
-  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
-
   String _address1;
   String get address1 => _$this._address1;
   set address1(String address1) => _$this._address1 = address1;
@@ -1023,17 +970,13 @@ class VendorEntityBuilder
   String get countryId => _$this._countryId;
   set countryId(String countryId) => _$this._countryId = countryId;
 
-  String _workPhone;
-  String get workPhone => _$this._workPhone;
-  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
-
-  String _lastLogin;
-  String get lastLogin => _$this._lastLogin;
-  set lastLogin(String lastLogin) => _$this._lastLogin = lastLogin;
 
   String _website;
   String get website => _$this._website;
@@ -1112,17 +1055,14 @@ class VendorEntityBuilder
   VendorEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _balance = _$v.balance;
-      _paidToDate = _$v.paidToDate;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
       _city = _$v.city;
       _state = _$v.state;
       _postalCode = _$v.postalCode;
       _countryId = _$v.countryId;
-      _workPhone = _$v.workPhone;
+      _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
-      _lastLogin = _$v.lastLogin;
       _website = _$v.website;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
@@ -1165,17 +1105,14 @@ class VendorEntityBuilder
       _$result = _$v ??
           new _$VendorEntity._(
               name: name,
-              balance: balance,
-              paidToDate: paidToDate,
               address1: address1,
               address2: address2,
               city: city,
               state: state,
               postalCode: postalCode,
               countryId: countryId,
-              workPhone: workPhone,
+              phone: phone,
               privateNotes: privateNotes,
-              lastLogin: lastLogin,
               website: website,
               vatNumber: vatNumber,
               idNumber: idNumber,

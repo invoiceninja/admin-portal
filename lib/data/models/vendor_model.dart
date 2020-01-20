@@ -37,7 +37,6 @@ abstract class VendorItemResponse
 class VendorFields {
   static const String name = 'name';
   static const String balance = 'balance';
-  static const String paidToDate = 'paidToDate';
   static const String address1 = 'address1';
   static const String address2 = 'address2';
   static const String city = 'city';
@@ -46,7 +45,6 @@ class VendorFields {
   static const String countryId = 'countryId';
   static const String workPhone = 'workPhone';
   static const String privateNotes = 'privateNotes';
-  static const String lastLogin = 'lastLogin';
   static const String website = 'website';
   static const String vatNumber = 'vatNumber';
   static const String idNumber = 'idNumber';
@@ -67,17 +65,14 @@ abstract class VendorEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      balance: 0.0,
-      paidToDate: 0.0,
       address1: '',
       address2: '',
       city: '',
       state: '',
       postalCode: '',
       countryId: '',
-      workPhone: '',
+      phone: '',
       privateNotes: '',
-      lastLogin: '',
       website: '',
       vatNumber: '',
       idNumber: '',
@@ -111,11 +106,6 @@ abstract class VendorEntity extends Object
 
   String get name;
 
-  double get balance;
-
-  @BuiltValueField(wireName: 'paid_to_date')
-  double get paidToDate;
-
   String get address1;
 
   String get address2;
@@ -130,14 +120,11 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
-  @BuiltValueField(wireName: 'work_phone')
-  String get workPhone;
+  @BuiltValueField(wireName: 'phone')
+  String get phone;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
-
-  @BuiltValueField(wireName: 'last_login')
-  String get lastLogin;
 
   String get website;
 
@@ -221,7 +208,7 @@ abstract class VendorEntity extends Object
       return true;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return true;
-    } else if (workPhone.toLowerCase().contains(filter)) {
+    } else if (phone.toLowerCase().contains(filter)) {
       return true;
     } else if (address1.toLowerCase().contains(filter)) {
       return true;
@@ -259,8 +246,8 @@ abstract class VendorEntity extends Object
       return vatNumber;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
-    } else if (workPhone.toLowerCase().contains(filter)) {
-      return workPhone;
+    } else if (phone.toLowerCase().contains(filter)) {
+      return phone;
     } else if (address1.toLowerCase().contains(filter)) {
       return address1;
     } else if (city.toLowerCase().contains(filter)) {
