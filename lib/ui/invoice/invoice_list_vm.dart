@@ -37,6 +37,7 @@ class InvoiceListBuilder extends StatelessWidget {
 class EntityListVM {
   EntityListVM({
     @required this.state,
+    @required this.entityType,
     @required this.user,
     @required this.listState,
     @required this.invoiceList,
@@ -53,6 +54,7 @@ class EntityListVM {
   });
 
   final AppState state;
+  final EntityType entityType;
   final UserEntity user;
   final ListUIState listState;
   final List<String> invoiceList;
@@ -85,6 +87,7 @@ class InvoiceListVM extends EntityListVM {
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
     List<String> tableColumns,
+    EntityType entityType,
   }) : super(
           state: state,
           user: user,
@@ -100,6 +103,7 @@ class InvoiceListVM extends EntityListVM {
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
           tableColumns: tableColumns,
+          entityType: entityType,
         );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -148,6 +152,7 @@ class InvoiceListVM extends EntityListVM {
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
       tableColumns: InvoicePresenter.getTableFields(state.userCompany),
+      entityType: EntityType.invoice,
     );
   }
 }

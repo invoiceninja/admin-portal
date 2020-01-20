@@ -25,19 +25,19 @@ class QuotePresenter extends EntityPresenter {
     final quote = entity as InvoiceEntity;
 
     switch (field) {
-      case InvoiceFields.invoiceNumber:
+      case QuoteFields.quoteNumber:
         return quote.number;
-      case InvoiceFields.client:
+      case QuoteFields.client:
         return (state.clientState.map[quote.clientId] ??
                 ClientEntity(id: quote.clientId))
             .listDisplayName;
-      case InvoiceFields.invoiceDate:
+      case QuoteFields.quoteDate:
         return formatDate(quote.date, context);
-      case InvoiceFields.amount:
+      case QuoteFields.amount:
         return formatNumber(quote.amount, context);
-      case InvoiceFields.balance:
+      case QuoteFields.balance:
         return formatNumber(quote.balance, context);
-      case InvoiceFields.dueDate:
+      case QuoteFields.dueDate:
         return formatDate(quote.dueDate, context);
     }
 

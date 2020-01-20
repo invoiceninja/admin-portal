@@ -71,7 +71,7 @@ class _EntityListState extends State<InvoiceList> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final listState = viewModel.listState;
-    final listUIState = state.uiState.invoiceUIState.listUIState;
+    final listUIState = state.getUIState(viewModel.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final isList = state.prefState.moduleLayout == ModuleLayout.list;
     final invoiceList = viewModel.invoiceList;
@@ -83,10 +83,10 @@ class _EntityListState extends State<InvoiceList> {
     }
 
     if (state.shouldSelectEntity(
-        entityType: EntityType.invoice, hasRecords: invoiceList.isNotEmpty)) {
+        entityType: viewModel.entityType, hasRecords: invoiceList.isNotEmpty)) {
       viewEntityById(
         context: context,
-        entityType: EntityType.invoice,
+        entityType: viewModel.entityType,
         entityId: invoiceList.isEmpty ? null : invoiceList.first,
       );
     }
