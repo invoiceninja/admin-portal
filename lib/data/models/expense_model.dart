@@ -44,6 +44,7 @@ class ExpenseFields {
   static const String bankId = 'bankId';
   static const String expenseCurrencyId = 'expenseCurrencyId';
   static const String expenseCategoryId = 'expenseCategoryId';
+  static const String expenseCategory = 'expenseCategory';
   static const String amount = 'amount';
   static const String expenseDate = 'expenseDate';
   static const String paymentDate = 'paymentDate';
@@ -54,8 +55,10 @@ class ExpenseFields {
   static const String taxRate1 = 'taxRate1';
   static const String taxRate2 = 'taxRate2';
   static const String clientId = 'clientId';
+  static const String client = 'client';
   static const String invoiceId = 'invoiceId';
   static const String vendorId = 'vendorId';
+  static const String vendor = 'vendor';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
 

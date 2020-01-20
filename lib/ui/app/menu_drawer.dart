@@ -186,32 +186,30 @@ class MenuDrawer extends StatelessWidget {
                           icon: getEntityIcon(EntityType.quote),
                           title: localization.quotes,
                         ),
-                        if (true || Config.DEMO_MODE) ...[
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.project,
-                            icon: getEntityIcon(EntityType.project),
-                            title: localization.projects,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.task,
-                            icon: getEntityIcon(EntityType.task),
-                            title: localization.tasks,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.vendor,
-                            icon: getEntityIcon(EntityType.vendor),
-                            title: localization.vendors,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.expense,
-                            icon: getEntityIcon(EntityType.expense),
-                            title: localization.expenses,
-                          ),
-                        ],
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.project,
+                          icon: getEntityIcon(EntityType.project),
+                          title: localization.projects,
+                        ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.task,
+                          icon: getEntityIcon(EntityType.task),
+                          title: localization.tasks,
+                        ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.vendor,
+                          icon: getEntityIcon(EntityType.vendor),
+                          title: localization.vendors,
+                        ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.expense,
+                          icon: getEntityIcon(EntityType.expense),
+                          title: localization.expenses,
+                        ),
                         // STARTER: menu - do not remove comment
                         DrawerTile(
                           company: company,
@@ -273,14 +271,14 @@ class _DrawerTileState extends State<DrawerTile> {
     final userCompany = state.userCompany;
     final NavigatorState navigator = Navigator.of(context);
 
-    /*
-    if (widget.entityType != null &&
-        !userCompany.canViewOrCreate(widget.entityType)) {
-      return Container();
-    } else if (!widget.company.isModuleEnabled(widget.entityType)) {
-      return Container();
+    if (false && !Config.DEMO_MODE) {
+      if (widget.entityType != null &&
+          !userCompany.canViewOrCreate(widget.entityType)) {
+        return Container();
+      } else if (!widget.company.isModuleEnabled(widget.entityType)) {
+        return Container();
+      }
     }
-     */
 
     final localization = AppLocalization.of(context);
     final route = widget.title == localization.dashboard

@@ -43,7 +43,7 @@ class VendorFields {
   static const String state = 'state';
   static const String postalCode = 'postalCode';
   static const String countryId = 'countryId';
-  static const String workPhone = 'workPhone';
+  static const String phone = 'phone';
   static const String privateNotes = 'privateNotes';
   static const String website = 'website';
   static const String vatNumber = 'vatNumber';

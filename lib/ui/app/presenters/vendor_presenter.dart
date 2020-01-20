@@ -6,7 +6,10 @@ class VendorPresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
       VendorFields.name,
+      VendorFields.city,
+      VendorFields.phone,
       EntityFields.state,
+      EntityFields.createdAt,
     ];
   }
 
@@ -17,6 +20,12 @@ class VendorPresenter extends EntityPresenter {
     switch (field) {
       case VendorFields.name:
         return vendor.name;
+      case VendorFields.city:
+        return vendor.city;
+      case VendorFields.phone:
+        return vendor.phone;
+      case VendorFields.state:
+        return vendor.state;
     }
 
     return super.getField(field: field, context: context);

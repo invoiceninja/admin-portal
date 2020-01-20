@@ -564,6 +564,10 @@ abstract class UserCompanyEntity
       return false;
     }
 
+    if (Config.DEMO_MODE) {
+      return true;
+    }
+
     // TODO remove this once task/expenses are supported
     if (!Config.DEMO_MODE &&
         [

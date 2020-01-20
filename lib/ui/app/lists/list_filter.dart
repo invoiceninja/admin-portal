@@ -22,6 +22,7 @@ class FilterListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     return ListTile(
+      dense: true,
       leading: Icon(getEntityIcon(entityType)),
       title: Text(localization.filteredBy
           .replaceFirst(':value', entity.listDisplayName)),
