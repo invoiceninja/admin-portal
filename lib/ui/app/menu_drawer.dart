@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
@@ -332,7 +333,10 @@ class _DrawerTileState extends State<DrawerTile> {
                   ? createEntityByType(
                       context: context, entityType: widget.entityType)
                   : null,
-          trailing: _isHovered || isNotDesktop(context) ? trailingWidget : null,
+          trailing: _isHovered ||
+                  !RendererBinding.instance.mouseTracker.mouseIsConnected
+              ? trailingWidget
+              : null,
         ),
       ),
     );
