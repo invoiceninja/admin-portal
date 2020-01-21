@@ -254,8 +254,11 @@ Middleware<AppState> _createLoadState(
           final layout = calculateLayout(action.context);
           if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
             store.dispatch(UserSettingsChanged(layout: layout));
-            store.dispatch(
-                ViewDashboard(navigator: Navigator.of(action.context)));
+            AppBuilder.of(action.context).rebuild();
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              store.dispatch(
+                  ViewDashboard(navigator: Navigator.of(action.context)));
+            });
           } else {
             store.dispatch(
                 ViewMainScreen(navigator: Navigator.of(action.context)));

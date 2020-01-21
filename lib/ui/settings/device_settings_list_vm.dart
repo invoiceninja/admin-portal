@@ -98,6 +98,7 @@ class DeviceSettingsVM {
           return;
         }
         store.dispatch(UserSettingsChanged(layout: value));
+        AppBuilder.of(context).rebuild();
         if (value == AppLayout.mobile) {
           store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
         } else {
