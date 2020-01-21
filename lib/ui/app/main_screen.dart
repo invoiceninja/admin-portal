@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -20,7 +21,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder(
-        //onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
+        onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
       final uiState = store.state.uiState;
       final prefState = store.state.prefState;
@@ -137,6 +138,15 @@ class MainScreen extends StatelessWidget {
         }
       }
 
+      return Row(children: <Widget>[
+        if (prefState.showMenu) ...[
+          MenuDrawerBuilder(),
+          _CustomDivider(),
+        ],
+        Expanded(child: screen),
+      ]);
+
+      /*
       return WillPopScope(
         onWillPop: () async {
           final state = store.state;
@@ -172,6 +182,7 @@ class MainScreen extends StatelessWidget {
           Expanded(child: screen),
         ]),
       );
+       */
     });
   }
 }

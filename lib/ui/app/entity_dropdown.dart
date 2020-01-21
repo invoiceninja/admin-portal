@@ -111,7 +111,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (isNotMobile(context)) {
+    if (false && isNotMobile(context)) {
       return TypeAheadFormField<String>(
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsBoxDecoration: SuggestionsBoxDecoration(

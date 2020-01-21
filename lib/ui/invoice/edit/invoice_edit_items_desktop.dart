@@ -134,6 +134,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: TextFormField(
+                      initialValue: lineItems[index].productKey,
+                      onChanged: (value) => viewModel.onChangedInvoiceItem(
+                          lineItems[index]
+                              .rebuild((b) => b..productKey = value),
+                          index),
+                    ),
+                  ),
+                  /*
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TypeAheadFormField<String>(
                       initialValue: lineItems[index].productKey,
                       noItemsFoundBuilder: (context) => SizedBox(),
@@ -175,6 +186,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       debounceDuration: Duration(seconds: 0),
                     ),
                   ),
+                   */
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(

@@ -34,11 +34,11 @@ String getAppURL(BuildContext context) =>
     isAndroid(context) ? kGoogleStoreUrl : kAppleStoreUrl;
 
 AppLayout calculateLayout(BuildContext context) {
-  final size = MediaQuery.of(context).size.width;
+  final size = MediaQuery.of(context).size.shortestSide;
 
   if (size < kMobileLayoutWidth) {
     return AppLayout.mobile;
-  } else if (size > kTabletLayoutWidth || kIsWeb) {
+  } else if (size > kTabletLayoutWidth) {
     return AppLayout.desktop;
   } else {
     return AppLayout.tablet;
