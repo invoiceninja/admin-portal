@@ -138,15 +138,6 @@ class MainScreen extends StatelessWidget {
         }
       }
 
-      return Row(children: <Widget>[
-        if (prefState.showMenu) ...[
-          MenuDrawerBuilder(),
-          _CustomDivider(),
-        ],
-        Expanded(child: screen),
-      ]);
-
-      /*
       return WillPopScope(
         onWillPop: () async {
           final state = store.state;
@@ -182,7 +173,6 @@ class MainScreen extends StatelessWidget {
           Expanded(child: screen),
         ]),
       );
-       */
     });
   }
 }
