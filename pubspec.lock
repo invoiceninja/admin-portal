@@ -500,6 +500,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.27"
+  lint:
+    dependency: "direct dev"
+    description:
+      name: lint
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
   local_auth:
     dependency: "direct main"
     description:
