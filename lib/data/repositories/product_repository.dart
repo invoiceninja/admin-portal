@@ -46,7 +46,7 @@ class ProductRepository {
       url += '&action=' + action.toString();
     }
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids}), secret: credentials.secret);
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);
@@ -62,7 +62,7 @@ class ProductRepository {
     if (product.isNew) {
       response = await webClient.post(
           credentials.url + '/products', credentials.token,
-          data: json.encode(data));
+          data: json.encode(data), secret: credentials.secret);
     } else {
       var url = credentials.url + '/products/' + product.id.toString();
       if (action != null) {

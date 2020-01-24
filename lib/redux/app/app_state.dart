@@ -111,8 +111,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UserCompanyEntity get userCompany => userCompanyState.userCompany;
 
-  Credentials get credentials =>
-      Credentials(token: userCompanyState.token.token, url: authState.url);
+  Credentials get credentials => Credentials(
+      token: userCompanyState.token.token,
+      url: authState.url,
+      secret: authState.secret);
 
   String get accentColor =>
       user?.userCompany?.settings?.accentColor ?? kDefaultAccentColor;
@@ -453,8 +455,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 }
 
 class Credentials {
-  Credentials({this.url, this.token});
+  Credentials({this.url, this.token, this.secret});
 
   String url;
   String token;
+  String secret;
 }
