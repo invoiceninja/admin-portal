@@ -8,7 +8,8 @@ class AppBuilder extends StatefulWidget {
   AppBuilderState createState() => new AppBuilderState();
 
   static AppBuilderState of(BuildContext context) {
-    return context.ancestorStateOfType(const TypeMatcher<AppBuilderState>());
+    return context.findAncestorStateOfType<AppBuilderState>();
+    //return context.ancestorStateOfType(const TypeMatcher<AppBuilderState>());
   }
 }
 

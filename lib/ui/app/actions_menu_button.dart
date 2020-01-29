@@ -58,7 +58,7 @@ class ActionMenuButton extends StatelessWidget {
       icon: Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => actions,
       onSelected: (EntityAction action) {
-        this.onSelected(context, action);
+        onSelected(context, action);
       },
     );
   }
