@@ -49,6 +49,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
 // STARTER: import - do not remove comment
 
 void main({bool isTesting = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
