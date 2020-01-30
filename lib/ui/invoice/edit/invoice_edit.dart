@@ -30,9 +30,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
       GlobalKey<FormState>(debugLabel: '_invoiceEdit');
 
   static const kDetailsScreen = 0;
-  static const kContactScreen = 1;
+  //static const kContactScreen = 1;
   static const kItemScreen = 2;
-  static const kNotesScreen = 3;
+  //static const kNotesScreen = 3;
 
   @override
   void initState() {

@@ -72,7 +72,7 @@ class MenuDrawer extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     company.displayName,
-                    style: Theme.of(context).textTheme.subhead,
+                    style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(viewModel.user.email,
@@ -272,7 +272,7 @@ class _DrawerTileState extends State<DrawerTile> {
     final userCompany = state.userCompany;
     final NavigatorState navigator = Navigator.of(context);
 
-    if (false && !Config.DEMO_MODE) {
+    if (!Config.DEMO_MODE) {
       if (widget.entityType != null &&
           !userCompany.canViewOrCreate(widget.entityType)) {
         return Container();
@@ -497,9 +497,9 @@ void _showContactUs(BuildContext context) {
 void _showAbout(BuildContext context) {
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
-  final TextStyle aboutTextStyle = themeData.textTheme.body2;
+  final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
   final TextStyle linkStyle =
-      themeData.textTheme.body2.copyWith(color: themeData.accentColor);
+      themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor);
 
   showAboutDialog(
     context: context,

@@ -111,7 +111,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (false && isNotMobile(context)) {
+    if (isNotMobile(context)) {
       return TypeAheadFormField<String>(
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
@@ -344,13 +344,13 @@ class _EntityListTile extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(entity.listDisplayName,
-                style: Theme.of(context).textTheme.title),
+                style: Theme.of(context).textTheme.headline6),
           ),
           entity.listDisplayAmount != null
               ? Text(
                   formatNumber(entity.listDisplayAmount, context,
                       formatNumberType: entity.listDisplayAmountType),
-                  style: Theme.of(context).textTheme.title)
+                  style: Theme.of(context).textTheme.headline6)
               : Container(),
         ],
       ),

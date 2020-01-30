@@ -282,8 +282,8 @@ class _LoginState extends State<LoginView> {
         _oneTimePasswordController.text.isNotEmpty;
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.body2;
-    final TextStyle linkStyle = themeData.textTheme.body2
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
+    final TextStyle linkStyle = themeData.textTheme.bodyText1
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
     return Stack(

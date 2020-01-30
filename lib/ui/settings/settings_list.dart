@@ -52,7 +52,7 @@ class SettingsList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.basicSettings,
-            style: Theme.of(context).textTheme.body2,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         SettingsListTile(
@@ -110,7 +110,7 @@ class SettingsList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.advancedSettings,
-            style: Theme.of(context).textTheme.body2,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         SettingsListTile(

@@ -31,7 +31,7 @@ class _QuoteEditState extends State<QuoteEdit>
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
-  static const kNotesScreen = 2;
+  //static const kNotesScreen = 2;
 
   @override
   void initState() {

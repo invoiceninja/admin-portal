@@ -85,7 +85,7 @@ class QuoteListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
@@ -93,7 +93,7 @@ class QuoteListItem extends StatelessWidget {
                       invoice.balance > 0 ? invoice.balance : invoice.amount,
                       context,
                       clientId: invoice.clientId),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

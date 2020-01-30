@@ -83,11 +83,11 @@ class CompanyGatewayListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   companyGateway.gateway.name,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(formatNumber(companyGateway.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

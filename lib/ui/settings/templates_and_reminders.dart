@@ -45,7 +45,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   TabController _controller;
 
   static const kTabEdit = 0;
-  static const kTabPreview = 1;
+  //static const kTabPreview = 1;
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();

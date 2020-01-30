@@ -46,8 +46,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   List<TextEditingController> _controllers = [];
 
   static const kTabPreview = 0;
-  static const kTabEdit = 1;
-  static const kTabHistory = 2;
+  //static const kTabEdit = 1;
+  //static const kTabHistory = 2;
 
   @override
   void initState() {
