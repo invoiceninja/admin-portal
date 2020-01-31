@@ -67,7 +67,8 @@ class PaymentViewVM {
           viewEntity(context: context, entity: client);
         }
       },
-      onInvoicePressed: (context, [bool longPress = false]) {
+      onInvoicePressed: (context, invoiceId, [bool longPress = false]) {
+        final invoice = state.invoiceState.map[invoiceId];
         if (longPress) {
           showEntityActionsDialog(
             context: context,
@@ -87,7 +88,7 @@ class PaymentViewVM {
   final PaymentEntity payment;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, [bool]) onInvoicePressed;
+  final Function(BuildContext, String, [bool]) onInvoicePressed;
   final Function(BuildContext, [bool]) onClientPressed;
   final bool isSaving;
   final bool isLoading;

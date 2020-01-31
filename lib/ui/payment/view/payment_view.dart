@@ -96,19 +96,28 @@ class _PaymentViewState extends State<PaymentView> {
                 color: Theme.of(context).backgroundColor,
                 height: 12.0,
               ),
-              Material(
-                color: Theme.of(context).canvasColor,
-                child: ListTile(
-                  title: EntityStateTitle(
-                    entity: invoice,
-                    title: '${localization.invoice} ${invoice.number}',
+              for (final paymentable in payment.paymentables)
+                Material(
+                  color: Theme.of(context).canvasColor,
+                  child: ListTile(
+                    title: EntityStateTitle(
+                      entity: invoice,
+                      title:
+                          '${localization.invoice} ${state.invoiceState.map[paymentable.invoiceId]?.number ?? ''}',
+                    ),
+                    subtitle: Text(formatNumber(paymentable.amount, context) +
+                        ' • ' +
+                        formatDate(
+                            convertTimestampToDateString(paymentable.createdAt),
+                            context)),
+                    leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onInvoicePressed(
+                        context, paymentable.invoiceId),
+                    onLongPress: () => viewModel.onInvoicePressed(
+                        context, paymentable.invoiceId, true),
                   ),
-                  leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () => viewModel.onInvoicePressed(context),
-                  onLongPress: () => viewModel.onInvoicePressed(context, true),
                 ),
-              ),
               Container(
                 color: Theme.of(context).backgroundColor,
                 height: 12.0,

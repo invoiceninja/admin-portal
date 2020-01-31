@@ -446,6 +446,18 @@ class _$PaymentableEntitySerializer
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
     ];
+    if (object.createdAt != null) {
+      result
+        ..add('created_at')
+        ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.invoiceId != null) {
       result
         ..add('invoice_id')
@@ -479,6 +491,14 @@ class _$PaymentableEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -1198,6 +1218,10 @@ class PaymentEntityBuilder
 
 class _$PaymentableEntity extends PaymentableEntity {
   @override
+  final int createdAt;
+  @override
+  final int updatedAt;
+  @override
   final String invoiceId;
   @override
   final String creditId;
@@ -1210,7 +1234,13 @@ class _$PaymentableEntity extends PaymentableEntity {
           [void Function(PaymentableEntityBuilder) updates]) =>
       (new PaymentableEntityBuilder()..update(updates)).build();
 
-  _$PaymentableEntity._({this.invoiceId, this.creditId, this.amount, this.id})
+  _$PaymentableEntity._(
+      {this.createdAt,
+      this.updatedAt,
+      this.invoiceId,
+      this.creditId,
+      this.amount,
+      this.id})
       : super._() {
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'amount');
@@ -1229,6 +1259,8 @@ class _$PaymentableEntity extends PaymentableEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is PaymentableEntity &&
+        createdAt == other.createdAt &&
+        updatedAt == other.updatedAt &&
         invoiceId == other.invoiceId &&
         creditId == other.creditId &&
         amount == other.amount &&
@@ -1238,7 +1270,11 @@ class _$PaymentableEntity extends PaymentableEntity {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, invoiceId.hashCode), creditId.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, createdAt.hashCode), updatedAt.hashCode),
+                    invoiceId.hashCode),
+                creditId.hashCode),
             amount.hashCode),
         id.hashCode));
   }
@@ -1246,6 +1282,8 @@ class _$PaymentableEntity extends PaymentableEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PaymentableEntity')
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt)
           ..add('invoiceId', invoiceId)
           ..add('creditId', creditId)
           ..add('amount', amount)
@@ -1257,6 +1295,14 @@ class _$PaymentableEntity extends PaymentableEntity {
 class PaymentableEntityBuilder
     implements Builder<PaymentableEntity, PaymentableEntityBuilder> {
   _$PaymentableEntity _$v;
+
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -1278,6 +1324,8 @@ class PaymentableEntityBuilder
 
   PaymentableEntityBuilder get _$this {
     if (_$v != null) {
+      _createdAt = _$v.createdAt;
+      _updatedAt = _$v.updatedAt;
       _invoiceId = _$v.invoiceId;
       _creditId = _$v.creditId;
       _amount = _$v.amount;
@@ -1304,7 +1352,12 @@ class PaymentableEntityBuilder
   _$PaymentableEntity build() {
     final _$result = _$v ??
         new _$PaymentableEntity._(
-            invoiceId: invoiceId, creditId: creditId, amount: amount, id: id);
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            invoiceId: invoiceId,
+            creditId: creditId,
+            amount: amount,
+            id: id);
     replace(_$result);
     return _$result;
   }

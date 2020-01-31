@@ -362,6 +362,14 @@ abstract class PaymentableEntity extends Object
   PaymentableEntity._();
 
   @nullable
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'updated_at')
+  int get updatedAt;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
