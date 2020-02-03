@@ -279,6 +279,9 @@ void handlePaymentAction(
     case EntityAction.edit:
       editEntity(context: context, entity: payment);
       break;
+    case EntityAction.refund:
+      // TODO ....
+      break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
           snackBarCompleter<Null>(context, localization.emailedPayment),

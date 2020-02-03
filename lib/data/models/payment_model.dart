@@ -302,12 +302,13 @@ abstract class PaymentEntity extends Object
       }
 
       if (userCompany.canEditEntity(this)) {
-        if (client != null &&
-            client.hasEmailAddress) {
-          actions.add(EntityAction.sendEmail);
+        if (completedAmount > 0) {
+          actions.add(EntityAction.refund);
         }
 
-        actions.add(EntityAction.refund);
+        if (client != null && client.hasEmailAddress) {
+          actions.add(EntityAction.sendEmail);
+        }
       }
     }
 
