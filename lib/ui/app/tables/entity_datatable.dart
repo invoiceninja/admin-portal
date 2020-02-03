@@ -73,7 +73,12 @@ class EntityDataTableSource extends DataTableSource {
                 ),
                 ActionMenuButton(
                   entityActions: entity.getActions(
-                      userCompany: state.userCompany, includeEdit: true),
+                      userCompany: state.userCompany,
+                      includeEdit: true,
+                      client: entity is BelongsToClient
+                          ? state.clientState
+                              .map[(entity as BelongsToClient)?.clientId]
+                          : null),
                   isSaving: false,
                   entity: entity,
                   onSelected: (context, action) =>

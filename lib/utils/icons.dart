@@ -47,6 +47,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.stop;
     case EntityAction.settings:
       return Icons.settings;
+    case EntityAction.refund:
+      return Icons.remove_circle_outline;
     default:
       return null;
   }

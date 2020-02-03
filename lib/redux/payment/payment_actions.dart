@@ -266,16 +266,6 @@ class FilterPaymentsByEntity implements PersistUI {
 
 void handlePaymentAction(
     BuildContext context, List<BaseEntity> payments, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          payments.length == 1,
-      'Cannot perform this action on more than one payment');
-
   if (payments.isEmpty) {
     return;
   }

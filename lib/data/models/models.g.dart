@@ -30,6 +30,7 @@ const EntityAction _$viewQuote = const EntityAction._('viewQuote');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$newPayment = const EntityAction._('newPayment');
 const EntityAction _$settings = const EntityAction._('settings');
+const EntityAction _$refund = const EntityAction._('refund');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
 const EntityAction _$start = const EntityAction._('start');
@@ -88,6 +89,8 @@ EntityAction _$valueOf(String name) {
       return _$newPayment;
     case 'settings':
       return _$settings;
+    case 'refund':
+      return _$refund;
     case 'pdf':
       return _$pdf;
     case 'more':
@@ -131,6 +134,7 @@ final BuiltSet<EntityAction> _$values =
   _$clientPortal,
   _$newPayment,
   _$settings,
+  _$refund,
   _$pdf,
   _$more,
   _$start,
