@@ -34,7 +34,6 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';

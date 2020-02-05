@@ -158,6 +158,25 @@ class SavePaymentFailure implements StopSaving {
   final Object error;
 }
 
+class RefundPaymentRequest implements StartSaving {
+  RefundPaymentRequest({this.completer, this.payment});
+
+  final Completer completer;
+  final PaymentEntity payment;
+}
+
+class RefundPaymentSuccess implements StopSaving, PersistData, PersistUI {
+  RefundPaymentSuccess(this.payment);
+
+  final PaymentEntity payment;
+}
+
+class RefundPaymentFailure implements StopSaving {
+  RefundPaymentFailure(this.error);
+
+  final Object error;
+}
+
 class ArchivePaymentsRequest implements StartSaving {
   ArchivePaymentsRequest(this.completer, this.paymentIds);
 

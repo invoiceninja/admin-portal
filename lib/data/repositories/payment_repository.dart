@@ -83,4 +83,26 @@ class PaymentRepository {
 
     return paymentResponse.data;
   }
+
+  Future<PaymentEntity> refundPayment(
+      Credentials credentials, PaymentEntity payment,
+      {bool sendEmail = false}) async {
+    final data = serializers.serializeWith(PaymentEntity.serializer, payment);
+    dynamic response;
+
+    var url = credentials.url + '/payments/refund';
+    //var url = credentials.url + '/payments/refund?include=paymentables';
+    /*
+    if (sendEmail) {
+      url += '&email_receipt=true';
+    }
+     */
+    response =
+        await webClient.post(url, credentials.token, data: json.encode(data));
+
+    final PaymentItemResponse paymentResponse =
+        serializers.deserializeWith(PaymentItemResponse.serializer, response);
+
+    return paymentResponse.data;
+  }
 }

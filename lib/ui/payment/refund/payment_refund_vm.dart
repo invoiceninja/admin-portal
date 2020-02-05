@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -18,7 +17,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,13 +46,11 @@ class PaymentRefundVM {
     @required this.payment,
     @required this.origPayment,
     @required this.onChanged,
-    @required this.onSavePressed,
+    @required this.onRefundPressed,
     @required this.onEmailChanged,
     @required this.prefState,
     @required this.invoiceMap,
     @required this.invoiceList,
-    @required this.clientMap,
-    @required this.clientList,
     @required this.staticState,
     @required this.onCancelPressed,
     @required this.isSaving,
@@ -74,8 +70,6 @@ class PaymentRefundVM {
       staticState: state.staticState,
       invoiceMap: state.invoiceState.map,
       invoiceList: state.invoiceState.list,
-      clientMap: state.clientState.map,
-      clientList: state.clientState.list,
       onChanged: (PaymentEntity payment) {
         store.dispatch(UpdatePayment(payment));
       },
@@ -91,10 +85,10 @@ class PaymentRefundVM {
         createEntity(context: context, entity: PaymentEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
-      onSavePressed: (BuildContext context) {
+      onRefundPressed: (BuildContext context) {
         final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
         store.dispatch(
-            SavePaymentRequest(completer: completer, payment: payment));
+            RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
@@ -121,14 +115,12 @@ class PaymentRefundVM {
   final PaymentEntity payment;
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onRefundPressed;
   final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
   final PrefState prefState;
   final BuiltList<String> invoiceList;
-  final BuiltMap<String, ClientEntity> clientMap;
-  final BuiltList<String> clientList;
   final StaticState staticState;
   final bool isSaving;
   final bool isDirty;

@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -101,7 +100,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
           return;
         }
 
-        viewModel.onSavePressed(context);
+        viewModel.onRefundPressed(context);
       },
       body: Form(
         key: _formKey,
@@ -247,11 +246,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
             entityId: paymentable.invoiceId,
-            entityList: memoizedDropdownInvoiceList(
-                widget.viewModel.invoiceMap,
-                widget.viewModel.clientMap,
-                widget.viewModel.invoiceList,
-                payment.clientId),
+            entityList: [],
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
               _amountController.text = formatNumber(invoice.balance, context,

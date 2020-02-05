@@ -21,10 +21,11 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final viewPaymentList = _viewPaymentList();
   final viewPayment = _viewPayment();
   final editPayment = _editPayment();
-  final refundPayment = _refundPayment();
+  final showRefundPayment = _showRefundPayment();
   final loadPayments = _loadPayments(repository);
   //final loadPayment = _loadPayment(repository);
   final savePayment = _savePayment(repository);
+  final refundPayment = _refundPayment(repository);
   final archivePayment = _archivePayment(repository);
   final deletePayment = _deletePayment(repository);
   final restorePayment = _restorePayment(repository);
@@ -34,10 +35,11 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, ViewPaymentList>(viewPaymentList),
     TypedMiddleware<AppState, ViewPayment>(viewPayment),
     TypedMiddleware<AppState, EditPayment>(editPayment),
-    TypedMiddleware<AppState, RefundPayment>(refundPayment),
+    TypedMiddleware<AppState, RefundPayment>(showRefundPayment),
     TypedMiddleware<AppState, LoadPayments>(loadPayments),
     //TypedMiddleware<AppState, LoadPayment>(loadPayment),
     TypedMiddleware<AppState, SavePaymentRequest>(savePayment),
+    TypedMiddleware<AppState, RefundPaymentRequest>(refundPayment),
     TypedMiddleware<AppState, ArchivePaymentsRequest>(archivePayment),
     TypedMiddleware<AppState, DeletePaymentsRequest>(deletePayment),
     TypedMiddleware<AppState, RestorePaymentsRequest>(restorePayment),
@@ -64,7 +66,7 @@ Middleware<AppState> _editPayment() {
   };
 }
 
-Middleware<AppState> _refundPayment() {
+Middleware<AppState> _showRefundPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RefundPayment;
 
@@ -223,6 +225,28 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(SavePaymentFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _refundPayment(PaymentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RefundPaymentRequest;
+    final PaymentEntity payment = action.payment;
+    final bool sendEmail = store.state.prefState.emailPayment;
+
+    repository
+        .refundPayment(store.state.credentials, action.payment, sendEmail: sendEmail)
+        .then((PaymentEntity payment) {
+      store.dispatch(RefundPaymentSuccess(payment));
+      //store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
+      action.completer.complete(payment);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RefundPaymentFailure(error));
       action.completer.completeError(error);
     });
 
