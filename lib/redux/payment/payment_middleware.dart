@@ -235,12 +235,12 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
 Middleware<AppState> _refundPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RefundPaymentRequest;
-    final PaymentEntity payment = action.payment;
     final bool sendEmail = store.state.prefState.emailPayment;
 
     repository
         .refundPayment(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
+      store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));
       //store.dispatch(LoadInvoice(invoiceId: payment.invoiceId));
       action.completer.complete(payment);

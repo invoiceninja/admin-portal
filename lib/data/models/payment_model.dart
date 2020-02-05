@@ -37,6 +37,7 @@ abstract class PaymentItemResponse
 
 class PaymentFields {
   static const String amount = 'amount';
+  static const String refunded = 'refunded';
   static const String transactionReference = 'transactionReference';
   static const String paymentDate = 'paymentDate';
   static const String paymentTypeId = 'paymentTypeId';

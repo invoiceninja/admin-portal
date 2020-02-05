@@ -53,6 +53,10 @@ class _PaymentViewState extends State<PaymentView> {
     if (payment.transactionReference.isNotEmpty) {
       fields[PaymentFields.transactionReference] = payment.transactionReference;
     }
+    if (payment.refunded != 0) {
+      fields[PaymentFields.refunded] =
+          formatNumber(payment.refunded, context, clientId: client.id);
+    }
 
     return ViewScaffold(
       entity: payment,
@@ -61,27 +65,15 @@ class _PaymentViewState extends State<PaymentView> {
         builder: (BuildContext context) {
           return ListView(
             children: <Widget>[
-              (payment.refunded ?? 0) > 0
-                  ? EntityHeader(
-                      backgroundColor:
-                          PaymentStatusColors.colors[payment.statusId],
-                      label: localization.amount,
-                      value: formatNumber(payment.amount, context,
-                          clientId: client.id),
-                      secondLabel: localization.refunded,
-                      secondValue: formatNumber(payment.refunded, context,
-                          clientId: client.id),
-                    )
-                  : EntityHeader(
-                      backgroundColor:
-                          PaymentStatusColors.colors[payment.statusId],
-                      label: localization.amount,
-                      value: formatNumber(payment.amount, context,
-                          clientId: client.id),
-                      secondLabel: localization.applied,
-                      secondValue: formatNumber(payment.applied, context,
-                          clientId: client.id),
-                    ),
+              EntityHeader(
+                backgroundColor: PaymentStatusColors.colors[payment.statusId],
+                label: localization.amount,
+                value:
+                    formatNumber(payment.amount, context, clientId: client.id),
+                secondLabel: localization.applied,
+                secondValue:
+                    formatNumber(payment.applied, context, clientId: client.id),
+              ),
               Material(
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
