@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       'refund': 'Refund',
+      'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by :value',
       'contact_email': 'Email',
       'multiselect': 'Multiselect',
@@ -15947,6 +15948,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get filteredBy => _localizedValues[localeCode]['filtered_by'];
 
   String get refund => _localizedValues[localeCode]['refund'];
+
+  String get refundDate => _localizedValues[localeCode]['refund_date'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

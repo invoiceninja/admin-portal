@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -20,6 +21,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final viewPaymentList = _viewPaymentList();
   final viewPayment = _viewPayment();
   final editPayment = _editPayment();
+  final refundPayment = _refundPayment();
   final loadPayments = _loadPayments(repository);
   //final loadPayment = _loadPayment(repository);
   final savePayment = _savePayment(repository);
@@ -32,6 +34,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, ViewPaymentList>(viewPaymentList),
     TypedMiddleware<AppState, ViewPayment>(viewPayment),
     TypedMiddleware<AppState, EditPayment>(editPayment),
+    TypedMiddleware<AppState, RefundPayment>(refundPayment),
     TypedMiddleware<AppState, LoadPayments>(loadPayments),
     //TypedMiddleware<AppState, LoadPayment>(loadPayment),
     TypedMiddleware<AppState, SavePaymentRequest>(savePayment),
@@ -57,6 +60,25 @@ Middleware<AppState> _editPayment() {
 
     if (isMobile(action.context)) {
       action.navigator.pushNamed(PaymentEditScreen.route);
+    }
+  };
+}
+
+Middleware<AppState> _refundPayment() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RefundPayment;
+
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
+      return;
+    }
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(PaymentRefundScreen.route));
+
+    if (isMobile(action.context)) {
+      action.navigator.pushNamed(PaymentRefundScreen.route);
     }
   };
 }

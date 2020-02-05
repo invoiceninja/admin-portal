@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -31,6 +32,20 @@ class ViewPayment extends AbstractNavigatorAction
 class EditPayment extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditPayment(
+      {@required this.payment,
+      @required NavigatorState navigator,
+      this.completer,
+      this.force = false})
+      : super(navigator: navigator);
+
+  final PaymentEntity payment;
+  final Completer completer;
+  final bool force;
+}
+
+class RefundPayment extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  RefundPayment(
       {@required this.payment,
       @required NavigatorState navigator,
       this.completer,
@@ -280,7 +295,10 @@ void handlePaymentAction(
       editEntity(context: context, entity: payment);
       break;
     case EntityAction.refund:
-      // TODO ....
+      store.dispatch(RefundPayment(
+        navigator: Navigator.of(context),
+        payment: payment,
+      ));
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(

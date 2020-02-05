@@ -34,6 +34,8 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund.dart';
+import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -333,6 +335,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             PaymentScreen.route: (context) => PaymentScreenBuilder(),
             PaymentViewScreen.route: (context) => PaymentViewScreen(),
             PaymentEditScreen.route: (context) => PaymentEditScreen(),
+            PaymentRefundScreen.route: (context) => PaymentRefundScreen(),
             QuoteScreen.route: (context) => QuoteScreenBuilder(),
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
@@ -341,7 +344,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             UserScreen.route: (context) => UserScreenBuilder(),
             UserViewScreen.route: (context) => UserViewScreen(),
             UserEditScreen.route: (context) => UserEditScreen(),
-
             GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
