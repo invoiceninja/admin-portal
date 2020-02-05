@@ -246,7 +246,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             entityType: EntityType.invoice,
             labelText: AppLocalization.of(context).invoice,
             entityId: paymentable.invoiceId,
-            entityList: [],
+            entityList: payment.paymentables
+                .map((payment) => payment.invoiceId)
+                .toList(),
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
               _amountController.text = formatNumber(invoice.balance, context,
@@ -262,7 +264,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         Expanded(
           child: DecoratedFormField(
             controller: _amountController,
-            label: localization.applied,
+            label: localization.amount,
           ),
         ),
         SizedBox(
