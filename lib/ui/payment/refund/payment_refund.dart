@@ -5,12 +5,9 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -113,21 +110,24 @@ class _PaymentRefundState extends State<PaymentRefund> {
           children: <Widget>[
             FormCard(
               children: <Widget>[
-                DecoratedFormField(
-                  controller: _amountController,
-                  autocorrect: false,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  label: localization.amount,
-                ),
-                for (var index = 0; index < paymentables.length; index++)
-                  PaymentableEditor(
-                    key: ValueKey(
-                        '__paymentable_${index}_${paymentables[index].id}__'),
-                    viewModel: viewModel,
-                    paymentable: paymentables[index],
-                    index: index,
-                    onChanged: () {},
+                if (payment.paymentables.isEmpty)
+                  DecoratedFormField(
+                    controller: _amountController,
+                    autocorrect: false,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    label: localization.amount,
                   ),
+                if (payment.paymentables.isNotEmpty)
+                  for (var index = 0; index < paymentables.length; index++)
+                    PaymentableEditor(
+                      key: ValueKey(
+                          '__paymentable_${index}_${paymentables[index].id}__'),
+                      viewModel: viewModel,
+                      paymentable: paymentables[index],
+                      index: index,
+                      onChanged: () {},
+                    ),
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectADate
@@ -141,17 +141,15 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 ),
               ],
             ),
-            payment.isNew
-                ? FormCard(children: <Widget>[
-                    SwitchListTile(
-                      activeColor: Theme.of(context).accentColor,
-                      title: Text(localization.sendEmail),
-                      value: viewModel.prefState.emailPayment,
-                      subtitle: Text(localization.emailReceipt),
-                      onChanged: (value) => viewModel.onEmailChanged(value),
-                    ),
-                  ])
-                : Container(),
+            FormCard(children: <Widget>[
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.sendEmail),
+                value: viewModel.prefState.emailPayment,
+                subtitle: Text(localization.emailReceipt),
+                onChanged: (value) => viewModel.onEmailChanged(value),
+              ),
+            ]),
           ],
         ),
       ),
