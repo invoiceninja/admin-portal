@@ -93,7 +93,6 @@ class AuthRepository {
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
 
-    /*
     final includes = [
       'account',
       'user.company_user',
@@ -116,9 +115,8 @@ class AuthRepository {
       // TODO add to starter
     ];
     url += '?include=${includes.join(',')}&include_static=true';
-    */
 
-    url += '?first_load=true&include_static=true';
+    //url += '?first_load=true&include_static=true';
 
     dynamic response;
 

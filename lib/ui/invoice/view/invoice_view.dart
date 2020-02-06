@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
@@ -49,8 +50,7 @@ class _InvoiceViewState extends State<InvoiceView>
 
     return ViewScaffold(
       entity: invoice,
-      title:
-          '${invoice.number ?? '• ${localization.pending}'}',
+      title: '${invoice.number ?? '• ${localization.pending}'}',
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [
@@ -64,7 +64,7 @@ class _InvoiceViewState extends State<InvoiceView>
           ),
         ],
       ),
-      secondaryWidget: isNotMobile(context)
+      secondaryWidget: isNotMobile(context) && !Config.DEMO_MODE
           ? FlatButton(
               child: Text(localization.pdf.toUpperCase()),
               onPressed: () =>

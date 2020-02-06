@@ -22,7 +22,7 @@ AuthState userSignUpRequestReducer(
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
-    ..url = cleanApiUrl(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret ?? ''
     ..email = action.email ?? '');
 }
@@ -30,7 +30,7 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
 AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
-    ..url = cleanApiUrl(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret
     ..email = action.email
     ..password = action.password);
@@ -39,7 +39,7 @@ AuthState userLoginRequestReducer(
 AuthState oauthLoginRequestReducer(
     AuthState authState, OAuthLoginRequest action) {
   return authState.rebuild((b) => b
-    ..url = cleanApiUrl(action.url)
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret);
 }
 
