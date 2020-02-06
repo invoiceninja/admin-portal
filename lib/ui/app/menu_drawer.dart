@@ -358,6 +358,7 @@ class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final localization = AppLocalization.of(context);
 
     return Container(
       color: Theme.of(context).bottomAppBarColor,
@@ -370,19 +371,23 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
+              tooltip: localization.contactUs,
             ),
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () =>
                   launch('https://www.invoiceninja.com/forums/forum/support'),
+              tooltip: localization.supportForum,
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
               onPressed: () => launch('https://docs.invoiceninja.com'),
+              tooltip: localization.help,
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
               onPressed: () => _showAbout(context),
+              tooltip: localization.about,
             ),
             /*
             if (kDebugMode)
@@ -407,6 +412,7 @@ class SidebarFooter extends StatelessWidget {
                   Icons.warning,
                   color: Colors.red,
                 ),
+                tooltip: localization.error,
                 onPressed: () => showDialog<ErrorDialog>(
                     context: context,
                     builder: (BuildContext context) {
