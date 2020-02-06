@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
@@ -35,7 +34,6 @@ class _PaymentViewState extends State<PaymentView> {
     final payment = viewModel.payment;
     final state = StoreProvider.of<AppState>(context).state;
     final client = state.clientState.map[payment.clientId];
-    final invoice = paymentInvoiceSelector(payment.id, state);
     final localization = AppLocalization.of(context);
 
     final fields = <String, String>{};
@@ -93,7 +91,7 @@ class _PaymentViewState extends State<PaymentView> {
                   color: Theme.of(context).canvasColor,
                   child: ListTile(
                     title: EntityStateTitle(
-                      entity: invoice,
+                      entity: state.invoiceState.map[paymentable.invoiceId],
                       title:
                           '${localization.invoice} ${state.invoiceState.map[paymentable.invoiceId]?.number ?? ''}',
                     ),

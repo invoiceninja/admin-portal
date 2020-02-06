@@ -171,12 +171,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.statusId,
             specifiedType: const FullType(String)));
     }
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(String)));
-    }
     if (object.privateNotes != null) {
       result
         ..add('private_notes')
@@ -328,10 +322,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'type_id':
           result.typeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'invoice_id':
-          result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -731,8 +721,6 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String typeId;
   @override
-  final String invoiceId;
-  @override
   final String privateNotes;
   @override
   final String customValue1;
@@ -788,7 +776,6 @@ class _$PaymentEntity extends PaymentEntity {
       this.transactionReference,
       this.date,
       this.typeId,
-      this.invoiceId,
       this.privateNotes,
       this.customValue1,
       this.customValue2,
@@ -864,7 +851,6 @@ class _$PaymentEntity extends PaymentEntity {
         transactionReference == other.transactionReference &&
         date == other.date &&
         typeId == other.typeId &&
-        invoiceId == other.invoiceId &&
         privateNotes == other.privateNotes &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
@@ -908,7 +894,7 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), invoiceId.hashCode), privateNotes.hashCode), customValue1.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode),
                                                                                 customValue2.hashCode),
                                                                             customValue3.hashCode),
                                                                         customValue4.hashCode),
@@ -942,7 +928,6 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('transactionReference', transactionReference)
           ..add('date', date)
           ..add('typeId', typeId)
-          ..add('invoiceId', invoiceId)
           ..add('privateNotes', privateNotes)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
@@ -1008,10 +993,6 @@ class PaymentEntityBuilder
   String _typeId;
   String get typeId => _$this._typeId;
   set typeId(String typeId) => _$this._typeId = typeId;
-
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -1119,7 +1100,6 @@ class PaymentEntityBuilder
       _transactionReference = _$v.transactionReference;
       _date = _$v.date;
       _typeId = _$v.typeId;
-      _invoiceId = _$v.invoiceId;
       _privateNotes = _$v.privateNotes;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
@@ -1174,7 +1154,6 @@ class PaymentEntityBuilder
               transactionReference: transactionReference,
               date: date,
               typeId: typeId,
-              invoiceId: invoiceId,
               privateNotes: privateNotes,
               customValue1: customValue1,
               customValue2: customValue2,

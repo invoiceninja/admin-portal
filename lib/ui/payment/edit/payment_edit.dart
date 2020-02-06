@@ -134,7 +134,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     onSelected: (client) {
                       viewModel.onChanged(payment.rebuild((b) => b
                         ..clientId = client.id
-                        ..invoiceId = null));
+                        ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
                         viewModel.clientMap, viewModel.clientList),

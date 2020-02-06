@@ -75,7 +75,6 @@ abstract class PaymentEntity extends Object
               (state.company.settings.defaultPaymentTypeId ?? '').isNotEmpty
           ? state.company.settings.defaultPaymentTypeId
           : '',
-      invoiceId: '',
       clientId: '',
       privateNotes: '',
       exchangeRate: 0.0,
@@ -130,10 +129,6 @@ abstract class PaymentEntity extends Object
 
   @BuiltValueField(wireName: 'type_id')
   String get typeId;
-
-  @nullable
-  @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
 
   @nullable
   @BuiltValueField(wireName: 'private_notes')

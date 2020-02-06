@@ -1,4 +1,3 @@
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -13,15 +12,10 @@ List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
   return paymentList
       .map((paymentId) => paymentMap[paymentId])
-      .where((payment) => payment.invoiceId == invoiceId && !payment.isDeleted)
+      .where((payment) =>
+          payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
+          !payment.isDeleted)
       .toList();
-}
-
-InvoiceEntity paymentInvoiceSelector(String paymentId, AppState state) {
-  final payment =
-      state.paymentState.map[paymentId] ?? PaymentEntity(id: paymentId);
-  return state.invoiceState.map[payment.invoiceId] ??
-      InvoiceEntity(id: payment.invoiceId);
 }
 
 var memoizedDropdownPaymentList = memo2(
@@ -64,8 +58,6 @@ List<String> filteredPaymentsSelector(
       return false;
     }
 
-    final invoice =
-        invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 
@@ -74,13 +66,15 @@ List<String> filteredPaymentsSelector(
           payment.clientId != paymentListState.filterEntityId) {
         return false;
       } else if (paymentListState.filterEntityType == EntityType.invoice &&
-          payment.invoiceId != paymentListState.filterEntityId) {
+          !payment.paymentables
+              .map((p) => p.invoiceId)
+              .contains(paymentListState.filterEntityId)) {
         return false;
       } else if (paymentListState.filterEntityType == EntityType.user &&
           !payment.userCanAccess(paymentListState.filterEntityId)) {
         return false;
       }
-    } else if (invoice.isDeleted || !client.isActive) {
+    } else if (!client.isActive) {
       return false;
     }
 

@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:redux/redux.dart';
@@ -50,8 +49,6 @@ class PaymentViewVM {
         PaymentEntity(id: state.paymentUIState.selectedId);
     final client = state.clientState.map[payment.clientId] ??
         ClientEntity(id: payment.clientId);
-    final invoice =
-        paymentInvoiceSelector(payment.id, state) ?? InvoiceEntity();
 
     return PaymentViewVM(
       state: state,

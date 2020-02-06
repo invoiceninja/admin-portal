@@ -303,14 +303,12 @@ List<ChartDataGroup> chartPayments(
   };
 
   paymentMap.forEach((int, payment) {
-    final invoice =
-        invoiceMap[payment.invoiceId] ?? InvoiceEntity(id: payment.invoiceId);
     final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
     final group = groupMap[client.groupId] ?? GroupEntity();
     final currencyId = client.getCurrencyId(company: company, group: group);
 
-    if (payment.isDeleted || invoice.isDeleted || client.isDeleted) {
+    if (payment.isDeleted || client.isDeleted) {
       // skip it
     } else if (!payment.isBetween(
         settings.startDate(company), settings.endDate(company))) {
