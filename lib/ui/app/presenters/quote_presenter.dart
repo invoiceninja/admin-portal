@@ -20,25 +20,25 @@ class QuotePresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
     final quote = entity as InvoiceEntity;
 
     switch (field) {
       case QuoteFields.quoteNumber:
-        return quote.number;
+        return Text(quote.number);
       case QuoteFields.client:
-        return (state.clientState.map[quote.clientId] ??
+        return Text((state.clientState.map[quote.clientId] ??
                 ClientEntity(id: quote.clientId))
-            .listDisplayName;
+            .listDisplayName);
       case QuoteFields.quoteDate:
-        return formatDate(quote.date, context);
+        return Text(formatDate(quote.date, context));
       case QuoteFields.amount:
-        return formatNumber(quote.amount, context);
+        return Text(formatNumber(quote.amount, context));
       case QuoteFields.balance:
-        return formatNumber(quote.balance, context);
+        return Text(formatNumber(quote.balance, context));
       case QuoteFields.dueDate:
-        return formatDate(quote.dueDate, context);
+        return Text(formatDate(quote.dueDate, context));
     }
 
     return super.getField(field: field, context: context);

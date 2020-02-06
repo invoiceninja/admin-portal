@@ -14,18 +14,18 @@ class VendorPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final vendor = entity as VendorEntity;
 
     switch (field) {
       case VendorFields.name:
-        return vendor.name;
+        return Text(vendor.name);
       case VendorFields.city:
-        return vendor.city;
+        return Text(vendor.city);
       case VendorFields.phone:
-        return vendor.phone;
+        return Text(vendor.phone);
       case VendorFields.state:
-        return vendor.state;
+        return Text(vendor.state);
     }
 
     return super.getField(field: field, context: context);

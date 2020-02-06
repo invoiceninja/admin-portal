@@ -12,12 +12,12 @@ class TaskPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final task = entity as TaskEntity;
 
     switch (field) {
       case TaskFields.description:
-        return task.description;
+        return Text(task.description);
     }
 
     return super.getField(field: field, context: context);

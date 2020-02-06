@@ -19,25 +19,25 @@ class InvoicePresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
     final invoice = entity as InvoiceEntity;
 
     switch (field) {
       case InvoiceFields.invoiceNumber:
-        return invoice.number;
+        return Text(invoice.number);
       case InvoiceFields.client:
-        return (state.clientState.map[invoice.clientId] ??
+        return Text((state.clientState.map[invoice.clientId] ??
                 ClientEntity(id: invoice.clientId))
-            .listDisplayName;
+            .listDisplayName);
       case InvoiceFields.invoiceDate:
-        return formatDate(invoice.date, context);
+        return Text(formatDate(invoice.date, context));
       case InvoiceFields.amount:
-        return formatNumber(invoice.amount, context);
+        return Text(formatNumber(invoice.amount, context));
       case InvoiceFields.balance:
-        return formatNumber(invoice.balance, context);
+        return Text(formatNumber(invoice.balance, context));
       case InvoiceFields.dueDate:
-        return formatDate(invoice.dueDate, context);
+        return Text(formatDate(invoice.dueDate, context));
     }
 
     return super.getField(field: field, context: context);

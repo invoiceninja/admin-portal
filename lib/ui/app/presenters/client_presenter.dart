@@ -18,22 +18,22 @@ class ClientPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final client = entity as ClientEntity;
 
     switch (field) {
       case ClientFields.name:
-        return client.name;
+        return Text(client.name);
       case ClientFields.contact:
-        return client.primaryContact.fullName;
+        return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
-        return client.primaryContact.email;
+        return Text(client.primaryContact.email);
       case ClientFields.address1:
-        return client.address1;
+        return Text(client.address1);
       case ClientFields.idNumber:
-        return client.idNumber;
+        return Text(client.idNumber);
       case ClientFields.balance:
-        return formatNumber(client.balance, context);
+        return Text(formatNumber(client.balance, context));
     }
 
     return super.getField(field: field, context: context);

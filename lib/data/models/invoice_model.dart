@@ -143,7 +143,9 @@ abstract class InvoiceEntity extends Object
     ..quoteInvoiceId = null
     ..number = ''
     ..date = convertDateTimeToSqlDate()
-    ..dueDate = '');
+    ..dueDate = ''
+    ..invitations.replace(
+        invitations.map((i) => i.rebuild((b) => b..link = '')).toList()));
 
   @override
   EntityType get entityType {

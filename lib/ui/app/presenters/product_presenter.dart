@@ -18,23 +18,23 @@ class ProductPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final product = entity as ProductEntity;
 
     switch (field) {
       case ProductFields.productKey:
-        return product.productKey;
+        return Text(product.productKey);
       case ProductFields.notes:
-        return product.notes;
+        return Text(product.notes);
       case ProductFields.cost:
-        return formatNumber(product.cost, context,
-            formatNumberType: FormatNumberType.money);
+        return Text(formatNumber(product.cost, context,
+            formatNumberType: FormatNumberType.money));
       case ProductFields.price:
-        return formatNumber(product.price, context,
-            formatNumberType: FormatNumberType.money);
+        return Text(formatNumber(product.price, context,
+            formatNumberType: FormatNumberType.money));
       case ProductFields.quantity:
-        return formatNumber(product.quantity, context,
-            formatNumberType: FormatNumberType.double);
+        return Text(formatNumber(product.quantity, context,
+            formatNumberType: FormatNumberType.double));
     }
 
     return super.getField(field: field, context: context);

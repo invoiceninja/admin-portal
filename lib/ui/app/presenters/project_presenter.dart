@@ -11,12 +11,12 @@ class ProjectPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final project = entity as ProjectEntity;
 
     switch (field) {
       case ProjectFields.name:
-        return project.name;
+        return Text(project.name);
     }
 
     return super.getField(field: field, context: context);

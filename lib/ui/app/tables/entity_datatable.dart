@@ -90,7 +90,7 @@ class EntityDataTableSource extends DataTableSource {
           ),
         ...tableColumns.map(
           (field) => DataCell(
-            Text(entityPresenter.getField(field: field, context: context)),
+            entityPresenter.getField(field: field, context: context),
             onTap: () => onTap(entity),
           ),
         )

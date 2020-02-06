@@ -18,23 +18,23 @@ class ExpensePresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
     final expense = entity as ExpenseEntity;
 
     switch (field) {
       case ExpenseFields.vendor:
-        return (state.vendorState.map[expense.vendorId] ?? VendorEntity())
-            .listDisplayName;
+        return Text((state.vendorState.map[expense.vendorId] ?? VendorEntity())
+            .listDisplayName);
       case ExpenseFields.client:
-        return (state.clientState.map[expense.clientId] ?? ClientEntity())
-            .listDisplayName;
+        return Text((state.clientState.map[expense.clientId] ?? ClientEntity())
+            .listDisplayName);
       case ExpenseFields.expenseDate:
-        return formatDate(expense.paymentDate, context);
+        return Text(formatDate(expense.paymentDate, context));
       case ExpenseFields.amount:
-        return formatNumber(expense.amount, context);
+        return Text(formatNumber(expense.amount, context));
       case ExpenseFields.publicNotes:
-        return expense.publicNotes;
+        return Text(expense.publicNotes);
     }
 
     return super.getField(field: field, context: context);

@@ -20,28 +20,28 @@ class PaymentPresenter extends EntityPresenter {
   }
 
   @override
-  String getField({String field, BuildContext context}) {
+  Widget getField({String field, BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
     final payment = entity as PaymentEntity;
 
     switch (field) {
       case PaymentFields.invoiceNumber:
-        return payment.paymentables
+        return Text(payment.paymentables
             .map((paymentable) =>
                 state.invoiceState.map[paymentable.invoiceId]?.number ?? '')
             .toList()
-            .join(', ');
+            .join(', '));
       case PaymentFields.client:
-        return state.clientState.map[payment.clientId]?.listDisplayName ?? '';
+        return Text(state.clientState.map[payment.clientId]?.listDisplayName ?? '');
       case PaymentFields.transactionReference:
-        return payment.transactionReference;
+        return Text(payment.transactionReference);
       case PaymentFields.paymentDate:
-        return formatDate(payment.date, context);
+        return Text(formatDate(payment.date, context));
       case PaymentFields.amount:
-        return formatNumber(payment.amount, context);
+        return Text(formatNumber(payment.amount, context));
       case PaymentFields.paymentStatus:
-        return AppLocalization.of(context)
-            .lookup('payment_status_${payment.statusId}');
+        return Text(AppLocalization.of(context)
+            .lookup('payment_status_${payment.statusId}'));
     }
 
     return super.getField(field: field, context: context);
