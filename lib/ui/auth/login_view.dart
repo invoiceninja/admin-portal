@@ -141,14 +141,6 @@ class _LoginState extends State<LoginView> {
     }
   }
 
-  void _submitForm() {
-    if (_isFormComplete && !_createAccount) {
-      _submitLoginForm();
-    } else {
-      FocusScope.of(context).nextFocus();
-    }
-  }
-
   void _submitSignUpForm() {
     final bool isValid = _formKey.currentState.validate();
     final localization = AppLocalization.of(context);
@@ -361,7 +353,8 @@ class _LoginState extends State<LoginView> {
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourEmail
                                     : null,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                           ),
                         if (_emailLogin && !_recoverPassword)
                           TextFormField(
@@ -405,7 +398,8 @@ class _LoginState extends State<LoginView> {
                               return null;
                             },
                             obscureText: _isPasswordObscured,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                           ),
                         if (_isSelfHosted)
                           TextFormField(
@@ -422,7 +416,8 @@ class _LoginState extends State<LoginView> {
                                 val.isEmpty || val.trim().isEmpty
                                     ? localization.pleaseEnterYourUrl
                                     : null,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                             keyboardType: TextInputType.url,
                           ),
                         if (_isSelfHosted)
@@ -434,7 +429,8 @@ class _LoginState extends State<LoginView> {
                             decoration:
                                 InputDecoration(labelText: localization.secret),
                             obscureText: true,
-                            onFieldSubmitted: (String value) => _submitForm(),
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
                           ),
                         if (_createAccount)
                           Padding(
