@@ -42,6 +42,11 @@ class _ClientPortalState extends State<ClientPortal>
   final _customCssController = TextEditingController();
   final _customJavaScriptController = TextEditingController();
 
+  final _customMessageDashboard = TextEditingController();
+  final _customMessageUnpaidInvoice = TextEditingController();
+  final _customMessagePaidInvoice = TextEditingController();
+  final _customMessageUnapprovedQuote = TextEditingController();
+
   List<TextEditingController> _controllers = [];
 
   @override
@@ -67,14 +72,23 @@ class _ClientPortalState extends State<ClientPortal>
       _portalDomainController,
       _customCssController,
       _customJavaScriptController,
+      _customMessageDashboard,
+      _customMessageUnpaidInvoice,
+      _customMessagePaidInvoice,
+      _customMessageUnapprovedQuote,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final company = widget.viewModel.company;
+    final settings = widget.viewModel.settings;
     _portalDomainController.text = company.portalDomain;
     _subdomainController.text = company.subdomain;
+    _customMessageDashboard.text = settings.customMessageDashboard;
+    _customMessagePaidInvoice.text = settings.customMessagePaidInvoice;
+    _customMessageUnpaidInvoice.text = settings.customMessageUnpaidInvoice;
+    _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -89,6 +103,16 @@ class _ClientPortalState extends State<ClientPortal>
         ..subdomain = _subdomainController.text.trim());
       if (company != widget.viewModel.company) {
         widget.viewModel.onCompanyChanged(company);
+      }
+
+      final settings = widget.viewModel.settings.rebuild((b) => b
+        ..customMessageDashboard = _customMessageDashboard.text.trim()
+        ..customMessageUnpaidInvoice = _customMessageUnpaidInvoice.text.trim()
+        ..customMessagePaidInvoice = _customMessagePaidInvoice.text.trim()
+        ..customMessageUnapprovedQuote =
+            _customMessageUnapprovedQuote.text.trim());
+      if (settings != widget.viewModel.settings) {
+        widget.viewModel.onSettingsChanged(settings);
       }
     });
   }
@@ -290,7 +314,30 @@ class _ClientPortalState extends State<ClientPortal>
           ),
           ListView(
             children: <Widget>[
-              // TODO implement fields
+              FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    controller: _customMessageDashboard,
+                    label: localization.dashboard,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
+                    controller: _customMessageUnpaidInvoice,
+                    label: localization.unpaidInvoice,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
+                    controller: _customMessagePaidInvoice,
+                    label: localization.paidInvoice,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
+                    controller: _customMessageUnapprovedQuote,
+                    label: localization.unapprovedQuote,
+                    maxLines: 6,
+                  ),
+                ],
+              ),
             ],
           ),
           ListView(
