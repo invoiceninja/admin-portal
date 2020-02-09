@@ -472,17 +472,13 @@ Middleware<AppState> _createViewMainScreen() {
       store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
     }
 
-    if (action.addDelay) {
-      while (action.navigator.canPop()) {
-        action.navigator.pop();
-      }
-      Timer(Duration(seconds: 1), () {
-        action.navigator.pushNamed(MainScreen.route);
-      });
-    } else {
-      action.navigator.pushNamedAndRemoveUntil(
-          MainScreen.route, (Route<dynamic> route) => false);
+    while (action.navigator.canPop()) {
+      action.navigator.pop();
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      action.navigator.pushNamed(MainScreen.route);
+    });
   };
 }
 

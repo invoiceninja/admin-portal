@@ -23,7 +23,7 @@ class DeviceSettings extends StatefulWidget {
 }
 
 class _DeviceSettingsState extends State<DeviceSettings> {
-  static final GlobalKey<FormState> _formKey =
+  final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_deviceSettings');
 
   @override

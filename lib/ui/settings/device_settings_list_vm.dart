@@ -99,12 +99,14 @@ class DeviceSettingsVM {
         }
         store.dispatch(UserSettingsChanged(layout: value));
         AppBuilder.of(context).rebuild();
-        if (value == AppLayout.mobile) {
-          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-        } else {
-          store.dispatch(
-              ViewMainScreen(navigator: Navigator.of(context), addDelay: true));
-        }
+        WidgetsBinding.instance.addPostFrameCallback((duration) {
+          if (value == AppLayout.mobile) {
+            store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+          } else {
+            store.dispatch(
+                ViewMainScreen(navigator: Navigator.of(context), addDelay: true));
+          }
+        });
       },
       onRequireAuthenticationChanged: (BuildContext context, bool value) async {
         bool authenticated = false;
