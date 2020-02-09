@@ -122,7 +122,7 @@ class _EmailSettingsState extends State<EmailSettings>
             children: <Widget>[
               FormCard(
                 children: <Widget>[
-                  AppDropdownButton(
+                  AppDropdownButton<String>(
                     labelText: localization.emailDesign,
                     value: viewModel.settings.emailStyle,
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
