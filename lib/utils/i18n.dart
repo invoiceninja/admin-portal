@@ -344,6 +344,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'date_format': 'Date Format',
       'datetime_format': 'Datetime Format',
       'military_time': 'Military Time',
+      'military_time_help': '24 Hour Display',
       'send_reminders': 'Send Reminders',
       'timezone': 'Timezone',
       'filtered_by_group': 'Filtered by Project',
@@ -15162,6 +15163,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get datetimeFormat => _localizedValues[localeCode]['datetime_format'];
 
   String get militaryTime => _localizedValues[localeCode]['military_time'];
+
+  String get militaryTimeHelp => _localizedValues[localeCode]['military_time_help'];
 
   String get sendReminders => _localizedValues[localeCode]['send_reminders'];
 

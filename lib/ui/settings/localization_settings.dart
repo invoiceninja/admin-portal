@@ -152,6 +152,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
               BoolDropdownButton(
                 iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.clock,
                 label: localization.militaryTime,
+                helpLabel: localization.militaryTimeHelp,
                 value: settings.enableMilitaryTime,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableMilitaryTime = value)),
