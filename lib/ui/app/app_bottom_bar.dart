@@ -318,7 +318,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 },
               ),
             IconButton(
-              key: Key(localization.filter),
               tooltip: localization.filter,
               icon: Icon(Icons.filter_list),
               onPressed: _showFilterStateSheet,
