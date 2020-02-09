@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/help_link.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
@@ -137,6 +138,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
             ),
             FormCard(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 EntityDropdown(
                   key: ValueKey('__primary_font_${settings.primaryFont}__'),
@@ -157,6 +159,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   onSelected: (font) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..secondaryFont = font?.id)),
                   allowClearing: state.settingsUIState.isFiltered,
+                ),
+                HelpLink(
+                  url: 'https://fonts.google.com',
+                  message: localization.toLearnAboutGoogleFonts,
                 ),
                 FormColorPicker(
                   labelText: localization.primaryColor,

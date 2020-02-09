@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -492,6 +493,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'thank_you_for_using_our_app': 'Thank you for using our app!',
       'if_you_like_it': 'If you like it please',
       'click_here': 'click here',
+      'click_here_capital': 'Click here',
       'to_rate_it': 'to rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
@@ -14135,6 +14137,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get clickHere => _localizedValues[localeCode]['click_here'];
 
+  String get clickHereCapital => _localizedValues[localeCode]['click_here_capital'];
+
   String get toRateIt => _localizedValues[localeCode]['to_rate_it'];
 
   String get average => _localizedValues[localeCode]['average'];
@@ -15963,6 +15967,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get unapprovedQuote =>
       _localizedValues[localeCode]['unapproved_quote'];
+
+  String get toLearnAboutGoogleFonts =>
+      _localizedValues[localeCode]['to_learn_about_gogle_fonts'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

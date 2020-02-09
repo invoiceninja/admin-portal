@@ -343,17 +343,6 @@ class _DrawerTileState extends State<DrawerTile> {
   }
 }
 
-class _LinkTextSpan extends TextSpan {
-  _LinkTextSpan({TextStyle style, String url, String text})
-      : super(
-            style: style,
-            text: text ?? url,
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                launch(url, forceSafariVC: false);
-              });
-}
-
 class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -529,9 +518,12 @@ void _showAbout(BuildContext context) {
                     '\n\n' +
                     localization.ifYouLikeIt,
               ),
-              _LinkTextSpan(
+              TextSpan(
                 style: linkStyle,
-                url: getAppURL(context),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launch(getAppURL(context), forceSafariVC: false);
+                  },
                 text: ' ' + localization.clickHere + ' ',
               ),
               TextSpan(
