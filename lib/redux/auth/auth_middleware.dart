@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -21,6 +22,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
   final recoverRequest = _createRecoverRequest(repository);
+  final addCompany = _createCompany(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -29,6 +31,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
+    TypedMiddleware<AppState, AddCompany>(addCompany),
   ];
 }
 
@@ -222,6 +225,17 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createCompany(AuthRepository repository) {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
+
+    final state = store.state;
+
+    repository.addCompany(token: state.credentials.token);
 
     next(action);
   };

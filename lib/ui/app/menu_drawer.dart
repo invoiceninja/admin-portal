@@ -102,36 +102,43 @@ class MenuDrawer extends StatelessWidget {
       },
     );
 
-    final _expandedCompanySelector = DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      value: viewModel.selectedCompanyIndex,
-      items: viewModel.companies
-          .map((CompanyEntity company) => DropdownMenuItem<String>(
-                value: (viewModel.companies.indexOf(company)).toString(),
-                child: _companyListItem(company),
-              ))
-          .toList()..add(DropdownMenuItem<String>(
-        value: null,
-        child: Row(
-          children: <Widget>[
-            SizedBox(width: 2),
-            Icon(Icons.add_circle, size: 32),
-            SizedBox(width: 28),
-            Text(localization.addCompany),
-          ],
-        ),
-      )),
-      onChanged: (value) {
-        if (value == null) {
-          print('## ADD COMPANY.. ##');
-        } else {
-          viewModel.onCompanyChanged(
-              context, value, viewModel.companies[int.parse(value)]);
-        }
-      },
-    ));
+    final _expandedCompanySelector = viewModel.companies.isEmpty
+        ? SizedBox()
+        : DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+            isExpanded: true,
+            icon: Icon(Icons.arrow_drop_down),
+            value: viewModel.selectedCompanyIndex,
+            items: [
+              ...viewModel.companies
+                  .map((CompanyEntity company) => DropdownMenuItem<String>(
+                        value:
+                            (viewModel.companies.indexOf(company)).toString(),
+                        child: _companyListItem(company),
+                      ))
+                  .toList(),
+              DropdownMenuItem<String>(
+                value: null,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(width: 2),
+                    Icon(Icons.add_circle, size: 32),
+                    SizedBox(width: 28),
+                    Text(localization.addCompany),
+                  ],
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              if (value == null) {
+                print('## ADD COMPANY.. ##');
+                viewModel.onAddCompany();
+              } else {
+                viewModel.onCompanyChanged(
+                    context, value, viewModel.companies[int.parse(value)]);
+              }
+            },
+          ));
 
     return SizedBox(
       width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,

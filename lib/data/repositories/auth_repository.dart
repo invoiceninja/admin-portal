@@ -90,6 +90,10 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
+  Future<dynamic> addCompany({String token}) async {
+    return webClient.post('/companies', token);
+  }
+
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
 

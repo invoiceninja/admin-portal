@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
@@ -31,6 +32,7 @@ class MenuDrawerVM {
     @required this.selectedCompanyIndex,
     @required this.onCompanyChanged,
     @required this.isLoading,
+    @required this.onAddCompany,
   });
 
   final List<CompanyEntity> companies;
@@ -38,6 +40,8 @@ class MenuDrawerVM {
   final UserEntity user;
   final String selectedCompanyIndex;
   final Function(BuildContext context, String, CompanyEntity) onCompanyChanged;
+  final Function onAddCompany;
+
   final bool isLoading;
 
   static MenuDrawerVM fromStore(Store<AppState> store) {
@@ -56,6 +60,9 @@ class MenuDrawerVM {
 
         store.dispatch(LoadClients());
         AppBuilder.of(context).rebuild();
+      },
+      onAddCompany: () {
+        store.dispatch(AddCompany());
       },
     );
   }

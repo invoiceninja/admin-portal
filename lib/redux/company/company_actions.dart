@@ -42,3 +42,5 @@ class SaveCompanyFailure implements StopSaving {
 
   final Object error;
 }
+
+class AddCompany {}
