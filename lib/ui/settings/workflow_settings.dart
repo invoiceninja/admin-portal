@@ -76,7 +76,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     BoolDropdownButton(
                       label: localization.autoEmailInvoice,
                       helpLabel: localization.autoEmailInvoiceHelp,
-                      value: settings.autoEmailInvoice ?? false,
+                      value: settings.autoEmailInvoice,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoEmailInvoice = value)),
                       iconData:
@@ -85,7 +85,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     BoolDropdownButton(
                       label: localization.autoArchiveInvoice,
                       helpLabel: localization.autoArchiveInvoiceHelp,
-                      value: settings.autoArchiveInvoice ?? false,
+                      value: settings.autoArchiveInvoice,
                       onChanged: (value) => viewModel.onSettingsChanged(settings
                           .rebuild((b) => b..autoArchiveInvoice = value)),
                       iconData:
@@ -103,7 +103,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     BoolDropdownButton(
                       label: localization.autoConvertQuote,
                       helpLabel: localization.autoConvertQuoteHelp,
-                      value: settings.autoConvertQuote ?? false,
+                      value: settings.autoConvertQuote,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoConvertQuote = value)),
                       iconData:
@@ -112,7 +112,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     BoolDropdownButton(
                       label: localization.autoArchiveQuote,
                       helpLabel: localization.autoArchiveQuoteHelp,
-                      value: settings.autoArchiveQuote ?? false,
+                      value: settings.autoArchiveQuote,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoArchiveQuote = value)),
                       iconData:
