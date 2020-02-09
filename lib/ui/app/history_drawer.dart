@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -190,13 +192,14 @@ class _HistoryListTileState extends State<HistoryListTile> {
               entityType: history.entityType);
         },
         onLongPress: () {
-          if (state.prefState.isHistoryFloated) {
-            Navigator.pop(context);
-          }
           showEntityActionsDialog(
             context: context,
             entities: [entity],
             client: state.clientState.map[clientId],
+            completer: state.prefState.isHistoryFloated
+                ? (Completer<Null>()
+                  ..future.then((value) => Navigator.pop(context)))
+                : null,
           );
         },
       ),
