@@ -47,11 +47,10 @@ class UpdateTaxRate implements PersistUI {
 }
 
 class LoadTaxRate {
-  LoadTaxRate({this.completer, this.taxRateId, this.loadActivities = false});
+  LoadTaxRate({this.completer, this.taxRateId});
 
   final Completer completer;
   final String taxRateId;
-  final bool loadActivities;
 }
 
 class LoadTaxRateActivity {

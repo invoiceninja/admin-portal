@@ -57,11 +57,10 @@ class UpdateTask implements PersistUI {
 }
 
 class LoadTask {
-  LoadTask({this.completer, this.taskId, this.loadActivities = false});
+  LoadTask({this.completer, this.taskId});
 
   final Completer completer;
   final String taskId;
-  final bool loadActivities;
 }
 
 class LoadTaskActivity {

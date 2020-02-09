@@ -46,13 +46,12 @@ class ProductViewVM {
         ProductEntity(id: state.productUIState.selectedId);
 
     /*
-    Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
+    Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProduct(
           completer: completer,
-          productId: product.id,
-          loadActivities: loadActivities));
+          productId: product.id,));
       return completer.future;
     }
     */
@@ -66,8 +65,8 @@ class ProductViewVM {
       company: state.company,
       onRefreshed: null,
       /*
-      onRefreshed: (context, loadActivities) =>
-          _handleRefresh(context, loadActivities),
+      onRefreshed: (context) =>
+          _handleRefresh(context),
           */
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleProductAction(context, [product], action),

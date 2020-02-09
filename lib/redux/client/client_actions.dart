@@ -63,11 +63,10 @@ class UpdateClient implements PersistUI {
 }
 
 class LoadClient {
-  LoadClient({this.completer, this.clientId, this.loadActivities = false});
+  LoadClient({this.completer, this.clientId});
 
   final Completer completer;
   final String clientId;
-  final bool loadActivities;
 }
 
 class LoadClientActivity {

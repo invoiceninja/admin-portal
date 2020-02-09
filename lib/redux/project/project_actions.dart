@@ -53,11 +53,10 @@ class UpdateProject implements PersistUI {
 }
 
 class LoadProject {
-  LoadProject({this.completer, this.projectId, this.loadActivities = false});
+  LoadProject({this.completer, this.projectId});
 
   final Completer completer;
   final String projectId;
-  final bool loadActivities;
 }
 
 class LoadProjectActivity {

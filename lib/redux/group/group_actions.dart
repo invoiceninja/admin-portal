@@ -52,11 +52,10 @@ class UpdateGroup implements PersistUI {
 }
 
 class LoadGroup {
-  LoadGroup({this.completer, this.groupId, this.loadActivities = false});
+  LoadGroup({this.completer, this.groupId});
 
   final Completer completer;
   final String groupId;
-  final bool loadActivities;
 }
 
 class LoadGroupActivity {

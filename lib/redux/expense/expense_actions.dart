@@ -51,11 +51,10 @@ class UpdateExpense implements PersistUI {
 }
 
 class LoadExpense {
-  LoadExpense({this.completer, this.expenseId, this.loadActivities = false});
+  LoadExpense({this.completer, this.expenseId});
 
   final Completer completer;
   final String expenseId;
-  final bool loadActivities;
 }
 
 class LoadExpenseActivity {

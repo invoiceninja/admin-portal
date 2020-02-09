@@ -54,11 +54,10 @@ class UpdateVendor implements PersistUI {
 }
 
 class LoadVendor {
-  LoadVendor({this.completer, this.vendorId, this.loadActivities = false});
+  LoadVendor({this.completer, this.vendorId});
 
   final Completer completer;
   final String vendorId;
-  final bool loadActivities;
 }
 
 class LoadVendorActivity {

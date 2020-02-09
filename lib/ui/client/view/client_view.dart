@@ -69,15 +69,15 @@ class _ClientViewState extends State<ClientView>
         controller: _controller,
         children: <Widget>[
           RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context, false),
+            onRefresh: () => viewModel.onRefreshed(context),
             child: ClientOverview(viewModel: viewModel),
           ),
           RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context, false),
+            onRefresh: () => viewModel.onRefreshed(context),
             child: ClientViewDetails(client: viewModel.client),
           ),
           RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context, true),
+            onRefresh: () => viewModel.onRefreshed(context),
             child: ClientViewActivity(
               viewModel: viewModel,
               key: ValueKey(viewModel.client.id),

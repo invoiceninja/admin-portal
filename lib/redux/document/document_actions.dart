@@ -43,11 +43,10 @@ class UpdateDocument implements PersistUI {
 }
 
 class LoadDocument {
-  LoadDocument({this.completer, this.documentId, this.loadActivities = false});
+  LoadDocument({this.completer, this.documentId});
 
   final Completer completer;
   final String documentId;
-  final bool loadActivities;
 }
 
 class LoadDocumentActivity {

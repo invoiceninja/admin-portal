@@ -56,11 +56,10 @@ class UpdateUserCompany implements PersistUI {
 }
 
 class LoadUser {
-  LoadUser({this.completer, this.userId, this.loadActivities = false});
+  LoadUser({this.completer, this.userId});
 
   final Completer completer;
   final String userId;
-  final bool loadActivities;
 }
 
 class LoadUserActivity {

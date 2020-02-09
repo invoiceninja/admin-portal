@@ -48,11 +48,10 @@ class UpdateStub implements PersistUI {
 }
 
 class LoadStub {
-  LoadStub({this.completer, this.stubId, this.loadActivities = false});
+  LoadStub({this.completer, this.stubId});
 
   final Completer completer;
   final String stubId;
-  final bool loadActivities;
 }
 
 class LoadStubActivity {

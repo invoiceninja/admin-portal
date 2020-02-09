@@ -53,11 +53,10 @@ class UpdateCompanyGateway implements PersistUI {
 
 class LoadCompanyGateway {
   LoadCompanyGateway(
-      {this.completer, this.companyGatewayId, this.loadActivities = false});
+      {this.completer, this.companyGatewayId});
 
   final Completer completer;
   final String companyGatewayId;
-  final bool loadActivities;
 }
 
 class LoadCompanyGatewayActivity {

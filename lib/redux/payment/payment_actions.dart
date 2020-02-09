@@ -64,11 +64,10 @@ class UpdatePayment implements PersistUI {
 }
 
 class LoadPayment {
-  LoadPayment({this.completer, this.paymentId, this.loadActivities = false});
+  LoadPayment({this.completer, this.paymentId});
 
   final Completer completer;
   final String paymentId;
-  final bool loadActivities;
 }
 
 class LoadPaymentActivity {

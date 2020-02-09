@@ -52,13 +52,12 @@ class ClientViewVM {
     final client = state.clientState.map[state.clientUIState.selectedId] ??
         ClientEntity(id: state.clientUIState.selectedId);
 
-    Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
+    Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClient(
           completer: completer,
-          clientId: client.id,
-          loadActivities: loadActivities));
+          clientId: client.id,));
       return completer.future;
     }
 
@@ -134,8 +133,8 @@ class ClientViewVM {
             break;
         }
       },
-      onRefreshed: (context, loadActivities) =>
-          _handleRefresh(context, loadActivities),
+      onRefreshed: (context) =>
+          _handleRefresh(context),
       onGroupPressed: (context) {
         viewEntityById(
             context: context,
@@ -153,7 +152,7 @@ class ClientViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onGroupPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
-  final Function(BuildContext, bool) onRefreshed;
+  final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
