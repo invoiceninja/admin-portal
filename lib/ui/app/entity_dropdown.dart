@@ -119,7 +119,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           minWidth: 300,
         )),
         suggestionsCallback: (filter) {
-          return widget.entityList
+          return (widget.entityList ?? widget.entityMap.keys.toList())
               .where((entityId) =>
                   _entityMap[entityId]?.matchesFilter(filter) ?? false)
               .toList();

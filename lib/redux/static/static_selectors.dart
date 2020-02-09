@@ -140,10 +140,6 @@ List<String> paymentTypeList(
 var memoizedFontMap = memo1((List<dynamic> fontList) => fontMap(fontList));
 
 BuiltMap<String, SelectableEntity> fontMap(List<dynamic> fonts) {
-  print(Map<String, SelectableEntity>.fromIterable(fonts,
-      key: (dynamic v) => v['value'],
-      value: (dynamic v) => FontEntity(id: v['value'], name: v['label'])));
-
   return BuiltMap<String, SelectableEntity>.from(
       Map<String, SelectableEntity>.fromIterable(fonts,
           key: (dynamic v) => v['value'],
