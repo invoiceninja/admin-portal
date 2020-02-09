@@ -26,6 +26,7 @@ class MenuDrawerBuilder extends StatelessWidget {
 
 class MenuDrawerVM {
   MenuDrawerVM({
+    @required this.state,
     @required this.companies,
     @required this.selectedCompany,
     @required this.user,
@@ -35,6 +36,7 @@ class MenuDrawerVM {
     @required this.onAddCompany,
   });
 
+  final AppState state;
   final List<CompanyEntity> companies;
   final CompanyEntity selectedCompany;
   final UserEntity user;
@@ -48,6 +50,7 @@ class MenuDrawerVM {
     final AppState state = store.state;
 
     return MenuDrawerVM(
+      state: state,
       isLoading: state.isLoading,
       companies: companiesSelector(state),
       user: state.user,

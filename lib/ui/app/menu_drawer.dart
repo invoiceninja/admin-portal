@@ -117,17 +117,18 @@ class MenuDrawer extends StatelessWidget {
                         child: _companyListItem(company),
                       ))
                   .toList(),
-              DropdownMenuItem<String>(
-                value: null,
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 2),
-                    Icon(Icons.add_circle, size: 32),
-                    SizedBox(width: 28),
-                    Text(localization.addCompany),
-                  ],
+              if (viewModel.state.userCompany.isAdmin)
+                DropdownMenuItem<String>(
+                  value: null,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 2),
+                      Icon(Icons.add_circle, size: 32),
+                      SizedBox(width: 28),
+                      Text(localization.addCompany),
+                    ],
+                  ),
                 ),
-              ),
             ],
             onChanged: (value) {
               if (value == null) {
