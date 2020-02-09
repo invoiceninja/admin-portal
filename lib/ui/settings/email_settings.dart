@@ -34,6 +34,7 @@ class _EmailSettingsState extends State<EmailSettings>
 
   final _replyToEmailController = TextEditingController();
   final _bccEmailController = TextEditingController();
+  final _emailStyleCustomController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -61,18 +62,18 @@ class _EmailSettingsState extends State<EmailSettings>
     _controllers = [
       _replyToEmailController,
       _bccEmailController,
+      _emailStyleCustomController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    //final settings = widget.viewModel.settings;
+    final settings = widget.viewModel.settings;
     //final signature = settings.emailFooter;
 
-    // return NotusDocument.fromJson(jsonDecode(contents));
-    //_zefyrController.compose(Delta()..insert(signature));
-
-    //_replyToEmailController.text = ;
+    _replyToEmailController.text = settings.replyToEmail;
+    _bccEmailController.text = settings.bccEmail;
+    _emailStyleCustomController.text = settings.emailStyleCustom;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -80,7 +81,15 @@ class _EmailSettingsState extends State<EmailSettings>
     super.didChangeDependencies();
   }
 
-  void _onChanged() {}
+  void _onChanged() {
+    final settings = widget.viewModel.settings.rebuild((b) => b
+      ..replyToEmail = _replyToEmailController.text.trim()
+      ..bccEmail = _bccEmailController.text.trim()
+      ..emailStyleCustom = _emailStyleCustomController.text.trim());
+    if (settings != widget.viewModel.settings) {
+      widget.viewModel.onSettingsChanged(settings);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +124,9 @@ class _EmailSettingsState extends State<EmailSettings>
                 children: <Widget>[
                   AppDropdownButton(
                     labelText: localization.emailDesign,
-                    value: kEmailDesignPlain, // TODO Fix this
-                    onChanged: (dynamic value) => null,
+                    value: viewModel.settings.emailStyle,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..emailStyle = value)),
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.plain),
@@ -136,16 +146,14 @@ class _EmailSettingsState extends State<EmailSettings>
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  BoolDropdownButton(
-                    label: localization.enableMarkup,
-                    helpLabel: localization.enableMarkupHelp,
-                    value: settings.enableEmailMarkup,
-                    iconData:
-                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enableEmailMarkup = value)),
-                  ),
+                  if (settings.emailStyle == kEmailDesignCustom) ...[
+                    SizedBox(height: 10),
+                    DecoratedFormField(
+                      label: localization.custom,
+                      controller: _emailStyleCustomController,
+                      maxLines: 6,
+                    ),
+                  ]
                 ],
               ),
               FormCard(
@@ -159,6 +167,16 @@ class _EmailSettingsState extends State<EmailSettings>
                     label: localization.bccEmail,
                     controller: _bccEmailController,
                     keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(height: 10),
+                  BoolDropdownButton(
+                    label: localization.enableMarkup,
+                    helpLabel: localization.enableMarkupHelp,
+                    value: settings.enableEmailMarkup,
+                    iconData:
+                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enableEmailMarkup = value)),
                   ),
                 ],
               ),
