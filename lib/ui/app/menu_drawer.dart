@@ -72,7 +72,7 @@ class MenuDrawer extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     company.displayName,
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headline6,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(viewModel.user.email,
@@ -112,10 +112,24 @@ class MenuDrawer extends StatelessWidget {
                 value: (viewModel.companies.indexOf(company)).toString(),
                 child: _companyListItem(company),
               ))
-          .toList(),
+          .toList()..add(DropdownMenuItem<String>(
+        value: null,
+        child: Row(
+          children: <Widget>[
+            SizedBox(width: 2),
+            Icon(Icons.add_circle, size: 32),
+            SizedBox(width: 28),
+            Text(localization.addCompany),
+          ],
+        ),
+      )),
       onChanged: (value) {
-        viewModel.onCompanyChanged(
-            context, value, viewModel.companies[int.parse(value)]);
+        if (value == null) {
+          print('## ADD COMPANY.. ##');
+        } else {
+          viewModel.onCompanyChanged(
+              context, value, viewModel.companies[int.parse(value)]);
+        }
       },
     ));
 
