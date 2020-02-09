@@ -58,16 +58,62 @@ class _AppBottomBarState extends State<AppBottomBar> {
   PersistentBottomSheetController _filterCustom3Controller;
   PersistentBottomSheetController _filterCustom4Controller;
 
+  int kSortPanel = 0;
+  int kFilterStatePanel = 1;
+  int kFilterStatusPanel = 2;
+  int kCustom1Panel = 3;
+  int kCustom2Panel = 4;
+  int kCustom3Panel = 5;
+  int kCustom4Panel = 6;
+
+
+  int closeBottomSheet() {
+    if (_filterStateController != null) {
+      _filterStateController.close();
+      return kFilterStatePanel;
+    }
+
+    if (_filterStatusController != null) {
+      _filterStatusController.close();
+      return kFilterStatusPanel;
+    }
+
+    if (_sortController != null) {
+      _sortController.close();
+      return kSortPanel;
+    }
+
+    if (_filterCustom1Controller != null) {
+      _filterCustom1Controller.close();
+      return kCustom1Panel;
+    }
+
+    if (_filterCustom2Controller != null) {
+      _filterCustom2Controller.close();
+      return kCustom2Panel;
+    }
+
+    if (_filterCustom3Controller != null) {
+      _filterCustom3Controller.close();
+      return kCustom3Panel;
+    }
+
+    if (_filterCustom4Controller != null) {
+      _filterCustom4Controller.close();
+      return kCustom4Panel;
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
 
     final _showFilterStateSheet = () {
-      if (_filterStateController != null) {
-        _filterStateController.close();
-        return;
+      if (closeBottomSheet() == kFilterStatePanel) {
+       return;
       }
-
       _filterStateController =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
@@ -105,8 +151,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showFilterStatusSheet = () {
-      if (_filterStatusController != null) {
-        _filterStatusController.close();
+      if (closeBottomSheet() == kFilterStatusPanel) {
         return;
       }
 
@@ -147,8 +192,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showSortSheet = () {
-      if (_sortController != null) {
-        _sortController.close();
+      if (closeBottomSheet() == kSortPanel) {
         return;
       }
 
@@ -194,8 +238,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showFilterCustom1Sheet = () {
-      if (_filterCustom1Controller != null) {
-        _filterCustom1Controller.close();
+      if (closeBottomSheet() == kCustom1Panel) {
         return;
       }
 
@@ -216,11 +259,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showFilterCustom2Sheet = () {
-      if (_filterCustom2Controller != null) {
-        _filterCustom2Controller.close();
+      if (closeBottomSheet() == kCustom2Panel) {
         return;
       }
-
       _filterCustom2Controller =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
         return CustomFieldSelector(
@@ -238,8 +279,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showFilterCustom3Sheet = () {
-      if (_filterCustom3Controller != null) {
-        _filterCustom3Controller.close();
+      if (closeBottomSheet() == kCustom3Panel) {
         return;
       }
 
@@ -260,8 +300,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
     };
 
     final _showFilterCustom4Sheet = () {
-      if (_filterCustom4Controller != null) {
-        _filterCustom4Controller.close();
+      if (closeBottomSheet() == kCustom4Panel) {
         return;
       }
 
