@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
-import 'package:invoiceninja_flutter/redux/reports/report_middleware.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';

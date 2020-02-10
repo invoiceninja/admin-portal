@@ -78,6 +78,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'settingsUIState',
       serializers.serialize(object.settingsUIState,
           specifiedType: const FullType(SettingsUIState)),
+      'reportsUIState',
+      serializers.serialize(object.reportsUIState,
+          specifiedType: const FullType(ReportsUIState)),
     ];
     if (object.filter != null) {
       result
@@ -187,6 +190,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
                   specifiedType: const FullType(SettingsUIState))
               as SettingsUIState);
           break;
+        case 'reportsUIState':
+          result.reportsUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ReportsUIState)) as ReportsUIState);
+          break;
       }
     }
 
@@ -237,6 +244,8 @@ class _$UIState extends UIState {
   final QuoteUIState quoteUIState;
   @override
   final SettingsUIState settingsUIState;
+  @override
+  final ReportsUIState reportsUIState;
 
   factory _$UIState([void Function(UIStateBuilder) updates]) =>
       (new UIStateBuilder()..update(updates)).build();
@@ -262,7 +271,8 @@ class _$UIState extends UIState {
       this.projectUIState,
       this.paymentUIState,
       this.quoteUIState,
-      this.settingsUIState})
+      this.settingsUIState,
+      this.reportsUIState})
       : super._() {
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
@@ -324,6 +334,9 @@ class _$UIState extends UIState {
     if (settingsUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'settingsUIState');
     }
+    if (reportsUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'reportsUIState');
+    }
   }
 
   @override
@@ -357,7 +370,8 @@ class _$UIState extends UIState {
         projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
         quoteUIState == other.quoteUIState &&
-        settingsUIState == other.settingsUIState;
+        settingsUIState == other.settingsUIState &&
+        reportsUIState == other.reportsUIState;
   }
 
   @override
@@ -380,26 +394,26 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode),
-                                                                                previousRoute.hashCode),
-                                                                            filter.hashCode),
-                                                                        filterClearedAt.hashCode),
-                                                                    dashboardUIState.hashCode),
-                                                                productUIState.hashCode),
-                                                            clientUIState.hashCode),
-                                                        invoiceUIState.hashCode),
-                                                    userUIState.hashCode),
-                                                taxRateUIState.hashCode),
-                                            companyGatewayUIState.hashCode),
-                                        groupUIState.hashCode),
-                                    documentUIState.hashCode),
-                                expenseUIState.hashCode),
-                            vendorUIState.hashCode),
-                        taskUIState.hashCode),
-                    projectUIState.hashCode),
-                paymentUIState.hashCode),
-            quoteUIState.hashCode),
-        settingsUIState.hashCode));
+                                                                            $jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode),
+                                                                                filter.hashCode),
+                                                                            filterClearedAt.hashCode),
+                                                                        dashboardUIState.hashCode),
+                                                                    productUIState.hashCode),
+                                                                clientUIState.hashCode),
+                                                            invoiceUIState.hashCode),
+                                                        userUIState.hashCode),
+                                                    taxRateUIState.hashCode),
+                                                companyGatewayUIState.hashCode),
+                                            groupUIState.hashCode),
+                                        documentUIState.hashCode),
+                                    expenseUIState.hashCode),
+                                vendorUIState.hashCode),
+                            taskUIState.hashCode),
+                        projectUIState.hashCode),
+                    paymentUIState.hashCode),
+                quoteUIState.hashCode),
+            settingsUIState.hashCode),
+        reportsUIState.hashCode));
   }
 
   @override
@@ -425,7 +439,8 @@ class _$UIState extends UIState {
           ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
           ..add('quoteUIState', quoteUIState)
-          ..add('settingsUIState', settingsUIState))
+          ..add('settingsUIState', settingsUIState)
+          ..add('reportsUIState', reportsUIState))
         .toString();
   }
 }
@@ -553,6 +568,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
       _$this._settingsUIState = settingsUIState;
 
+  ReportsUIStateBuilder _reportsUIState;
+  ReportsUIStateBuilder get reportsUIState =>
+      _$this._reportsUIState ??= new ReportsUIStateBuilder();
+  set reportsUIState(ReportsUIStateBuilder reportsUIState) =>
+      _$this._reportsUIState = reportsUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
@@ -578,6 +599,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _paymentUIState = _$v.paymentUIState?.toBuilder();
       _quoteUIState = _$v.quoteUIState?.toBuilder();
       _settingsUIState = _$v.settingsUIState?.toBuilder();
+      _reportsUIState = _$v.reportsUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -622,7 +644,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
               quoteUIState: quoteUIState.build(),
-              settingsUIState: settingsUIState.build());
+              settingsUIState: settingsUIState.build(),
+              reportsUIState: reportsUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -658,6 +681,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         quoteUIState.build();
         _$failedField = 'settingsUIState';
         settingsUIState.build();
+        _$failedField = 'reportsUIState';
+        reportsUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());
