@@ -72,7 +72,7 @@ class ReportsScreen extends StatelessWidget {
                   ]
                       .map((report) => DropdownMenuItem(
                             value: report,
-                            child: Text(report),
+                            child: Text(localization.lookup(report)),
                           ))
                       .toList(),
                 ),
