@@ -45,6 +45,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   TabController _controller;
 
   static const kTabEdit = 0;
+
   //static const kTabPreview = 1;
 
   final _subjectController = TextEditingController();
@@ -305,7 +306,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     ),
                     AppDropdownButton(
                         labelText: localization.frequency,
-                        value: settings.endlessReminderFrequencyId,
+                        value: settings.endlessReminderFrequencyId == '0'
+                            ? null
+                            : settings.endlessReminderFrequencyId,
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(settings.rebuild(
                                 (b) => b..endlessReminderFrequencyId = value)),

@@ -39,14 +39,14 @@ Completer<T> snackBarCompleter<T>(BuildContext context, String message,
       message: message,
     )));
   }).catchError((Object error) {
+    if (shouldPop) {
+      Navigator.of(context).pop();
+    }
     showDialog<ErrorDialog>(
         context: context,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
-    if (shouldPop) {
-      Navigator.of(context).pop();
-    }
   });
 
   return completer;
