@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -136,6 +138,9 @@ class MainScreen extends StatelessWidget {
 
               case SettingsScreen.route:
                 screen = SettingsScreens();
+                break;
+              case ReportsScreen.route:
+                screen = ReportsScreenBuilder();
                 break;
             }
           }

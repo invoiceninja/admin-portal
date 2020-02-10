@@ -82,8 +82,12 @@ abstract class DashboardUIState
         final date = addYears(firstDayOfYear, (1 + offset) * -1);
         return convertDateTimeToSqlDate(date);
       default:
-        final startDate = DateTime.parse(customStartDate);
-        final endDate = DateTime.parse(customEndDate);
+        final startDate = customStartDate.isEmpty
+            ? DateTime.now()
+            : DateTime.parse(customStartDate);
+        final endDate = customEndDate.isEmpty
+            ? DateTime.now()
+            : DateTime.parse(customEndDate);
         final days = endDate.difference(startDate).inDays;
         return convertDateTimeToSqlDate(
             startDate.subtract(Duration(days: days * offset)));
@@ -119,8 +123,12 @@ abstract class DashboardUIState
             addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
         return convertDateTimeToSqlDate(date);
       default:
-        final startDate = DateTime.parse(customStartDate);
-        final endDate = DateTime.parse(customEndDate);
+        final startDate = customStartDate.isEmpty
+            ? DateTime.now()
+            : DateTime.parse(customStartDate);
+        final endDate = customEndDate.isEmpty
+            ? DateTime.now()
+            : DateTime.parse(customEndDate);
         final days = endDate.difference(startDate).inDays;
         return convertDateTimeToSqlDate(
             endDate.subtract(Duration(days: days * offset)));

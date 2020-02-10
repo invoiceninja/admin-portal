@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
 import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+import 'package:invoiceninja_flutter/redux/reports/report_middleware.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
 import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -35,6 +36,8 @@ import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -90,6 +93,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
+        ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
         ..addAll(createStoreUsersMiddleware())
         ..addAll(createStoreTaxRatesMiddleware())
@@ -347,6 +351,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             GroupViewScreen.route: (context) => GroupViewScreen(),
             GroupEditScreen.route: (context) => GroupEditScreen(),
             SettingsScreen.route: (context) => SettingsScreenBuilder(),
+            ReportsScreen.route: (context) => ReportsScreenBuilder(),
             CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
             UserDetailsScreen.route: (context) => UserDetailsScreen(),
             LocalizationScreen.route: (context) => LocalizationScreen(),
