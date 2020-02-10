@@ -161,6 +161,7 @@ const String kTaskStatusInvoiced = '-3';
 const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
+const String kReports = 'reports';
 
 /*
 const String kEmailTemplateInvoice = 'invoice_email';

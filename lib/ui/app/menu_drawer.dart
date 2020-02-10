@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/report_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -94,9 +95,9 @@ class MenuDrawer extends StatelessWidget {
       itemBuilder: (BuildContext context) => [
         ...viewModel.companies
             .map((company) => PopupMenuItem<String>(
-          child: _companyListItem(company),
-          value: company.id,
-        ))
+                  child: _companyListItem(company),
+                  value: company.id,
+                ))
             .toList(),
         if (viewModel.state.userCompany.isAdmin)
           PopupMenuItem<String>(
@@ -256,7 +257,16 @@ class MenuDrawer extends StatelessWidget {
                         // STARTER: menu - do not remove comment
                         DrawerTile(
                           company: company,
-                          icon: kIsWeb ? Icons.settings : FontAwesomeIcons.cog,
+                          icon: FontAwesomeIcons.chartLine,
+                          title: localization.reports,
+                          onTap: () {
+                            store.dispatch(
+                                ViewReports(navigator: Navigator.of(context)));
+                          },
+                        ),
+                        DrawerTile(
+                          company: company,
+                          icon: FontAwesomeIcons.cog,
                           title: localization.settings,
                           onTap: () {
                             store.dispatch(ViewSettings(
@@ -328,7 +338,7 @@ class _DrawerTileState extends State<DrawerTile> {
         ? kDashboard
         : widget.title == localization.settings
             ? kSettings
-            : widget.entityType.name;
+            : widget.title == localization.reports ? kReports : widget.entityType.name;
 
     Widget trailingWidget;
     if (!state.prefState.isMenuCollapsed) {
