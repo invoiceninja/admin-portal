@@ -97,12 +97,14 @@ class ReportsScreen extends StatelessWidget {
                   DatePicker(
                     labelText: localization.startDate,
                     selectedDate: reportsUIState.customStartDate,
-                    onSelected: (value) => null,
+                    onSelected: (value) =>
+                        viewModel.onSettingsChanged(customStartDate: value),
                   ),
                   DatePicker(
                     labelText: localization.endDate,
                     selectedDate: reportsUIState.customEndDate,
-                    onSelected: (value) => null,
+                    onSelected: (value) =>
+                        viewModel.onSettingsChanged(customEndDate: value),
                   ),
                 ]
               ],
