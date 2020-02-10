@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_reducer.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
@@ -47,6 +48,7 @@ UIState uiReducer(UIState state, dynamic action) {
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
+    ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
     ..userUIState.replace(userUIReducer(state.userUIState, action))
     ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action))

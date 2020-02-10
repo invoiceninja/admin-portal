@@ -20,6 +20,9 @@ class _$ReportsUIStateSerializer
   Iterable<Object> serialize(Serializers serializers, ReportsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'report',
+      serializers.serialize(object.report,
+          specifiedType: const FullType(String)),
       'dateRange',
       serializers.serialize(object.dateRange,
           specifiedType: const FullType(DateRange)),
@@ -49,6 +52,10 @@ class _$ReportsUIStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'report':
+          result.report = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'dateRange':
           result.dateRange = serializers.deserialize(value,
               specifiedType: const FullType(DateRange)) as DateRange;
@@ -74,6 +81,8 @@ class _$ReportsUIStateSerializer
 
 class _$ReportsUIState extends ReportsUIState {
   @override
+  final String report;
+  @override
   final DateRange dateRange;
   @override
   final String customStartDate;
@@ -86,11 +95,15 @@ class _$ReportsUIState extends ReportsUIState {
       (new ReportsUIStateBuilder()..update(updates)).build();
 
   _$ReportsUIState._(
-      {this.dateRange,
+      {this.report,
+      this.dateRange,
       this.customStartDate,
       this.customEndDate,
       this.currencyId})
       : super._() {
+    if (report == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'report');
+    }
     if (dateRange == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'dateRange');
     }
@@ -117,6 +130,7 @@ class _$ReportsUIState extends ReportsUIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ReportsUIState &&
+        report == other.report &&
         dateRange == other.dateRange &&
         customStartDate == other.customStartDate &&
         customEndDate == other.customEndDate &&
@@ -126,7 +140,9 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, dateRange.hashCode), customStartDate.hashCode),
+        $jc(
+            $jc($jc($jc(0, report.hashCode), dateRange.hashCode),
+                customStartDate.hashCode),
             customEndDate.hashCode),
         currencyId.hashCode));
   }
@@ -134,6 +150,7 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ReportsUIState')
+          ..add('report', report)
           ..add('dateRange', dateRange)
           ..add('customStartDate', customStartDate)
           ..add('customEndDate', customEndDate)
@@ -145,6 +162,10 @@ class _$ReportsUIState extends ReportsUIState {
 class ReportsUIStateBuilder
     implements Builder<ReportsUIState, ReportsUIStateBuilder> {
   _$ReportsUIState _$v;
+
+  String _report;
+  String get report => _$this._report;
+  set report(String report) => _$this._report = report;
 
   DateRange _dateRange;
   DateRange get dateRange => _$this._dateRange;
@@ -168,6 +189,7 @@ class ReportsUIStateBuilder
 
   ReportsUIStateBuilder get _$this {
     if (_$v != null) {
+      _report = _$v.report;
       _dateRange = _$v.dateRange;
       _customStartDate = _$v.customStartDate;
       _customEndDate = _$v.customEndDate;
@@ -194,6 +216,7 @@ class ReportsUIStateBuilder
   _$ReportsUIState build() {
     final _$result = _$v ??
         new _$ReportsUIState._(
+            report: report,
             dateRange: dateRange,
             customStartDate: customStartDate,
             customEndDate: customEndDate,

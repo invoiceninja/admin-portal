@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';

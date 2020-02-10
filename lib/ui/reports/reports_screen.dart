@@ -53,8 +53,9 @@ class ReportsScreen extends StatelessWidget {
               children: <Widget>[
                 AppDropdownButton(
                   labelText: localization.report,
-                  value: null,
-                  onChanged: (dynamic value) => null,
+                  value: state.uiState.reportsUIState.report,
+                  onChanged: (dynamic value) =>
+                      viewModel.onSettingsChanged(value),
                   items: [
                     kReportActivity,
                     kReportAging,

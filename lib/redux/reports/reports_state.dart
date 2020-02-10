@@ -10,6 +10,7 @@ abstract class ReportsUIState
     implements Built<ReportsUIState, ReportsUIStateBuilder> {
   factory ReportsUIState() {
     return _$ReportsUIState._(
+      report: kReportActivity,
       dateRange: DateRange.last30Days,
       customStartDate: '',
       customEndDate: convertDateTimeToSqlDate(),
@@ -18,6 +19,8 @@ abstract class ReportsUIState
   }
 
   ReportsUIState._();
+
+  String get report;
 
   DateRange get dateRange;
 
