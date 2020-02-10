@@ -91,14 +91,35 @@ class MenuDrawer extends StatelessWidget {
         width: double.infinity,
         child: _companyLogo(viewModel.selectedCompany),
       ),
-      itemBuilder: (BuildContext context) => viewModel.companies
-          .map((company) => PopupMenuItem<String>(
-                child: _companyListItem(company),
-                value: company.id,
-              ))
-          .toList(),
+      itemBuilder: (BuildContext context) => [
+        ...viewModel.companies
+            .map((company) => PopupMenuItem<String>(
+          child: _companyListItem(company),
+          value: company.id,
+        ))
+            .toList(),
+        if (viewModel.state.userCompany.isAdmin)
+          PopupMenuItem<String>(
+            value: null,
+            child: Row(
+              children: <Widget>[
+                SizedBox(width: 2),
+                Icon(Icons.add_circle, size: 32),
+                SizedBox(width: 28),
+                Text(localization.addCompany),
+              ],
+            ),
+          ),
+      ],
       onSelected: (String companyId) {
-        print('>> Selected: $companyId');
+        if (companyId == null) {
+          viewModel.onAddCompany();
+        } else {
+          /*
+          viewModel.onCompanyChanged(
+              context, value, viewModel.companies[int.parse(value)]);
+           */
+        }
       },
     );
 
@@ -132,7 +153,6 @@ class MenuDrawer extends StatelessWidget {
             ],
             onChanged: (value) {
               if (value == null) {
-                print('## ADD COMPANY.. ##');
                 viewModel.onAddCompany();
               } else {
                 viewModel.onCompanyChanged(
