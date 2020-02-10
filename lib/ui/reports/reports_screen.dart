@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -32,7 +33,10 @@ class ReportsScreen extends StatelessWidget {
     final reportsUIState = state.uiState.reportsUIState;
 
     return WillPopScope(
-      onWillPop: () async => true,
+      onWillPop: () async {
+        store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+        return false;
+      },
       child: Scaffold(
         drawer: isMobile(context) || state.prefState.isMenuFloated
             ? MenuDrawerBuilder()
