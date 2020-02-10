@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -51,7 +52,7 @@ class ReportsScreen extends StatelessWidget {
           children: <Widget>[
             FormCard(
               children: <Widget>[
-                AppDropdownButton(
+                AppDropdownButton<String>(
                   labelText: localization.report,
                   value: state.uiState.reportsUIState.report,
                   onChanged: (dynamic value) =>
@@ -74,6 +75,18 @@ class ReportsScreen extends StatelessWidget {
                       .map((report) => DropdownMenuItem(
                             value: report,
                             child: Text(localization.lookup(report)),
+                          ))
+                      .toList(),
+                ),
+                AppDropdownButton<DateRange>(
+                  labelText: localization.dateRange,
+                  value: state.uiState.reportsUIState.dateRange,
+                  onChanged: (dynamic value) => null,
+                  items: DateRange.values
+                      .map((dateRange) => DropdownMenuItem<DateRange>(
+                            child:
+                                Text(localization.lookup(dateRange.toString())),
+                            value: dateRange,
                           ))
                       .toList(),
                 ),
