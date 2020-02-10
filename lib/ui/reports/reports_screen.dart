@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -92,6 +93,18 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                if (reportsUIState.dateRange == DateRange.custom) ...[
+                  DatePicker(
+                    labelText: localization.startDate,
+                    selectedDate: reportsUIState.customStartDate,
+                    onSelected: (value) => null,
+                  ),
+                  DatePicker(
+                    labelText: localization.endDate,
+                    selectedDate: reportsUIState.customEndDate,
+                    onSelected: (value) => null,
+                  ),
+                ]
               ],
             )
           ],

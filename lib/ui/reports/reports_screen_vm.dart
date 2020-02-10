@@ -37,6 +37,8 @@ class ReportsScreenVM {
   final Function({
     String report,
     DateRange dateRange,
+    String customStartDate,
+    String customEndDate,
   }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
@@ -47,10 +49,14 @@ class ReportsScreenVM {
       onSettingsChanged: ({
         String report,
         DateRange dateRange,
+        String customStartDate,
+        String customEndDate,
       }) {
         store.dispatch(UpdateReportSettings(
           report: report,
           dateRange: dateRange,
+          customStartDate: customStartDate,
+          customEndDate: customEndDate,
         ));
       },
     );
