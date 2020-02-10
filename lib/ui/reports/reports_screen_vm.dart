@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
@@ -33,16 +34,23 @@ class ReportsScreenVM {
   });
 
   final AppState state;
-  final Function(String report) onSettingsChanged;
+  final Function({
+    String report,
+    DateRange dateRange,
+  }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
 
     return ReportsScreenVM(
       state: state,
-      onSettingsChanged: (String report) {
+      onSettingsChanged: ({
+        String report,
+        DateRange dateRange,
+      }) {
         store.dispatch(UpdateReportSettings(
           report: report,
+          dateRange: dateRange,
         ));
       },
     );

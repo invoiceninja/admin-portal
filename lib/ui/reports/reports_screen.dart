@@ -28,6 +28,7 @@ class ReportsScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
+    final reportsUIState = state.uiState.reportsUIState;
 
     return WillPopScope(
       onWillPop: () async => true,
@@ -54,9 +55,9 @@ class ReportsScreen extends StatelessWidget {
               children: <Widget>[
                 AppDropdownButton<String>(
                   labelText: localization.report,
-                  value: state.uiState.reportsUIState.report,
+                  value: reportsUIState.report,
                   onChanged: (dynamic value) =>
-                      viewModel.onSettingsChanged(value),
+                      viewModel.onSettingsChanged(report: value),
                   items: [
                     kReportActivity,
                     kReportAging,
@@ -80,8 +81,9 @@ class ReportsScreen extends StatelessWidget {
                 ),
                 AppDropdownButton<DateRange>(
                   labelText: localization.dateRange,
-                  value: state.uiState.reportsUIState.dateRange,
-                  onChanged: (dynamic value) => null,
+                  value: reportsUIState.dateRange,
+                  onChanged: (dynamic value) =>
+                      viewModel.onSettingsChanged(dateRange: value),
                   items: DateRange.values
                       .map((dateRange) => DropdownMenuItem<DateRange>(
                             child:
