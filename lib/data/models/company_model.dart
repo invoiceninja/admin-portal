@@ -1059,6 +1059,9 @@ abstract class SettingsEntity
       lateFeeAmount3: clientSettings?.lateFeeAmount3 ??
           groupSettings?.lateFeeAmount3 ??
           companySettings?.lateFeeAmount3,
+      lateFeeAmountEndless: clientSettings?.lateFeeAmountEndless ??
+          groupSettings?.lateFeeAmountEndless ??
+          companySettings?.lateFeeAmountEndless,
       lateFeePercent1: clientSettings?.lateFeePercent1 ??
           groupSettings?.lateFeePercent1 ??
           companySettings?.lateFeePercent1,
@@ -1068,6 +1071,9 @@ abstract class SettingsEntity
       lateFeePercent3: clientSettings?.lateFeePercent3 ??
           groupSettings?.lateFeePercent3 ??
           companySettings?.lateFeePercent3,
+      lateFeePercentEndless: clientSettings?.lateFeePercentEndless ??
+          groupSettings?.lateFeePercentEndless ??
+          companySettings?.lateFeePercentEndless,
       emailSubjectReminder4: clientSettings?.emailSubjectReminder4 ??
           groupSettings?.emailSubjectReminder4 ??
           companySettings?.emailSubjectReminder4,
@@ -1631,6 +1637,10 @@ abstract class SettingsEntity
   double get lateFeeAmount3;
 
   @nullable
+  @BuiltValueField(wireName: 'late_fee_endless_amount')
+  double get lateFeeAmountEndless;
+
+  @nullable
   @BuiltValueField(wireName: 'late_fee_percent1')
   double get lateFeePercent1;
 
@@ -1641,6 +1651,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'late_fee_percent3')
   double get lateFeePercent3;
+
+  @nullable
+  @BuiltValueField(wireName: 'late_fee_endless_percent')
+  double get lateFeePercentEndless;
 
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder4')

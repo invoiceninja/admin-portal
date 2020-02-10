@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -49,7 +51,31 @@ class ReportsScreen extends StatelessWidget {
           children: <Widget>[
             FormCard(
               children: <Widget>[
-
+                AppDropdownButton(
+                  labelText: localization.report,
+                  value: null,
+                  onChanged: (dynamic value) => null,
+                  items: [
+                    kReportActivity,
+                    kReportAging,
+                    kReportClient,
+                    kReportCredit,
+                    kReportDocument,
+                    kReportExpense,
+                    kReportInvoice,
+                    kReportPayment,
+                    kReportProduct,
+                    kReportProfitAndLoss,
+                    kReportTask,
+                    kReportTaxRate,
+                    kReportQuote,
+                  ]
+                      .map((report) => DropdownMenuItem(
+                            value: report,
+                            child: Text(report),
+                          ))
+                      .toList(),
+                ),
               ],
             )
           ],

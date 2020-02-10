@@ -212,6 +212,20 @@ const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
 
+const String kReportActivity = 'activity';
+const String kReportAging = 'aging';
+const String kReportClient = 'client';
+const String kReportCredit = 'credit';
+const String kReportDocument = 'document';
+const String kReportExpense = 'expense';
+const String kReportInvoice = 'invoice';
+const String kReportPayment = 'payment';
+const String kReportProduct = 'product';
+const String kReportProfitAndLoss = 'profitAndLoss';
+const String kReportTask = 'task';
+const String kReportTaxRate = 'taxRate';
+const String kReportQuote = 'quote';
+
 const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
