@@ -110,9 +110,9 @@ class ReportsScreen extends StatelessWidget {
                     onSelected: (value) =>
                         viewModel.onSettingsChanged(customEndDate: value),
                   ),
-                ]
+                ],
               ],
-            )
+            ),
           ],
         ),
       ),
