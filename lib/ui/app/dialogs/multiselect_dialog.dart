@@ -14,7 +14,7 @@ void multiselectDialog(
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: title,
       title: Text(title),
-      content: _multiselectList(
+      content: _MultiSelectList(
         options: options,
         selected: selected,
       ),
@@ -35,17 +35,17 @@ void multiselectDialog(
   );
 }
 
-class _multiselectList extends StatefulWidget {
-  _multiselectList({this.options, this.selected});
+class _MultiSelectList extends StatefulWidget {
+  const _MultiSelectList({this.options, this.selected});
 
-  List<String> options;
-  List<String> selected;
+  final List<String> options;
+  final List<String> selected;
 
   @override
-  __multiselectListState createState() => __multiselectListState();
+  _MultiSelectListState createState() => _MultiSelectListState();
 }
 
-class __multiselectListState extends State<_multiselectList> {
+class _MultiSelectListState extends State<_MultiSelectList> {
   List<String> selected;
 
   @override
@@ -88,7 +88,6 @@ class __multiselectListState extends State<_multiselectList> {
                   selected.remove(field);
                   selected.insert(newIndex, field);
                 });
-                //viewModel.onSortChanged(oldIndex, newIndex);
               },
             ),
           ),
