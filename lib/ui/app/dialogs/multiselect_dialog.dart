@@ -19,6 +19,7 @@ void multiselectDialog(
       content: _MultiSelectList(
         options: options,
         selected: selected,
+        addTitle: addTitle,
       ),
       actions: <Widget>[
         FlatButton(
@@ -73,7 +74,6 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                     ))
                 .toList(),
             value: null,
-            showBlank: true,
             onChanged: (dynamic value) {
               print('## selected $value');
             },
