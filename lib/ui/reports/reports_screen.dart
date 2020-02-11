@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -12,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -113,9 +115,106 @@ class ReportsScreen extends StatelessWidget {
                 ],
               ],
             ),
+            FormCard(
+              child: ReportDataTable(
+                viewModel: viewModel,
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+}
+
+class ReportDataTable extends StatelessWidget {
+  const ReportDataTable({@required this.viewModel});
+
+  final ReportsScreenVM viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final reportResult = viewModel.reportResult;
+
+    return DataTable(
+      columns: reportResult.tableColumns(context),
+      rows: reportResult.tableRows(context),
+    );
+  }
+}
+
+class ReportResult {
+  ReportResult({this.columns, this.data});
+
+  final List<String> columns;
+  final List<List<ReportElement>> data;
+
+  List<DataColumn> tableColumns(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return [
+      for (String column in columns)
+        DataColumn(
+          label: Text(localization.lookup(column)),
+        )
+    ];
+  }
+
+  List<DataRow> tableRows(BuildContext context) {
+    return [
+      for (List<ReportElement> row in data)
+        DataRow(
+            cells:
+                row.map((row) => DataCell(row.renderWidget(context))).toList())
+    ];
+  }
+}
+
+abstract class ReportElement {
+  Widget renderWidget(BuildContext context) {
+    throw 'Error: need to override renderWidget()';
+  }
+}
+
+class ReportValue extends ReportElement {
+  ReportValue({this.value});
+
+  final String value;
+
+  @override
+  Widget renderWidget(BuildContext context) {
+    return Text(value);
+  }
+}
+
+class ReportEntityValue extends ReportElement {
+  ReportEntityValue({this.entityType, this.entityId});
+
+  final EntityType entityType;
+  final String entityId;
+
+  @override
+  Widget renderWidget(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    return Text(
+        state.getEntityMap(entityType)[entityId]?.listDisplayName ?? '');
+  }
+}
+
+class ReportAmount extends ReportElement {
+  ReportAmount({
+    this.value,
+    this.currencyId,
+    this.formatNumberType = FormatNumberType.money,
+  });
+
+  final double value;
+  final FormatNumberType formatNumberType;
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context) {
+    return Text(formatNumber(value, context,
+        currencyId: currencyId, formatNumberType: formatNumberType));
   }
 }

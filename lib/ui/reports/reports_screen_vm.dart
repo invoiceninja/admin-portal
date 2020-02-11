@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
-import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:redux/redux.dart';
 
@@ -31,9 +30,11 @@ class ReportsScreenVM {
   ReportsScreenVM({
     @required this.state,
     @required this.onSettingsChanged,
+    @required this.reportResult,
   });
 
   final AppState state;
+  final ReportResult reportResult;
   final Function({
     String report,
     DateRange dateRange,
@@ -44,8 +45,20 @@ class ReportsScreenVM {
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
 
+    final reportResult = ReportResult(
+      columns: ['client'],
+      data: [
+        [
+          ReportAmount(
+            value: 100,
+          )
+        ]
+      ]
+    );
+
     return ReportsScreenVM(
       state: state,
+      reportResult: reportResult,
       onSettingsChanged: ({
         String report,
         DateRange dateRange,
