@@ -15,18 +15,21 @@ void multiselectDialog(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: title,
-      title: Text(title),
+      title: Row(
+        children: <Widget>[
+          Expanded(child: Text(title)),
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      ),
       content: _MultiSelectList(
         options: options,
         selected: selected,
         addTitle: addTitle,
       ),
       actions: <Widget>[
-        FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
         FlatButton(
             child: Text(localization.save.toUpperCase()),
             onPressed: () {

@@ -123,7 +123,7 @@ class ReportsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 FlatButton(
-                  child: Text(localization.columns),
+                  child: Text(localization.editColumns.toUpperCase()),
                   onPressed: () {
                     multiselectDialog(
                       context: context,
