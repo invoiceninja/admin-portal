@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
@@ -52,8 +53,9 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
   TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
       saveCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
-      (userCompany, action) =>
-          userCompany.rebuild((b) => b..user.replace(action.user))),
+      (userCompany, action) => userCompany.rebuild((b) => b
+        ..user.replace(action.user)
+        ..settings.replace(action.user.userCompany.settings))),
 ]);
 
 UserCompanyEntity loadCompanySuccessReducer(

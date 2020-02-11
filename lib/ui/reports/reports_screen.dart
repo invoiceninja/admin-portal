@@ -127,6 +127,7 @@ class ReportsScreen extends StatelessWidget {
                   return FlatButton(
                     child: Text(localization.editColumns.toUpperCase()),
                     onPressed: () {
+                      print('## Bulder: selected: ${reportResult.columns}');
                       multiselectDialog(
                         context: context,
                         onSelected: (selected) {

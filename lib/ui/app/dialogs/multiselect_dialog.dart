@@ -11,7 +11,6 @@ void multiselectDialog(
     List<String> selected,
     Function(List<String>) onSelected}) {
   final localization = AppLocalization.of(context);
-  List<String> selected;
 
   showDialog<AlertDialog>(
     context: context,
@@ -42,8 +41,12 @@ void multiselectDialog(
 }
 
 class _MultiSelectList extends StatefulWidget {
-  const _MultiSelectList(
-      {this.options, this.selected, this.addTitle, this.onSelected});
+  const _MultiSelectList({
+    @required this.options,
+    @required this.selected,
+    @required this.addTitle,
+    @required this.onSelected,
+  });
 
   final List<String> options;
   final List<String> selected;
@@ -60,13 +63,24 @@ class _MultiSelectListState extends State<_MultiSelectList> {
   @override
   void initState() {
     super.initState();
+    print('## initState: selected - ${widget.selected}');
     selected = widget.selected ?? [];
   }
+
+  /*
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('## initState: selected - ${widget.selected}');
+    selected = widget.selected ?? [];
+  }
+
+   */
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    
+
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
       child: Column(
