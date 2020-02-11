@@ -43,23 +43,23 @@ class ClientFields {
   static const String name = 'name';
   static const String address1 = 'address1';
   static const String balance = 'balance';
-  static const String vatNumber = 'vatNumber';
-  static const String idNumber = 'idNumber';
-  static const String paidToDate = 'paidToDate';
-  static const String createdAt = 'createdAt';
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String vatNumber = 'vat_number';
+  static const String idNumber = 'id_number';
+  static const String paidToDate = 'paid_to_date';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
   static const String contact = 'contact';
-  static const String contactEmail = 'contactEmail';
+  static const String contactEmail = 'contact_email';
   static const String state = 'state';
   static const String phone = 'phone';
   static const String language = 'language';
   static const String currency = 'currency';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-  static const String customValue3 = 'customValue3';
-  static const String customValue4 = 'customValue4';
+  static const String customValue1 = 'custom_value1';
+  static const String customValue2 = 'custom_value2';
+  static const String customValue3 = 'custom_value3';
+  static const String customValue4 = 'custom_value4';
 }
 
 abstract class ClientEntity extends Object
