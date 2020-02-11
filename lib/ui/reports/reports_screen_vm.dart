@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:redux/redux.dart';
 
@@ -44,17 +45,17 @@ class ReportsScreenVM {
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
+    ReportResult reportResult;
 
-    final reportResult = ReportResult(
-      columns: ['client'],
-      data: [
-        [
-          ReportAmount(
-            value: 100,
-          )
-        ]
-      ]
-    );
+    switch (state.uiState.reportsUIState.report) {
+      default:
+        reportResult = clientReport(
+          company: state.company,
+          clientMap: state.clientState.map,
+          reportsUIState: state.uiState.reportsUIState,
+        );
+        break;
+    }
 
     return ReportsScreenVM(
       state: state,

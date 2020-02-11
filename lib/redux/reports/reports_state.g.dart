@@ -32,6 +32,8 @@ class _$ReportsUIStateSerializer
       'customEndDate',
       serializers.serialize(object.customEndDate,
           specifiedType: const FullType(String)),
+      'offset',
+      serializers.serialize(object.offset, specifiedType: const FullType(int)),
       'currencyId',
       serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
@@ -68,6 +70,10 @@ class _$ReportsUIStateSerializer
           result.customEndDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'offset':
+          result.offset = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'currencyId':
           result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -89,6 +95,8 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String customEndDate;
   @override
+  final int offset;
+  @override
   final String currencyId;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder) updates]) =>
@@ -99,6 +107,7 @@ class _$ReportsUIState extends ReportsUIState {
       this.dateRange,
       this.customStartDate,
       this.customEndDate,
+      this.offset,
       this.currencyId})
       : super._() {
     if (report == null) {
@@ -112,6 +121,9 @@ class _$ReportsUIState extends ReportsUIState {
     }
     if (customEndDate == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'customEndDate');
+    }
+    if (offset == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'offset');
     }
     if (currencyId == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'currencyId');
@@ -134,6 +146,7 @@ class _$ReportsUIState extends ReportsUIState {
         dateRange == other.dateRange &&
         customStartDate == other.customStartDate &&
         customEndDate == other.customEndDate &&
+        offset == other.offset &&
         currencyId == other.currencyId;
   }
 
@@ -141,9 +154,11 @@ class _$ReportsUIState extends ReportsUIState {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, report.hashCode), dateRange.hashCode),
-                customStartDate.hashCode),
-            customEndDate.hashCode),
+            $jc(
+                $jc($jc($jc(0, report.hashCode), dateRange.hashCode),
+                    customStartDate.hashCode),
+                customEndDate.hashCode),
+            offset.hashCode),
         currencyId.hashCode));
   }
 
@@ -154,6 +169,7 @@ class _$ReportsUIState extends ReportsUIState {
           ..add('dateRange', dateRange)
           ..add('customStartDate', customStartDate)
           ..add('customEndDate', customEndDate)
+          ..add('offset', offset)
           ..add('currencyId', currencyId))
         .toString();
   }
@@ -181,6 +197,10 @@ class ReportsUIStateBuilder
   set customEndDate(String customEndDate) =>
       _$this._customEndDate = customEndDate;
 
+  int _offset;
+  int get offset => _$this._offset;
+  set offset(int offset) => _$this._offset = offset;
+
   String _currencyId;
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
@@ -193,6 +213,7 @@ class ReportsUIStateBuilder
       _dateRange = _$v.dateRange;
       _customStartDate = _$v.customStartDate;
       _customEndDate = _$v.customEndDate;
+      _offset = _$v.offset;
       _currencyId = _$v.currencyId;
       _$v = null;
     }
@@ -220,6 +241,7 @@ class ReportsUIStateBuilder
             dateRange: dateRange,
             customStartDate: customStartDate,
             customEndDate: customEndDate,
+            offset: offset,
             currencyId: currencyId);
     replace(_$result);
     return _$result;

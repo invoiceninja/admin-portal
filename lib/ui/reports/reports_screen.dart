@@ -164,8 +164,14 @@ class ReportResult {
     return [
       for (List<ReportElement> row in data)
         DataRow(
-            cells:
-                row.map((row) => DataCell(row.renderWidget(context))).toList())
+          cells: row
+              .map(
+                (row) => DataCell(
+                  row.renderWidget(context),
+                ),
+              )
+              .toList(),
+        )
     ];
   }
 }
