@@ -83,10 +83,11 @@ class __multiselectListState extends State<_multiselectList> {
                   newIndex--;
                 }
 
-                final field = selected[oldIndex];
-                selected.remove(field);
-                selected.insert(newIndex, field);
-
+                setState(() {
+                  final field = selected[oldIndex];
+                  selected.remove(field);
+                  selected.insert(newIndex, field);
+                });
                 //viewModel.onSortChanged(oldIndex, newIndex);
               },
             ),
