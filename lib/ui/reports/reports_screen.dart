@@ -136,9 +136,14 @@ class ReportDataTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final reportResult = viewModel.reportResult;
 
-    return DataTable(
-      columns: reportResult.tableColumns(context),
-      rows: reportResult.tableRows(context),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        DataTable(
+          columns: reportResult.tableColumns(context),
+          rows: reportResult.tableRows(context),
+        ),
+      ],
     );
   }
 }
