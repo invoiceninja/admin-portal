@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void multiselectDialog(
     {BuildContext context,
     String title,
+    String addTitle,
     List<String> options,
     List<String> selected,
     Function(List<String>) onSelected}) {
@@ -36,10 +38,11 @@ void multiselectDialog(
 }
 
 class _MultiSelectList extends StatefulWidget {
-  const _MultiSelectList({this.options, this.selected});
+  const _MultiSelectList({this.options, this.selected, this.addTitle});
 
   final List<String> options;
   final List<String> selected;
+  final String addTitle;
 
   @override
   _MultiSelectListState createState() => _MultiSelectListState();
@@ -61,6 +64,20 @@ class _MultiSelectListState extends State<_MultiSelectList> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          AppDropdownButton<String>(
+            labelText: widget.addTitle,
+            items: widget.options
+                .map((option) => DropdownMenuItem(
+                      child: Text(option),
+                      value: option,
+                    ))
+                .toList(),
+            value: null,
+            showBlank: true,
+            onChanged: (dynamic value) {
+              print('## selected $value');
+            },
+          ),
           Expanded(
             child: ReorderableListView(
               children: selected

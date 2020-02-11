@@ -133,6 +133,7 @@ class ReportsScreen extends StatelessWidget {
                       options: ['one', 'two', 'three', 'four'],
                       selected: ['one', 'two', 'three'],
                       title: localization.editColumns,
+                      addTitle: localization.addColumn,
                     );
                   },
                 )
