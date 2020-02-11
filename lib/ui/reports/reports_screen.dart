@@ -182,9 +182,14 @@ class ReportDataTable extends StatelessWidget {
 }
 
 class ReportResult {
-  ReportResult({this.columns, this.data});
+  ReportResult({
+    this.columns,
+    this.allColumns,
+    this.data,
+  });
 
   final List<String> columns;
+  final List<String> allColumns;
   final List<List<ReportElement>> data;
 
   List<DataColumn> tableColumns(BuildContext context) {

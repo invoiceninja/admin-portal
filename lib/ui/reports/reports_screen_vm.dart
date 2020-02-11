@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:redux/redux.dart';
 
@@ -50,7 +51,7 @@ class ReportsScreenVM {
     switch (state.uiState.reportsUIState.report) {
       default:
         reportResult = clientReport(
-          company: state.company,
+          userCompany: state.userCompany,
           clientMap: state.clientState.map,
           reportsUIState: state.uiState.reportsUIState,
         );
