@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 void multiselectDialog(
     {BuildContext context,
@@ -64,8 +65,9 @@ class _MultiSelectListState extends State<_MultiSelectList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.maxFinite,
+      width: isMobile(context) ? double.maxFinite : 400,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           AppDropdownButton<String>(
@@ -95,9 +97,22 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                   .map((option) => Padding(
                         key: ValueKey(option),
                         padding: const EdgeInsets.all(14),
-                        child: Text(
-                          option,
-                          style: Theme.of(context).textTheme.headline5,
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                option,
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.close),
+                              onPressed: () {
+                                setState(() => selected.remove(option));
+                              },
+                            )
+                          ],
                         ),
                       ))
                   .toList(),
