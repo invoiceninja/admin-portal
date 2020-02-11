@@ -78,7 +78,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
             items: widget.options
                 .where((option) => !selected.contains(option))
                 .map((option) => DropdownMenuItem(
-                      child: Text(option),
+                      child: Text(localization.lookup(option)),
                       value: option,
                     ))
                 .toList(),
