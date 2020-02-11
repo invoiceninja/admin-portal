@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -124,7 +125,15 @@ class ReportsScreen extends StatelessWidget {
                 FlatButton(
                   child: Text(localization.columns),
                   onPressed: () {
-                    
+                    multiselectDialog(
+                      context: context,
+                      onSelected: (selected) {
+                        print('## ON SELECTED: $selected');
+                      },
+                      options: ['one', 'two', 'three', 'four'],
+                      selected: ['one', 'two', 'three'],
+                      title: localization.editColumns,
+                    );
                   },
                 )
               ],

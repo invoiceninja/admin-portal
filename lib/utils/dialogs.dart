@@ -105,3 +105,4 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
     );
   }
 }
+
