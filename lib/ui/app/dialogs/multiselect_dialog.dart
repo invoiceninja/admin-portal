@@ -84,7 +84,6 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                 .toList(),
             value: null,
             onChanged: (dynamic value) {
-              print('## selected $value');
               if (selected.contains(value)) {
                 return;
               }
@@ -109,7 +108,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                               child: Text(
                                 localization.lookup(option),
                                 textAlign: TextAlign.left,
-                                style: Theme.of(context).textTheme.headline5,
+                                style: Theme.of(context).textTheme.headline6,
                               ),
                             ),
                             IconButton(

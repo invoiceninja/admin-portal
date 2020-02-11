@@ -123,21 +123,23 @@ class ReportsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FlatButton(
-                  child: Text(localization.editColumns.toUpperCase()),
-                  onPressed: () {
-                    multiselectDialog(
-                      context: context,
-                      onSelected: (selected) {
-                        print('## ON SELECTED: $selected');
-                      },
-                      options: reportResult.allColumns,
-                      selected: reportResult.columns,
-                      title: localization.editColumns,
-                      addTitle: localization.addColumn,
-                    );
-                  },
-                )
+                Builder(builder: (BuildContext context) {
+                  return FlatButton(
+                    child: Text(localization.editColumns.toUpperCase()),
+                    onPressed: () {
+                      multiselectDialog(
+                        context: context,
+                        onSelected: (selected) {
+                          viewModel.onReportColumnsChanged(context, selected);
+                        },
+                        options: reportResult.allColumns,
+                        selected: reportResult.columns,
+                        title: localization.editColumns,
+                        addTitle: localization.addColumn,
+                      );
+                    },
+                  );
+                }),
               ],
             ),
             FormCard(

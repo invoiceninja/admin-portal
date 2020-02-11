@@ -45,8 +45,6 @@ class UserDetailsVM {
       user: state.uiState.settingsUIState.user,
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onSavePressed: (context) {
-        print(
-            'hasRecentlyEnteredPassword: ${state.authState.hasRecentlyEnteredPassword}');
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).savedSettings);
         completer.future.then((_) {
