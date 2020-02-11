@@ -130,8 +130,17 @@ class ReportsScreen extends StatelessWidget {
                       onSelected: (selected) {
                         print('## ON SELECTED: $selected');
                       },
-                      options: ['one', 'two', 'three', 'four'],
-                      selected: ['one', 'two', 'three'],
+                      options: [
+                        'one',
+                        'two',
+                        'three',
+                        'four',
+                      ],
+                      selected: [
+                        'one',
+                        'two',
+                        'three',
+                      ],
                       title: localization.editColumns,
                       addTitle: localization.addColumn,
                     );

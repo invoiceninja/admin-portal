@@ -68,6 +68,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
           AppDropdownButton<String>(
             labelText: widget.addTitle,
             items: widget.options
+                .where((option) => !selected.contains(option))
                 .map((option) => DropdownMenuItem(
                       child: Text(option),
                       value: option,
@@ -76,8 +77,15 @@ class _MultiSelectListState extends State<_MultiSelectList> {
             value: null,
             onChanged: (dynamic value) {
               print('## selected $value');
+              if (selected.contains(value)) {
+                return;
+              }
+              setState(() {
+                selected.add(value);
+              });
             },
           ),
+          SizedBox(height: 20),
           Expanded(
             child: ReorderableListView(
               children: selected
