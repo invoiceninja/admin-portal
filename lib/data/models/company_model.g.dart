@@ -863,10 +863,19 @@ class _$UserSettingsEntitySerializer
         ..add(serializers.serialize(object.accentColor,
             specifiedType: const FullType(String)));
     }
-    if (object.tableFields != null) {
+    if (object.tableColumns != null) {
       result
-        ..add('table_fields')
-        ..add(serializers.serialize(object.tableFields,
+        ..add('table_columns')
+        ..add(serializers.serialize(object.tableColumns,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(BuiltList, const [const FullType(String)])
+            ])));
+    }
+    if (object.reportColumns != null) {
+      result
+        ..add('report_columns')
+        ..add(serializers.serialize(object.reportColumns,
             specifiedType: const FullType(BuiltMap, const [
               const FullType(String),
               const FullType(BuiltList, const [const FullType(String)])
@@ -891,8 +900,15 @@ class _$UserSettingsEntitySerializer
           result.accentColor = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'table_fields':
-          result.tableFields.replace(serializers.deserialize(value,
+        case 'table_columns':
+          result.tableColumns.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
+        case 'report_columns':
+          result.reportColumns.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(BuiltList, const [const FullType(String)])
@@ -3839,13 +3855,17 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   final String accentColor;
   @override
-  final BuiltMap<String, BuiltList<String>> tableFields;
+  final BuiltMap<String, BuiltList<String>> tableColumns;
+  @override
+  final BuiltMap<String, BuiltList<String>> reportColumns;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
       (new UserSettingsEntityBuilder()..update(updates)).build();
 
-  _$UserSettingsEntity._({this.accentColor, this.tableFields}) : super._();
+  _$UserSettingsEntity._(
+      {this.accentColor, this.tableColumns, this.reportColumns})
+      : super._();
 
   @override
   UserSettingsEntity rebuild(
@@ -3861,19 +3881,22 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     if (identical(other, this)) return true;
     return other is UserSettingsEntity &&
         accentColor == other.accentColor &&
-        tableFields == other.tableFields;
+        tableColumns == other.tableColumns &&
+        reportColumns == other.reportColumns;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, accentColor.hashCode), tableFields.hashCode));
+    return $jf($jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+        reportColumns.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
           ..add('accentColor', accentColor)
-          ..add('tableFields', tableFields))
+          ..add('tableColumns', tableColumns)
+          ..add('reportColumns', reportColumns))
         .toString();
   }
 }
@@ -3886,18 +3909,25 @@ class UserSettingsEntityBuilder
   String get accentColor => _$this._accentColor;
   set accentColor(String accentColor) => _$this._accentColor = accentColor;
 
-  MapBuilder<String, BuiltList<String>> _tableFields;
-  MapBuilder<String, BuiltList<String>> get tableFields =>
-      _$this._tableFields ??= new MapBuilder<String, BuiltList<String>>();
-  set tableFields(MapBuilder<String, BuiltList<String>> tableFields) =>
-      _$this._tableFields = tableFields;
+  MapBuilder<String, BuiltList<String>> _tableColumns;
+  MapBuilder<String, BuiltList<String>> get tableColumns =>
+      _$this._tableColumns ??= new MapBuilder<String, BuiltList<String>>();
+  set tableColumns(MapBuilder<String, BuiltList<String>> tableColumns) =>
+      _$this._tableColumns = tableColumns;
+
+  MapBuilder<String, BuiltList<String>> _reportColumns;
+  MapBuilder<String, BuiltList<String>> get reportColumns =>
+      _$this._reportColumns ??= new MapBuilder<String, BuiltList<String>>();
+  set reportColumns(MapBuilder<String, BuiltList<String>> reportColumns) =>
+      _$this._reportColumns = reportColumns;
 
   UserSettingsEntityBuilder();
 
   UserSettingsEntityBuilder get _$this {
     if (_$v != null) {
       _accentColor = _$v.accentColor;
-      _tableFields = _$v.tableFields?.toBuilder();
+      _tableColumns = _$v.tableColumns?.toBuilder();
+      _reportColumns = _$v.reportColumns?.toBuilder();
       _$v = null;
     }
     return this;
@@ -3922,12 +3952,16 @@ class UserSettingsEntityBuilder
     try {
       _$result = _$v ??
           new _$UserSettingsEntity._(
-              accentColor: accentColor, tableFields: _tableFields?.build());
+              accentColor: accentColor,
+              tableColumns: _tableColumns?.build(),
+              reportColumns: _reportColumns?.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'tableFields';
-        _tableFields?.build();
+        _$failedField = 'tableColumns';
+        _tableColumns?.build();
+        _$failedField = 'reportColumns';
+        _reportColumns?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserSettingsEntity', _$failedField, e.toString());

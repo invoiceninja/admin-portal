@@ -618,7 +618,8 @@ abstract class UserSettingsEntity
   factory UserSettingsEntity() {
     return _$UserSettingsEntity._(
       accentColor: kDefaultAccentColor,
-      tableFields: BuiltMap<String, BuiltList<String>>(),
+      tableColumns: BuiltMap<String, BuiltList<String>>(),
+      reportColumns: BuiltMap<String, BuiltList<String>>(),
     );
   }
 
@@ -629,8 +630,12 @@ abstract class UserSettingsEntity
   String get accentColor;
 
   @nullable
-  @BuiltValueField(wireName: 'table_fields')
-  BuiltMap<String, BuiltList<String>> get tableFields;
+  @BuiltValueField(wireName: 'table_columns')
+  BuiltMap<String, BuiltList<String>> get tableColumns;
+
+  @nullable
+  @BuiltValueField(wireName: 'report_columns')
+  BuiltMap<String, BuiltList<String>> get reportColumns;
 
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;
