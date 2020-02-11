@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -10,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -127,14 +125,13 @@ class ReportsScreen extends StatelessWidget {
                   return FlatButton(
                     child: Text(localization.editColumns.toUpperCase()),
                     onPressed: () {
-                      print('## Bulder: selected: ${reportResult.columns}');
                       multiselectDialog(
                         context: context,
                         onSelected: (selected) {
                           viewModel.onReportColumnsChanged(context, selected);
                         },
                         options: reportResult.allColumns,
-                        selected: reportResult.columns,
+                        selected: reportResult.columns.toList(),
                         title: localization.editColumns,
                         addTitle: localization.addColumn,
                       );
