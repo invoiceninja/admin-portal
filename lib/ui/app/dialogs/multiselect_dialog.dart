@@ -65,6 +65,8 @@ class _MultiSelectListState extends State<_MultiSelectList> {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
       child: Column(
@@ -105,7 +107,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                             SizedBox(width: 20),
                             Expanded(
                               child: Text(
-                                option,
+                                localization.lookup(option),
                                 textAlign: TextAlign.left,
                                 style: Theme.of(context).textTheme.headline5,
                               ),
