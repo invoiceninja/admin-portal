@@ -86,7 +86,7 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
-                
+
                 /*
                 AppDropdownButton<DateRange>(
                   labelText: localization.dateRange,
@@ -116,6 +116,17 @@ class ReportsScreen extends StatelessWidget {
                   ),
                 ],
                  */
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(localization.columns),
+                  onPressed: () {
+                    
+                  },
+                )
               ],
             ),
             FormCard(
