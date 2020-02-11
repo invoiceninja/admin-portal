@@ -86,6 +86,8 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                
+                /*
                 AppDropdownButton<DateRange>(
                   labelText: localization.dateRange,
                   value: reportsUIState.dateRange,
@@ -113,6 +115,7 @@ class ReportsScreen extends StatelessWidget {
                         viewModel.onSettingsChanged(customEndDate: value),
                   ),
                 ],
+                 */
               ],
             ),
             FormCard(
