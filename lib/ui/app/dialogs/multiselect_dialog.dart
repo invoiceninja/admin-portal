@@ -11,6 +11,7 @@ void multiselectDialog(
     List<String> selected,
     Function(List<String>) onSelected}) {
   final localization = AppLocalization.of(context);
+  List<String> selected;
 
   showDialog<AlertDialog>(
     context: context,
@@ -21,6 +22,7 @@ void multiselectDialog(
         options: options,
         selected: selected,
         addTitle: addTitle,
+        onSelected: (values) => selected = values,
       ),
       actions: <Widget>[
         FlatButton(
@@ -32,7 +34,7 @@ void multiselectDialog(
             child: Text(localization.save.toUpperCase()),
             onPressed: () {
               Navigator.pop(context);
-              onSelected(['']);
+              onSelected(selected);
             })
       ],
     ),
@@ -40,11 +42,13 @@ void multiselectDialog(
 }
 
 class _MultiSelectList extends StatefulWidget {
-  const _MultiSelectList({this.options, this.selected, this.addTitle});
+  const _MultiSelectList(
+      {this.options, this.selected, this.addTitle, this.onSelected});
 
   final List<String> options;
   final List<String> selected;
   final String addTitle;
+  final Function(List<String>) onSelected;
 
   @override
   _MultiSelectListState createState() => _MultiSelectListState();
@@ -56,7 +60,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    selected = widget.selected;
+    selected = widget.selected ?? [];
   }
 
   @override
@@ -84,6 +88,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
               }
               setState(() {
                 selected.add(value);
+                widget.onSelected(selected);
               });
             },
           ),
@@ -129,6 +134,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                   final field = selected[oldIndex];
                   selected.remove(field);
                   selected.insert(newIndex, field);
+                  widget.onSelected(selected);
                 });
               },
             ),

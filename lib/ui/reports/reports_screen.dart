@@ -34,6 +34,7 @@ class ReportsScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
     final reportsUIState = state.uiState.reportsUIState;
+    final reportResult = viewModel.reportResult;
 
     return WillPopScope(
       onWillPop: () async {
@@ -130,17 +131,8 @@ class ReportsScreen extends StatelessWidget {
                       onSelected: (selected) {
                         print('## ON SELECTED: $selected');
                       },
-                      options: [
-                        'one',
-                        'two',
-                        'three',
-                        'four',
-                      ],
-                      selected: [
-                        'one',
-                        'two',
-                        'three',
-                      ],
+                      options: reportResult.allColumns,
+                      selected: reportResult.columns,
                       title: localization.editColumns,
                       addTitle: localization.addColumn,
                     );

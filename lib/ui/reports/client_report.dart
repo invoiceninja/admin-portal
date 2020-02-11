@@ -14,8 +14,10 @@ ReportResult clientReport({
   final List<List<ReportElement>> data = [];
   BuiltList<String> columns;
 
-  if (userCompany.settings.reportColumns.containsKey(kReportClient)) {
-    columns = userCompany.settings.reportColumns[kReportClient];
+  final reportColumns = userCompany.settings.reportColumns;
+
+  if (reportColumns != null && reportColumns.containsKey(kReportClient)) {
+    columns = reportColumns[kReportClient];
   } else {
     columns = BuiltList(<String>[
       ClientFields.name,
