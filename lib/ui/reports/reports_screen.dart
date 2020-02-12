@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -98,36 +99,6 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
-
-                /*
-                AppDropdownButton<DateRange>(
-                  labelText: localization.dateRange,
-                  value: reportsUIState.dateRange,
-                  onChanged: (dynamic value) =>
-                      viewModel.onSettingsChanged(dateRange: value),
-                  items: DateRange.values
-                      .map((dateRange) => DropdownMenuItem<DateRange>(
-                            child:
-                                Text(localization.lookup(dateRange.toString())),
-                            value: dateRange,
-                          ))
-                      .toList(),
-                ),
-                if (reportsUIState.dateRange == DateRange.custom) ...[
-                  DatePicker(
-                    labelText: localization.startDate,
-                    selectedDate: reportsUIState.customStartDate,
-                    onSelected: (value) =>
-                        viewModel.onSettingsChanged(customStartDate: value),
-                  ),
-                  DatePicker(
-                    labelText: localization.endDate,
-                    selectedDate: reportsUIState.customEndDate,
-                    onSelected: (value) =>
-                        viewModel.onSettingsChanged(customEndDate: value),
-                  ),
-                ],
-                 */
               ],
             ),
             Row(
@@ -234,24 +205,21 @@ class _ReportDataTableState extends State<ReportDataTable> {
       child: DataTable(
         sortColumnIndex: state.userCompany.settings
             .reportSettings[state.uiState.reportsUIState.report].sortIndex,
-        sortAscending: state
-            .userCompany
-            .settings
-            .reportSettings[state.uiState.reportsUIState.report]
-            .sortAscending,
+        sortAscending: state.userCompany.settings
+            .reportSettings[state.uiState.reportsUIState.report].sortAscending,
         columns: reportResult.tableColumns(
             context,
-                (index, ascending) =>
+            (index, ascending) =>
                 widget.viewModel.onReportSorted(index, ascending)),
         rows: [
           reportResult.tableFilters(context,
               _textEditingControllers[state.uiState.reportsUIState.report],
-                  (column, value) {
-                widget.viewModel.onReportFiltersChanged(
-                    context,
-                    state.uiState.reportsUIState.filters
-                        .rebuild((b) => b..addAll({column: value})));
-              }),
+              (column, value) {
+            widget.viewModel.onReportFiltersChanged(
+                context,
+                state.uiState.reportsUIState.filters
+                    .rebuild((b) => b..addAll({column: value})));
+          }),
           ...reportResult.tableRows(context),
         ],
       ),
@@ -291,10 +259,29 @@ class ReportResult {
       BuildContext context,
       Map<String, TextEditingController> textEditingControllers,
       Function(String, String) onFilterChanged) {
+    final localization = AppLocalization.of(context);
     return DataRow(cells: [
       for (String column in columns)
         if (['updated_at', 'created_at'].contains(column))
-          DataCell(Text(column))
+          DataCell(AppDropdownButton<DateRange>(
+            labelText: null,
+            showBlank: true,
+            blankValue: null,
+            value: (textEditingControllers[column].text ?? '').isNotEmpty
+                ? DateRange.valueOf(textEditingControllers[column].text)
+                : null,
+            onChanged: (dynamic value) {
+              textEditingControllers[column].text =
+                  value == null ? '' : value.toString();
+              onFilterChanged(column, value.toString());
+            },
+            items: DateRange.values
+                .map((dateRange) => DropdownMenuItem<DateRange>(
+                      child: Text(localization.lookup(dateRange.toString())),
+                      value: dateRange,
+                    ))
+                .toList(),
+          ))
         else
           DataCell(TypeAheadFormField(
             noItemsFoundBuilder: (context) => SizedBox(),
