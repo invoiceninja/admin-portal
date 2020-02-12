@@ -155,7 +155,7 @@ class ReportsScreen extends StatelessWidget {
             ),
             FormCard(
               child: ReportDataTable(
-                key: ValueKey(state.uiState.reportsUIState.report),
+                key: ObjectKey(state.uiState.reportsUIState),
                 viewModel: viewModel,
               ),
             )
@@ -229,7 +229,6 @@ class _ReportDataTableState extends State<ReportDataTable> {
             reportResult.tableFilters(context,
                 _textEditingControllers[state.uiState.reportsUIState.report],
                 (column, value) {
-              print('## Filter changed: $column, $value');
               widget.viewModel.onReportFiltersChanged(
                   context,
                   state.uiState.reportsUIState.filters
@@ -305,7 +304,8 @@ class ReportResult {
                 suffix: IconButton(
               icon: Icon(Icons.clear),
               onPressed: () {
-                //
+                textEditingControllers[column].text = '';
+                onFilterChanged(column, '');
               },
             )),
           ),
