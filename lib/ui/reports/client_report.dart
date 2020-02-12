@@ -5,12 +5,15 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:memoize/memoize.dart';
 
-ReportResult clientReport({
-  UserCompanyEntity userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-}) {
+var memoizedClientReport = memo3((UserCompanyEntity userCompany,
+        ReportsUIState reportsUIState,
+        BuiltMap<String, ClientEntity> clientMap) =>
+    clientReport(userCompany, reportsUIState, clientMap));
+
+ReportResult clientReport(UserCompanyEntity userCompany,
+    ReportsUIState reportsUIState, BuiltMap<String, ClientEntity> clientMap) {
   final List<List<ReportElement>> data = [];
   BuiltList<String> columns;
 

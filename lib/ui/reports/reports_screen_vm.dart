@@ -56,10 +56,10 @@ class ReportsScreenVM {
 
     switch (state.uiState.reportsUIState.report) {
       default:
-        reportResult = clientReport(
-          userCompany: state.userCompany,
-          clientMap: state.clientState.map,
-          reportsUIState: state.uiState.reportsUIState,
+        reportResult = memoizedClientReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.clientState.map,
         );
         break;
     }
