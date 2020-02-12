@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -54,7 +55,18 @@ class ReportsScreen extends StatelessWidget {
                   onPressed: () => store
                       .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
                 ),
-          title: Text(localization.reports),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(child: Text(localization.reports)),
+              if (state.isSaving)
+                SizedBox(
+                  width: 28,
+                  height: 28,
+                  child: CircularProgressIndicator(),
+                ),
+            ],
+          ),
         ),
         body: Column(
           children: <Widget>[

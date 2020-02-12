@@ -63,19 +63,8 @@ class _MultiSelectListState extends State<_MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    print('## initState: selected - ${widget.selected}');
     selected = widget.selected ?? [];
   }
-
-  /*
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print('## initState: selected - ${widget.selected}');
-    selected = widget.selected ?? [];
-  }
-
-   */
 
   @override
   Widget build(BuildContext context) {

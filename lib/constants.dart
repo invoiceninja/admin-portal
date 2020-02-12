@@ -43,7 +43,7 @@ const kProductPlans = [
   kProductPlanEnterprise20,
 ];
 
-const double kMobileLayoutWidth = 600;
+const double kMobileLayoutWidth = 700;
 const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
