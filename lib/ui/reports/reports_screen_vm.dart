@@ -117,9 +117,6 @@ class ReportsScreenVM {
       }) {
         store.dispatch(UpdateReportSettings(
           report: report,
-          dateRange: dateRange,
-          customStartDate: customStartDate,
-          customEndDate: customEndDate,
         ));
       },
     );

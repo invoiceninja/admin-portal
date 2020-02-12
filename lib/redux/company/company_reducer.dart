@@ -52,6 +52,7 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       loadCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
       saveCompanySuccessReducer),
+
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
       (userCompany, action) => userCompany.rebuild((b) => b
         ..user.replace(action.user)
