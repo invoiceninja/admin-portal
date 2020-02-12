@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 
-
 ReportResult invoiceReport({
   CompanyEntity company,
   ReportsUIState reportsUIState,
@@ -24,15 +23,12 @@ ReportResult invoiceReport({
       continue;
     }
 
-    if (invoice.isBetween(
-        reportsUIState.startDate(company), reportsUIState.endDate(company))) {
-      if (!totalAmounts.containsKey(client.id)) {
-        totalAmounts[client.id] = 0;
-        totalPaid[client.id] = 0;
-      }
-      totalAmounts[client.id] += invoice.amount;
-      totalPaid[client.id] += invoice.amount - invoice.balance;
+    if (!totalAmounts.containsKey(client.id)) {
+      totalAmounts[client.id] = 0;
+      totalPaid[client.id] = 0;
     }
+    totalAmounts[client.id] += invoice.amount;
+    totalPaid[client.id] += invoice.amount - invoice.balance;
   }
 
   for (var clientId in clientMap.keys) {
