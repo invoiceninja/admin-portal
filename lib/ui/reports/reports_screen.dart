@@ -316,10 +316,13 @@ class ReportResult {
           textFieldConfiguration: TextFieldConfiguration<String>(
             controller: textEditingControllers[column],
             decoration: InputDecoration(
-                suffix: (textEditingControllers[column]?.text ?? '').isEmpty
+                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
                     : IconButton(
-                        icon: Icon(Icons.clear),
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
                         onPressed: () {
                           textEditingControllers[column].text = '';
                           onFilterChanged(column, '');
