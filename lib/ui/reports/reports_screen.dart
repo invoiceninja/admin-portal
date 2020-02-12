@@ -301,13 +301,15 @@ class ReportResult {
           textFieldConfiguration: TextFieldConfiguration<String>(
             controller: textEditingControllers[column],
             decoration: InputDecoration(
-                suffix: IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () {
-                textEditingControllers[column].text = '';
-                onFilterChanged(column, '');
-              },
-            )),
+                suffix: (textEditingControllers[column]?.text ?? '').isEmpty
+                    ? null
+                    : IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          textEditingControllers[column].text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
           ),
           autoFlipDirection: true,
           animationStart: 1,
