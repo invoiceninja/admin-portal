@@ -229,37 +229,32 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final state = widget.viewModel.state;
     final reportResult = widget.viewModel.reportResult;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: DataTable(
-            sortColumnIndex: state.userCompany.settings
-                .reportSettings[state.uiState.reportsUIState.report].sortIndex,
-            sortAscending: state
-                .userCompany
-                .settings
-                .reportSettings[state.uiState.reportsUIState.report]
-                .sortAscending,
-            columns: reportResult.tableColumns(
-                context,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        sortColumnIndex: state.userCompany.settings
+            .reportSettings[state.uiState.reportsUIState.report].sortIndex,
+        sortAscending: state
+            .userCompany
+            .settings
+            .reportSettings[state.uiState.reportsUIState.report]
+            .sortAscending,
+        columns: reportResult.tableColumns(
+            context,
                 (index, ascending) =>
-                    widget.viewModel.onReportSorted(index, ascending)),
-            rows: [
-              reportResult.tableFilters(context,
-                  _textEditingControllers[state.uiState.reportsUIState.report],
+                widget.viewModel.onReportSorted(index, ascending)),
+        rows: [
+          reportResult.tableFilters(context,
+              _textEditingControllers[state.uiState.reportsUIState.report],
                   (column, value) {
                 widget.viewModel.onReportFiltersChanged(
                     context,
                     state.uiState.reportsUIState.filters
                         .rebuild((b) => b..addAll({column: value})));
               }),
-              ...reportResult.tableRows(context),
-            ],
-          ),
-        ),
-      ],
+          ...reportResult.tableRows(context),
+        ],
+      ),
     );
   }
 }
