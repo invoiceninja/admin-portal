@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -52,11 +51,10 @@ class ReportsScreen extends StatelessWidget {
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () =>
-                store
-                    .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-          ),
+                  icon: Icon(Icons.menu),
+                  onPressed: () => store
+                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
+                ),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -94,11 +92,10 @@ class ReportsScreen extends StatelessWidget {
                     kReportTaxRate,
                     kReportQuote,
                   ]
-                      .map((report) =>
-                      DropdownMenuItem(
-                        value: report,
-                        child: Text(localization.lookup(report)),
-                      ))
+                      .map((report) => DropdownMenuItem(
+                            value: report,
+                            child: Text(localization.lookup(report)),
+                          ))
                       .toList(),
                 ),
 
@@ -179,7 +176,7 @@ class ReportDataTable extends StatefulWidget {
 
 class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
-  _textEditingControllers = {};
+      _textEditingControllers = {};
 
   @override
   void didChangeDependencies() {
@@ -238,19 +235,26 @@ class _ReportDataTableState extends State<ReportDataTable> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: DataTable(
+            sortColumnIndex: state.userCompany.settings
+                .reportSettings[state.uiState.reportsUIState.report].sortIndex,
+            sortAscending: state
+                .userCompany
+                .settings
+                .reportSettings[state.uiState.reportsUIState.report]
+                .sortAscending,
             columns: reportResult.tableColumns(
                 context,
-                    (index, ascending) =>
+                (index, ascending) =>
                     widget.viewModel.onReportSorted(index, ascending)),
             rows: [
               reportResult.tableFilters(context,
                   _textEditingControllers[state.uiState.reportsUIState.report],
-                      (column, value) {
-                    widget.viewModel.onReportFiltersChanged(
-                        context,
-                        state.uiState.reportsUIState.filters
-                            .rebuild((b) => b..addAll({column: value})));
-                  }),
+                  (column, value) {
+                widget.viewModel.onReportFiltersChanged(
+                    context,
+                    state.uiState.reportsUIState.filters
+                        .rebuild((b) => b..addAll({column: value})));
+              }),
               ...reportResult.tableRows(context),
             ],
           ),
@@ -271,8 +275,8 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
-  List<DataColumn> tableColumns(BuildContext context,
-      Function(int, bool) onSortCallback) {
+  List<DataColumn> tableColumns(
+      BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
@@ -288,62 +292,64 @@ class ReportResult {
     ];
   }
 
-  DataRow tableFilters(BuildContext context,
+  DataRow tableFilters(
+      BuildContext context,
       Map<String, TextEditingController> textEditingControllers,
       Function(String, String) onFilterChanged) {
     return DataRow(cells: [
       for (String column in columns)
-        DataCell(TypeAheadFormField(
-          noItemsFoundBuilder: (context) => SizedBox(),
-          suggestionsBoxDecoration: SuggestionsBoxDecoration(
-            constraints: BoxConstraints(
-              minWidth: 300,
+        if (['updated_at', 'created_at'].contains(column))
+          DataCell(Text(column))
+        else
+          DataCell(TypeAheadFormField(
+            noItemsFoundBuilder: (context) => SizedBox(),
+            suggestionsBoxDecoration: SuggestionsBoxDecoration(
+              constraints: BoxConstraints(
+                minWidth: 300,
+              ),
             ),
-          ),
-          suggestionsCallback: (filter) {
-            filter = filter.toLowerCase();
-            final index = columns.indexOf(column);
-            return data
-                .where((row) =>
-            row[index].sortString().toLowerCase().contains(filter) &&
-                row[index]
-                    .sortString()
-                    .trim()
-                    .isNotEmpty)
-                .map((row) => row[index].sortString())
-                .toSet()
-                .toList();
-          },
-          itemBuilder: (context, String entityId) {
-            return Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text('$entityId'),
-            );
-          },
-          onSuggestionSelected: (String value) {
-            textEditingControllers[column].text = value;
-            onFilterChanged(column, value);
-          },
-          textFieldConfiguration: TextFieldConfiguration<String>(
-            controller: textEditingControllers[column],
-            decoration: InputDecoration(
-                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
-                    ? null
-                    : IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    textEditingControllers[column].text = '';
-                    onFilterChanged(column, '');
-                  },
-                )),
-          ),
-          autoFlipDirection: true,
-          animationStart: 1,
-          debounceDuration: Duration(seconds: 0),
-        ))
+            suggestionsCallback: (filter) {
+              filter = filter.toLowerCase();
+              final index = columns.indexOf(column);
+              return data
+                  .where((row) =>
+                      row[index].sortString().toLowerCase().contains(filter) &&
+                      row[index].sortString().trim().isNotEmpty)
+                  .map((row) => row[index].sortString())
+                  .toSet()
+                  .toList();
+            },
+            itemBuilder: (context, String entityId) {
+              return Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text('$entityId'),
+              );
+            },
+            onSuggestionSelected: (String value) {
+              textEditingControllers[column].text = value;
+              onFilterChanged(column, value);
+            },
+            textFieldConfiguration: TextFieldConfiguration<String>(
+              controller: textEditingControllers[column],
+              decoration: InputDecoration(
+                  suffixIcon:
+                      (textEditingControllers[column]?.text ?? '').isEmpty
+                          ? null
+                          : IconButton(
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                textEditingControllers[column].text = '';
+                                onFilterChanged(column, '');
+                              },
+                            )),
+            ),
+            autoFlipDirection: true,
+            animationStart: 1,
+            debounceDuration: Duration(seconds: 0),
+          ))
     ]);
   }
 
@@ -353,11 +359,10 @@ class ReportResult {
         DataRow(
           cells: row
               .map(
-                (row) =>
-                DataCell(
+                (row) => DataCell(
                   row.renderWidget(context),
                 ),
-          )
+              )
               .toList(),
         )
     ];
