@@ -40,6 +40,7 @@ void confirmCallback({BuildContext context, VoidCallback callback}) {
 void passwordCallback({BuildContext context, Function(String) callback}) {
   showDialog<AlertDialog>(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return PasswordConfirmation(
         callback: callback,

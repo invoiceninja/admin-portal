@@ -155,7 +155,7 @@ class ReportsScreen extends StatelessWidget {
             ),
             FormCard(
               child: ReportDataTable(
-                key: ObjectKey(state.uiState.reportsUIState),
+                //key: ObjectKey(state.uiState.reportsUIState),
                 viewModel: viewModel,
               ),
             )
@@ -191,6 +191,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
       }
       if (!_textEditingControllers[reportState.report].containsKey(column)) {
         final textEditingController = TextEditingController();
+        // TODO figure out how to remove this listener in dispose
+        textEditingController.addListener(() {
+          _onChanged(column, textEditingController.text);
+        });
         if (reportState.filters.containsKey(column)) {
           textEditingController.text = reportState.filters[column];
         }
@@ -200,6 +204,15 @@ class _ReportDataTableState extends State<ReportDataTable> {
     }
 
     super.didChangeDependencies();
+  }
+
+  void _onChanged(String column, String value) {
+    print('## On changed - column: $column - $value');
+    final state = widget.viewModel.state;
+    widget.viewModel.onReportFiltersChanged(
+        context,
+        state.uiState.reportsUIState.filters
+            .rebuild((b) => b..addAll({column: value})));
   }
 
   @override
