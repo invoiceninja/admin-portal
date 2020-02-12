@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -10,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -164,23 +164,62 @@ class ReportsScreen extends StatelessWidget {
   }
 }
 
-class ReportDataTable extends StatelessWidget {
+class ReportDataTable extends StatefulWidget {
   const ReportDataTable({@required this.viewModel});
 
   final ReportsScreenVM viewModel;
 
   @override
+  _ReportDataTableState createState() => _ReportDataTableState();
+}
+
+class _ReportDataTableState extends State<ReportDataTable> {
+  final Map<String, Map<String, TextEditingController>>
+      _textEditingControllers = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final state = widget.viewModel.state;
+    final reportState = state.uiState.reportsUIState;
+    final reportResult = widget.viewModel.reportResult;
+
+    for (var column in reportResult.columns) {
+      if (_textEditingControllers[reportState.report].containsKey(column)) {
+        print('## CREATINRG ${reportState.report} - $column');
+        _textEditingControllers[reportState.report][column] = TextEditingController();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _textEditingControllers.keys.forEach((i) {
+      _textEditingControllers[i].keys.forEach((j) {
+        print('## DISPOSING $i - $j');
+        _textEditingControllers[i][j].dispose();
+      });
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final reportResult = viewModel.reportResult;
+    final reportResult = widget.viewModel.reportResult;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         DataTable(
-          columns: reportResult.tableColumns(context, (index, ascending) {
-            viewModel.onReportSorted(index, ascending);
-          }),
-          rows: reportResult.tableRows(context),
+          columns: reportResult.tableColumns(
+              context,
+              (index, ascending) =>
+                  widget.viewModel.onReportSorted(index, ascending)),
+          rows: [
+            reportResult.tableFilters(context),
+            ...reportResult.tableRows(context),
+          ],
         ),
       ],
     );
@@ -209,6 +248,34 @@ class ReportResult {
           onSort: onSortCallback,
         )
     ];
+  }
+
+  DataRow tableFilters(BuildContext context) {
+    return DataRow(cells: [
+      for (String column in columns)
+        DataCell(TypeAheadFormField(
+          suggestionsCallback: (filter) {
+            filter = filter.toLowerCase();
+            final index = columns.indexOf(column);
+            return data
+                .where((row) =>
+                    row[index].sortString().toLowerCase().contains(filter))
+                .map((row) => row[index].sortString())
+                .toList();
+          },
+          itemBuilder: (context, String entityId) {
+            return Text('$entityId');
+          },
+          onSuggestionSelected: (String value) {
+            print('## onSuggestionSelected: $value');
+          },
+          /*
+          textFieldConfiguration: TextFieldConfiguration<String>(
+            controller: _textController,
+          ),          
+           */
+        ))
+    ]);
   }
 
   List<DataRow> tableRows(BuildContext context) {
