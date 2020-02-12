@@ -284,8 +284,10 @@ class ReportResult {
             final index = columns.indexOf(column);
             return data
                 .where((row) =>
-                    row[index].sortString().toLowerCase().contains(filter))
+                    row[index].sortString().toLowerCase().contains(filter) &&
+                    row[index].sortString().trim().isNotEmpty)
                 .map((row) => row[index].sortString())
+                .toSet()
                 .toList();
           },
           itemBuilder: (context, String entityId) {
