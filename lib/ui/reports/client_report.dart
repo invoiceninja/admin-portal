@@ -18,9 +18,13 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   BuiltList<String> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
+  final clientReportSettings =
+      reportSettings != null && reportSettings.containsKey(kReportClient)
+          ? reportSettings[kReportClient]
+          : null;
 
-  if (reportSettings != null && reportSettings.containsKey(kReportClient)) {
-    columns = reportSettings[kReportClient].columns;
+  if (clientReportSettings != null) {
+    columns = clientReportSettings.columns;
   } else {
     columns = BuiltList(<String>[
       ClientFields.name,
@@ -39,10 +43,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
     for (var column in columns) {
       switch (column) {
         case ClientFields.name:
-          row.add(ReportEntityValue(
-            entityType: EntityType.client,
-            entityId: client.id,
-          ));
+          row.add(ReportValue(value: client.name));
           break;
         case ClientFields.idNumber:
           row.add(ReportValue(value: client.idNumber));
@@ -56,6 +57,13 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       }
     }
   }
+
+  data.sort((rowA, rowB) {
+    final valueA = rowA[clientReportSettings.sortIndex].sortString();
+    final valueB = rowB[clientReportSettings.sortIndex].sortString();
+
+    return valueA.compareTo(valueB);
+  });
 
   return ReportResult(
     allColumns: [

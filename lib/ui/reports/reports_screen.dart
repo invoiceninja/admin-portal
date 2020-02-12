@@ -51,10 +51,11 @@ class ReportsScreen extends StatelessWidget {
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () => store
-                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-                ),
+            icon: Icon(Icons.menu),
+            onPressed: () =>
+                store
+                    .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
+          ),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -92,10 +93,11 @@ class ReportsScreen extends StatelessWidget {
                     kReportTaxRate,
                     kReportQuote,
                   ]
-                      .map((report) => DropdownMenuItem(
-                            value: report,
-                            child: Text(localization.lookup(report)),
-                          ))
+                      .map((report) =>
+                      DropdownMenuItem(
+                        value: report,
+                        child: Text(localization.lookup(report)),
+                      ))
                       .toList(),
                 ),
 
@@ -198,8 +200,8 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
-  List<DataColumn> tableColumns(
-      BuildContext context, Function(int, bool) onSortCallback) {
+  List<DataColumn> tableColumns(BuildContext context,
+      Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
@@ -217,10 +219,11 @@ class ReportResult {
         DataRow(
           cells: row
               .map(
-                (row) => DataCell(
+                (row) =>
+                DataCell(
                   row.renderWidget(context),
                 ),
-              )
+          )
               .toList(),
         )
     ];
@@ -228,8 +231,17 @@ class ReportResult {
 }
 
 abstract class ReportElement {
+
+  ReportElement({this.entityType, this.entityId});
+  final EntityType entityType;
+  final String entityId;
+
   Widget renderWidget(BuildContext context) {
     throw 'Error: need to override renderWidget()';
+  }
+
+  String sortString() {
+    throw 'Error: need to override sortString()';
   }
 }
 
@@ -242,19 +254,10 @@ class ReportValue extends ReportElement {
   Widget renderWidget(BuildContext context) {
     return Text(value);
   }
-}
-
-class ReportEntityValue extends ReportElement {
-  ReportEntityValue({this.entityType, this.entityId});
-
-  final EntityType entityType;
-  final String entityId;
 
   @override
-  Widget renderWidget(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
-    return Text(
-        state.getEntityMap(entityType)[entityId]?.listDisplayName ?? '');
+  String sortString() {
+    return value;
   }
 }
 
@@ -273,5 +276,11 @@ class ReportAmount extends ReportElement {
   Widget renderWidget(BuildContext context) {
     return Text(formatNumber(value, context,
         currencyId: currencyId, formatNumberType: formatNumberType));
+  }
+
+
+  @override
+  String sortString() {
+    return value.toString();
   }
 }
