@@ -52,10 +52,11 @@ class ReportsScreen extends StatelessWidget {
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () => store
-                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-                ),
+            icon: Icon(Icons.menu),
+            onPressed: () =>
+                store
+                    .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
+          ),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -93,10 +94,11 @@ class ReportsScreen extends StatelessWidget {
                     kReportTaxRate,
                     kReportQuote,
                   ]
-                      .map((report) => DropdownMenuItem(
-                            value: report,
-                            child: Text(localization.lookup(report)),
-                          ))
+                      .map((report) =>
+                      DropdownMenuItem(
+                        value: report,
+                        child: Text(localization.lookup(report)),
+                      ))
                       .toList(),
                 ),
 
@@ -177,7 +179,7 @@ class ReportDataTable extends StatefulWidget {
 
 class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
-      _textEditingControllers = {};
+  _textEditingControllers = {};
 
   @override
   void didChangeDependencies() {
@@ -233,22 +235,25 @@ class _ReportDataTableState extends State<ReportDataTable> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        DataTable(
-          columns: reportResult.tableColumns(
-              context,
-              (index, ascending) =>
-                  widget.viewModel.onReportSorted(index, ascending)),
-          rows: [
-            reportResult.tableFilters(context,
-                _textEditingControllers[state.uiState.reportsUIState.report],
-                (column, value) {
-              widget.viewModel.onReportFiltersChanged(
-                  context,
-                  state.uiState.reportsUIState.filters
-                      .rebuild((b) => b..addAll({column: value})));
-            }),
-            ...reportResult.tableRows(context),
-          ],
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            columns: reportResult.tableColumns(
+                context,
+                    (index, ascending) =>
+                    widget.viewModel.onReportSorted(index, ascending)),
+            rows: [
+              reportResult.tableFilters(context,
+                  _textEditingControllers[state.uiState.reportsUIState.report],
+                      (column, value) {
+                    widget.viewModel.onReportFiltersChanged(
+                        context,
+                        state.uiState.reportsUIState.filters
+                            .rebuild((b) => b..addAll({column: value})));
+                  }),
+              ...reportResult.tableRows(context),
+            ],
+          ),
         ),
       ],
     );
@@ -266,13 +271,14 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
-  List<DataColumn> tableColumns(
-      BuildContext context, Function(int, bool) onSortCallback) {
+  List<DataColumn> tableColumns(BuildContext context,
+      Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
       for (String column in columns)
         DataColumn(
+          tooltip: localization.lookup(column),
           label: Text(
             localization.lookup(column),
             overflow: TextOverflow.ellipsis,
@@ -282,8 +288,7 @@ class ReportResult {
     ];
   }
 
-  DataRow tableFilters(
-      BuildContext context,
+  DataRow tableFilters(BuildContext context,
       Map<String, TextEditingController> textEditingControllers,
       Function(String, String) onFilterChanged) {
     return DataRow(cells: [
@@ -300,8 +305,11 @@ class ReportResult {
             final index = columns.indexOf(column);
             return data
                 .where((row) =>
-                    row[index].sortString().toLowerCase().contains(filter) &&
-                    row[index].sortString().trim().isNotEmpty)
+            row[index].sortString().toLowerCase().contains(filter) &&
+                row[index]
+                    .sortString()
+                    .trim()
+                    .isNotEmpty)
                 .map((row) => row[index].sortString())
                 .toSet()
                 .toList();
@@ -322,15 +330,15 @@ class ReportResult {
                 suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
                     : IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () {
-                          textEditingControllers[column].text = '';
-                          onFilterChanged(column, '');
-                        },
-                      )),
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    textEditingControllers[column].text = '';
+                    onFilterChanged(column, '');
+                  },
+                )),
           ),
           autoFlipDirection: true,
           animationStart: 1,
@@ -345,10 +353,11 @@ class ReportResult {
         DataRow(
           cells: row
               .map(
-                (row) => DataCell(
+                (row) =>
+                DataCell(
                   row.renderWidget(context),
                 ),
-              )
+          )
               .toList(),
         )
     ];
