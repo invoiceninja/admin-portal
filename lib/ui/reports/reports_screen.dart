@@ -51,11 +51,10 @@ class ReportsScreen extends StatelessWidget {
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () =>
-                store
-                    .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-          ),
+                  icon: Icon(Icons.menu),
+                  onPressed: () => store
+                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
+                ),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -93,11 +92,10 @@ class ReportsScreen extends StatelessWidget {
                     kReportTaxRate,
                     kReportQuote,
                   ]
-                      .map((report) =>
-                      DropdownMenuItem(
-                        value: report,
-                        child: Text(localization.lookup(report)),
-                      ))
+                      .map((report) => DropdownMenuItem(
+                            value: report,
+                            child: Text(localization.lookup(report)),
+                          ))
                       .toList(),
                 ),
 
@@ -200,8 +198,8 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
-  List<DataColumn> tableColumns(BuildContext context,
-      Function(int, bool) onSortCallback) {
+  List<DataColumn> tableColumns(
+      BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
@@ -219,11 +217,10 @@ class ReportResult {
         DataRow(
           cells: row
               .map(
-                (row) =>
-                DataCell(
+                (row) => DataCell(
                   row.renderWidget(context),
                 ),
-          )
+              )
               .toList(),
         )
     ];
@@ -231,8 +228,8 @@ class ReportResult {
 }
 
 abstract class ReportElement {
-
   ReportElement({this.entityType, this.entityId});
+
   final EntityType entityType;
   final String entityId;
 
@@ -246,7 +243,11 @@ abstract class ReportElement {
 }
 
 class ReportValue extends ReportElement {
-  ReportValue({this.value});
+  ReportValue({
+    this.value,
+    EntityType entityType,
+    String entityId,
+  }) : super(entityType: entityType, entityId: entityId);
 
   final String value;
 
@@ -264,9 +265,11 @@ class ReportValue extends ReportElement {
 class ReportAmount extends ReportElement {
   ReportAmount({
     this.value,
+    EntityType entityType,
+    String entityId,
     this.currencyId,
     this.formatNumberType = FormatNumberType.money,
-  });
+  }) : super(entityType: entityType, entityId: entityId);
 
   final double value;
   final FormatNumberType formatNumberType;
@@ -277,7 +280,6 @@ class ReportAmount extends ReportElement {
     return Text(formatNumber(value, context,
         currencyId: currencyId, formatNumberType: formatNumberType));
   }
-
 
   @override
   String sortString() {

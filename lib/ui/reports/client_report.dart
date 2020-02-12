@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:memoize/memoize.dart';
@@ -43,16 +42,16 @@ ReportResult clientReport(UserCompanyEntity userCompany,
     for (var column in columns) {
       switch (column) {
         case ClientFields.name:
-          row.add(ReportValue(value: client.name));
+          row.add(client.getReportValue(value: client.name));
           break;
         case ClientFields.idNumber:
-          row.add(ReportValue(value: client.idNumber));
+          row.add(client.getReportValue(value: client.idNumber));
           break;
         case ClientFields.vatNumber:
-          row.add(ReportValue(value: client.vatNumber));
+          row.add(client.getReportValue(value: client.vatNumber));
           break;
         case ClientFields.state:
-          row.add(ReportValue(value: client.state));
+          row.add(client.getReportValue(value: client.state));
           break;
       }
     }

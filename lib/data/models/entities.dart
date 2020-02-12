@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'entities.g.dart';
@@ -208,6 +209,20 @@ abstract class BaseEntity implements SelectableEntity {
   String get entityState => isActive
       ? kEntityStateActive
       : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
+
+  ReportValue getReportValue({String value}) =>
+      ReportValue(entityId: id, entityType: entityType, value: value);
+
+  ReportAmount getReportAmount(
+          {double value,
+          String currencyId,
+          FormatNumberType formatNumberType}) =>
+      ReportAmount(
+          entityId: id,
+          entityType: entityType,
+          value: value,
+          currencyId: currencyId,
+          formatNumberType: formatNumberType);
 
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
