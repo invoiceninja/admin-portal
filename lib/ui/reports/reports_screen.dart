@@ -261,6 +261,12 @@ class ReportResult {
     return DataRow(cells: [
       for (String column in columns)
         DataCell(TypeAheadFormField(
+          noItemsFoundBuilder: (context) => SizedBox(),
+          suggestionsBoxDecoration: SuggestionsBoxDecoration(
+            constraints: BoxConstraints(
+              minWidth: 300,
+            ),
+          ),
           suggestionsCallback: (filter) {
             filter = filter.toLowerCase();
             final index = columns.indexOf(column);
@@ -281,7 +287,17 @@ class ReportResult {
           },
           textFieldConfiguration: TextFieldConfiguration<String>(
             controller: textEditingControllers[column],
+            decoration: InputDecoration(
+                suffix: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                //
+              },
+            )),
           ),
+          autoFlipDirection: true,
+          animationStart: 1,
+          debounceDuration: Duration(seconds: 0),
         ))
     ]);
   }

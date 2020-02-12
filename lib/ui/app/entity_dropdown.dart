@@ -115,9 +115,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
       return TypeAheadFormField<String>(
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
-            constraints: BoxConstraints(
-          minWidth: 300,
-        )),
+          constraints: BoxConstraints(
+            minWidth: 300,
+          ),
+        ),
         suggestionsCallback: (filter) {
           return (widget.entityList ?? widget.entityMap.keys.toList())
               .where((entityId) =>
@@ -165,8 +166,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
                     : SizedBox(),
           ),
         ),
-        autoFlipDirection: true,
         //direction: AxisDirection.up,
+        autoFlipDirection: true,
         animationStart: 1,
         debounceDuration: Duration(seconds: 0),
       );
