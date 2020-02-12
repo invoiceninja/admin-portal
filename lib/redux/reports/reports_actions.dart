@@ -14,7 +14,7 @@ class ViewReports extends AbstractNavigatorAction implements PersistUI {
 
 class UpdateReportSettings implements PersistUI {
   UpdateReportSettings({
-    this.report,
+    @required this.report,
     this.sortIndex,
     this.sortAscending
   });

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -46,12 +45,7 @@ class ReportsScreenVM {
   final ReportResult reportResult;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(int, bool) onReportSorted;
-  final Function({
-    String report,
-    DateRange dateRange,
-    String customStartDate,
-    String customEndDate,
-  }) onSettingsChanged;
+  final Function({String report}) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -71,7 +65,11 @@ class ReportsScreenVM {
       state: state,
       reportResult: reportResult,
       onReportSorted: (index, ascending) {
-        print('## onSort: $index - $ascending');
+        store.dispatch(UpdateReportSettings(
+          report: state.uiState.reportsUIState.report,
+          sortIndex: index,
+          sortAscending: ascending,
+        ));
       },
       onReportColumnsChanged: (context, columns) {
         final report = state.uiState.reportsUIState.report;
@@ -111,9 +109,6 @@ class ReportsScreenVM {
       },
       onSettingsChanged: ({
         String report,
-        DateRange dateRange,
-        String customStartDate,
-        String customEndDate,
       }) {
         store.dispatch(UpdateReportSettings(
           report: report,

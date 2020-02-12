@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -52,7 +53,21 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       loadCompanySuccessReducer),
   TypedReducer<UserCompanyEntity, SaveCompanySuccess>(
       saveCompanySuccessReducer),
-
+  TypedReducer<UserCompanyEntity, UpdateReportSettings>((userCompany, action) {
+    if (userCompany.settings.reportSettings.containsKey(action.report)) {
+      final settings = userCompany.settings.reportSettings[action.report];
+      return userCompany.rebuild((b) => b
+        ..settings.reportSettings[action.report] = settings.rebuild((b) => b
+          ..sortAscending = action.sortAscending ?? settings.sortAscending
+          ..sortIndex = action.sortIndex ?? settings.sortIndex));
+    } else {
+      return userCompany.rebuild((b) => b
+        ..settings.reportSettings[action.report] = ReportSettingsEntity(
+          sortAscending: action.sortAscending,
+          sortIndex: action.sortIndex,
+        ));
+    }
+  }),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
       (userCompany, action) => userCompany.rebuild((b) => b
         ..user.replace(action.user)

@@ -643,10 +643,10 @@ abstract class UserSettingsEntity
 
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
-  factory ReportSettingsEntity() {
+  factory ReportSettingsEntity({int sortIndex, bool sortAscending}) {
     return _$ReportSettingsEntity._(
-      sortIndex: 0,
-      sortAscending: true,
+      sortIndex: sortIndex ?? 0,
+      sortAscending: sortAscending ?? true,
       columns: BuiltList<String>(),
     );
   }
