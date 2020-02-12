@@ -15,10 +15,12 @@ class ViewReports extends AbstractNavigatorAction implements PersistUI {
 class UpdateReportSettings implements PersistUI {
   UpdateReportSettings({
     @required this.report,
+    this.filters,
     this.sortIndex,
   });
 
   final String report;
+  final Map<String, String> filters;
   final int sortIndex;
 }
 

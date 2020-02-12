@@ -223,7 +223,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
                   widget.viewModel.onReportSorted(index, ascending)),
           rows: [
             reportResult.tableFilters(context,
-                _textEditingControllers[state.uiState.reportsUIState.report]),
+                _textEditingControllers[state.uiState.reportsUIState.report],
+                (column, value) {
+              print('## Filter changed: $column, $value');
+            }),
             ...reportResult.tableRows(context),
           ],
         ),
@@ -256,8 +259,10 @@ class ReportResult {
     ];
   }
 
-  DataRow tableFilters(BuildContext context,
-      Map<String, TextEditingController> textEditingControllers) {
+  DataRow tableFilters(
+      BuildContext context,
+      Map<String, TextEditingController> textEditingControllers,
+      Function(String, String) onFilterChanged) {
     return DataRow(cells: [
       for (String column in columns)
         DataCell(TypeAheadFormField(
@@ -284,6 +289,7 @@ class ReportResult {
           },
           onSuggestionSelected: (String value) {
             textEditingControllers[column].text = value;
+            onFilterChanged(column, value);
           },
           textFieldConfiguration: TextFieldConfiguration<String>(
             controller: textEditingControllers[column],

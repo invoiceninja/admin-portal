@@ -23,6 +23,10 @@ class _$ReportsUIStateSerializer
       'report',
       serializers.serialize(object.report,
           specifiedType: const FullType(String)),
+      'filters',
+      serializers.serialize(object.filters,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
     ];
 
     return result;
@@ -44,6 +48,13 @@ class _$ReportsUIStateSerializer
           result.report = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'filters':
+          result.filters.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String)
+              ])) as BuiltMap<dynamic, dynamic>);
+          break;
       }
     }
 
@@ -54,13 +65,18 @@ class _$ReportsUIStateSerializer
 class _$ReportsUIState extends ReportsUIState {
   @override
   final String report;
+  @override
+  final BuiltMap<String, String> filters;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder) updates]) =>
       (new ReportsUIStateBuilder()..update(updates)).build();
 
-  _$ReportsUIState._({this.report}) : super._() {
+  _$ReportsUIState._({this.report, this.filters}) : super._() {
     if (report == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'report');
+    }
+    if (filters == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'filters');
     }
   }
 
@@ -75,18 +91,21 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ReportsUIState && report == other.report;
+    return other is ReportsUIState &&
+        report == other.report &&
+        filters == other.filters;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, report.hashCode));
+    return $jf($jc($jc(0, report.hashCode), filters.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ReportsUIState')
-          ..add('report', report))
+          ..add('report', report)
+          ..add('filters', filters))
         .toString();
   }
 }
@@ -99,11 +118,17 @@ class ReportsUIStateBuilder
   String get report => _$this._report;
   set report(String report) => _$this._report = report;
 
+  MapBuilder<String, String> _filters;
+  MapBuilder<String, String> get filters =>
+      _$this._filters ??= new MapBuilder<String, String>();
+  set filters(MapBuilder<String, String> filters) => _$this._filters = filters;
+
   ReportsUIStateBuilder();
 
   ReportsUIStateBuilder get _$this {
     if (_$v != null) {
       _report = _$v.report;
+      _filters = _$v.filters?.toBuilder();
       _$v = null;
     }
     return this;
@@ -124,7 +149,21 @@ class ReportsUIStateBuilder
 
   @override
   _$ReportsUIState build() {
-    final _$result = _$v ?? new _$ReportsUIState._(report: report);
+    _$ReportsUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$ReportsUIState._(report: report, filters: filters.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'filters';
+        filters.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ReportsUIState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
