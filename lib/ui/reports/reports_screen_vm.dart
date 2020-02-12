@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
@@ -73,13 +74,20 @@ class ReportsScreenVM {
         print('## onSort: $index - $ascending');
       },
       onReportColumnsChanged: (context, columns) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).savedSettings);
+        final report = state.uiState.reportsUIState.report;
+        final allReportSettings = state.userCompany.settings.reportSettings;
+        final reportSettings =
+            (allReportSettings != null && allReportSettings.containsKey(report)
+                    ? allReportSettings[report]
+                    : ReportSettingsEntity())
+                .rebuild((b) => b..columns.replace(BuiltList<String>(columns)));
         final user = state.user.rebuild((b) => b
           ..userCompany
                   .settings
-                  .reportColumns[state.uiState.reportsUIState.report] =
-              BuiltList<String>(columns));
+                  .reportSettings[state.uiState.reportsUIState.report] =
+              reportSettings);
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).savedSettings);
         if (state.authState.hasRecentlyEnteredPassword) {
           store.dispatch(
             SaveUserSettingsRequest(

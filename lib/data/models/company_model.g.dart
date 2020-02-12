@@ -16,6 +16,8 @@ Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
 Serializer<UserSettingsEntity> _$userSettingsEntitySerializer =
     new _$UserSettingsEntitySerializer();
+Serializer<ReportSettingsEntity> _$reportSettingsEntitySerializer =
+    new _$ReportSettingsEntitySerializer();
 Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
@@ -872,13 +874,13 @@ class _$UserSettingsEntitySerializer
               const FullType(BuiltList, const [const FullType(String)])
             ])));
     }
-    if (object.reportColumns != null) {
+    if (object.reportSettings != null) {
       result
-        ..add('report_columns')
-        ..add(serializers.serialize(object.reportColumns,
+        ..add('report_settings')
+        ..add(serializers.serialize(object.reportSettings,
             specifiedType: const FullType(BuiltMap, const [
               const FullType(String),
-              const FullType(BuiltList, const [const FullType(String)])
+              const FullType(ReportSettingsEntity)
             ])));
     }
     return result;
@@ -907,12 +909,75 @@ class _$UserSettingsEntitySerializer
                 const FullType(BuiltList, const [const FullType(String)])
               ])) as BuiltMap<dynamic, dynamic>);
           break;
-        case 'report_columns':
-          result.reportColumns.replace(serializers.deserialize(value,
+        case 'report_settings':
+          result.reportSettings.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(BuiltList, const [const FullType(String)])
+                const FullType(ReportSettingsEntity)
               ])) as BuiltMap<dynamic, dynamic>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$ReportSettingsEntitySerializer
+    implements StructuredSerializer<ReportSettingsEntity> {
+  @override
+  final Iterable<Type> types = const [
+    ReportSettingsEntity,
+    _$ReportSettingsEntity
+  ];
+  @override
+  final String wireName = 'ReportSettingsEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, ReportSettingsEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'sort_index',
+      serializers.serialize(object.sortIndex,
+          specifiedType: const FullType(int)),
+      'sort_ascending',
+      serializers.serialize(object.sortAscending,
+          specifiedType: const FullType(bool)),
+      'columns',
+      serializers.serialize(object.columns,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(String)])),
+    ];
+
+    return result;
+  }
+
+  @override
+  ReportSettingsEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new ReportSettingsEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'sort_index':
+          result.sortIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'sort_ascending':
+          result.sortAscending = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'columns':
+          result.columns.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(String)]))
+              as BuiltList<dynamic>);
           break;
       }
     }
@@ -3857,14 +3922,14 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   @override
   final BuiltMap<String, BuiltList<String>> tableColumns;
   @override
-  final BuiltMap<String, BuiltList<String>> reportColumns;
+  final BuiltMap<String, ReportSettingsEntity> reportSettings;
 
   factory _$UserSettingsEntity(
           [void Function(UserSettingsEntityBuilder) updates]) =>
       (new UserSettingsEntityBuilder()..update(updates)).build();
 
   _$UserSettingsEntity._(
-      {this.accentColor, this.tableColumns, this.reportColumns})
+      {this.accentColor, this.tableColumns, this.reportSettings})
       : super._();
 
   @override
@@ -3882,13 +3947,13 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return other is UserSettingsEntity &&
         accentColor == other.accentColor &&
         tableColumns == other.tableColumns &&
-        reportColumns == other.reportColumns;
+        reportSettings == other.reportSettings;
   }
 
   @override
   int get hashCode {
     return $jf($jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
-        reportColumns.hashCode));
+        reportSettings.hashCode));
   }
 
   @override
@@ -3896,7 +3961,7 @@ class _$UserSettingsEntity extends UserSettingsEntity {
     return (newBuiltValueToStringHelper('UserSettingsEntity')
           ..add('accentColor', accentColor)
           ..add('tableColumns', tableColumns)
-          ..add('reportColumns', reportColumns))
+          ..add('reportSettings', reportSettings))
         .toString();
   }
 }
@@ -3915,11 +3980,11 @@ class UserSettingsEntityBuilder
   set tableColumns(MapBuilder<String, BuiltList<String>> tableColumns) =>
       _$this._tableColumns = tableColumns;
 
-  MapBuilder<String, BuiltList<String>> _reportColumns;
-  MapBuilder<String, BuiltList<String>> get reportColumns =>
-      _$this._reportColumns ??= new MapBuilder<String, BuiltList<String>>();
-  set reportColumns(MapBuilder<String, BuiltList<String>> reportColumns) =>
-      _$this._reportColumns = reportColumns;
+  MapBuilder<String, ReportSettingsEntity> _reportSettings;
+  MapBuilder<String, ReportSettingsEntity> get reportSettings =>
+      _$this._reportSettings ??= new MapBuilder<String, ReportSettingsEntity>();
+  set reportSettings(MapBuilder<String, ReportSettingsEntity> reportSettings) =>
+      _$this._reportSettings = reportSettings;
 
   UserSettingsEntityBuilder();
 
@@ -3927,7 +3992,7 @@ class UserSettingsEntityBuilder
     if (_$v != null) {
       _accentColor = _$v.accentColor;
       _tableColumns = _$v.tableColumns?.toBuilder();
-      _reportColumns = _$v.reportColumns?.toBuilder();
+      _reportSettings = _$v.reportSettings?.toBuilder();
       _$v = null;
     }
     return this;
@@ -3954,17 +4019,145 @@ class UserSettingsEntityBuilder
           new _$UserSettingsEntity._(
               accentColor: accentColor,
               tableColumns: _tableColumns?.build(),
-              reportColumns: _reportColumns?.build());
+              reportSettings: _reportSettings?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'tableColumns';
         _tableColumns?.build();
-        _$failedField = 'reportColumns';
-        _reportColumns?.build();
+        _$failedField = 'reportSettings';
+        _reportSettings?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserSettingsEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$ReportSettingsEntity extends ReportSettingsEntity {
+  @override
+  final int sortIndex;
+  @override
+  final bool sortAscending;
+  @override
+  final BuiltList<String> columns;
+
+  factory _$ReportSettingsEntity(
+          [void Function(ReportSettingsEntityBuilder) updates]) =>
+      (new ReportSettingsEntityBuilder()..update(updates)).build();
+
+  _$ReportSettingsEntity._({this.sortIndex, this.sortAscending, this.columns})
+      : super._() {
+    if (sortIndex == null) {
+      throw new BuiltValueNullFieldError('ReportSettingsEntity', 'sortIndex');
+    }
+    if (sortAscending == null) {
+      throw new BuiltValueNullFieldError(
+          'ReportSettingsEntity', 'sortAscending');
+    }
+    if (columns == null) {
+      throw new BuiltValueNullFieldError('ReportSettingsEntity', 'columns');
+    }
+  }
+
+  @override
+  ReportSettingsEntity rebuild(
+          void Function(ReportSettingsEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  ReportSettingsEntityBuilder toBuilder() =>
+      new ReportSettingsEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is ReportSettingsEntity &&
+        sortIndex == other.sortIndex &&
+        sortAscending == other.sortAscending &&
+        columns == other.columns;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc($jc(0, sortIndex.hashCode), sortAscending.hashCode),
+        columns.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('ReportSettingsEntity')
+          ..add('sortIndex', sortIndex)
+          ..add('sortAscending', sortAscending)
+          ..add('columns', columns))
+        .toString();
+  }
+}
+
+class ReportSettingsEntityBuilder
+    implements Builder<ReportSettingsEntity, ReportSettingsEntityBuilder> {
+  _$ReportSettingsEntity _$v;
+
+  int _sortIndex;
+  int get sortIndex => _$this._sortIndex;
+  set sortIndex(int sortIndex) => _$this._sortIndex = sortIndex;
+
+  bool _sortAscending;
+  bool get sortAscending => _$this._sortAscending;
+  set sortAscending(bool sortAscending) =>
+      _$this._sortAscending = sortAscending;
+
+  ListBuilder<String> _columns;
+  ListBuilder<String> get columns =>
+      _$this._columns ??= new ListBuilder<String>();
+  set columns(ListBuilder<String> columns) => _$this._columns = columns;
+
+  ReportSettingsEntityBuilder();
+
+  ReportSettingsEntityBuilder get _$this {
+    if (_$v != null) {
+      _sortIndex = _$v.sortIndex;
+      _sortAscending = _$v.sortAscending;
+      _columns = _$v.columns?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(ReportSettingsEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$ReportSettingsEntity;
+  }
+
+  @override
+  void update(void Function(ReportSettingsEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$ReportSettingsEntity build() {
+    _$ReportSettingsEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ReportSettingsEntity._(
+              sortIndex: sortIndex,
+              sortAscending: sortAscending,
+              columns: columns.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'columns';
+        columns.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ReportSettingsEntity', _$failedField, e.toString());
       }
       rethrow;
     }

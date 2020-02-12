@@ -619,7 +619,7 @@ abstract class UserSettingsEntity
     return _$UserSettingsEntity._(
       accentColor: kDefaultAccentColor,
       tableColumns: BuiltMap<String, BuiltList<String>>(),
-      reportColumns: BuiltMap<String, BuiltList<String>>(),
+      reportSettings: BuiltMap<String, ReportSettingsEntity>(),
     );
   }
 
@@ -634,11 +634,35 @@ abstract class UserSettingsEntity
   BuiltMap<String, BuiltList<String>> get tableColumns;
 
   @nullable
-  @BuiltValueField(wireName: 'report_columns')
-  BuiltMap<String, BuiltList<String>> get reportColumns;
+  @BuiltValueField(wireName: 'report_settings')
+  BuiltMap<String, ReportSettingsEntity> get reportSettings;
 
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;
+}
+
+abstract class ReportSettingsEntity
+    implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
+  factory ReportSettingsEntity() {
+    return _$ReportSettingsEntity._(
+      sortIndex: 0,
+      sortAscending: true,
+      columns: BuiltList<String>(),
+    );
+  }
+
+  ReportSettingsEntity._();
+
+  @BuiltValueField(wireName: 'sort_index')
+  int get sortIndex;
+
+  @BuiltValueField(wireName: 'sort_ascending')
+  bool get sortAscending;
+
+  BuiltList<String> get columns;
+
+  static Serializer<ReportSettingsEntity> get serializer =>
+      _$reportSettingsEntitySerializer;
 }
 
 abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
