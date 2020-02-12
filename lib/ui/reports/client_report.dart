@@ -62,7 +62,11 @@ ReportResult clientReport(UserCompanyEntity userCompany,
     final valueA = rowA[clientReportSettings.sortIndex].sortString();
     final valueB = rowB[clientReportSettings.sortIndex].sortString();
 
-    return valueA.compareTo(valueB);
+    if (clientReportSettings.sortAscending) {
+      return valueA.compareTo(valueB);
+    } else {
+      return valueB.compareTo(valueA);
+    }
   });
 
   return ReportResult(

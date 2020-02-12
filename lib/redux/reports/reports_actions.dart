@@ -16,11 +16,9 @@ class UpdateReportSettings implements PersistUI {
   UpdateReportSettings({
     @required this.report,
     this.sortIndex,
-    this.sortAscending
   });
 
   final String report;
   final int sortIndex;
-  final bool sortAscending;
 }
 

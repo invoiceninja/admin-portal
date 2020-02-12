@@ -68,7 +68,6 @@ class ReportsScreenVM {
         store.dispatch(UpdateReportSettings(
           report: state.uiState.reportsUIState.report,
           sortIndex: index,
-          sortAscending: ascending,
         ));
       },
       onReportColumnsChanged: (context, columns) {

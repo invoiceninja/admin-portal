@@ -58,12 +58,13 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       final settings = userCompany.settings.reportSettings[action.report];
       return userCompany.rebuild((b) => b
         ..settings.reportSettings[action.report] = settings.rebuild((b) => b
-          ..sortAscending = action.sortAscending ?? settings.sortAscending
+          ..sortAscending = action.sortIndex == settings.sortIndex
+              ? !settings.sortAscending
+              : true
           ..sortIndex = action.sortIndex ?? settings.sortIndex));
     } else {
       return userCompany.rebuild((b) => b
         ..settings.reportSettings[action.report] = ReportSettingsEntity(
-          sortAscending: action.sortAscending,
           sortIndex: action.sortIndex,
         ));
     }
