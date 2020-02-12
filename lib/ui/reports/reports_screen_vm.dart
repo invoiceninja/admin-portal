@@ -37,12 +37,14 @@ class ReportsScreenVM {
     @required this.state,
     @required this.onSettingsChanged,
     @required this.onReportColumnsChanged,
+    @required this.onReportSorted,
     @required this.reportResult,
   });
 
   final AppState state;
   final ReportResult reportResult;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
+  final Function(int, bool) onReportSorted;
   final Function({
     String report,
     DateRange dateRange,
@@ -67,6 +69,9 @@ class ReportsScreenVM {
     return ReportsScreenVM(
       state: state,
       reportResult: reportResult,
+      onReportSorted: (index, ascending) {
+        print('## onSort: $index - $ascending');
+      },
       onReportColumnsChanged: (context, columns) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).savedSettings);

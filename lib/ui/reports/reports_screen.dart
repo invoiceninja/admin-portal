@@ -68,7 +68,7 @@ class ReportsScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: Column(
+        body: ListView(
           children: <Widget>[
             FormCard(
               children: <Widget>[
@@ -177,7 +177,9 @@ class ReportDataTable extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         DataTable(
-          columns: reportResult.tableColumns(context),
+          columns: reportResult.tableColumns(context, (index, ascending) {
+            viewModel.onReportSorted(index, ascending);
+          }),
           rows: reportResult.tableRows(context),
         ),
       ],
@@ -196,13 +198,15 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
-  List<DataColumn> tableColumns(BuildContext context) {
+  List<DataColumn> tableColumns(
+      BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
       for (String column in columns)
         DataColumn(
           label: Text(localization.lookup(column)),
+          onSort: onSortCallback,
         )
     ];
   }
