@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 var memoizedClientReport = memo3((UserCompanyEntity userCompany,
@@ -55,6 +56,12 @@ ReportResult clientReport(UserCompanyEntity userCompany,
         case ClientFields.state:
           value = client.state;
           break;
+        case ClientFields.createdAt:
+          value = convertTimestampToDateString(client.createdAt);
+          break;
+        case ClientFields.updatedAt:
+          value = convertTimestampToDateString(client.updatedAt);
+          break;
       }
 
       if (reportsUIState.filters.containsKey(column)) {
@@ -94,8 +101,11 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       ClientFields.idNumber,
       ClientFields.vatNumber,
       ClientFields.state,
+      ClientFields.createdAt,
+      ClientFields.updatedAt,
     ],
     columns: columns.toList(),
     data: data,
   );
 }
+

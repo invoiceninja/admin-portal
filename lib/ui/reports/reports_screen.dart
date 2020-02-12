@@ -273,7 +273,10 @@ class ReportResult {
     return [
       for (String column in columns)
         DataColumn(
-          label: Text(localization.lookup(column)),
+          label: Text(
+            localization.lookup(column),
+            overflow: TextOverflow.ellipsis,
+          ),
           onSort: onSortCallback,
         )
     ];
