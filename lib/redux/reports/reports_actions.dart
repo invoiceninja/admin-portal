@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
@@ -20,7 +21,7 @@ class UpdateReportSettings implements PersistUI {
   });
 
   final String report;
-  final Map<String, String> filters;
+  final BuiltMap<String, String> filters;
   final int sortIndex;
 }
 

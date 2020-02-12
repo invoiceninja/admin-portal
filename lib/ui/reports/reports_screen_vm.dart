@@ -37,6 +37,7 @@ class ReportsScreenVM {
     @required this.state,
     @required this.onSettingsChanged,
     @required this.onReportColumnsChanged,
+    @required this.onReportFiltersChanged,
     @required this.onReportSorted,
     @required this.reportResult,
   });
@@ -44,11 +45,13 @@ class ReportsScreenVM {
   final AppState state;
   final ReportResult reportResult;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
+  final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
   final Function(int, bool) onReportSorted;
   final Function({String report}) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
+    final report = state.uiState.reportsUIState.report;
     ReportResult reportResult;
 
     switch (state.uiState.reportsUIState.report) {
@@ -70,8 +73,13 @@ class ReportsScreenVM {
           sortIndex: index,
         ));
       },
+      onReportFiltersChanged: (context, filterMap) {
+        store.dispatch(UpdateReportSettings(
+          report: report,
+          filters: filterMap,
+        ));
+      },
       onReportColumnsChanged: (context, columns) {
-        final report = state.uiState.reportsUIState.report;
         final allReportSettings = state.userCompany.settings.reportSettings;
         final reportSettings =
             (allReportSettings != null && allReportSettings.containsKey(report)

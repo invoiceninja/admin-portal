@@ -226,6 +226,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
                 _textEditingControllers[state.uiState.reportsUIState.report],
                 (column, value) {
               print('## Filter changed: $column, $value');
+              widget.viewModel.onReportFiltersChanged(
+                  context,
+                  state.uiState.reportsUIState.filters
+                      .rebuild((b) => b..addAll({column: value})));
             }),
             ...reportResult.tableRows(context),
           ],
