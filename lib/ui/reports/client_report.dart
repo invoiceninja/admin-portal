@@ -68,6 +68,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
         final filter = reportsUIState.filters[column];
         if (filter.isNotEmpty &&
             !value.toLowerCase().contains(filter.toLowerCase())) {
+          print('## Not matching $column filter: $filter');
           skip = true;
         }
       }

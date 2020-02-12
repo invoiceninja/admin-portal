@@ -267,13 +267,18 @@ class ReportResult {
             labelText: null,
             showBlank: true,
             blankValue: null,
-            value: (textEditingControllers[column].text ?? '').isNotEmpty
+            value: (textEditingControllers[column].text ?? '').isNotEmpty &&
+                    textEditingControllers[column].text != 'null'
                 ? DateRange.valueOf(textEditingControllers[column].text)
                 : null,
             onChanged: (dynamic value) {
-              textEditingControllers[column].text =
-                  value == null ? '' : value.toString();
-              onFilterChanged(column, value.toString());
+              if (value == null) {
+                textEditingControllers[column].text = '';
+                onFilterChanged(column, '');
+              } else {
+                textEditingControllers[column].text = value.toString();
+                onFilterChanged(column, value.toString());
+              }
             },
             items: DateRange.values
                 .map((dateRange) => DropdownMenuItem<DateRange>(
