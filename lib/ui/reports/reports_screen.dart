@@ -190,8 +190,12 @@ class _ReportDataTableState extends State<ReportDataTable> {
         _textEditingControllers[reportState.report] = {};
       }
       if (!_textEditingControllers[reportState.report].containsKey(column)) {
+        final textEditingController = TextEditingController();
+        if (reportState.filters.containsKey(column)) {
+          textEditingController.text = reportState.filters[column];
+        }
         _textEditingControllers[reportState.report][column] =
-            TextEditingController();
+            textEditingController;
       }
     }
 

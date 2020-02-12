@@ -36,28 +36,48 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       continue;
     }
 
+    bool skip = false;
     final List<ReportElement> row = [];
-    data.add(row);
 
     for (var column in columns) {
+      String value = '';
+
       switch (column) {
         case ClientFields.name:
-          row.add(client.getReportValue(value: client.name));
+          value = client.name;
           break;
         case ClientFields.idNumber:
-          row.add(client.getReportValue(value: client.idNumber));
+          value = client.idNumber;
           break;
         case ClientFields.vatNumber:
-          row.add(client.getReportValue(value: client.vatNumber));
+          value = client.vatNumber;
           break;
         case ClientFields.state:
-          row.add(client.getReportValue(value: client.state));
+          value = client.state;
           break;
       }
+
+      if (reportsUIState.filters.containsKey(column)) {
+        final filter = reportsUIState.filters[column];
+        if (filter.isNotEmpty &&
+            !value.toLowerCase().contains(filter.toLowerCase())) {
+          skip = true;
+        }
+      }
+
+      row.add(client.getReportValue(value: value));
+    }
+
+    if (!skip) {
+      data.add(row);
     }
   }
 
   data.sort((rowA, rowB) {
+    if (rowA.length <= clientReportSettings.sortIndex ||
+        rowB.length <= clientReportSettings.sortIndex) {
+      return 0;
+    }
     final valueA = rowA[clientReportSettings.sortIndex].sortString();
     final valueB = rowB[clientReportSettings.sortIndex].sortString();
 
