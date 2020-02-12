@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -154,6 +155,7 @@ class ReportsScreen extends StatelessWidget {
             ),
             FormCard(
               child: ReportDataTable(
+                key: ValueKey(state.uiState.reportsUIState.report),
                 viewModel: viewModel,
               ),
             )
@@ -165,7 +167,7 @@ class ReportsScreen extends StatelessWidget {
 }
 
 class ReportDataTable extends StatefulWidget {
-  const ReportDataTable({@required this.viewModel});
+  const ReportDataTable({Key key, @required this.viewModel}) : super(key: key);
 
   final ReportsScreenVM viewModel;
 
@@ -179,25 +181,27 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
-
     final state = widget.viewModel.state;
     final reportState = state.uiState.reportsUIState;
     final reportResult = widget.viewModel.reportResult;
 
     for (var column in reportResult.columns) {
-      if (_textEditingControllers[reportState.report].containsKey(column)) {
-        print('## CREATINRG ${reportState.report} - $column');
-        _textEditingControllers[reportState.report][column] = TextEditingController();
+      if (_textEditingControllers[reportState.report] == null) {
+        _textEditingControllers[reportState.report] = {};
+      }
+      if (!_textEditingControllers[reportState.report].containsKey(column)) {
+        _textEditingControllers[reportState.report][column] =
+            TextEditingController();
       }
     }
+
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
     _textEditingControllers.keys.forEach((i) {
       _textEditingControllers[i].keys.forEach((j) {
-        print('## DISPOSING $i - $j');
         _textEditingControllers[i][j].dispose();
       });
     });
@@ -206,6 +210,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
   @override
   Widget build(BuildContext context) {
+    final state = widget.viewModel.state;
     final reportResult = widget.viewModel.reportResult;
 
     return Column(
@@ -217,7 +222,8 @@ class _ReportDataTableState extends State<ReportDataTable> {
               (index, ascending) =>
                   widget.viewModel.onReportSorted(index, ascending)),
           rows: [
-            reportResult.tableFilters(context),
+            reportResult.tableFilters(context,
+                _textEditingControllers[state.uiState.reportsUIState.report]),
             ...reportResult.tableRows(context),
           ],
         ),
@@ -250,7 +256,8 @@ class ReportResult {
     ];
   }
 
-  DataRow tableFilters(BuildContext context) {
+  DataRow tableFilters(BuildContext context,
+      Map<String, TextEditingController> textEditingControllers) {
     return DataRow(cells: [
       for (String column in columns)
         DataCell(TypeAheadFormField(
@@ -264,16 +271,17 @@ class ReportResult {
                 .toList();
           },
           itemBuilder: (context, String entityId) {
-            return Text('$entityId');
+            return Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text('$entityId'),
+            );
           },
           onSuggestionSelected: (String value) {
-            print('## onSuggestionSelected: $value');
+            textEditingControllers[column].text = value;
           },
-          /*
           textFieldConfiguration: TextFieldConfiguration<String>(
-            controller: _textController,
-          ),          
-           */
+            controller: textEditingControllers[column],
+          ),
         ))
     ]);
   }
