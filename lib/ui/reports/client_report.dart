@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
@@ -55,19 +56,22 @@ class ClientReportFields {
   static const String contactLastLogin = 'contact_last_login';
 }
 
-var memoizedClientReport = memo5((
+var memoizedClientReport = memo6((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, CountryEntity> countryMap,
   BuiltMap<String, IndustryEntity> industryMap,
   BuiltMap<String, SizeEntity> sizeMap,
 ) =>
-    clientReport(userCompany, reportsUIState, clientMap, industryMap, sizeMap));
+    clientReport(userCompany, reportsUIState, clientMap, countryMap,
+        industryMap, sizeMap));
 
 ReportResult clientReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, CountryEntity> countryMap,
   BuiltMap<String, IndustryEntity> industryMap,
   BuiltMap<String, SizeEntity> sizeMap,
 ) {
@@ -122,6 +126,18 @@ ReportResult clientReport(
         case ClientReportFields.size:
           value = sizeMap[client.sizeId].listDisplayName;
           break;
+        case ClientReportFields.customValue1:
+          value = client.customValue1;
+          break;
+        case ClientReportFields.customValue2:
+          value = client.customValue2;
+          break;
+        case ClientReportFields.customValue3:
+          value = client.customValue3;
+          break;
+        case ClientReportFields.customValue4:
+          value = client.customValue4;
+          break;
         case ClientReportFields.address1:
           value = client.address1;
           break;
@@ -136,6 +152,27 @@ ReportResult clientReport(
           break;
         case ClientReportFields.postCode:
           value = client.postalCode;
+          break;
+        case ClientReportFields.country:
+          value = countryMap[client.countryId]?.listDisplayName ?? '';
+          break;
+        case ClientReportFields.shippingAddress1:
+          value = client.shippingAddress1;
+          break;
+        case ClientReportFields.shippingAddress2:
+          value = client.shippingAddress2;
+          break;
+        case ClientReportFields.shippingCity:
+          value = client.shippingCity;
+          break;
+        case ClientReportFields.shippingState:
+          value = client.shippingState;
+          break;
+        case ClientReportFields.shippingPostalCode:
+          value = client.shippingPostalCode;
+          break;
+        case ClientReportFields.shippingCountry:
+          value = countryMap[client.shippingCountryId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.phone:
           value = client.phone;
@@ -162,11 +199,38 @@ ReportResult clientReport(
         case ClientReportFields.updatedAt:
           value = convertTimestampToDateString(client.updatedAt);
           break;
+        case ClientReportFields.contactFirstName:
+          value = contact.firstName;
+          break;
+        case ClientReportFields.contactLastName:
+          value = contact.lastName;
+          break;
+        case ClientReportFields.contactEmail:
+          value = contact.email;
+          break;
+        case ClientReportFields.contactPhone:
+          value = contact.phone;
+          break;
+        case ClientReportFields.contactCustomValue1:
+          value = contact.customValue1;
+          break;
+        case ClientReportFields.contactCustomValue2:
+          value = contact.customValue2;
+          break;
+        case ClientReportFields.contactCustomValue3:
+          value = contact.customValue3;
+          break;
+        case ClientReportFields.contactCustomValue4:
+          value = contact.customValue4;
+          break;
         case ClientReportFields.contactLastLogin:
           value = convertTimestampToDateString(contact.lastLogin);
           break;
         case ClientReportFields.balance:
           amount = client.balance;
+          break;
+        case ClientReportFields.creditBalance:
+          amount = client.creditBalance;
           break;
         case ClientReportFields.paidToDate:
           amount = client.paidToDate;
