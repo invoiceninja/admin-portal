@@ -14,6 +14,12 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'shipping_address1': 'Shipping Street',
+      'shipping_address2': 'Shipping Apt/Suite',
+      'shipping_city': 'Shipping City',
+      'shipping_state': 'Shipping State/Province',
+      'shipping_postal_code': 'Shipping Postal Code',
+      'shipping_country': 'Shipping Country',
       'client_id': 'Client Id',
       'assigned_to': 'Assigned To',
       'created_by': 'Created By',
@@ -16014,6 +16020,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get createdById => _localizedValues[localeCode]['created_by_id'];
 
   String get clientId => _localizedValues[localeCode]['client_id'];
+
+  String get shippingAddress1 =>
+      _localizedValues[localeCode]['shipping_address1'];
+
+  String get shippingAddress2 =>
+      _localizedValues[localeCode]['shipping_address2'];
+
+  String get shippingCity => _localizedValues[localeCode]['shipping_city'];
+
+  String get shippingState => _localizedValues[localeCode]['shipping_state'];
+
+  String get shippingPostalCode =>
+      _localizedValues[localeCode]['shipping_postal_code'];
+
+  String get shippingCountry =>
+      _localizedValues[localeCode]['shipping_country'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
