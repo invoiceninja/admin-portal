@@ -44,6 +44,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
 
     for (var column in columns) {
       String value = '';
+      double amount;
 
       switch (column) {
         case ClientFields.name:
@@ -64,6 +65,12 @@ ReportResult clientReport(UserCompanyEntity userCompany,
         case ClientFields.updatedAt:
           value = convertTimestampToDateString(client.updatedAt);
           break;
+        case ClientFields.balance:
+          amount = client.balance;
+          break;
+        case ClientFields.paidToDate:
+          amount = client.paidToDate;
+          break;
       }
 
       if (reportsUIState.filters.containsKey(column)) {
@@ -82,10 +89,8 @@ ReportResult clientReport(UserCompanyEntity userCompany,
               customStartDate: reportsUIState.customStartDate,
               customEndDate: reportsUIState.customEndDate,
             );
-            print('## FILTER $value: Start: $startDate, End: $endDate');
             if (!(startDate.compareTo(value) <= 0 &&
                 endDate.compareTo(value) >= 0)) {
-              print('## SKIP');
               skip = true;
             }
           } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
@@ -94,7 +99,11 @@ ReportResult clientReport(UserCompanyEntity userCompany,
         }
       }
 
-      row.add(client.getReportValue(value: value));
+      if (amount != null) {
+        row.add(client.getReportAmount(value: amount));
+      } else {
+        row.add(client.getReportValue(value: value));
+      }
     }
 
     if (!skip) {
@@ -120,6 +129,8 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   return ReportResult(
     allColumns: [
       ClientFields.name,
+      ClientFields.balance,
+      ClientFields.paidToDate,
       ClientFields.idNumber,
       ClientFields.vatNumber,
       ClientFields.state,
