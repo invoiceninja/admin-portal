@@ -539,7 +539,7 @@ class ReportResult {
         for (var column in columns) {
           String value = '';
           if (column == groupBy) {
-            value = group + ' (' + values['count'].toString() + ')';
+            value = group + ' (' + values['count'].floor().toString() + ')';
           }
           cells.add(DataCell(Text(value)));
         }
@@ -547,20 +547,6 @@ class ReportResult {
       });
 
       print('## TOTALS: $totals');
-      /*
-      for (var i = 0; i < data.length; i++) {
-        final row = data[i];
-        final cells = <DataCell>[];
-        for (var j = 0; j < row.length; j++) {
-          final cell = row[j];
-          final column = columns[j];
-          print('## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
-          cells.add(DataCell(cell.renderWidget(context, column)));
-        }
-        rows.add(DataRow(cells: cells));
-      }
-      
-       */
     }
 
     return rows;

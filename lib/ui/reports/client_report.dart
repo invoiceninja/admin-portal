@@ -260,13 +260,10 @@ ReportResult clientReport(
         rowB.length <= clientReportSettings.sortIndex) {
       return 0;
     }
-    String valueA = rowA[clientReportSettings.sortIndex].sortString();
-    String valueB = rowB[clientReportSettings.sortIndex].sortString();
-    if (reportsUIState.groupBy.isNotEmpty) {
-      final index = columns.indexOf(reportsUIState.groupBy);
-      valueA = rowA[index].sortString() + valueA;
-      valueB = rowA[index].sortString() + valueB;
-    }
+
+    final String valueA = rowA[clientReportSettings.sortIndex].sortString();
+    final String valueB = rowB[clientReportSettings.sortIndex].sortString();
+
     if (clientReportSettings.sortAscending) {
       return valueA.compareTo(valueB);
     } else {
