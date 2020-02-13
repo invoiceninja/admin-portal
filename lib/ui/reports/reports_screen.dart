@@ -112,11 +112,12 @@ class ReportsScreen extends StatelessWidget {
                 ),
                 AppDropdownButton<String>(
                   labelText: localization.groupBy,
-                  value: null,
-                  blankValue: null,
+                  value: reportsUIState.groupBy,
+                  blankValue: '',
                   showBlank: true,
                   onChanged: (dynamic value) {
                     print('Group: onChanged - $value');
+                    viewModel.onSettingsChanged(groupBy: value);
                   },
                   items: reportResult.columns
                       .where((column) =>
@@ -412,6 +413,7 @@ class ReportResult {
       for (String column in columns)
         if (getReportColumnType(column) == ReportColumnType.number)
           DataCell(DecoratedFormField(
+            label: '',
             controller: textEditingControllers[column],
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ))

@@ -12,6 +12,7 @@ abstract class ReportsUIState
       report: kReportClient,
       customStartDate: '',
       customEndDate: '',
+      groupBy: '',
       filters: BuiltMap<String, String>(),
     );
   }
@@ -19,6 +20,8 @@ abstract class ReportsUIState
   ReportsUIState._();
 
   String get report;
+
+  String get groupBy;
 
   String get customStartDate;
 

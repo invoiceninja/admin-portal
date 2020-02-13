@@ -17,6 +17,7 @@ class UpdateReportSettings implements PersistUI {
   UpdateReportSettings({
     @required this.report,
     this.filters,
+    this.groupBy,
     this.sortIndex,
     this.customStartDate,
     this.customEndDate,
@@ -24,6 +25,7 @@ class UpdateReportSettings implements PersistUI {
 
   final String report;
   final BuiltMap<String, String> filters;
+  final String groupBy;
   final int sortIndex;
   final String customStartDate;
   final String customEndDate;

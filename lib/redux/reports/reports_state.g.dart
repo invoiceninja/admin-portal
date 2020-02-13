@@ -23,6 +23,9 @@ class _$ReportsUIStateSerializer
       'report',
       serializers.serialize(object.report,
           specifiedType: const FullType(String)),
+      'groupBy',
+      serializers.serialize(object.groupBy,
+          specifiedType: const FullType(String)),
       'customStartDate',
       serializers.serialize(object.customStartDate,
           specifiedType: const FullType(String)),
@@ -54,6 +57,10 @@ class _$ReportsUIStateSerializer
           result.report = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'groupBy':
+          result.groupBy = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'customStartDate':
           result.customStartDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -80,6 +87,8 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String report;
   @override
+  final String groupBy;
+  @override
   final String customStartDate;
   @override
   final String customEndDate;
@@ -90,10 +99,17 @@ class _$ReportsUIState extends ReportsUIState {
       (new ReportsUIStateBuilder()..update(updates)).build();
 
   _$ReportsUIState._(
-      {this.report, this.customStartDate, this.customEndDate, this.filters})
+      {this.report,
+      this.groupBy,
+      this.customStartDate,
+      this.customEndDate,
+      this.filters})
       : super._() {
     if (report == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'report');
+    }
+    if (groupBy == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'groupBy');
     }
     if (customStartDate == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'customStartDate');
@@ -119,6 +135,7 @@ class _$ReportsUIState extends ReportsUIState {
     if (identical(other, this)) return true;
     return other is ReportsUIState &&
         report == other.report &&
+        groupBy == other.groupBy &&
         customStartDate == other.customStartDate &&
         customEndDate == other.customEndDate &&
         filters == other.filters;
@@ -127,7 +144,9 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, report.hashCode), customStartDate.hashCode),
+        $jc(
+            $jc($jc($jc(0, report.hashCode), groupBy.hashCode),
+                customStartDate.hashCode),
             customEndDate.hashCode),
         filters.hashCode));
   }
@@ -136,6 +155,7 @@ class _$ReportsUIState extends ReportsUIState {
   String toString() {
     return (newBuiltValueToStringHelper('ReportsUIState')
           ..add('report', report)
+          ..add('groupBy', groupBy)
           ..add('customStartDate', customStartDate)
           ..add('customEndDate', customEndDate)
           ..add('filters', filters))
@@ -150,6 +170,10 @@ class ReportsUIStateBuilder
   String _report;
   String get report => _$this._report;
   set report(String report) => _$this._report = report;
+
+  String _groupBy;
+  String get groupBy => _$this._groupBy;
+  set groupBy(String groupBy) => _$this._groupBy = groupBy;
 
   String _customStartDate;
   String get customStartDate => _$this._customStartDate;
@@ -171,6 +195,7 @@ class ReportsUIStateBuilder
   ReportsUIStateBuilder get _$this {
     if (_$v != null) {
       _report = _$v.report;
+      _groupBy = _$v.groupBy;
       _customStartDate = _$v.customStartDate;
       _customEndDate = _$v.customEndDate;
       _filters = _$v.filters?.toBuilder();
@@ -199,6 +224,7 @@ class ReportsUIStateBuilder
       _$result = _$v ??
           new _$ReportsUIState._(
               report: report,
+              groupBy: groupBy,
               customStartDate: customStartDate,
               customEndDate: customEndDate,
               filters: filters.build());

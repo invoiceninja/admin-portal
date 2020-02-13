@@ -6,6 +6,7 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
   if (action is UpdateReportSettings) {
     return state.rebuild((b) => b
       ..report = action.report ?? state.report
+      ..groupBy = action.groupBy ?? state.groupBy
       ..customStartDate = action.customStartDate ?? state.customStartDate
       ..customEndDate = action.customEndDate ?? state.customEndDate
       ..filters.replace(action.filters ?? state.filters));
