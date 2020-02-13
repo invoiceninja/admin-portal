@@ -504,19 +504,57 @@ class ReportResult {
     final reportState = store.state.uiState.reportsUIState;
     final groupBy = reportState.groupBy;
 
-    for (var i = 0; i < data.length; i++) {
-      final row = data[i];
-      final cells = <DataCell>[];
-
-      for (var j = 0; j < row.length; j++) {
-        final cell = row[j];
-        final column = columns[j];
-
-        print('## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
-        cells.add(DataCell(cell.renderWidget(context, column)));
+    if (groupBy.isEmpty) {
+      for (var i = 0; i < data.length; i++) {
+        final row = data[i];
+        final cells = <DataCell>[];
+        for (var j = 0; j < row.length; j++) {
+          final cell = row[j];
+          final column = columns[j];
+          cells.add(DataCell(cell.renderWidget(context, column)));
+        }
+        rows.add(DataRow(cells: cells));
       }
+    } else {
+      String lastValue;
+      final Map<String, Map<String, double>> totals = {};
 
-      rows.add(DataRow(cells: cells));
+      for (var i = 0; i < data.length; i++) {
+        final row = data[i];
+        for (var j = 0; j < row.length; j++) {
+          final cell = row[j];
+          if (cell is ReportAmount) {
+            final column = columns[j];
+            print(
+                '## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
+
+            final value = row[columns.indexOf(groupBy)].sortString();
+            if (!totals.containsKey(value)) {
+              totals[value] = {
+                'count': 0,
+                'total': 0
+              };
+            }
+            totals[value]['count'] += 1;
+            totals[value]['total'] += cell.value;
+          }
+        }
+      }
+      print('## TOTALS: $totals');
+      /*
+      for (var i = 0; i < data.length; i++) {
+        final row = data[i];
+        final cells = <DataCell>[];
+        for (var j = 0; j < row.length; j++) {
+          final cell = row[j];
+          final column = columns[j];
+          print('## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
+          cells.add(DataCell(cell.renderWidget(context, column)));
+        }
+        rows.add(DataRow(cells: cells));
+      }
+      
+       */
     }
 
     return rows;
