@@ -2,8 +2,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -67,10 +69,24 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       if (reportsUIState.filters.containsKey(column)) {
         final filter = reportsUIState.filters[column];
         if (filter.isNotEmpty) {
-          print('## FILTER: value: $value, filter: $filter');
-
-          if (!value.toLowerCase().contains(filter.toLowerCase())) {
-            print('## Not matching $column filter: $filter');
+          if (getReportColumnType(column) == ReportColumnType.date) {
+            final startDate = calculateStartDate(
+              dateRange: DateRange.valueOf(filter),
+              company: userCompany.company,
+              //customEndDate: customEndDate,
+              //customStartDate: customStartDate,
+            );
+            final endDate = calculateEndDate(
+              dateRange: DateRange.valueOf(filter),
+              company: userCompany.company,
+              //customEndDate: customEndDate,
+              //customStartDate: customStartDate,
+            );
+            if (!(startDate.compareTo(value) <= 0 &&
+                endDate.compareTo(value) >= 0)) {
+              skip = true;
+            }
+          } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
             skip = true;
           }
         }

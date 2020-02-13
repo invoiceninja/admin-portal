@@ -57,7 +57,7 @@ DateTime addMonths(DateTime dateTime, int offset) {
 String calculateStartDate({
   CompanyEntity company,
   DateRange dateRange,
-  int offset,
+  int offset = 0,
   String customStartDate,
   String customEndDate,
 }) {
@@ -100,7 +100,7 @@ String calculateStartDate({
 String calculateEndDate({
   CompanyEntity company,
   DateRange dateRange,
-  int offset,
+  int offset = 0,
   String customStartDate,
   String customEndDate,
 }) {
