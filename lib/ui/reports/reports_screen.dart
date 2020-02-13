@@ -110,6 +110,24 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                AppDropdownButton<String>(
+                  labelText: localization.groupBy,
+                  value: null,
+                  blankValue: null,
+                  showBlank: true,
+                  onChanged: (dynamic value) {
+                    print('Group: onChanged - $value');
+                  },
+                  items: reportResult.columns
+                      .where((column) =>
+                          getReportColumnType(column) !=
+                          ReportColumnType.number)
+                      .map((column) => DropdownMenuItem(
+                            child: Text(localization.lookup(column)),
+                            value: column,
+                          ))
+                      .toList(),
+                ),
                 if (hasCustomDate) ...[
                   DatePicker(
                     labelText: localization.startDate,
@@ -290,7 +308,6 @@ class ReportResult {
     UserCompanyEntity userCompany,
     ReportsUIState reportsUIState,
   }) {
-
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
       if (filter.isNotEmpty) {
