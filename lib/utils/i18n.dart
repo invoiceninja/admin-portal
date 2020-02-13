@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'assigned_to': 'Assigned To',
+      'created_by': 'Created By',
+      'assigned_to_id': 'Assigned To Id',
+      'created_by_id': 'Created By Id',
       'add_column': 'Add Column',
       'edit_columns': 'Edit Columns',
       'columns': 'Columns',
@@ -15171,7 +15175,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get militaryTime => _localizedValues[localeCode]['military_time'];
 
-  String get militaryTimeHelp => _localizedValues[localeCode]['military_time_help'];
+  String get militaryTimeHelp =>
+      _localizedValues[localeCode]['military_time_help'];
 
   String get sendReminders => _localizedValues[localeCode]['send_reminders'];
 
@@ -15999,6 +16004,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get addColumn => _localizedValues[localeCode]['add_column'];
 
+  String get assignedTo => _localizedValues[localeCode]['assigned_to'];
+
+  String get createdIy => _localizedValues[localeCode]['created_by'];
+
+  String get assignedToId => _localizedValues[localeCode]['assigned_to_id'];
+
+  String get createdById => _localizedValues[localeCode]['created_by_id'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

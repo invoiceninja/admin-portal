@@ -40,6 +40,7 @@ abstract class ClientItemResponse
 }
 
 class ClientFields {
+  static const String clientId = 'client_id';
   static const String name = 'name';
   static const String address1 = 'address1';
   static const String balance = 'balance';
@@ -60,6 +61,10 @@ class ClientFields {
   static const String customValue2 = 'custom_value2';
   static const String customValue3 = 'custom_value3';
   static const String customValue4 = 'custom_value4';
+  static const String assignedTo = 'assigned_to';
+  static const String createdBy = 'created_by';
+  static const String assignedToId = 'assigned_to_id';
+  static const String createdById = 'created_by_id';
 }
 
 abstract class ClientEntity extends Object

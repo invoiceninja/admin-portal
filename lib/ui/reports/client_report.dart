@@ -23,7 +23,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   final clientReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportClient)
           ? reportSettings[kReportClient]
-          : ReportSettingsEntity();
+          : null;
 
   if (clientReportSettings != null) {
     columns = clientReportSettings.columns;
@@ -61,6 +61,23 @@ ReportResult clientReport(UserCompanyEntity userCompany,
           break;
         case ClientFields.createdAt:
           value = convertTimestampToDateString(client.createdAt);
+          break;
+        case ClientFields.assignedTo:
+          value = userCompany
+                  .company.userMap[client.assignedUserId]?.listDisplayName ??
+              '';
+          break;
+        case ClientFields.assignedToId:
+          value = client.assignedUserId;
+          break;
+        case ClientFields.createdBy:
+          print('## USER MAP ${userCompany.company.userMap}');
+          value = userCompany
+                  .company.userMap[client.createdUserId]?.listDisplayName ??
+              '';
+          break;
+        case ClientFields.createdById:
+          value = client.createdUserId;
           break;
         case ClientFields.updatedAt:
           value = convertTimestampToDateString(client.updatedAt);
@@ -148,6 +165,8 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   return ReportResult(
     allColumns: [
       ClientFields.name,
+      ClientFields.createdBy,
+      ClientFields.assignedTo,
       ClientFields.balance,
       ClientFields.paidToDate,
       ClientFields.idNumber,
@@ -155,6 +174,9 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       ClientFields.state,
       ClientFields.createdAt,
       ClientFields.updatedAt,
+      ClientFields.clientId,
+      ClientFields.assignedToId,
+      ClientFields.createdById,
     ],
     columns: columns.toList(),
     data: data,

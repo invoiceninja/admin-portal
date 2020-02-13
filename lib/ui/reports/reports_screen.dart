@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -223,14 +224,16 @@ class _ReportDataTableState extends State<ReportDataTable> {
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
     final reportResult = widget.viewModel.reportResult;
+    final reportSettings = state.userCompany.settings.reportSettings == null
+        ? ReportSettingsEntity()
+        : state.userCompany.settings
+            .reportSettings[state.uiState.reportsUIState.report];
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        sortColumnIndex: state.userCompany.settings
-            .reportSettings[state.uiState.reportsUIState.report].sortIndex,
-        sortAscending: state.userCompany.settings
-            .reportSettings[state.uiState.reportsUIState.report].sortAscending,
+        sortColumnIndex: reportSettings.sortIndex,
+        sortAscending: reportSettings.sortAscending,
         columns: reportResult.tableColumns(
             context,
             (index, ascending) =>
@@ -303,12 +306,10 @@ class ReportResult {
     return DataRow(cells: [
       for (String column in columns)
         if (getReportColumnType(column) == ReportColumnType.number)
-          DataCell(
-              DecoratedFormField(
-                controller: textEditingControllers[column],
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-              )
-          )
+          DataCell(DecoratedFormField(
+            controller: textEditingControllers[column],
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+          ))
         else if (getReportColumnType(column) == ReportColumnType.dateTime)
           DataCell(AppDropdownButton<DateRange>(
             labelText: null,
