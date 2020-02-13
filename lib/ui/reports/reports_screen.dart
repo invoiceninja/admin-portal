@@ -224,10 +224,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
     final reportResult = widget.viewModel.reportResult;
-    final reportSettings = state.userCompany.settings.reportSettings == null
-        ? ReportSettingsEntity()
-        : state.userCompany.settings
-            .reportSettings[state.uiState.reportsUIState.report];
+    final reportSettings = state.userCompany.settings
+            ?.reportSettings[state.uiState.reportsUIState.report] ??
+        ReportSettingsEntity();
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
