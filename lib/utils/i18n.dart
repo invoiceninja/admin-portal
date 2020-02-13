@@ -16006,9 +16006,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get assignedTo => _localizedValues[localeCode]['assigned_to'];
 
-  String get createdIy => _localizedValues[localeCode]['created_by'];
+  String get createdBy => _localizedValues[localeCode]['created_by'];
 
-  String get assignedToId => _localizedValues[localeCode]['assigned_to_id'];
+  String get assignedTId => _localizedValues[localeCode]['assigned_to_id'];
 
   String get createdById => _localizedValues[localeCode]['created_by_id'];
 
