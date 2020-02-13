@@ -121,7 +121,7 @@ ReportResult clientReport(
           value = client.publicNotes;
           break;
         case ClientReportFields.industry:
-          value = industryMap[client.industryId].listDisplayName;
+          value = industryMap[client.industryId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.size:
           value = sizeMap[client.sizeId].listDisplayName;
