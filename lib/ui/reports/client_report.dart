@@ -89,6 +89,8 @@ ReportResult clientReport(
     columns = BuiltList(<String>[
       ClientReportFields.name,
       ClientReportFields.idNumber,
+      ClientReportFields.contactFullName,
+      ClientReportFields.contactEmail,
     ]);
   }
 
@@ -237,40 +239,16 @@ ReportResult clientReport(
         final filter = reportsUIState.filters[column];
         if (filter.isNotEmpty) {
           if (getReportColumnType(column) == ReportColumnType.number) {
-            final String range = filter.replaceAll(',', '-') + '-';
-            final List<String> parts = range.split('-');
-            final min = parseDouble(parts[0]);
-            final max = parseDouble(parts[1]);
-            if (amount < min || (max > 0 && amount > max)) {
+            if (!ReportResult.matchAmount(filter: filter, amount: amount)) {
               skip = true;
             }
           } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
-            final startDate = calculateStartDate(
-              dateRange: DateRange.valueOf(filter),
-              company: userCompany.company,
-              customStartDate: reportsUIState.customStartDate,
-              customEndDate: reportsUIState.customEndDate,
-            );
-            final endDate = calculateEndDate(
-              dateRange: DateRange.valueOf(filter),
-              company: userCompany.company,
-              customStartDate: reportsUIState.customStartDate,
-              customEndDate: reportsUIState.customEndDate,
-            );
-            if (reportsUIState.customStartDate.isNotEmpty &&
-                reportsUIState.customEndDate.isNotEmpty) {
-              if (!(startDate.compareTo(value) <= 0 &&
-                  endDate.compareTo(value) >= 0)) {
-                skip = true;
-              }
-            } else if (reportsUIState.customStartDate.isNotEmpty) {
-              if (!(startDate.compareTo(value) <= 0)) {
-                skip = true;
-              }
-            } else if (reportsUIState.customEndDate.isNotEmpty) {
-              if (!(endDate.compareTo(value) >= 0)) {
-                skip = true;
-              }
+            if (!ReportResult.matchDateTime(
+                filter: filter,
+                value: value,
+                reportsUIState: reportsUIState,
+                userCompany: userCompany)) {
+              skip = true;
             }
           } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
             skip = true;

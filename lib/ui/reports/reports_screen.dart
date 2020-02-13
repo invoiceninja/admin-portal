@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -17,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -281,6 +283,54 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
+  static bool matchAmount({String filter, double amount}) {
+    final String range = filter.replaceAll(',', '-') + '-';
+    final List<String> parts = range.split('-');
+    final min = parseDouble(parts[0]);
+    final max = parseDouble(parts[1]);
+    if (amount < min || (max > 0 && amount > max)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  static bool matchDateTime({
+    String filter,
+    String value,
+    UserCompanyEntity userCompany,
+    ReportsUIState reportsUIState,
+  }) {
+    final startDate = calculateStartDate(
+      dateRange: DateRange.valueOf(filter),
+      company: userCompany.company,
+      customStartDate: reportsUIState.customStartDate,
+      customEndDate: reportsUIState.customEndDate,
+    );
+    final endDate = calculateEndDate(
+      dateRange: DateRange.valueOf(filter),
+      company: userCompany.company,
+      customStartDate: reportsUIState.customStartDate,
+      customEndDate: reportsUIState.customEndDate,
+    );
+    if (reportsUIState.customStartDate.isNotEmpty &&
+        reportsUIState.customEndDate.isNotEmpty) {
+      if (!(startDate.compareTo(value) <= 0 && endDate.compareTo(value) >= 0)) {
+        return false;
+      }
+    } else if (reportsUIState.customStartDate.isNotEmpty) {
+      if (!(startDate.compareTo(value) <= 0)) {
+        return false;
+      }
+    } else if (reportsUIState.customEndDate.isNotEmpty) {
+      if (!(endDate.compareTo(value) >= 0)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   List<DataColumn> tableColumns(
       BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
@@ -394,14 +444,13 @@ class ReportResult {
         DataRow(
           cells: data[i]
               .map(
-                (row) => DataCell(
-                  Container(
-                    child: row.renderWidget(context, columns[data[i].indexOf(row)]),
-                    constraints: BoxConstraints(
-                      minWidth: 80,
-                    ),
-                  )
-                ),
+                (row) => DataCell(Container(
+                  child:
+                      row.renderWidget(context, columns[data[i].indexOf(row)]),
+                  constraints: BoxConstraints(
+                    minWidth: 80,
+                  ),
+                )),
               )
               .toList(),
         )
