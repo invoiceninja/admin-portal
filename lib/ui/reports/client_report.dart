@@ -73,17 +73,19 @@ ReportResult clientReport(UserCompanyEntity userCompany,
             final startDate = calculateStartDate(
               dateRange: DateRange.valueOf(filter),
               company: userCompany.company,
-              //customEndDate: customEndDate,
-              //customStartDate: customStartDate,
+              customStartDate: reportsUIState.customStartDate,
+              customEndDate: reportsUIState.customEndDate,
             );
             final endDate = calculateEndDate(
               dateRange: DateRange.valueOf(filter),
               company: userCompany.company,
-              //customEndDate: customEndDate,
-              //customStartDate: customStartDate,
+              customStartDate: reportsUIState.customStartDate,
+              customEndDate: reportsUIState.customEndDate,
             );
+            print('## FILTER $value: Start: $startDate, End: $endDate');
             if (!(startDate.compareTo(value) <= 0 &&
                 endDate.compareTo(value) >= 0)) {
+              print('## SKIP');
               skip = true;
             }
           } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
