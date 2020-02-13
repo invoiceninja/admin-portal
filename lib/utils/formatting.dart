@@ -274,11 +274,9 @@ String formatDate(String value, BuildContext context,
           ? company.settings.dateFormatId
           : kDefaultDateFormat;
       format = dateFormats[dateFormatId].format;
-      if (company.settings.enableMilitaryTime) {
-        format = showSeconds
-            ? format.replaceFirst('h:mm:ss a', 'H:mm:ss')
-            : format.replaceFirst('h:mm a', 'H:mm');
-      }
+      format += ' ' + (showSeconds
+          ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+          : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
     return formatter.format(DateTime.tryParse(value).toLocal());

@@ -355,12 +355,12 @@ class ReportResult {
 
   List<DataRow> tableRows(BuildContext context) {
     return [
-      for (List<ReportElement> row in data)
+      for (var i = 0; i < data.length; i++)
         DataRow(
-          cells: row
+          cells: data[i]
               .map(
                 (row) => DataCell(
-                  row.renderWidget(context),
+                  row.renderWidget(context, columns[data[i].indexOf(row)]),
                 ),
               )
               .toList(),
@@ -375,7 +375,7 @@ abstract class ReportElement {
   final EntityType entityType;
   final String entityId;
 
-  Widget renderWidget(BuildContext context) {
+  Widget renderWidget(BuildContext context, String column) {
     throw 'Error: need to override renderWidget()';
   }
 
@@ -394,8 +394,14 @@ class ReportValue extends ReportElement {
   final String value;
 
   @override
-  Widget renderWidget(BuildContext context) {
-    return Text(value);
+  Widget renderWidget(BuildContext context, String column) {
+    print('## renderValue: $column');
+    print('## COLUMN TYPE ${getReportColumnType(column)}');
+    if (getReportColumnType(column) == ReportColumnType.date) {
+      return Text(formatDate(value, context, showTime: true));
+    } else {
+      return Text(value);
+    }
   }
 
   @override
@@ -418,7 +424,9 @@ class ReportAmount extends ReportElement {
   final String currencyId;
 
   @override
-  Widget renderWidget(BuildContext context) {
+  Widget renderWidget(BuildContext context, String column) {
+    print(
+        '## renderAmount: $column - COLUMN TYPE ${getReportColumnType(column)}');
     return Text(formatNumber(value, context,
         currencyId: currencyId, formatNumberType: formatNumberType));
   }
