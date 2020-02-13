@@ -395,9 +395,12 @@ class ReportResult {
       for (String column in columns)
         DataColumn(
           tooltip: localization.lookup(column),
-          label: Text(
-            localization.lookup(column) + '   ',
-            overflow: TextOverflow.ellipsis,
+          label: Container(
+            constraints: BoxConstraints(minWidth: 80),
+            child: Text(
+              localization.lookup(column) + '   ',
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           onSort: onSortCallback,
         )
