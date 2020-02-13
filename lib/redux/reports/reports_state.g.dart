@@ -23,6 +23,12 @@ class _$ReportsUIStateSerializer
       'report',
       serializers.serialize(object.report,
           specifiedType: const FullType(String)),
+      'customStartDate',
+      serializers.serialize(object.customStartDate,
+          specifiedType: const FullType(String)),
+      'customEndDate',
+      serializers.serialize(object.customEndDate,
+          specifiedType: const FullType(String)),
       'filters',
       serializers.serialize(object.filters,
           specifiedType: const FullType(BuiltMap,
@@ -48,6 +54,14 @@ class _$ReportsUIStateSerializer
           result.report = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'customStartDate':
+          result.customStartDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'customEndDate':
+          result.customEndDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'filters':
           result.filters.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -66,14 +80,26 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String report;
   @override
+  final String customStartDate;
+  @override
+  final String customEndDate;
+  @override
   final BuiltMap<String, String> filters;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder) updates]) =>
       (new ReportsUIStateBuilder()..update(updates)).build();
 
-  _$ReportsUIState._({this.report, this.filters}) : super._() {
+  _$ReportsUIState._(
+      {this.report, this.customStartDate, this.customEndDate, this.filters})
+      : super._() {
     if (report == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'report');
+    }
+    if (customStartDate == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'customStartDate');
+    }
+    if (customEndDate == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'customEndDate');
     }
     if (filters == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'filters');
@@ -93,18 +119,25 @@ class _$ReportsUIState extends ReportsUIState {
     if (identical(other, this)) return true;
     return other is ReportsUIState &&
         report == other.report &&
+        customStartDate == other.customStartDate &&
+        customEndDate == other.customEndDate &&
         filters == other.filters;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, report.hashCode), filters.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, report.hashCode), customStartDate.hashCode),
+            customEndDate.hashCode),
+        filters.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ReportsUIState')
           ..add('report', report)
+          ..add('customStartDate', customStartDate)
+          ..add('customEndDate', customEndDate)
           ..add('filters', filters))
         .toString();
   }
@@ -118,6 +151,16 @@ class ReportsUIStateBuilder
   String get report => _$this._report;
   set report(String report) => _$this._report = report;
 
+  String _customStartDate;
+  String get customStartDate => _$this._customStartDate;
+  set customStartDate(String customStartDate) =>
+      _$this._customStartDate = customStartDate;
+
+  String _customEndDate;
+  String get customEndDate => _$this._customEndDate;
+  set customEndDate(String customEndDate) =>
+      _$this._customEndDate = customEndDate;
+
   MapBuilder<String, String> _filters;
   MapBuilder<String, String> get filters =>
       _$this._filters ??= new MapBuilder<String, String>();
@@ -128,6 +171,8 @@ class ReportsUIStateBuilder
   ReportsUIStateBuilder get _$this {
     if (_$v != null) {
       _report = _$v.report;
+      _customStartDate = _$v.customStartDate;
+      _customEndDate = _$v.customEndDate;
       _filters = _$v.filters?.toBuilder();
       _$v = null;
     }
@@ -152,7 +197,11 @@ class ReportsUIStateBuilder
     _$ReportsUIState _$result;
     try {
       _$result = _$v ??
-          new _$ReportsUIState._(report: report, filters: filters.build());
+          new _$ReportsUIState._(
+              report: report,
+              customStartDate: customStartDate,
+              customEndDate: customEndDate,
+              filters: filters.build());
     } catch (_) {
       String _$failedField;
       try {

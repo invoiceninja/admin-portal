@@ -10,6 +10,8 @@ abstract class ReportsUIState
   factory ReportsUIState() {
     return _$ReportsUIState._(
       report: kReportClient,
+      customStartDate: '',
+      customEndDate: '',
       filters: BuiltMap<String, String>(),
     );
   }
@@ -17,6 +19,10 @@ abstract class ReportsUIState
   ReportsUIState._();
 
   String get report;
+
+  String get customStartDate;
+
+  String get customEndDate;
 
   BuiltMap<String, String> get filters;
 

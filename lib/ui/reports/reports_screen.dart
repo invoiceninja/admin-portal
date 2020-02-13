@@ -109,8 +109,15 @@ class ReportsScreen extends StatelessWidget {
                 if (hasCustomDate) ...[
                   DatePicker(
                     labelText: localization.startDate,
-                    //selectedDate: _settings.compareStartDate,
-                    //onSelected: (date) => _settings.compareStartDate = date,
+                    selectedDate: reportsUIState.customStartDate,
+                    onSelected: (date) =>
+                        viewModel.onSettingsChanged(customStartDate: date),
+                  ),
+                  DatePicker(
+                    labelText: localization.endDate,
+                    selectedDate: reportsUIState.customEndDate,
+                    onSelected: (date) =>
+                        viewModel.onSettingsChanged(customEndDate: date),
                   ),
                 ]
               ],

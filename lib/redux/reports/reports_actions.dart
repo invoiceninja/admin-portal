@@ -18,10 +18,14 @@ class UpdateReportSettings implements PersistUI {
     @required this.report,
     this.filters,
     this.sortIndex,
+    this.customStartDate,
+    this.customEndDate,
   });
 
   final String report;
   final BuiltMap<String, String> filters;
   final int sortIndex;
+  final String customStartDate;
+  final String customEndDate;
 }
 

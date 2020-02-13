@@ -47,7 +47,11 @@ class ReportsScreenVM {
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
   final Function(int, bool) onReportSorted;
-  final Function({String report}) onSettingsChanged;
+  final Function({
+    String report,
+    String customStartDate,
+    String customEndDate,
+  }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -116,9 +120,13 @@ class ReportsScreenVM {
       },
       onSettingsChanged: ({
         String report,
+        String customStartDate,
+        String customEndDate,
       }) {
         store.dispatch(UpdateReportSettings(
-          report: report,
+          report: report ?? state.uiState.reportsUIState.report,
+          customStartDate: customStartDate,
+          customEndDate: customEndDate,
         ));
       },
     );
