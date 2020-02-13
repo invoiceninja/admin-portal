@@ -23,9 +23,9 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   final clientReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportClient)
           ? reportSettings[kReportClient]
-          : null;
+          : ReportSettingsEntity();
 
-  if (clientReportSettings != null) {
+  if (clientReportSettings.columns.isNotEmpty) {
     columns = clientReportSettings.columns;
   } else {
     columns = BuiltList(<String>[
