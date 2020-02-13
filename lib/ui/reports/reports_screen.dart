@@ -151,6 +151,7 @@ class ReportsScreen extends StatelessWidget {
             FormCard(
               child: ReportDataTable(
                 //key: ObjectKey(viewModel.reportResult.columns),
+                key: ValueKey(viewModel.state.isSaving),
                 viewModel: viewModel,
               ),
             )
