@@ -71,6 +71,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
           value = client.assignedUserId;
           break;
         case ClientFields.createdBy:
+          print('## USER ARRAY ${userCompany.company.users}');
           print('## USER MAP ${userCompany.company.userMap}');
           value = userCompany
                   .company.userMap[client.createdUserId]?.listDisplayName ??

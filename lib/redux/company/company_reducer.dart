@@ -81,9 +81,8 @@ UserCompanyEntity loadCompanySuccessReducer(
 
   // Check user has a blank user settings object
   if (userCompany?.settings?.accentColor == null) {
-    userCompany = userCompany.rebuild((b) => b
-        ..settings.replace(UserSettingsEntity())
-    );
+    userCompany =
+        userCompany.rebuild((b) => b..settings.replace(UserSettingsEntity()));
   }
 
   userCompany = userCompany.rebuild((b) => b.company
@@ -118,13 +117,14 @@ UserCompanyEntity loadCompanySuccessReducer(
   }
   */
 
-  return userCompany
-    ..company.rebuild((b) => b
-      ..userMap.addAll(Map.fromIterable(
-        action.userCompany.company.users,
-        key: (dynamic item) => item.id,
-        value: (dynamic item) => item,
-      )));
+  userCompany = userCompany.rebuild((b) => b
+    ..company.userMap.addAll(Map.fromIterable(
+          action.userCompany.company.users,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        )));
+
+  return userCompany;
 }
 
 UserCompanyEntity saveCompanySuccessReducer(

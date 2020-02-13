@@ -150,7 +150,7 @@ class ReportsScreen extends StatelessWidget {
             ),
             FormCard(
               child: ReportDataTable(
-                //key: ObjectKey(state.uiState.reportsUIState),
+                //key: ObjectKey(viewModel.reportResult.columns),
                 viewModel: viewModel,
               ),
             )
