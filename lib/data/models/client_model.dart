@@ -564,6 +564,7 @@ abstract class ContactEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      lastLogin: 0,
     );
   }
 
@@ -603,6 +604,7 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  @nullable
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
 

@@ -526,15 +526,18 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
-      'last_login',
-      serializers.serialize(object.lastLogin,
-          specifiedType: const FullType(int)),
     ];
     if (object.password != null) {
       result
         ..add('password')
         ..add(serializers.serialize(object.password,
             specifiedType: const FullType(String)));
+    }
+    if (object.lastLogin != null) {
+      result
+        ..add('last_login')
+        ..add(serializers.serialize(object.lastLogin,
+            specifiedType: const FullType(int)));
     }
     if (object.isChanged != null) {
       result
@@ -1662,9 +1665,6 @@ class _$ContactEntity extends ContactEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
-    }
-    if (lastLogin == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
     }
   }
 

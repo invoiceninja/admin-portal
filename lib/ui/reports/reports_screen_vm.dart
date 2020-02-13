@@ -64,6 +64,8 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.clientState.map,
+          state.staticState.industryMap,
+          state.staticState.sizeMap,
         );
         break;
     }

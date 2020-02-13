@@ -3,6 +3,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/dates.dart';
@@ -53,13 +55,22 @@ class ClientReportFields {
   static const String contactLastLogin = 'contact_last_login';
 }
 
-var memoizedClientReport = memo3((UserCompanyEntity userCompany,
-        ReportsUIState reportsUIState,
-        BuiltMap<String, ClientEntity> clientMap) =>
-    clientReport(userCompany, reportsUIState, clientMap));
+var memoizedClientReport = memo5((
+  UserCompanyEntity userCompany,
+  ReportsUIState reportsUIState,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, IndustryEntity> industryMap,
+  BuiltMap<String, SizeEntity> sizeMap,
+) =>
+    clientReport(userCompany, reportsUIState, clientMap, industryMap, sizeMap));
 
-ReportResult clientReport(UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState, BuiltMap<String, ClientEntity> clientMap) {
+ReportResult clientReport(
+  UserCompanyEntity userCompany,
+  ReportsUIState reportsUIState,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, IndustryEntity> industryMap,
+  BuiltMap<String, SizeEntity> sizeMap,
+) {
   final List<List<ReportElement>> data = [];
   BuiltList<String> columns;
 
@@ -105,14 +116,35 @@ ReportResult clientReport(UserCompanyEntity userCompany,
         case ClientReportFields.publicNotes:
           value = client.publicNotes;
           break;
+        case ClientReportFields.industry:
+          value = industryMap[client.industryId].listDisplayName;
+          break;
+        case ClientReportFields.size:
+          value = sizeMap[client.sizeId].listDisplayName;
+          break;
+        case ClientReportFields.address1:
+          value = client.address1;
+          break;
+        case ClientReportFields.address2:
+          value = client.address2;
+          break;
+        case ClientReportFields.city:
+          value = client.city;
+          break;
+        case ClientReportFields.state:
+          value = client.state;
+          break;
+        case ClientReportFields.postCode:
+          value = client.postalCode;
+          break;
+        case ClientReportFields.phone:
+          value = client.phone;
+          break;
         case ClientReportFields.idNumber:
           value = client.idNumber;
           break;
         case ClientReportFields.vatNumber:
           value = client.vatNumber;
-          break;
-        case ClientReportFields.state:
-          value = client.state;
           break;
         case ClientReportFields.createdAt:
           value = convertTimestampToDateString(client.createdAt);
