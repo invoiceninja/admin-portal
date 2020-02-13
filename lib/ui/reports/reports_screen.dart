@@ -546,7 +546,7 @@ class ReportResult {
           if (column == groupBy) {
             value = group + ' (' + values['count'].floor().toString() + ')';
           } else if (getReportColumnType(column) == ReportColumnType.number) {
-            //value = values
+            value = formatNumber(values[column], context);
           }
           cells.add(DataCell(Text(value)));
         }
