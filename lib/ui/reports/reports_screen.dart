@@ -500,6 +500,9 @@ class ReportResult {
 
   List<DataRow> tableRows(BuildContext context) {
     final rows = <DataRow>[];
+    final store = StoreProvider.of<AppState>(context);
+    final reportState = store.state.uiState.reportsUIState;
+    final groupBy = reportState.groupBy;
 
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
@@ -507,7 +510,10 @@ class ReportResult {
 
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
-        cells.add(DataCell(cell.renderWidget(context, columns[i])));
+        final column = columns[j];
+
+        print('## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
+        cells.add(DataCell(cell.renderWidget(context, column)));
       }
 
       rows.add(DataRow(cells: cells));
