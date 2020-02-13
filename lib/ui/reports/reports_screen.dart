@@ -499,18 +499,21 @@ class ReportResult {
   }
 
   List<DataRow> tableRows(BuildContext context) {
-    return [
-      for (var i = 0; i < data.length; i++)
-        DataRow(
-          cells: data[i]
-              .map(
-                (row) => DataCell(
-                  row.renderWidget(context, columns[data[i].indexOf(row)]),
-                ),
-              )
-              .toList(),
-        )
-    ];
+    final rows = <DataRow>[];
+
+    for (var i = 0; i < data.length; i++) {
+      final row = data[i];
+      final cells = <DataCell>[];
+
+      for (var j = 0; j < row.length; j++) {
+        final cell = row[j];
+        cells.add(DataCell(cell.renderWidget(context, columns[i])));
+      }
+
+      rows.add(DataRow(cells: cells));
+    }
+
+    return rows;
   }
 }
 
