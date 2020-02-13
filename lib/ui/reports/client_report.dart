@@ -2,13 +2,11 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
-import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -235,25 +233,14 @@ ReportResult clientReport(
           break;
       }
 
-      if (reportsUIState.filters.containsKey(column)) {
-        final filter = reportsUIState.filters[column];
-        if (filter.isNotEmpty) {
-          if (getReportColumnType(column) == ReportColumnType.number) {
-            if (!ReportResult.matchAmount(filter: filter, amount: amount)) {
-              skip = true;
-            }
-          } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
-            if (!ReportResult.matchDateTime(
-                filter: filter,
-                value: value,
-                reportsUIState: reportsUIState,
-                userCompany: userCompany)) {
-              skip = true;
-            }
-          } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
-            skip = true;
-          }
-        }
+      if (!ReportResult.matchField(
+        value: value,
+        amount: amount,
+        userCompany: userCompany,
+        reportsUIState: reportsUIState,
+        column: column,
+      )) {
+        skip = true;
       }
 
       if (amount != null) {

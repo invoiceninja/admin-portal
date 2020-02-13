@@ -283,6 +283,44 @@ class ReportResult {
   final List<String> allColumns;
   final List<List<ReportElement>> data;
 
+  static bool matchField({
+    String column,
+    String value,
+    double amount,
+    UserCompanyEntity userCompany,
+    ReportsUIState reportsUIState,
+  }) {
+
+    if (reportsUIState.filters.containsKey(column)) {
+      final filter = reportsUIState.filters[column];
+      if (filter.isNotEmpty) {
+        if (getReportColumnType(column) == ReportColumnType.number) {
+          if (!ReportResult.matchAmount(filter: filter, amount: amount)) {
+            return false;
+          }
+        } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
+          if (!ReportResult.matchDateTime(
+              filter: filter,
+              value: value,
+              reportsUIState: reportsUIState,
+              userCompany: userCompany)) {
+            return false;
+          }
+        } else {
+          if (!ReportResult.matchString(filter: filter, value: value)) {
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  static bool matchString({String filter, String value}) {
+    return value.toLowerCase().contains(filter.toLowerCase());
+  }
+
   static bool matchAmount({String filter, double amount}) {
     final String range = filter.replaceAll(',', '-') + '-';
     final List<String> parts = range.split('-');
