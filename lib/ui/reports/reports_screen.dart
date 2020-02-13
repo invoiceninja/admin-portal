@@ -378,7 +378,7 @@ class ReportResult {
         DataColumn(
           tooltip: localization.lookup(column),
           label: Text(
-            localization.lookup(column),
+            localization.lookup(column) + '   ',
             overflow: TextOverflow.ellipsis,
           ),
           onSort: onSortCallback,
