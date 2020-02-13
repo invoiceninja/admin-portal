@@ -87,8 +87,8 @@ ReportResult clientReport(
     columns = BuiltList(<String>[
       ClientReportFields.name,
       ClientReportFields.idNumber,
-      ClientReportFields.contactFullName,
-      ClientReportFields.contactEmail,
+      ClientReportFields.balance,
+      ClientReportFields.country,
     ]);
   }
 
