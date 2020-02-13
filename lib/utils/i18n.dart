@@ -14,6 +14,12 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'contact_full_name': 'Contact Full Name',
+      'contact_phone': 'Contact Phone',
+      'contact_custom_value1': 'Contact Custom Value 1',
+      'contact_custom_value2': 'Contact Custom Value 2',
+      'contact_custom_value3': 'Contact Custom Value 3',
+      'contact_custom_value4': 'Contact Custom Value 4',
       'shipping_address1': 'Shipping Street',
       'shipping_address2': 'Shipping Apt/Suite',
       'shipping_city': 'Shipping City',
@@ -41,7 +47,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refund': 'Refund',
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by :value',
-      'contact_email': 'Email',
+      'contact_email': 'Contact Email',
       'multiselect': 'Multiselect',
       'entity_state': 'State',
       'verify_password': 'Verify Password',
@@ -857,10 +863,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'all': 'All',
       'select': 'Select',
       'long_press_multiselect': 'Long-press Multiselect',
-      'custom_value_1': 'Custom Value 1',
-      'custom_value_2': 'Custom Value 2',
-      'custom_value_3': 'Custom Value 3',
-      'custom_value_4': 'Custom Value 4',
+      'custom_value1': 'Custom Value 1',
+      'custom_value2': 'Custom Value 2',
+      'custom_value3': 'Custom Value 3',
+      'custom_value4': 'Custom Value 4',
       'email_style_custom': 'Custom Email Style',
       'custom_message_dashboard': 'Custom Dashboard Message',
       'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
@@ -15719,13 +15725,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get threeTaxRates => _localizedValues[localeCode]['three_tax_rates'];
 
-  String get customValue1 => _localizedValues[localeCode]['custom_value_1'];
+  String get customValue1 => _localizedValues[localeCode]['custom_value1'];
 
-  String get customValue2 => _localizedValues[localeCode]['custom_value_2'];
+  String get customValue2 => _localizedValues[localeCode]['custom_value2'];
 
-  String get customValue3 => _localizedValues[localeCode]['custom_value_3'];
+  String get customValue3 => _localizedValues[localeCode]['custom_value3'];
 
-  String get customValue4 => _localizedValues[localeCode]['custom_value_4'];
+  String get customValue4 => _localizedValues[localeCode]['custom_value4'];
 
   String get emailStyleCustom =>
       _localizedValues[localeCode]['email_style_custom'];
@@ -16036,6 +16042,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get shippingCountry =>
       _localizedValues[localeCode]['shipping_country'];
+
+  String get contactFullName =>
+      _localizedValues[localeCode]['contact_full_name'];
+
+  String get contactPhone => _localizedValues[localeCode]['contact_phone'];
+
+  String get contactCustomValue1 =>
+      _localizedValues[localeCode]['contact_custom_value1'];
+
+  String get contactCustomValue2 =>
+      _localizedValues[localeCode]['contact_custom_value2'];
+
+  String get contactCustomValue3 =>
+      _localizedValues[localeCode]['contact_custom_value3'];
+
+  String get contactCustomValue4 =>
+      _localizedValues[localeCode]['contact_custom_value4'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
