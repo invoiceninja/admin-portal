@@ -58,80 +58,22 @@ abstract class DashboardUIState
   }
 
   String startDate(CompanyEntity company) {
-    final today = DateTime.now();
-    final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
-    final firstDayOfYear = DateTime.utc(
-        today.year, int.tryParse(company.firstMonthOfYear) ?? 0, 1);
-    switch (dateRange) {
-      case DateRange.last7Days:
-        final date = today.subtract(Duration(days: 7 * (1 + offset)));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.last30Days:
-        final date = today.subtract(Duration(days: 30 * (1 + offset)));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.thisMonth:
-        final date = addMonths(firstDayOfMonth, offset * -1);
-        return convertDateTimeToSqlDate(date);
-      case DateRange.lastMonth:
-        final date = addMonths(firstDayOfMonth, (1 + offset) * -1);
-        return convertDateTimeToSqlDate(date);
-      case DateRange.thisYear:
-        final date = addYears(firstDayOfYear, offset * -1);
-        return convertDateTimeToSqlDate(date);
-      case DateRange.lastYear:
-        final date = addYears(firstDayOfYear, (1 + offset) * -1);
-        return convertDateTimeToSqlDate(date);
-      default:
-        final startDate = customStartDate.isEmpty
-            ? DateTime.now()
-            : DateTime.parse(customStartDate);
-        final endDate = customEndDate.isEmpty
-            ? DateTime.now()
-            : DateTime.parse(customEndDate);
-        final days = endDate.difference(startDate).inDays;
-        return convertDateTimeToSqlDate(
-            startDate.subtract(Duration(days: days * offset)));
-    }
+    return calculateStartDate(
+      company: company,
+      offset: offset,
+      customEndDate: customEndDate,
+      customStartDate: customStartDate,
+      dateRange: dateRange,
+    );
   }
 
   String endDate(CompanyEntity company) {
-    final today = DateTime.now();
-    final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
-    final firstDayOfYear = DateTime.utc(
-        today.year, int.tryParse(company.firstMonthOfYear) ?? 0, 1);
-    switch (dateRange) {
-      case DateRange.last7Days:
-        final date = today.subtract(Duration(days: 7 * offset));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.last30Days:
-        final date = today.subtract(Duration(days: 30 * offset));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.thisMonth:
-        final date = addMonths(firstDayOfMonth, (offset - 1) * -1)
-            .subtract(Duration(days: 1));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.lastMonth:
-        final date =
-            addMonths(firstDayOfMonth, offset * -1).subtract(Duration(days: 1));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.thisYear:
-        final date = addYears(firstDayOfYear, (offset - 1) * -1)
-            .subtract(Duration(days: 1));
-        return convertDateTimeToSqlDate(date);
-      case DateRange.lastYear:
-        final date =
-            addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
-        return convertDateTimeToSqlDate(date);
-      default:
-        final startDate = customStartDate.isEmpty
-            ? DateTime.now()
-            : DateTime.parse(customStartDate);
-        final endDate = customEndDate.isEmpty
-            ? DateTime.now()
-            : DateTime.parse(customEndDate);
-        final days = endDate.difference(startDate).inDays;
-        return convertDateTimeToSqlDate(
-            endDate.subtract(Duration(days: days * offset)));
-    }
+    return calculateEndDate(
+      company: company,
+      offset: offset,
+      customEndDate: customEndDate,
+      customStartDate: customStartDate,
+      dateRange: dateRange,
+    );
   }
 }

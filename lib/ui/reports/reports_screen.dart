@@ -227,6 +227,19 @@ class _ReportDataTableState extends State<ReportDataTable> {
   }
 }
 
+enum ReportColumnType {
+  string,
+  date,
+}
+
+ReportColumnType getReportColumnType(String column) {
+  if (['updated_at', 'created_at'].contains(column)) {
+    return ReportColumnType.date;
+  } else {
+    return ReportColumnType.string;
+  }
+}
+
 class ReportResult {
   ReportResult({
     this.columns,
@@ -262,7 +275,7 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     return DataRow(cells: [
       for (String column in columns)
-        if (['updated_at', 'created_at'].contains(column))
+        if (getReportColumnType(column) == ReportColumnType.date)
           DataCell(AppDropdownButton<DateRange>(
             labelText: null,
             showBlank: true,

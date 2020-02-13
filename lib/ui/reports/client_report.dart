@@ -66,10 +66,13 @@ ReportResult clientReport(UserCompanyEntity userCompany,
 
       if (reportsUIState.filters.containsKey(column)) {
         final filter = reportsUIState.filters[column];
-        if (filter.isNotEmpty &&
-            !value.toLowerCase().contains(filter.toLowerCase())) {
-          print('## Not matching $column filter: $filter');
-          skip = true;
+        if (filter.isNotEmpty) {
+          print('## FILTER: value: $value, filter: $filter');
+
+          if (!value.toLowerCase().contains(filter.toLowerCase())) {
+            print('## Not matching $column filter: $filter');
+            skip = true;
+          }
         }
       }
 
@@ -109,4 +112,3 @@ ReportResult clientReport(UserCompanyEntity userCompany,
     data: data,
   );
 }
-
