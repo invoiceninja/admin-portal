@@ -516,7 +516,6 @@ class ReportResult {
         rows.add(DataRow(cells: cells));
       }
     } else {
-      String lastValue;
       final Map<String, Map<String, double>> totals = {};
 
       for (var i = 0; i < data.length; i++) {
@@ -525,21 +524,28 @@ class ReportResult {
           final cell = row[j];
           if (cell is ReportAmount) {
             final column = columns[j];
-            print(
-                '## column: $column, sort: ${cell.sortString()}, groupBy: $groupBy');
-
             final value = row[columns.indexOf(groupBy)].sortString();
             if (!totals.containsKey(value)) {
-              totals[value] = {
-                'count': 0,
-                'total': 0
-              };
+              totals[value] = {'count': 0, 'total': 0};
             }
             totals[value]['count'] += 1;
             totals[value]['total'] += cell.value;
           }
         }
       }
+
+      totals.forEach((group, values) {
+        final cells = <DataCell>[];
+        for (var column in columns) {
+          String value = '';
+          if (column == groupBy) {
+            value = group + ' (' + values['count'].toString() + ')';
+          }
+          cells.add(DataCell(Text(value)));
+        }
+        rows.add(DataRow(cells: cells));
+      });
+
       print('## TOTALS: $totals');
       /*
       for (var i = 0; i < data.length; i++) {
