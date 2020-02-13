@@ -88,6 +88,7 @@ ReportResult clientReport(
       ClientReportFields.name,
       ClientReportFields.idNumber,
       ClientReportFields.balance,
+      ClientReportFields.paidToDate,
       ClientReportFields.country,
     ]);
   }

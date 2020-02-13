@@ -522,14 +522,19 @@ class ReportResult {
         final row = data[i];
         for (var j = 0; j < row.length; j++) {
           final cell = row[j];
-          if (cell is ReportAmount) {
-            final column = columns[j];
-            final value = row[columns.indexOf(groupBy)].sortString();
-            if (!totals.containsKey(value)) {
-              totals[value] = {'count': 0, 'total': 0};
-            }
+          final column = columns[j];
+          final value = row[columns.indexOf(groupBy)].sortString();
+          if (!totals.containsKey(value)) {
+            totals[value] = {'count': 0};
+          }
+          if (column == groupBy) {
             totals[value]['count'] += 1;
-            totals[value]['total'] += cell.value;
+          }
+          if (cell is ReportAmount) {
+            if (!totals[value].containsKey(column)) {
+              totals[value][column] = 0;
+            }
+            totals[value][column] += cell.value;
           }
         }
       }
@@ -540,6 +545,8 @@ class ReportResult {
           String value = '';
           if (column == groupBy) {
             value = group + ' (' + values['count'].floor().toString() + ')';
+          } else if (getReportColumnType(column) == ReportColumnType.number) {
+            //value = values
           }
           cells.add(DataCell(Text(value)));
         }
