@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -35,6 +36,12 @@ class ReportsScreen extends StatelessWidget {
     final state = viewModel.state;
     final reportsUIState = state.uiState.reportsUIState;
     final reportResult = viewModel.reportResult;
+
+    final hasCustomDate = reportsUIState.filters.keys.where((column) {
+      final filter = reportsUIState.filters[column];
+      return getReportColumnType(column) == ReportColumnType.dateTime &&
+          filter == DateRange.custom.toString();
+    }).isNotEmpty;
 
     return WillPopScope(
       onWillPop: () async {
@@ -79,19 +86,19 @@ class ReportsScreen extends StatelessWidget {
                   onChanged: (dynamic value) =>
                       viewModel.onSettingsChanged(report: value),
                   items: [
-                    kReportActivity,
-                    kReportAging,
+                    //kReportActivity,
+                    //kReportAging,
                     kReportClient,
-                    kReportCredit,
-                    kReportDocument,
-                    kReportExpense,
-                    kReportInvoice,
-                    kReportPayment,
-                    kReportProduct,
-                    kReportProfitAndLoss,
-                    kReportTask,
-                    kReportTaxRate,
-                    kReportQuote,
+                    //kReportCredit,
+                    //kReportDocument,
+                    //kReportExpense,
+                    //kReportInvoice,
+                    //kReportPayment,
+                    //kReportProduct,
+                    //kReportProfitAndLoss,
+                    //kReportTask,
+                    //kReportTaxRate,
+                    //kReportQuote,
                   ]
                       .map((report) => DropdownMenuItem(
                             value: report,
@@ -99,6 +106,13 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                if (hasCustomDate) ...[
+                  DatePicker(
+                    labelText: localization.startDate,
+                    //selectedDate: _settings.compareStartDate,
+                    //onSelected: (date) => _settings.compareStartDate = date,
+                  ),
+                ]
               ],
             ),
             Row(
@@ -423,8 +437,6 @@ class ReportAmount extends ReportElement {
 
   @override
   Widget renderWidget(BuildContext context, String column) {
-    print(
-        '## renderAmount: $column - COLUMN TYPE ${getReportColumnType(column)}');
     return Text(formatNumber(value, context,
         currencyId: currencyId, formatNumberType: formatNumberType));
   }

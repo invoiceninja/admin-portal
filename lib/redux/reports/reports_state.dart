@@ -9,7 +9,7 @@ abstract class ReportsUIState
     implements Built<ReportsUIState, ReportsUIStateBuilder> {
   factory ReportsUIState() {
     return _$ReportsUIState._(
-      report: kReportActivity,
+      report: kReportClient,
       filters: BuiltMap<String, String>(),
     );
   }

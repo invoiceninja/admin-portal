@@ -23,7 +23,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
   final clientReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportClient)
           ? reportSettings[kReportClient]
-          : null;
+          : ReportSettingsEntity();
 
   if (clientReportSettings != null) {
     columns = clientReportSettings.columns;
