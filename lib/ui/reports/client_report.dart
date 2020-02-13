@@ -9,6 +9,51 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
+class ClientReportFields {
+  static const String clientId = 'client_id';
+  static const String name = 'name';
+  static const String website = 'website';
+  static const String privateNotes = 'private_notes';
+  static const String industry = 'industry';
+  static const String size = 'size';
+  static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String postCode = 'postal_code';
+  static const String phone = 'phone';
+  static const String country = 'country';
+  static const String shippingAddress1 = 'shipping_address1';
+  static const String shippingAddress2 = 'shipping_address2';
+  static const String shippingCity = 'shipping_city';
+  static const String shippingState = 'shipping_state';
+  static const String shippingPostalCode = 'shipping_postal_code';
+  static const String shippingCountry = 'shipping_country';
+  static const String customValue1 = 'custom_value1';
+  static const String customValue2 = 'custom_value2';
+  static const String customValue3 = 'custom_value3';
+  static const String customValue4 = 'custom_value4';
+  static const String createdBy = 'created_by';
+  static const String assignedTo = 'assigned_to';
+  static const String balance = 'balance';
+  static const String creditBalance = 'credit_balance';
+  static const String paidToDate = 'paid_to_date';
+  static const String idNumber = 'id_number';
+  static const String vatNumber = 'vat_number';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+  static const String contactId = 'contact_id';
+  static const String contactFirstName = 'contact_first_name';
+  static const String contactLastName = 'contact_last_name';
+  static const String contactEmail = 'contact_email';
+  static const String contactPhone = 'contact_phone';
+  static const String contactCustomValue1 = 'contact_custom_value1';
+  static const String contactCustomValue2 = 'contact_custom_value2';
+  static const String contactCustomValue3 = 'contact_custom_value3';
+  static const String contactCustomValue4 = 'contact_custom_value4';
+  static const String contactLastLogin = 'contact_last_login';
+}
+
 var memoizedClientReport = memo3((UserCompanyEntity userCompany,
         ReportsUIState reportsUIState,
         BuiltMap<String, ClientEntity> clientMap) =>
@@ -29,12 +74,14 @@ ReportResult clientReport(UserCompanyEntity userCompany,
     columns = clientReportSettings.columns;
   } else {
     columns = BuiltList(<String>[
-      ClientFields.name,
+      ClientReportFields.name,
+      ClientReportFields.idNumber,
     ]);
   }
 
   for (var clientId in clientMap.keys) {
     final client = clientMap[clientId];
+    final contact = client.primaryContact;
     if (client.isDeleted) {
       continue;
     }
@@ -47,44 +94,41 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       double amount;
 
       switch (column) {
-        case ClientFields.name:
+        case ClientReportFields.name:
           value = client.name;
           break;
-        case ClientFields.idNumber:
+        case ClientReportFields.idNumber:
           value = client.idNumber;
           break;
-        case ClientFields.vatNumber:
+        case ClientReportFields.vatNumber:
           value = client.vatNumber;
           break;
-        case ClientFields.state:
+        case ClientReportFields.state:
           value = client.state;
           break;
-        case ClientFields.createdAt:
+        case ClientReportFields.createdAt:
           value = convertTimestampToDateString(client.createdAt);
           break;
-        case ClientFields.assignedTo:
+        case ClientReportFields.assignedTo:
           value = userCompany
                   .company.userMap[client.assignedUserId]?.listDisplayName ??
               '';
           break;
-        case ClientFields.assignedToId:
-          value = client.assignedUserId;
-          break;
-        case ClientFields.createdBy:
+        case ClientReportFields.createdBy:
           value = userCompany
                   .company.userMap[client.createdUserId]?.listDisplayName ??
               '';
           break;
-        case ClientFields.createdById:
-          value = client.createdUserId;
-          break;
-        case ClientFields.updatedAt:
+        case ClientReportFields.updatedAt:
           value = convertTimestampToDateString(client.updatedAt);
           break;
-        case ClientFields.balance:
+        case ClientReportFields.contactLastLogin:
+          value = convertTimestampToDateString(contact.lastLogin);
+          break;
+        case ClientReportFields.balance:
           amount = client.balance;
           break;
-        case ClientFields.paidToDate:
+        case ClientReportFields.paidToDate:
           amount = client.paidToDate;
           break;
       }
@@ -163,19 +207,26 @@ ReportResult clientReport(UserCompanyEntity userCompany,
 
   return ReportResult(
     allColumns: [
-      ClientFields.name,
-      ClientFields.createdBy,
-      ClientFields.assignedTo,
-      ClientFields.balance,
-      ClientFields.paidToDate,
-      ClientFields.idNumber,
-      ClientFields.vatNumber,
-      ClientFields.state,
-      ClientFields.createdAt,
-      ClientFields.updatedAt,
-      ClientFields.clientId,
-      ClientFields.assignedToId,
-      ClientFields.createdById,
+      ClientReportFields.clientId,
+      ClientReportFields.name,
+      ClientReportFields.createdBy,
+      ClientReportFields.assignedTo,
+      ClientReportFields.balance,
+      ClientReportFields.paidToDate,
+      ClientReportFields.idNumber,
+      ClientReportFields.vatNumber,
+      ClientReportFields.state,
+      ClientReportFields.createdAt,
+      ClientReportFields.updatedAt,
+      ClientReportFields.contactId,
+      ClientReportFields.contactFirstName,
+      ClientReportFields.contactLastName,
+      ClientReportFields.contactEmail,
+      ClientReportFields.contactPhone,
+      ClientReportFields.contactCustomValue1,
+      ClientReportFields.contactCustomValue2,
+      ClientReportFields.contactCustomValue3,
+      ClientReportFields.contactCustomValue4,
     ],
     columns: columns.toList(),
     data: data,

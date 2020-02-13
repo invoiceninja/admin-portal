@@ -535,6 +535,7 @@ abstract class ClientEntity extends Object
 }
 
 class ContactFields {
+  static const String fullName = 'fullName';
   static const String firstName = 'firstName';
   static const String lastName = 'lastName';
   static const String email = 'email';
@@ -601,6 +602,9 @@ abstract class ContactEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'last_login')
+  int get lastLogin;
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();

@@ -526,6 +526,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'last_login',
+      serializers.serialize(object.lastLogin,
+          specifiedType: const FullType(int)),
     ];
     if (object.password != null) {
       result
@@ -643,6 +646,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_login':
+          result.lastLogin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1579,6 +1586,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String customValue4;
   @override
+  final int lastLogin;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1611,6 +1620,7 @@ class _$ContactEntity extends ContactEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.lastLogin,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1653,6 +1663,9 @@ class _$ContactEntity extends ContactEntity {
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
     }
+    if (lastLogin == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
+    }
   }
 
   @override
@@ -1678,6 +1691,7 @@ class _$ContactEntity extends ContactEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        lastLogin == other.lastLogin &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1708,18 +1722,18 @@ class _$ContactEntity extends ContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc(0, firstName.hashCode),
-                                                                                lastName.hashCode),
-                                                                            email.hashCode),
-                                                                        password.hashCode),
-                                                                    phone.hashCode),
-                                                                contactKey.hashCode),
-                                                            isPrimary.hashCode),
-                                                        sendInvoice.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            customValue3.hashCode),
-                                        customValue4.hashCode),
+                                                                            $jc($jc($jc(0, firstName.hashCode), lastName.hashCode),
+                                                                                email.hashCode),
+                                                                            password.hashCode),
+                                                                        phone.hashCode),
+                                                                    contactKey.hashCode),
+                                                                isPrimary.hashCode),
+                                                            sendInvoice.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        lastLogin.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1745,6 +1759,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('lastLogin', lastLogin)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1809,6 +1824,10 @@ class ContactEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  int _lastLogin;
+  int get lastLogin => _$this._lastLogin;
+  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1859,6 +1878,7 @@ class ContactEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _lastLogin = _$v.lastLogin;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1901,6 +1921,7 @@ class ContactEntityBuilder
             customValue2: customValue2,
             customValue3: customValue3,
             customValue4: customValue4,
+            lastLogin: lastLogin,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

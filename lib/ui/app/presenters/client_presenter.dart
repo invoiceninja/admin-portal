@@ -11,7 +11,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.contactEmail,
       ClientFields.idNumber,
       EntityFields.createdAt,
-      //ClientFields.lastLogin, // TODO implement
+      //ClientFields.contactLastLogin,
       ClientFields.balance,
       EntityFields.state,
     ];
