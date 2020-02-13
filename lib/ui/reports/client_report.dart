@@ -45,8 +45,7 @@ class ClientReportFields {
   static const String vatNumber = 'vat_number';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
-  static const String contactFirstName = 'contact_first_name';
-  static const String contactLastName = 'contact_last_name';
+  static const String contactFullName = 'contact_full_name';
   static const String contactEmail = 'contact_email';
   static const String contactPhone = 'contact_phone';
   static const String contactCustomValue1 = 'contact_custom_value1';
@@ -199,11 +198,8 @@ ReportResult clientReport(
         case ClientReportFields.updatedAt:
           value = convertTimestampToDateString(client.updatedAt);
           break;
-        case ClientReportFields.contactFirstName:
-          value = contact.firstName;
-          break;
-        case ClientReportFields.contactLastName:
-          value = contact.lastName;
+        case ClientReportFields.contactFullName:
+          value = contact.fullName;
           break;
         case ClientReportFields.contactEmail:
           value = contact.email;
@@ -343,8 +339,7 @@ ReportResult clientReport(
       ClientReportFields.vatNumber,
       ClientReportFields.createdAt,
       ClientReportFields.updatedAt,
-      ClientReportFields.contactFirstName,
-      ClientReportFields.contactLastName,
+      ClientReportFields.contactFullName,
       ClientReportFields.contactEmail,
       ClientReportFields.contactPhone,
       ClientReportFields.contactCustomValue1,
