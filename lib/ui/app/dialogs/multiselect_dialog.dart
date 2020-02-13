@@ -14,6 +14,7 @@ void multiselectDialog(
 
   showDialog<AlertDialog>(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: title,
       title: Text(title),
