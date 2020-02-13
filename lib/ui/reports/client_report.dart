@@ -69,7 +69,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       if (reportsUIState.filters.containsKey(column)) {
         final filter = reportsUIState.filters[column];
         if (filter.isNotEmpty) {
-          if (getReportColumnType(column) == ReportColumnType.date) {
+          if (getReportColumnType(column) == ReportColumnType.dateTime) {
             final startDate = calculateStartDate(
               dateRange: DateRange.valueOf(filter),
               company: userCompany.company,

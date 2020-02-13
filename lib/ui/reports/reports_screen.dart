@@ -229,12 +229,12 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
 enum ReportColumnType {
   string,
-  date,
+  dateTime,
 }
 
 ReportColumnType getReportColumnType(String column) {
   if (['updated_at', 'created_at'].contains(column)) {
-    return ReportColumnType.date;
+    return ReportColumnType.dateTime;
   } else {
     return ReportColumnType.string;
   }
@@ -275,7 +275,7 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     return DataRow(cells: [
       for (String column in columns)
-        if (getReportColumnType(column) == ReportColumnType.date)
+        if (getReportColumnType(column) == ReportColumnType.dateTime)
           DataCell(AppDropdownButton<DateRange>(
             labelText: null,
             showBlank: true,
@@ -395,9 +395,7 @@ class ReportValue extends ReportElement {
 
   @override
   Widget renderWidget(BuildContext context, String column) {
-    print('## renderValue: $column');
-    print('## COLUMN TYPE ${getReportColumnType(column)}');
-    if (getReportColumnType(column) == ReportColumnType.date) {
+    if (getReportColumnType(column) == ReportColumnType.dateTime) {
       return Text(formatDate(value, context, showTime: true));
     } else {
       return Text(value);
