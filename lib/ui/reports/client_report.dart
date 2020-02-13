@@ -10,10 +10,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 class ClientReportFields {
-  static const String clientId = 'client_id';
   static const String name = 'name';
   static const String website = 'website';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String industry = 'industry';
   static const String size = 'size';
   static const String address1 = 'address1';
@@ -42,7 +42,6 @@ class ClientReportFields {
   static const String vatNumber = 'vat_number';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
-  static const String contactId = 'contact_id';
   static const String contactFirstName = 'contact_first_name';
   static const String contactLastName = 'contact_last_name';
   static const String contactEmail = 'contact_email';
@@ -96,6 +95,15 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       switch (column) {
         case ClientReportFields.name:
           value = client.name;
+          break;
+        case ClientReportFields.website:
+          value = client.website;
+          break;
+        case ClientReportFields.privateNotes:
+          value = client.privateNotes;
+          break;
+        case ClientReportFields.publicNotes:
+          value = client.publicNotes;
           break;
         case ClientReportFields.idNumber:
           value = client.idNumber;
@@ -207,18 +215,38 @@ ReportResult clientReport(UserCompanyEntity userCompany,
 
   return ReportResult(
     allColumns: [
-      ClientReportFields.clientId,
       ClientReportFields.name,
+      ClientReportFields.website,
+      ClientReportFields.privateNotes,
+      ClientReportFields.publicNotes,
+      ClientReportFields.industry,
+      ClientReportFields.size,
+      ClientReportFields.address1,
+      ClientReportFields.address2,
+      ClientReportFields.city,
+      ClientReportFields.state,
+      ClientReportFields.postCode,
+      ClientReportFields.phone,
+      ClientReportFields.country,
+      ClientReportFields.shippingAddress1,
+      ClientReportFields.shippingAddress2,
+      ClientReportFields.shippingCity,
+      ClientReportFields.shippingState,
+      ClientReportFields.shippingPostalCode,
+      ClientReportFields.shippingCountry,
+      ClientReportFields.customValue1,
+      ClientReportFields.customValue2,
+      ClientReportFields.customValue3,
+      ClientReportFields.customValue4,
       ClientReportFields.createdBy,
       ClientReportFields.assignedTo,
       ClientReportFields.balance,
+      ClientReportFields.creditBalance,
       ClientReportFields.paidToDate,
       ClientReportFields.idNumber,
       ClientReportFields.vatNumber,
-      ClientReportFields.state,
       ClientReportFields.createdAt,
       ClientReportFields.updatedAt,
-      ClientReportFields.contactId,
       ClientReportFields.contactFirstName,
       ClientReportFields.contactLastName,
       ClientReportFields.contactEmail,
@@ -227,6 +255,7 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       ClientReportFields.contactCustomValue2,
       ClientReportFields.contactCustomValue3,
       ClientReportFields.contactCustomValue4,
+      ClientReportFields.contactLastLogin,
     ],
     columns: columns.toList(),
     data: data,
