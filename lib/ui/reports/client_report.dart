@@ -89,9 +89,21 @@ ReportResult clientReport(UserCompanyEntity userCompany,
               customStartDate: reportsUIState.customStartDate,
               customEndDate: reportsUIState.customEndDate,
             );
-            if (!(startDate.compareTo(value) <= 0 &&
-                endDate.compareTo(value) >= 0)) {
-              skip = true;
+            print('## datetime: $filter, $startDate, $endDate');
+            if (reportsUIState.customStartDate.isNotEmpty &&
+                reportsUIState.customEndDate.isNotEmpty) {
+              if (!(startDate.compareTo(value) <= 0 &&
+                  endDate.compareTo(value) >= 0)) {
+                skip = true;
+              }
+            } else if (reportsUIState.customStartDate.isNotEmpty) {
+              if (!(startDate.compareTo(value) <= 0)) {
+                skip = true;
+              }
+            } else if (reportsUIState.customEndDate.isNotEmpty) {
+              if (!(endDate.compareTo(value) >= 0)) {
+                skip = true;
+              }
             }
           } else if (!value.toLowerCase().contains(filter.toLowerCase())) {
             skip = true;
