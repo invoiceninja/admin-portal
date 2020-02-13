@@ -504,13 +504,9 @@ class ReportResult {
         DataRow(
           cells: data[i]
               .map(
-                (row) => DataCell(Container(
-                  child:
-                      row.renderWidget(context, columns[data[i].indexOf(row)]),
-                  constraints: BoxConstraints(
-                    minWidth: 80,
-                  ),
-                )),
+                (row) => DataCell(
+                  row.renderWidget(context, columns[data[i].indexOf(row)]),
+                ),
               )
               .toList(),
         )
