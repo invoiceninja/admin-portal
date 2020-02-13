@@ -76,7 +76,15 @@ ReportResult clientReport(UserCompanyEntity userCompany,
       if (reportsUIState.filters.containsKey(column)) {
         final filter = reportsUIState.filters[column];
         if (filter.isNotEmpty) {
-          if (getReportColumnType(column) == ReportColumnType.dateTime) {
+          if (getReportColumnType(column) == ReportColumnType.number) {
+            final String range = filter.replaceAll(',', '-') + '-';
+            final List<String> parts = range.split('-');
+            final min = parseDouble(parts[0]);
+            final max = parseDouble(parts[1]);
+            if (amount < min || (max > 0 && amount > max)) {
+              skip = true;
+            }
+          } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
             final startDate = calculateStartDate(
               dateRange: DateRange.valueOf(filter),
               company: userCompany.company,
@@ -89,7 +97,6 @@ ReportResult clientReport(UserCompanyEntity userCompany,
               customStartDate: reportsUIState.customStartDate,
               customEndDate: reportsUIState.customEndDate,
             );
-            print('## datetime: $filter, $startDate, $endDate');
             if (reportsUIState.customStartDate.isNotEmpty &&
                 reportsUIState.customEndDate.isNotEmpty) {
               if (!(startDate.compareTo(value) <= 0 &&

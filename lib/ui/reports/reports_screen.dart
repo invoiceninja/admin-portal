@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -253,11 +254,14 @@ class _ReportDataTableState extends State<ReportDataTable> {
 enum ReportColumnType {
   string,
   dateTime,
+  number,
 }
 
 ReportColumnType getReportColumnType(String column) {
   if (['updated_at', 'created_at'].contains(column)) {
     return ReportColumnType.dateTime;
+  } else if (['balance', 'paid_to_date'].contains(column)) {
+    return ReportColumnType.number;
   } else {
     return ReportColumnType.string;
   }
@@ -298,7 +302,14 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     return DataRow(cells: [
       for (String column in columns)
-        if (getReportColumnType(column) == ReportColumnType.dateTime)
+        if (getReportColumnType(column) == ReportColumnType.number)
+          DataCell(
+              DecoratedFormField(
+                controller: textEditingControllers[column],
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              )
+          )
+        else if (getReportColumnType(column) == ReportColumnType.dateTime)
           DataCell(AppDropdownButton<DateRange>(
             labelText: null,
             showBlank: true,
