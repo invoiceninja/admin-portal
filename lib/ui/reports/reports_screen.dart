@@ -326,6 +326,10 @@ class ReportResult {
               userCompany: userCompany)) {
             return false;
           }
+        } else if (getReportColumnType(column) == ReportColumnType.bool) {
+          if (filter != '$value') {
+            return false;
+          }
         } else {
           if (!ReportResult.matchString(filter: filter, value: value)) {
             return false;
