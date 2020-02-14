@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -671,8 +672,12 @@ class ReportBoolValue extends ReportElement {
   @override
   Widget renderWidget(BuildContext context, String column) {
     final localization = AppLocalization.of(context);
-    return Text(
-      value == true ? localization.yes : localization.no,
+    return SizedBox(
+      width: 80,
+      child: Text(
+        value == true ? localization.yes : localization.no,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 
