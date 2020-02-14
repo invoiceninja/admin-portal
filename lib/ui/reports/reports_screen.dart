@@ -279,6 +279,7 @@ enum ReportColumnType {
   string,
   dateTime,
   number,
+  bool,
 }
 
 ReportColumnType getReportColumnType(String column) {
@@ -286,6 +287,8 @@ ReportColumnType getReportColumnType(String column) {
     return ReportColumnType.dateTime;
   } else if (['balance', 'paid_to_date'].contains(column)) {
     return ReportColumnType.number;
+  } else if (['is_active'].contains(column)) {
+    return ReportColumnType.bool;
   } else {
     return ReportColumnType.string;
   }
@@ -413,7 +416,35 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     return DataRow(cells: [
       for (String column in columns)
-        if (getReportColumnType(column) == ReportColumnType.number)
+        if (getReportColumnType(column) == ReportColumnType.bool)
+          DataCell(AppDropdownButton<bool>(
+            labelText: null,
+            showBlank: true,
+            blankValue: null,
+            value: textEditingControllers[column].text == 'true'
+                ? true
+                : textEditingControllers[column].text == 'false' ? false : null,
+            onChanged: (dynamic value) {
+              if (value == null) {
+                textEditingControllers[column].text = '';
+                onFilterChanged(column, '');
+              } else {
+                textEditingControllers[column].text = value.toString();
+                onFilterChanged(column, value.toString());
+              }
+            },
+            items: [
+              DropdownMenuItem(
+                child: Text(AppLocalization.of(context).yes),
+                value: true,
+              ),
+              DropdownMenuItem(
+                child: Text(AppLocalization.of(context).no),
+                value: false,
+              ),
+            ],
+          ))
+        else if (getReportColumnType(column) == ReportColumnType.number)
           DataCell(DecoratedFormField(
             label: '',
             controller: textEditingControllers[column],
