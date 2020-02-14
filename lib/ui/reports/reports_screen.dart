@@ -274,9 +274,14 @@ class _ReportDataTableState extends State<ReportDataTable> {
     return Column(
       children: <Widget>[
         FormCard(
-          child: DataTable(
-            columns: reportResult.totalColumns(context),
-            rows: [],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              DataTable(
+                columns: reportResult.totalColumns(context),
+                rows: [],
+              ),
+            ],
           ),
         ),
         FormCard(
@@ -400,7 +405,7 @@ class ReportResult {
     DateRange dateRange = DateRange.last30Days;
     try {
       dateRange = DateRange.valueOf(filter);
-    } catch (e) {
+    } catch (exception) {
       //
     }
 
@@ -696,6 +701,10 @@ class ReportResult {
       DataColumn(
         label: Text(localization.currency),
         tooltip: localization.currency,
+      ),
+      DataColumn(
+        label: Text(localization.count),
+        tooltip: localization.count,
       ),
       for (String column in columns)
         if (getReportColumnType(column) == ReportColumnType.number)
