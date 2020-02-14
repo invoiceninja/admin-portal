@@ -654,6 +654,10 @@ class ReportResult {
                 } else {
                   customEndDate = convertDateTimeToSqlDate(addYears(date, 1));
                 }
+              } else if (getReportColumnType(column) == ReportColumnType.bool) {
+                filter = filter == AppLocalization.of(context).yes
+                    ? 'true'
+                    : filter == AppLocalization.of(context).no ? 'false' : '';
               }
               store.dispatch(
                 UpdateReportSettings(
