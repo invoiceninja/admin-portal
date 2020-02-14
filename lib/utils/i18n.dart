@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'totals': 'Totals',
       'blank': 'Blank',
       'day': 'Day',
       'month': 'Month',
@@ -14599,6 +14600,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get countSelected => _localizedValues[localeCode]['count_selected'];
 
   String get total => _localizedValues[localeCode]['total'];
+
+  String get totals => _localizedValues[localeCode]['totals'];
 
   String get percent => _localizedValues[localeCode]['percent'];
 

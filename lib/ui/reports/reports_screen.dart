@@ -193,13 +193,10 @@ class ReportsScreen extends StatelessWidget {
                 }),
               ],
             ),
-            FormCard(
-              child: ReportDataTable(
-                //key: ObjectKey(viewModel.reportResult.columns),
-                key: ValueKey(
-                    '${viewModel.state.isSaving} ${reportsUIState.group}'),
-                viewModel: viewModel,
-              ),
+            ReportDataTable(
+              key: ValueKey(
+                  '${viewModel.state.isSaving} ${reportsUIState.group}'),
+              viewModel: viewModel,
             )
           ],
         ),
@@ -274,27 +271,43 @@ class _ReportDataTableState extends State<ReportDataTable> {
             ?.reportSettings[state.uiState.reportsUIState.report] ??
         ReportSettingsEntity();
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        sortColumnIndex: reportSettings.sortIndex,
-        sortAscending: reportSettings.sortAscending,
-        columns: reportResult.tableColumns(
-            context,
-            (index, ascending) =>
-                widget.viewModel.onReportSorted(index, ascending)),
-        rows: [
-          reportResult.tableFilters(context,
-              _textEditingControllers[state.uiState.reportsUIState.report],
-              (column, value) {
-            widget.viewModel.onReportFiltersChanged(
-                context,
-                state.uiState.reportsUIState.filters
-                    .rebuild((b) => b..addAll({column: value})));
-          }),
-          ...reportResult.tableRows(context),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        FormCard(
+          child: DataTable(
+            columns: [
+              DataColumn(
+                label: Text(AppLocalization.of(context).totals),
+              )
+            ],
+            rows: [],
+          ),
+        ),
+        FormCard(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              sortColumnIndex: reportSettings.sortIndex,
+              sortAscending: reportSettings.sortAscending,
+              columns: reportResult.tableColumns(
+                  context,
+                      (index, ascending) =>
+                      widget.viewModel.onReportSorted(index, ascending)),
+              rows: [
+                reportResult.tableFilters(context,
+                    _textEditingControllers[state.uiState.reportsUIState.report],
+                        (column, value) {
+                      widget.viewModel.onReportFiltersChanged(
+                          context,
+                          state.uiState.reportsUIState.filters
+                              .rebuild((b) => b..addAll({column: value})));
+                    }),
+                ...reportResult.tableRows(context),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
