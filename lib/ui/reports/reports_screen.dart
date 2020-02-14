@@ -275,11 +275,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
       children: <Widget>[
         FormCard(
           child: DataTable(
-            columns: [
-              DataColumn(
-                label: Text(AppLocalization.of(context).totals),
-              )
-            ],
+            columns: reportResult.totalColumns(context),
             rows: [],
           ),
         ),
@@ -291,17 +287,18 @@ class _ReportDataTableState extends State<ReportDataTable> {
               sortAscending: reportSettings.sortAscending,
               columns: reportResult.tableColumns(
                   context,
-                      (index, ascending) =>
+                  (index, ascending) =>
                       widget.viewModel.onReportSorted(index, ascending)),
               rows: [
-                reportResult.tableFilters(context,
-                    _textEditingControllers[state.uiState.reportsUIState.report],
-                        (column, value) {
-                      widget.viewModel.onReportFiltersChanged(
-                          context,
-                          state.uiState.reportsUIState.filters
-                              .rebuild((b) => b..addAll({column: value})));
-                    }),
+                reportResult.tableFilters(
+                    context,
+                    _textEditingControllers[
+                        state.uiState.reportsUIState.report], (column, value) {
+                  widget.viewModel.onReportFiltersChanged(
+                      context,
+                      state.uiState.reportsUIState.filters
+                          .rebuild((b) => b..addAll({column: value})));
+                }),
                 ...reportResult.tableRows(context),
               ],
             ),
@@ -690,6 +687,27 @@ class ReportResult {
     }
 
     return rows;
+  }
+
+  List<DataColumn> totalColumns(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return [
+      DataColumn(
+        label: Text(localization.currency),
+        tooltip: localization.currency,
+      ),
+      for (String column in columns)
+        if (getReportColumnType(column) == ReportColumnType.number)
+          DataColumn(
+            tooltip: localization.lookup(column),
+            label: Text(
+              localization.lookup(column),
+              overflow: TextOverflow.ellipsis,
+            ),
+            numeric: true,
+          )
+    ];
   }
 }
 
