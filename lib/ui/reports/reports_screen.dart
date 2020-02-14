@@ -83,6 +83,7 @@ class ReportsScreen extends StatelessWidget {
           ),
         ),
         body: ListView(
+          key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group}'),
           children: <Widget>[
             FormCard(
               children: <Widget>[
@@ -195,7 +196,8 @@ class ReportsScreen extends StatelessWidget {
             FormCard(
               child: ReportDataTable(
                 //key: ObjectKey(viewModel.reportResult.columns),
-                key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group ?? ''}'),
+                key: ValueKey(
+                    '${viewModel.state.isSaving} ${reportsUIState.group}'),
                 viewModel: viewModel,
               ),
             )
@@ -388,7 +390,7 @@ class ReportResult {
     DateRange dateRange = DateRange.last30Days;
     try {
       dateRange = DateRange.valueOf(filter);
-    } catch(e) {
+    } catch (e) {
       //
     }
 
@@ -625,25 +627,38 @@ class ReportResult {
           String value = '';
           if (column == groupBy) {
             if (getReportColumnType(column) == ReportColumnType.dateTime) {
-              group = formatDate(group, context);
+              value = formatDate(group, context);
             } else if (group.isEmpty) {
-              group = AppLocalization.of(context).blank;
+              value = AppLocalization.of(context).blank;
             }
 
-            value = group + ' (' + values['count'].floor().toString() + ')';
+            value = value + ' (' + values['count'].floor().toString() + ')';
           } else if (getReportColumnType(column) == ReportColumnType.number) {
             value = formatNumber(values[column], context);
           }
           cells.add(DataCell(Text(value), onTap: () {
             if (column == groupBy) {
               String filter = group;
+              String customStartDate = '';
+              String customEndDate = '';
               if (getReportColumnType(column) == ReportColumnType.dateTime) {
                 filter = DateRange.custom.toString();
+                final date = DateTime.tryParse(group);
+                customStartDate = group;
+                if (reportState.subgroup == kReportGroupDay) {
+                  customEndDate = convertDateTimeToSqlDate(addDays(date, 1));
+                } else if (reportState.subgroup == kReportGroupMonth) {
+                  customEndDate = convertDateTimeToSqlDate(addMonths(date, 1));
+                } else {
+                  customEndDate = convertDateTimeToSqlDate(addYears(date, 1));
+                }
               }
               store.dispatch(
                 UpdateReportSettings(
                   report: reportState.report,
                   group: '',
+                  customStartDate: customStartDate,
+                  customEndDate: customEndDate,
                   filters: reportState.filters
                       .rebuild((b) => b..addAll({column: filter})),
                 ),

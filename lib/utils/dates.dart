@@ -21,6 +21,10 @@ DateTime addYears(DateTime dateTime, int offset) {
   return DateTime.utc(dateTime.year + offset, dateTime.month, dateTime.day);
 }
 
+DateTime addDays(DateTime dateTime, int offset) {
+  return dateTime.add(Duration(days: offset));
+}
+
 DateTime addMonths(DateTime dateTime, int offset) {
   final r = offset % 12;
   final q = (offset - r) ~/ 12;
