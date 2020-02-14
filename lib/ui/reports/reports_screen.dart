@@ -630,6 +630,8 @@ class ReportResult {
               value = formatDate(group, context);
             } else if (group.isEmpty) {
               value = AppLocalization.of(context).blank;
+            } else {
+              value = group;
             }
 
             value = value + ' (' + values['count'].floor().toString() + ')';
