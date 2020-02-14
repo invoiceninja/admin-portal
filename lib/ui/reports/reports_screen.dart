@@ -620,6 +620,9 @@ class ReportResult {
         for (var column in columns) {
           String value = '';
           if (column == groupBy) {
+            if (getReportColumnType(column) == ReportColumnType.dateTime) {
+              group = formatDate(group, context);
+            }
             value = group + ' (' + values['count'].floor().toString() + ')';
           } else if (getReportColumnType(column) == ReportColumnType.number) {
             value = formatNumber(values[column], context);
