@@ -245,6 +245,10 @@ const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';
 
+const String kReportGroupDay = 'day';
+const String kReportGroupMonth = 'month';
+const String kReportGroupYear = 'year';
+
 const String kActivityEmailInvoice = '6';
 
 const int kModuleRecurringInvoice = 1;

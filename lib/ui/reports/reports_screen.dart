@@ -132,7 +132,7 @@ class ReportsScreen extends StatelessWidget {
                 ),
                 if (getReportColumnType(reportsUIState.group) ==
                     ReportColumnType.dateTime)
-                  AppDropdownButton<ReportSubgroup>(
+                  AppDropdownButton<String>(
                       labelText: localization.subgroup,
                       value: reportsUIState.subgroup,
                       blankValue: '',
@@ -144,15 +144,15 @@ class ReportsScreen extends StatelessWidget {
                       items: [
                         DropdownMenuItem(
                           child: Text(localization.day),
-                          value: ReportSubgroup.day,
+                          value: kReportGroupDay,
                         ),
                         DropdownMenuItem(
                           child: Text(localization.month),
-                          value: ReportSubgroup.month,
+                          value: kReportGroupMonth,
                         ),
                         DropdownMenuItem(
                           child: Text(localization.year),
-                          value: ReportSubgroup.year,
+                          value: kReportGroupYear,
                         ),
                       ]),
                 if (hasCustomDate) ...[
@@ -306,12 +306,6 @@ enum ReportColumnType {
   dateTime,
   number,
   bool,
-}
-
-enum ReportSubgroup {
-  day,
-  month,
-  year,
 }
 
 ReportColumnType getReportColumnType(String column) {
