@@ -131,7 +131,7 @@ class ReportsScreenVM {
         String customEndDate,
       }) {
         final reportState = state.uiState.reportsUIState;
-        if (reportState.group != group) {
+        if (group != null && reportState.group != group) {
           store.dispatch(UpdateReportSettings(
             report: report ?? reportState.report,
             group: group,
