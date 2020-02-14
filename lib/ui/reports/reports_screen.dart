@@ -408,6 +408,7 @@ class ReportResult {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          numeric: getReportColumnType(column) == ReportColumnType.number,
           onSort: onSortCallback,
         )
     ];
@@ -670,7 +671,9 @@ class ReportBoolValue extends ReportElement {
   @override
   Widget renderWidget(BuildContext context, String column) {
     final localization = AppLocalization.of(context);
-    return Text(value == true ? localization.yes : localization.no);
+    return Text(
+      value == true ? localization.yes : localization.no,
+    );
   }
 
   @override
