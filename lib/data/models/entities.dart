@@ -210,13 +210,13 @@ abstract class BaseEntity implements SelectableEntity {
       ? kEntityStateActive
       : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
 
-  ReportStringValue getReportValue({String value}) =>
+  ReportStringValue getReportString({String value}) =>
       ReportStringValue(entityId: id, entityType: entityType, value: value);
 
   ReportBoolValue getReportBool({bool value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
 
-  ReportNumberValue getReportAmount(
+  ReportNumberValue getReportNumber(
           {double value,
           String currencyId,
           FormatNumberType formatNumberType}) =>

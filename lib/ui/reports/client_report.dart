@@ -249,9 +249,10 @@ ReportResult clientReport(
       if (value.runtimeType == bool) {
         row.add(client.getReportBool(value: value));
       } else if (value.runtimeType == double) {
-        row.add(client.getReportAmount(value: value));
+        row.add(client.getReportNumber(
+            value: value, currencyId: client.settings.currencyId));
       } else {
-        row.add(client.getReportValue(value: value));
+        row.add(client.getReportString(value: value));
       }
     }
 
