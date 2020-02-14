@@ -279,7 +279,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
             children: <Widget>[
               DataTable(
                 columns: reportResult.totalColumns(context),
-                rows: [],
+                rows: reportResult.totalRows(context),
               ),
             ],
           ),
@@ -717,6 +717,40 @@ class ReportResult {
             numeric: true,
           )
     ];
+  }
+
+  List<DataRow> totalRows(BuildContext context) {
+    final rows = <DataRow>[];
+
+    final Map<String, Map<String, double>> totals = {};
+
+    for (var i = 0; i < data.length; i++) {
+      final row = data[i];
+      final cells = <DataCell>[
+        DataCell(Text('')),
+        DataCell(Text('')),
+      ];
+      for (var j = 0; j < row.length; j++) {
+        final cell = row[j];
+        final column = columns[j];
+        if (getReportColumnType(column) == ReportColumnType.number) {
+          cells.add(DataCell(cell.renderWidget(context, column)));
+          final String currencyId = (cell as ReportNumberValue).currencyId;
+
+          if (!totals.containsKey(currencyId)) {
+            totals[currencyId] = {'count': 0};
+          }
+          if (!totals[currencyId].containsKey(column)) {
+            totals[currencyId][column] = 0;
+          }
+          totals[currencyId][column] += cell.value;
+        }
+      }
+      rows.add(DataRow(cells: cells));
+    }
+
+    print('## TOTALS: $totals');
+    return rows;
   }
 }
 
