@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'blank': 'Blank',
       'day': 'Day',
       'month': 'Month',
       'year': 'Year',
@@ -16084,6 +16085,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get month => _localizedValues[localeCode]['month'];
 
   String get year => _localizedValues[localeCode]['year'];
+
+  String get blank => _localizedValues[localeCode]['blank'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

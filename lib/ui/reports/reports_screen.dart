@@ -134,10 +134,7 @@ class ReportsScreen extends StatelessWidget {
                   AppDropdownButton<String>(
                       labelText: localization.subgroup,
                       value: reportsUIState.subgroup,
-                      blankValue: '',
-                      showBlank: true,
                       onChanged: (dynamic value) {
-                        print('Subgroup: onChanged - $value');
                         viewModel.onSettingsChanged(subgroup: value);
                       },
                       items: [
@@ -249,7 +246,6 @@ class _ReportDataTableState extends State<ReportDataTable> {
   }
 
   void _onChanged(String column, String value) {
-    print('## On changed - column: $column - $value');
     final state = widget.viewModel.state;
     widget.viewModel.onReportFiltersChanged(
         context,
@@ -622,7 +618,10 @@ class ReportResult {
           if (column == groupBy) {
             if (getReportColumnType(column) == ReportColumnType.dateTime) {
               group = formatDate(group, context);
+            } else if (group.isEmpty) {
+              group = AppLocalization.of(context).blank;
             }
+
             value = group + ' (' + values['count'].floor().toString() + ')';
           } else if (getReportColumnType(column) == ReportColumnType.number) {
             value = formatNumber(values[column], context);
@@ -631,8 +630,6 @@ class ReportResult {
         }
         rows.add(DataRow(cells: cells));
       });
-
-      print('## TOTALS: $totals');
     }
 
     return rows;
