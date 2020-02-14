@@ -721,20 +721,16 @@ class ReportResult {
 
   List<DataRow> totalRows(BuildContext context) {
     final rows = <DataRow>[];
+    final store = StoreProvider.of<AppState>(context);
 
     final Map<String, Map<String, double>> totals = {};
 
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
-      final cells = <DataCell>[
-        DataCell(Text('')),
-        DataCell(Text('')),
-      ];
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
         if (getReportColumnType(column) == ReportColumnType.number) {
-          cells.add(DataCell(cell.renderWidget(context, column)));
           final String currencyId = (cell as ReportNumberValue).currencyId;
 
           if (!totals.containsKey(currencyId)) {
@@ -746,8 +742,20 @@ class ReportResult {
           totals[currencyId][column] += cell.value;
         }
       }
-      rows.add(DataRow(cells: cells));
     }
+
+    totals.forEach((group, values) {
+      final cells = <DataCell>[
+        DataCell(Text(
+            store.state.staticState.currencyMap[group]?.listDisplayName ?? '')),
+        DataCell(Text('')),
+      ];
+
+      cells.add(DataCell(Text(group ?? '')));
+      cells.add(DataCell(Text(group ?? '')));
+
+      rows.add(DataRow(cells: cells));
+    });
 
     print('## TOTALS: $totals');
     return rows;
