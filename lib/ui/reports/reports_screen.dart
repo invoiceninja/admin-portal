@@ -117,7 +117,6 @@ class ReportsScreen extends StatelessWidget {
                   blankValue: '',
                   showBlank: true,
                   onChanged: (dynamic value) {
-                    print('Group: onChanged - $value');
                     viewModel.onSettingsChanged(group: value);
                   },
                   items: reportResult.columns
@@ -587,19 +586,34 @@ class ReportResult {
         for (var j = 0; j < row.length; j++) {
           final cell = row[j];
           final column = columns[j];
-          final value =
-              row[columns.indexOf(groupBy)].renderText(context, column);
-          if (!totals.containsKey(value)) {
-            totals[value] = {'count': 0};
-          }
-          if (column == groupBy) {
-            totals[value]['count'] += 1;
-          }
-          if (cell is ReportNumberValue) {
-            if (!totals[value].containsKey(column)) {
-              totals[value][column] = 0;
+          final columnIndex = columns.indexOf(groupBy);
+
+          String value = row[columnIndex].renderText(context, column);
+          print(
+              'Column: $column, Column Type: ${getReportColumnType(column)}, subgroup: ${reportState.subgroup}');
+
+          if (reportState.subgroup.isEmpty ||
+              getReportColumnType(column) == ReportColumnType.dateTime) {
+            if (getReportColumnType(reportState.group) ==
+                    ReportColumnType.dateTime &&
+                reportState.subgroup.isNotEmpty) {
+              if (reportState.subgroup == kReportGroupDay) {
+                value = convertDateTimeToSqlDate(DateTime.tryParse(value));
+              }
             }
-            totals[value][column] += cell.value;
+
+            if (!totals.containsKey(value)) {
+              totals[value] = {'count': 0};
+            }
+            if (column == groupBy) {
+              totals[value]['count'] += 1;
+            }
+            if (cell is ReportNumberValue) {
+              if (!totals[value].containsKey(column)) {
+                totals[value][column] = 0;
+              }
+              totals[value][column] += cell.value;
+            }
           }
         }
       }
