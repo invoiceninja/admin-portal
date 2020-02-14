@@ -51,7 +51,8 @@ class ReportsScreenVM {
     String report,
     String customStartDate,
     String customEndDate,
-    String groupBy,
+    String group,
+  String subgroup,
   }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
@@ -124,13 +125,15 @@ class ReportsScreenVM {
       },
       onSettingsChanged: ({
         String report,
-        String groupBy,
+        String group,
+        String subgroup,
         String customStartDate,
         String customEndDate,
       }) {
         store.dispatch(UpdateReportSettings(
           report: report ?? state.uiState.reportsUIState.report,
-          groupBy: groupBy,
+          group: group,
+          subgroup: subgroup,
           customStartDate: customStartDate,
           customEndDate: customEndDate,
         ));

@@ -23,8 +23,11 @@ class _$ReportsUIStateSerializer
       'report',
       serializers.serialize(object.report,
           specifiedType: const FullType(String)),
-      'groupBy',
-      serializers.serialize(object.groupBy,
+      'group',
+      serializers.serialize(object.group,
+          specifiedType: const FullType(String)),
+      'subgroup',
+      serializers.serialize(object.subgroup,
           specifiedType: const FullType(String)),
       'customStartDate',
       serializers.serialize(object.customStartDate,
@@ -57,8 +60,12 @@ class _$ReportsUIStateSerializer
           result.report = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'groupBy':
-          result.groupBy = serializers.deserialize(value,
+        case 'group':
+          result.group = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'subgroup':
+          result.subgroup = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'customStartDate':
@@ -87,7 +94,9 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String report;
   @override
-  final String groupBy;
+  final String group;
+  @override
+  final String subgroup;
   @override
   final String customStartDate;
   @override
@@ -100,7 +109,8 @@ class _$ReportsUIState extends ReportsUIState {
 
   _$ReportsUIState._(
       {this.report,
-      this.groupBy,
+      this.group,
+      this.subgroup,
       this.customStartDate,
       this.customEndDate,
       this.filters})
@@ -108,8 +118,11 @@ class _$ReportsUIState extends ReportsUIState {
     if (report == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'report');
     }
-    if (groupBy == null) {
-      throw new BuiltValueNullFieldError('ReportsUIState', 'groupBy');
+    if (group == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'group');
+    }
+    if (subgroup == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'subgroup');
     }
     if (customStartDate == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'customStartDate');
@@ -135,7 +148,8 @@ class _$ReportsUIState extends ReportsUIState {
     if (identical(other, this)) return true;
     return other is ReportsUIState &&
         report == other.report &&
-        groupBy == other.groupBy &&
+        group == other.group &&
+        subgroup == other.subgroup &&
         customStartDate == other.customStartDate &&
         customEndDate == other.customEndDate &&
         filters == other.filters;
@@ -145,7 +159,9 @@ class _$ReportsUIState extends ReportsUIState {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, report.hashCode), groupBy.hashCode),
+            $jc(
+                $jc($jc($jc(0, report.hashCode), group.hashCode),
+                    subgroup.hashCode),
                 customStartDate.hashCode),
             customEndDate.hashCode),
         filters.hashCode));
@@ -155,7 +171,8 @@ class _$ReportsUIState extends ReportsUIState {
   String toString() {
     return (newBuiltValueToStringHelper('ReportsUIState')
           ..add('report', report)
-          ..add('groupBy', groupBy)
+          ..add('group', group)
+          ..add('subgroup', subgroup)
           ..add('customStartDate', customStartDate)
           ..add('customEndDate', customEndDate)
           ..add('filters', filters))
@@ -171,9 +188,13 @@ class ReportsUIStateBuilder
   String get report => _$this._report;
   set report(String report) => _$this._report = report;
 
-  String _groupBy;
-  String get groupBy => _$this._groupBy;
-  set groupBy(String groupBy) => _$this._groupBy = groupBy;
+  String _group;
+  String get group => _$this._group;
+  set group(String group) => _$this._group = group;
+
+  String _subgroup;
+  String get subgroup => _$this._subgroup;
+  set subgroup(String subgroup) => _$this._subgroup = subgroup;
 
   String _customStartDate;
   String get customStartDate => _$this._customStartDate;
@@ -195,7 +216,8 @@ class ReportsUIStateBuilder
   ReportsUIStateBuilder get _$this {
     if (_$v != null) {
       _report = _$v.report;
-      _groupBy = _$v.groupBy;
+      _group = _$v.group;
+      _subgroup = _$v.subgroup;
       _customStartDate = _$v.customStartDate;
       _customEndDate = _$v.customEndDate;
       _filters = _$v.filters?.toBuilder();
@@ -224,7 +246,8 @@ class ReportsUIStateBuilder
       _$result = _$v ??
           new _$ReportsUIState._(
               report: report,
-              groupBy: groupBy,
+              group: group,
+              subgroup: subgroup,
               customStartDate: customStartDate,
               customEndDate: customEndDate,
               filters: filters.build());

@@ -14,6 +14,10 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'day': 'Day',
+      'month': 'Month',
+      'year': 'Year',
+      'subgroup': 'Subgroup',
       'is_active': 'Is Active',
       'group_by': 'Group By',
       'credit_balance': 'Credit Balance',
@@ -16069,13 +16073,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get contactLastLogin =>
       _localizedValues[localeCode]['contact_last_login'];
 
-  String get groupBy =>
-      _localizedValues[localeCode]['group_by'];
+  String get groupBy => _localizedValues[localeCode]['group_by'];
 
-  String get isActive =>
-      _localizedValues[localeCode]['is_active'];
+  String get isActive => _localizedValues[localeCode]['is_active'];
 
+  String get subgroup => _localizedValues[localeCode]['subgroup'];
 
+  String get day => _localizedValues[localeCode]['day'];
+
+  String get month => _localizedValues[localeCode]['month'];
+
+  String get year => _localizedValues[localeCode]['year'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
@@ -16084,3 +16092,5 @@ mixin LocalizationsProvider on LocaleCodeAware {
         key;
   }
 }
+
+

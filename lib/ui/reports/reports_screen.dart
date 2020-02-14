@@ -112,13 +112,13 @@ class ReportsScreen extends StatelessWidget {
                       .toList(),
                 ),
                 AppDropdownButton<String>(
-                  labelText: localization.groupBy,
-                  value: reportsUIState.groupBy,
+                  labelText: localization.group,
+                  value: reportsUIState.group,
                   blankValue: '',
                   showBlank: true,
                   onChanged: (dynamic value) {
                     print('Group: onChanged - $value');
-                    viewModel.onSettingsChanged(groupBy: value);
+                    viewModel.onSettingsChanged(group: value);
                   },
                   items: reportResult.columns
                       .where((column) =>
@@ -130,6 +130,31 @@ class ReportsScreen extends StatelessWidget {
                           ))
                       .toList(),
                 ),
+                if (getReportColumnType(reportsUIState.group) ==
+                    ReportColumnType.dateTime)
+                  AppDropdownButton<ReportSubgroup>(
+                      labelText: localization.subgroup,
+                      value: reportsUIState.subgroup,
+                      blankValue: '',
+                      showBlank: true,
+                      onChanged: (dynamic value) {
+                        print('Subgroup: onChanged - $value');
+                        viewModel.onSettingsChanged(subgroup: value);
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.day),
+                          value: ReportSubgroup.day,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.month),
+                          value: ReportSubgroup.month,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.year),
+                          value: ReportSubgroup.year,
+                        ),
+                      ]),
                 if (hasCustomDate) ...[
                   DatePicker(
                     labelText: localization.startDate,
@@ -281,6 +306,12 @@ enum ReportColumnType {
   dateTime,
   number,
   bool,
+}
+
+enum ReportSubgroup {
+  day,
+  month,
+  year,
 }
 
 ReportColumnType getReportColumnType(String column) {
@@ -541,7 +572,7 @@ class ReportResult {
     final rows = <DataRow>[];
     final store = StoreProvider.of<AppState>(context);
     final reportState = store.state.uiState.reportsUIState;
-    final groupBy = reportState.groupBy;
+    final groupBy = reportState.group;
 
     if (groupBy.isEmpty) {
       for (var i = 0; i < data.length; i++) {
