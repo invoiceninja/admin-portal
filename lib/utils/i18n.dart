@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'is_active': 'Is Active',
       'group_by': 'Group By',
       'credit_balance': 'Credit Balance',
       'contact_last_login': 'Contact Last Login',
@@ -16070,6 +16071,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get groupBy =>
       _localizedValues[localeCode]['group_by'];
+
+  String get isActive =>
+      _localizedValues[localeCode]['is_active'];
+
 
 
   String lookup(String key) {

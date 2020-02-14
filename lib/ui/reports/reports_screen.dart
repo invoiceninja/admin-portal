@@ -304,8 +304,7 @@ class ReportResult {
 
   static bool matchField({
     String column,
-    String value,
-    double amount,
+    dynamic value,
     UserCompanyEntity userCompany,
     ReportsUIState reportsUIState,
   }) {
@@ -313,7 +312,7 @@ class ReportResult {
       final filter = reportsUIState.filters[column];
       if (filter.isNotEmpty) {
         if (getReportColumnType(column) == ReportColumnType.number) {
-          if (!ReportResult.matchAmount(filter: filter, amount: amount)) {
+          if (!ReportResult.matchAmount(filter: filter, amount: value)) {
             return false;
           }
         } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
@@ -530,7 +529,7 @@ class ReportResult {
           if (column == groupBy) {
             totals[value]['count'] += 1;
           }
-          if (cell is ReportAmount) {
+          if (cell is ReportNumberValue) {
             if (!totals[value].containsKey(column)) {
               totals[value][column] = 0;
             }
@@ -561,8 +560,9 @@ class ReportResult {
 }
 
 abstract class ReportElement {
-  ReportElement({this.entityType, this.entityId});
+  ReportElement({this.value, this.entityType, this.entityId});
 
+  final dynamic value;
   final EntityType entityType;
   final String entityId;
 
@@ -575,14 +575,12 @@ abstract class ReportElement {
   }
 }
 
-class ReportValue extends ReportElement {
-  ReportValue({
-    this.value,
+class ReportStringValue extends ReportElement {
+  ReportStringValue({
+    dynamic value,
     EntityType entityType,
     String entityId,
-  }) : super(entityType: entityType, entityId: entityId);
-
-  final String value;
+  }) : super(value: value, entityType: entityType, entityId: entityId);
 
   @override
   Widget renderWidget(BuildContext context, String column) {
@@ -599,16 +597,15 @@ class ReportValue extends ReportElement {
   }
 }
 
-class ReportAmount extends ReportElement {
-  ReportAmount({
-    this.value,
+class ReportNumberValue extends ReportElement {
+  ReportNumberValue({
+    dynamic value,
     EntityType entityType,
     String entityId,
     this.currencyId,
     this.formatNumberType = FormatNumberType.money,
-  }) : super(entityType: entityType, entityId: entityId);
+  }) : super(value: value, entityType: entityType, entityId: entityId);
 
-  final double value;
   final FormatNumberType formatNumberType;
   final String currencyId;
 
@@ -621,5 +618,24 @@ class ReportAmount extends ReportElement {
   @override
   String sortString() {
     return value.toString();
+  }
+}
+
+class ReportBoolValue extends ReportElement {
+  ReportBoolValue({
+    dynamic value,
+    EntityType entityType,
+    String entityId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    final localization = AppLocalization.of(context);
+    return Text(value == true ? localization.yes : localization.no);
+  }
+
+  @override
+  String sortString() {
+    return '$value';
   }
 }

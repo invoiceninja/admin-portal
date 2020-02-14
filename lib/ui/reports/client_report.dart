@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 class ClientReportFields {
@@ -41,8 +42,6 @@ class ClientReportFields {
   static const String paidToDate = 'paid_to_date';
   static const String idNumber = 'id_number';
   static const String vatNumber = 'vat_number';
-  static const String createdAt = 'created_at';
-  static const String updatedAt = 'updated_at';
   static const String contactFullName = 'contact_full_name';
   static const String contactEmail = 'contact_email';
   static const String contactPhone = 'contact_phone';
@@ -51,6 +50,9 @@ class ClientReportFields {
   static const String contactCustomValue3 = 'contact_custom_value3';
   static const String contactCustomValue4 = 'contact_custom_value4';
   static const String contactLastLogin = 'contact_last_login';
+  static const String isActive = 'is_active';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
 }
 
 var memoizedClientReport = memo6((
@@ -104,8 +106,7 @@ ReportResult clientReport(
     final List<ReportElement> row = [];
 
     for (var column in columns) {
-      String value = '';
-      double amount;
+      dynamic value = '';
 
       switch (column) {
         case ClientReportFields.name:
@@ -183,9 +184,6 @@ ReportResult clientReport(
         case ClientReportFields.vatNumber:
           value = client.vatNumber;
           break;
-        case ClientReportFields.createdAt:
-          value = convertTimestampToDateString(client.createdAt);
-          break;
         case ClientReportFields.assignedTo:
           value = userCompany
                   .company.userMap[client.assignedUserId]?.listDisplayName ??
@@ -195,9 +193,6 @@ ReportResult clientReport(
           value = userCompany
                   .company.userMap[client.createdUserId]?.listDisplayName ??
               '';
-          break;
-        case ClientReportFields.updatedAt:
-          value = convertTimestampToDateString(client.updatedAt);
           break;
         case ClientReportFields.contactFullName:
           value = contact.fullName;
@@ -224,19 +219,27 @@ ReportResult clientReport(
           value = convertTimestampToDateString(contact.lastLogin);
           break;
         case ClientReportFields.balance:
-          amount = client.balance;
+          value = client.balance;
           break;
         case ClientReportFields.creditBalance:
-          amount = client.creditBalance;
+          value = client.creditBalance;
           break;
         case ClientReportFields.paidToDate:
-          amount = client.paidToDate;
+          value = client.paidToDate;
+          break;
+        case ClientReportFields.isActive:
+          value = client.isActive;
+          break;
+        case ClientReportFields.updatedAt:
+          value = convertTimestampToDateString(client.updatedAt);
+          break;
+        case ClientReportFields.createdAt:
+          value = convertTimestampToDateString(client.createdAt);
           break;
       }
 
       if (!ReportResult.matchField(
         value: value,
-        amount: amount,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: column,
@@ -244,8 +247,10 @@ ReportResult clientReport(
         skip = true;
       }
 
-      if (amount != null) {
-        row.add(client.getReportAmount(value: amount));
+      if (value.runtimeType == bool) {
+        row.add(client.getReportBool(value: value));
+      } else if (value.runtimeType == double) {
+        row.add(client.getReportAmount(value: value));
       } else {
         row.add(client.getReportValue(value: value));
       }
@@ -304,8 +309,6 @@ ReportResult clientReport(
       ClientReportFields.paidToDate,
       ClientReportFields.idNumber,
       ClientReportFields.vatNumber,
-      ClientReportFields.createdAt,
-      ClientReportFields.updatedAt,
       ClientReportFields.contactFullName,
       ClientReportFields.contactEmail,
       ClientReportFields.contactPhone,
@@ -314,6 +317,9 @@ ReportResult clientReport(
       ClientReportFields.contactCustomValue3,
       ClientReportFields.contactCustomValue4,
       ClientReportFields.contactLastLogin,
+      ClientReportFields.isActive,
+      ClientReportFields.createdAt,
+      ClientReportFields.updatedAt,
     ],
     columns: columns.toList(),
     data: data,
