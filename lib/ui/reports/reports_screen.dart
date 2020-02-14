@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
@@ -194,7 +195,7 @@ class ReportsScreen extends StatelessWidget {
             FormCard(
               child: ReportDataTable(
                 //key: ObjectKey(viewModel.reportResult.columns),
-                key: ValueKey(viewModel.state.isSaving),
+                key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group ?? ''}'),
                 viewModel: viewModel,
               ),
             )
@@ -384,14 +385,21 @@ class ReportResult {
     UserCompanyEntity userCompany,
     ReportsUIState reportsUIState,
   }) {
+    DateRange dateRange = DateRange.last30Days;
+    try {
+      dateRange = DateRange.valueOf(filter);
+    } catch(e) {
+      //
+    }
+
     final startDate = calculateStartDate(
-      dateRange: DateRange.valueOf(filter),
+      dateRange: dateRange,
       company: userCompany.company,
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
     );
     final endDate = calculateEndDate(
-      dateRange: DateRange.valueOf(filter),
+      dateRange: dateRange,
       company: userCompany.company,
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
@@ -626,7 +634,22 @@ class ReportResult {
           } else if (getReportColumnType(column) == ReportColumnType.number) {
             value = formatNumber(values[column], context);
           }
-          cells.add(DataCell(Text(value)));
+          cells.add(DataCell(Text(value), onTap: () {
+            if (column == groupBy) {
+              String filter = group;
+              if (getReportColumnType(column) == ReportColumnType.dateTime) {
+                filter = DateRange.custom.toString();
+              }
+              store.dispatch(
+                UpdateReportSettings(
+                  report: reportState.report,
+                  group: '',
+                  filters: reportState.filters
+                      .rebuild((b) => b..addAll({column: filter})),
+                ),
+              );
+            }
+          }));
         }
         rows.add(DataRow(cells: cells));
       });
