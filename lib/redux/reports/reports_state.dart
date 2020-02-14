@@ -13,7 +13,7 @@ abstract class ReportsUIState
       customStartDate: '',
       customEndDate: '',
       group: '',
-      subgroup: '',
+      subgroup: kReportGroupDay,
       filters: BuiltMap<String, String>(),
     );
   }

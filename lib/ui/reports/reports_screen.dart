@@ -589,31 +589,28 @@ class ReportResult {
           final columnIndex = columns.indexOf(groupBy);
 
           String value = row[columnIndex].renderText(context, column);
-          print(
-              'Column: $column, Column Type: ${getReportColumnType(column)}, subgroup: ${reportState.subgroup}');
 
-          if (reportState.subgroup.isEmpty ||
-              getReportColumnType(column) == ReportColumnType.dateTime) {
-            if (getReportColumnType(reportState.group) ==
-                    ReportColumnType.dateTime &&
-                reportState.subgroup.isNotEmpty) {
-              if (reportState.subgroup == kReportGroupDay) {
-                value = convertDateTimeToSqlDate(DateTime.tryParse(value));
-              }
+          if (getReportColumnType(reportState.group) ==
+              ReportColumnType.dateTime) {
+            value = convertDateTimeToSqlDate(DateTime.tryParse(value));
+            if (reportState.subgroup == kReportGroupYear) {
+              value = value.substring(0, 4) + '-01-01';
+            } else if (reportState.subgroup == kReportGroupMonth) {
+              value = value.substring(0, 7) + '-01';
             }
+          }
 
-            if (!totals.containsKey(value)) {
-              totals[value] = {'count': 0};
+          if (!totals.containsKey(value)) {
+            totals[value] = {'count': 0};
+          }
+          if (column == groupBy) {
+            totals[value]['count'] += 1;
+          }
+          if (cell is ReportNumberValue) {
+            if (!totals[value].containsKey(column)) {
+              totals[value][column] = 0;
             }
-            if (column == groupBy) {
-              totals[value]['count'] += 1;
-            }
-            if (cell is ReportNumberValue) {
-              if (!totals[value].containsKey(column)) {
-                totals[value][column] = 0;
-              }
-              totals[value][column] += cell.value;
-            }
+            totals[value][column] += cell.value;
           }
         }
       }
