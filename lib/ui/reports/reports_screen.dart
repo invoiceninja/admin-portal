@@ -492,9 +492,12 @@ class ReportResult {
               final index = columns.indexOf(column);
               return data
                   .where((row) =>
-                      row[index].sortString().toLowerCase().contains(filter) &&
-                      row[index].sortString().trim().isNotEmpty)
-                  .map((row) => row[index].sortString())
+                      row[index]
+                          .renderText(context, column)
+                          .toLowerCase()
+                          .contains(filter) &&
+                      row[index].renderText(context, column).trim().isNotEmpty)
+                  .map((row) => row[index].renderText(context, column))
                   .toSet()
                   .toList();
             },
@@ -557,7 +560,8 @@ class ReportResult {
         for (var j = 0; j < row.length; j++) {
           final cell = row[j];
           final column = columns[j];
-          final value = row[columns.indexOf(groupBy)].sortString();
+          final value =
+              row[columns.indexOf(groupBy)].renderText(context, column);
           if (!totals.containsKey(value)) {
             totals[value] = {'count': 0};
           }
@@ -605,7 +609,7 @@ abstract class ReportElement {
     throw 'Error: need to override renderWidget()';
   }
 
-  String sortString() {
+  String renderText(BuildContext context, String column) {
     throw 'Error: need to override sortString()';
   }
 }
@@ -627,7 +631,7 @@ class ReportStringValue extends ReportElement {
   }
 
   @override
-  String sortString() {
+  String renderText(BuildContext context, String column) {
     return value;
   }
 }
@@ -651,7 +655,7 @@ class ReportNumberValue extends ReportElement {
   }
 
   @override
-  String sortString() {
+  String renderText(BuildContext context, String column) {
     return value.toString();
   }
 }
@@ -670,7 +674,8 @@ class ReportBoolValue extends ReportElement {
   }
 
   @override
-  String sortString() {
-    return '$value';
+  String renderText(BuildContext context, String column) {
+    final localization = AppLocalization.of(context);
+    return value == true ? localization.yes : localization.no;
   }
 }

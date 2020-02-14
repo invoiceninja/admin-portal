@@ -267,8 +267,8 @@ ReportResult clientReport(
       return 0;
     }
 
-    final String valueA = rowA[clientReportSettings.sortIndex].sortString();
-    final String valueB = rowB[clientReportSettings.sortIndex].sortString();
+    final String valueA = rowA[clientReportSettings.sortIndex].value;
+    final String valueB = rowB[clientReportSettings.sortIndex].value;
 
     if (clientReportSettings.sortAscending) {
       return valueA.compareTo(valueB);
