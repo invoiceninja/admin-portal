@@ -12,7 +12,7 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
       ..customEndDate = action.customEndDate ?? state.customEndDate
       ..filters.replace(action.filters ?? state.filters));
   } else if (action is SelectCompany) {
-    //return state.rebuild((b) => b..currencyId = action.company.jcurrencyId);
+    //return state.rebuild((b) => b..currencyId = action.company.currencyId);
     // TODO re-enable
     return state;
   }

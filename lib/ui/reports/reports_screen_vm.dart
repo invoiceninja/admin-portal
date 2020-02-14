@@ -52,7 +52,7 @@ class ReportsScreenVM {
     String customStartDate,
     String customEndDate,
     String group,
-  String subgroup,
+    String subgroup,
   }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
@@ -130,13 +130,25 @@ class ReportsScreenVM {
         String customStartDate,
         String customEndDate,
       }) {
-        store.dispatch(UpdateReportSettings(
-          report: report ?? state.uiState.reportsUIState.report,
-          group: group,
-          subgroup: subgroup,
-          customStartDate: customStartDate,
-          customEndDate: customEndDate,
-        ));
+        final reportState = state.uiState.reportsUIState;
+        if (reportState.group != group) {
+          store.dispatch(UpdateReportSettings(
+            report: report ?? reportState.report,
+            group: group,
+            subgroup: subgroup,
+            customStartDate: '',
+            customEndDate: '',
+            filters: BuiltMap<String, String>(),
+          ));
+        } else {
+          store.dispatch(UpdateReportSettings(
+            report: report ?? reportState.report,
+            group: group,
+            subgroup: subgroup,
+            customStartDate: customStartDate,
+            customEndDate: customEndDate,
+          ));
+        }
       },
     );
   }
