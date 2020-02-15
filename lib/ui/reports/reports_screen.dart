@@ -280,28 +280,29 @@ class _ReportDataTableState extends State<ReportDataTable> {
           ),
         ),
         FormCard(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              sortColumnIndex: reportSettings.sortIndex,
-              sortAscending: reportSettings.sortAscending,
-              columns: reportResult.tableColumns(
-                  context,
-                  (index, ascending) =>
-                      widget.viewModel.onReportSorted(index, ascending)),
-              rows: [
-                reportResult.tableFilters(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              DataTable(
+                sortColumnIndex: reportSettings.sortIndex,
+                sortAscending: reportSettings.sortAscending,
+                columns: reportResult.tableColumns(
                     context,
-                    _textEditingControllers[
-                        state.uiState.reportsUIState.report], (column, value) {
-                  widget.viewModel.onReportFiltersChanged(
-                      context,
-                      state.uiState.reportsUIState.filters
-                          .rebuild((b) => b..addAll({column: value})));
-                }),
-                ...reportResult.tableRows(context),
-              ],
-            ),
+                    (index, ascending) =>
+                        widget.viewModel.onReportSorted(index, ascending)),
+                rows: [
+                  reportResult.tableFilters(context,
+                      _textEditingControllers[state.uiState.reportsUIState.report],
+                      (column, value) {
+                    widget.viewModel.onReportFiltersChanged(
+                        context,
+                        state.uiState.reportsUIState.filters
+                            .rebuild((b) => b..addAll({column: value})));
+                  }),
+                  ...reportResult.tableRows(context),
+                ],
+              ),
+            ],
           ),
         ),
       ],
