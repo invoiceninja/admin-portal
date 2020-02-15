@@ -126,7 +126,7 @@ ReportResult clientReport(
           value = industryMap[client.industryId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.size:
-          value = sizeMap[client.sizeId].listDisplayName;
+          value = sizeMap[client.sizeId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.customValue1:
           value = client.customValue1;

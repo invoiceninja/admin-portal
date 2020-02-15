@@ -280,29 +280,28 @@ class _ReportDataTableState extends State<ReportDataTable> {
           ),
         ),
         FormCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              DataTable(
-                sortColumnIndex: reportSettings.sortIndex,
-                sortAscending: reportSettings.sortAscending,
-                columns: reportResult.tableColumns(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              sortColumnIndex: reportSettings.sortIndex,
+              sortAscending: reportSettings.sortAscending,
+              columns: reportResult.tableColumns(
+                  context,
+                  (index, ascending) =>
+                      widget.viewModel.onReportSorted(index, ascending)),
+              rows: [
+                reportResult.tableFilters(
                     context,
-                    (index, ascending) =>
-                        widget.viewModel.onReportSorted(index, ascending)),
-                rows: [
-                  reportResult.tableFilters(context,
-                      _textEditingControllers[state.uiState.reportsUIState.report],
-                      (column, value) {
-                    widget.viewModel.onReportFiltersChanged(
-                        context,
-                        state.uiState.reportsUIState.filters
-                            .rebuild((b) => b..addAll({column: value})));
-                  }),
-                  ...reportResult.tableRows(context),
-                ],
-              ),
-            ],
+                    _textEditingControllers[
+                        state.uiState.reportsUIState.report], (column, value) {
+                  widget.viewModel.onReportFiltersChanged(
+                      context,
+                      state.uiState.reportsUIState.filters
+                          .rebuild((b) => b..addAll({column: value})));
+                }),
+                ...reportResult.tableRows(context),
+              ],
+            ),
           ),
         ),
       ],
@@ -795,7 +794,7 @@ class ReportStringValue extends ReportElement {
     if (getReportColumnType(column) == ReportColumnType.dateTime) {
       return Text(formatDate(value, context, showTime: true));
     } else {
-      return Text(value);
+      return Text(value ?? '');
     }
   }
 
