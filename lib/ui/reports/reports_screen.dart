@@ -81,6 +81,23 @@ class ReportsScreen extends StatelessWidget {
                 ),
             ],
           ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(localization.columns),
+              onPressed: () {
+                multiselectDialog(
+                  context: context,
+                  onSelected: (selected) {
+                    viewModel.onReportColumnsChanged(context, selected);
+                  },
+                  options: reportResult.allColumns,
+                  selected: reportResult.columns.toList(),
+                  title: localization.editColumns,
+                  addTitle: localization.addColumn,
+                );
+              },
+            )
+          ],
         ),
         body: ListView(
           key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group}'),
@@ -169,28 +186,6 @@ class ReportsScreen extends StatelessWidget {
                         viewModel.onSettingsChanged(customEndDate: date),
                   ),
                 ]
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Builder(builder: (BuildContext context) {
-                  return FlatButton(
-                    child: Text(localization.editColumns.toUpperCase()),
-                    onPressed: () {
-                      multiselectDialog(
-                        context: context,
-                        onSelected: (selected) {
-                          viewModel.onReportColumnsChanged(context, selected);
-                        },
-                        options: reportResult.allColumns,
-                        selected: reportResult.columns.toList(),
-                        title: localization.editColumns,
-                        addTitle: localization.addColumn,
-                      );
-                    },
-                  );
-                }),
               ],
             ),
             ReportDataTable(
@@ -696,7 +691,7 @@ class ReportResult {
 
   List<DataColumn> totalColumns(BuildContext context) {
     final localization = AppLocalization.of(context);
-    columns.toList(). sort((String str1, String str2) => str1.compareTo(str2));
+    columns.toList().sort((String str1, String str2) => str1.compareTo(str2));
 
     return [
       DataColumn(
