@@ -725,6 +725,7 @@ class ReportResult {
 
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
+      bool countedRow = false;
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
@@ -733,6 +734,10 @@ class ReportResult {
 
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
+          }
+          if (!countedRow) {
+            totals[currencyId]['count']++;
+            countedRow = true;
           }
           if (!totals[currencyId].containsKey(column)) {
             totals[currencyId][column] = 0;
@@ -747,7 +752,7 @@ class ReportResult {
         DataCell(Text(
             store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
                 '')),
-        DataCell(Text(values.toString())),
+        DataCell(Text(values['count'].toInt().toString())),
       ];
 
       final List<String> fields = values.keys.toList()
