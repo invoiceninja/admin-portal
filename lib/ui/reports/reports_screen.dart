@@ -82,21 +82,23 @@ class ReportsScreen extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            FlatButton(
-              child: Text(localization.columns),
-              onPressed: () {
-                multiselectDialog(
-                  context: context,
-                  onSelected: (selected) {
-                    viewModel.onReportColumnsChanged(context, selected);
-                  },
-                  options: reportResult.allColumns,
-                  selected: reportResult.columns.toList(),
-                  title: localization.editColumns,
-                  addTitle: localization.addColumn,
-                );
-              },
-            )
+            Builder(builder: (BuildContext context) {
+              return FlatButton(
+                child: Text(localization.columns),
+                onPressed: () {
+                  multiselectDialog(
+                    context: context,
+                    onSelected: (selected) {
+                      viewModel.onReportColumnsChanged(context, selected);
+                    },
+                    options: reportResult.allColumns,
+                    selected: reportResult.columns.toList(),
+                    title: localization.editColumns,
+                    addTitle: localization.addColumn,
+                  );
+                },
+              );
+            }),
           ],
         ),
         body: ListView(
