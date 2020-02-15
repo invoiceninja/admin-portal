@@ -104,90 +104,104 @@ class ReportsScreen extends StatelessWidget {
         body: ListView(
           key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group}'),
           children: <Widget>[
-            FormCard(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                AppDropdownButton<String>(
-                  labelText: localization.report,
-                  value: reportsUIState.report,
-                  onChanged: (dynamic value) =>
-                      viewModel.onSettingsChanged(report: value),
-                  items: [
-                    //kReportActivity,
-                    //kReportAging,
-                    kReportClient,
-                    //kReportCredit,
-                    //kReportDocument,
-                    //kReportExpense,
-                    //kReportInvoice,
-                    //kReportPayment,
-                    //kReportProduct,
-                    //kReportProfitAndLoss,
-                    //kReportTask,
-                    //kReportTaxRate,
-                    //kReportQuote,
-                  ]
-                      .map((report) => DropdownMenuItem(
-                            value: report,
-                            child: Text(localization.lookup(report)),
-                          ))
-                      .toList(),
-                ),
-                AppDropdownButton<String>(
-                  labelText: localization.group,
-                  value: reportsUIState.group,
-                  blankValue: '',
-                  showBlank: true,
-                  onChanged: (dynamic value) {
-                    viewModel.onSettingsChanged(group: value);
-                  },
-                  items: reportResult.columns
-                      .where((column) =>
-                          getReportColumnType(column) !=
-                          ReportColumnType.number)
-                      .map((column) => DropdownMenuItem(
-                            child: Text(localization.lookup(column)),
-                            value: column,
-                          ))
-                      .toList(),
-                ),
-                if (getReportColumnType(reportsUIState.group) ==
-                    ReportColumnType.dateTime)
-                  AppDropdownButton<String>(
-                      labelText: localization.subgroup,
-                      value: reportsUIState.subgroup,
-                      onChanged: (dynamic value) {
-                        viewModel.onSettingsChanged(subgroup: value);
-                      },
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.day),
-                          value: kReportGroupDay,
+                Expanded(
+                  child: FormCard(
+                    children: <Widget>[
+                      AppDropdownButton<String>(
+                        labelText: localization.report,
+                        value: reportsUIState.report,
+                        onChanged: (dynamic value) =>
+                            viewModel.onSettingsChanged(report: value),
+                        items: [
+                          //kReportActivity,
+                          //kReportAging,
+                          kReportClient,
+                          //kReportCredit,
+                          //kReportDocument,
+                          //kReportExpense,
+                          //kReportInvoice,
+                          //kReportPayment,
+                          //kReportProduct,
+                          //kReportProfitAndLoss,
+                          //kReportTask,
+                          //kReportTaxRate,
+                          //kReportQuote,
+                        ]
+                            .map((report) => DropdownMenuItem(
+                                  value: report,
+                                  child: Text(localization.lookup(report)),
+                                ))
+                            .toList(),
+                      ),
+                      if (hasCustomDate) ...[
+                        DatePicker(
+                          labelText: localization.startDate,
+                          selectedDate: reportsUIState.customStartDate,
+                          allowClearing: true,
+                          onSelected: (date) =>
+                              viewModel.onSettingsChanged(customStartDate: date),
                         ),
-                        DropdownMenuItem(
-                          child: Text(localization.month),
-                          value: kReportGroupMonth,
+                        DatePicker(
+                          labelText: localization.endDate,
+                          selectedDate: reportsUIState.customEndDate,
+                          allowClearing: true,
+                          onSelected: (date) =>
+                              viewModel.onSettingsChanged(customEndDate: date),
                         ),
-                        DropdownMenuItem(
-                          child: Text(localization.year),
-                          value: kReportGroupYear,
-                        ),
-                      ]),
-                if (hasCustomDate) ...[
-                  DatePicker(
-                    labelText: localization.startDate,
-                    selectedDate: reportsUIState.customStartDate,
-                    allowClearing: true,
-                    onSelected: (date) =>
-                        viewModel.onSettingsChanged(customStartDate: date),
+                      ]
+                    ],
                   ),
-                  DatePicker(
-                    labelText: localization.endDate,
-                    selectedDate: reportsUIState.customEndDate,
-                    allowClearing: true,
-                    onSelected: (date) =>
-                        viewModel.onSettingsChanged(customEndDate: date),
+                ),
+                Expanded(
+                  child: FormCard(
+                    children: <Widget>[
+                      AppDropdownButton<String>(
+                        labelText: localization.group,
+                        value: reportsUIState.group,
+                        blankValue: '',
+                        showBlank: true,
+                        onChanged: (dynamic value) {
+                          viewModel.onSettingsChanged(group: value);
+                        },
+                        items: reportResult.columns
+                            .where((column) =>
+                                getReportColumnType(column) !=
+                                ReportColumnType.number)
+                            .map((column) => DropdownMenuItem(
+                                  child: Text(localization.lookup(column)),
+                                  value: column,
+                                ))
+                            .toList(),
+                      ),
+                      if (getReportColumnType(reportsUIState.group) ==
+                          ReportColumnType.dateTime)
+                        AppDropdownButton<String>(
+                            labelText: localization.subgroup,
+                            value: reportsUIState.subgroup,
+                            onChanged: (dynamic value) {
+                              viewModel.onSettingsChanged(subgroup: value);
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                child: Text(localization.day),
+                                value: kReportGroupDay,
+                              ),
+                              DropdownMenuItem(
+                                child: Text(localization.month),
+                                value: kReportGroupMonth,
+                              ),
+                              DropdownMenuItem(
+                                child: Text(localization.year),
+                                value: kReportGroupYear,
+                              ),
+                            ]),
+                    ],
                   ),
-                ]
+                )
               ],
             ),
             ReportDataTable(
