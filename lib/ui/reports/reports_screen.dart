@@ -696,7 +696,7 @@ class ReportResult {
 
   List<DataColumn> totalColumns(BuildContext context) {
     final localization = AppLocalization.of(context);
-    columns.sort((String str1, String str2) => str1.compareTo(str2));
+    columns.toList(). sort((String str1, String str2) => str1.compareTo(str2));
 
     return [
       DataColumn(

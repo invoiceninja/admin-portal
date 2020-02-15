@@ -66,6 +66,7 @@ class ReportsScreenVM {
           state.userCompany,
           state.uiState.reportsUIState,
           state.clientState.map,
+          state.userState.map,
           state.staticState.countryMap,
           state.staticState.industryMap,
           state.staticState.sizeMap,

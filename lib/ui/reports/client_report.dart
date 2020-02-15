@@ -54,21 +54,23 @@ class ClientReportFields {
   static const String updatedAt = 'updated_at';
 }
 
-var memoizedClientReport = memo6((
+var memoizedClientReport = memo7((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, CountryEntity> countryMap,
   BuiltMap<String, IndustryEntity> industryMap,
   BuiltMap<String, SizeEntity> sizeMap,
 ) =>
-    clientReport(userCompany, reportsUIState, clientMap, countryMap,
+    clientReport(userCompany, reportsUIState, clientMap, userMap, countryMap,
         industryMap, sizeMap));
 
 ReportResult clientReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, CountryEntity> countryMap,
   BuiltMap<String, IndustryEntity> industryMap,
   BuiltMap<String, SizeEntity> sizeMap,
@@ -184,14 +186,10 @@ ReportResult clientReport(
           value = client.vatNumber;
           break;
         case ClientReportFields.assignedTo:
-          value = userCompany
-                  .company.userMap[client.assignedUserId]?.listDisplayName ??
-              '';
+          value = userMap[client.assignedUserId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.createdBy:
-          value = userCompany
-                  .company.userMap[client.createdUserId]?.listDisplayName ??
-              '';
+          value = userMap[client.createdUserId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.contactFullName:
           value = contact.fullName;
