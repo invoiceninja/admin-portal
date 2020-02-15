@@ -696,6 +696,7 @@ class ReportResult {
 
   List<DataColumn> totalColumns(BuildContext context) {
     final localization = AppLocalization.of(context);
+    columns.sort((String str1, String str2) => str1.compareTo(str2));
 
     return [
       DataColumn(
@@ -730,8 +731,8 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        if (getReportColumnType(column) == ReportColumnType.number) {
-          final String currencyId = (cell as ReportNumberValue).currencyId;
+        if (cell is ReportNumberValue) {
+          final String currencyId = cell.currencyId;
 
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
@@ -744,15 +745,23 @@ class ReportResult {
       }
     }
 
-    totals.forEach((group, values) {
+    totals.forEach((currencyId, values) {
       final cells = <DataCell>[
         DataCell(Text(
-            store.state.staticState.currencyMap[group]?.listDisplayName ?? '')),
-        DataCell(Text('')),
+            store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
+                '')),
+        DataCell(Text(values.toString())),
       ];
 
-      cells.add(DataCell(Text(group ?? '')));
-      cells.add(DataCell(Text(group ?? '')));
+      final List<String> fields = values.keys.toList()
+        ..sort((String str1, String str2) => str1.compareTo(str2));
+      fields.forEach((field) {
+        final amount = values[field];
+        final value = formatNumber(amount, context, currencyId: currencyId);
+        if (field != 'count') {
+          cells.add(DataCell(Text(value)));
+        }
+      });
 
       rows.add(DataRow(cells: cells));
     });
