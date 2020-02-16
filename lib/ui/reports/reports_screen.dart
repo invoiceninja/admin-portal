@@ -133,7 +133,7 @@ class ReportsScreen extends StatelessWidget {
                           //kReportCredit,
                           //kReportDocument,
                           //kReportExpense,
-                          //kReportInvoice,
+                          kReportInvoice,
                           //kReportPayment,
                           //kReportProduct,
                           //kReportProfitAndLoss,
