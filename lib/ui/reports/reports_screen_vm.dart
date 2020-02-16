@@ -178,13 +178,13 @@ Map<String, Map<String, double>> calculateReportTotals({
   ReportResult reportResult,
   ReportsUIState reportUIState,
 }) {
-  if (reportUIState.group.isEmpty) {
-    return null;
-  }
-
   final Map<String, Map<String, double>> totals = {};
   final data = reportResult.data;
   final columns = reportResult.columns;
+
+  if (reportUIState.group.isEmpty) {
+    return totals;
+  }
 
   for (var i = 0; i < data.length; i++) {
     final row = data[i];
@@ -193,7 +193,7 @@ Map<String, Map<String, double>> calculateReportTotals({
       final column = columns[j];
       final columnIndex = columns.indexOf(reportUIState.group);
 
-      String group = row[columnIndex].value;
+      dynamic group = row[columnIndex].value;
 
       if (getReportColumnType(reportUIState.group) ==
           ReportColumnType.dateTime) {
@@ -206,16 +206,16 @@ Map<String, Map<String, double>> calculateReportTotals({
       }
 
       if (!totals.containsKey(group)) {
-        totals[group] = {'count': 0};
+        totals['$group'] = {'count': 0};
       }
       if (column == reportUIState.group) {
-        totals[group]['count'] += 1;
+        totals['$group']['count'] += 1;
       }
       if (cell is ReportNumberValue) {
-        if (!totals[group].containsKey(column)) {
-          totals[group][column] = 0;
+        if (!totals['$group'].containsKey(column)) {
+          totals['$group'][column] = 0;
         }
-        totals[group][column] += cell.value;
+        totals['$group'][column] += cell.value;
       }
     }
   }
