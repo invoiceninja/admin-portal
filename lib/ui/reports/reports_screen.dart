@@ -359,7 +359,21 @@ class ReportCharts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
-    final chart = state.uiState.reportsUIState.chart;
+    final reportsUIState = state.uiState.reportsUIState;
+
+    if (reportsUIState.chart.isEmpty || reportsUIState.group.isEmpty) {
+      return SizedBox();
+    }
+
+    final color = state.prefState.enableDarkMode
+        ? charts.MaterialPalette.white
+        : charts.MaterialPalette.gray.shade700;
+    final axis = charts.NumericAxisSpec(
+        renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color),
+            lineStyle: charts.LineStyleSpec(
+                thickness: 1,
+                color: charts.MaterialPalette.gray.shadeDefault)));
 
     return FormCard(
       child: SizedBox(
@@ -375,12 +389,14 @@ class ReportCharts extends StatelessWidget {
               data: viewModel.reportTotals.keys
                   .map((key) => {
                         'name': key,
-                        'value': viewModel.reportTotals[key][chart]
+                        'value': viewModel.reportTotals[key]
+                            [reportsUIState.chart]
                       })
                   .toList(),
             )
           ],
           animate: true,
+          primaryMeasureAxis: axis,
         ),
       ),
     );
