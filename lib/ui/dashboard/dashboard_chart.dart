@@ -83,9 +83,10 @@ class _DashboardChartState extends State<DashboardChart> {
               labelStyle: charts.TextStyleSpec(color: color),
               lineStyle: charts.LineStyleSpec(color: color))),
       primaryMeasureAxis: charts.NumericAxisSpec(
-          renderSpec: charts.GridlineRendererSpec(
-              labelStyle: charts.TextStyleSpec(color: color),
-              lineStyle: charts.LineStyleSpec(color: color))),
+        renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: color),
+            lineStyle: charts.LineStyleSpec(color: color)),
+      ),
     );
 
     return FormCard(

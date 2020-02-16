@@ -363,11 +363,11 @@ class ReportCharts extends StatelessWidget {
 
     return FormCard(
       child: SizedBox(
-        height: 300,
+        height: 200,
         child: charts.BarChart(
           [
             new charts.Series<dynamic, String>(
-              id: 'Sales',
+              id: 'chart',
               colorFn: (dynamic _, __) =>
                   charts.MaterialPalette.blue.shadeDefault,
               domainFn: (dynamic item, _) => item['name'],
