@@ -928,16 +928,16 @@ class ReportStringValue extends ReportElement {
 
   @override
   Widget renderWidget(BuildContext context, String column) {
-    if (getReportColumnType(column) == ReportColumnType.dateTime) {
-      return Text(formatDate(value, context, showTime: true));
-    } else {
-      return Text(value ?? '');
-    }
+    return Text(renderText(context, column));
   }
 
   @override
   String renderText(BuildContext context, String column) {
-    return value;
+    if (getReportColumnType(column) == ReportColumnType.dateTime) {
+      return formatDate(value, context, showTime: true);
+    } else {
+      return value ?? '';
+    }
   }
 }
 
@@ -955,13 +955,13 @@ class ReportNumberValue extends ReportElement {
 
   @override
   Widget renderWidget(BuildContext context, String column) {
-    return Text(formatNumber(value, context,
-        currencyId: currencyId, formatNumberType: formatNumberType));
+    return Text(renderText(context, column));
   }
 
   @override
   String renderText(BuildContext context, String column) {
-    return value.toString();
+    return formatNumber(value, context,
+        currencyId: currencyId, formatNumberType: formatNumberType);
   }
 }
 

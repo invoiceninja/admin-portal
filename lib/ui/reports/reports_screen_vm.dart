@@ -179,13 +179,12 @@ class ReportsScreenVM {
           csvData = csvData.substring(0, csvData.length - 1);
           reportResult.data.forEach((row) {
             csvData += '\n';
-            row.forEach((cell) {
-              csvData += '${cell.value},';
-            });
+            for (var i=0; i<row.length; i++) {
+              final column = reportResult.columns[i];
+              csvData += '${row[i].renderText(context, column)},';
+            }
             csvData = csvData.substring(0, csvData.length - 1);
           });
-
-          print('## CSV DATA: $csvData');
 
           final date = convertDateTimeToSqlDate();
           final filename =
