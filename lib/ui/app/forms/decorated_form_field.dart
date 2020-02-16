@@ -16,7 +16,7 @@ class DecoratedFormField extends StatelessWidget {
     this.textInputAction,
     this.onFieldSubmitted,
     this.initialValue,
-    this.enabled,
+    this.enabled = true,
     this.hint,
     this.expands = false,
   }) : super(key: key);
