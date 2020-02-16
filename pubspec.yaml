@@ -44,7 +44,7 @@ dependencies:
   native_pdf_view: any
   flutter_typeahead: ^1.8.0
   #quick_actions: ^0.2.1
-  #flutter_share: ^1.0.2+1
+  flutter_share: ^1.0.2+1
 
 dev_dependencies:
   flutter_driver:

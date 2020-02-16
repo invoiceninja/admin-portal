@@ -1,6 +1,6 @@
 //import 'dart:html';
 import 'dart:io' as file;
-//import 'package:flutter_share/flutter_share.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -205,12 +205,10 @@ class ReportsScreenVM {
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
             print('Filename: $filename');
-            /*
             await FlutterShare.shareFile(
                 title: filename,
                 //text: 'Example share text',
                 filePath: filePath);
-             */
           }
         });
   }
