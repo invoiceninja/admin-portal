@@ -170,9 +170,26 @@ class ReportsScreenVM {
           }
         },
         onExportPressed: (context) async {
-          print('## EXPORT ##');
-          String data = 'test_data';
-          const filename = 'export.csv';
+          final localization = AppLocalization.of(context);
+          String csvData = '';
+
+          reportResult.columns.forEach((column) {
+            csvData += '${localization.lookup(column)},';
+          });
+          csvData = csvData.substring(0, csvData.length - 1);
+          reportResult.data.forEach((row) {
+            csvData += '\n';
+            row.forEach((cell) {
+              csvData += '${cell.value},';
+            });
+            csvData = csvData.substring(0, csvData.length - 1);
+          });
+
+          print('## CSV DATA: $csvData');
+
+          final date = convertDateTimeToSqlDate();
+          final filename =
+              '${state.uiState.reportsUIState.report}_report_$date.csv';
 
           if (kIsWeb) {
             /*
@@ -186,11 +203,11 @@ class ReportsScreenVM {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';
             final csvFile = file.File(filePath);
-            csvFile.writeAsString(data);
-
+            csvFile.writeAsString(csvData);
+            print('Filename: $filename');
             await FlutterShare.shareFile(
-                title: 'Invoice Ninja',
-                text: 'Example share text',
+                title: filename,
+                //text: 'Example share text',
                 filePath: filePath);
           }
         });
