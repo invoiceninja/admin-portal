@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -9,50 +12,50 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
-class ClientReportFields {
-  static const String name = 'name';
-  static const String website = 'website';
-  static const String currency = 'currency';
-  static const String language = 'language';
-  static const String privateNotes = 'private_notes';
-  static const String publicNotes = 'public_notes';
-  static const String industry = 'industry';
-  static const String size = 'size';
-  static const String address1 = 'address1';
-  static const String address2 = 'address2';
-  static const String city = 'city';
-  static const String state = 'state';
-  static const String postCode = 'postal_code';
-  static const String phone = 'phone';
-  static const String country = 'country';
-  static const String shippingAddress1 = 'shipping_address1';
-  static const String shippingAddress2 = 'shipping_address2';
-  static const String shippingCity = 'shipping_city';
-  static const String shippingState = 'shipping_state';
-  static const String shippingPostalCode = 'shipping_postal_code';
-  static const String shippingCountry = 'shipping_country';
-  static const String customValue1 = 'custom_value1';
-  static const String customValue2 = 'custom_value2';
-  static const String customValue3 = 'custom_value3';
-  static const String customValue4 = 'custom_value4';
-  static const String createdBy = 'created_by';
-  static const String assignedTo = 'assigned_to';
-  static const String balance = 'balance';
-  static const String creditBalance = 'credit_balance';
-  static const String paidToDate = 'paid_to_date';
-  static const String idNumber = 'id_number';
-  static const String vatNumber = 'vat_number';
-  static const String contactFullName = 'contact_full_name';
-  static const String contactEmail = 'contact_email';
-  static const String contactPhone = 'contact_phone';
-  static const String contactCustomValue1 = 'contact_custom_value1';
-  static const String contactCustomValue2 = 'contact_custom_value2';
-  static const String contactCustomValue3 = 'contact_custom_value3';
-  static const String contactCustomValue4 = 'contact_custom_value4';
-  static const String contactLastLogin = 'contact_last_login';
-  static const String isActive = 'is_active';
-  static const String createdAt = 'created_at';
-  static const String updatedAt = 'updated_at';
+enum ClientReportFields {
+  name,
+  website,
+  currency,
+  language,
+  private_notes,
+  public_notes,
+  industry,
+  size,
+  address_1,
+  address_2,
+  city,
+  state,
+  post_code,
+  phone,
+  country,
+  shipping_address_1,
+  shipping_address_2,
+  shipping_city,
+  shipping_state,
+  shipping_postal_code,
+  shipping_country,
+  custom_value_1,
+  custom_value_2,
+  custom_value_3,
+  custom_value_4,
+  created_by,
+  assigned_to,
+  balance,
+  credit_balance,
+  paid_to_date,
+  id_number,
+  vat_number,
+  contact_full_name,
+  contact_email,
+  contact_phone,
+  contact_custom_value_1,
+  contact_custom_value_2,
+  contact_custom_value_3,
+  contact_custom_value_4,
+  contact_last_login,
+  is_active,
+  created_at,
+  updated_at,
 }
 
 var memoizedClientReport = memo5((
@@ -72,7 +75,7 @@ ReportResult clientReport(
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
-  BuiltList<String> columns;
+  BuiltList<ClientReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
   final clientReportSettings =
@@ -81,16 +84,18 @@ ReportResult clientReport(
           : ReportSettingsEntity();
 
   if (clientReportSettings.columns.isNotEmpty) {
-    columns = clientReportSettings.columns;
+    columns = BuiltList(clientReportSettings.columns
+        .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
+        .toList());
   } else {
-    columns = BuiltList(<String>[
+    columns = BuiltList(<ClientReportFields>[
       ClientReportFields.name,
-      ClientReportFields.contactEmail,
-      ClientReportFields.idNumber,
-      ClientReportFields.vatNumber,
+      ClientReportFields.contact_email,
+      ClientReportFields.id_number,
+      ClientReportFields.vat_number,
       ClientReportFields.currency,
       ClientReportFields.balance,
-      ClientReportFields.paidToDate,
+      ClientReportFields.paid_to_date,
       ClientReportFields.country,
     ]);
   }
@@ -123,10 +128,10 @@ ReportResult clientReport(
           value =
               staticState.languageMap[client.languageId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.privateNotes:
+        case ClientReportFields.private_notes:
           value = client.privateNotes;
           break;
-        case ClientReportFields.publicNotes:
+        case ClientReportFields.public_notes:
           value = client.publicNotes;
           break;
         case ClientReportFields.industry:
@@ -136,22 +141,22 @@ ReportResult clientReport(
         case ClientReportFields.size:
           value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.customValue1:
+        case ClientReportFields.custom_value_1:
           value = client.customValue1;
           break;
-        case ClientReportFields.customValue2:
+        case ClientReportFields.custom_value_2:
           value = client.customValue2;
           break;
-        case ClientReportFields.customValue3:
+        case ClientReportFields.custom_value_3:
           value = client.customValue3;
           break;
-        case ClientReportFields.customValue4:
+        case ClientReportFields.custom_value_4:
           value = client.customValue4;
           break;
-        case ClientReportFields.address1:
+        case ClientReportFields.address_1:
           value = client.address1;
           break;
-        case ClientReportFields.address2:
+        case ClientReportFields.address_2:
           value = client.address2;
           break;
         case ClientReportFields.city:
@@ -160,29 +165,29 @@ ReportResult clientReport(
         case ClientReportFields.state:
           value = client.state;
           break;
-        case ClientReportFields.postCode:
+        case ClientReportFields.post_code:
           value = client.postalCode;
           break;
         case ClientReportFields.country:
           value =
               staticState.countryMap[client.countryId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.shippingAddress1:
+        case ClientReportFields.shipping_address_1:
           value = client.shippingAddress1;
           break;
-        case ClientReportFields.shippingAddress2:
+        case ClientReportFields.shipping_address_2:
           value = client.shippingAddress2;
           break;
-        case ClientReportFields.shippingCity:
+        case ClientReportFields.shipping_city:
           value = client.shippingCity;
           break;
-        case ClientReportFields.shippingState:
+        case ClientReportFields.shipping_state:
           value = client.shippingState;
           break;
-        case ClientReportFields.shippingPostalCode:
+        case ClientReportFields.shipping_postal_code:
           value = client.shippingPostalCode;
           break;
-        case ClientReportFields.shippingCountry:
+        case ClientReportFields.shipping_country:
           value = staticState
                   .countryMap[client.shippingCountryId]?.listDisplayName ??
               '';
@@ -190,58 +195,58 @@ ReportResult clientReport(
         case ClientReportFields.phone:
           value = client.phone;
           break;
-        case ClientReportFields.idNumber:
+        case ClientReportFields.id_number:
           value = client.idNumber;
           break;
-        case ClientReportFields.vatNumber:
+        case ClientReportFields.vat_number:
           value = client.vatNumber;
           break;
-        case ClientReportFields.assignedTo:
+        case ClientReportFields.assigned_to:
           value = userMap[client.assignedUserId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.createdBy:
+        case ClientReportFields.created_by:
           value = userMap[client.createdUserId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.contactFullName:
+        case ClientReportFields.contact_full_name:
           value = contact.fullName;
           break;
-        case ClientReportFields.contactEmail:
+        case ClientReportFields.contact_email:
           value = contact.email;
           break;
-        case ClientReportFields.contactPhone:
+        case ClientReportFields.contact_phone:
           value = contact.phone;
           break;
-        case ClientReportFields.contactCustomValue1:
+        case ClientReportFields.contact_custom_value_1:
           value = contact.customValue1;
           break;
-        case ClientReportFields.contactCustomValue2:
+        case ClientReportFields.contact_custom_value_2:
           value = contact.customValue2;
           break;
-        case ClientReportFields.contactCustomValue3:
+        case ClientReportFields.contact_custom_value_3:
           value = contact.customValue3;
           break;
-        case ClientReportFields.contactCustomValue4:
+        case ClientReportFields.contact_custom_value_4:
           value = contact.customValue4;
           break;
-        case ClientReportFields.contactLastLogin:
+        case ClientReportFields.contact_last_login:
           value = convertTimestampToDateString(contact.lastLogin);
           break;
         case ClientReportFields.balance:
           value = client.balance;
           break;
-        case ClientReportFields.creditBalance:
+        case ClientReportFields.credit_balance:
           value = client.creditBalance;
           break;
-        case ClientReportFields.paidToDate:
+        case ClientReportFields.paid_to_date:
           value = client.paidToDate;
           break;
-        case ClientReportFields.isActive:
+        case ClientReportFields.is_active:
           value = client.isActive;
           break;
-        case ClientReportFields.updatedAt:
+        case ClientReportFields.updated_at:
           value = convertTimestampToDateString(client.updatedAt);
           break;
-        case ClientReportFields.createdAt:
+        case ClientReportFields.created_at:
           value = convertTimestampToDateString(client.createdAt);
           break;
       }
@@ -250,7 +255,7 @@ ReportResult clientReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: column,
+        column: EnumUtils.parse(column),
       )) {
         skip = true;
       }
@@ -287,52 +292,9 @@ ReportResult clientReport(
   });
 
   return ReportResult(
-    allColumns: [
-      ClientReportFields.name,
-      ClientReportFields.website,
-      ClientReportFields.currency,
-      ClientReportFields.language,
-      ClientReportFields.privateNotes,
-      ClientReportFields.publicNotes,
-      ClientReportFields.industry,
-      ClientReportFields.size,
-      ClientReportFields.address1,
-      ClientReportFields.address2,
-      ClientReportFields.city,
-      ClientReportFields.state,
-      ClientReportFields.postCode,
-      ClientReportFields.phone,
-      ClientReportFields.country,
-      ClientReportFields.shippingAddress1,
-      ClientReportFields.shippingAddress2,
-      ClientReportFields.shippingCity,
-      ClientReportFields.shippingState,
-      ClientReportFields.shippingPostalCode,
-      ClientReportFields.shippingCountry,
-      ClientReportFields.customValue1,
-      ClientReportFields.customValue2,
-      ClientReportFields.customValue3,
-      ClientReportFields.customValue4,
-      ClientReportFields.createdBy,
-      ClientReportFields.assignedTo,
-      ClientReportFields.balance,
-      ClientReportFields.creditBalance,
-      ClientReportFields.paidToDate,
-      ClientReportFields.idNumber,
-      ClientReportFields.vatNumber,
-      ClientReportFields.contactFullName,
-      ClientReportFields.contactEmail,
-      ClientReportFields.contactPhone,
-      ClientReportFields.contactCustomValue1,
-      ClientReportFields.contactCustomValue2,
-      ClientReportFields.contactCustomValue3,
-      ClientReportFields.contactCustomValue4,
-      ClientReportFields.contactLastLogin,
-      ClientReportFields.isActive,
-      ClientReportFields.createdAt,
-      ClientReportFields.updatedAt,
-    ],
-    columns: columns.toList(),
+    allColumns:
+        ClientReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }
