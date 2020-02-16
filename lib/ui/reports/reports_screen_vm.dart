@@ -3,15 +3,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:memoize/memoize.dart';
 import 'package:redux/redux.dart';
 
 import 'reports_screen.dart';
@@ -39,11 +43,13 @@ class ReportsScreenVM {
     @required this.onReportColumnsChanged,
     @required this.onReportFiltersChanged,
     @required this.onReportSorted,
+    @required this.reportTotals,
     @required this.reportResult,
   });
 
   final AppState state;
   final ReportResult reportResult;
+  final Map<String, Map<String, double>> reportTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
   final Function(int, bool) onReportSorted;
@@ -73,9 +79,13 @@ class ReportsScreenVM {
         break;
     }
 
+    print('## TOTALS: ${memoizedReportTotals(reportResult, state.uiState.reportsUIState)}');
+
     return ReportsScreenVM(
       state: state,
       reportResult: reportResult,
+      reportTotals:
+          memoizedReportTotals(reportResult, state.uiState.reportsUIState),
       onReportSorted: (index, ascending) {
         store.dispatch(UpdateReportSettings(
           report: state.uiState.reportsUIState.report,
@@ -155,4 +165,60 @@ class ReportsScreenVM {
       },
     );
   }
+}
+
+var memoizedReportTotals = memo2((
+  ReportResult reportResult,
+  ReportsUIState reportUIState,
+) =>
+    calculateReportTotals(
+        reportResult: reportResult, reportUIState: reportUIState));
+
+Map<String, Map<String, double>> calculateReportTotals({
+  ReportResult reportResult,
+  ReportsUIState reportUIState,
+}) {
+  if (reportUIState.group.isEmpty) {
+    return null;
+  }
+
+  final Map<String, Map<String, double>> totals = {};
+  final data = reportResult.data;
+  final columns = reportResult.columns;
+
+  for (var i = 0; i < data.length; i++) {
+    final row = data[i];
+    for (var j = 0; j < row.length; j++) {
+      final cell = row[j];
+      final column = columns[j];
+      final columnIndex = columns.indexOf(reportUIState.group);
+
+      String group = row[columnIndex].value;
+
+      if (getReportColumnType(reportUIState.group) ==
+          ReportColumnType.dateTime) {
+        group = convertDateTimeToSqlDate(DateTime.tryParse(group));
+        if (reportUIState.subgroup == kReportGroupYear) {
+          group = group.substring(0, 4) + '-01-01';
+        } else if (reportUIState.subgroup == kReportGroupMonth) {
+          group = group.substring(0, 7) + '-01';
+        }
+      }
+
+      if (!totals.containsKey(group)) {
+        totals[group] = {'count': 0};
+      }
+      if (column == reportUIState.group) {
+        totals[group]['count'] += 1;
+      }
+      if (cell is ReportNumberValue) {
+        if (!totals[group].containsKey(column)) {
+          totals[group][column] = 0;
+        }
+        totals[group][column] += cell.value;
+      }
+    }
+  }
+
+  return totals;
 }

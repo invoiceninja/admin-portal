@@ -137,24 +137,25 @@ class ReportsScreen extends StatelessWidget {
                                 ))
                             .toList(),
                       ),
-                      AppDropdownButton<String>(
-                        labelText: localization.chart,
-                        value: reportsUIState.chart,
-                        blankValue: '',
-                        showBlank: true,
-                        onChanged: (dynamic value) {
-                          viewModel.onSettingsChanged(chart: value);
-                        },
-                        items: reportResult.columns
-                            .where((column) =>
-                                getReportColumnType(column) ==
-                                ReportColumnType.number)
-                            .map((column) => DropdownMenuItem(
-                                  child: Text(localization.lookup(column)),
-                                  value: column,
-                                ))
-                            .toList(),
-                      ),
+                      if (reportsUIState.group.isNotEmpty)
+                        AppDropdownButton<String>(
+                          labelText: localization.chart,
+                          value: reportsUIState.chart,
+                          blankValue: '',
+                          showBlank: true,
+                          onChanged: (dynamic value) {
+                            viewModel.onSettingsChanged(chart: value);
+                          },
+                          items: reportResult.columns
+                              .where((column) =>
+                                  getReportColumnType(column) ==
+                                  ReportColumnType.number)
+                              .map((column) => DropdownMenuItem(
+                                    child: Text(localization.lookup(column)),
+                                    value: column,
+                                  ))
+                              .toList(),
+                        ),
                       if (hasCustomDate) ...[
                         DatePicker(
                           labelText: localization.startDate,
@@ -333,7 +334,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
                       state.uiState.reportsUIState.filters
                           .rebuild((b) => b..addAll({column: value})));
                 }),
-                ...reportResult.tableRows(context),
+                ...reportResult.tableRows(context, widget.viewModel),
               ],
             ),
           ),
@@ -364,9 +365,9 @@ ReportColumnType getReportColumnType(String column) {
 
 class ReportResult {
   ReportResult({
-    this.columns,
-    this.allColumns,
-    this.data,
+    @required this.columns,
+    @required this.allColumns,
+    @required this.data,
   });
 
   final List<String> columns;
@@ -611,7 +612,7 @@ class ReportResult {
     ]);
   }
 
-  List<DataRow> tableRows(BuildContext context) {
+  List<DataRow> tableRows(BuildContext context, ReportsScreenVM viewModel) {
     final rows = <DataRow>[];
     final store = StoreProvider.of<AppState>(context);
     final reportState = store.state.uiState.reportsUIState;
@@ -629,43 +630,7 @@ class ReportResult {
         rows.add(DataRow(cells: cells));
       }
     } else {
-      final Map<String, Map<String, double>> totals = {};
-
-      for (var i = 0; i < data.length; i++) {
-        final row = data[i];
-        for (var j = 0; j < row.length; j++) {
-          final cell = row[j];
-          final column = columns[j];
-          final columnIndex = columns.indexOf(groupBy);
-
-          String value = row[columnIndex].renderText(context, column);
-
-          if (getReportColumnType(reportState.group) ==
-              ReportColumnType.dateTime) {
-            value = convertDateTimeToSqlDate(DateTime.tryParse(value));
-            if (reportState.subgroup == kReportGroupYear) {
-              value = value.substring(0, 4) + '-01-01';
-            } else if (reportState.subgroup == kReportGroupMonth) {
-              value = value.substring(0, 7) + '-01';
-            }
-          }
-
-          if (!totals.containsKey(value)) {
-            totals[value] = {'count': 0};
-          }
-          if (column == groupBy) {
-            totals[value]['count'] += 1;
-          }
-          if (cell is ReportNumberValue) {
-            if (!totals[value].containsKey(column)) {
-              totals[value][column] = 0;
-            }
-            totals[value][column] += cell.value;
-          }
-        }
-      }
-
-      totals.forEach((group, values) {
+      viewModel.reportTotals.forEach((group, values) {
         final cells = <DataCell>[];
         for (var column in columns) {
           String value = '';
@@ -800,7 +765,6 @@ class ReportResult {
       rows.add(DataRow(cells: cells));
     });
 
-    print('## TOTALS: $totals');
     return rows;
   }
 }
