@@ -53,6 +53,7 @@ class ReportsScreenVM {
     String customEndDate,
     String group,
     String subgroup,
+    String chart,
   }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
@@ -126,6 +127,7 @@ class ReportsScreenVM {
         String report,
         String group,
         String subgroup,
+        String chart,
         String customStartDate,
         String customEndDate,
       }) {
@@ -134,6 +136,7 @@ class ReportsScreenVM {
           store.dispatch(UpdateReportSettings(
             report: report ?? reportState.report,
             group: group,
+            chart: chart,
             subgroup: subgroup,
             customStartDate: '',
             customEndDate: '',
@@ -144,6 +147,7 @@ class ReportsScreenVM {
             report: report ?? reportState.report,
             group: group,
             subgroup: subgroup,
+            chart: chart,
             customStartDate: customStartDate,
             customEndDate: customEndDate,
           ));

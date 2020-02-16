@@ -137,13 +137,31 @@ class ReportsScreen extends StatelessWidget {
                                 ))
                             .toList(),
                       ),
+                      AppDropdownButton<String>(
+                        labelText: localization.chart,
+                        value: reportsUIState.chart,
+                        blankValue: '',
+                        showBlank: true,
+                        onChanged: (dynamic value) {
+                          viewModel.onSettingsChanged(chart: value);
+                        },
+                        items: reportResult.columns
+                            .where((column) =>
+                                getReportColumnType(column) ==
+                                ReportColumnType.number)
+                            .map((column) => DropdownMenuItem(
+                                  child: Text(localization.lookup(column)),
+                                  value: column,
+                                ))
+                            .toList(),
+                      ),
                       if (hasCustomDate) ...[
                         DatePicker(
                           labelText: localization.startDate,
                           selectedDate: reportsUIState.customStartDate,
                           allowClearing: true,
-                          onSelected: (date) =>
-                              viewModel.onSettingsChanged(customStartDate: date),
+                          onSelected: (date) => viewModel.onSettingsChanged(
+                              customStartDate: date),
                         ),
                         DatePicker(
                           labelText: localization.endDate,

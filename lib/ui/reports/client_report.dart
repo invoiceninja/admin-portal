@@ -85,8 +85,10 @@ ReportResult clientReport(
   } else {
     columns = BuiltList(<String>[
       ClientReportFields.name,
-      ClientReportFields.currency,
+      ClientReportFields.contactEmail,
       ClientReportFields.idNumber,
+      ClientReportFields.vatNumber,
+      ClientReportFields.currency,
       ClientReportFields.balance,
       ClientReportFields.paidToDate,
       ClientReportFields.country,

@@ -8,6 +8,7 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
       ..report = action.report ?? state.report
       ..group = action.group ?? state.group
       ..subgroup = action.subgroup ?? state.subgroup
+      ..chart = action.chart ?? state.chart
       ..customStartDate = action.customStartDate ?? state.customStartDate
       ..customEndDate = action.customEndDate ?? state.customEndDate
       ..filters.replace(action.filters ?? state.filters));
