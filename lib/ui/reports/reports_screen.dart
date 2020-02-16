@@ -113,11 +113,12 @@ class ReportsScreen extends StatelessWidget {
         body: ListView(
           key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group}'),
           children: <Widget>[
-            Row(
+            Flex(
+              direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Expanded(
+                Flexible(
                   child: FormCard(
                     children: <Widget>[
                       AppDropdownButton<String>(
@@ -146,25 +147,6 @@ class ReportsScreen extends StatelessWidget {
                                 ))
                             .toList(),
                       ),
-                      if (reportsUIState.group.isNotEmpty)
-                        AppDropdownButton<String>(
-                          labelText: localization.chart,
-                          value: reportsUIState.chart,
-                          blankValue: '',
-                          showBlank: true,
-                          onChanged: (dynamic value) {
-                            viewModel.onSettingsChanged(chart: value);
-                          },
-                          items: reportResult.columns
-                              .where((column) =>
-                                  getReportColumnType(column) ==
-                                  ReportColumnType.number)
-                              .map((column) => DropdownMenuItem(
-                                    child: Text(localization.lookup(column)),
-                                    value: column,
-                                  ))
-                              .toList(),
-                        ),
                       if (hasCustomDate) ...[
                         DatePicker(
                           labelText: localization.startDate,
@@ -184,7 +166,7 @@ class ReportsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: FormCard(
                     children: <Widget>[
                       AppDropdownButton<String>(
@@ -229,7 +211,32 @@ class ReportsScreen extends StatelessWidget {
                             ]),
                     ],
                   ),
-                )
+                ),
+                if (reportsUIState.group.isNotEmpty)
+                  Flexible(
+                    child: FormCard(
+                      children: <Widget>[
+                        AppDropdownButton<String>(
+                          labelText: localization.chart,
+                          value: reportsUIState.chart,
+                          blankValue: '',
+                          showBlank: true,
+                          onChanged: (dynamic value) {
+                            viewModel.onSettingsChanged(chart: value);
+                          },
+                          items: reportResult.columns
+                              .where((column) =>
+                                  getReportColumnType(column) ==
+                                  ReportColumnType.number)
+                              .map((column) => DropdownMenuItem(
+                                    child: Text(localization.lookup(column)),
+                                    value: column,
+                                  ))
+                              .toList(),
+                        ),
+                      ],
+                    ),
+                  )
               ],
             ),
             ReportDataTable(
@@ -237,7 +244,7 @@ class ReportsScreen extends StatelessWidget {
                   '${viewModel.state.isSaving} ${reportsUIState.group}'),
               viewModel: viewModel,
             )
-          ],
+            ],
         ),
       ),
     );

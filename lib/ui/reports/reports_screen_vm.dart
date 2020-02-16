@@ -1,6 +1,6 @@
-import 'dart:html';
+//import 'dart:html';
 import 'dart:io' as file;
-import 'package:flutter_share/flutter_share.dart';
+//import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -193,20 +193,24 @@ class ReportsScreenVM {
 
           if (kIsWeb) {
             final encodedFileContents = Uri.encodeComponent(csvData);
+            /*
             AnchorElement(
                 href: 'data:text/plain;charset=utf-8,$encodedFileContents')
               ..setAttribute('download', filename)
               ..click();
+             */
           } else {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
             print('Filename: $filename');
+            /*
             await FlutterShare.shareFile(
                 title: filename,
                 //text: 'Example share text',
                 filePath: filePath);
+             */
           }
         });
   }
