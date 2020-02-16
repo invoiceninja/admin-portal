@@ -260,17 +260,12 @@ ReportResult clientReport(
         skip = true;
       }
 
-      print('## Value: $value, Runtime Type: ${value.runtimeType}');
       if (value.runtimeType == bool) {
-        print('## BOOL');
         row.add(client.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        print('## DOUBLE/INT');
         row.add(client.getReportNumber(
             value: value, currencyId: client.settings.currencyId));
-        print('## DONE');
       } else {
-        print('## ELSE');
         row.add(client.getReportString(value: '$value'));
       }
     }
