@@ -408,6 +408,30 @@ class ReportCharts extends StatelessWidget {
         );
         break;
       case ReportColumnType.dateTime:
+        /*
+        child = charts.TimeSeriesChart(
+          [
+            charts.Series<dynamic, DateTime>(
+                id: 'chart',
+                colorFn: (dynamic _, __) =>
+                    charts.MaterialPalette.blue.shadeDefault,
+                domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
+                measureFn: (dynamic item, _) => item['value'],
+                data: viewModel.reportTotals.keys
+                    .map((key) => {
+                          'name': key,
+                          'value': viewModel.reportTotals[key]
+                              [reportsUIState.chart]
+                        })
+                    .toList())
+          ],
+          animate: true,
+          //primaryMeasureAxis: numericAxis,
+          //domainAxis: axis,
+        );
+        
+         */
+        break;
       case ReportColumnType.number:
     }
 
