@@ -3,9 +3,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -13,6 +12,8 @@ import 'package:memoize/memoize.dart';
 class ClientReportFields {
   static const String name = 'name';
   static const String website = 'website';
+  static const String currency = 'currency';
+  static const String language = 'language';
   static const String privateNotes = 'private_notes';
   static const String publicNotes = 'public_notes';
   static const String industry = 'industry';
@@ -54,26 +55,21 @@ class ClientReportFields {
   static const String updatedAt = 'updated_at';
 }
 
-var memoizedClientReport = memo7((
+var memoizedClientReport = memo5((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, CountryEntity> countryMap,
-  BuiltMap<String, IndustryEntity> industryMap,
-  BuiltMap<String, SizeEntity> sizeMap,
+  StaticState staticState,
 ) =>
-    clientReport(userCompany, reportsUIState, clientMap, userMap, countryMap,
-        industryMap, sizeMap));
+    clientReport(userCompany, reportsUIState, clientMap, userMap, staticState));
 
 ReportResult clientReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, CountryEntity> countryMap,
-  BuiltMap<String, IndustryEntity> industryMap,
-  BuiltMap<String, SizeEntity> sizeMap,
+  StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<String> columns;
@@ -89,6 +85,7 @@ ReportResult clientReport(
   } else {
     columns = BuiltList(<String>[
       ClientReportFields.name,
+      ClientReportFields.currency,
       ClientReportFields.idNumber,
       ClientReportFields.balance,
       ClientReportFields.paidToDate,
@@ -116,6 +113,14 @@ ReportResult clientReport(
         case ClientReportFields.website:
           value = client.website;
           break;
+        case ClientReportFields.currency:
+          value =
+              staticState.currencyMap[client.currencyId]?.listDisplayName ?? '';
+          break;
+        case ClientReportFields.language:
+          value =
+              staticState.languageMap[client.languageId]?.listDisplayName ?? '';
+          break;
         case ClientReportFields.privateNotes:
           value = client.privateNotes;
           break;
@@ -123,10 +128,11 @@ ReportResult clientReport(
           value = client.publicNotes;
           break;
         case ClientReportFields.industry:
-          value = industryMap[client.industryId]?.listDisplayName ?? '';
+          value =
+              staticState.industryMap[client.industryId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.size:
-          value = sizeMap[client.sizeId]?.listDisplayName ?? '';
+          value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.customValue1:
           value = client.customValue1;
@@ -156,7 +162,8 @@ ReportResult clientReport(
           value = client.postalCode;
           break;
         case ClientReportFields.country:
-          value = countryMap[client.countryId]?.listDisplayName ?? '';
+          value =
+              staticState.countryMap[client.countryId]?.listDisplayName ?? '';
           break;
         case ClientReportFields.shippingAddress1:
           value = client.shippingAddress1;
@@ -174,7 +181,9 @@ ReportResult clientReport(
           value = client.shippingPostalCode;
           break;
         case ClientReportFields.shippingCountry:
-          value = countryMap[client.shippingCountryId]?.listDisplayName ?? '';
+          value = staticState
+                  .countryMap[client.shippingCountryId]?.listDisplayName ??
+              '';
           break;
         case ClientReportFields.phone:
           value = client.phone;
@@ -279,6 +288,8 @@ ReportResult clientReport(
     allColumns: [
       ClientReportFields.name,
       ClientReportFields.website,
+      ClientReportFields.currency,
+      ClientReportFields.language,
       ClientReportFields.privateNotes,
       ClientReportFields.publicNotes,
       ClientReportFields.industry,
