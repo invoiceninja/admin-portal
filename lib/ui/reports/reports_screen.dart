@@ -307,8 +307,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
     return Column(
       children: <Widget>[
         if (reportsUIState.chart.isNotEmpty)
-          ReportCharts(
-            viewModel: widget.viewModel,
+          ClipRect(
+            child: ReportCharts(
+              viewModel: widget.viewModel,
+            ),
           ),
         FormCard(
           child: Column(
@@ -367,13 +369,18 @@ class ReportCharts extends StatelessWidget {
 
     final color = state.prefState.enableDarkMode
         ? charts.MaterialPalette.white
-        : charts.MaterialPalette.gray.shade700;
-    final axis = charts.NumericAxisSpec(
+        : charts.MaterialPalette.black;
+
+    final numericAxis = charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
-            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color),
+            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
+
+    final axis = charts.OrdinalAxisSpec(
+        renderSpec: charts.GridlineRendererSpec(
             lineStyle: charts.LineStyleSpec(
-                thickness: 1,
-                color: charts.MaterialPalette.gray.shadeDefault)));
+              color: charts.MaterialPalette.transparent,
+            ),
+            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
 
     return FormCard(
       child: SizedBox(
@@ -396,7 +403,8 @@ class ReportCharts extends StatelessWidget {
             )
           ],
           animate: true,
-          primaryMeasureAxis: axis,
+          primaryMeasureAxis: numericAxis,
+          domainAxis: axis,
         ),
       ),
     );

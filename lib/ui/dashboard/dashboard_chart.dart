@@ -180,7 +180,9 @@ class _DashboardChartState extends State<DashboardChart> {
           height: 240.0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: chart,
+            child: ClipRect(
+              child: chart,
+            ),
           ),
         ),
         Divider(height: 1.0),
