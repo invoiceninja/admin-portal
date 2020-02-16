@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -301,8 +302,14 @@ class _ReportDataTableState extends State<ReportDataTable> {
             ?.reportSettings[state.uiState.reportsUIState.report] ??
         ReportSettingsEntity();
 
+    final reportsUIState = state.uiState.reportsUIState;
+
     return Column(
       children: <Widget>[
+        if (reportsUIState.chart.isNotEmpty)
+          ReportCharts(
+            viewModel: widget.viewModel,
+          ),
         FormCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -340,6 +347,42 @@ class _ReportDataTableState extends State<ReportDataTable> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ReportCharts extends StatelessWidget {
+  const ReportCharts({@required this.viewModel});
+
+  final ReportsScreenVM viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = viewModel.state;
+    final chart = state.uiState.reportsUIState.chart;
+
+    return FormCard(
+      child: SizedBox(
+        height: 300,
+        child: charts.BarChart(
+          [
+            new charts.Series<dynamic, String>(
+              id: 'Sales',
+              colorFn: (dynamic _, __) =>
+                  charts.MaterialPalette.blue.shadeDefault,
+              domainFn: (dynamic item, _) => item['name'],
+              measureFn: (dynamic item, _) => item['value'],
+              data: viewModel.reportTotals.keys
+                  .map((key) => {
+                        'name': key,
+                        'value': viewModel.reportTotals[key][chart]
+                      })
+                  .toList(),
+            )
+          ],
+          animate: true,
+        ),
+      ),
     );
   }
 }
