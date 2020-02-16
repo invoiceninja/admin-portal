@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:io' as file;
 import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
@@ -191,13 +192,11 @@ class ReportsScreenVM {
               '${state.uiState.reportsUIState.report}_report_$date.csv';
 
           if (kIsWeb) {
-            /*
-            final encodedFileContents = Uri.encodeComponent(data);
+            final encodedFileContents = Uri.encodeComponent(csvData);
             AnchorElement(
                 href: 'data:text/plain;charset=utf-8,$encodedFileContents')
               ..setAttribute('download', filename)
               ..click();
-             */
           } else {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';

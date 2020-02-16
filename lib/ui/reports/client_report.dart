@@ -266,7 +266,7 @@ ReportResult clientReport(
         row.add(client.getReportNumber(
             value: value, currencyId: client.settings.currencyId));
       } else {
-        row.add(client.getReportString(value: value));
+        row.add(client.getReportString(value: '$value'));
       }
     }
 
