@@ -382,32 +382,43 @@ class ReportCharts extends StatelessWidget {
             ),
             labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
 
-    return FormCard(
-      child: SizedBox(
-        height: 200,
-        child: charts.BarChart(
+    Widget child;
+    switch (getReportColumnType(reportsUIState.group)) {
+      case ReportColumnType.string:
+      case ReportColumnType.bool:
+        child = charts.BarChart(
           [
-            new charts.Series<dynamic, String>(
-              id: 'chart',
-              colorFn: (dynamic _, __) =>
-                  charts.MaterialPalette.blue.shadeDefault,
-              domainFn: (dynamic item, _) => item['name'],
-              measureFn: (dynamic item, _) => item['value'],
-              data: viewModel.reportTotals.keys
-                  .map((key) => {
-                        'name': key,
-                        'value': viewModel.reportTotals[key]
-                            [reportsUIState.chart]
-                      })
-                  .toList(),
-            )
+            charts.Series<dynamic, String>(
+                id: 'chart',
+                colorFn: (dynamic _, __) =>
+                    charts.MaterialPalette.blue.shadeDefault,
+                domainFn: (dynamic item, _) => item['name'],
+                measureFn: (dynamic item, _) => item['value'],
+                data: viewModel.reportTotals.keys
+                    .map((key) => {
+                          'name': key,
+                          'value': viewModel.reportTotals[key]
+                              [reportsUIState.chart]
+                        })
+                    .toList())
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
           domainAxis: axis,
-        ),
-      ),
-    );
+        );
+        break;
+      case ReportColumnType.dateTime:
+      case ReportColumnType.number:
+    }
+
+    return child == null
+        ? SizedBox()
+        : FormCard(
+            child: SizedBox(
+              height: 200,
+              child: child,
+            ),
+          );
   }
 }
 
