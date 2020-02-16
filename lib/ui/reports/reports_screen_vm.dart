@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:io' as file;
+import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 
 import 'reports_screen.dart';
@@ -42,6 +46,7 @@ class ReportsScreenVM {
     @required this.onSettingsChanged,
     @required this.onReportColumnsChanged,
     @required this.onReportFiltersChanged,
+    @required this.onExportPressed,
     @required this.onReportSorted,
     @required this.reportTotals,
     @required this.reportResult,
@@ -51,6 +56,7 @@ class ReportsScreenVM {
   final ReportResult reportResult;
   final Map<String, Map<String, double>> reportTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
+  final Function(BuildContext) onExportPressed;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
   final Function(int, bool) onReportSorted;
   final Function({
@@ -79,91 +85,114 @@ class ReportsScreenVM {
         break;
     }
 
-    print('## TOTALS: ${memoizedReportTotals(reportResult, state.uiState.reportsUIState)}');
+    print(
+        '## TOTALS: ${memoizedReportTotals(reportResult, state.uiState.reportsUIState)}');
 
     return ReportsScreenVM(
-      state: state,
-      reportResult: reportResult,
-      reportTotals:
-          memoizedReportTotals(reportResult, state.uiState.reportsUIState),
-      onReportSorted: (index, ascending) {
-        store.dispatch(UpdateReportSettings(
-          report: state.uiState.reportsUIState.report,
-          sortIndex: index,
-        ));
-      },
-      onReportFiltersChanged: (context, filterMap) {
-        store.dispatch(UpdateReportSettings(
-          report: report,
-          filters: filterMap,
-        ));
-      },
-      onReportColumnsChanged: (context, columns) {
-        final allReportSettings = state.userCompany.settings.reportSettings;
-        final reportSettings =
-            (allReportSettings != null && allReportSettings.containsKey(report)
-                    ? allReportSettings[report]
-                    : ReportSettingsEntity())
-                .rebuild((b) => b..columns.replace(BuiltList<String>(columns)));
-        final user = state.user.rebuild((b) => b
-          ..userCompany
-                  .settings
-                  .reportSettings[state.uiState.reportsUIState.report] =
-              reportSettings);
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).savedSettings);
-        if (state.authState.hasRecentlyEnteredPassword) {
-          store.dispatch(
-            SaveUserSettingsRequest(
-              completer: completer,
-              user: user,
-            ),
-          );
-        } else {
-          passwordCallback(
-              context: context,
-              callback: (password) {
-                store.dispatch(
-                  SaveUserSettingsRequest(
-                    completer: completer,
-                    user: user,
-                    password: password,
-                  ),
-                );
-              });
-        }
-      },
-      onSettingsChanged: ({
-        String report,
-        String group,
-        String subgroup,
-        String chart,
-        String customStartDate,
-        String customEndDate,
-      }) {
-        final reportState = state.uiState.reportsUIState;
-        if (group != null && reportState.group != group) {
+        state: state,
+        reportResult: reportResult,
+        reportTotals:
+            memoizedReportTotals(reportResult, state.uiState.reportsUIState),
+        onReportSorted: (index, ascending) {
           store.dispatch(UpdateReportSettings(
-            report: report ?? reportState.report,
-            group: group,
-            chart: chart,
-            subgroup: subgroup,
-            customStartDate: '',
-            customEndDate: '',
-            filters: BuiltMap<String, String>(),
+            report: state.uiState.reportsUIState.report,
+            sortIndex: index,
           ));
-        } else {
+        },
+        onReportFiltersChanged: (context, filterMap) {
           store.dispatch(UpdateReportSettings(
-            report: report ?? reportState.report,
-            group: group,
-            subgroup: subgroup,
-            chart: chart,
-            customStartDate: customStartDate,
-            customEndDate: customEndDate,
+            report: report,
+            filters: filterMap,
           ));
-        }
-      },
-    );
+        },
+        onReportColumnsChanged: (context, columns) {
+          final allReportSettings = state.userCompany.settings.reportSettings;
+          final reportSettings = (allReportSettings != null &&
+                      allReportSettings.containsKey(report)
+                  ? allReportSettings[report]
+                  : ReportSettingsEntity())
+              .rebuild((b) => b..columns.replace(BuiltList<String>(columns)));
+          final user = state.user.rebuild((b) => b
+            ..userCompany
+                    .settings
+                    .reportSettings[state.uiState.reportsUIState.report] =
+                reportSettings);
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).savedSettings);
+          if (state.authState.hasRecentlyEnteredPassword) {
+            store.dispatch(
+              SaveUserSettingsRequest(
+                completer: completer,
+                user: user,
+              ),
+            );
+          } else {
+            passwordCallback(
+                context: context,
+                callback: (password) {
+                  store.dispatch(
+                    SaveUserSettingsRequest(
+                      completer: completer,
+                      user: user,
+                      password: password,
+                    ),
+                  );
+                });
+          }
+        },
+        onSettingsChanged: ({
+          String report,
+          String group,
+          String subgroup,
+          String chart,
+          String customStartDate,
+          String customEndDate,
+        }) {
+          final reportState = state.uiState.reportsUIState;
+          if (group != null && reportState.group != group) {
+            store.dispatch(UpdateReportSettings(
+              report: report ?? reportState.report,
+              group: group,
+              chart: chart,
+              subgroup: subgroup,
+              customStartDate: '',
+              customEndDate: '',
+              filters: BuiltMap<String, String>(),
+            ));
+          } else {
+            store.dispatch(UpdateReportSettings(
+              report: report ?? reportState.report,
+              group: group,
+              subgroup: subgroup,
+              chart: chart,
+              customStartDate: customStartDate,
+              customEndDate: customEndDate,
+            ));
+          }
+        },
+        onExportPressed: (context) async {
+          print('## EXPORT ##');
+          String data = 'test_data';
+          const filename = 'export.csv';
+
+          if (kIsWeb) {
+            final encodedFileContents = Uri.encodeComponent(data);
+            AnchorElement(
+                href: 'data:text/plain;charset=utf-8,$encodedFileContents')
+              ..setAttribute('download', filename)
+              ..click();
+          } else {
+            final directory = await getApplicationDocumentsDirectory();
+            final filePath = '$directory/$filename';
+            final csvFile = file.File(filePath);
+            csvFile.writeAsString(data);
+
+            await FlutterShare.shareFile(
+                title: 'Example share',
+                text: 'Example share text',
+                filePath: filePath);
+          }
+        });
   }
 }
 

@@ -36,7 +36,7 @@ dependencies:
   sentry: ^2.2.0
   image_picker: ^0.6.1+4
   zefyr: ^0.8.0
-  flutter_colorpicker: any
+  flutter_colorpicker: ^0.2.0
   flutter_json_widget: ^1.0.2
   webview_flutter: ^0.3.15+1
   timeago: ^2.0.22
@@ -44,6 +44,7 @@ dependencies:
   native_pdf_view: any
   flutter_typeahead: ^1.7.0
   #quick_actions: ^0.2.1
+  flutter_share: ^1.0.2+1
 
 dev_dependencies:
   flutter_driver:

@@ -86,6 +86,7 @@ class ReportsScreen extends StatelessWidget {
             Builder(builder: (BuildContext context) {
               return FlatButton(
                 child: Text(localization.columns),
+                textColor: Colors.white,
                 onPressed: () {
                   multiselectDialog(
                     context: context,
@@ -100,6 +101,13 @@ class ReportsScreen extends StatelessWidget {
                 },
               );
             }),
+            FlatButton(
+              child: Text(localization.export),
+              textColor: Colors.white,
+              onPressed: () {
+                viewModel.onExportPressed(context);
+              },
+            )
           ],
         ),
         body: ListView(
@@ -580,12 +588,27 @@ class ReportResult {
     return true;
   }
 
+  List<String> sortedColumns(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final group = store.state.uiState.reportsUIState.group;
+    final data = columns.toList();
+
+    /*
+    if (group.isNotEmpty) {
+      data.remove(group);
+      data.insert(0, group);
+    }
+    */
+
+    return data;
+  }
+
   List<DataColumn> tableColumns(
       BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
 
     return [
-      for (String column in columns)
+      for (String column in sortedColumns(context))
         DataColumn(
           tooltip: localization.lookup(column),
           label: Container(
@@ -607,7 +630,7 @@ class ReportResult {
       Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
     return DataRow(cells: [
-      for (String column in columns)
+      for (String column in sortedColumns(context))
         if (getReportColumnType(column) == ReportColumnType.bool)
           DataCell(AppDropdownButton<bool>(
             labelText: null,
@@ -743,7 +766,7 @@ class ReportResult {
     } else {
       viewModel.reportTotals.forEach((group, values) {
         final cells = <DataCell>[];
-        for (var column in columns) {
+        for (var column in sortedColumns(context)) {
           String value = '';
           if (column == groupBy) {
             if (getReportColumnType(column) == ReportColumnType.dateTime) {
