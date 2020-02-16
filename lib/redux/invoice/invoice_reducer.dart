@@ -63,7 +63,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
       ..isChanged = true
       ..clientId = client?.id
       ..invitations.addAll((client?.contacts ?? <ContactEntity>[])
-          .where((contact) => contact.sendInvoice)
+          .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))));
   }),
   TypedReducer<InvoiceEntity, RestoreInvoicesSuccess>((invoices, action) {

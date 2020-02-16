@@ -560,7 +560,7 @@ abstract class ContactEntity extends Object
       phone: '',
       contactKey: '',
       isPrimary: false,
-      sendInvoice: true,
+      sendEmail: true,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -593,8 +593,8 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
 
-  @BuiltValueField(wireName: 'send_invoice')
-  bool get sendInvoice;
+  @BuiltValueField(wireName: 'send')
+  bool get sendEmail;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;

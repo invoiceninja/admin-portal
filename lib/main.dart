@@ -304,7 +304,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   backgroundColor: Colors.grey.shade200,
                   buttonColor: const Color(0xFF0D5D91),
                 ),
-          title: 'invoicing.co',
+          title: 'Invoice Ninja',
           onGenerateRoute: isMobile(context) ? null : generateRoute,
           routes: isMobile(context) ? {
             LoginScreen.route: (context) => LoginScreen(),

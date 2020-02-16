@@ -42,7 +42,7 @@ dependencies:
   timeago: ^2.0.22
   #native_pdf_renderer: any
   native_pdf_view: any
-  flutter_typeahead: ^1.7.0
+  flutter_typeahead: ^1.8.0
   #quick_actions: ^0.2.1
   flutter_share: ^1.0.2+1
 

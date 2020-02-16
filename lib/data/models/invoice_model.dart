@@ -124,7 +124,7 @@ abstract class InvoiceEntity extends Object
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
-              .where((contact) => contact.sendInvoice)
+              .where((contact) => contact.sendEmail)
               .map((contact) => InvitationEntity(contactId: contact.id))
               .toList()),
       updatedAt: 0,

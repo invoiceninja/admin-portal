@@ -29,8 +29,8 @@ class InvoiceEditContacts extends StatelessWidget {
     } else {
       contacts = client.contacts.toList()
         ..sort((contactA, contactB) {
-          if (contactA.sendInvoice != contactB.sendInvoice) {
-            return contactA.sendInvoice ? 1 : -1;
+          if (contactA.sendEmail != contactB.sendEmail) {
+            return contactA.sendEmail ? 1 : -1;
           } else {
             return contactA.fullName
                 .toLowerCase()

@@ -610,7 +610,6 @@ class ReportResult {
     return [
       for (String column in sortedColumns(context))
         DataColumn(
-          tooltip: localization.lookup(column),
           label: Container(
             constraints: BoxConstraints(minWidth: 80),
             child: Text(
@@ -829,16 +828,13 @@ class ReportResult {
     return [
       DataColumn(
         label: Text(localization.currency),
-        tooltip: localization.currency,
       ),
       DataColumn(
         label: Text(localization.count),
-        tooltip: localization.count,
       ),
       for (String column in columns)
         if (getReportColumnType(column) == ReportColumnType.number)
           DataColumn(
-            tooltip: localization.lookup(column),
             label: Text(
               localization.lookup(column),
               overflow: TextOverflow.ellipsis,
