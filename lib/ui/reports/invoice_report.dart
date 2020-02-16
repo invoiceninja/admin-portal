@@ -25,19 +25,19 @@ enum InvoiceReportFields {
   partial,
   partial_due_date,
   auto_bill,
-  custom_value_1,
-  custom_value_2,
-  custom_value_3,
-  custom_value_4,
-  custom_taxes_1,
-  custom_taxes_2,
-  custom_taxes_3,
-  custom_taxes_4,
+  custom_value1,
+  custom_value2,
+  custom_value3,
+  custom_value4,
+  custom_taxes1,
+  custom_taxes2,
+  custom_taxes3,
+  custom_taxes4,
   has_expenses,
-  custom_surcharge_1,
-  custom_surcharge_2,
-  custom_surcharge_3,
-  custom_surcharge_4,
+  custom_surcharge1,
+  custom_surcharge2,
+  custom_surcharge3,
+  custom_surcharge4,
   updated_at,
   archived_at,
   is_deleted,
@@ -136,43 +136,43 @@ ReportResult invoiceReport(
         case InvoiceReportFields.auto_bill:
           value = invoice.autoBill;
           break;
-        case InvoiceReportFields.custom_value_1:
+        case InvoiceReportFields.custom_value1:
           value = invoice.customValue1;
           break;
-        case InvoiceReportFields.custom_value_2:
+        case InvoiceReportFields.custom_value2:
           value = invoice.customValue2;
           break;
-        case InvoiceReportFields.custom_value_3:
+        case InvoiceReportFields.custom_value3:
           value = invoice.customValue3;
           break;
-        case InvoiceReportFields.custom_value_4:
+        case InvoiceReportFields.custom_value4:
           value = invoice.customValue4;
           break;
-        case InvoiceReportFields.custom_taxes_1:
+        case InvoiceReportFields.custom_taxes1:
           value = invoice.customTaxes1;
           break;
-        case InvoiceReportFields.custom_taxes_2:
+        case InvoiceReportFields.custom_taxes2:
           value = invoice.customTaxes2;
           break;
-        case InvoiceReportFields.custom_taxes_3:
+        case InvoiceReportFields.custom_taxes3:
           value = invoice.customTaxes3;
           break;
-        case InvoiceReportFields.custom_taxes_4:
+        case InvoiceReportFields.custom_taxes4:
           value = invoice.customTaxes4;
           break;
         case InvoiceReportFields.has_expenses:
           value = invoice.hasExpenses;
           break;
-        case InvoiceReportFields.custom_surcharge_1:
+        case InvoiceReportFields.custom_surcharge1:
           value = invoice.customSurcharge1;
           break;
-        case InvoiceReportFields.custom_surcharge_2:
+        case InvoiceReportFields.custom_surcharge2:
           value = invoice.customSurcharge2;
           break;
-        case InvoiceReportFields.custom_surcharge_3:
+        case InvoiceReportFields.custom_surcharge3:
           value = invoice.customSurcharge3;
           break;
-        case InvoiceReportFields.custom_surcharge_4:
+        case InvoiceReportFields.custom_surcharge4:
           value = invoice.customSurcharge4;
           break;
         case InvoiceReportFields.updated_at:
