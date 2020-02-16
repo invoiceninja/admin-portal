@@ -373,14 +373,19 @@ class ReportCharts extends StatelessWidget {
 
     final numericAxis = charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: color),
+            lineStyle: charts.LineStyleSpec(color: color)));
+
+    final ordinalAxis = charts.OrdinalAxisSpec(
+        renderSpec: charts.GridlineRendererSpec(
+            lineStyle:
+                charts.LineStyleSpec(color: charts.MaterialPalette.transparent),
             labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
 
-    final axis = charts.OrdinalAxisSpec(
-        renderSpec: charts.GridlineRendererSpec(
-            lineStyle: charts.LineStyleSpec(
-              color: charts.MaterialPalette.transparent,
-            ),
-            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
+    final dateTimeAxis = charts.DateTimeAxisSpec(
+        renderSpec: charts.SmallTickRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: color),
+            lineStyle: charts.LineStyleSpec(color: color)));
 
     Widget child;
     switch (getReportColumnType(reportsUIState.group)) {
@@ -404,11 +409,10 @@ class ReportCharts extends StatelessWidget {
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
-          domainAxis: axis,
+          domainAxis: ordinalAxis,
         );
         break;
       case ReportColumnType.dateTime:
-        /*
         child = charts.TimeSeriesChart(
           [
             charts.Series<dynamic, DateTime>(
@@ -426,11 +430,16 @@ class ReportCharts extends StatelessWidget {
                     .toList())
           ],
           animate: true,
-          //primaryMeasureAxis: numericAxis,
-          //domainAxis: axis,
+          primaryMeasureAxis: numericAxis,
+          domainAxis: dateTimeAxis,
+          /*
+          behaviors: [
+            charts.SeriesLegend(
+              outsideJustification: charts.OutsideJustification.endDrawArea,
+            )
+          ],
+           */
         );
-        
-         */
         break;
       case ReportColumnType.number:
     }
