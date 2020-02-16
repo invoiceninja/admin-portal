@@ -480,7 +480,7 @@ enum ReportColumnType {
 ReportColumnType getReportColumnType(String column) {
   if (['updated_at', 'created_at'].contains(column)) {
     return ReportColumnType.dateTime;
-  } else if (['balance', 'paid_to_date'].contains(column)) {
+  } else if (['balance', 'paid_to_date', 'amount'].contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
     return ReportColumnType.bool;

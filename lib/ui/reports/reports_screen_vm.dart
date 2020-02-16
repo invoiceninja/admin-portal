@@ -215,7 +215,6 @@ class ReportsScreenVM {
             final filePath = '${directory.path}/$filename';
             final csvFile = file.File(filePath);
             csvFile.writeAsString(csvData);
-            print('Filename: $filename');
             await FlutterShare.shareFile(
                 title: filename,
                 //text: 'Example share text',

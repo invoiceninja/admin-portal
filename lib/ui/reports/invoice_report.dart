@@ -197,7 +197,7 @@ ReportResult invoiceReport(
 
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
-      } else if (value.runtimeType == double) {
+      } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(invoice.getReportNumber(
             value: value, currencyId: client.settings.currencyId));
       } else {
