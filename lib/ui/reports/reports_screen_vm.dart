@@ -250,6 +250,10 @@ Map<String, Map<String, double>> calculateReportTotals({
       final column = columns[j];
       final columnIndex = columns.indexOf(reportUIState.group);
 
+      if (columnIndex == -1) {
+        continue;
+      }
+
       dynamic group = row[columnIndex].value;
 
       if (getReportColumnType(reportUIState.group) ==
