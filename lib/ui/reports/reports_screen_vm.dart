@@ -24,6 +24,7 @@ import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 
+import 'expense_report.dart';
 import 'reports_screen.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
@@ -94,6 +95,18 @@ class ReportsScreenVM {
           state.invoiceState.map,
           state.expenseState.map,
           state.projectState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportExpense:
+        reportResult = memoizedExpenseReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.expenseState.map,
+          state.invoiceState.map,
+          state.clientState.map,
           state.vendorState.map,
           state.userState.map,
           state.staticState,
