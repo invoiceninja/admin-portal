@@ -251,6 +251,7 @@ Map<String, Map<String, double>> calculateReportTotals({
       final columnIndex = columns.indexOf(reportUIState.group);
 
       if (columnIndex == -1) {
+        print('## ERROR: colum not found - ${reportUIState.group}');
         continue;
       }
 

@@ -657,9 +657,13 @@ class ReportResult {
       Map<String, TextEditingController> textEditingControllers,
       Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
+
     return DataRow(cells: [
       for (String column in sortedColumns(context))
-        if (getReportColumnType(column) == ReportColumnType.bool)
+        if (textEditingControllers == null ||
+            !textEditingControllers.containsKey(column))
+          DataCell(SizedBox())
+        else if (getReportColumnType(column) == ReportColumnType.bool)
           DataCell(AppDropdownButton<bool>(
             labelText: null,
             showBlank: true,
@@ -756,8 +760,9 @@ class ReportResult {
                   ? textEditingControllers[column]
                   : null,
               decoration: InputDecoration(
-                  suffixIcon:
-                      (textEditingControllers[column]?.text ?? '').isEmpty
+                  suffixIcon: textEditingControllers == null
+                      ? null
+                      : (textEditingControllers[column]?.text ?? '').isEmpty
                           ? null
                           : IconButton(
                               icon: Icon(
