@@ -523,12 +523,16 @@ class ReportResult {
           }
         } else if (getReportColumnType(column) == ReportColumnType.dateTime ||
             getReportColumnType(column) == ReportColumnType.date) {
+          print('## match dateTime: $filter $value');
           if (!ReportResult.matchDateTime(
               filter: filter,
               value: value,
               reportsUIState: reportsUIState,
               userCompany: userCompany)) {
+            print('## NO MATCH');
             return false;
+          } else {
+            print('## MATCH');
           }
         } else if (getReportColumnType(column) == ReportColumnType.bool) {
           if (filter != '$value') {
@@ -586,17 +590,25 @@ class ReportResult {
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
     );
-    if (reportsUIState.customStartDate.isNotEmpty &&
-        reportsUIState.customEndDate.isNotEmpty) {
+    final customStartDate = reportsUIState.customStartDate;
+    final customEndDate = reportsUIState.customEndDate;
+    if (dateRange == DateRange.custom) {
+      if (customStartDate.isNotEmpty && customEndDate.isNotEmpty) {
+        if (!(startDate.compareTo(value) <= 0 &&
+            endDate.compareTo(value) >= 0)) {
+          return false;
+        }
+      } else if (customStartDate.isNotEmpty) {
+        if (!(startDate.compareTo(value) <= 0)) {
+          return false;
+        }
+      } else if (customEndDate.isNotEmpty) {
+        if (!(endDate.compareTo(value) >= 0)) {
+          return false;
+        }
+      }
+    } else {
       if (!(startDate.compareTo(value) <= 0 && endDate.compareTo(value) >= 0)) {
-        return false;
-      }
-    } else if (reportsUIState.customStartDate.isNotEmpty) {
-      if (!(startDate.compareTo(value) <= 0)) {
-        return false;
-      }
-    } else if (reportsUIState.customEndDate.isNotEmpty) {
-      if (!(endDate.compareTo(value) >= 0)) {
         return false;
       }
     }
