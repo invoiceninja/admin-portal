@@ -530,16 +530,12 @@ class ReportResult {
           }
         } else if (getReportColumnType(column) == ReportColumnType.dateTime ||
             getReportColumnType(column) == ReportColumnType.date) {
-          print('## match dateTime: $filter $value');
           if (!ReportResult.matchDateTime(
               filter: filter,
               value: value,
               reportsUIState: reportsUIState,
               userCompany: userCompany)) {
-            print('## NO MATCH');
             return false;
-          } else {
-            print('## MATCH');
           }
         } else if (getReportColumnType(column) == ReportColumnType.bool) {
           if (filter != '$value') {
