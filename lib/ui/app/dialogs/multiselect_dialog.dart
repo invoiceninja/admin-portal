@@ -22,7 +22,10 @@ void multiselectDialog(
         selected: selected,
         addTitle: addTitle,
         defaultSelected: defaultSelected,
-        onSelected: (values) => selected = values,
+        onSelected: (values) {
+          // selected = values
+          onSelected(values);
+        },
       ),
     ),
   );
@@ -82,7 +85,6 @@ class _MultiSelectListState extends State<_MultiSelectList> {
               }
               setState(() {
                 selected.add(value);
-                widget.onSelected(selected);
               });
             },
           ),
@@ -128,7 +130,6 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                   final field = selected[oldIndex];
                   selected.remove(field);
                   selected.insert(newIndex, field);
-                  widget.onSelected(selected);
                 });
               },
             ),
