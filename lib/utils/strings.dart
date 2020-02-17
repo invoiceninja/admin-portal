@@ -43,3 +43,12 @@ String getLastName(String value) {
   }
   return parts.last;
 }
+
+bool matchesString(String haystack, String needle) {
+  String regExp = '';
+  needle.toLowerCase().runes.forEach((int rune) {
+    final character = String.fromCharCode(rune);
+    regExp += character + '.*?';
+  });
+  return RegExp(regExp).hasMatch(haystack.toLowerCase());
+}

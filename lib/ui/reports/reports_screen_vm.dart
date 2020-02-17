@@ -96,9 +96,6 @@ class ReportsScreenVM {
         break;
     }
 
-    print(
-        '## TOTALS: ${memoizedReportTotals(reportResult, state.uiState.reportsUIState)}');
-
     return ReportsScreenVM(
         state: state,
         reportResult: reportResult,

@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({
@@ -552,9 +553,8 @@ class ReportResult {
     return true;
   }
 
-  static bool matchString({String filter, String value}) {
-    return value.toLowerCase().contains(filter.toLowerCase());
-  }
+  static bool matchString({String filter, String value}) =>
+      matchesString(value, filter);
 
   static bool matchAmount({String filter, double amount}) {
     final String range = filter.replaceAll(',', '-') + '-';
