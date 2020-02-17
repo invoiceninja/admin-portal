@@ -244,7 +244,7 @@ class ReportsScreen extends StatelessWidget {
                   '${viewModel.state.isSaving} ${reportsUIState.group}'),
               viewModel: viewModel,
             )
-            ],
+          ],
         ),
       ),
     );
@@ -729,7 +729,9 @@ class ReportResult {
               onFilterChanged(column, value);
             },
             textFieldConfiguration: TextFieldConfiguration<String>(
-              controller: textEditingControllers[column],
+              controller: textEditingControllers != null
+                  ? textEditingControllers[column]
+                  : null,
               decoration: InputDecoration(
                   suffixIcon:
                       (textEditingControllers[column]?.text ?? '').isEmpty
