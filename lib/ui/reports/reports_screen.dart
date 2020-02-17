@@ -553,8 +553,13 @@ class ReportResult {
     return true;
   }
 
-  static bool matchString({String filter, String value}) =>
-      matchesString(value, filter);
+  static bool matchString({String filter, String value}) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    return value.toLowerCase().contains(filter.toLowerCase());
+  }
 
   static bool matchAmount({String filter, double amount}) {
     final String range = filter.replaceAll(',', '-') + '-';

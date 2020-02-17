@@ -44,7 +44,21 @@ String getLastName(String value) {
   return parts.last;
 }
 
+bool matchesStrings(List<String> haystacks, String needle) {
+  bool isMatch = false;
+  haystacks.forEach((haystack) {
+    if (matchesString(haystack, needle)) {
+      isMatch = true;
+    }
+  });
+  return isMatch;
+}
+
 bool matchesString(String haystack, String needle) {
+  if (needle == null || needle.isEmpty) {
+    return true;
+  }
+
   String regExp = '';
   needle.toLowerCase().runes.forEach((int rune) {
     final character = String.fromCharCode(rune);
