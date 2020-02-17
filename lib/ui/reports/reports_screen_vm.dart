@@ -191,7 +191,7 @@ class ReportsScreenVM {
           csvData = csvData.substring(0, csvData.length - 1);
           reportResult.data.forEach((row) {
             csvData += '\n';
-            for (var i=0; i<row.length; i++) {
+            for (var i = 0; i < row.length; i++) {
               final column = reportResult.columns[i];
               csvData += '${row[i].renderText(context, column)},';
             }
@@ -253,7 +253,8 @@ Map<String, Map<String, double>> calculateReportTotals({
       dynamic group = row[columnIndex].value;
 
       if (getReportColumnType(reportUIState.group) ==
-          ReportColumnType.dateTime) {
+              ReportColumnType.dateTime ||
+          getReportColumnType(reportUIState.group) == ReportColumnType.date) {
         group = convertDateTimeToSqlDate(DateTime.tryParse(group));
         if (reportUIState.subgroup == kReportGroupYear) {
           group = group.substring(0, 4) + '-01-01';
