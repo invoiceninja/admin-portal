@@ -112,7 +112,8 @@ class ReportsScreen extends StatelessWidget {
           ],
         ),
         body: ListView(
-          key: ValueKey('${viewModel.state.isSaving} ${reportsUIState.group}'),
+          key: ValueKey(
+              '${viewModel.state.isSaving}_${reportsUIState.report}_${reportsUIState.group}'),
           children: <Widget>[
             Flex(
               direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
