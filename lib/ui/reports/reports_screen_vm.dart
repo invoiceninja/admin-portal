@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -119,6 +120,16 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           state.paymentState.map,
           state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportProduct:
+        reportResult = memoizedProductReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.productState.map,
           state.vendorState.map,
           state.userState.map,
           state.staticState,
