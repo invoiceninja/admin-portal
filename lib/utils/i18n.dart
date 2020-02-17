@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'reset': 'Reset',
       'number': 'Number',
       'export': 'Export',
       'chart': 'Chart',
@@ -16102,6 +16103,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get export => _localizedValues[localeCode]['export'];
 
   String get number => _localizedValues[localeCode]['number'];
+
+  String get reset => _localizedValues[localeCode]['reset'];
 
 
   String lookup(String key) {

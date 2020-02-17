@@ -9,9 +9,8 @@ void multiselectDialog(
     String addTitle,
     List<String> options,
     List<String> selected,
+    List<String> defaultSelected,
     Function(List<String>) onSelected}) {
-  final localization = AppLocalization.of(context);
-
   showDialog<AlertDialog>(
     context: context,
     barrierDismissible: false,
@@ -22,21 +21,9 @@ void multiselectDialog(
         options: options,
         selected: selected,
         addTitle: addTitle,
+        defaultSelected: defaultSelected,
         onSelected: (values) => selected = values,
       ),
-      actions: <Widget>[
-        FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        FlatButton(
-            child: Text(localization.save.toUpperCase()),
-            onPressed: () {
-              Navigator.pop(context);
-              onSelected(selected);
-            })
-      ],
     ),
   );
 }
@@ -45,12 +32,14 @@ class _MultiSelectList extends StatefulWidget {
   const _MultiSelectList({
     @required this.options,
     @required this.selected,
+    @required this.defaultSelected,
     @required this.addTitle,
     @required this.onSelected,
   });
 
   final List<String> options;
   final List<String> selected;
+  final List<String> defaultSelected;
   final String addTitle;
   final Function(List<String>) onSelected;
 
@@ -144,6 +133,31 @@ class _MultiSelectListState extends State<_MultiSelectList> {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: <Widget>[
+                FlatButton(
+                    child: Text(localization.reset.toUpperCase()),
+                    onPressed: () {
+                      setState(
+                          () => selected = widget.defaultSelected.toList());
+                    }),
+                Spacer(),
+                FlatButton(
+                    child: Text(localization.cancel.toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                FlatButton(
+                    child: Text(localization.save.toUpperCase()),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      widget.onSelected(selected);
+                    })
+              ],
+            ),
+          )
         ],
       ),
     );
