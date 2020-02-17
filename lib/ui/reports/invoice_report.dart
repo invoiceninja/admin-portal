@@ -71,19 +71,21 @@ ReportResult invoiceReport(
           ? reportSettings[kReportInvoice]
           : ReportSettingsEntity();
 
+  final defaultColumns = [
+    InvoiceReportFields.number,
+    InvoiceReportFields.amount,
+    InvoiceReportFields.balance,
+    InvoiceReportFields.date,
+    InvoiceReportFields.due_date,
+    InvoiceReportFields.client
+  ];
+
   if (invoiceReportSettings.columns.isNotEmpty) {
     columns = BuiltList(invoiceReportSettings.columns
         .map((e) => EnumUtils.fromString(InvoiceReportFields.values, e))
         .toList());
   } else {
-    columns = BuiltList(<InvoiceReportFields>[
-      InvoiceReportFields.number,
-      InvoiceReportFields.amount,
-      InvoiceReportFields.balance,
-      InvoiceReportFields.date,
-      InvoiceReportFields.due_date,
-      InvoiceReportFields.client
-    ]);
+    columns = BuiltList(defaultColumns);
   }
 
   for (var invoiceId in invoiceMap.keys) {
@@ -230,6 +232,8 @@ ReportResult invoiceReport(
     allColumns:
         InvoiceReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

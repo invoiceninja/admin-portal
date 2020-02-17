@@ -505,11 +505,13 @@ class ReportResult {
   ReportResult({
     @required this.columns,
     @required this.allColumns,
+    @required this.defaultColumns,
     @required this.data,
   });
 
   final List<String> columns;
   final List<String> allColumns;
+  final List<String> defaultColumns;
   final List<List<ReportElement>> data;
 
   static bool matchField({

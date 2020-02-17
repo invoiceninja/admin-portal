@@ -83,21 +83,23 @@ ReportResult clientReport(
           ? reportSettings[kReportClient]
           : ReportSettingsEntity();
 
+  final defaultColumns = [
+    ClientReportFields.name,
+    ClientReportFields.contact_email,
+    ClientReportFields.id_number,
+    ClientReportFields.vat_number,
+    ClientReportFields.currency,
+    ClientReportFields.balance,
+    ClientReportFields.paid_to_date,
+    ClientReportFields.country,
+  ];
+
   if (clientReportSettings.columns.isNotEmpty) {
     columns = BuiltList(clientReportSettings.columns
         .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
         .toList());
   } else {
-    columns = BuiltList(<ClientReportFields>[
-      ClientReportFields.name,
-      ClientReportFields.contact_email,
-      ClientReportFields.id_number,
-      ClientReportFields.vat_number,
-      ClientReportFields.currency,
-      ClientReportFields.balance,
-      ClientReportFields.paid_to_date,
-      ClientReportFields.country,
-    ]);
+    columns = BuiltList(defaultColumns);
   }
 
   for (var clientId in clientMap.keys) {
@@ -293,8 +295,10 @@ ReportResult clientReport(
 
   return ReportResult(
     allColumns:
-        ClientReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+        ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }
