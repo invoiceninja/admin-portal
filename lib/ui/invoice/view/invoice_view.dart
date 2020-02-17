@@ -67,6 +67,7 @@ class _InvoiceViewState extends State<InvoiceView>
       secondaryWidget: isNotMobile(context) && !Config.DEMO_MODE
           ? FlatButton(
               child: Text(localization.pdf.toUpperCase()),
+              textColor: Colors.white,
               onPressed: () =>
                   handleInvoiceAction(context, [invoice], EntityAction.pdf),
             )
