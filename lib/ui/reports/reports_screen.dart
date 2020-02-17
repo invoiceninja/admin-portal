@@ -433,7 +433,9 @@ class ReportCharts extends StatelessWidget {
         break;
       case ReportColumnType.date:
       case ReportColumnType.dateTime:
-        final keys = viewModel.reportTotals.keys.toList();
+        final keys = viewModel.reportTotals.keys
+            .where((element) => element.isNotEmpty)
+            .toList();
         keys.sort((String str1, String str2) => str1.compareTo(str2));
         child = charts.TimeSeriesChart(
           [
@@ -820,6 +822,9 @@ class ReportResult {
             value = formatNumber(values[column], context);
           }
           cells.add(DataCell(Text(value), onTap: () {
+            if (group.isEmpty) {
+              return;
+            }
             if (column == groupBy) {
               String filter = group;
               String customStartDate = '';

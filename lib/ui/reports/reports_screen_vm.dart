@@ -260,11 +260,13 @@ Map<String, Map<String, double>> calculateReportTotals({
       if (getReportColumnType(reportUIState.group) ==
               ReportColumnType.dateTime ||
           getReportColumnType(reportUIState.group) == ReportColumnType.date) {
-        group = convertDateTimeToSqlDate(DateTime.tryParse(group));
-        if (reportUIState.subgroup == kReportGroupYear) {
-          group = group.substring(0, 4) + '-01-01';
-        } else if (reportUIState.subgroup == kReportGroupMonth) {
-          group = group.substring(0, 7) + '-01';
+        if ((group as String).isNotEmpty) {
+          group = convertDateTimeToSqlDate(DateTime.tryParse(group));
+          if (reportUIState.subgroup == kReportGroupYear) {
+            group = group.substring(0, 4) + '-01-01';
+          } else if (reportUIState.subgroup == kReportGroupMonth) {
+            group = group.substring(0, 7) + '-01';
+          }
         }
       }
 
