@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -135,7 +136,19 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-       // TODO: Obtain credit map
+      case kReportTask:
+        reportResult = memoizedTaskReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taskState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      // TODO: Obtain credit map
       //case kReportCredit:
       //  reportResult = memoizedCreditReport(
       //    state.userCompany,
