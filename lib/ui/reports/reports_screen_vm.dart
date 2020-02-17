@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -85,9 +86,22 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
+      case kReportDocument:
+        reportResult = memoizedDocumentReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.documentState.map,
+          state.invoiceState.map,
+          state.expenseState.map,
+          state.projectState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
        // TODO: Obtain credit map
       //case kReportCredit:
-      //  reportResult = memoizedInvoiceReport(
+      //  reportResult = memoizedCreditReport(
       //    state.userCompany,
       //    state.uiState.reportsUIState,
       //    state.creditState.map,
