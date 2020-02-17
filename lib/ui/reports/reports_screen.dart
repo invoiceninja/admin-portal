@@ -46,7 +46,8 @@ class ReportsScreen extends StatelessWidget {
 
     final hasCustomDate = reportsUIState.filters.keys.where((column) {
       final filter = reportsUIState.filters[column];
-      return getReportColumnType(column) == ReportColumnType.dateTime &&
+      return (getReportColumnType(column) == ReportColumnType.dateTime ||
+              getReportColumnType(column) == ReportColumnType.date) &&
           filter == DateRange.custom.toString();
     }).isNotEmpty;
 
@@ -188,7 +189,9 @@ class ReportsScreen extends StatelessWidget {
                             .toList(),
                       ),
                       if (getReportColumnType(reportsUIState.group) ==
-                          ReportColumnType.dateTime)
+                              ReportColumnType.dateTime ||
+                          getReportColumnType(reportsUIState.group) ==
+                              ReportColumnType.date)
                         AppDropdownButton<String>(
                             labelText: localization.subgroup,
                             value: reportsUIState.subgroup,
@@ -427,6 +430,8 @@ class ReportCharts extends StatelessWidget {
           domainAxis: ordinalAxis,
         );
         break;
+      case ReportColumnType.date:
+        break;
       case ReportColumnType.dateTime:
         child = charts.TimeSeriesChart(
           [
@@ -473,6 +478,7 @@ class ReportCharts extends StatelessWidget {
 enum ReportColumnType {
   string,
   dateTime,
+  date,
   number,
   bool,
 }
@@ -480,6 +486,8 @@ enum ReportColumnType {
 ReportColumnType getReportColumnType(String column) {
   if (['updated_at', 'created_at'].contains(column)) {
     return ReportColumnType.dateTime;
+  } else if (['date', 'due_date'].contains(column)) {
+    return ReportColumnType.date;
   } else if (['balance', 'paid_to_date', 'amount'].contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
@@ -513,7 +521,8 @@ class ReportResult {
           if (!ReportResult.matchAmount(filter: filter, amount: value)) {
             return false;
           }
-        } else if (getReportColumnType(column) == ReportColumnType.dateTime) {
+        } else if (getReportColumnType(column) == ReportColumnType.dateTime ||
+            getReportColumnType(column) == ReportColumnType.date) {
           if (!ReportResult.matchDateTime(
               filter: filter,
               value: value,
@@ -671,7 +680,8 @@ class ReportResult {
             controller: textEditingControllers[column],
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ))
-        else if (getReportColumnType(column) == ReportColumnType.dateTime)
+        else if (getReportColumnType(column) == ReportColumnType.dateTime ||
+            getReportColumnType(column) == ReportColumnType.date)
           DataCell(AppDropdownButton<DateRange>(
             labelText: null,
             showBlank: true,
@@ -777,14 +787,15 @@ class ReportResult {
         for (var column in sortedColumns(context)) {
           String value = '';
           if (column == groupBy) {
-            if (getReportColumnType(column) == ReportColumnType.dateTime) {
-              value = formatDate(group, context);
-            } else if (group.isEmpty) {
+            if (group.isEmpty) {
               value = AppLocalization.of(context).blank;
+            } else if (getReportColumnType(column) ==
+                    ReportColumnType.dateTime ||
+                getReportColumnType(column) == ReportColumnType.date) {
+              value = formatDate(group, context);
             } else {
               value = group;
             }
-
             value = value + ' (' + values['count'].floor().toString() + ')';
           } else if (getReportColumnType(column) == ReportColumnType.number) {
             value = formatNumber(values[column], context);
@@ -794,7 +805,8 @@ class ReportResult {
               String filter = group;
               String customStartDate = '';
               String customEndDate = '';
-              if (getReportColumnType(column) == ReportColumnType.dateTime) {
+              if (getReportColumnType(column) == ReportColumnType.dateTime ||
+                  getReportColumnType(column) == ReportColumnType.date) {
                 filter = DateRange.custom.toString();
                 final date = DateTime.tryParse(group);
                 customStartDate = group;
@@ -938,8 +950,10 @@ class ReportStringValue extends ReportElement {
 
   @override
   String renderText(BuildContext context, String column) {
-    if (getReportColumnType(column) == ReportColumnType.dateTime) {
-      return formatDate(value, context, showTime: true);
+    if (getReportColumnType(column) == ReportColumnType.dateTime ||
+        getReportColumnType(column) == ReportColumnType.date) {
+      return formatDate(value, context,
+          showTime: getReportColumnType(column) == ReportColumnType.dateTime);
     } else {
       return value ?? '';
     }
