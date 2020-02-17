@@ -85,6 +85,17 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
+       // TODO: Obtain credit map
+      //case kReportCredit:
+      //  reportResult = memoizedInvoiceReport(
+      //    state.userCompany,
+      //    state.uiState.reportsUIState,
+      //    state.creditState.map,
+      //    state.clientState.map,
+      //    state.userState.map,
+      //    state.staticState,
+      //  );
+      //  break;
       default:
         reportResult = memoizedClientReport(
           state.userCompany,
