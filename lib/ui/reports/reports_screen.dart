@@ -431,8 +431,9 @@ class ReportCharts extends StatelessWidget {
         );
         break;
       case ReportColumnType.date:
-        break;
       case ReportColumnType.dateTime:
+        final keys = viewModel.reportTotals.keys.toList();
+        keys.sort((String str1, String str2) => str1.compareTo(str2));
         child = charts.TimeSeriesChart(
           [
             charts.Series<dynamic, DateTime>(
@@ -441,7 +442,7 @@ class ReportCharts extends StatelessWidget {
                     charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.reportTotals.keys
+                data: keys
                     .map((key) => {
                           'name': key,
                           'value': viewModel.reportTotals[key]
