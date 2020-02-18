@@ -673,6 +673,8 @@ class ReportResult {
   List<DataColumn> tableColumns(
       BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final company = store.state.company;
 
     return [
       for (String column in sortedColumns(context))
@@ -680,7 +682,10 @@ class ReportResult {
           label: Container(
             constraints: BoxConstraints(minWidth: 80),
             child: Text(
-              localization.lookup(column) + '   ',
+              (company.getCustomFieldLabel(column).isNotEmpty
+                      ? company.getCustomFieldLabel(column)
+                      : localization.lookup(column)) +
+                  '   ',
               overflow: TextOverflow.ellipsis,
             ),
           ),

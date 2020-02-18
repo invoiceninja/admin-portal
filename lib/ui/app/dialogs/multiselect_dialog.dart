@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -62,6 +64,7 @@ class _MultiSelectListState extends State<_MultiSelectList> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
 
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
@@ -73,11 +76,15 @@ class _MultiSelectListState extends State<_MultiSelectList> {
             labelText: widget.addTitle,
             items: widget.options
                 .where((option) => !selected.contains(option))
-                .map((option) => DropdownMenuItem(
-                      child: Text(localization.lookup(option)),
-                      value: option,
-                    ))
-                .toList(),
+                .map((option) {
+              final columnTitle = state.company.getCustomFieldLabel(option);
+              return DropdownMenuItem(
+                child: Text(columnTitle.isEmpty
+                    ? localization.lookup(option)
+                    : columnTitle),
+                value: option,
+              );
+            }).toList(),
             value: null,
             onChanged: (dynamic value) {
               if (selected.contains(value)) {
@@ -91,31 +98,34 @@ class _MultiSelectListState extends State<_MultiSelectList> {
           SizedBox(height: 20),
           Expanded(
             child: ReorderableListView(
-              children: selected
-                  .map((option) => Padding(
-                        key: ValueKey(option),
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: <Widget>[
-                            Icon(Icons.reorder),
-                            SizedBox(width: 20),
-                            Expanded(
-                              child: Text(
-                                localization.lookup(option),
-                                textAlign: TextAlign.left,
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.close),
-                              onPressed: () {
-                                setState(() => selected.remove(option));
-                              },
-                            )
-                          ],
+              children: selected.map((option) {
+                final columnTitle = state.company.getCustomFieldLabel(option);
+                return Padding(
+                  key: ValueKey(option),
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.reorder),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: Text(
+                          columnTitle.isEmpty
+                              ? localization.lookup(option)
+                              : columnTitle,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
-                      ))
-                  .toList(),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          setState(() => selected.remove(option));
+                        },
+                      )
+                    ],
+                  ),
+                );
+              }).toList(),
               onReorder: (oldIndex, newIndex) {
                 // https://stackoverflow.com/a/54164333/497368
                 // These two lines are workarounds for ReorderableListView problems
