@@ -146,21 +146,7 @@ ReportResult productReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= productReportSettings.sortIndex ||
-        rowB.length <= productReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[productReportSettings.sortIndex].value;
-    final String valueB = rowB[productReportSettings.sortIndex].value;
-
-    if (productReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, productReportSettings));
 
   return ReportResult(
     allColumns:

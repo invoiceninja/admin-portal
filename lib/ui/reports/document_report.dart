@@ -127,21 +127,7 @@ ReportResult documentReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= documentReportSettings.sortIndex ||
-        rowB.length <= documentReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[documentReportSettings.sortIndex].value;
-    final String valueB = rowB[documentReportSettings.sortIndex].value;
-
-    if (documentReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, documentReportSettings));
 
   return ReportResult(
     allColumns:

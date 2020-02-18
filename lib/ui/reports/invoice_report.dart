@@ -212,21 +212,7 @@ ReportResult invoiceReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= invoiceReportSettings.sortIndex ||
-        rowB.length <= invoiceReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[invoiceReportSettings.sortIndex].value;
-    final String valueB = rowB[invoiceReportSettings.sortIndex].value;
-
-    if (invoiceReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, invoiceReportSettings));
 
   return ReportResult(
     allColumns:

@@ -141,21 +141,7 @@ ReportResult paymentReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= paymentReportSettings.sortIndex ||
-        rowB.length <= paymentReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[paymentReportSettings.sortIndex].value;
-    final String valueB = rowB[paymentReportSettings.sortIndex].value;
-
-    if (paymentReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, paymentReportSettings));
 
   return ReportResult(
     allColumns:

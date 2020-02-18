@@ -164,21 +164,7 @@ ReportResult expenseReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= expenseReportSettings.sortIndex ||
-        rowB.length <= expenseReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[expenseReportSettings.sortIndex].value;
-    final String valueB = rowB[expenseReportSettings.sortIndex].value;
-
-    if (expenseReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, expenseReportSettings));
 
   return ReportResult(
     allColumns:

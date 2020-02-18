@@ -118,21 +118,7 @@ ReportResult creditReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= creditReportSettings.sortIndex ||
-        rowB.length <= creditReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[creditReportSettings.sortIndex].value;
-    final String valueB = rowB[creditReportSettings.sortIndex].value;
-
-    if (creditReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, creditReportSettings));
 
   return ReportResult(
     allColumns:

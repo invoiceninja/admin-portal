@@ -146,21 +146,8 @@ ReportResult taskReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= taskReportSettings.sortIndex ||
-        rowB.length <= taskReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[taskReportSettings.sortIndex].value;
-    final String valueB = rowB[taskReportSettings.sortIndex].value;
-
-    if (taskReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort(
+      (rowA, rowB) => sortReportTableRows(rowA, rowB, taskReportSettings));
 
   return ReportResult(
     allColumns: TaskReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
