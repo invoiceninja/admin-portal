@@ -21,15 +21,15 @@ enum ClientReportFields {
   public_notes,
   industry,
   size,
-  address_1,
-  address_2,
+  address1,
+  address2,
   city,
   state,
-  post_code,
+  postal_code,
   phone,
   country,
-  shipping_address_1,
-  shipping_address_2,
+  shipping_address1,
+  shipping_address2,
   shipping_city,
   shipping_state,
   shipping_postal_code,
@@ -155,10 +155,10 @@ ReportResult clientReport(
         case ClientReportFields.client4:
           value = client.customValue4;
           break;
-        case ClientReportFields.address_1:
+        case ClientReportFields.address1:
           value = client.address1;
           break;
-        case ClientReportFields.address_2:
+        case ClientReportFields.address2:
           value = client.address2;
           break;
         case ClientReportFields.city:
@@ -167,17 +167,17 @@ ReportResult clientReport(
         case ClientReportFields.state:
           value = client.state;
           break;
-        case ClientReportFields.post_code:
+        case ClientReportFields.postal_code:
           value = client.postalCode;
           break;
         case ClientReportFields.country:
           value =
               staticState.countryMap[client.countryId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.shipping_address_1:
+        case ClientReportFields.shipping_address1:
           value = client.shippingAddress1;
           break;
-        case ClientReportFields.shipping_address_2:
+        case ClientReportFields.shipping_address2:
           value = client.shippingAddress2;
           break;
         case ClientReportFields.shipping_city:

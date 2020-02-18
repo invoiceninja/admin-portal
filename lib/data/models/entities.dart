@@ -307,6 +307,7 @@ abstract class LoginResponse
 }
 
 class CustomFieldType {
+
   static const String company = 'company';
   static const String company1 = 'company1';
   static const String company2 = 'company2';

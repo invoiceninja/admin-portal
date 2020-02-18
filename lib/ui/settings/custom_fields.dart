@@ -261,6 +261,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
         }
       } else {
         _fieldType = kFieldTypeMultiLineText;
+        _customFieldController.text = widget.value;
       }
     } else {
       _customFieldController.text = widget.value;

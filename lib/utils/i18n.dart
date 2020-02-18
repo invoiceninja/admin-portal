@@ -14,6 +14,54 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'company1': 'Custom Company 1',
+      'company2': 'Custom Company 2',
+      'company3': 'Custom Company 3',
+      'company4': 'Custom Company 4',
+      'product1': 'Custom Product 1',
+      'product2': 'Custom Product 2',
+      'product3': 'Custom Product 3',
+      'product4': 'Custom Product 4',
+      'client1': 'Custom Client 1',
+      'client2': 'Custom Client 1',
+      'client3': 'Custom Client 1',
+      'client4': 'Custom Client 1',
+      'contact1': 'Custom Contact 1',
+      'contact2': 'Custom Contact 2',
+      'contact3': 'Custom Contact 3',
+      'contact4': 'Custom Contact 4',
+      'task1': 'Custom Task 1',
+      'task2': 'Custom Task 2',
+      'task3': 'Custom Task 3',
+      'task4': 'Custom Task 4',
+      'project1': 'Custom Project 1',
+      'project2': 'Custom Project 2',
+      'project3': 'Custom Project 3',
+      'project4': 'Custom Project 4',
+      'expense1': 'Custom Expense 1',
+      'expense2': 'Custom Expense 2',
+      'expense3': 'Custom Expense 3',
+      'expense4': 'Custom Expense 4',
+      'vendor1': 'Custom Vendor 1',
+      'vendor2': 'Custom Vendor 2',
+      'vendor3': 'Custom Vendor 3',
+      'vendor4': 'Custom Vendor 4',
+      'invoice1': 'Custom Invoice 1',
+      'invoice2': 'Custom Invoice 2',
+      'invoice3': 'Custom Invoice 3',
+      'invoice4': 'Custom Invoice 4',
+      'payment1': 'Custom Payment 1',
+      'payment2': 'Custom Payment 2',
+      'payment3': 'Custom Payment 3',
+      'payment4': 'Custom Payment 4',
+      'surcharge1': 'Custom Surcharge 1',
+      'surcharge2': 'Custom Surcharge 2',
+      'surcharge3': 'Custom Surcharge 3',
+      'surcharge4': 'Custom Surcharge 4',
+      'group1': 'Custom Group 1',
+      'group2': 'Custom Group 2',
+      'group3': 'Custom Group 3',
+      'group4': 'Custom Group 4',
       'reset': 'Reset',
       'number': 'Number',
       'export': 'Export',
@@ -16106,6 +16154,101 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get reset => _localizedValues[localeCode]['reset'];
 
+  String get client1 => _localizedValues[localeCode]['client1'];
+
+  String get client2 => _localizedValues[localeCode]['client2'];
+
+  String get client3 => _localizedValues[localeCode]['client3'];
+
+  String get client4 => _localizedValues[localeCode]['client4'];
+
+  String get company1 => _localizedValues[localeCode]['company1'];
+
+  String get company2 => _localizedValues[localeCode]['company2'];
+
+  String get company3 => _localizedValues[localeCode]['company3'];
+
+  String get company4 => _localizedValues[localeCode]['company4'];
+
+  String get product1 => _localizedValues[localeCode]['product1'];
+
+  String get product2 => _localizedValues[localeCode]['product2'];
+
+  String get product3 => _localizedValues[localeCode]['product3'];
+
+  String get product4 => _localizedValues[localeCode]['product4'];
+
+  String get contact1 => _localizedValues[localeCode]['contact1'];
+
+  String get contact2 => _localizedValues[localeCode]['contact2'];
+
+  String get contact3 => _localizedValues[localeCode]['contact3'];
+
+  String get contact4 => _localizedValues[localeCode]['contact4'];
+
+  String get task1 => _localizedValues[localeCode]['task1'];
+
+  String get task2 => _localizedValues[localeCode]['task2'];
+
+  String get task3 => _localizedValues[localeCode]['task3'];
+
+  String get task4 => _localizedValues[localeCode]['task4'];
+
+  String get project1 => _localizedValues[localeCode]['project1'];
+
+  String get project2 => _localizedValues[localeCode]['project2'];
+
+  String get project3 => _localizedValues[localeCode]['project3'];
+
+  String get project4 => _localizedValues[localeCode]['project4'];
+
+  String get expense1 => _localizedValues[localeCode]['expense1'];
+
+  String get expense2 => _localizedValues[localeCode]['expense2'];
+
+  String get expense3 => _localizedValues[localeCode]['expense3'];
+
+  String get expense4 => _localizedValues[localeCode]['expense4'];
+
+  String get vendor1 => _localizedValues[localeCode]['vendor1'];
+
+  String get vendor2 => _localizedValues[localeCode]['vendor2'];
+
+  String get vendor3 => _localizedValues[localeCode]['vendor3'];
+
+  String get vendor4 => _localizedValues[localeCode]['vendor4'];
+
+  String get invoice1 => _localizedValues[localeCode]['invoice1'];
+
+  String get invoice2 => _localizedValues[localeCode]['invoice2'];
+
+  String get invoice3 => _localizedValues[localeCode]['invoice3'];
+
+  String get invoice4 => _localizedValues[localeCode]['invoice4'];
+
+  String get payment1 => _localizedValues[localeCode]['payment1'];
+
+  String get payment2 => _localizedValues[localeCode]['payment2'];
+
+  String get payment3 => _localizedValues[localeCode]['payment3'];
+
+  String get payment4 => _localizedValues[localeCode]['payment4'];
+
+  String get surcharge1 => _localizedValues[localeCode]['surcharge1'];
+
+  String get surcharge2 => _localizedValues[localeCode]['surcharge2'];
+
+  String get surcharge3 => _localizedValues[localeCode]['surcharge3'];
+
+  String get surcharge4 => _localizedValues[localeCode]['surcharge4'];
+
+  String get group1 => _localizedValues[localeCode]['group1'];
+
+  String get group2 => _localizedValues[localeCode]['group2'];
+
+  String get group3 => _localizedValues[localeCode]['group3'];
+
+  String get group4 => _localizedValues[localeCode]['group4'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
@@ -16114,5 +16257,3 @@ mixin LocalizationsProvider on LocaleCodeAware {
         key;
   }
 }
-
-
