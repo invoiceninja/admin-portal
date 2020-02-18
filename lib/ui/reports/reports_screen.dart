@@ -186,11 +186,16 @@ class ReportsScreen extends StatelessWidget {
                             .where((column) =>
                                 getReportColumnType(column, context) !=
                                 ReportColumnType.number)
-                            .map((column) => DropdownMenuItem(
-                                  child: Text(localization.lookup(column)),
-                                  value: column,
-                                ))
-                            .toList(),
+                            .map((column) {
+                          final columnTitle =
+                              state.company.getCustomFieldLabel(column);
+                          return DropdownMenuItem(
+                            child: Text(columnTitle.isEmpty
+                                ? localization.lookup(column)
+                                : columnTitle),
+                            value: column,
+                          );
+                        }).toList(),
                       ),
                       if (getReportColumnType(reportsUIState.group, context) ==
                               ReportColumnType.dateTime ||
@@ -553,7 +558,7 @@ class ReportResult {
           if (value.runtimeType == String) {
             if (value.toLowerCase() == 'yes') {
               value = 'true';
-            }  else if (value.toLowerCase() == 'no') {
+            } else if (value.toLowerCase() == 'no') {
               value = 'false';
             }
           }
@@ -561,19 +566,15 @@ class ReportResult {
             return false;
           }
         } else if (isValidDate(value)) {
-          print('## date');
           if (!ReportResult.matchDateTime(
               filter: filter,
               value: value,
               reportsUIState: reportsUIState,
               userCompany: userCompany)) {
-            print('## SKIP');
             return false;
           }
         } else {
-          print('## string');
           if (!ReportResult.matchString(filter: filter, value: value)) {
-            print('## SKIP');
             return false;
           }
         }
