@@ -831,7 +831,11 @@ class ReportResult {
   List<DataRow> tableRows(BuildContext context, ReportsScreenVM viewModel) {
     final rows = <DataRow>[];
     final store = StoreProvider.of<AppState>(context);
-    final reportState = store.state.uiState.reportsUIState;
+    final state = store.state;
+    final reportState = state.uiState.reportsUIState;
+    final reportSettings = state.userCompany.settings
+            ?.reportSettings[state.uiState.reportsUIState.report] ??
+        ReportSettingsEntity();
     final groupBy = reportState.group;
 
     if (groupBy.isEmpty) {
@@ -846,7 +850,21 @@ class ReportResult {
         rows.add(DataRow(cells: cells));
       }
     } else {
-      viewModel.groupTotals.forEach((group, values) {
+      final groupTotals = viewModel.groupTotals;
+      final keys = groupTotals.keys.toList();
+      keys.sort((rowA, rowB) {
+        final valuesA = groupTotals[rowA];
+        final valuesB = groupTotals[rowB];
+        final sort = columns[reportSettings.sortIndex];
+        if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
+          return reportSettings.sortAscending
+              ? valuesA[sort].compareTo(valuesB[sort])
+              : valuesB[sort].compareTo(valuesA[sort]);
+        }
+        return 0;
+      });
+      keys.forEach((group) {
+        final values = viewModel.groupTotals[group];
         final cells = <DataCell>[];
         for (var column in sortedColumns(context)) {
           String value = '';
