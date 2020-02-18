@@ -274,18 +274,21 @@ String formatDate(String value, BuildContext context,
           ? company.settings.dateFormatId
           : kDefaultDateFormat;
       format = dateFormats[dateFormatId].format;
-      format += ' ' + (showSeconds
-          ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
-          : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a');
+      format += ' ' +
+          (showSeconds
+              ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+              : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
-    return formatter.format(DateTime.tryParse(value).toLocal());
+    final parsed = DateTime.tryParse(value);
+    return parsed == null ? '' : formatter.format(parsed.toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final formatter = DateFormat(
         dateFormats[company.settings.dateFormatId].format,
         localeSelector(state));
-    return formatter.format(DateTime.tryParse(value));
+    final parsed = DateTime.tryParse(value);
+    return parsed == null ? '' : formatter.format(parsed);
   }
 }
 
