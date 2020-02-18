@@ -23,6 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
@@ -328,16 +329,12 @@ Map<String, Map<String, double>> calculateReportTotals({
 
       dynamic group = row[columnIndex].value;
 
-      if (getReportColumnType(reportUIState.group) ==
-              ReportColumnType.dateTime ||
-          getReportColumnType(reportUIState.group) == ReportColumnType.date) {
-        if ((group as String).isNotEmpty) {
-          group = convertDateTimeToSqlDate(DateTime.tryParse(group));
-          if (reportUIState.subgroup == kReportGroupYear) {
-            group = group.substring(0, 4) + '-01-01';
-          } else if (reportUIState.subgroup == kReportGroupMonth) {
-            group = group.substring(0, 7) + '-01';
-          }
+      if ((group as String).isNotEmpty && isValidDate(group)) {
+        group = convertDateTimeToSqlDate(DateTime.tryParse(group));
+        if (reportUIState.subgroup == kReportGroupYear) {
+          group = group.substring(0, 4) + '-01-01';
+        } else if (reportUIState.subgroup == kReportGroupMonth) {
+          group = group.substring(0, 7) + '-01';
         }
       }
 

@@ -66,3 +66,12 @@ bool matchesString(String haystack, String needle) {
   });
   return RegExp(regExp).hasMatch(haystack.toLowerCase());
 }
+
+bool isValidDate(String input) {
+  try {
+    DateTime.parse(input);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}

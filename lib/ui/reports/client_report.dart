@@ -34,10 +34,10 @@ enum ClientReportFields {
   shipping_state,
   shipping_postal_code,
   shipping_country,
-  custom_value_1,
-  custom_value_2,
-  custom_value_3,
-  custom_value_4,
+  client1,
+  client2,
+  client3,
+  client4,
   created_by,
   assigned_to,
   balance,
@@ -48,10 +48,10 @@ enum ClientReportFields {
   contact_full_name,
   contact_email,
   contact_phone,
-  contact_custom_value_1,
-  contact_custom_value_2,
-  contact_custom_value_3,
-  contact_custom_value_4,
+  contact1,
+  contact2,
+  contact3,
+  contact4,
   contact_last_login,
   is_active,
   created_at,
@@ -143,16 +143,16 @@ ReportResult clientReport(
         case ClientReportFields.size:
           value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
           break;
-        case ClientReportFields.custom_value_1:
+        case ClientReportFields.client1:
           value = client.customValue1;
           break;
-        case ClientReportFields.custom_value_2:
+        case ClientReportFields.client2:
           value = client.customValue2;
           break;
-        case ClientReportFields.custom_value_3:
+        case ClientReportFields.client3:
           value = client.customValue3;
           break;
-        case ClientReportFields.custom_value_4:
+        case ClientReportFields.client4:
           value = client.customValue4;
           break;
         case ClientReportFields.address_1:
@@ -218,16 +218,16 @@ ReportResult clientReport(
         case ClientReportFields.contact_phone:
           value = contact.phone;
           break;
-        case ClientReportFields.contact_custom_value_1:
+        case ClientReportFields.contact1:
           value = contact.customValue1;
           break;
-        case ClientReportFields.contact_custom_value_2:
+        case ClientReportFields.contact2:
           value = contact.customValue2;
           break;
-        case ClientReportFields.contact_custom_value_3:
+        case ClientReportFields.contact3:
           value = contact.customValue3;
           break;
-        case ClientReportFields.contact_custom_value_4:
+        case ClientReportFields.contact4:
           value = contact.customValue4;
           break;
         case ClientReportFields.contact_last_login:
