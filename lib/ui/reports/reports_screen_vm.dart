@@ -13,8 +13,12 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -23,6 +27,7 @@ import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 
+import 'expense_report.dart';
 import 'reports_screen.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
@@ -85,6 +90,75 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
+      case kReportDocument:
+        reportResult = memoizedDocumentReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.documentState.map,
+          state.invoiceState.map,
+          state.expenseState.map,
+          state.projectState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportExpense:
+        reportResult = memoizedExpenseReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.expenseState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportPayment:
+        reportResult = memoizedPaymentReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.paymentState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportProduct:
+        reportResult = memoizedProductReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.productState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportTask:
+        reportResult = memoizedTaskReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taskState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      // TODO: Obtain credit map
+      //case kReportCredit:
+      //  reportResult = memoizedCreditReport(
+      //    state.userCompany,
+      //    state.uiState.reportsUIState,
+      //    state.creditState.map,
+      //    state.clientState.map,
+      //    state.userState.map,
+      //    state.staticState,
+      //  );
+      //  break;
       default:
         reportResult = memoizedClientReport(
           state.userCompany,

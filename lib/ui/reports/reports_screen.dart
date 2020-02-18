@@ -134,14 +134,14 @@ class ReportsScreen extends StatelessWidget {
                           //kReportActivity,
                           //kReportAging,
                           kReportClient,
-                          //kReportCredit,
-                          //kReportDocument,
-                          //kReportExpense,
+                          kReportCredit,
+                          kReportDocument,
+                          kReportExpense,
                           kReportInvoice,
-                          //kReportPayment,
-                          //kReportProduct,
+                          kReportPayment,
+                          kReportProduct,
                           //kReportProfitAndLoss,
-                          //kReportTask,
+                          kReportTask,
                           //kReportTaxRate,
                           //kReportQuote,
                         ]
@@ -494,7 +494,8 @@ ReportColumnType getReportColumnType(String column) {
     return ReportColumnType.dateTime;
   } else if (['date', 'due_date'].contains(column)) {
     return ReportColumnType.date;
-  } else if (['balance', 'paid_to_date', 'amount'].contains(column)) {
+  } else if (['balance', 'paid_to_date', 'amount', 'quantity', 'price', 'cost']
+      .contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
     return ReportColumnType.bool;
