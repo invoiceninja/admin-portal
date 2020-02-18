@@ -1,4 +1,5 @@
 //import 'dart:html';
+import 'dart:collection';
 import 'dart:io' as file;
 import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
@@ -55,13 +56,13 @@ class ReportsScreenVM {
     @required this.onReportFiltersChanged,
     @required this.onExportPressed,
     @required this.onReportSorted,
-    @required this.reportTotals,
+    @required this.groupTotals,
     @required this.reportResult,
   });
 
   final AppState state;
   final ReportResult reportResult;
-  final Map<String, Map<String, double>> reportTotals;
+  final Map<String, Map<String, double>> groupTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
@@ -174,7 +175,7 @@ class ReportsScreenVM {
     return ReportsScreenVM(
         state: state,
         reportResult: reportResult,
-        reportTotals:
+        groupTotals:
             memoizedReportTotals(reportResult, state.uiState.reportsUIState),
         onReportSorted: (index, ascending) {
           store.dispatch(UpdateReportSettings(

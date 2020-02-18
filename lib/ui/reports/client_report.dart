@@ -277,21 +277,7 @@ ReportResult clientReport(
     }
   }
 
-  data.sort((rowA, rowB) {
-    if (rowA.length <= clientReportSettings.sortIndex ||
-        rowB.length <= clientReportSettings.sortIndex) {
-      return 0;
-    }
-
-    final String valueA = rowA[clientReportSettings.sortIndex].value;
-    final String valueB = rowB[clientReportSettings.sortIndex].value;
-
-    if (clientReportSettings.sortAscending) {
-      return valueA.compareTo(valueB);
-    } else {
-      return valueB.compareTo(valueA);
-    }
-  });
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, clientReportSettings));
 
   return ReportResult(
     allColumns:

@@ -426,10 +426,10 @@ class ReportCharts extends StatelessWidget {
                     charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (dynamic item, _) => item['name'],
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.reportTotals.keys
+                data: viewModel.groupTotals.keys
                     .map((key) => {
                           'name': key,
-                          'value': viewModel.reportTotals[key]
+                          'value': viewModel.groupTotals[key]
                               [reportsUIState.chart]
                         })
                     .toList())
@@ -441,7 +441,7 @@ class ReportCharts extends StatelessWidget {
         break;
       case ReportColumnType.date:
       case ReportColumnType.dateTime:
-        final keys = viewModel.reportTotals.keys
+        final keys = viewModel.groupTotals.keys
             .where((element) => element.isNotEmpty)
             .toList();
         keys.sort((String str1, String str2) => str1.compareTo(str2));
@@ -456,7 +456,7 @@ class ReportCharts extends StatelessWidget {
                 data: keys
                     .map((key) => {
                           'name': key,
-                          'value': viewModel.reportTotals[key]
+                          'value': viewModel.groupTotals[key]
                               [reportsUIState.chart]
                         })
                     .toList())
@@ -846,7 +846,7 @@ class ReportResult {
         rows.add(DataRow(cells: cells));
       }
     } else {
-      viewModel.reportTotals.forEach((group, values) {
+      viewModel.groupTotals.forEach((group, values) {
         final cells = <DataCell>[];
         for (var column in sortedColumns(context)) {
           String value = '';
@@ -1079,5 +1079,22 @@ class ReportBoolValue extends ReportElement {
   String renderText(BuildContext context, String column) {
     final localization = AppLocalization.of(context);
     return value == true ? localization.yes : localization.no;
+  }
+}
+
+int sortReportTableRows(
+    dynamic rowA, dynamic rowB, ReportSettingsEntity reportSettings) {
+  if (rowA.length <= reportSettings.sortIndex ||
+      rowB.length <= reportSettings.sortIndex) {
+    return 0;
+  }
+
+  final dynamic valueA = rowA[reportSettings.sortIndex].value;
+  final dynamic valueB = rowB[reportSettings.sortIndex].value;
+
+  if (reportSettings.sortAscending) {
+    return valueA.compareTo(valueB);
+  } else {
+    return valueB.compareTo(valueA);
   }
 }
