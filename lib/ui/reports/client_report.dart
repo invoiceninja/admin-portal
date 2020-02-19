@@ -41,6 +41,7 @@ enum ClientReportFields {
   balance,
   credit_balance,
   paid_to_date,
+  total,
   id_number,
   vat_number,
   contact_full_name,
@@ -230,6 +231,9 @@ ReportResult clientReport(
           break;
         case ClientReportFields.contact_last_login:
           value = convertTimestampToDateString(contact.lastLogin);
+          break;
+        case ClientReportFields.total:
+          value = client.balance + client.paidToDate;
           break;
         case ClientReportFields.balance:
           value = client.balance;

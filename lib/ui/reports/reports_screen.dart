@@ -526,8 +526,15 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.dateTime;
   } else if (['date', 'due_date'].contains(column)) {
     return ReportColumnType.date;
-  } else if (['balance', 'paid_to_date', 'amount', 'quantity', 'pridce', 'cost']
-      .contains(column)) {
+  } else if ([
+    'balance',
+    'paid_to_date',
+    'amount',
+    'quantity',
+    'pridce',
+    'cost',
+    'total',
+  ].contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
     return ReportColumnType.bool;
