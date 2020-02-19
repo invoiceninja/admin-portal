@@ -740,10 +740,24 @@ class ReportResult {
           ))
         else if (getReportColumnType(column, context) ==
             ReportColumnType.number)
-          DataCell(DecoratedFormField(
-            label: '',
+          DataCell(TextFormField(
             controller: textEditingControllers[column],
             keyboardType: TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(
+                suffixIcon: textEditingControllers == null
+                    ? null
+                    : (textEditingControllers[column]?.text ?? '').isEmpty
+                        ? null
+                        : IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              textEditingControllers[column].text = '';
+                              onFilterChanged(column, '');
+                            },
+                          )),
           ))
         else if (getReportColumnType(column, context) ==
                 ReportColumnType.dateTime ||
