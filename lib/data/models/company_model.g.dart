@@ -938,18 +938,35 @@ class _$ReportSettingsEntitySerializer
       Serializers serializers, ReportSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'sort_index',
-      serializers.serialize(object.sortIndex,
-          specifiedType: const FullType(int)),
-      'sort_ascending',
-      serializers.serialize(object.sortAscending,
-          specifiedType: const FullType(bool)),
       'columns',
       serializers.serialize(object.columns,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-
+    if (object.sortIndex != null) {
+      result
+        ..add('sort_index')
+        ..add(serializers.serialize(object.sortIndex,
+            specifiedType: const FullType(int)));
+    }
+    if (object.sortAscending != null) {
+      result
+        ..add('sort_ascending')
+        ..add(serializers.serialize(object.sortAscending,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.sortTotalsIndex != null) {
+      result
+        ..add('sort_totals_index')
+        ..add(serializers.serialize(object.sortTotalsIndex,
+            specifiedType: const FullType(int)));
+    }
+    if (object.sortTotalsAscending != null) {
+      result
+        ..add('sort_totals_ascending')
+        ..add(serializers.serialize(object.sortTotalsAscending,
+            specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -971,6 +988,14 @@ class _$ReportSettingsEntitySerializer
           break;
         case 'sort_ascending':
           result.sortAscending = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'sort_totals_index':
+          result.sortTotalsIndex = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'sort_totals_ascending':
+          result.sortTotalsAscending = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'columns':
@@ -4044,21 +4069,23 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
   @override
   final bool sortAscending;
   @override
+  final int sortTotalsIndex;
+  @override
+  final bool sortTotalsAscending;
+  @override
   final BuiltList<String> columns;
 
   factory _$ReportSettingsEntity(
           [void Function(ReportSettingsEntityBuilder) updates]) =>
       (new ReportSettingsEntityBuilder()..update(updates)).build();
 
-  _$ReportSettingsEntity._({this.sortIndex, this.sortAscending, this.columns})
+  _$ReportSettingsEntity._(
+      {this.sortIndex,
+      this.sortAscending,
+      this.sortTotalsIndex,
+      this.sortTotalsAscending,
+      this.columns})
       : super._() {
-    if (sortIndex == null) {
-      throw new BuiltValueNullFieldError('ReportSettingsEntity', 'sortIndex');
-    }
-    if (sortAscending == null) {
-      throw new BuiltValueNullFieldError(
-          'ReportSettingsEntity', 'sortAscending');
-    }
     if (columns == null) {
       throw new BuiltValueNullFieldError('ReportSettingsEntity', 'columns');
     }
@@ -4079,12 +4106,18 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
     return other is ReportSettingsEntity &&
         sortIndex == other.sortIndex &&
         sortAscending == other.sortAscending &&
+        sortTotalsIndex == other.sortTotalsIndex &&
+        sortTotalsAscending == other.sortTotalsAscending &&
         columns == other.columns;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, sortIndex.hashCode), sortAscending.hashCode),
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc(0, sortIndex.hashCode), sortAscending.hashCode),
+                sortTotalsIndex.hashCode),
+            sortTotalsAscending.hashCode),
         columns.hashCode));
   }
 
@@ -4093,6 +4126,8 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
     return (newBuiltValueToStringHelper('ReportSettingsEntity')
           ..add('sortIndex', sortIndex)
           ..add('sortAscending', sortAscending)
+          ..add('sortTotalsIndex', sortTotalsIndex)
+          ..add('sortTotalsAscending', sortTotalsAscending)
           ..add('columns', columns))
         .toString();
   }
@@ -4111,6 +4146,16 @@ class ReportSettingsEntityBuilder
   set sortAscending(bool sortAscending) =>
       _$this._sortAscending = sortAscending;
 
+  int _sortTotalsIndex;
+  int get sortTotalsIndex => _$this._sortTotalsIndex;
+  set sortTotalsIndex(int sortTotalsIndex) =>
+      _$this._sortTotalsIndex = sortTotalsIndex;
+
+  bool _sortTotalsAscending;
+  bool get sortTotalsAscending => _$this._sortTotalsAscending;
+  set sortTotalsAscending(bool sortTotalsAscending) =>
+      _$this._sortTotalsAscending = sortTotalsAscending;
+
   ListBuilder<String> _columns;
   ListBuilder<String> get columns =>
       _$this._columns ??= new ListBuilder<String>();
@@ -4122,6 +4167,8 @@ class ReportSettingsEntityBuilder
     if (_$v != null) {
       _sortIndex = _$v.sortIndex;
       _sortAscending = _$v.sortAscending;
+      _sortTotalsIndex = _$v.sortTotalsIndex;
+      _sortTotalsAscending = _$v.sortTotalsAscending;
       _columns = _$v.columns?.toBuilder();
       _$v = null;
     }
@@ -4149,6 +4196,8 @@ class ReportSettingsEntityBuilder
           new _$ReportSettingsEntity._(
               sortIndex: sortIndex,
               sortAscending: sortAscending,
+              sortTotalsIndex: sortTotalsIndex,
+              sortTotalsAscending: sortTotalsAscending,
               columns: columns.build());
     } catch (_) {
       String _$failedField;

@@ -344,6 +344,11 @@ class _ReportDataTableState extends State<ReportDataTable> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               DataTable(
+                sortColumnIndex: reportSettings.sortTotalsIndex != null &&
+                        reportResult.columns.length >
+                            reportSettings.sortTotalsIndex
+                    ? reportSettings.sortTotalsIndex
+                    : null,
                 columns: reportResult.totalColumns(context),
                 rows: reportResult.totalRows(context),
               ),
@@ -354,10 +359,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              sortColumnIndex:
-                  reportResult.columns.length > reportSettings.sortIndex
-                      ? reportSettings.sortIndex
-                      : null,
+              sortColumnIndex: reportSettings.sortIndex != null &&
+                      reportResult.columns.length > reportSettings.sortIndex
+                  ? reportSettings.sortIndex
+                  : null,
               sortAscending: reportSettings.sortAscending,
               columns: reportResult.tableColumns(
                   context,
@@ -1119,7 +1124,9 @@ class ReportBoolValue extends ReportElement {
 
 int sortReportTableRows(
     dynamic rowA, dynamic rowB, ReportSettingsEntity reportSettings) {
-  if (rowA.length <= reportSettings.sortIndex ||
+  if (reportSettings.sortIndex == null) {
+    return 0;
+  } else if (rowA.length <= reportSettings.sortIndex ||
       rowB.length <= reportSettings.sortIndex) {
     return 0;
   }

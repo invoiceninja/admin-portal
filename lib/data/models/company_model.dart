@@ -643,21 +643,35 @@ abstract class UserSettingsEntity
 
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
-  factory ReportSettingsEntity({int sortIndex, bool sortAscending}) {
+  factory ReportSettingsEntity({int sortIndex, bool sortAscending, int sortTotalsIndex, bool sortTotalsAscending, }) {
     return _$ReportSettingsEntity._(
-      sortIndex: sortIndex ?? 0,
+      sortIndex: sortIndex,
       sortAscending: sortAscending ?? true,
+      sortTotalsIndex: sortTotalsIndex,
+      sortTotalsAscending: sortTotalsAscending ?? true,
       columns: BuiltList<String>(),
     );
   }
 
   ReportSettingsEntity._();
 
+  @nullable
   @BuiltValueField(wireName: 'sort_index')
   int get sortIndex;
 
+  // TODO remove nullable
+  @nullable
   @BuiltValueField(wireName: 'sort_ascending')
   bool get sortAscending;
+
+  @nullable
+  @BuiltValueField(wireName: 'sort_totals_index')
+  int get sortTotalsIndex;
+
+  // TODO remove nullable
+  @nullable
+  @BuiltValueField(wireName: 'sort_totals_ascending')
+  bool get sortTotalsAscending;
 
   BuiltList<String> get columns;
 

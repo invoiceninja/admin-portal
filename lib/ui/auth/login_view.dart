@@ -31,7 +31,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginView> {
-  static final GlobalKey<FormState> _formKey =
+  final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_login');
 
   final _firstNameController = TextEditingController();
