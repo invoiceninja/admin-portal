@@ -16,6 +16,11 @@ enum InvoiceReportFields {
   amount,
   balance,
   client,
+  client_balance,
+  client_address1,
+  client_address2,
+  client_shipping_address1,
+  client_shipping_address2,
   status,
   number,
   discount,
@@ -110,6 +115,21 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.client:
           value = client?.listDisplayName ?? '';
+          break;
+        case InvoiceReportFields.client_balance:
+          value = client.balance;
+          break;
+        case InvoiceReportFields.client_address1:
+          value = client.address1;
+          break;
+        case InvoiceReportFields.client_address2:
+          value = client.address2;
+          break;
+        case InvoiceReportFields.client_shipping_address1:
+          value = client.shippingAddress1;
+          break;
+        case InvoiceReportFields.client_shipping_address2:
+          value = client.shippingAddress2;
           break;
         case InvoiceReportFields.status:
           value = staticState.invoiceStatusMap[invoice.statusId]?.name ?? '';

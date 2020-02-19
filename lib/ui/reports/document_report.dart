@@ -15,6 +15,9 @@ enum DocumentReportFields {
   name,
   type,
   invoice,
+  invoice_amount,
+  invoice_date,
+  invoice_due_date,
   expense,
   project,
   vendor,
@@ -72,6 +75,10 @@ ReportResult documentReport(
 
   for (var documentId in documentMap.keys) {
     final document = documentMap[documentId];
+    final invoice = invoiceMap[document.invoiceId];
+    final expense = expenseMap[document.expenseId];
+    final project = projectMap[document.projectId];
+    final vendor = vendorMap[document.vendorId];
 
     if (document.isDeleted) {
       continue;
@@ -91,16 +98,25 @@ ReportResult documentReport(
           value = document.type;
           break;
         case DocumentReportFields.invoice:
-          value = invoiceMap[document.invoiceId].listDisplayName;
+          value = invoice.listDisplayName;
+          break;
+        case DocumentReportFields.invoice_amount:
+          value = invoice.amount;
+          break;
+        case DocumentReportFields.invoice_date:
+          value = invoice.date;
+          break;
+        case DocumentReportFields.invoice_due_date:
+          value = invoice.dueDate;
           break;
         case DocumentReportFields.expense:
-          value = expenseMap[document.expenseId].listDisplayName;
+          value = expense.listDisplayName;
           break;
         case DocumentReportFields.project:
-          value = projectMap[document.projectId].listDisplayName;
+          value = project.listDisplayName;
           break;
         case DocumentReportFields.vendor:
-          value = vendorMap[document.vendorId].listDisplayName;
+          value = vendor.listDisplayName;
           break;
       }
 

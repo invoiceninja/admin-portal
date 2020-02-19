@@ -21,7 +21,13 @@ enum ExpenseReportFields {
   tax_rate2,
   tax_rate3,
   client,
+  client_balance,
+  client_address1,
+  client_address2,
+  client_shipping_address1,
+  client_shipping_address2,
   invoice,
+  invoice_amount,
   vendor,
   custom_value1,
   custom_value2,
@@ -80,6 +86,8 @@ ReportResult expenseReport(
   for (var expenseId in expenseMap.keys) {
     final expense = expenseMap[expenseId];
     final client = clientMap[expense.clientId];
+    final invoice = invoiceMap[expense.invoiceId];
+    final vendor = vendorMap[expense.vendorId];
 
     if (expense.isDeleted) {
       continue;
@@ -118,13 +126,31 @@ ReportResult expenseReport(
           value = expense.taxRate3;
           break;
         case ExpenseReportFields.client:
-          value = clientMap[expense.clientId].displayName;
+          value = client.displayName;
+          break;
+        case ExpenseReportFields.client_balance:
+          value = client.balance;
+          break;
+        case ExpenseReportFields.client_address1:
+          value = client.address1;
+          break;
+        case ExpenseReportFields.client_address2:
+          value = client.address2;
+          break;
+        case ExpenseReportFields.client_shipping_address1:
+          value = client.shippingAddress1;
+          break;
+        case ExpenseReportFields.client_shipping_address2:
+          value = client.shippingAddress2;
           break;
         case ExpenseReportFields.invoice:
-          value = invoiceMap[expense.invoiceId].listDisplayName;
+          value = invoice.listDisplayName;
+          break;
+        case ExpenseReportFields.invoice_amount:
+          value = invoice.amount;
           break;
         case ExpenseReportFields.vendor:
-          value = vendorMap[expense.vendorId].listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case ExpenseReportFields.custom_value1:
           value = expense.customValue1;
