@@ -196,14 +196,14 @@ class ReportsScreenVM {
                   ? allReportSettings[report]
                   : ReportSettingsEntity())
               .rebuild((b) => b..columns.replace(BuiltList<String>(columns)));
-          final user = state.user.rebuild((b) => b
-            ..userCompany
-                    .settings
-                    .reportSettings[state.uiState.reportsUIState.report] =
+          final settings = state.userCompany.settings.rebuild((b) => b
+            ..reportSettings[state.uiState.reportsUIState.report] =
                 reportSettings);
+          final user = state.user
+              .rebuild((b) => b..userCompany.settings.replace(settings));
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
-          if (state.authState.hasRecentlyEnteredPassword) {
+          if (state.authState.hasRecentlyEnteredPassword && false) {
             store.dispatch(
               SaveUserSettingsRequest(
                 completer: completer,

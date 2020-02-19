@@ -1,9 +1,15 @@
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
-  if (action is UpdateReportSettings) {
+  if (action is SaveUserSettingsSuccess) {
+    return state.rebuild((b) => b
+      ..group = ''
+      ..subgroup = ''
+      ..chart = '');
+  } else if (action is UpdateReportSettings) {
     if (action.report != null &&
         action.report.isNotEmpty &&
         action.report != state.report) {

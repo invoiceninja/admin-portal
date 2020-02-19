@@ -449,6 +449,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'MultiSelect: ${productListState.isInMultiselect()} SelectedIds: ${productListState.selectedIds}';
     //return 'History: $historyList';
     return 'Report State: ${uiState.reportsUIState}, Settings: ${userCompany.settings}';
+    //return 'UserCompany Settngs: ${userCompany.settings}, User Settings: ${user.userCompany.settings}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

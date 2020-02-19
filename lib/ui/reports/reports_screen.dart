@@ -354,7 +354,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: DataTable(
-              sortColumnIndex: reportSettings.sortIndex,
+              sortColumnIndex:
+                  reportResult.columns.length > reportSettings.sortIndex
+                      ? reportSettings.sortIndex
+                      : null,
               sortAscending: reportSettings.sortAscending,
               columns: reportResult.tableColumns(
                   context,
