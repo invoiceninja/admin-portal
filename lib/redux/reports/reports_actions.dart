@@ -21,6 +21,7 @@ class UpdateReportSettings implements PersistUI {
     this.group,
     this.subgroup,
     this.sortIndex,
+    this.sortTotalsIndex,
     this.customStartDate,
     this.customEndDate,
   });
@@ -31,6 +32,7 @@ class UpdateReportSettings implements PersistUI {
   final String chart;
   final String subgroup;
   final int sortIndex;
+  final int sortTotalsIndex;
   final String customStartDate;
   final String customEndDate;
 }

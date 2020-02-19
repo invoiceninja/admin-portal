@@ -349,7 +349,11 @@ class _ReportDataTableState extends State<ReportDataTable> {
                             reportSettings.sortTotalsIndex
                     ? reportSettings.sortTotalsIndex
                     : null,
-                columns: reportResult.totalColumns(context),
+                sortAscending: reportSettings.sortTotalsAscending,
+                columns: reportResult.totalColumns(
+                    context,
+                    (index, ascending) => widget.viewModel
+                        .onReportTotalsSorted(index, ascending)),
                 rows: reportResult.totalRows(context),
               ),
             ],
@@ -953,16 +957,19 @@ class ReportResult {
     return rows;
   }
 
-  List<DataColumn> totalColumns(BuildContext context) {
+  List<DataColumn> totalColumns(
+      BuildContext context, Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
     columns.toList().sort((String str1, String str2) => str1.compareTo(str2));
 
     return [
       DataColumn(
         label: Text(localization.currency),
+        onSort: onSortCallback,
       ),
       DataColumn(
         label: Text(localization.count),
+        onSort: onSortCallback,
       ),
       for (String column in columns)
         if (getReportColumnType(column, context) == ReportColumnType.number)
@@ -972,6 +979,7 @@ class ReportResult {
               overflow: TextOverflow.ellipsis,
             ),
             numeric: true,
+            onSort: onSortCallback,
           )
     ];
   }
@@ -979,7 +987,10 @@ class ReportResult {
   List<DataRow> totalRows(BuildContext context) {
     final rows = <DataRow>[];
     final store = StoreProvider.of<AppState>(context);
-
+    final state = store.state;
+    final reportSettings = state.userCompany.settings
+            ?.reportSettings[state.uiState.reportsUIState.report] ??
+        ReportSettingsEntity();
     final Map<String, Map<String, double>> totals = {};
 
     for (var i = 0; i < data.length; i++) {
@@ -1006,7 +1017,40 @@ class ReportResult {
       }
     }
 
-    totals.forEach((currencyId, values) {
+    final keys = totals.keys.toList();
+    if (reportSettings.sortTotalsIndex != null) {
+      keys.sort((rowA, rowB) {
+        dynamic valueA;
+        dynamic valueB;
+
+        if (reportSettings.sortTotalsIndex == 0) {
+          final currencyMap = state.staticState.currencyMap;
+          valueA = currencyMap[rowA].listDisplayName;
+          valueB = currencyMap[rowB].listDisplayName;
+        } else if (reportSettings.sortTotalsIndex == 1) {
+          valueA = totals[rowA]['count'];
+          valueB = totals[rowB]['count'];
+        } else {
+          final List<String> fields = totals[rowA].keys.toList()
+            ..remove('count')
+            ..sort((String str1, String str2) => str1.compareTo(str2));
+          final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
+          valueA = totals[rowA][sortColumn];
+          valueB = totals[rowB][sortColumn];
+        }
+
+        if (valueA == null || valueB == null) {
+          return 0;
+        }
+
+        return reportSettings.sortTotalsAscending
+            ? valueA.compareTo(valueB)
+            : valueB.compareTo(valueA);
+      });
+    }
+
+    keys.forEach((currencyId) {
+      final values = totals[currencyId];
       final cells = <DataCell>[
         DataCell(Text(
             store.state.staticState.currencyMap[currencyId]?.listDisplayName ??

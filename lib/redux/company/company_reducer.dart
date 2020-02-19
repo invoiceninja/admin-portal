@@ -58,15 +58,27 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       final settings = userCompany.settings.reportSettings[action.report];
       return userCompany.rebuild((b) => b
         ..settings.reportSettings[action.report] = settings.rebuild((b) => b
-          ..sortAscending = action.sortIndex == settings.sortIndex
-              ? !settings.sortAscending
-              : true
-          ..sortIndex = action.sortIndex ?? settings.sortIndex));
+          ..sortAscending = action.sortIndex == null
+              ? settings.sortAscending
+              : action.sortIndex == settings.sortIndex
+                  ? !settings.sortAscending
+                  : true
+          ..sortTotalsAscending = action.sortTotalsIndex == null
+              ? settings.sortTotalsAscending
+              : action.sortTotalsIndex == settings.sortTotalsIndex
+                  ? !settings.sortTotalsAscending
+                  : true
+          ..sortIndex = action.sortIndex ?? settings.sortIndex
+          ..sortTotalsIndex =
+              action.sortTotalsIndex ?? settings.sortTotalsIndex));
     } else {
-      return userCompany.rebuild((b) => b
-        ..settings.reportSettings[action.report] = ReportSettingsEntity(
-          sortIndex: action.sortIndex,
-        ));
+      return userCompany.rebuild(
+        (b) => b
+          ..settings.reportSettings[action.report] = ReportSettingsEntity(
+            sortIndex: action.sortIndex,
+            sortTotalsIndex: action.sortTotalsIndex,
+          ),
+      );
     }
   }),
   TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(

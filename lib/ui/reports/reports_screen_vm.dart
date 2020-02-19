@@ -58,6 +58,7 @@ class ReportsScreenVM {
     @required this.onReportSorted,
     @required this.groupTotals,
     @required this.reportResult,
+    @required this.onReportTotalsSorted,
   });
 
   final AppState state;
@@ -67,6 +68,7 @@ class ReportsScreenVM {
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
   final Function(int, bool) onReportSorted;
+  final Function(int, bool) onReportTotalsSorted;
   final Function({
     String report,
     String customStartDate,
@@ -181,6 +183,12 @@ class ReportsScreenVM {
           store.dispatch(UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
             sortIndex: index,
+          ));
+        },
+        onReportTotalsSorted: (index, ascending) {
+          store.dispatch(UpdateReportSettings(
+            report: state.uiState.reportsUIState.report,
+            sortTotalsIndex: index,
           ));
         },
         onReportFiltersChanged: (context, filterMap) {
