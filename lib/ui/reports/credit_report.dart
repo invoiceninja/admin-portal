@@ -17,6 +17,10 @@ enum CreditReportFields {
   credit_date,
   credit_number,
   client,
+  client_city,
+  client_state,
+  client_country,
+  client_is_active
 }
 
 var memoizedCreditReport = memo6((
@@ -90,7 +94,19 @@ ReportResult creditReport(
           value = credit.creditNumber;
           break;
         case CreditReportFields.client:
-          value = clientMap[credit.clientId].displayName;
+          value = client.displayName;
+          break;
+        case CreditReportFields.client_city:
+          value = client.city;
+          break;
+        case CreditReportFields.client_state:
+          value = client.state;
+          break;
+        case CreditReportFields.client_country:
+          value = staticState.countryMap[client.countryId].listDisplayName;
+          break;
+        case CreditReportFields.client_is_active:
+          value = client.isActive;
           break;
       }
 
@@ -118,7 +134,8 @@ ReportResult creditReport(
     }
   }
 
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, creditReportSettings));
+  data.sort(
+      (rowA, rowB) => sortReportTableRows(rowA, rowB, creditReportSettings));
 
   return ReportResult(
     allColumns:

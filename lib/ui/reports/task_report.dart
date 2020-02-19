@@ -16,8 +16,19 @@ enum TaskReportFields {
   end_date,
   description,
   invoice,
+  invoice_amount,
+  invoice_date,
+  invoice_due_date,
   client,
+  client_balance,
+  client_address1,
+  client_address2,
+  client_shipping_address1,
+  client_shipping_address2,
   vendor,
+  vendor_city,
+  vendor_state,
+  vendor_country,
   custom_value1,
   custom_value2,
   custom_value3,
@@ -76,6 +87,8 @@ ReportResult taskReport(
   for (var taskId in taskMap.keys) {
     final task = taskMap[taskId];
     final client = clientMap[task.clientId];
+    final vendor = vendorMap[task.vendorId];
+    final invoice = invoiceMap[task.invoiceId];
 
     if (task.isDeleted) {
       continue;
@@ -100,13 +113,46 @@ ReportResult taskReport(
           value = task.description;
           break;
         case TaskReportFields.invoice:
-          value = invoiceMap[task.invoiceId];
+          value = invoice;
+          break;
+        case TaskReportFields.invoice_amount:
+          value = invoice.amount;
+          break;
+        case TaskReportFields.invoice_date:
+          value = invoice.date;
+          break;
+        case TaskReportFields.invoice_due_date:
+          value = invoice.dueDate;
           break;
         case TaskReportFields.client:
           value = clientMap[task.clientId];
           break;
+        case TaskReportFields.client_balance:
+          value = client.balance;
+          break;
+        case TaskReportFields.client_address1:
+          value = client.address1;
+          break;
+        case TaskReportFields.client_address2:
+          value = client.address2;
+          break;
+        case TaskReportFields.client_shipping_address1:
+          value = client.shippingAddress1;
+          break;
+        case TaskReportFields.client_shipping_address2:
+          value = client.shippingAddress2;
+          break;
         case TaskReportFields.vendor:
           value = vendorMap[task.vendorId];
+          break;
+        case TaskReportFields.vendor_city:
+          value = vendor?.city;
+          break;
+        case TaskReportFields.vendor_state:
+          value = vendor?.state;
+          break;
+        case TaskReportFields.vendor_country:
+          value = staticState.countryMap[vendor?.countryId];
           break;
         case TaskReportFields.custom_value1:
           value = task.customValue1;
