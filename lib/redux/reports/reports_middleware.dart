@@ -19,14 +19,13 @@ List<Middleware<AppState>> createStoreReportsMiddleware() {
 Middleware<AppState> _viewReports() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewReports;
-    final uiState = store.state.uiState;
 
     if (!action.force &&
         hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
-    final route = ReportsScreen.route;
+    const route = ReportsScreen.route;
 
     next(action);
 

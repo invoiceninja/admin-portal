@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -527,7 +526,7 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.dateTime;
   } else if (['date', 'due_date'].contains(column)) {
     return ReportColumnType.date;
-  } else if (['balance', 'paid_to_date', 'amount', 'quantity', 'price', 'cost']
+  } else if (['balance', 'paid_to_date', 'amount', 'quantity', 'pridce', 'cost']
       .contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
@@ -668,11 +667,12 @@ class ReportResult {
   }
 
   List<String> sortedColumns(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final group = store.state.uiState.reportsUIState.group;
     final data = columns.toList();
 
     /*
+    final store = StoreProvider.of<AppState>(context);
+    final group = store.state.uiState.reportsUIState.group;
+
     if (group.isNotEmpty) {
       data.remove(group);
       data.insert(0, group);
