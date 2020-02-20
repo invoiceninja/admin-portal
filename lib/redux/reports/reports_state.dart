@@ -13,6 +13,7 @@ abstract class ReportsUIState
       customStartDate: '',
       customEndDate: '',
       group: '',
+      selectedGroup: '',
       chart: '',
       subgroup: kReportGroupDay,
       filters: BuiltMap<String, String>(),
@@ -24,6 +25,8 @@ abstract class ReportsUIState
   String get report;
 
   String get group;
+
+  String get selectedGroup;
 
   String get chart;
 

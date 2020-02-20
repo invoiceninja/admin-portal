@@ -115,7 +115,7 @@ class ReportsScreen extends StatelessWidget {
         ),
         body: ListView(
           key: ValueKey(
-              '${viewModel.state.isSaving}_${reportsUIState.report}_${reportsUIState.group}'),
+              '${viewModel.state.isSaving}_${reportsUIState.report}_${reportsUIState.group}_${reportsUIState.selectedGroup}'),
           children: <Widget>[
             Flex(
               direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
@@ -947,7 +947,7 @@ class ReportResult {
               store.dispatch(
                 UpdateReportSettings(
                   report: reportState.report,
-                  group: '',
+                  selectedGroup: filter,
                   customStartDate: customStartDate,
                   customEndDate: customEndDate,
                   filters: reportState.filters

@@ -26,6 +26,9 @@ class _$ReportsUIStateSerializer
       'group',
       serializers.serialize(object.group,
           specifiedType: const FullType(String)),
+      'selectedGroup',
+      serializers.serialize(object.selectedGroup,
+          specifiedType: const FullType(String)),
       'chart',
       serializers.serialize(object.chart,
           specifiedType: const FullType(String)),
@@ -67,6 +70,10 @@ class _$ReportsUIStateSerializer
           result.group = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'selectedGroup':
+          result.selectedGroup = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'chart':
           result.chart = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -103,6 +110,8 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String group;
   @override
+  final String selectedGroup;
+  @override
   final String chart;
   @override
   final String subgroup;
@@ -119,6 +128,7 @@ class _$ReportsUIState extends ReportsUIState {
   _$ReportsUIState._(
       {this.report,
       this.group,
+      this.selectedGroup,
       this.chart,
       this.subgroup,
       this.customStartDate,
@@ -130,6 +140,9 @@ class _$ReportsUIState extends ReportsUIState {
     }
     if (group == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'group');
+    }
+    if (selectedGroup == null) {
+      throw new BuiltValueNullFieldError('ReportsUIState', 'selectedGroup');
     }
     if (chart == null) {
       throw new BuiltValueNullFieldError('ReportsUIState', 'chart');
@@ -162,6 +175,7 @@ class _$ReportsUIState extends ReportsUIState {
     return other is ReportsUIState &&
         report == other.report &&
         group == other.group &&
+        selectedGroup == other.selectedGroup &&
         chart == other.chart &&
         subgroup == other.subgroup &&
         customStartDate == other.customStartDate &&
@@ -175,7 +189,9 @@ class _$ReportsUIState extends ReportsUIState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, report.hashCode), group.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, report.hashCode), group.hashCode),
+                            selectedGroup.hashCode),
                         chart.hashCode),
                     subgroup.hashCode),
                 customStartDate.hashCode),
@@ -188,6 +204,7 @@ class _$ReportsUIState extends ReportsUIState {
     return (newBuiltValueToStringHelper('ReportsUIState')
           ..add('report', report)
           ..add('group', group)
+          ..add('selectedGroup', selectedGroup)
           ..add('chart', chart)
           ..add('subgroup', subgroup)
           ..add('customStartDate', customStartDate)
@@ -208,6 +225,11 @@ class ReportsUIStateBuilder
   String _group;
   String get group => _$this._group;
   set group(String group) => _$this._group = group;
+
+  String _selectedGroup;
+  String get selectedGroup => _$this._selectedGroup;
+  set selectedGroup(String selectedGroup) =>
+      _$this._selectedGroup = selectedGroup;
 
   String _chart;
   String get chart => _$this._chart;
@@ -238,6 +260,7 @@ class ReportsUIStateBuilder
     if (_$v != null) {
       _report = _$v.report;
       _group = _$v.group;
+      _selectedGroup = _$v.selectedGroup;
       _chart = _$v.chart;
       _subgroup = _$v.subgroup;
       _customStartDate = _$v.customStartDate;
@@ -269,6 +292,7 @@ class ReportsUIStateBuilder
           new _$ReportsUIState._(
               report: report,
               group: group,
+              selectedGroup: selectedGroup,
               chart: chart,
               subgroup: subgroup,
               customStartDate: customStartDate,

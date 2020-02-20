@@ -89,11 +89,34 @@ class DashboardPanels extends StatelessWidget {
                 ? () => viewModel.onOffsetChanged(-1)
                 : null,
           ),
-          if (hasMultipleCurrencies)
+          if (hasMultipleCurrencies) ...[
+            Expanded(
+              child: SizedBox(),
+            ),
+            DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                    .map((currencyId) => DropdownMenuItem<String>(
+                          child: Text(currencyId == kCurrencyAll
+                              ? localization.all
+                              : viewModel.currencyMap[currencyId]?.code),
+                          value: currencyId,
+                        ))
+                    .toList(),
+                onChanged: (currencyId) =>
+                    viewModel.onCurrencyChanged(currencyId),
+                value: state.dashboardUIState.currencyId,
+              ),
+            ),
+            SizedBox(
+              width: 12,
+            ),
+          ]
+          /*
             Row(
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 SizedBox(width: 8.0),
-                Spacer(),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     items: memoizedGetCurrencyIds(company, clientMap, groupMap)
@@ -111,7 +134,8 @@ class DashboardPanels extends StatelessWidget {
                 ),
                 SizedBox(width: 16.0),
               ],
-            ),
+            ),            
+             */
         ],
       ),
     );
