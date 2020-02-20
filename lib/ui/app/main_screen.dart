@@ -5,6 +5,9 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
@@ -176,11 +179,24 @@ class MainScreen extends StatelessWidget {
                 store.dispatch(PopLastHistory());
               }
 
-              viewEntityById(
-                entityType: history.entityType,
-                entityId: history.id,
-                context: context,
-              );
+              switch (history.entityType) {
+                case EntityType.dashboard:
+                  store.dispatch(
+                      ViewDashboard(navigator: Navigator.of(context)));
+                  break;
+                case EntityType.reports:
+                  store.dispatch(ViewReports(navigator: Navigator.of(context)));
+                  break;
+                case EntityType.settings:
+                  store
+                      .dispatch(ViewSettings(navigator: Navigator.of(context)));
+                  break;
+                default:
+                  viewEntityById(
+                      context: context,
+                      entityId: history.id,
+                      entityType: history.entityType);
+              }
 
               return false;
             },
