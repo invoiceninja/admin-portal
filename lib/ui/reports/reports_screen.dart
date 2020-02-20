@@ -892,11 +892,14 @@ class ReportResult {
       keys.sort((rowA, rowB) {
         final valuesA = groupTotals[rowA];
         final valuesB = groupTotals[rowB];
-        final sort = columns[reportSettings.sortIndex];
-        if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
-          return reportSettings.sortAscending
-              ? valuesA[sort].compareTo(valuesB[sort])
-              : valuesB[sort].compareTo(valuesA[sort]);
+        if (reportSettings.sortIndex != null &&
+            reportSettings.sortIndex < columns.length) {
+          final sort = columns[reportSettings.sortIndex];
+          if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
+            return reportSettings.sortAscending
+                ? valuesA[sort].compareTo(valuesB[sort])
+                : valuesB[sort].compareTo(valuesA[sort]);
+          }
         }
         return 0;
       });
