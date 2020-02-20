@@ -140,7 +140,18 @@ class MainScreen extends StatelessWidget {
                 screen = SettingsScreens();
                 break;
               case ReportsScreen.route:
-                screen = ReportsScreenBuilder();
+                screen = Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: ReportsScreenBuilder(),
+                      flex: 5,
+                    ),
+                    if (prefState.showHistory) ...[
+                      _CustomDivider(),
+                      HistoryDrawerBuilder(),
+                    ],
+                  ],
+                );
                 break;
             }
           }

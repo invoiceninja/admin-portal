@@ -110,7 +110,21 @@ class ReportsScreen extends StatelessWidget {
               onPressed: () {
                 viewModel.onExportPressed(context);
               },
-            )
+            ),
+            if (isMobile(context) || !state.prefState.isHistoryVisible)
+              Builder(
+                builder: (context) => IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    if (isMobile(context) || state.prefState.isHistoryFloated) {
+                      Scaffold.of(context).openEndDrawer();
+                    } else {
+                      store.dispatch(
+                          UserSettingsChanged(sidebar: AppSidebar.history));
+                    }
+                  },
+                ),
+              ),
           ],
         ),
         body: ListView(
