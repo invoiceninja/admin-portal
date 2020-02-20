@@ -8,6 +8,7 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
     return state.rebuild((b) => b
       ..group = ''
       ..subgroup = ''
+      ..selectedGroup = ''
       ..chart = '');
   } else if (action is UpdateReportSettings) {
     if (action.report != null &&
@@ -18,6 +19,7 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
       return state.rebuild((b) => b
         ..report = action.report ?? state.report
         ..group = action.group ?? state.group
+        ..selectedGroup = action.selectedGroup ?? state.selectedGroup
         ..subgroup = action.subgroup ?? state.subgroup
         ..chart = action.chart ?? state.chart
         ..customStartDate = action.customStartDate ?? state.customStartDate

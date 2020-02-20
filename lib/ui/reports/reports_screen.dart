@@ -179,7 +179,7 @@ class ReportsScreen extends StatelessWidget {
                         blankValue: '',
                         showBlank: true,
                         onChanged: (dynamic value) {
-                          viewModel.onSettingsChanged(group: value);
+                          viewModel.onSettingsChanged(group: value, selectedGroup: '');
                         },
                         items: reportResult.columns
                             .where((column) =>

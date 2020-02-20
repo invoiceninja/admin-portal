@@ -72,6 +72,7 @@ class ReportsScreenVM {
     String customStartDate,
     String customEndDate,
     String group,
+    String selectedGroup,
     String subgroup,
     String chart,
   }) onSettingsChanged;
@@ -193,6 +194,7 @@ class ReportsScreenVM {
           store.dispatch(UpdateReportSettings(
             report: report,
             filters: filterMap,
+            selectedGroup: '',
           ));
         },
         onReportColumnsChanged: (context, columns) {
@@ -233,6 +235,7 @@ class ReportsScreenVM {
         onSettingsChanged: ({
           String report,
           String group,
+          String selectedGroup,
           String subgroup,
           String chart,
           String customStartDate,
@@ -245,6 +248,7 @@ class ReportsScreenVM {
               group: group,
               chart: chart,
               subgroup: subgroup,
+              selectedGroup: '',
               customStartDate: '',
               customEndDate: '',
               filters: BuiltMap<String, String>(),
@@ -253,6 +257,7 @@ class ReportsScreenVM {
             store.dispatch(UpdateReportSettings(
               report: report ?? reportState.report,
               group: group,
+              selectedGroup: selectedGroup,
               subgroup: subgroup,
               chart: chart,
               customStartDate: customStartDate,
