@@ -676,8 +676,6 @@ class ReportResult {
 
   List<String> sortedColumns(BuildContext context) {
     final data = columns.toList();
-
-    /*
     final store = StoreProvider.of<AppState>(context);
     final group = store.state.uiState.reportsUIState.group;
 
@@ -685,7 +683,6 @@ class ReportResult {
       data.remove(group);
       data.insert(0, group);
     }
-    */
 
     return data;
   }
