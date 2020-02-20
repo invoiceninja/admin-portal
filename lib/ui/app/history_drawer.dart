@@ -7,6 +7,9 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -208,10 +211,22 @@ class _HistoryListTileState extends State<HistoryListTile> {
           if (state.prefState.isHistoryFloated) {
             Navigator.pop(context);
           }
-          viewEntityById(
-              context: context,
-              entityId: history.id,
-              entityType: history.entityType);
+          switch (history.entityType) {
+            case EntityType.dashboard:
+              store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+              break;
+            case EntityType.reports:
+              store.dispatch(ViewReports(navigator: Navigator.of(context)));
+              break;
+            case EntityType.settings:
+              store.dispatch(ViewSettings(navigator: Navigator.of(context)));
+              break;
+            default:
+              viewEntityById(
+                  context: context,
+                  entityId: history.id,
+                  entityType: history.entityType);
+          }
         },
         onLongPress: entity == null
             ? null
