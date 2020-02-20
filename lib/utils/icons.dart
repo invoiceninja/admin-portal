@@ -55,6 +55,12 @@ IconData getEntityActionIcon(EntityAction entityAction) {
 
 IconData getEntityIcon(EntityType entityType) {
   switch (entityType) {
+    case EntityType.dashboard:
+      return FontAwesomeIcons.tachometerAlt;
+    case EntityType.reports:
+      return FontAwesomeIcons.chartLine;
+    case EntityType.settings:
+      return FontAwesomeIcons.cog;
     case EntityType.product:
       return FontAwesomeIcons.cube;
     case EntityType.project:

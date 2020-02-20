@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -14,7 +13,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
-import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
@@ -23,7 +21,6 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
@@ -65,12 +62,6 @@ UIState uiReducer(UIState state, dynamic action) {
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
 }
-
-Reducer<BuiltList<String>> routeHistoryReducer = combineReducers([
-  TypedReducer<BuiltList<String>, ViewDashboard>((history, action) {
-    return history.rebuild((b) => b..add(DashboardScreenBuilder.route));
-  }),
-]);
 
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {

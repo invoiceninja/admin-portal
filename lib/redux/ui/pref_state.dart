@@ -171,8 +171,8 @@ class AppSidebarMode extends EnumClass {
 abstract class HistoryRecord
     implements Built<HistoryRecord, HistoryRecordBuilder> {
   factory HistoryRecord({
-    @required String id,
     @required EntityType entityType,
+    String id,
   }) {
     return _$HistoryRecord._(
       id: id,

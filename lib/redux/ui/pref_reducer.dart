@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -14,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart'
     as prefix0;
@@ -297,6 +299,15 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       }
     },
   ),
+  TypedReducer<BuiltList<HistoryRecord>, ViewDashboard>((historyList, action) =>
+      _addToHistory(
+          historyList, HistoryRecord(entityType: EntityType.dashboard))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewReports>((historyList, action) =>
+      _addToHistory(
+          historyList, HistoryRecord(entityType: EntityType.reports))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewSettings>((historyList, action) =>
+      _addToHistory(
+          historyList, HistoryRecord(entityType: EntityType.settings))),
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),
@@ -391,7 +402,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
 BuiltList<HistoryRecord> _addToHistory(
     BuiltList<HistoryRecord> list, HistoryRecord record) {
   // don't track new records
-  if (record.id == null || record.id.startsWith('-')) {
+  if (record.id != null && record.id.startsWith('-')) {
     return list;
   }
 

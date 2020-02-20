@@ -191,9 +191,7 @@ class MenuDrawer extends StatelessWidget {
                       children: <Widget>[
                         DrawerTile(
                           company: company,
-                          icon: kIsWeb
-                              ? Icons.dashboard
-                              : FontAwesomeIcons.tachometerAlt,
+                          icon: getEntityIcon(EntityType.dashboard),
                           title: localization.dashboard,
                           onTap: () => store.dispatch(
                               ViewDashboard(navigator: Navigator.of(context))),
@@ -257,7 +255,7 @@ class MenuDrawer extends StatelessWidget {
                         // STARTER: menu - do not remove comment
                         DrawerTile(
                           company: company,
-                          icon: FontAwesomeIcons.chartLine,
+                          icon: getEntityIcon(EntityType.reports),
                           title: localization.reports,
                           onTap: () {
                             store.dispatch(
@@ -266,7 +264,7 @@ class MenuDrawer extends StatelessWidget {
                         ),
                         DrawerTile(
                           company: company,
-                          icon: FontAwesomeIcons.cog,
+                          icon: getEntityIcon(EntityType.settings),
                           title: localization.settings,
                           onTap: () {
                             store.dispatch(ViewSettings(
@@ -338,7 +336,9 @@ class _DrawerTileState extends State<DrawerTile> {
         ? kDashboard
         : widget.title == localization.settings
             ? kSettings
-            : widget.title == localization.reports ? kReports : widget.entityType.name;
+            : widget.title == localization.reports
+                ? kReports
+                : widget.entityType.name;
 
     Widget trailingWidget;
     if (!state.prefState.isMenuCollapsed) {

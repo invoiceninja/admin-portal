@@ -34,11 +34,14 @@ class HistoryDrawer extends StatelessWidget {
 
     final widgets = <Widget>[];
     for (var history in state.historyList) {
-      final entity =
-          state.getEntityMap(history.entityType)[history.id] as BaseEntity;
+      final entityMap = state.getEntityMap(history.entityType);
 
-      if (entity == null || (entity.isDeleted ?? false)) {
-        continue;
+      if (entityMap != null) {
+        final entity = entityMap[history.id] as BaseEntity;
+
+        if (entity?.isDeleted == true) {
+          continue;
+        }
       }
 
       widgets.add(HistoryListTile(
@@ -104,26 +107,46 @@ class _HistoryListTileState extends State<HistoryListTile> {
     final state = store.state;
 
     final history = widget.history;
-    final entity =
-        state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
+    Widget text;
     String clientId;
-    switch (history.entityType) {
-      case EntityType.invoice:
-        clientId = (entity as InvoiceEntity).clientId;
-        break;
-      case EntityType.payment:
-        clientId = (entity as PaymentEntity).clientId;
-        break;
-      case EntityType.task:
-        clientId = (entity as TaskEntity).clientId;
-        break;
-      case EntityType.expense:
-        clientId = (entity as ExpenseEntity).clientId;
-        break;
-      case EntityType.project:
-        clientId = (entity as ProjectEntity).clientId;
-        break;
+    BaseEntity entity;
+
+    if ([
+      EntityType.dashboard,
+      EntityType.reports,
+      EntityType.settings,
+    ].contains(history.entityType)) {
+      text = Text(localization.lookup(history.entityType.toString()));
+    } else {
+      entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
+
+      if (entity == null) {
+        return SizedBox();
+      }
+
+      switch (history.entityType) {
+        case EntityType.invoice:
+          clientId = (entity as InvoiceEntity).clientId;
+          break;
+        case EntityType.payment:
+          clientId = (entity as PaymentEntity).clientId;
+          break;
+        case EntityType.task:
+          clientId = (entity as TaskEntity).clientId;
+          break;
+        case EntityType.expense:
+          clientId = (entity as ExpenseEntity).clientId;
+          break;
+        case EntityType.project:
+          clientId = (entity as ProjectEntity).clientId;
+          break;
+      }
+
+      text = Text(entity.listDisplayName.isEmpty
+          ? formatNumber(entity.listDisplayAmount, context,
+              formatNumberType: entity.listDisplayAmountType)
+          : entity.listDisplayName);
     }
 
     return Container(
@@ -132,11 +155,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
       child: ListTile(
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
-        title: Text(entity.listDisplayName.isEmpty
-            ? formatNumber(entity.listDisplayAmount, context,
-                formatNumberType: entity.listDisplayAmountType)
-            : entity.listDisplayName),
-        subtitle: Text(localization.lookup('${history.entityType}')),
+        title: text,
+        subtitle: history.id == null
+            ? null
+            : Text(localization.lookup('${history.entityType}')),
         // TODO this needs to be localized
         trailing: LiveText(
           () => timeago.format(history.dateTime, locale: 'en_short'),
@@ -191,17 +213,19 @@ class _HistoryListTileState extends State<HistoryListTile> {
               entityId: history.id,
               entityType: history.entityType);
         },
-        onLongPress: () {
-          showEntityActionsDialog(
-            context: context,
-            entities: [entity],
-            client: state.clientState.map[clientId],
-            completer: state.prefState.isHistoryFloated
-                ? (Completer<Null>()
-                  ..future.then((value) => Navigator.pop(context)))
-                : null,
-          );
-        },
+        onLongPress: entity == null
+            ? null
+            : () {
+                showEntityActionsDialog(
+                  context: context,
+                  entities: [entity],
+                  client: state.clientState.map[clientId],
+                  completer: state.prefState.isHistoryFloated
+                      ? (Completer<Null>()
+                        ..future.then((value) => Navigator.pop(context)))
+                      : null,
+                );
+              },
       ),
     );
   }

@@ -6,6 +6,9 @@ part of 'entities.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const EntityType _$dashboard = const EntityType._('dashboard');
+const EntityType _$reports = const EntityType._('reports');
+const EntityType _$settings = const EntityType._('settings');
 const EntityType _$taxRate = const EntityType._('taxRate');
 const EntityType _$companyGateway = const EntityType._('companyGateway');
 const EntityType _$invoice = const EntityType._('invoice');
@@ -43,6 +46,12 @@ const EntityType _$font = const EntityType._('font');
 
 EntityType _$typeValueOf(String name) {
   switch (name) {
+    case 'dashboard':
+      return _$dashboard;
+    case 'reports':
+      return _$reports;
+    case 'settings':
+      return _$settings;
     case 'taxRate':
       return _$taxRate;
     case 'companyGateway':
@@ -118,6 +127,9 @@ EntityType _$typeValueOf(String name) {
 
 final BuiltSet<EntityType> _$typeValues =
     new BuiltSet<EntityType>(const <EntityType>[
+  _$dashboard,
+  _$reports,
+  _$settings,
   _$taxRate,
   _$companyGateway,
   _$invoice,
