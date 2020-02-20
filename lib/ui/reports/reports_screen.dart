@@ -179,7 +179,8 @@ class ReportsScreen extends StatelessWidget {
                         blankValue: '',
                         showBlank: true,
                         onChanged: (dynamic value) {
-                          viewModel.onSettingsChanged(group: value, selectedGroup: '');
+                          viewModel.onSettingsChanged(
+                              group: value, selectedGroup: '');
                         },
                         items: reportResult.columns
                             .where((column) =>
@@ -871,7 +872,10 @@ class ReportResult {
         ReportSettingsEntity();
     final groupBy = reportState.group;
 
-    if (groupBy.isEmpty) {
+    final isGroupByFIltered = reportState.filters.containsKey(groupBy) &&
+        reportState.filters[groupBy].isNotEmpty;
+
+    if (groupBy.isEmpty || isGroupByFIltered) {
       for (var i = 0; i < data.length; i++) {
         final row = data[i];
         final cells = <DataCell>[];
