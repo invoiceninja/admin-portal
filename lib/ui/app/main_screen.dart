@@ -168,9 +168,12 @@ class MainScreen extends StatelessWidget {
                 return true;
               }
 
-              final history = historyList[1];
+              final isEditing = state.uiState.isEditing;
+              final history = historyList[isEditing ? 0 : 1];
 
-              store.dispatch(PopLastHistory());
+              if (!isEditing) {
+                store.dispatch(PopLastHistory());
+              }
 
               switch (history.entityType) {
                 case EntityType.dashboard:
