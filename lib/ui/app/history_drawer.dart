@@ -111,7 +111,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
 
     final history = widget.history;
 
-    Widget text;
+    Widget title;
+    Widget subtitle;
     String clientId;
     BaseEntity entity;
 
@@ -120,7 +121,16 @@ class _HistoryListTileState extends State<HistoryListTile> {
       EntityType.reports,
       EntityType.settings,
     ].contains(history.entityType)) {
-      text = Text(localization.lookup(history.entityType.toString()));
+      title = Text(localization.lookup(history.entityType.toString()));
+      if (history.entityType == EntityType.reports) {
+        subtitle =
+            Text(localization.lookup(state.uiState.reportsUIState.report));
+      } else if (history.entityType == EntityType.settings) {
+        var section = state.uiState.settingsUIState.section;
+        section = section.replaceAll('_edit', '').replaceAll('_view', '');
+        subtitle =
+            Text(localization.lookup(section));
+      }
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
@@ -146,10 +156,12 @@ class _HistoryListTileState extends State<HistoryListTile> {
           break;
       }
 
-      text = Text(entity.listDisplayName.isEmpty
+      title = Text(entity.listDisplayName.isEmpty
           ? formatNumber(entity.listDisplayAmount, context,
               formatNumberType: entity.listDisplayAmountType)
           : entity.listDisplayName);
+
+      subtitle = Text(localization.lookup('${history.entityType}'));
     }
 
     return Container(
@@ -158,10 +170,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
       child: ListTile(
         key: ValueKey('__${history.id}_${history.entityType}__'),
         leading: Icon(getEntityIcon(history.entityType)),
-        title: text,
-        subtitle: history.id == null
-            ? null
-            : Text(localization.lookup('${history.entityType}')),
+        title: title,
+        subtitle: subtitle,
         // TODO this needs to be localized
         trailing: LiveText(
           () => timeago.format(history.dateTime, locale: 'en_short'),
