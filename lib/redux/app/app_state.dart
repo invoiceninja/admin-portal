@@ -117,8 +117,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String get accentColor =>
       user?.userCompany?.settings?.accentColor ?? kDefaultAccentColor;
 
-  BuiltList<HistoryRecord> get historyList =>
-      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList;
+  List<HistoryRecord> get historyList =>
+      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList
+          .where((history) {
+        final entityMap = getEntityMap(history.entityType);
+        if (entityMap != null) {
+          final entity = entityMap[history.id] as BaseEntity;
+          if (entity?.isDeleted == true) {
+            return false;
+          }
+        }
+        return true;
+      }).toList();
 
   bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
     final entityList = getEntityList(entityType);

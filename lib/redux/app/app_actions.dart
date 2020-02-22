@@ -306,11 +306,13 @@ void viewEntityById({
   String entityId,
   EntityType entityType,
   bool force = false,
+  bool showError = true,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
 
   if (entityId != null &&
+      showError &&
       !store.state.getEntityMap(entityType).containsKey(entityId)) {
     showErrorDialog(
         context: context,

@@ -189,9 +189,11 @@ class MainScreen extends StatelessWidget {
                   break;
                 default:
                   viewEntityById(
-                      context: context,
-                      entityId: history.id,
-                      entityType: history.entityType);
+                    context: context,
+                    entityId: history.id,
+                    entityType: history.entityType,
+                    showError: false,
+                  );
               }
 
               return false;

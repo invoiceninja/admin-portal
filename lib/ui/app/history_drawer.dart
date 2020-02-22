@@ -37,16 +37,6 @@ class HistoryDrawer extends StatelessWidget {
 
     final widgets = <Widget>[];
     for (var history in state.historyList) {
-      final entityMap = state.getEntityMap(history.entityType);
-
-      if (entityMap != null) {
-        final entity = entityMap[history.id] as BaseEntity;
-
-        if (entity?.isDeleted == true) {
-          continue;
-        }
-      }
-
       widgets.add(HistoryListTile(
         history: history,
       ));
@@ -128,8 +118,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
       } else if (history.entityType == EntityType.settings) {
         var section = state.uiState.settingsUIState.section;
         section = section.replaceAll('_edit', '').replaceAll('_view', '');
-        subtitle =
-            Text(localization.lookup(section));
+        subtitle = Text(localization.lookup(section));
       }
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
