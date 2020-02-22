@@ -893,7 +893,14 @@ class ReportResult {
         for (var j = 0; j < row.length; j++) {
           final cell = row[j];
           final column = columns[j];
-          cells.add(DataCell(cell.renderWidget(context, column)));
+          cells.add(
+            DataCell(cell.renderWidget(context, column), onTap: () {
+              viewEntityById(
+                  context: context,
+                  entityId: cell.entityId,
+                  entityType: cell.entityType);
+            }),
+          );
         }
         rows.add(DataRow(cells: cells));
       }
