@@ -66,6 +66,17 @@ class _MultiSelectListState extends State<_MultiSelectList> {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
+    final Map<String, String> options = {};
+    widget.options
+        .where((option) => !selected.contains(option))
+        .forEach((option) {
+      final columnTitle = state.company.getCustomFieldLabel(option);
+      options[option] =
+          columnTitle.isEmpty ? localization.lookup(option) : columnTitle;
+    });
+    final keys = options.keys.toList();
+    keys.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
       child: Column(
@@ -74,14 +85,9 @@ class _MultiSelectListState extends State<_MultiSelectList> {
         children: <Widget>[
           AppDropdownButton<String>(
             labelText: widget.addTitle,
-            items: widget.options
-                .where((option) => !selected.contains(option))
-                .map((option) {
-              final columnTitle = state.company.getCustomFieldLabel(option);
+            items: keys.map((option) {
               return DropdownMenuItem(
-                child: Text(columnTitle.isEmpty
-                    ? localization.lookup(option)
-                    : columnTitle),
+                child: Text(options[option]),
                 value: option,
               );
             }).toList(),
