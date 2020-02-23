@@ -156,6 +156,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'balance')
   double get balance;
 
+  @nullable
   @BuiltValueField(wireName: 'credit_balance')
   double get creditBalance;
 

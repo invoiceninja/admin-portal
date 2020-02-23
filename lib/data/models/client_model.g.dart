@@ -120,9 +120,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
-      'credit_balance',
-      serializers.serialize(object.creditBalance,
-          specifiedType: const FullType(double)),
       'paid_to_date',
       serializers.serialize(object.paidToDate,
           specifiedType: const FullType(double)),
@@ -206,6 +203,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('lastUpdatedActivities')
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
+    }
+    if (object.creditBalance != null) {
+      result
+        ..add('credit_balance')
+        ..add(serializers.serialize(object.creditBalance,
+            specifiedType: const FullType(double)));
     }
     if (object.countryId != null) {
       result
@@ -1033,9 +1036,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (balance == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'balance');
-    }
-    if (creditBalance == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'creditBalance');
     }
     if (paidToDate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
