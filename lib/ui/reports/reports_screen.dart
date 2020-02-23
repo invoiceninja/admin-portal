@@ -289,6 +289,41 @@ class ReportDataTable extends StatefulWidget {
 class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
       _textEditingControllers = {};
+  ReportDataTableSource dataTableSource;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final viewModel = widget.viewModel;
+    final reportUIState = viewModel.state.uiState.reportsUIState;
+
+    dataTableSource = ReportDataTableSource(
+        viewModel: viewModel,
+        context: context,
+        textEditingControllers: _textEditingControllers,
+        onFilterChanged: (column, value) {
+          viewModel.onReportFiltersChanged(context,
+              reportUIState.filters.rebuild((b) => b..addAll({column: value})));
+        });
+  }
+
+  @override
+  void didUpdateWidget(ReportDataTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final viewModel = widget.viewModel;
+    dataTableSource.viewModel = viewModel;
+
+    /*
+    dataTableSource.editingId = viewModel.state.productUIState.editing.id;
+    dataTableSource.entityList = viewModel.productList;
+    dataTableSource.entityMap = viewModel.productMap;
+    */
+
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    dataTableSource.notifyListeners();
+  }
 
   @override
   void didChangeDependencies() {
@@ -373,34 +408,22 @@ class _ReportDataTableState extends State<ReportDataTable> {
             ],
           ),
         ),
-        FormCard(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              sortColumnIndex: reportSettings.sortIndex != null &&
-                      reportResult.columns.length > reportSettings.sortIndex
-                  ? reportSettings.sortIndex
-                  : null,
-              sortAscending: reportSettings.sortAscending,
-              columns: reportResult.tableColumns(
-                  context,
-                  (index, ascending) =>
-                      widget.viewModel.onReportSorted(index, ascending)),
-              rows: [
-                reportResult.tableFilters(
-                    context,
-                    _textEditingControllers[
-                        state.uiState.reportsUIState.report], (column, value) {
-                  widget.viewModel.onReportFiltersChanged(
-                      context,
-                      state.uiState.reportsUIState.filters
-                          .rebuild((b) => b..addAll({column: value})));
-                }),
-                ...reportResult.tableRows(context, widget.viewModel),
-              ],
-            ),
+        SingleChildScrollView(
+          padding: const EdgeInsets.all(12),
+          child: PaginatedDataTable(
+            header: SizedBox(),
+            sortColumnIndex: reportSettings.sortIndex != null &&
+                    reportResult.columns.length > reportSettings.sortIndex
+                ? reportSettings.sortIndex
+                : null,
+            sortAscending: reportSettings.sortAscending,
+            columns: reportResult.tableColumns(
+                context,
+                (index, ascending) =>
+                    widget.viewModel.onReportSorted(index, ascending)),
+            source: dataTableSource,
           ),
-        ),
+        )
       ],
     );
   }
@@ -513,6 +536,7 @@ class ReportCharts extends StatelessWidget {
   }
 }
 
+
 enum ReportColumnType {
   string,
   dateTime,
@@ -555,6 +579,42 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.bool;
   } else {
     return ReportColumnType.string;
+  }
+}
+
+class ReportDataTableSource extends DataTableSource {
+  ReportDataTableSource({
+    @required this.context,
+    @required this.textEditingControllers,
+    @required this.onFilterChanged,
+    @required this.viewModel,
+  });
+
+  ReportsScreenVM viewModel;
+  final BuildContext context;
+  final Map<String, Map<String, TextEditingController>> textEditingControllers;
+  final Function(String, String) onFilterChanged;
+
+  @override
+  int get selectedRowCount => 0;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => viewModel.reportResult.data.length + 1;
+
+  @override
+  DataRow getRow(int index) {
+    final reportResult = viewModel.reportResult;
+    if (index == 0) {
+      return reportResult.tableFilters(
+          context,
+          textEditingControllers[viewModel.state.uiState.reportsUIState.report],
+          (column, value) => onFilterChanged(column, value));
+    } else {
+      return reportResult.tableRow(context, viewModel, index);
+    }
   }
 }
 
@@ -737,7 +797,7 @@ class ReportResult {
       for (String column in sortedColumns(context))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
-          DataCell(SizedBox())
+          DataCell(Text(textEditingControllers == null ? 'null' : 'test'))
         else if (getReportColumnType(column, context) == ReportColumnType.bool)
           DataCell(AppDropdownButton<bool>(
             labelText: null,
@@ -873,8 +933,7 @@ class ReportResult {
     ]);
   }
 
-  List<DataRow> tableRows(BuildContext context, ReportsScreenVM viewModel) {
-    final rows = <DataRow>[];
+  DataRow tableRow(BuildContext context, ReportsScreenVM viewModel, int index) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final reportState = state.uiState.reportsUIState;
@@ -887,23 +946,21 @@ class ReportResult {
         reportState.filters[groupBy].isNotEmpty;
 
     if (groupBy.isEmpty || isGroupByFIltered) {
-      for (var i = 0; i < data.length; i++) {
-        final row = data[i];
-        final cells = <DataCell>[];
-        for (var j = 0; j < row.length; j++) {
-          final cell = row[j];
-          final column = columns[j];
-          cells.add(
-            DataCell(cell.renderWidget(context, column), onTap: () {
-              viewEntityById(
-                  context: context,
-                  entityId: cell.entityId,
-                  entityType: cell.entityType);
-            }),
-          );
-        }
-        rows.add(DataRow(cells: cells));
+      final row = data[index-1];
+      final cells = <DataCell>[];
+      for (var j = 0; j < row.length; j++) {
+        final cell = row[j];
+        final column = columns[j];
+        cells.add(
+          DataCell(cell.renderWidget(context, column), onTap: () {
+            viewEntityById(
+                context: context,
+                entityId: cell.entityId,
+                entityType: cell.entityType);
+          }),
+        );
       }
+      return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
       final keys = groupTotals.keys.toList();
@@ -921,72 +978,70 @@ class ReportResult {
         }
         return 0;
       });
-      keys.forEach((group) {
-        final values = viewModel.groupTotals[group];
-        final cells = <DataCell>[];
-        for (var column in sortedColumns(context)) {
-          String value = '';
+
+      final group = keys[index-1];
+      final values = viewModel.groupTotals[group];
+      final cells = <DataCell>[];
+      for (var column in sortedColumns(context)) {
+        String value = '';
+        if (column == groupBy) {
+          if (group.isEmpty) {
+            value = AppLocalization.of(context).blank;
+          } else if (getReportColumnType(column, context) ==
+                  ReportColumnType.dateTime ||
+              getReportColumnType(column, context) == ReportColumnType.date) {
+            value = formatDate(group, context);
+          } else {
+            value = group;
+          }
+          value = value + ' (' + values['count'].floor().toString() + ')';
+        } else if (getReportColumnType(column, context) ==
+            ReportColumnType.number) {
+          value = formatNumber(values[column], context);
+        }
+        cells.add(DataCell(Text(value), onTap: () {
+          if (group.isEmpty) {
+            return;
+          }
           if (column == groupBy) {
-            if (group.isEmpty) {
-              value = AppLocalization.of(context).blank;
-            } else if (getReportColumnType(column, context) ==
+            String filter = group;
+            String customStartDate = '';
+            String customEndDate = '';
+            if (getReportColumnType(column, context) ==
                     ReportColumnType.dateTime ||
                 getReportColumnType(column, context) == ReportColumnType.date) {
-              value = formatDate(group, context);
-            } else {
-              value = group;
-            }
-            value = value + ' (' + values['count'].floor().toString() + ')';
-          } else if (getReportColumnType(column, context) ==
-              ReportColumnType.number) {
-            value = formatNumber(values[column], context);
-          }
-          cells.add(DataCell(Text(value), onTap: () {
-            if (group.isEmpty) {
-              return;
-            }
-            if (column == groupBy) {
-              String filter = group;
-              String customStartDate = '';
-              String customEndDate = '';
-              if (getReportColumnType(column, context) ==
-                      ReportColumnType.dateTime ||
-                  getReportColumnType(column, context) ==
-                      ReportColumnType.date) {
-                filter = DateRange.custom.toString();
-                final date = DateTime.tryParse(group);
-                customStartDate = group;
-                if (reportState.subgroup == kReportGroupDay) {
-                  customEndDate = convertDateTimeToSqlDate(addDays(date, 1));
-                } else if (reportState.subgroup == kReportGroupMonth) {
-                  customEndDate = convertDateTimeToSqlDate(addMonths(date, 1));
-                } else {
-                  customEndDate = convertDateTimeToSqlDate(addYears(date, 1));
-                }
-              } else if (getReportColumnType(column, context) ==
-                  ReportColumnType.bool) {
-                filter = filter == AppLocalization.of(context).yes
-                    ? 'true'
-                    : filter == AppLocalization.of(context).no ? 'false' : '';
+              filter = DateRange.custom.toString();
+              final date = DateTime.tryParse(group);
+              customStartDate = group;
+              if (reportState.subgroup == kReportGroupDay) {
+                customEndDate = convertDateTimeToSqlDate(addDays(date, 1));
+              } else if (reportState.subgroup == kReportGroupMonth) {
+                customEndDate = convertDateTimeToSqlDate(addMonths(date, 1));
+              } else {
+                customEndDate = convertDateTimeToSqlDate(addYears(date, 1));
               }
-              store.dispatch(
-                UpdateReportSettings(
-                  report: reportState.report,
-                  selectedGroup: filter,
-                  customStartDate: customStartDate,
-                  customEndDate: customEndDate,
-                  filters: reportState.filters
-                      .rebuild((b) => b..addAll({column: filter})),
-                ),
-              );
+            } else if (getReportColumnType(column, context) ==
+                ReportColumnType.bool) {
+              filter = filter == AppLocalization.of(context).yes
+                  ? 'true'
+                  : filter == AppLocalization.of(context).no ? 'false' : '';
             }
-          }));
-        }
-        rows.add(DataRow(cells: cells));
-      });
-    }
+            store.dispatch(
+              UpdateReportSettings(
+                report: reportState.report,
+                selectedGroup: filter,
+                customStartDate: customStartDate,
+                customEndDate: customEndDate,
+                filters: reportState.filters
+                    .rebuild((b) => b..addAll({column: filter})),
+              ),
+            );
+          }
+        }));
+      }
 
-    return rows;
+      return DataRow(cells: cells);
+    }
   }
 
   List<DataColumn> totalColumns(
