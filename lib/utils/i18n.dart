@@ -1082,6 +1082,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved'
     },
     'sq': {
       'company1': 'Custom Company 1',
@@ -32955,6 +32956,74 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get savedDesign => _localizedValues[localeCode]['saved_design'];
 
   String get refresh => _localizedValues[localeCode]['refresh'];
+
+  String get clientCity => _localizedValues[localeCode]['client_city'];
+
+  String get clientState => _localizedValues[localeCode]['client_state'];
+
+  String get clientCountry => _localizedValues[localeCode]['client_country'];
+
+  String get clientIsActive => _localizedValues[localeCode]['client_is_active'];
+
+  String get clientBalance => _localizedValues[localeCode]['client_balance'];
+
+  String get clientAddress1 => _localizedValues[localeCode]['client_address1'];
+
+  String get clientAddress2 => _localizedValues[localeCode]['client_address2'];
+
+  String get clientShippingAddress1 =>
+      _localizedValues[localeCode]['client_shipping_address1'];
+
+  String get clientShippingAddress2 =>
+      _localizedValues[localeCode]['client_shipping_address2'];
+
+  String get type => _localizedValues[localeCode]['type'];
+
+  String get invoiceAmount => _localizedValues[localeCode]['invoice_amount'];
+
+  String get invoiceDueDate => _localizedValues[localeCode]['invoice_due_date'];
+
+  String get taxRate1 => _localizedValues[localeCode]['tax_rate1'];
+
+  String get taxRate2 => _localizedValues[localeCode]['tax_rate2'];
+
+  String get taxRate3 => _localizedValues[localeCode]['tax_rate3'];
+
+  String get autoBill => _localizedValues[localeCode]['auto_bill'];
+
+  String get archivedAt => _localizedValues[localeCode]['archived_at'];
+
+  String get hasExpenses => _localizedValues[localeCode]['has_expenses'];
+
+  String get customTaxes1 => _localizedValues[localeCode]['custom_taxes1'];
+
+  String get customTaxes2 => _localizedValues[localeCode]['custom_taxes2'];
+
+  String get customTaxes3 => _localizedValues[localeCode]['custom_taxes3'];
+
+  String get customTaxes4 => _localizedValues[localeCode]['custom_taxes4'];
+
+  String get customSurcharge1 =>
+      _localizedValues[localeCode]['custom_surcharge1'];
+
+  String get customSurcharge2 =>
+      _localizedValues[localeCode]['custom_surcharge2'];
+
+  String get customSurcharge3 =>
+      _localizedValues[localeCode]['custom_surcharge3'];
+
+  String get customSurcharge4 =>
+      _localizedValues[localeCode]['custom_surcharge4'];
+
+  String get isDeleted => _localizedValues[localeCode]['is_deleted'];
+
+  String get vendorCity => _localizedValues[localeCode]['vendor_city'];
+
+  String get vendorState => _localizedValues[localeCode]['vendor_state'];
+
+  String get vendorCountry => _localizedValues[localeCode]['vendor_country'];
+
+  String get isApproved => _localizedValues[localeCode]['is_approved'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

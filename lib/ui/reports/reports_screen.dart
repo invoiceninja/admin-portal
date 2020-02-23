@@ -161,7 +161,7 @@ class ReportsScreen extends StatelessWidget {
                           //kReportProfitAndLoss,
                           //kReportTask,
                           //kReportTaxRate,
-                          //kReportQuote,
+                          kReportQuote,
                         ]
                             .map((report) =>
                             DropdownMenuItem(
