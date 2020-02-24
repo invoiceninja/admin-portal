@@ -182,15 +182,17 @@ class ReportsScreenVM {
         break;
     }
 
+    final groupTotals = memoizeedGroupTotals(
+      reportResult,
+      state.uiState.reportsUIState,
+      reportSettings,
+    );
+
     return ReportsScreenVM(
         state: state,
         reportResult: reportResult,
         reportState: state.uiState.reportsUIState,
-        groupTotals: memoizeedGroupTotals(
-          reportResult,
-          state.uiState.reportsUIState,
-          reportSettings,
-        ),
+        groupTotals: groupTotals,
         onReportSorted: (column, ascending) {
           store.dispatch(UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
@@ -279,20 +281,54 @@ class ReportsScreenVM {
         },
         onExportPressed: (context) async {
           final localization = AppLocalization.of(context);
+          final reportState = state.uiState.reportsUIState;
           String csvData = '';
 
-          reportResult.columns.forEach((column) {
-            csvData += '${localization.lookup(column)},';
-          });
-          csvData = csvData.substring(0, csvData.length - 1);
-          reportResult.data.forEach((row) {
-            csvData += '\n';
-            for (var i = 0; i < row.length; i++) {
-              final column = reportResult.columns[i];
-              csvData += '${row[i].renderText(context, column)},';
-            }
+          if (reportState.group.isEmpty) {
+            reportResult.columns.forEach((column) {
+              csvData += '${localization.lookup(column)},';
+            });
             csvData = csvData.substring(0, csvData.length - 1);
-          });
+            reportResult.data.forEach((row) {
+              csvData += '\n';
+              for (var i = 0; i < row.length; i++) {
+                final column = reportResult.columns[i];
+                csvData += '${row[i].renderText(context, column)},';
+              }
+              csvData = csvData.substring(0, csvData.length - 1);
+            });
+          } else {
+            final columns = reportResult.columns
+                .where((column) =>
+                    getReportColumnType(column, context) ==
+                    ReportColumnType.number)
+                .toList();
+            columns.sort((String str1, String str2) => str1.compareTo(str2));
+
+            csvData += localization.lookup(reportState.group) +
+                ',' +
+                localization.count;
+
+            columns.forEach((column) {
+              csvData += ',' + localization.lookup(column);
+            });
+
+            csvData += '\n';
+
+            groupTotals.rows.forEach((group) {
+              final row = groupTotals.totals[group];
+              csvData += '$group,${row['count'].toInt()}';
+
+              columns.forEach((column) {
+                csvData += ',' + row[column].toString();
+              });
+
+              csvData += '\n';
+            });
+          }
+
+          print('## CSV DATA');
+          print(csvData);
 
           final date = convertDateTimeToSqlDate();
           final filename =
