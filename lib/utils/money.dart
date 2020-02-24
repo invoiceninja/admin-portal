@@ -25,7 +25,7 @@ double getExchangeRateWithMap(BuiltMap<String, CurrencyEntity> currencyMap,
   }
 
   if (toCurrency == baseCurrency) {
-    return 1 / (fromCurrency.exchangeRate ?? 1);
+    return 1 / (fromCurrency?.exchangeRate ?? 1);
   }
 
   return toCurrency.exchangeRate * (1 / fromCurrency.exchangeRate);
