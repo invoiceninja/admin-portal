@@ -36,7 +36,8 @@ abstract class ProjectItemResponse
 
 class ProjectFields {
   static const String name = 'name';
-  static const String clientId = 'clientAt';
+  static const String clientId = 'clientId';
+  static const String client = 'client';
   static const String taskRate = 'taskRate';
   static const String dueDate = 'due_date';
   static const String privateNotes = 'privateNotes';

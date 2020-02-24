@@ -221,12 +221,14 @@ class MenuDrawer extends StatelessWidget {
                           icon: getEntityIcon(EntityType.payment),
                           title: localization.payments,
                         ),
-                        DrawerTile(
-                          company: company,
-                          entityType: EntityType.quote,
-                          icon: getEntityIcon(EntityType.quote),
-                          title: localization.quotes,
-                        ),
+                        // TODO remove this
+                        if (!Config.DEMO_MODE)
+                          DrawerTile(
+                            company: company,
+                            entityType: EntityType.quote,
+                            icon: getEntityIcon(EntityType.quote),
+                            title: localization.quotes,
+                          ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.project,
