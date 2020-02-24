@@ -758,7 +758,7 @@ class ReportResult {
     final data = columns.toList();
     final group = reportState.group;
 
-    if (group.isNotEmpty || !reportState.isGroupByFIltered) {
+    if (group.isNotEmpty) {
       data.remove(group);
       data.insert(0, group);
     }
