@@ -254,7 +254,7 @@ const dynamic kMockLogin = '''
                     "late_fee_endless_percent": 0,
                     "client_online_payment_notification": true,
                     "client_manual_payment_notification": true,
-                    "name": "",
+                    "name": "Test Account",
                     "company_logo": "",
                     "website": "",
                     "address1": "",

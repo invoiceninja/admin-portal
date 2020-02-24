@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
@@ -111,7 +112,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    if (isNotMobile(context)) {
+    // TODO remove DEMO_MODE check
+    if (isNotMobile(context) && !Config.DEMO_MODE) {
       return TypeAheadFormField<String>(
         noItemsFoundBuilder: (context) => SizedBox(),
         suggestionsBoxDecoration: SuggestionsBoxDecoration(
