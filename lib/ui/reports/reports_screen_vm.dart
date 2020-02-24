@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io' as file;
 import 'package:flutter_share/flutter_share.dart';
 import 'package:built_collection/built_collection.dart';
@@ -203,11 +204,13 @@ class ReportsScreenVM {
           ));
         },
         onReportFiltersChanged: (context, filterMap) {
-          store.dispatch(UpdateReportSettings(
-            report: report,
-            filters: filterMap,
-            selectedGroup: '',
-          ));
+          Timer(Duration(milliseconds: 100), () {
+            store.dispatch(UpdateReportSettings(
+              report: report,
+              filters: filterMap,
+              selectedGroup: '',
+            ));
+          });
         },
         onReportColumnsChanged: (context, columns) {
           final settings = state.userCompany.settings.rebuild((b) => b
@@ -248,29 +251,31 @@ class ReportsScreenVM {
           String customStartDate,
           String customEndDate,
         }) {
-          final reportState = state.uiState.reportsUIState;
-          if (group != null && reportState.group != group) {
-            store.dispatch(UpdateReportSettings(
-              report: report ?? reportState.report,
-              group: group,
-              chart: chart,
-              subgroup: subgroup,
-              selectedGroup: '',
-              customStartDate: '',
-              customEndDate: '',
-              filters: BuiltMap<String, String>(),
-            ));
-          } else {
-            store.dispatch(UpdateReportSettings(
-              report: report ?? reportState.report,
-              group: group,
-              selectedGroup: selectedGroup,
-              subgroup: subgroup,
-              chart: chart,
-              customStartDate: customStartDate,
-              customEndDate: customEndDate,
-            ));
-          }
+          Timer(Duration(milliseconds: 100), () {
+            final reportState = state.uiState.reportsUIState;
+            if (group != null && reportState.group != group) {
+              store.dispatch(UpdateReportSettings(
+                report: report ?? reportState.report,
+                group: group,
+                chart: chart,
+                subgroup: subgroup,
+                selectedGroup: '',
+                customStartDate: '',
+                customEndDate: '',
+                filters: BuiltMap<String, String>(),
+              ));
+            } else {
+              store.dispatch(UpdateReportSettings(
+                report: report ?? reportState.report,
+                group: group,
+                selectedGroup: selectedGroup,
+                subgroup: subgroup,
+                chart: chart,
+                customStartDate: customStartDate,
+                customEndDate: customEndDate,
+              ));
+            }
+          });
         },
         onExportPressed: (context) async {
           final localization = AppLocalization.of(context);
