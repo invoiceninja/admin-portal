@@ -218,7 +218,7 @@ class ReportsScreenVM {
               .rebuild((b) => b..userCompany.settings.replace(settings));
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
-          if (state.authState.hasRecentlyEnteredPassword && false) {
+          if (state.authState.hasRecentlyEnteredPassword) {
             store.dispatch(
               SaveUserSettingsRequest(
                 completer: completer,

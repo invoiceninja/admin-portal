@@ -453,14 +453,17 @@ class ReportCharts extends StatelessWidget {
 
     final ordinalAxis = charts.OrdinalAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
-            lineStyle:
-                charts.LineStyleSpec(color: charts.MaterialPalette.transparent),
-            labelStyle: charts.TextStyleSpec(fontSize: 10, color: color)));
+      lineStyle:
+          charts.LineStyleSpec(color: charts.MaterialPalette.transparent),
+      labelStyle: charts.TextStyleSpec(fontSize: 10, color: color),
+      labelRotation: 45,
+    ));
 
     final dateTimeAxis = charts.DateTimeAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
-            labelStyle: charts.TextStyleSpec(color: color),
-            lineStyle: charts.LineStyleSpec(color: color)));
+      labelStyle: charts.TextStyleSpec(color: color),
+      lineStyle: charts.LineStyleSpec(color: color),
+    ));
 
     Widget child;
     switch (getReportColumnType(reportState.group, context)) {
