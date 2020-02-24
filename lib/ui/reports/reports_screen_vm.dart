@@ -57,11 +57,13 @@ class ReportsScreenVM {
     @required this.groupTotals,
     @required this.reportResult,
     @required this.onReportTotalsSorted,
+    @required this.reportState,
   });
 
   final AppState state;
   final ReportResult reportResult;
-  final Map<String, Map<String, double>> groupTotals;
+  final ReportsUIState reportState;
+  final GroupTotals groupTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
@@ -176,8 +178,9 @@ class ReportsScreenVM {
     return ReportsScreenVM(
         state: state,
         reportResult: reportResult,
+        reportState: state.uiState.reportsUIState,
         groupTotals:
-            memoizedReportTotals(reportResult, state.uiState.reportsUIState),
+            memoizeedGroupTotals(reportResult, state.uiState.reportsUIState),
         onReportSorted: (index, ascending) {
           store.dispatch(UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
@@ -308,14 +311,21 @@ class ReportsScreenVM {
   }
 }
 
-var memoizedReportTotals = memo2((
+class GroupTotals {
+  GroupTotals({this.totals, this.rows});
+
+  final Map<String, Map<String, double>> totals;
+  final List<String> rows;
+}
+
+var memoizeedGroupTotals = memo2((
   ReportResult reportResult,
   ReportsUIState reportUIState,
 ) =>
     calculateReportTotals(
         reportResult: reportResult, reportUIState: reportUIState));
 
-Map<String, Map<String, double>> calculateReportTotals({
+GroupTotals calculateReportTotals({
   ReportResult reportResult,
   ReportsUIState reportUIState,
 }) {
@@ -324,7 +334,7 @@ Map<String, Map<String, double>> calculateReportTotals({
   final columns = reportResult.columns;
 
   if (reportUIState.group.isEmpty) {
-    return totals;
+    return GroupTotals();
   }
 
   for (var i = 0; i < data.length; i++) {
@@ -365,5 +375,5 @@ Map<String, Map<String, double>> calculateReportTotals({
     }
   }
 
-  return totals;
+  return GroupTotals(totals: totals);
 }

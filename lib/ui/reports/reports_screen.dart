@@ -475,10 +475,10 @@ class ReportCharts extends StatelessWidget {
                     charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (dynamic item, _) => item['name'],
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.groupTotals.keys
+                data: viewModel.groupTotals.totals.keys
                     .map((key) => {
                           'name': key,
-                          'value': viewModel.groupTotals[key]
+                          'value': viewModel.groupTotals.totals[key]
                               [reportsUIState.chart]
                         })
                     .toList())
@@ -490,7 +490,7 @@ class ReportCharts extends StatelessWidget {
         break;
       case ReportColumnType.date:
       case ReportColumnType.dateTime:
-        final keys = viewModel.groupTotals.keys
+        final keys = viewModel.groupTotals.totals.keys
             .where((element) => element.isNotEmpty)
             .toList();
         keys.sort((String str1, String str2) => str1.compareTo(str2));
@@ -505,7 +505,7 @@ class ReportCharts extends StatelessWidget {
                 data: keys
                     .map((key) => {
                           'name': key,
-                          'value': viewModel.groupTotals[key]
+                          'value': viewModel.groupTotals.totals[key]
                               [reportsUIState.chart]
                         })
                     .toList())
@@ -535,7 +535,6 @@ class ReportCharts extends StatelessWidget {
           );
   }
 }
-
 
 enum ReportColumnType {
   string,
@@ -602,7 +601,13 @@ class ReportDataTableSource extends DataTableSource {
   bool get isRowCountApproximate => false;
 
   @override
-  int get rowCount => viewModel.reportResult.data.length + 1;
+  int get rowCount {
+    if (viewModel.reportState.group.isNotEmpty) {
+      return viewModel.groupTotals.totals.length + 1;
+    } else {
+      return viewModel.reportResult.data.length + 1;
+    }
+  }
 
   @override
   DataRow getRow(int index) {
@@ -946,7 +951,7 @@ class ReportResult {
         reportState.filters[groupBy].isNotEmpty;
 
     if (groupBy.isEmpty || isGroupByFIltered) {
-      final row = data[index-1];
+      final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
@@ -963,7 +968,9 @@ class ReportResult {
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
-      final keys = groupTotals.keys.toList();
+      final keys = groupTotals.totals.keys.toList();
+
+      /*
       keys.sort((rowA, rowB) {
         final valuesA = groupTotals[rowA];
         final valuesB = groupTotals[rowB];
@@ -978,9 +985,12 @@ class ReportResult {
         }
         return 0;
       });
+      */
 
-      final group = keys[index-1];
-      final values = viewModel.groupTotals[group];
+      print('## TOTALS: ${groupTotals.totals}');
+      print('## $index - Keys: $keys');
+      final group = keys[index - 1];
+      final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
       for (var column in sortedColumns(context)) {
         String value = '';
