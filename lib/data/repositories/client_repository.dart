@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja_flutter/.env.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/mock/mock_clients.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -37,13 +35,7 @@ class ClientRepository {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    dynamic response;
-
-    if (Config.DEMO_MODE) {
-      response = json.decode(kMockClients);
-    } else {
-      response = await webClient.get(url, credentials.token);
-    }
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);

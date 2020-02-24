@@ -24,7 +24,6 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
