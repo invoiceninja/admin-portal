@@ -329,19 +329,19 @@ var memoizeedGroupTotals = memo3((
 ) =>
     calculateReportTotals(
         reportResult: reportResult,
-        reportUIState: reportUIState,
+        reportState: reportUIState,
         reportSettings: reportSettings));
 
 GroupTotals calculateReportTotals({
   ReportResult reportResult,
-  ReportsUIState reportUIState,
+  ReportsUIState reportState,
   ReportSettingsEntity reportSettings,
 }) {
   final Map<String, Map<String, double>> totals = {};
   final data = reportResult.data;
   final columns = reportResult.columns;
 
-  if (reportUIState.group.isEmpty) {
+  if (reportState.group.isEmpty) {
     return GroupTotals();
   }
 
@@ -350,10 +350,10 @@ GroupTotals calculateReportTotals({
     for (var j = 0; j < row.length; j++) {
       final cell = row[j];
       final column = columns[j];
-      final columnIndex = columns.indexOf(reportUIState.group);
+      final columnIndex = columns.indexOf(reportState.group);
 
       if (columnIndex == -1) {
-        print('## ERROR: colum not found - ${reportUIState.group}');
+        print('## ERROR: colum not found - ${reportState.group}');
         continue;
       }
 
@@ -361,9 +361,9 @@ GroupTotals calculateReportTotals({
 
       if ((group as String).isNotEmpty && isValidDate(group)) {
         group = convertDateTimeToSqlDate(DateTime.tryParse(group));
-        if (reportUIState.subgroup == kReportGroupYear) {
+        if (reportState.subgroup == kReportGroupYear) {
           group = group.substring(0, 4) + '-01-01';
-        } else if (reportUIState.subgroup == kReportGroupMonth) {
+        } else if (reportState.subgroup == kReportGroupMonth) {
           group = group.substring(0, 7) + '-01';
         }
       }
@@ -371,7 +371,7 @@ GroupTotals calculateReportTotals({
       if (!totals.containsKey(group)) {
         totals['$group'] = {'count': 0};
       }
-      if (column == reportUIState.group) {
+      if (column == reportState.group) {
         totals['$group']['count'] += 1;
       }
       if (cell is ReportNumberValue) {
@@ -383,29 +383,29 @@ GroupTotals calculateReportTotals({
     }
   }
 
-
   final rows = totals.keys.toList();
-  print('## keys was: $rows');
+  final sortedColumns = reportResult.sortedColumns(reportState.group);
 
   rows.sort((rowA, rowB) {
     final valuesA = totals[rowA];
     final valuesB = totals[rowB];
-    print('## Sort: index: ${reportSettings.sortIndex}, col len: ${columns.length}');
     if (reportSettings.sortIndex != null &&
         reportSettings.sortIndex < columns.length) {
-      final sort = columns[reportSettings.sortIndex];
-      print('## sort: $sort');
-      if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
-        print('comparing: ${valuesA[sort]} to ${valuesB[sort]}');
+      final sort = sortedColumns[reportSettings.sortIndex];
+      if (reportSettings.sortIndex == 0) {
         return reportSettings.sortAscending
-            ? valuesA[sort].compareTo(valuesB[sort])
-            : valuesB[sort].compareTo(valuesA[sort]);
+            ? rowA.compareTo(rowB)
+            : rowB.compareTo(rowA);
+      } else {
+        if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
+          return reportSettings.sortAscending
+              ? valuesA[sort].compareTo(valuesB[sort])
+              : valuesB[sort].compareTo(valuesA[sort]);
+        }
       }
     }
     return 0;
   });
-
-  print('## keys is: $rows');
 
   return GroupTotals(totals: totals, rows: rows);
 }

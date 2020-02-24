@@ -754,10 +754,8 @@ class ReportResult {
     return true;
   }
 
-  List<String> sortedColumns(BuildContext context) {
+  List<String> sortedColumns(String group) {
     final data = columns.toList();
-    final store = StoreProvider.of<AppState>(context);
-    final group = store.state.uiState.reportsUIState.group;
 
     if (group.isNotEmpty) {
       data.remove(group);
@@ -772,9 +770,10 @@ class ReportResult {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
+    final reportState = store.state.uiState.reportsUIState;
 
     return [
-      for (String column in sortedColumns(context))
+      for (String column in sortedColumns(reportState.group))
         DataColumn(
           label: Container(
             constraints: BoxConstraints(minWidth: 80),
@@ -798,9 +797,11 @@ class ReportResult {
       Map<String, TextEditingController> textEditingControllers,
       Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final reportState = store.state.uiState.reportsUIState;
 
     return DataRow(cells: [
-      for (String column in sortedColumns(context))
+      for (String column in sortedColumns(reportState.group))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
           DataCell(Text(textEditingControllers == null ? 'null' : 'test'))
@@ -970,7 +971,7 @@ class ReportResult {
       final group = groupTotals.rows[index - 1];
       final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
-      for (var column in sortedColumns(context)) {
+      for (var column in sortedColumns(reportState.group)) {
         String value = '';
         if (column == groupBy) {
           if (group.isEmpty) {
