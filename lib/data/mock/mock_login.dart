@@ -111,8 +111,6 @@ const dynamic kMockLogin = '''
                 "enable_product_quantity": true,
                 "default_quantity": true,
                 "custom_fields": {
-                    "invoice1": "1",
-                    "invoice2": "2",
                     "client1": "Multi Text",
                     "client2": "Switch|switch",
                     "client3": "Dropdown|one,two,three",

@@ -386,10 +386,14 @@ class _DrawerTileState extends State<DrawerTile> {
                   ? createEntityByType(
                       context: context, entityType: widget.entityType)
                   : null,
+          /*
           trailing: _isHovered ||
                   !RendererBinding.instance.mouseTracker.mouseIsConnected
               ? trailingWidget
               : null,
+
+           */
+          trailing: trailingWidget,
         ),
       ),
     );
