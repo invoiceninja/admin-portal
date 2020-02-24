@@ -230,12 +230,13 @@ ReportResult invoiceReport(
     }
   }
 
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, invoiceReportSettings));
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         InvoiceReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

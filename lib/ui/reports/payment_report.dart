@@ -159,12 +159,13 @@ ReportResult paymentReport(
     }
   }
 
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, paymentReportSettings));
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         PaymentReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

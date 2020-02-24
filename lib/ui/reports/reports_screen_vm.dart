@@ -67,7 +67,7 @@ class ReportsScreenVM {
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
-  final Function(int, bool) onReportSorted;
+  final Function(String, bool) onReportSorted;
   final Function(int, bool) onReportTotalsSorted;
   final Function({
     String report,
@@ -190,10 +190,10 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           reportSettings,
         ),
-        onReportSorted: (index, ascending) {
+        onReportSorted: (column, ascending) {
           store.dispatch(UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
-            sortIndex: index,
+            sortColumn: column,
           ));
         },
         onReportTotalsSorted: (index, ascending) {
@@ -385,14 +385,16 @@ GroupTotals calculateReportTotals({
 
   final rows = totals.keys.toList();
   final sortedColumns = reportResult.sortedColumns(reportState);
+  final index = sortedColumns.contains(reportSettings.sortColumn)
+      ? sortedColumns.indexOf(reportSettings.sortColumn)
+      : 0;
 
   rows.sort((rowA, rowB) {
     final valuesA = totals[rowA];
     final valuesB = totals[rowB];
-    if (reportSettings.sortIndex != null &&
-        reportSettings.sortIndex < columns.length) {
-      final sort = sortedColumns[reportSettings.sortIndex];
-      if (reportSettings.sortIndex == 0) {
+    if (index != null && index < columns.length) {
+      final sort = sortedColumns[index];
+      if (index == 0) {
         return reportSettings.sortAscending
             ? rowA.compareTo(rowB)
             : rowB.compareTo(rowA);

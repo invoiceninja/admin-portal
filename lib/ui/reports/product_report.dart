@@ -157,13 +157,14 @@ ReportResult productReport(
     }
   }
 
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort(
-      (rowA, rowB) => sortReportTableRows(rowA, rowB, productReportSettings));
+      (rowA, rowB) => sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         ProductReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

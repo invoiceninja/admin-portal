@@ -188,12 +188,13 @@ ReportResult expenseReport(
     }
   }
 
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, expenseReportSettings));
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         ExpenseReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

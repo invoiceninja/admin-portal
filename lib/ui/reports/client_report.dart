@@ -279,12 +279,13 @@ ReportResult clientReport(
     }
   }
 
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, clientReportSettings));
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

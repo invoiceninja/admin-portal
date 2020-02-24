@@ -643,9 +643,9 @@ abstract class UserSettingsEntity
 
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
-  factory ReportSettingsEntity({int sortIndex, bool sortAscending, int sortTotalsIndex, bool sortTotalsAscending, }) {
+  factory ReportSettingsEntity({String sortColumn, bool sortAscending, int sortTotalsIndex, bool sortTotalsAscending, }) {
     return _$ReportSettingsEntity._(
-      sortIndex: sortIndex,
+      sortColumn: sortColumn ?? '',
       sortAscending: sortAscending ?? true,
       sortTotalsIndex: sortTotalsIndex,
       sortTotalsAscending: sortTotalsAscending ?? true,
@@ -656,8 +656,8 @@ abstract class ReportSettingsEntity
   ReportSettingsEntity._();
 
   @nullable
-  @BuiltValueField(wireName: 'sort_index')
-  int get sortIndex;
+  @BuiltValueField(wireName: 'sort_column')
+  String get sortColumn;
 
   // TODO remove nullable
   @nullable

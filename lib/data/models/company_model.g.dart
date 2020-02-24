@@ -943,11 +943,11 @@ class _$ReportSettingsEntitySerializer
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.sortIndex != null) {
+    if (object.sortColumn != null) {
       result
-        ..add('sort_index')
-        ..add(serializers.serialize(object.sortIndex,
-            specifiedType: const FullType(int)));
+        ..add('sort_column')
+        ..add(serializers.serialize(object.sortColumn,
+            specifiedType: const FullType(String)));
     }
     if (object.sortAscending != null) {
       result
@@ -982,9 +982,9 @@ class _$ReportSettingsEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'sort_index':
-          result.sortIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'sort_column':
+          result.sortColumn = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'sort_ascending':
           result.sortAscending = serializers.deserialize(value,
@@ -4065,7 +4065,7 @@ class UserSettingsEntityBuilder
 
 class _$ReportSettingsEntity extends ReportSettingsEntity {
   @override
-  final int sortIndex;
+  final String sortColumn;
   @override
   final bool sortAscending;
   @override
@@ -4080,7 +4080,7 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
       (new ReportSettingsEntityBuilder()..update(updates)).build();
 
   _$ReportSettingsEntity._(
-      {this.sortIndex,
+      {this.sortColumn,
       this.sortAscending,
       this.sortTotalsIndex,
       this.sortTotalsAscending,
@@ -4104,7 +4104,7 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ReportSettingsEntity &&
-        sortIndex == other.sortIndex &&
+        sortColumn == other.sortColumn &&
         sortAscending == other.sortAscending &&
         sortTotalsIndex == other.sortTotalsIndex &&
         sortTotalsAscending == other.sortTotalsAscending &&
@@ -4115,7 +4115,7 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, sortIndex.hashCode), sortAscending.hashCode),
+            $jc($jc($jc(0, sortColumn.hashCode), sortAscending.hashCode),
                 sortTotalsIndex.hashCode),
             sortTotalsAscending.hashCode),
         columns.hashCode));
@@ -4124,7 +4124,7 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ReportSettingsEntity')
-          ..add('sortIndex', sortIndex)
+          ..add('sortColumn', sortColumn)
           ..add('sortAscending', sortAscending)
           ..add('sortTotalsIndex', sortTotalsIndex)
           ..add('sortTotalsAscending', sortTotalsAscending)
@@ -4137,9 +4137,9 @@ class ReportSettingsEntityBuilder
     implements Builder<ReportSettingsEntity, ReportSettingsEntityBuilder> {
   _$ReportSettingsEntity _$v;
 
-  int _sortIndex;
-  int get sortIndex => _$this._sortIndex;
-  set sortIndex(int sortIndex) => _$this._sortIndex = sortIndex;
+  String _sortColumn;
+  String get sortColumn => _$this._sortColumn;
+  set sortColumn(String sortColumn) => _$this._sortColumn = sortColumn;
 
   bool _sortAscending;
   bool get sortAscending => _$this._sortAscending;
@@ -4165,7 +4165,7 @@ class ReportSettingsEntityBuilder
 
   ReportSettingsEntityBuilder get _$this {
     if (_$v != null) {
-      _sortIndex = _$v.sortIndex;
+      _sortColumn = _$v.sortColumn;
       _sortAscending = _$v.sortAscending;
       _sortTotalsIndex = _$v.sortTotalsIndex;
       _sortTotalsAscending = _$v.sortTotalsAscending;
@@ -4194,7 +4194,7 @@ class ReportSettingsEntityBuilder
     try {
       _$result = _$v ??
           new _$ReportSettingsEntity._(
-              sortIndex: sortIndex,
+              sortColumn: sortColumn,
               sortAscending: sortAscending,
               sortTotalsIndex: sortTotalsIndex,
               sortTotalsAscending: sortTotalsAscending,

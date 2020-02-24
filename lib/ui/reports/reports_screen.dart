@@ -378,6 +378,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final reportSettings =
         state.userCompany.settings?.reportSettings[reportState.report] ??
             ReportSettingsEntity();
+    final sortedColumns = reportResult.sortedColumns(reportState);
 
     return Column(
       children: <Widget>[
@@ -411,15 +412,21 @@ class _ReportDataTableState extends State<ReportDataTable> {
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
             header: SizedBox(),
+            /*
             sortColumnIndex: reportSettings.sortIndex != null &&
                     reportResult.columns.length > reportSettings.sortIndex
                 ? reportSettings.sortIndex
+                : null,
+                *
+             */
+            sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
+                ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
             sortAscending: reportSettings.sortAscending,
             columns: reportResult.tableColumns(
                 context,
                 (index, ascending) =>
-                    widget.viewModel.onReportSorted(index, ascending)),
+                    widget.viewModel.onReportSorted(sortedColumns[index], ascending)),
             source: dataTableSource,
           ),
         )
@@ -1246,17 +1253,20 @@ class ReportBoolValue extends ReportElement {
   }
 }
 
-int sortReportTableRows(
-    dynamic rowA, dynamic rowB, ReportSettingsEntity reportSettings) {
-  if (reportSettings.sortIndex == null) {
-    return 0;
-  } else if (rowA.length <= reportSettings.sortIndex ||
-      rowB.length <= reportSettings.sortIndex) {
+int sortReportTableRows(dynamic rowA, dynamic rowB,
+    ReportSettingsEntity reportSettings, List<String> columns) {
+  if (reportSettings.sortColumn == null || reportSettings.sortColumn.isEmpty) {
     return 0;
   }
 
-  final dynamic valueA = rowA[reportSettings.sortIndex].value;
-  final dynamic valueB = rowB[reportSettings.sortIndex].value;
+  final index = columns.indexOf(reportSettings.sortColumn);
+
+  if (rowA.length <= index || rowB.length <= index) {
+    return 0;
+  }
+
+  final dynamic valueA = rowA[index].value;
+  final dynamic valueB = rowB[index].value;
 
   if (reportSettings.sortAscending) {
     return valueA.compareTo(valueB);
