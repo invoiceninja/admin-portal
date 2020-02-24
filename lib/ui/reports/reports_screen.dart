@@ -477,7 +477,7 @@ class ReportCharts extends StatelessWidget {
                     charts.MaterialPalette.blue.shadeDefault,
                 domainFn: (dynamic item, _) => item['name'],
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.groupTotals.totals.keys
+                data: viewModel.groupTotals.rows
                     .map((key) => {
                           'name': key,
                           'value': viewModel.groupTotals.totals[key]
@@ -492,7 +492,7 @@ class ReportCharts extends StatelessWidget {
         break;
       case ReportColumnType.date:
       case ReportColumnType.dateTime:
-        final keys = viewModel.groupTotals.totals.keys
+        final keys = viewModel.groupTotals.rows
             .where((element) => element.isNotEmpty)
             .toList();
         keys.sort((String str1, String str2) => str1.compareTo(str2));
@@ -530,9 +530,11 @@ class ReportCharts extends StatelessWidget {
     return child == null
         ? SizedBox()
         : FormCard(
-            child: SizedBox(
-              height: 200,
-              child: child,
+            child: ClipRect(
+              child: SizedBox(
+                height: 200,
+                child: child,
+              ),
             ),
           );
   }
