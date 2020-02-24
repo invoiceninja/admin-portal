@@ -375,10 +375,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final viewModel = widget.viewModel;
     final reportResult = viewModel.reportResult;
     final reportState = viewModel.reportState;
-    final reportSettings = state.userCompany.settings
-            ?.reportSettings[reportState.report] ??
-        ReportSettingsEntity();
-
+    final reportSettings =
+        state.userCompany.settings?.reportSettings[reportState.report] ??
+            ReportSettingsEntity();
 
     return Column(
       children: <Widget>[
@@ -602,10 +601,12 @@ class ReportDataTableSource extends DataTableSource {
 
   @override
   int get rowCount {
-    if (viewModel.reportState.group.isNotEmpty) {
-      return viewModel.groupTotals.totals.length + 1;
-    } else {
+    final reportState = viewModel.reportState;
+
+    if (reportState.group.isEmpty || reportState.isGroupByFIltered) {
       return viewModel.reportResult.data.length + 1;
+    } else {
+      return viewModel.groupTotals.totals.length + 1;
     }
   }
 
@@ -945,12 +946,10 @@ class ReportResult {
     final reportSettings = state.userCompany.settings
             ?.reportSettings[state.uiState.reportsUIState.report] ??
         ReportSettingsEntity();
+
     final groupBy = reportState.group;
 
-    final isGroupByFIltered = reportState.filters.containsKey(groupBy) &&
-        reportState.filters[groupBy].isNotEmpty;
-
-    if (groupBy.isEmpty || isGroupByFIltered) {
+    if (groupBy.isEmpty || reportState.isGroupByFIltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {

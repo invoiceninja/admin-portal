@@ -38,7 +38,9 @@ abstract class ReportsUIState
 
   BuiltMap<String, String> get filters;
 
+  bool get isGroupByFIltered =>
+      filters.containsKey(group) && filters[group].isNotEmpty;
+
   static Serializer<ReportsUIState> get serializer =>
       _$reportsUIStateSerializer;
-
 }
