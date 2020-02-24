@@ -284,7 +284,7 @@ class ReportsScreenVM {
           final reportState = state.uiState.reportsUIState;
           String csvData = '';
 
-          if (reportState.group.isEmpty) {
+          if (reportState.group.isEmpty || reportState.isGroupByFIltered) {
             reportResult.columns.forEach((column) {
               csvData += '${localization.lookup(column)},';
             });
@@ -326,9 +326,6 @@ class ReportsScreenVM {
               csvData += '\n';
             });
           }
-
-          print('## CSV DATA');
-          print(csvData);
 
           final date = convertDateTimeToSqlDate();
           final filename =
