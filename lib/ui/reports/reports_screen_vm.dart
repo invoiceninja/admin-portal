@@ -384,7 +384,7 @@ GroupTotals calculateReportTotals({
   }
 
   final rows = totals.keys.toList();
-  final sortedColumns = reportResult.sortedColumns(reportState.group);
+  final sortedColumns = reportResult.sortedColumns(reportState);
 
   rows.sort((rowA, rowB) {
     final valuesA = totals[rowA];

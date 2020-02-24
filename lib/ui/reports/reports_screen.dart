@@ -754,10 +754,11 @@ class ReportResult {
     return true;
   }
 
-  List<String> sortedColumns(String group) {
+  List<String> sortedColumns(ReportsUIState reportState) {
     final data = columns.toList();
+    final group = reportState.group;
 
-    if (group.isNotEmpty) {
+    if (group.isNotEmpty || !reportState.isGroupByFIltered) {
       data.remove(group);
       data.insert(0, group);
     }
@@ -773,7 +774,7 @@ class ReportResult {
     final reportState = store.state.uiState.reportsUIState;
 
     return [
-      for (String column in sortedColumns(reportState.group))
+      for (String column in sortedColumns(reportState))
         DataColumn(
           label: Container(
             constraints: BoxConstraints(minWidth: 80),
@@ -801,7 +802,7 @@ class ReportResult {
     final reportState = store.state.uiState.reportsUIState;
 
     return DataRow(cells: [
-      for (String column in sortedColumns(reportState.group))
+      for (String column in sortedColumns(reportState))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
           DataCell(Text(textEditingControllers == null ? 'null' : 'test'))
@@ -944,18 +945,16 @@ class ReportResult {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final reportState = state.uiState.reportsUIState;
-    final reportSettings = state.userCompany.settings
-            ?.reportSettings[state.uiState.reportsUIState.report] ??
-        ReportSettingsEntity();
-
     final groupBy = reportState.group;
+    final sorted = sortedColumns(reportState);
 
     if (groupBy.isEmpty || reportState.isGroupByFIltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
-        final cell = row[j];
-        final column = columns[j];
+        final index = columns.indexOf(sorted[j]);
+        final cell = row[index];
+        final column = sorted[j];
         cells.add(
           DataCell(cell.renderWidget(context, column), onTap: () {
             viewEntityById(
@@ -971,7 +970,7 @@ class ReportResult {
       final group = groupTotals.rows[index - 1];
       final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
-      for (var column in sortedColumns(reportState.group)) {
+      for (var column in sortedColumns(reportState)) {
         String value = '';
         if (column == groupBy) {
           if (group.isEmpty) {
