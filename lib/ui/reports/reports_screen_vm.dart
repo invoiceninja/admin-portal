@@ -82,6 +82,12 @@ class ReportsScreenVM {
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
+    final allReportSettings = state.userCompany.settings.reportSettings;
+    final reportSettings =
+        allReportSettings != null && allReportSettings.containsKey(report)
+            ? allReportSettings[report]
+            : ReportSettingsEntity();
+
     ReportResult reportResult;
 
     switch (state.uiState.reportsUIState.report) {
@@ -179,8 +185,11 @@ class ReportsScreenVM {
         state: state,
         reportResult: reportResult,
         reportState: state.uiState.reportsUIState,
-        groupTotals:
-            memoizeedGroupTotals(reportResult, state.uiState.reportsUIState),
+        groupTotals: memoizeedGroupTotals(
+          reportResult,
+          state.uiState.reportsUIState,
+          reportSettings,
+        ),
         onReportSorted: (index, ascending) {
           store.dispatch(UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
@@ -201,15 +210,10 @@ class ReportsScreenVM {
           ));
         },
         onReportColumnsChanged: (context, columns) {
-          final allReportSettings = state.userCompany.settings.reportSettings;
-          final reportSettings = (allReportSettings != null &&
-                      allReportSettings.containsKey(report)
-                  ? allReportSettings[report]
-                  : ReportSettingsEntity())
-              .rebuild((b) => b..columns.replace(BuiltList<String>(columns)));
           final settings = state.userCompany.settings.rebuild((b) => b
             ..reportSettings[state.uiState.reportsUIState.report] =
-                reportSettings);
+                reportSettings.rebuild(
+                    (b) => b..columns.replace(BuiltList<String>(columns))));
           final user = state.user
               .rebuild((b) => b..userCompany.settings.replace(settings));
           final completer = snackBarCompleter<Null>(
@@ -318,16 +322,20 @@ class GroupTotals {
   final List<String> rows;
 }
 
-var memoizeedGroupTotals = memo2((
+var memoizeedGroupTotals = memo3((
   ReportResult reportResult,
   ReportsUIState reportUIState,
+  ReportSettingsEntity reportSettings,
 ) =>
     calculateReportTotals(
-        reportResult: reportResult, reportUIState: reportUIState));
+        reportResult: reportResult,
+        reportUIState: reportUIState,
+        reportSettings: reportSettings));
 
 GroupTotals calculateReportTotals({
   ReportResult reportResult,
   ReportsUIState reportUIState,
+  ReportSettingsEntity reportSettings,
 }) {
   final Map<String, Map<String, double>> totals = {};
   final data = reportResult.data;
@@ -375,5 +383,29 @@ GroupTotals calculateReportTotals({
     }
   }
 
-  return GroupTotals(totals: totals);
+
+  final rows = totals.keys.toList();
+  print('## keys was: $rows');
+
+  rows.sort((rowA, rowB) {
+    final valuesA = totals[rowA];
+    final valuesB = totals[rowB];
+    print('## Sort: index: ${reportSettings.sortIndex}, col len: ${columns.length}');
+    if (reportSettings.sortIndex != null &&
+        reportSettings.sortIndex < columns.length) {
+      final sort = columns[reportSettings.sortIndex];
+      print('## sort: $sort');
+      if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
+        print('comparing: ${valuesA[sort]} to ${valuesB[sort]}');
+        return reportSettings.sortAscending
+            ? valuesA[sort].compareTo(valuesB[sort])
+            : valuesB[sort].compareTo(valuesA[sort]);
+      }
+    }
+    return 0;
+  });
+
+  print('## keys is: $rows');
+
+  return GroupTotals(totals: totals, rows: rows);
 }

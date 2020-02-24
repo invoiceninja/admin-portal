@@ -967,28 +967,7 @@ class ReportResult {
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
-      final keys = groupTotals.totals.keys.toList();
-
-      /*
-      keys.sort((rowA, rowB) {
-        final valuesA = groupTotals[rowA];
-        final valuesB = groupTotals[rowB];
-        if (reportSettings.sortIndex != null &&
-            reportSettings.sortIndex < columns.length) {
-          final sort = columns[reportSettings.sortIndex];
-          if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
-            return reportSettings.sortAscending
-                ? valuesA[sort].compareTo(valuesB[sort])
-                : valuesB[sort].compareTo(valuesA[sort]);
-          }
-        }
-        return 0;
-      });
-      */
-
-      print('## TOTALS: ${groupTotals.totals}');
-      print('## $index - Keys: $keys');
-      final group = keys[index - 1];
+      final group = groupTotals.rows[index - 1];
       final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
       for (var column in sortedColumns(context)) {
