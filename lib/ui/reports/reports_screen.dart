@@ -41,11 +41,11 @@ class ReportsScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
-    final reportsUIState = state.uiState.reportsUIState;
+    final reportsState = viewModel.reportState;
     final reportResult = viewModel.reportResult;
 
-    final hasCustomDate = reportsUIState.filters.keys.where((column) {
-      final filter = reportsUIState.filters[column];
+    final hasCustomDate = reportsState.filters.keys.where((column) {
+      final filter = reportsState.filters[column];
       return (getReportColumnType(column, context) ==
                   ReportColumnType.dateTime ||
               getReportColumnType(column, context) == ReportColumnType.date) &&
@@ -129,7 +129,7 @@ class ReportsScreen extends StatelessWidget {
         ),
         body: ListView(
           key: ValueKey(
-              '${viewModel.state.isSaving}_${reportsUIState.report}_${reportsUIState.group}'),
+              '${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
           children: <Widget>[
             Flex(
               direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
@@ -141,7 +141,7 @@ class ReportsScreen extends StatelessWidget {
                     children: <Widget>[
                       AppDropdownButton<String>(
                         labelText: localization.report,
-                        value: reportsUIState.report,
+                        value: reportsState.report,
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(report: value),
                         items: [
@@ -168,14 +168,14 @@ class ReportsScreen extends StatelessWidget {
                       if (hasCustomDate) ...[
                         DatePicker(
                           labelText: localization.startDate,
-                          selectedDate: reportsUIState.customStartDate,
+                          selectedDate: reportsState.customStartDate,
                           allowClearing: true,
                           onSelected: (date) => viewModel.onSettingsChanged(
                               customStartDate: date),
                         ),
                         DatePicker(
                           labelText: localization.endDate,
-                          selectedDate: reportsUIState.customEndDate,
+                          selectedDate: reportsState.customEndDate,
                           allowClearing: true,
                           onSelected: (date) =>
                               viewModel.onSettingsChanged(customEndDate: date),
@@ -189,7 +189,7 @@ class ReportsScreen extends StatelessWidget {
                     children: <Widget>[
                       AppDropdownButton<String>(
                         labelText: localization.group,
-                        value: reportsUIState.group,
+                        value: reportsState.group,
                         blankValue: '',
                         showBlank: true,
                         onChanged: (dynamic value) {
@@ -211,13 +211,13 @@ class ReportsScreen extends StatelessWidget {
                           );
                         }).toList(),
                       ),
-                      if (getReportColumnType(reportsUIState.group, context) ==
+                      if (getReportColumnType(reportsState.group, context) ==
                               ReportColumnType.dateTime ||
-                          getReportColumnType(reportsUIState.group, context) ==
+                          getReportColumnType(reportsState.group, context) ==
                               ReportColumnType.date)
                         AppDropdownButton<String>(
                             labelText: localization.subgroup,
-                            value: reportsUIState.subgroup,
+                            value: reportsState.subgroup,
                             onChanged: (dynamic value) {
                               viewModel.onSettingsChanged(subgroup: value);
                             },
@@ -238,13 +238,13 @@ class ReportsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (reportsUIState.group.isNotEmpty)
+                if (reportsState.group.isNotEmpty)
                   Flexible(
                     child: FormCard(
                       children: <Widget>[
                         AppDropdownButton<String>(
                           labelText: localization.chart,
-                          value: reportsUIState.chart,
+                          value: reportsState.chart,
                           blankValue: '',
                           showBlank: true,
                           onChanged: (dynamic value) {
@@ -267,7 +267,7 @@ class ReportsScreen extends StatelessWidget {
             ),
             ReportDataTable(
               key: ValueKey(
-                  '${viewModel.state.isSaving}_${reportsUIState.group}_${reportsUIState.selectedGroup}'),
+                  '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
               viewModel: viewModel,
             )
           ],
@@ -296,7 +296,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     super.initState();
 
     final viewModel = widget.viewModel;
-    final reportUIState = viewModel.state.uiState.reportsUIState;
+    final reportState = viewModel.reportState;
 
     dataTableSource = ReportDataTableSource(
         viewModel: viewModel,
@@ -304,7 +304,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
         textEditingControllers: _textEditingControllers,
         onFilterChanged: (column, value) {
           viewModel.onReportFiltersChanged(context,
-              reportUIState.filters.rebuild((b) => b..addAll({column: value})));
+              reportState.filters.rebuild((b) => b..addAll({column: value})));
         });
   }
 
@@ -327,9 +327,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
   @override
   void didChangeDependencies() {
-    final state = widget.viewModel.state;
-    final reportState = state.uiState.reportsUIState;
-    final reportResult = widget.viewModel.reportResult;
+    final viewModel = widget.viewModel;
+    final reportState = viewModel.reportState;
+    final reportResult = viewModel.reportResult;
 
     for (var column in reportResult.columns) {
       if (_textEditingControllers[reportState.report] == null) {
@@ -353,10 +353,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
   }
 
   void _onChanged(String column, String value) {
-    final state = widget.viewModel.state;
     widget.viewModel.onReportFiltersChanged(
         context,
-        state.uiState.reportsUIState.filters
+        widget.viewModel.reportState.filters
             .rebuild((b) => b..addAll({column: value})));
   }
 
@@ -373,16 +372,17 @@ class _ReportDataTableState extends State<ReportDataTable> {
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
-    final reportResult = widget.viewModel.reportResult;
+    final viewModel = widget.viewModel;
+    final reportResult = viewModel.reportResult;
+    final reportState = viewModel.reportState;
     final reportSettings = state.userCompany.settings
-            ?.reportSettings[state.uiState.reportsUIState.report] ??
+            ?.reportSettings[reportState.report] ??
         ReportSettingsEntity();
 
-    final reportsUIState = state.uiState.reportsUIState;
 
     return Column(
       children: <Widget>[
-        if (reportsUIState.chart.isNotEmpty)
+        if (reportState.chart.isNotEmpty)
           ClipRect(
             child: ReportCharts(
               viewModel: widget.viewModel,
@@ -437,9 +437,9 @@ class ReportCharts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = viewModel.state;
-    final reportsUIState = state.uiState.reportsUIState;
+    final reportState = viewModel.reportState;
 
-    if (reportsUIState.chart.isEmpty || reportsUIState.group.isEmpty) {
+    if (reportState.chart.isEmpty || reportState.group.isEmpty) {
       return SizedBox();
     }
 
@@ -464,7 +464,7 @@ class ReportCharts extends StatelessWidget {
             lineStyle: charts.LineStyleSpec(color: color)));
 
     Widget child;
-    switch (getReportColumnType(reportsUIState.group, context)) {
+    switch (getReportColumnType(reportState.group, context)) {
       case ReportColumnType.string:
       case ReportColumnType.bool:
         child = charts.BarChart(
@@ -479,7 +479,7 @@ class ReportCharts extends StatelessWidget {
                     .map((key) => {
                           'name': key,
                           'value': viewModel.groupTotals.totals[key]
-                              [reportsUIState.chart]
+                              [reportState.chart]
                         })
                     .toList())
           ],
@@ -506,7 +506,7 @@ class ReportCharts extends StatelessWidget {
                     .map((key) => {
                           'name': key,
                           'value': viewModel.groupTotals.totals[key]
-                              [reportsUIState.chart]
+                              [reportState.chart]
                         })
                     .toList())
           ],
@@ -615,7 +615,7 @@ class ReportDataTableSource extends DataTableSource {
     if (index == 0) {
       return reportResult.tableFilters(
           context,
-          textEditingControllers[viewModel.state.uiState.reportsUIState.report],
+          textEditingControllers[viewModel.reportState.report],
           (column, value) => onFilterChanged(column, value));
     } else {
       return reportResult.tableRow(context, viewModel, index);
