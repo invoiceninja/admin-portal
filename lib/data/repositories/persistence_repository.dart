@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:html' as html;
+//import 'dart:html' as html;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -25,9 +25,11 @@ class PersistenceRepository {
         state.rebuild((b) => b..userCompany.token.token = '');
 
     if (kIsWeb) {
+      /*
       print('## COOKIE: ${html.window.document.cookie}');
       html.window.document.cookie =
           'token=$token; expires=Sat, 19 Dec 2099 12:00:00 UTC; Secure; SameSite=Strict;';
+       */
     }
 
     // TODO persist stateWithoutToken
