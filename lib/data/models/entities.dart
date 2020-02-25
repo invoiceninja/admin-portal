@@ -311,7 +311,6 @@ abstract class LoginResponse
 }
 
 class CustomFieldType {
-
   static const String company = 'company';
   static const String company1 = 'company1';
   static const String company2 = 'company2';
@@ -449,7 +448,8 @@ abstract class ActivityEntity
   EntityType get entityType {
     if (['1', '2', '3', '26'].contains(activityTypeId)) {
       return EntityType.client;
-    } else if (['4', '5', '6', '7', '8', '9', '25'].contains(activityTypeId)) {
+    } else if (['4', '5', '6', '7', '8', '9', '25', '53']
+        .contains(activityTypeId)) {
       return EntityType.invoice;
     } else if (['10', '11', '12', '13', '27'].contains(activityTypeId)) {
       return EntityType.payment;
@@ -466,6 +466,8 @@ abstract class ActivityEntity
     } else if (['42', '43', '44', '45', '46'].contains(activityTypeId)) {
       return EntityType.task;
     } else {
+      print(
+          '## Error: failed to resolve entity type - activity_type_id: $activityTypeId');
       return null;
     }
   }
