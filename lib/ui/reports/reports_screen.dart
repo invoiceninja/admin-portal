@@ -245,32 +245,32 @@ class ReportsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (reportsState.group.isNotEmpty)
-                  Flexible(
-                    child: FormCard(
-                      children: <Widget>[
-                        AppDropdownButton<String>(
-                          labelText: localization.chart,
-                          value: reportsState.chart,
-                          blankValue: '',
-                          showBlank: true,
-                          onChanged: (dynamic value) {
-                            viewModel.onSettingsChanged(chart: value);
-                          },
-                          items: reportResult.columns
-                              .where((column) =>
-                          getReportColumnType(column, context) ==
-                              ReportColumnType.number)
-                              .map((column) =>
-                              DropdownMenuItem(
-                                child: Text(localization.lookup(column)),
-                                value: column,
-                              ))
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  )
+                Flexible(
+                  child: FormCard(
+                    children: <Widget>[
+                      AppDropdownButton<String>(
+                        enabled: reportsState.group.isNotEmpty,
+                        labelText: localization.chart,
+                        value: reportsState.chart,
+                        blankValue: '',
+                        showBlank: true,
+                        onChanged: (dynamic value) {
+                          viewModel.onSettingsChanged(chart: value);
+                        },
+                        items: reportResult.columns
+                            .where((column) =>
+                        getReportColumnType(column, context) ==
+                            ReportColumnType.number)
+                            .map((column) =>
+                            DropdownMenuItem(
+                              child: Text(localization.lookup(column)),
+                              value: column,
+                            ))
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
             ReportDataTable(
