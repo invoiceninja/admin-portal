@@ -1,3 +1,4 @@
+import 'dart:html' as html5;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
@@ -19,11 +20,17 @@ class PersistenceRepository {
   final FileStorage fileStorage;
 
   Future<File> saveCompanyState(UserCompanyState state) async {
-    /*
-    // TODO re-enable
-    final stateWithoutToken = state.rebuild(
-        (b) => b..company.replace(state.company.rebuild((b) => b..token = '')));
-     */
+    final token = state.userCompany.token.token;
+    final stateWithoutToken =
+        state.rebuild((b) => b..userCompany.token.token = '');
+
+    if (kIsWeb) {
+      print('## COOKIE: ${html5.window.document.cookie}');
+      html5.window.document.cookie =
+          'token=$token; expires=Thu, 18 Dec 2099 12:00:00 UTC; Secure';
+    }
+
+    // TODO persist stateWithoutToken
     final data = serializers.serializeWith(UserCompanyState.serializer, state);
 
     return await fileStorage.save(json.encode(data));
