@@ -26,9 +26,14 @@ abstract class CompanyEntity extends Object
       plan: '',
       settings: SettingsEntity(),
       appUrl: '',
+      sizeId: '',
+      industryId: '',
       enabledModules: 0,
       firstMonthOfYear: '0',
       firstDayOfWeek: '0',
+      subdomain: '',
+      portalDomain: '',
+      portalMode: kClientPortalModeSubdomain,
       updateProducts: true,
       fillProducts: true,
       showProductDetails: true,
@@ -79,35 +84,27 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'custom_surcharge_taxes4')
   bool get enableCustomSurchargeTaxes4;
 
-  @nullable
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
-  @nullable
   @BuiltValueField(wireName: 'industry_id')
   String get industryId;
 
-  @nullable
   @BuiltValueField(wireName: 'subdomain')
   String get subdomain;
 
-  @nullable
   @BuiltValueField(wireName: 'portal_mode')
   String get portalMode;
 
-  @nullable
   @BuiltValueField(wireName: 'portal_domain')
   String get portalDomain;
 
-  @nullable
   @BuiltValueField(wireName: 'update_products')
   bool get updateProducts;
 
-  @nullable
   @BuiltValueField(wireName: 'convert_products')
   bool get convertProductExchangeRate;
 
-  @nullable
   @BuiltValueField(wireName: 'fill_products')
   bool get fillProducts;
 
@@ -117,7 +114,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'enable_product_quantity')
   bool get enableProductQuantity;
 
-  @nullable
   @BuiltValueField(wireName: 'enable_invoice_quantity')
   bool get enableInvoiceQuantity;
 
@@ -149,88 +145,55 @@ abstract class CompanyEntity extends Object
 
   BuiltList<ActivityEntity> get activities;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'tax_rates')
   BuiltList<TaxRateEntity> get taxRates;
 
-  @nullable
   @BuiltValueField(wireName: 'task_statuses')
   BuiltList<TaskStatusEntity> get taskStatuses;
 
   BuiltMap<String, TaskStatusEntity> get taskStatusMap;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'company_gateways')
   BuiltList<CompanyGatewayEntity> get companyGateways;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'expense_categories')
   BuiltList<ExpenseCategoryEntity> get expenseCategories;
 
-  // TODO remove this
-  @nullable
   BuiltMap<String, ExpenseCategoryEntity> get expenseCategoryMap;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'clients')
   BuiltList<ClientEntity> get clients;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'products')
   BuiltList<ProductEntity> get products;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'invoices')
   BuiltList<InvoiceEntity> get invoices;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'payments')
   BuiltList<PaymentEntity> get payments;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'quotes')
   BuiltList<InvoiceEntity> get quotes;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'credits')
   BuiltList<InvoiceEntity> get credits;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'tasks')
   BuiltList<TaskEntity> get tasks;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'projects')
   BuiltList<ProjectEntity> get projects;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'expenses')
   BuiltList<ExpenseEntity> get expenses;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'vendors')
   BuiltList<VendorEntity> get vendors;
 
-  // TODO remove this
-  @nullable
   BuiltMap<String, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
@@ -238,7 +201,6 @@ abstract class CompanyEntity extends Object
 
   SettingsEntity get settings;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;

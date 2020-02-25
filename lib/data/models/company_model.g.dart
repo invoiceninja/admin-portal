@@ -46,11 +46,38 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'custom_surcharge_taxes4',
       serializers.serialize(object.enableCustomSurchargeTaxes4,
           specifiedType: const FullType(bool)),
+      'size_id',
+      serializers.serialize(object.sizeId,
+          specifiedType: const FullType(String)),
+      'industry_id',
+      serializers.serialize(object.industryId,
+          specifiedType: const FullType(String)),
+      'subdomain',
+      serializers.serialize(object.subdomain,
+          specifiedType: const FullType(String)),
+      'portal_mode',
+      serializers.serialize(object.portalMode,
+          specifiedType: const FullType(String)),
+      'portal_domain',
+      serializers.serialize(object.portalDomain,
+          specifiedType: const FullType(String)),
+      'update_products',
+      serializers.serialize(object.updateProducts,
+          specifiedType: const FullType(bool)),
+      'convert_products',
+      serializers.serialize(object.convertProductExchangeRate,
+          specifiedType: const FullType(bool)),
+      'fill_products',
+      serializers.serialize(object.fillProducts,
+          specifiedType: const FullType(bool)),
       'enable_product_cost',
       serializers.serialize(object.enableProductCost,
           specifiedType: const FullType(bool)),
       'enable_product_quantity',
       serializers.serialize(object.enableProductQuantity,
+          specifiedType: const FullType(bool)),
+      'enable_invoice_quantity',
+      serializers.serialize(object.enableInvoiceQuantity,
           specifiedType: const FullType(bool)),
       'default_quantity',
       serializers.serialize(object.defaultQuantity,
@@ -75,12 +102,82 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
+      'tax_rates',
+      serializers.serialize(object.taxRates,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(TaxRateEntity)])),
+      'task_statuses',
+      serializers.serialize(object.taskStatuses,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(TaskStatusEntity)])),
       'taskStatusMap',
       serializers.serialize(object.taskStatusMap,
           specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(TaskStatusEntity)
           ])),
+      'company_gateways',
+      serializers.serialize(object.companyGateways,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(CompanyGatewayEntity)])),
+      'expense_categories',
+      serializers.serialize(object.expenseCategories,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(ExpenseCategoryEntity)])),
+      'expenseCategoryMap',
+      serializers.serialize(object.expenseCategoryMap,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ExpenseCategoryEntity)
+          ])),
+      'users',
+      serializers.serialize(object.users,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(UserEntity)])),
+      'clients',
+      serializers.serialize(object.clients,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ClientEntity)])),
+      'products',
+      serializers.serialize(object.products,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ProductEntity)])),
+      'invoices',
+      serializers.serialize(object.invoices,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(InvoiceEntity)])),
+      'payments',
+      serializers.serialize(object.payments,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(PaymentEntity)])),
+      'quotes',
+      serializers.serialize(object.quotes,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(InvoiceEntity)])),
+      'credits',
+      serializers.serialize(object.credits,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(InvoiceEntity)])),
+      'tasks',
+      serializers.serialize(object.tasks,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(TaskEntity)])),
+      'projects',
+      serializers.serialize(object.projects,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ProjectEntity)])),
+      'expenses',
+      serializers.serialize(object.expenses,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(ExpenseEntity)])),
+      'vendors',
+      serializers.serialize(object.vendors,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(VendorEntity)])),
+      'userMap',
+      serializers.serialize(object.userMap,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(UserEntity)])),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
@@ -89,60 +186,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
     ];
-    if (object.sizeId != null) {
-      result
-        ..add('size_id')
-        ..add(serializers.serialize(object.sizeId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.industryId != null) {
-      result
-        ..add('industry_id')
-        ..add(serializers.serialize(object.industryId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subdomain != null) {
-      result
-        ..add('subdomain')
-        ..add(serializers.serialize(object.subdomain,
-            specifiedType: const FullType(String)));
-    }
-    if (object.portalMode != null) {
-      result
-        ..add('portal_mode')
-        ..add(serializers.serialize(object.portalMode,
-            specifiedType: const FullType(String)));
-    }
-    if (object.portalDomain != null) {
-      result
-        ..add('portal_domain')
-        ..add(serializers.serialize(object.portalDomain,
-            specifiedType: const FullType(String)));
-    }
-    if (object.updateProducts != null) {
-      result
-        ..add('update_products')
-        ..add(serializers.serialize(object.updateProducts,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.convertProductExchangeRate != null) {
-      result
-        ..add('convert_products')
-        ..add(serializers.serialize(object.convertProductExchangeRate,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.fillProducts != null) {
-      result
-        ..add('fill_products')
-        ..add(serializers.serialize(object.fillProducts,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.enableInvoiceQuantity != null) {
-      result
-        ..add('enable_invoice_quantity')
-        ..add(serializers.serialize(object.enableInvoiceQuantity,
-            specifiedType: const FullType(bool)));
-    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -154,127 +197,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('default_url')
         ..add(serializers.serialize(object.appUrl,
             specifiedType: const FullType(String)));
-    }
-    if (object.taxRates != null) {
-      result
-        ..add('tax_rates')
-        ..add(serializers.serialize(object.taxRates,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(TaxRateEntity)])));
-    }
-    if (object.taskStatuses != null) {
-      result
-        ..add('task_statuses')
-        ..add(serializers.serialize(object.taskStatuses,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(TaskStatusEntity)])));
-    }
-    if (object.companyGateways != null) {
-      result
-        ..add('company_gateways')
-        ..add(serializers.serialize(object.companyGateways,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(CompanyGatewayEntity)])));
-    }
-    if (object.expenseCategories != null) {
-      result
-        ..add('expense_categories')
-        ..add(serializers.serialize(object.expenseCategories,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ExpenseCategoryEntity)])));
-    }
-    if (object.expenseCategoryMap != null) {
-      result
-        ..add('expenseCategoryMap')
-        ..add(serializers.serialize(object.expenseCategoryMap,
-            specifiedType: const FullType(BuiltMap, const [
-              const FullType(String),
-              const FullType(ExpenseCategoryEntity)
-            ])));
-    }
-    if (object.users != null) {
-      result
-        ..add('users')
-        ..add(serializers.serialize(object.users,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(UserEntity)])));
-    }
-    if (object.clients != null) {
-      result
-        ..add('clients')
-        ..add(serializers.serialize(object.clients,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ClientEntity)])));
-    }
-    if (object.products != null) {
-      result
-        ..add('products')
-        ..add(serializers.serialize(object.products,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ProductEntity)])));
-    }
-    if (object.invoices != null) {
-      result
-        ..add('invoices')
-        ..add(serializers.serialize(object.invoices,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceEntity)])));
-    }
-    if (object.payments != null) {
-      result
-        ..add('payments')
-        ..add(serializers.serialize(object.payments,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(PaymentEntity)])));
-    }
-    if (object.quotes != null) {
-      result
-        ..add('quotes')
-        ..add(serializers.serialize(object.quotes,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceEntity)])));
-    }
-    if (object.credits != null) {
-      result
-        ..add('credits')
-        ..add(serializers.serialize(object.credits,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(InvoiceEntity)])));
-    }
-    if (object.tasks != null) {
-      result
-        ..add('tasks')
-        ..add(serializers.serialize(object.tasks,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(TaskEntity)])));
-    }
-    if (object.projects != null) {
-      result
-        ..add('projects')
-        ..add(serializers.serialize(object.projects,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ProjectEntity)])));
-    }
-    if (object.expenses != null) {
-      result
-        ..add('expenses')
-        ..add(serializers.serialize(object.expenses,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(ExpenseEntity)])));
-    }
-    if (object.vendors != null) {
-      result
-        ..add('vendors')
-        ..add(serializers.serialize(object.vendors,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(VendorEntity)])));
-    }
-    if (object.userMap != null) {
-      result
-        ..add('userMap')
-        ..add(serializers.serialize(object.userMap,
-            specifiedType: const FullType(BuiltMap,
-                const [const FullType(String), const FullType(UserEntity)])));
     }
     if (object.enabledModules != null) {
       result
@@ -2849,12 +2771,41 @@ class _$CompanyEntity extends CompanyEntity {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableCustomSurchargeTaxes4');
     }
+    if (sizeId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'sizeId');
+    }
+    if (industryId == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'industryId');
+    }
+    if (subdomain == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'subdomain');
+    }
+    if (portalMode == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'portalMode');
+    }
+    if (portalDomain == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'portalDomain');
+    }
+    if (updateProducts == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'updateProducts');
+    }
+    if (convertProductExchangeRate == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'convertProductExchangeRate');
+    }
+    if (fillProducts == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'fillProducts');
+    }
     if (enableProductCost == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'enableProductCost');
     }
     if (enableProductQuantity == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableProductQuantity');
+    }
+    if (enableInvoiceQuantity == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyEntity', 'enableInvoiceQuantity');
     }
     if (defaultQuantity == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuantity');
@@ -2877,8 +2828,59 @@ class _$CompanyEntity extends CompanyEntity {
     if (activities == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'activities');
     }
+    if (taxRates == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'taxRates');
+    }
+    if (taskStatuses == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatuses');
+    }
     if (taskStatusMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'taskStatusMap');
+    }
+    if (companyGateways == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'companyGateways');
+    }
+    if (expenseCategories == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategories');
+    }
+    if (expenseCategoryMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'expenseCategoryMap');
+    }
+    if (users == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'users');
+    }
+    if (clients == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'clients');
+    }
+    if (products == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'products');
+    }
+    if (invoices == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'invoices');
+    }
+    if (payments == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'payments');
+    }
+    if (quotes == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'quotes');
+    }
+    if (credits == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'credits');
+    }
+    if (tasks == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'tasks');
+    }
+    if (projects == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'projects');
+    }
+    if (expenses == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'expenses');
+    }
+    if (vendors == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'vendors');
+    }
+    if (userMap == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
     }
     if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
@@ -3431,24 +3433,24 @@ class CompanyEntityBuilder
               firstMonthOfYear: firstMonthOfYear,
               groups: groups.build(),
               activities: activities.build(),
-              taxRates: _taxRates?.build(),
-              taskStatuses: _taskStatuses?.build(),
+              taxRates: taxRates.build(),
+              taskStatuses: taskStatuses.build(),
               taskStatusMap: taskStatusMap.build(),
-              companyGateways: _companyGateways?.build(),
-              expenseCategories: _expenseCategories?.build(),
-              expenseCategoryMap: _expenseCategoryMap?.build(),
-              users: _users?.build(),
-              clients: _clients?.build(),
-              products: _products?.build(),
-              invoices: _invoices?.build(),
-              payments: _payments?.build(),
-              quotes: _quotes?.build(),
-              credits: _credits?.build(),
-              tasks: _tasks?.build(),
-              projects: _projects?.build(),
-              expenses: _expenses?.build(),
-              vendors: _vendors?.build(),
-              userMap: _userMap?.build(),
+              companyGateways: companyGateways.build(),
+              expenseCategories: expenseCategories.build(),
+              expenseCategoryMap: expenseCategoryMap.build(),
+              users: users.build(),
+              clients: clients.build(),
+              products: products.build(),
+              invoices: invoices.build(),
+              payments: payments.build(),
+              quotes: quotes.build(),
+              credits: credits.build(),
+              tasks: tasks.build(),
+              projects: projects.build(),
+              expenses: expenses.build(),
+              vendors: vendors.build(),
+              userMap: userMap.build(),
               customFields: customFields.build(),
               settings: settings.build(),
               enabledModules: enabledModules,
@@ -3468,41 +3470,41 @@ class CompanyEntityBuilder
         _$failedField = 'activities';
         activities.build();
         _$failedField = 'taxRates';
-        _taxRates?.build();
+        taxRates.build();
         _$failedField = 'taskStatuses';
-        _taskStatuses?.build();
+        taskStatuses.build();
         _$failedField = 'taskStatusMap';
         taskStatusMap.build();
         _$failedField = 'companyGateways';
-        _companyGateways?.build();
+        companyGateways.build();
         _$failedField = 'expenseCategories';
-        _expenseCategories?.build();
+        expenseCategories.build();
         _$failedField = 'expenseCategoryMap';
-        _expenseCategoryMap?.build();
+        expenseCategoryMap.build();
         _$failedField = 'users';
-        _users?.build();
+        users.build();
         _$failedField = 'clients';
-        _clients?.build();
+        clients.build();
         _$failedField = 'products';
-        _products?.build();
+        products.build();
         _$failedField = 'invoices';
-        _invoices?.build();
+        invoices.build();
         _$failedField = 'payments';
-        _payments?.build();
+        payments.build();
         _$failedField = 'quotes';
-        _quotes?.build();
+        quotes.build();
         _$failedField = 'credits';
-        _credits?.build();
+        credits.build();
         _$failedField = 'tasks';
-        _tasks?.build();
+        tasks.build();
         _$failedField = 'projects';
-        _projects?.build();
+        projects.build();
         _$failedField = 'expenses';
-        _expenses?.build();
+        expenses.build();
         _$failedField = 'vendors';
-        _vendors?.build();
+        vendors.build();
         _$failedField = 'userMap';
-        _userMap?.build();
+        userMap.build();
         _$failedField = 'customFields';
         customFields.build();
         _$failedField = 'settings';
