@@ -305,13 +305,13 @@ class _ReportDataTableState extends State<ReportDataTable> {
     super.initState();
 
     final viewModel = widget.viewModel;
-    final reportState = viewModel.reportState;
 
     dataTableSource = ReportDataTableSource(
         viewModel: viewModel,
         context: context,
         textEditingControllers: _textEditingControllers,
         onFilterChanged: (column, value) {
+          final reportState = widget.viewModel.reportState;
           viewModel.onReportFiltersChanged(context,
               reportState.filters.rebuild((b) => b..addAll({column: value})));
         });
