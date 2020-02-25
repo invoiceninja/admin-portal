@@ -407,7 +407,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
                         reportSettings.sortTotalsIndex
                     ? reportSettings.sortTotalsIndex
                     : null,
-                sortAscending: reportSettings.sortTotalsAscending,
+                sortAscending: reportSettings.sortTotalsAscending ?? true,
                 columns: reportResult.totalColumns(
                     context,
                         (index, ascending) =>
@@ -432,7 +432,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
-            sortAscending: reportSettings.sortAscending,
+            sortAscending: reportSettings.sortAscending ?? true,
             columns: reportResult.tableColumns(
                 context,
                     (index, ascending) =>
