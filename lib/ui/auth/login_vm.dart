@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -91,16 +92,18 @@ class LoginVM {
     );
 
     void _handleLogin(BuildContext context) {
-      print('## _handleLogin: layout: ${calculateLayout(context)}');
+      final layout = calculateLayout(context);
 
-      store.dispatch(UserSettingsChanged(layout: calculateLayout(context)));
+      store.dispatch(UserSettingsChanged(layout: layout));
       AppBuilder.of(context).rebuild();
 
-      if (isMobile(context)) {
-        store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-      } else {
-        store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
-      }
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        if (layout == AppLayout.mobile) {
+          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+        } else {
+          store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
+        }
+      });
     }
 
     return LoginVM(
