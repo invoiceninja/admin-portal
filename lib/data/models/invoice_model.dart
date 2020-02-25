@@ -121,6 +121,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge4: 0,
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
+      usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
@@ -194,6 +195,9 @@ abstract class InvoiceEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'design_id')
   String get designId;
+
+  @BuiltValueField(wireName: 'uses_inclusive_taxes')
+  bool get usesInclusiveTaxes;
 
   /*
   @BuiltValueField(wireName: 'frequency_id')

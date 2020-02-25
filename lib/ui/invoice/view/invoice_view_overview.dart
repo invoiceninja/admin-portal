@@ -219,7 +219,7 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     invoice
-        .calculateTaxes(company.settings.enableInclusiveTaxes)
+        .calculateTaxes(invoice.usesInclusiveTaxes)
         .forEach((taxName, taxAmount) {
       widgets.add(surchargeRow(taxName, taxAmount));
     });

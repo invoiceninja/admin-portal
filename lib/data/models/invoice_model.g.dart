@@ -154,6 +154,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'footer',
       serializers.serialize(object.footer,
           specifiedType: const FullType(String)),
+      'uses_inclusive_taxes',
+      serializers.serialize(object.usesInclusiveTaxes,
+          specifiedType: const FullType(bool)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -398,6 +401,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'design_id':
           result.designId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'uses_inclusive_taxes':
+          result.usesInclusiveTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -1101,6 +1108,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String designId;
   @override
+  final bool usesInclusiveTaxes;
+  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -1191,6 +1200,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.terms,
       this.footer,
       this.designId,
+      this.usesInclusiveTaxes,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
@@ -1260,6 +1270,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (footer == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'footer');
+    }
+    if (usesInclusiveTaxes == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'usesInclusiveTaxes');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'taxName1');
@@ -1351,6 +1364,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         terms == other.terms &&
         footer == other.footer &&
         designId == other.designId &&
+        usesInclusiveTaxes == other.usesInclusiveTaxes &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
@@ -1409,7 +1423,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
                                                                                 customSurcharge3.hashCode),
                                                                             customSurcharge4.hashCode),
                                                                         customTaxes1.hashCode),
@@ -1448,6 +1462,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('terms', terms)
           ..add('footer', footer)
           ..add('designId', designId)
+          ..add('usesInclusiveTaxes', usesInclusiveTaxes)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
@@ -1547,6 +1562,11 @@ class InvoiceEntityBuilder
   String _designId;
   String get designId => _$this._designId;
   set designId(String designId) => _$this._designId = designId;
+
+  bool _usesInclusiveTaxes;
+  bool get usesInclusiveTaxes => _$this._usesInclusiveTaxes;
+  set usesInclusiveTaxes(bool usesInclusiveTaxes) =>
+      _$this._usesInclusiveTaxes = usesInclusiveTaxes;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1723,6 +1743,7 @@ class InvoiceEntityBuilder
       _terms = _$v.terms;
       _footer = _$v.footer;
       _designId = _$v.designId;
+      _usesInclusiveTaxes = _$v.usesInclusiveTaxes;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
@@ -1797,6 +1818,7 @@ class InvoiceEntityBuilder
               terms: terms,
               footer: footer,
               designId: designId,
+              usesInclusiveTaxes: usesInclusiveTaxes,
               taxName1: taxName1,
               taxRate1: taxRate1,
               taxName2: taxName2,
