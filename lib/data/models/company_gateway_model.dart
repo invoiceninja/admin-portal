@@ -55,7 +55,7 @@ abstract class CompanyGatewayEntity extends Object
       isChanged: false,
       isDeleted: false,
       gateway: GatewayEntity(),
-      gatewayId: null,
+      gatewayId: '',
       acceptedCreditCards: 0,
       showBillingAddress: true,
       showShippingAddress: false,
@@ -78,7 +78,6 @@ abstract class CompanyGatewayEntity extends Object
 
   GatewayEntity get gateway;
 
-  @nullable
   @BuiltValueField(wireName: 'gateway_key')
   String get gatewayId;
 
@@ -97,19 +96,15 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'fees_and_limits')
   BuiltMap<String, FeesAndLimitsSettings> get feesAndLimitsMap;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
@@ -211,51 +206,55 @@ abstract class FeesAndLimitsSettings
       maxLimit: -1,
       minLimit: -1,
       adjustFeePercent: false,
+      feeAmount: 0,
+      feeCap: 0,
+      feePercent: 0,
+      taxName1: '',
+      taxName2: '',
+      taxName3: '',
+      taxRate1: 0,
+      taxRate2: 0,
+      taxRate3: 0,
     );
   }
 
   FeesAndLimitsSettings._();
 
-  @nullable
   @BuiltValueField(wireName: 'min_limit')
   double get minLimit;
 
-  @nullable
   @BuiltValueField(wireName: 'max_limit')
   double get maxLimit;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_amount')
   double get feeAmount;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_percent')
   double get feePercent;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_cap')
   double get feeCap;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_rate1')
   double get taxRate1;
 
+  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'fee_tax_name1')
   String get taxName1;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_rate2')
   double get taxRate2;
 
+  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'fee_tax_name2')
   String get taxName2;
 
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_rate3')
   double get taxRate3;
 
+  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'fee_tax_name3')
   String get taxName3;

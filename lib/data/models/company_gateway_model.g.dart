@@ -129,6 +129,9 @@ class _$CompanyGatewayEntitySerializer
       'gateway',
       serializers.serialize(object.gateway,
           specifiedType: const FullType(GatewayEntity)),
+      'gateway_key',
+      serializers.serialize(object.gatewayId,
+          specifiedType: const FullType(String)),
       'accepted_credit_cards',
       serializers.serialize(object.acceptedCreditCards,
           specifiedType: const FullType(int)),
@@ -147,40 +150,22 @@ class _$CompanyGatewayEntitySerializer
             const FullType(String),
             const FullType(FeesAndLimitsSettings)
           ])),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'config',
       serializers.serialize(object.config,
           specifiedType: const FullType(String)),
     ];
-    if (object.gatewayId != null) {
-      result
-        ..add('gateway_key')
-        ..add(serializers.serialize(object.gatewayId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -349,69 +334,45 @@ class _$FeesAndLimitsSettingsSerializer
       Serializers serializers, FeesAndLimitsSettings object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'min_limit',
+      serializers.serialize(object.minLimit,
+          specifiedType: const FullType(double)),
+      'max_limit',
+      serializers.serialize(object.maxLimit,
+          specifiedType: const FullType(double)),
+      'fee_amount',
+      serializers.serialize(object.feeAmount,
+          specifiedType: const FullType(double)),
+      'fee_percent',
+      serializers.serialize(object.feePercent,
+          specifiedType: const FullType(double)),
+      'fee_cap',
+      serializers.serialize(object.feeCap,
+          specifiedType: const FullType(double)),
+      'fee_tax_rate1',
+      serializers.serialize(object.taxRate1,
+          specifiedType: const FullType(double)),
+      'fee_tax_rate2',
+      serializers.serialize(object.taxRate2,
+          specifiedType: const FullType(double)),
+      'fee_tax_rate3',
+      serializers.serialize(object.taxRate3,
+          specifiedType: const FullType(double)),
       'adjust_fee_percent',
       serializers.serialize(object.adjustFeePercent,
           specifiedType: const FullType(bool)),
     ];
-    if (object.minLimit != null) {
-      result
-        ..add('min_limit')
-        ..add(serializers.serialize(object.minLimit,
-            specifiedType: const FullType(double)));
-    }
-    if (object.maxLimit != null) {
-      result
-        ..add('max_limit')
-        ..add(serializers.serialize(object.maxLimit,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feeAmount != null) {
-      result
-        ..add('fee_amount')
-        ..add(serializers.serialize(object.feeAmount,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feePercent != null) {
-      result
-        ..add('fee_percent')
-        ..add(serializers.serialize(object.feePercent,
-            specifiedType: const FullType(double)));
-    }
-    if (object.feeCap != null) {
-      result
-        ..add('fee_cap')
-        ..add(serializers.serialize(object.feeCap,
-            specifiedType: const FullType(double)));
-    }
-    if (object.taxRate1 != null) {
-      result
-        ..add('fee_tax_rate1')
-        ..add(serializers.serialize(object.taxRate1,
-            specifiedType: const FullType(double)));
-    }
     if (object.taxName1 != null) {
       result
         ..add('fee_tax_name1')
         ..add(serializers.serialize(object.taxName1,
             specifiedType: const FullType(String)));
     }
-    if (object.taxRate2 != null) {
-      result
-        ..add('fee_tax_rate2')
-        ..add(serializers.serialize(object.taxRate2,
-            specifiedType: const FullType(double)));
-    }
     if (object.taxName2 != null) {
       result
         ..add('fee_tax_name2')
         ..add(serializers.serialize(object.taxName2,
             specifiedType: const FullType(String)));
-    }
-    if (object.taxRate3 != null) {
-      result
-        ..add('fee_tax_rate3')
-        ..add(serializers.serialize(object.taxRate3,
-            specifiedType: const FullType(double)));
     }
     if (object.taxName3 != null) {
       result
@@ -752,6 +713,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (gateway == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gateway');
     }
+    if (gatewayId == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gatewayId');
+    }
     if (acceptedCreditCards == null) {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'acceptedCreditCards');
@@ -771,6 +735,22 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (feesAndLimitsMap == null) {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'feesAndLimitsMap');
+    }
+    if (customValue1 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue1');
+    }
+    if (customValue2 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'customValue4');
     }
     if (config == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
@@ -1117,6 +1097,30 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       this.taxName3,
       this.adjustFeePercent})
       : super._() {
+    if (minLimit == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'minLimit');
+    }
+    if (maxLimit == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'maxLimit');
+    }
+    if (feeAmount == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feeAmount');
+    }
+    if (feePercent == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feePercent');
+    }
+    if (feeCap == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'feeCap');
+    }
+    if (taxRate1 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate1');
+    }
+    if (taxRate2 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate2');
+    }
+    if (taxRate3 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate3');
+    }
     if (adjustFeePercent == null) {
       throw new BuiltValueNullFieldError(
           'FeesAndLimitsSettings', 'adjustFeePercent');
