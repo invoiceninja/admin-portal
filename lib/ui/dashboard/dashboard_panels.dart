@@ -67,29 +67,31 @@ class DashboardPanels extends StatelessWidget {
                 : null,
           ),
           SizedBox(width: 15),
-          InkWell(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Flexible(
-                  child: Text(
-                    formatDateRange(uiState.startDate(company),
-                        uiState.endDate(company), context),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(fontSize: 18),
+          Expanded(
+            child: InkWell(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Flexible(
+                    child: Text(
+                      formatDateRange(uiState.startDate(company),
+                          uiState.endDate(company), context),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .copyWith(fontSize: 18),
+                    ),
                   ),
-                ),
-                SizedBox(width: 6.0),
-                Icon(Icons.arrow_drop_down),
-              ],
+                  SizedBox(width: 6.0),
+                  Icon(Icons.arrow_drop_down),
+                ],
+              ),
+              onTap: () => _showDateOptions(context),
             ),
-            onTap: () => _showDateOptions(context),
           ),
           if (hasMultipleCurrencies) ...[
-            Expanded(
-              child: SizedBox(),
+            SizedBox(
+              width: 12,
             ),
             DropdownButtonHideUnderline(
               child: DropdownButton<String>(
