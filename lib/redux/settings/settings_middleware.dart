@@ -92,9 +92,12 @@ Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
         .saveUser(store.state.credentials, action.user, action.password)
         .then((user) {
       store.dispatch(SaveUserSettingsSuccess(user));
+      /*
       if (action.password != null) {
         store.dispatch(UserVerifiedPassword());
       }
+       */
+      store.dispatch(UserVerifiedPassword());
       action.completer.complete();
     }).catchError((Object error) {
       print(error);

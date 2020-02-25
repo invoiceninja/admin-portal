@@ -74,6 +74,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..defaultQuantity = value)),
               ),
+              /*
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.showInvoiceQuantity),
@@ -82,6 +83,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..enableInvoiceQuantity = value)),
               ),
+               */
             ],
           ),
           FormCard(
