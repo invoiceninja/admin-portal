@@ -61,6 +61,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
+      'first_day_of_week',
+      serializers.serialize(object.firstDayOfWeek,
+          specifiedType: const FullType(String)),
+      'first_month_of_year',
+      serializers.serialize(object.firstMonthOfYear,
+          specifiedType: const FullType(String)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -147,18 +153,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('default_url')
         ..add(serializers.serialize(object.appUrl,
-            specifiedType: const FullType(String)));
-    }
-    if (object.firstDayOfWeek != null) {
-      result
-        ..add('first_day_of_week')
-        ..add(serializers.serialize(object.firstDayOfWeek,
-            specifiedType: const FullType(String)));
-    }
-    if (object.firstMonthOfYear != null) {
-      result
-        ..add('first_month_of_year')
-        ..add(serializers.serialize(object.firstMonthOfYear,
             specifiedType: const FullType(String)));
     }
     if (object.taxRates != null) {
@@ -2870,6 +2864,12 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
+    }
+    if (firstDayOfWeek == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'firstDayOfWeek');
+    }
+    if (firstMonthOfYear == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'firstMonthOfYear');
     }
     if (groups == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'groups');

@@ -139,13 +139,9 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'default_url')
   String get appUrl;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'first_day_of_week')
   String get firstDayOfWeek;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'first_month_of_year')
   String get firstMonthOfYear;
 
