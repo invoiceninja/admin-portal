@@ -98,6 +98,7 @@ abstract class ClientEntity extends Object
       shippingAddress2: '',
       shippingCity: '',
       shippingState: '',
+      groupId: '',
       shippingPostalCode: '',
       shippingCountryId: '',
       customValue1: '',
@@ -123,11 +124,11 @@ abstract class ClientEntity extends Object
     ..isChanged = false
     ..isDeleted = false);
 
-  @nullable
   @BuiltValueField(wireName: 'group_settings_id')
   String get groupId;
 
   @nullable
+  @BuiltValueField(serialize: false)
   int get lastUpdatedActivities;
 
   bool get areActivitiesLoaded =>
@@ -156,7 +157,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'balance')
   double get balance;
 
-  @nullable
   @BuiltValueField(wireName: 'credit_balance')
   double get creditBalance;
 
@@ -174,27 +174,26 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'postal_code')
   String get postalCode;
 
-  @nullable
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
-  @nullable
   @BuiltValueField(wireName: 'phone')
   String get phone;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  // TODO remove this nullable
   @nullable
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
 
   String get website;
 
-  @nullable
   @BuiltValueField(wireName: 'industry_id')
   String get industryId;
 
+  // TODO remove this nullable
   @nullable
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
@@ -220,7 +219,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'shipping_postal_code')
   String get shippingPostalCode;
 
-  @nullable
   @BuiltValueField(wireName: 'shipping_country_id')
   String get shippingCountryId;
 
@@ -583,6 +581,7 @@ abstract class ContactEntity extends Object
 
   String get email;
 
+  // TODO remove this nullable
   @nullable
   String get password;
 
@@ -609,6 +608,7 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  // TODO remove this nullable
   @nullable
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
