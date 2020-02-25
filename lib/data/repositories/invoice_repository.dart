@@ -18,7 +18,7 @@ class InvoiceRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/invoices/$entityId?include=invitations',
+        '${credentials.url}/invoices/$entityId?',
         credentials.token);
 
     final InvoiceItemResponse invoiceResponse =
@@ -30,7 +30,7 @@ class InvoiceRepository {
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int updatedAt) async {
     String url =
-        credentials.url + '/invoices?include=invitations'; // invoice_type_id=1
+        credentials.url + '/invoices?'; // invoice_type_id=1
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -46,7 +46,7 @@ class InvoiceRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/invoices/bulk?include=invitations';
+    var url = credentials.url + '/invoices/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }
@@ -66,10 +66,10 @@ class InvoiceRepository {
 
     if (invoice.isNew) {
       response = await webClient.post(
-          credentials.url + '/invoices?include=invitations', credentials.token,
+          credentials.url + '/invoices?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/invoices/${invoice.id}?include=invitations';
+      var url = '${credentials.url}/invoices/${invoice.id}?';
       if (action != null) {
         url += '&action=' + action.toString();
       }

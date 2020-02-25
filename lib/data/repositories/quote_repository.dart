@@ -18,7 +18,7 @@ class QuoteRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/quotes/$entityId?include=invitations',
+        '${credentials.url}/quotes/$entityId?',
         credentials.token);
 
     final InvoiceItemResponse quoteResponse =
@@ -29,7 +29,7 @@ class QuoteRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/quotes?include=invitations';
+    String url = credentials.url + '/quotes?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -45,7 +45,7 @@ class QuoteRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/quotes/bulk?include=invitations';
+    var url = credentials.url + '/quotes/bulk?';
     if (action != null) {
       url += '&action=' + action.toString();
     }
@@ -65,10 +65,10 @@ class QuoteRepository {
 
     if (quote.isNew) {
       response = await webClient.post(
-          credentials.url + '/quotes?include=invitations', credentials.token,
+          credentials.url + '/quotes?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/quotes/${quote.id}?include=invitations';
+      var url = '${credentials.url}/quotes/${quote.id}?';
       if (action != null) {
         url += '?action=' + action.toString();
       }
