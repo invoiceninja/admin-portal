@@ -54,7 +54,19 @@ class DashboardPanels extends StatelessWidget {
       elevation: 6.0,
       child: Row(
         children: <Widget>[
-          SizedBox(width: 18),
+          SizedBox(width: 8.0),
+          IconButton(
+            icon: Icon(Icons.navigate_before),
+            onPressed: () => viewModel.onOffsetChanged(1),
+          ),
+          SizedBox(width: 8.0),
+          IconButton(
+            icon: Icon(Icons.navigate_next),
+            onPressed: viewModel.isNextEnabled
+                ? () => viewModel.onOffsetChanged(-1)
+                : null,
+          ),
+          SizedBox(width: 15),
           InkWell(
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -74,20 +86,6 @@ class DashboardPanels extends StatelessWidget {
               ],
             ),
             onTap: () => _showDateOptions(context),
-          ),
-          isMobile(context) && !hasMultipleCurrencies
-              ? Spacer()
-              : SizedBox(width: 8.0),
-          IconButton(
-            icon: Icon(Icons.navigate_before),
-            onPressed: () => viewModel.onOffsetChanged(1),
-          ),
-          SizedBox(width: 8.0),
-          IconButton(
-            icon: Icon(Icons.navigate_next),
-            onPressed: viewModel.isNextEnabled
-                ? () => viewModel.onOffsetChanged(-1)
-                : null,
           ),
           if (hasMultipleCurrencies) ...[
             Expanded(
