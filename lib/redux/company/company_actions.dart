@@ -43,4 +43,7 @@ class SaveCompanyFailure implements StopSaving {
   final Object error;
 }
 
-class AddCompany {}
+class AddCompany {
+  AddCompany(this.context);
+  final BuildContext context;
+}

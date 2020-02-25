@@ -113,7 +113,7 @@ class MenuDrawer extends StatelessWidget {
       ],
       onSelected: (String companyId) {
         if (companyId == null) {
-          viewModel.onAddCompany();
+          viewModel.onAddCompany(context);
         } else {
           /*
           viewModel.onCompanyChanged(
@@ -153,7 +153,7 @@ class MenuDrawer extends StatelessWidget {
             ],
             onChanged: (value) {
               if (value == null) {
-                viewModel.onAddCompany();
+                viewModel.onAddCompany(context);
               } else {
                 viewModel.onCompanyChanged(
                     context, value, viewModel.companies[int.parse(value)]);

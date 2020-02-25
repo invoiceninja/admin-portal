@@ -9,6 +9,8 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {
   const MenuDrawerBuilder({Key key}) : super(key: key);
@@ -42,7 +44,7 @@ class MenuDrawerVM {
   final UserEntity user;
   final String selectedCompanyIndex;
   final Function(BuildContext context, String, CompanyEntity) onCompanyChanged;
-  final Function onAddCompany;
+  final Function(BuildContext context) onAddCompany;
 
   final bool isLoading;
 
@@ -64,8 +66,8 @@ class MenuDrawerVM {
         store.dispatch(LoadClients());
         AppBuilder.of(context).rebuild();
       },
-      onAddCompany: () {
-        store.dispatch(AddCompany());
+      onAddCompany: (BuildContext context) {
+        store.dispatch(AddCompany(context));
       },
     );
   }

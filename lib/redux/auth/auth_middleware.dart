@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
 
@@ -231,11 +232,16 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
 }
 
 Middleware<AppState> _createCompany(AuthRepository repository) {
-  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as AddCompany;
     final state = store.state;
 
-    repository.addCompany(token: state.credentials.token);
+    repository.addCompany(token: state.credentials.token).then((dynamic value) {
+      store.dispatch(RefreshData(
+        platform: getPlatform(action.context),
+      ));
+    });
 
     next(action);
   };
