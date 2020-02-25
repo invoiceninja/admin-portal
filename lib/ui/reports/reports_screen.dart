@@ -422,13 +422,6 @@ class _ReportDataTableState extends State<ReportDataTable> {
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
             header: SizedBox(),
-            /*
-            sortColumnIndex: reportSettings.sortIndex != null &&
-                    reportResult.columns.length > reportSettings.sortIndex
-                ? reportSettings.sortIndex
-                : null,
-                *
-             */
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
