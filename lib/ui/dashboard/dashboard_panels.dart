@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({

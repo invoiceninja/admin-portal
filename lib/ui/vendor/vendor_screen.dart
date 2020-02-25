@@ -81,7 +81,7 @@ class VendorScreen extends StatelessWidget {
                       context: context,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then(
+                        ..future.then<dynamic>(
                             (_) => store.dispatch(ClearVendorMultiselect())),
                     );
                   },

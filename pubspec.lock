@@ -316,14 +316,14 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   flutter_redux:
     dependency: "direct main"
     description:
       name: flutter_redux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4"
+    version: "0.6.0"
   flutter_share:
     dependency: "direct main"
     description:
@@ -361,7 +361,7 @@ packages:
       name: font_awesome_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.5.0"
+    version: "8.7.0"
   front_end:
     dependency: transitive
     description:
@@ -387,21 +387,21 @@ packages:
       name: google_sign_in
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.1"
+    version: "4.1.4"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
       name: google_sign_in_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   google_sign_in_web:
     dependency: transitive
     description:
       name: google_sign_in_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.3+1"
+    version: "0.8.3+2"
   graphs:
     dependency: transitive
     description:
@@ -457,7 +457,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3+1"
+    version: "0.6.3+4"
   in_app_purchase:
     dependency: "direct main"
     description:
@@ -513,7 +513,7 @@ packages:
       name: local_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.1+3"
   logging:
     dependency: transitive
     description:
@@ -625,7 +625,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.1"
   pedantic:
     dependency: transitive
     description:
@@ -653,7 +653,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   pool:
     dependency: transitive
     description:
@@ -709,14 +709,14 @@ packages:
       name: redux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "4.0.0"
   redux_logging:
     dependency: "direct main"
     description:
       name: redux_logging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   sentry:
     dependency: "direct main"
     description:
@@ -730,35 +730,35 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3+5"
+    version: "0.6.3+6"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.6+1"
+    version: "0.5.6+2"
   shared_preferences_macos:
     dependency: transitive
     description:
       name: shared_preferences_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1+5"
+    version: "0.0.1+6"
   shared_preferences_platform_interface:
     dependency: transitive
     description:
       name: shared_preferences_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.3"
   shared_preferences_web:
     dependency: transitive
     description:
       name: shared_preferences_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2+3"
+    version: "0.1.2+4"
   shelf:
     dependency: transitive
     description:
@@ -826,7 +826,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   stack_trace:
     dependency: transitive
     description:
@@ -924,28 +924,28 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.1"
+    version: "5.4.2"
   url_launcher_macos:
     dependency: transitive
     description:
       name: url_launcher_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1+2"
+    version: "0.0.1+4"
   url_launcher_platform_interface:
     dependency: transitive
     description:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.6"
   url_launcher_web:
     dependency: transitive
     description:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.1+1"
   usage:
     dependency: transitive
     description:
@@ -1008,7 +1008,7 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.19+7"
+    version: "0.3.19+8"
   xml:
     dependency: transitive
     description:
