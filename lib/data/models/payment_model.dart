@@ -93,6 +93,12 @@ abstract class PaymentEntity extends Object
       paymentables: BuiltList<PaymentableEntity>(),
       invoices: BuiltList<PaymentableEntity>(),
       credits: BuiltList<PaymentableEntity>(),
+      assignedUserId: '',
+      createdAt: 0,
+      createdUserId: '',
+      vendorId: '',
+      projectId: '',
+      number: '',
     );
   }
 

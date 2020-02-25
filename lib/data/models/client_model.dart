@@ -114,6 +114,9 @@ abstract class ClientEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
     );
   }
 
@@ -568,6 +571,9 @@ abstract class ContactEntity extends Object
       archivedAt: 0,
       isDeleted: false,
       lastLogin: 0,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
     );
   }
 

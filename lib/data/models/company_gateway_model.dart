@@ -66,6 +66,11 @@ abstract class CompanyGatewayEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      updatedAt: 0,
+      archivedAt: 0,
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
     );
   }
 

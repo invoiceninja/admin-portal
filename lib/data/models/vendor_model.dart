@@ -89,6 +89,9 @@ abstract class VendorEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      assignedUserId: '',
+      createdAt: 0,
+      createdUserId: '',
     );
   }
 
@@ -307,6 +310,9 @@ abstract class VendorContactEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      createdAt: 0,
+      assignedUserId: '',
     );
   }
 

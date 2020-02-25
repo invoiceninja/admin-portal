@@ -64,6 +64,13 @@ abstract class DocumentEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
+      vendorId: '',
+      projectId: '',
+      invoiceId: '',
+      expenseId: '',
     );
   }
 

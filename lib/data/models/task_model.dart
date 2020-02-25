@@ -151,6 +151,12 @@ abstract class TaskEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      assignedUserId: '',
+      createdAt: 0,
+      createdUserId: '',
+      vendorId: '',
+      taskStatusId: '',
+      taskStatusSortOrder: 0,
     );
   }
 

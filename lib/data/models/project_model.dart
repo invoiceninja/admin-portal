@@ -70,6 +70,9 @@ abstract class ProjectEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      createdAt: 0,
+      assignedUserId: '',
     );
   }
 

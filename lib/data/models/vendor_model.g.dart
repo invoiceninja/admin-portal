@@ -162,6 +162,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.currencyId != null) {
       result
@@ -179,18 +185,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -374,6 +368,12 @@ class _$VendorContactEntitySerializer
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.isChanged != null) {
       result
@@ -385,18 +385,6 @@ class _$VendorContactEntitySerializer
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -822,6 +810,12 @@ class _$VendorEntity extends VendorEntity {
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'archivedAt');
+    }
   }
 
   @override
@@ -1207,6 +1201,12 @@ class _$VendorContactEntity extends VendorContactEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('VendorContactEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('VendorContactEntity', 'archivedAt');
     }
   }
 

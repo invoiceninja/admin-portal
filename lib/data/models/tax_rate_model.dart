@@ -52,6 +52,11 @@ abstract class TaxRateEntity extends Object
       name: name ?? '',
       rate: rate ?? 0.0,
       isDeleted: false,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
+      archivedAt: 0,
+      updatedAt: 0,
     );
   }
 

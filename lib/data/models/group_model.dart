@@ -53,6 +53,9 @@ abstract class GroupEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
     );
   }
 

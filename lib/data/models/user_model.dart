@@ -50,6 +50,9 @@ abstract class UserEntity extends Object
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      createdUserId: '',
+      createdAt: 0,
+      assignedUserId: '',
       firstName: '',
       lastName: '',
       email: '',

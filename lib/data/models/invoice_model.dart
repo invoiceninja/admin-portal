@@ -131,6 +131,9 @@ abstract class InvoiceEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
     );
   }
 

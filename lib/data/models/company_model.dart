@@ -22,6 +22,12 @@ abstract class CompanyEntity extends Object
     return _$CompanyEntity._(
       id: '',
       updatedAt: 0,
+      archivedAt: 0,
+      assignedUserId: '',
+      createdAt: 0,
+      createdUserId: '',
+      isChanged: false,
+      isDeleted: false,
       companyKey: '',
       plan: '',
       settings: SettingsEntity(),
@@ -204,8 +210,6 @@ abstract class CompanyEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'enabled_modules')
   int get enabledModules;
-
-  //@BuiltValueField(wireName: 'custom_messages')
 
   String get displayName => settings.name ?? '';
 

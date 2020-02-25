@@ -108,6 +108,11 @@ abstract class ExpenseEntity extends Object
       customValue3: '',
       customValue4: '',
       isDeleted: false,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
+      archivedAt: 0,
+      updatedAt: 0,
     );
   }
 

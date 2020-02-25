@@ -179,6 +179,12 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.invoiceId != null) {
       result
@@ -238,18 +244,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -802,6 +796,12 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'archivedAt');
     }
   }
 

@@ -152,6 +152,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.credits,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.number != null) {
       result
@@ -235,18 +241,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -828,6 +822,12 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (credits == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'credits');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'archivedAt');
     }
   }
 

@@ -131,6 +131,12 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
       'client_id',
       serializers.serialize(object.clientId,
           specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.isChanged != null) {
       result
@@ -142,18 +148,6 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -522,6 +516,12 @@ class _$CreditEntity extends CreditEntity {
     }
     if (clientId == null) {
       throw new BuiltValueNullFieldError('CreditEntity', 'clientId');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('CreditEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('CreditEntity', 'archivedAt');
     }
   }
 
