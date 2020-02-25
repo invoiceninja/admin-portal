@@ -15,36 +15,34 @@ dependencies:
     sdk: flutter
   flutter_redux: ^0.6.0
   redux_logging: ^0.4.0
-  http: ^0.12.0+2
-  in_app_purchase: ^0.2.1+3
-  path_provider: ^1.3.0
-  shared_preferences: ^0.5.3+4
-  font_awesome_flutter: ^8.5.0
-  built_value: ^6.7.1
-  built_collection: ^4.2.2
+  http: ^0.12.0+4
+  in_app_purchase: ^0.3.1+1
+  path_provider: ^1.6.1
+  shared_preferences: ^0.5.6+2
+  font_awesome_flutter: ^8.7.0
+  built_value: ^7.0.9
+  built_collection: ^4.3.2
   memoize: ^2.0.0
-  cached_network_image: ^2.0.0-rc.1
-  #cached_network_image: any
-  url_launcher: ^5.1.2
-  share: ^0.6.2+1
-  intl: any
-  flutter_slidable: ^0.5.3
-  charts_flutter: ^0.8.0
-  google_sign_in: ^4.0.7
-  firebase_auth: ^0.14.0+5
-  local_auth: any
-  sentry: ^2.2.0
-  image_picker: ^0.6.1+4
-  zefyr: ^0.8.0
-  flutter_colorpicker: ^0.2.0
+  cached_network_image: ^2.0.0
+  url_launcher: ^5.4.2
+  share: ^0.6.3+6
+  intl: ^0.16.1
+  flutter_slidable: ^0.5.4
+  charts_flutter: ^0.8.1
+  google_sign_in: ^4.1.4
+  firebase_auth: ^0.15.4
+  local_auth: ^0.6.1+3
+  sentry: ^3.0.1
+  image_picker: ^0.6.3+4
+  flutter_colorpicker: ^0.3.2
   flutter_json_widget: ^1.0.2
-  webview_flutter: ^0.3.15+1
-  timeago: ^2.0.22
-  #native_pdf_renderer: any
-  native_pdf_view: any
+  webview_flutter: ^0.3.19+8
+  timeago: ^2.0.26
+  native_pdf_view: ^2.1.1
   flutter_typeahead: ^1.8.0
-  #quick_actions: ^0.2.1
   flutter_share: ^1.0.2+1
+  #native_pdf_renderer: any
+  #quick_actions: ^0.2.1
 
 dev_dependencies:
   flutter_driver:
@@ -52,8 +50,8 @@ dev_dependencies:
   test: ^1.6.3
   #flutter_test:
   #  sdk: flutter
-  build_runner: ^1.6.9
-  built_value_generator: ^6.7.1
+  build_runner: ^1.7.4
+  built_value_generator: ^7.0.9
   faker: ^1.1.1
 
 # For information on the generic Dart part of this file, see the
