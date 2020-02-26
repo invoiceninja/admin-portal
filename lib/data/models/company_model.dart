@@ -1334,6 +1334,14 @@ abstract class SettingsEntity
   String get defaultQuoteFooter;
 
   @nullable
+  @BuiltValueField(wireName: 'credit_terms')
+  String get defaultCreditTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_footer')
+  String get defaultCreditFooter;
+
+  @nullable
   @BuiltValueField(wireName: 'enabled_tax_rates')
   int get numberOfInvoiceTaxRates;
 

@@ -239,6 +239,8 @@ class SettingsSearch extends StatelessWidget {
       'invoice_footer',
       'quote_terms',
       'quote_footer',
+      'credit_terms',
+      'credit_footer',
     ],
     kSettingsUserDetails: [
       'first_name',

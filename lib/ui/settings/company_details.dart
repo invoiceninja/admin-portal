@@ -61,6 +61,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _invoiceFooterController = TextEditingController();
   final _quoteTermsController = TextEditingController();
   final _quoteFooterController = TextEditingController();
+  final _creditTermsController = TextEditingController();
+  final _creditFooterController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -104,6 +106,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _invoiceTermsController,
       _quoteFooterController,
       _quoteTermsController,
+      _creditFooterController,
+      _creditTermsController,
     ];
 
     _controllers.forEach(
@@ -136,6 +140,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _invoiceFooterController.text = settings.defaultInvoiceFooter;
     _quoteTermsController.text = settings.defaultQuoteTerms;
     _quoteFooterController.text = settings.defaultQuoteFooter;
+    _creditFooterController.text = settings.defaultCreditFooter;
+    _creditTermsController.text = settings.defaultCreditTerms;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -168,7 +174,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
         ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
         ..defaultQuoteFooter = _quoteFooterController.text.trim()
-        ..defaultQuoteTerms = _quoteTermsController.text.trim());
+        ..defaultQuoteTerms = _quoteTermsController.text.trim()
+        ..defaultCreditFooter = _creditFooterController.text.trim()
+        ..defaultCreditTerms = _creditTermsController.text.trim());
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
       }
@@ -467,6 +475,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   DecoratedFormField(
                     label: localization.quoteFooter,
                     controller: _quoteFooterController,
+                    maxLines: 4,
+                  ),
+                  DecoratedFormField(
+                    label: localization.creditTerms,
+                    controller: _creditTermsController,
+                    maxLines: 4,
+                  ),
+                  DecoratedFormField(
+                    label: localization.creditFooter,
+                    controller: _creditFooterController,
                     maxLines: 4,
                   ),
                 ],
