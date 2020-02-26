@@ -28,15 +28,9 @@ List<String> filteredQuotesSelector(
       if (!quoteListState.entityMatchesFilter(client)) {
         return false;
       }
-    } else {
-      if (!client.isActive) {
+    } else if (quoteListState.filterEntityType == EntityType.user) {
+      if (!quote.userCanAccess(quoteListState.filterEntityId)) {
         return false;
-      }
-
-      if (quoteListState.filterEntityType == EntityType.user) {
-        if (!quote.userCanAccess(quoteListState.filterEntityId)) {
-          return false;
-        }
       }
     }
 

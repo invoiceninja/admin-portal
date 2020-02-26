@@ -271,24 +271,23 @@ class _LoginState extends State<LoginView> {
 
     return Stack(
       children: <Widget>[
-        if (!kIsWeb)
-          SizedBox(
-            height: 250.0,
-            child: ClipPath(
-              clipper: ArcClipper(),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: [
-                    //Colors.grey.shade800,
-                    //Colors.black87,
-                    Theme.of(context).buttonColor,
-                    Theme.of(context).buttonColor.withOpacity(.7),
-                  ],
-                )),
-              ),
+        SizedBox(
+          height: 250.0,
+          child: ClipPath(
+            clipper: ArcClipper(),
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                colors: [
+                  //Colors.grey.shade800,
+                  //Colors.black87,
+                  Theme.of(context).buttonColor,
+                  Theme.of(context).buttonColor.withOpacity(.7),
+                ],
+              )),
             ),
           ),
+        ),
         ListView(
           shrinkWrap: true,
           children: <Widget>[

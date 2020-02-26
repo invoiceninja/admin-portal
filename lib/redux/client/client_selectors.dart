@@ -42,15 +42,9 @@ List<String> filteredClientsSelector(
       if (!clientListState.entityMatchesFilter(group)) {
         return false;
       }
-    } else {
-      if (!client.isActive) {
+    } else if (clientListState.filterEntityType == EntityType.user) {
+      if (!client.userCanAccess(clientListState.filterEntityId)) {
         return false;
-      }
-
-      if (clientListState.filterEntityType == EntityType.user) {
-        if (!client.userCanAccess(clientListState.filterEntityId)) {
-          return false;
-        }
       }
     }
 

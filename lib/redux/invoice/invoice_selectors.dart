@@ -60,15 +60,9 @@ List<String> filteredInvoicesSelector(
       if (!invoiceListState.entityMatchesFilter(client)) {
         return false;
       }
-    } else {
-      if (!client.isActive) {
+    } else if (invoiceListState.filterEntityType == EntityType.user) {
+      if (!invoice.userCanAccess(invoiceListState.filterEntityId)) {
         return false;
-      }
-
-      if (invoiceListState.filterEntityType == EntityType.user) {
-        if (!invoice.userCanAccess(invoiceListState.filterEntityId)) {
-          return false;
-        }
       }
     }
 

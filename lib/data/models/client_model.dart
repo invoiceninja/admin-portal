@@ -186,8 +186,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
-  // TODO remove this nullable
-  @nullable
   @BuiltValueField(wireName: 'public_notes')
   String get publicNotes;
 
@@ -196,8 +194,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'industry_id')
   String get industryId;
 
-  // TODO remove this nullable
-  @nullable
   @BuiltValueField(wireName: 'size_id')
   String get sizeId;
 
