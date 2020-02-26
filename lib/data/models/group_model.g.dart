@@ -114,12 +114,6 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.isChanged != null) {
       result
@@ -131,6 +125,18 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -445,12 +451,6 @@ class _$GroupEntity extends GroupEntity {
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('GroupEntity', 'settings');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('GroupEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('GroupEntity', 'archivedAt');
     }
   }
 

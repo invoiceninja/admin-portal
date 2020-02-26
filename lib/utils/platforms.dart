@@ -38,10 +38,8 @@ AppLayout calculateLayout(BuildContext context) {
 
   if (size < kMobileLayoutWidth) {
     return AppLayout.mobile;
-  } else if (size > kTabletLayoutWidth) {
-    return AppLayout.desktop;
   } else {
-    return AppLayout.tablet;
+    return AppLayout.desktop;
   }
 }
 

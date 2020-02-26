@@ -131,7 +131,6 @@ abstract class ClientEntity extends Object
   String get groupId;
 
   @nullable
-  @BuiltValueField(serialize: false)
   int get lastUpdatedActivities;
 
   bool get areActivitiesLoaded =>

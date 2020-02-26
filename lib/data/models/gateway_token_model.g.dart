@@ -132,12 +132,6 @@ class _$GatewayTokenEntitySerializer
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.isChanged != null) {
       result
@@ -149,6 +143,18 @@ class _$GatewayTokenEntitySerializer
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -493,12 +499,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('GatewayTokenEntity', 'isDefault');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'archivedAt');
     }
   }
 

@@ -185,12 +185,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.plan != null) {
       result
@@ -220,6 +214,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -2888,12 +2894,6 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'archivedAt');
     }
   }
 

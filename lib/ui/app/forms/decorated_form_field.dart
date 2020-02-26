@@ -19,6 +19,7 @@ class DecoratedFormField extends StatelessWidget {
     this.enabled = true,
     this.hint,
     this.expands = false,
+    this.autofocus = false,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -34,6 +35,7 @@ class DecoratedFormField extends StatelessWidget {
   final bool autocorrect;
   final bool obscureText;
   final bool expands;
+  final bool autofocus;
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
@@ -43,6 +45,7 @@ class DecoratedFormField extends StatelessWidget {
     return TextFormField(
       key: ValueKey(label),
       controller: controller,
+      autofocus: autofocus,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

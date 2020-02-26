@@ -215,13 +215,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.gatewayTokens,
           specifiedType: const FullType(
               BuiltList, const [const FullType(GatewayTokenEntity)])),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
+    if (object.lastUpdatedActivities != null) {
+      result
+        ..add('lastUpdatedActivities')
+        ..add(serializers.serialize(object.lastUpdatedActivities,
+            specifiedType: const FullType(int)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -232,6 +232,18 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -275,6 +287,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'group_settings_id':
           result.groupId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'lastUpdatedActivities':
+          result.lastUpdatedActivities = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -496,12 +512,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.password != null) {
       result
@@ -525,6 +535,18 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -1083,12 +1105,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (gatewayTokens == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'archivedAt');
     }
   }
 
@@ -1671,12 +1687,6 @@ class _$ContactEntity extends ContactEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'archivedAt');
     }
   }
 

@@ -121,12 +121,6 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.customValue1 != null) {
       result
@@ -168,6 +162,18 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -538,12 +544,6 @@ class _$UserEntity extends UserEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'phone');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('UserEntity', 'archivedAt');
     }
   }
 

@@ -233,12 +233,6 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       serializers.serialize(object.invitations,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.invoiceNumber != null) {
       result
@@ -274,6 +268,18 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -557,12 +563,6 @@ class _$InvitationEntitySerializer
       'viewed_date',
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
-      'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
-      'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
     ];
     if (object.isChanged != null) {
       result
@@ -574,6 +574,18 @@ class _$InvitationEntitySerializer
       result
         ..add('created_at')
         ..add(serializers.serialize(object.createdAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.updatedAt != null) {
+      result
+        ..add('updated_at')
+        ..add(serializers.serialize(object.updatedAt,
+            specifiedType: const FullType(int)));
+    }
+    if (object.archivedAt != null) {
+      result
+        ..add('archived_at')
+        ..add(serializers.serialize(object.archivedAt,
             specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
@@ -1141,12 +1153,6 @@ class _$QuoteEntity extends QuoteEntity {
     }
     if (invitations == null) {
       throw new BuiltValueNullFieldError('QuoteEntity', 'invitations');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('QuoteEntity', 'archivedAt');
     }
   }
 
@@ -1752,12 +1758,6 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (viewedDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'viewedDate');
-    }
-    if (updatedAt == null) {
-      throw new BuiltValueNullFieldError('InvitationEntity', 'updatedAt');
-    }
-    if (archivedAt == null) {
-      throw new BuiltValueNullFieldError('InvitationEntity', 'archivedAt');
     }
   }
 
