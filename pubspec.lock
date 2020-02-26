@@ -562,7 +562,7 @@ packages:
       name: native_pdf_renderer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.2"
+    version: "1.7.0"
   native_pdf_view:
     dependency: "direct main"
     description:
@@ -597,7 +597,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.9.0"
   package_resolver:
     dependency: transitive
     description:
@@ -826,7 +826,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   string_scanner:
     dependency: transitive
     description:
@@ -1003,5 +1003,5 @@ packages:
     source: hosted
     version: "2.2.0"
 sdks:
-  dart: ">=2.7.0-dev <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
