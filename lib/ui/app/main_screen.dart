@@ -198,13 +198,16 @@ class MainScreen extends StatelessWidget {
 
               return false;
             },
-            child: Row(children: <Widget>[
-              if (prefState.showMenu) ...[
-                MenuDrawerBuilder(),
-                _CustomDivider(),
-              ],
-              Expanded(child: screen),
-            ]),
+            child: DefaultFocusTraversal(
+              policy: WidgetOrderFocusTraversalPolicy(),
+              child: Row(children: <Widget>[
+                if (prefState.showMenu) ...[
+                  MenuDrawerBuilder(),
+                  _CustomDivider(),
+                ],
+                Expanded(child: screen),
+              ]),
+            ),
           );
         });
   }
@@ -370,6 +373,16 @@ class EntityScreens extends StatelessWidget {
       listFlex = 5;
     }
 
+    final child = subRoute == 'email'
+        ? emailWidget
+        : subRoute == 'refund'
+            ? refundWidget
+            : subRoute == 'edit'
+                ? editWidget
+                : (entityUIState.selectedId ?? '').isNotEmpty
+                    ? viewWidget
+                    : BlankScreen(AppLocalization.of(context).noRecordSelected);
+
     return Row(
       children: <Widget>[
         Expanded(
@@ -380,16 +393,7 @@ class EntityScreens extends StatelessWidget {
         if (prefState.isModuleList || isPreviewShown)
           Expanded(
             flex: previewFlex,
-            child: subRoute == 'email'
-                ? emailWidget
-                : subRoute == 'refund'
-                    ? refundWidget
-                    : subRoute == 'edit'
-                        ? editWidget
-                        : (entityUIState.selectedId ?? '').isNotEmpty
-                            ? viewWidget
-                            : BlankScreen(
-                                AppLocalization.of(context).noRecordSelected),
+            child: child,
           ),
         if (prefState.showHistory) ...[
           _CustomDivider(),

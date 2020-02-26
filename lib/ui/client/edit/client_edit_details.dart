@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -113,6 +114,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
         FormCard(
           children: <Widget>[
             DecoratedFormField(
+              autofocus: kIsWeb,
               label: localization.name,
               controller: _nameController,
               validator: (String val) => !viewModel.client.hasNameSet
