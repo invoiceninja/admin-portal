@@ -30,6 +30,8 @@ import 'package:redux/redux.dart';
 
 import 'expense_report.dart';
 import 'reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);
@@ -332,13 +334,7 @@ class ReportsScreenVM {
               '${state.uiState.reportsUIState.report}_report_$date.csv';
 
           if (kIsWeb) {
-            /*
-            final encodedFileContents = Uri.encodeComponent(csvData);
-            AnchorElement(
-                href: 'data:text/plain;charset=utf-8,$encodedFileContents')
-              ..setAttribute('download', filename)
-              ..click();
-             */
+            webDownload(filename, csvData);
           } else {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';

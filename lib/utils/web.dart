@@ -10,7 +10,7 @@ String readCookie() {
   return window.document.cookie;
 }
 
-Future<String> getFileOnWeb() {
+Future<String> webFilePicker() {
   final completer = new Completer<String>();
   final InputElement input = document.createElement('input');
   input
@@ -26,4 +26,11 @@ Future<String> getFileOnWeb() {
   });
   input.click();
   return completer.future;
+}
+
+void webDownload(String filename, String data) {
+  final encodedFileContents = Uri.encodeComponent(data);
+  AnchorElement(href: 'data:text/plain;charset=utf-8,$encodedFileContents')
+    ..setAttribute('download', filename)
+    ..click();
 }

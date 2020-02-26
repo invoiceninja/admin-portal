@@ -363,8 +363,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             onPressed: () async {
                               String path;
                               if (kIsWeb) {
-                                path = await getFileOnWeb();
-                                print('## PATH: $path');
+                                path = await webFilePicker();
                               } else {
                                 final image = await ImagePicker.pickImage(
                                     source: kReleaseMode
