@@ -243,24 +243,18 @@ abstract class FeesAndLimitsSettings
   @BuiltValueField(wireName: 'fee_tax_rate1')
   double get taxRate1;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_name1')
   String get taxName1;
 
   @BuiltValueField(wireName: 'fee_tax_rate2')
   double get taxRate2;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_name2')
   String get taxName2;
 
   @BuiltValueField(wireName: 'fee_tax_rate3')
   double get taxRate3;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'fee_tax_name3')
   String get taxName3;
 

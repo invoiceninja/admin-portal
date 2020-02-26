@@ -92,7 +92,7 @@ UserCompanyEntity loadCompanySuccessReducer(
   var userCompany = action.userCompany;
 
   // Check user has a blank user settings object
-  if (userCompany?.settings?.accentColor == null) {
+  if (userCompany.settings == null) {
     userCompany =
         userCompany.rebuild((b) => b..settings.replace(UserSettingsEntity()));
   }

@@ -346,34 +346,26 @@ class _$FeesAndLimitsSettingsSerializer
       'fee_tax_rate1',
       serializers.serialize(object.taxRate1,
           specifiedType: const FullType(double)),
+      'fee_tax_name1',
+      serializers.serialize(object.taxName1,
+          specifiedType: const FullType(String)),
       'fee_tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
+      'fee_tax_name2',
+      serializers.serialize(object.taxName2,
+          specifiedType: const FullType(String)),
       'fee_tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
+      'fee_tax_name3',
+      serializers.serialize(object.taxName3,
+          specifiedType: const FullType(String)),
       'adjust_fee_percent',
       serializers.serialize(object.adjustFeePercent,
           specifiedType: const FullType(bool)),
     ];
-    if (object.taxName1 != null) {
-      result
-        ..add('fee_tax_name1')
-        ..add(serializers.serialize(object.taxName1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxName2 != null) {
-      result
-        ..add('fee_tax_name2')
-        ..add(serializers.serialize(object.taxName2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.taxName3 != null) {
-      result
-        ..add('fee_tax_name3')
-        ..add(serializers.serialize(object.taxName3,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -1115,11 +1107,20 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
     if (taxRate1 == null) {
       throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate1');
     }
+    if (taxName1 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName1');
+    }
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate2');
     }
+    if (taxName2 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName2');
+    }
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxRate3');
+    }
+    if (taxName3 == null) {
+      throw new BuiltValueNullFieldError('FeesAndLimitsSettings', 'taxName3');
     }
     if (adjustFeePercent == null) {
       throw new BuiltValueNullFieldError(

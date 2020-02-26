@@ -135,7 +135,7 @@ class _UserDetailsState extends State<UserDetails> {
             children: <Widget>[
               FormColorPicker(
                 labelText: localization.accentColor,
-                initialValue: user.userCompany.settings.accentColor,
+                initialValue: viewModel.state.userCompany.settings.accentColor,
                 onSelected: (value) {
                   widget.viewModel.onChanged(user.rebuild(
                       (b) => b..userCompany.settings.accentColor = value));
