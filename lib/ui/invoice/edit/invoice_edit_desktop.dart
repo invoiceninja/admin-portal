@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -195,6 +196,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   children: <Widget>[
                     if (invoice.isNew)
                       ClientPicker(
+                        autofocus: kIsWeb,
                         clientId: invoice.clientId,
                         clientState: viewModel.state.clientState,
                         onSelected: (client) =>

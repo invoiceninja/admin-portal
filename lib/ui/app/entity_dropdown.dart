@@ -25,6 +25,7 @@ class EntityDropdown extends StatefulWidget {
     this.validator,
     this.entityId,
     this.onAddPressed,
+    this.autofocus = false,
     this.onFieldSubmitted,
   }) : super(key: key);
 
@@ -32,6 +33,7 @@ class EntityDropdown extends StatefulWidget {
   final List<String> entityList;
   final String labelText;
   final String entityId;
+  final bool autofocus;
   final BuiltMap<String, SelectableEntity> entityMap;
   final Function(SelectableEntity) onSelected;
   final Function validator;
@@ -140,6 +142,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         },
         textFieldConfiguration: TextFieldConfiguration<String>(
           controller: _textController,
+          autofocus: widget.autofocus,
           decoration: InputDecoration(
             labelText: widget.labelText,
             suffix: showClear

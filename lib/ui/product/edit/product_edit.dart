@@ -137,6 +137,7 @@ class _ProductEditState extends State<ProductEdit> {
             FormCard(
               children: <Widget>[
                 DecoratedFormField(
+                  autofocus: kIsWeb,
                   label: localization.product,
                   controller: _productKeyController,
                   validator: (val) => val.isEmpty || val.trim().isEmpty

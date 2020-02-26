@@ -123,6 +123,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               children: <Widget>[
                 if (payment.isNew) ...[
                   EntityDropdown(
+                    autofocus: kIsWeb,
                     key: Key('__client_${payment.clientId}__'),
                     entityType: EntityType.client,
                     labelText: AppLocalization.of(context).client,

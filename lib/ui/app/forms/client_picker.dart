@@ -13,12 +13,14 @@ class ClientPicker extends StatelessWidget {
     @required this.clientState,
     @required this.onSelected,
     @required this.onAddPressed,
+    this.autofocus,
   });
 
   final String clientId;
   final ClientState clientState;
   final Function(SelectableEntity) onSelected;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class ClientPicker extends StatelessWidget {
       entityType: EntityType.client,
       labelText: localization.client,
       entityId: clientId,
+      autofocus: autofocus,
       entityList: memoizedDropdownClientList(clientState.map, clientState.list),
       entityMap: clientState.map,
       validator: (String val) => val.trim().isEmpty
