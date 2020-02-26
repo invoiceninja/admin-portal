@@ -587,15 +587,12 @@ abstract class UserSettingsEntity
 
   UserSettingsEntity._();
 
-  @nullable
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
 
-  @nullable
   @BuiltValueField(wireName: 'table_columns')
   BuiltMap<String, BuiltList<String>> get tableColumns;
 
-  @nullable
   @BuiltValueField(wireName: 'report_settings')
   BuiltMap<String, ReportSettingsEntity> get reportSettings;
 

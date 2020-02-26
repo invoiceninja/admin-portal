@@ -384,9 +384,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final viewModel = widget.viewModel;
     final reportResult = viewModel.reportResult;
     final reportState = viewModel.reportState;
-    final reportSettings =
-        state.userCompany.settings?.reportSettings[reportState.report] ??
-            ReportSettingsEntity();
+    final settings = state.userCompany.settings;
+    final reportSettings = settings != null &&
+        settings.reportSettings.containsKey(reportState.report) ? settings
+        .reportSettings[reportState.report] : ReportSettingsEntity();
     final sortedColumns = reportResult.sortedColumns(reportState);
 
     return Column(

@@ -764,31 +764,24 @@ class _$UserSettingsEntitySerializer
   @override
   Iterable<Object> serialize(Serializers serializers, UserSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.accentColor != null) {
-      result
-        ..add('accent_color')
-        ..add(serializers.serialize(object.accentColor,
-            specifiedType: const FullType(String)));
-    }
-    if (object.tableColumns != null) {
-      result
-        ..add('table_columns')
-        ..add(serializers.serialize(object.tableColumns,
-            specifiedType: const FullType(BuiltMap, const [
-              const FullType(String),
-              const FullType(BuiltList, const [const FullType(String)])
-            ])));
-    }
-    if (object.reportSettings != null) {
-      result
-        ..add('report_settings')
-        ..add(serializers.serialize(object.reportSettings,
-            specifiedType: const FullType(BuiltMap, const [
-              const FullType(String),
-              const FullType(ReportSettingsEntity)
-            ])));
-    }
+    final result = <Object>[
+      'accent_color',
+      serializers.serialize(object.accentColor,
+          specifiedType: const FullType(String)),
+      'table_columns',
+      serializers.serialize(object.tableColumns,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
+      'report_settings',
+      serializers.serialize(object.reportSettings,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(ReportSettingsEntity)
+          ])),
+    ];
+
     return result;
   }
 
@@ -3951,7 +3944,18 @@ class _$UserSettingsEntity extends UserSettingsEntity {
 
   _$UserSettingsEntity._(
       {this.accentColor, this.tableColumns, this.reportSettings})
-      : super._();
+      : super._() {
+    if (accentColor == null) {
+      throw new BuiltValueNullFieldError('UserSettingsEntity', 'accentColor');
+    }
+    if (tableColumns == null) {
+      throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
+    }
+    if (reportSettings == null) {
+      throw new BuiltValueNullFieldError(
+          'UserSettingsEntity', 'reportSettings');
+    }
+  }
 
   @override
   UserSettingsEntity rebuild(
@@ -4039,15 +4043,15 @@ class UserSettingsEntityBuilder
       _$result = _$v ??
           new _$UserSettingsEntity._(
               accentColor: accentColor,
-              tableColumns: _tableColumns?.build(),
-              reportSettings: _reportSettings?.build());
+              tableColumns: tableColumns.build(),
+              reportSettings: reportSettings.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'tableColumns';
-        _tableColumns?.build();
+        tableColumns.build();
         _$failedField = 'reportSettings';
-        _reportSettings?.build();
+        reportSettings.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserSettingsEntity', _$failedField, e.toString());
