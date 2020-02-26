@@ -94,70 +94,68 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CurrencyEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'sizeMap':
           result.sizeMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(SizeEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(SizeEntity)])));
           break;
         case 'gatewayMap':
           result.gatewayMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(GatewayEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'industryMap':
           result.industryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(IndustryEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'timezoneMap':
           result.timezoneMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(TimezoneEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'dateFormatMap':
           result.dateFormatMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(DateFormatEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'languageMap':
           result.languageMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(LanguageEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'paymentTypeMap':
           result.paymentTypeMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(PaymentTypeEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'countryMap':
           result.countryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CountryEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'invoiceStatusMap':
           result.invoiceStatusMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(InvoiceStatusEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
       }
     }

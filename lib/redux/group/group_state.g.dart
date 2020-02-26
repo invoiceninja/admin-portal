@@ -58,13 +58,13 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(GroupEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

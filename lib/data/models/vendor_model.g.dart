@@ -51,7 +51,7 @@ class _$VendorListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -297,7 +297,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,

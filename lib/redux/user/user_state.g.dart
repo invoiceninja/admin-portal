@@ -54,16 +54,14 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
           break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(UserEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(UserEntity)])));
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

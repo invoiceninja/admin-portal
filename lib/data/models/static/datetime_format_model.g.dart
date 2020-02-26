@@ -53,7 +53,7 @@ class _$DatetimeFormatListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

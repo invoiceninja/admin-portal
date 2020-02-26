@@ -353,131 +353,127 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.groups.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GroupEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'tax_rates':
           result.taxRates.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaxRateEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'task_statuses':
           result.taskStatuses.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaskStatusEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'taskStatusMap':
           result.taskStatusMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(TaskStatusEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'company_gateways':
           result.companyGateways.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CompanyGatewayEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'expense_categories':
           result.expenseCategories.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseCategoryEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'expenseCategoryMap':
           result.expenseCategoryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(ExpenseCategoryEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'users':
           result.users.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(UserEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'clients':
           result.clients.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ClientEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'products':
           result.products.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProductEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'invoices':
           result.invoices.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'payments':
           result.payments.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'quotes':
           result.quotes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'credits':
           result.credits.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'tasks':
           result.tasks.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaskEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'projects':
           result.projects.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProjectEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'expenses':
           result.expenses.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'vendors':
           result.vendors.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'userMap':
           result.userMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(UserEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(UserEntity)])));
           break;
         case 'custom_fields':
           result.customFields.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(String)
-              ])) as BuiltMap<dynamic, dynamic>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -817,14 +813,14 @@ class _$UserSettingsEntitySerializer
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(BuiltList, const [const FullType(String)])
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'report_settings':
           result.reportSettings.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(ReportSettingsEntity)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
       }
     }
@@ -912,7 +908,7 @@ class _$ReportSettingsEntitySerializer
           result.columns.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -2051,10 +2047,8 @@ class _$SettingsEntitySerializer
           break;
         case 'translations':
           result.translations.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(String)
-              ])) as BuiltMap<dynamic, dynamic>);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'task_number_pattern':
           result.taskNumberPattern = serializers.deserialize(value,
@@ -2516,7 +2510,7 @@ class _$SettingsEntitySerializer
           result.customPaymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTermEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'has_custom_design1_HIDDEN':
           result.hasCustomDesign1 = serializers.deserialize(value,

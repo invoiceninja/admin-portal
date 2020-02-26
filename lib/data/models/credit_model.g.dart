@@ -49,7 +49,7 @@ class _$CreditListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CreditEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

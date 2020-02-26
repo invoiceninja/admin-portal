@@ -55,7 +55,7 @@ class _$PaymentListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -362,19 +362,19 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.paymentables.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'invoices':
           result.invoices.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'credits':
           result.credits.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,

@@ -51,7 +51,7 @@ class _$TaskListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TaskEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

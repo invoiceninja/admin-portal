@@ -55,7 +55,7 @@ class _$CompanyGatewayListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CompanyGatewayEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -252,7 +252,7 @@ class _$CompanyGatewayEntitySerializer
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(FeesAndLimitsSettings)
-              ])) as BuiltMap<dynamic, dynamic>);
+              ])));
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,

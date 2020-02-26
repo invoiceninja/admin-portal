@@ -119,43 +119,43 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           result.stateFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(EntityState)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'statusFilters':
           result.statusFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(EntityStatus)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'custom1Filters':
           result.custom1Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'custom2Filters':
           result.custom2Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'custom3Filters':
           result.custom3Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'custom4Filters':
           result.custom4Filters.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'selectedIds':
           result.selectedIds.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

@@ -57,7 +57,7 @@ class _$InvoiceListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -508,13 +508,13 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.lineItems.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceItemEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'invitations':
           result.invitations.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvitationEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,

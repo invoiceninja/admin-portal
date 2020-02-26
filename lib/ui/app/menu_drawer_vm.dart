@@ -60,9 +60,9 @@ class MenuDrawerVM {
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {
-        // TODO re-enable
-        //store.dispatch(SelectCompany(int.parse(companyIndex), company));
 
+
+        //store.dispatch(SelectCompany(int.parse(companyIndex), company));
         store.dispatch(LoadClients());
         AppBuilder.of(context).rebuild();
       },

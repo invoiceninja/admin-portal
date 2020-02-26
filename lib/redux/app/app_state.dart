@@ -464,7 +464,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Currency Map: ${staticState.currencyMap}';
     //return 'History: $historyList';
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
-    return 'Invitations: ${invoiceUIState.editing.invitations}';
+    //return 'Invitations: ${invoiceUIState.editing.invitations}';
+    return 'Token: ${userCompanyStates.map((state) => state.token.token).toList().join(', ')}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

@@ -53,7 +53,7 @@ class _$StaticDataListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(StaticDataEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -189,73 +189,73 @@ class _$StaticDataEntitySerializer
           result.currencies.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'sizes':
           result.sizes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(SizeEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'industries':
           result.industries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(IndustryEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'timezones':
           result.timezones.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TimezoneEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'gateways':
           result.gateways.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GatewayEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'date_formats':
           result.dateFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DateFormatEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'datetime_formats':
           result.datetimeFormats.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'languages':
           result.languages.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'payment_types':
           result.paymentTypes.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTypeEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'countries':
           result.countries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'invoice_designs':
           result.invoiceDesigns.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceDesignEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'invoice_status':
           result.invoiceStatus.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

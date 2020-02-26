@@ -105,7 +105,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.userCompanyStates.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(UserCompanyState)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

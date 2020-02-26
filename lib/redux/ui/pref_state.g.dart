@@ -230,7 +230,7 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.companyPrefs.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CompanyPrefState)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -275,7 +275,7 @@ class _$CompanyPrefStateSerializer
           result.historyList.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(HistoryRecord)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }

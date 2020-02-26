@@ -51,7 +51,7 @@ class _$ClientListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ClientEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -406,19 +406,19 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ContactEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'gateway_tokens':
           result.gatewayTokens.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GatewayTokenEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -487,7 +487,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'is_primary',
       serializers.serialize(object.isPrimary,
           specifiedType: const FullType(bool)),
-      'send',
+      'send_email',
       serializers.serialize(object.sendEmail,
           specifiedType: const FullType(bool)),
       'custom_value1',
@@ -600,7 +600,7 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           result.isPrimary = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'send':
+        case 'send_email':
           result.sendEmail = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;

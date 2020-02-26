@@ -599,7 +599,7 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
 
-  @BuiltValueField(wireName: 'send')
+  @BuiltValueField(wireName: 'send_email')
   bool get sendEmail;
 
   @BuiltValueField(wireName: 'custom_value1')

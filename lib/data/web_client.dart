@@ -146,10 +146,14 @@ void _checkResponse(http.Response response) {
     throw 'Server requests are not supported in the demo';
   }
 
+  /*
   debugPrint(
       'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 20000))}',
       wrapWidth: 1000);
-  //print('response: ${response.statusCode} ${response.body}');
+
+   */
+
+  debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
   final version = response.headers['x-app-version'];
