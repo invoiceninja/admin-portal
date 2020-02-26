@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/web.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
@@ -359,12 +360,21 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             label: localization.uploadLogo,
                             icon: Icons.cloud_upload,
                             onPressed: () async {
-                              final image = await ImagePicker.pickImage(
-                                  source: kReleaseMode
-                                      ? ImageSource.gallery
-                                      : ImageSource.camera);
-                              if (image != null) {
-                                viewModel.onUploadLogo(context, image.path);
+                              String path;
+                              if (kIsWeb) {
+                                path = await getFileOnWeb();
+                                print('## PATH: $path');
+                              } else {
+                                final image = await ImagePicker.pickImage(
+                                    source: kReleaseMode
+                                        ? ImageSource.gallery
+                                        : ImageSource.camera);
+                                if (image != null) {
+                                  path = image.path;
+                                }
+                              }
+                              if (path != null) {
+                                viewModel.onUploadLogo(context, path);
                               }
                             },
                           ),
