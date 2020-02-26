@@ -129,6 +129,9 @@ class DatatableHeader extends StatelessWidget {
       );
     }
 
-    return message;
+    return SizedBox(
+      width: 100,
+      child: message,
+    );
   }
 }
