@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 // This version must be updated in tandem with the pubspec version.
 const String kAppVersion = '2.0.13';
 const String kSiteUrl = 'https://invoiceninja.com';
