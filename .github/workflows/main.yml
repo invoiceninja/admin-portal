@@ -1,0 +1,36 @@
+name: Build Flutter Web
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: Build Flutter Web
+    env:
+      my_secret: ${{secrets.commit_secret}}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'dev'
+      - run: flutter config --enable-web
+      - run: flutter pub get
+      - run: |
+          cp lib/.env.dart.example lib/.env.dart
+          sed 's/secret/password/g' lib/.env.dart
+          cat lib/.env.dart
+      - run: flutter build web --release
+      - run: |
+          git config --global user.email hillelcoren@gmail.com
+          git config --global user.name hillelcoren
+          git status
+
+          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
+          cd invoiceninja
+          git checkout v2
+
+          cp -r ../build/web/* ./public/
+          git add .
+          git commit -m 'Update Flutter client'
+          git push
