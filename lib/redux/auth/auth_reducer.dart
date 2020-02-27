@@ -19,13 +19,6 @@ AuthState userSignUpRequestReducer(
     ..secret = '');
 }
 
-AuthState userSignUpRequestReducer(
-    AuthState authState, UserSignUpRequest action) {
-  return authState.rebuild((b) => b
-    ..url = ''
-    ..secret = '');
-}
-
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
