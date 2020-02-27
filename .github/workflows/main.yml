@@ -16,7 +16,8 @@ jobs:
           channel: 'dev'
       - run: flutter config --enable-web
       - run: flutter pub get
-      - run: cp lib/.env.dart.example lib/.env.dart
+      - run: |
+          cp lib/.env.dart.example lib/.env.dart
       - run: flutter build web --release
       - run: |
           git config --global user.email hillelcoren@gmail.com
