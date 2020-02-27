@@ -20,6 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, action) => action.groupId),
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<GroupEntity>([

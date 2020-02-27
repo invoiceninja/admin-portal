@@ -373,6 +373,8 @@ class EntityScreens extends StatelessWidget {
       listFlex = 5;
     }
 
+    print('## selectedId: ${entityUIState.selectedId}');
+
     final child = subRoute == 'email'
         ? emailWidget
         : subRoute == 'refund'

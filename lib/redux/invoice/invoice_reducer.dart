@@ -39,6 +39,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.invoice.id),
   TypedReducer<String, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([

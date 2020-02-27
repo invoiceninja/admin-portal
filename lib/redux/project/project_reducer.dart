@@ -35,6 +35,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewProject>((selectedId, action) => action.projectId),
   TypedReducer<String, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ProjectEntity>([
