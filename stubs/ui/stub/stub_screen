@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_scaffold.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -11,20 +14,42 @@ import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
 class StubScreen extends StatelessWidget {
+  const StubScreen({
+    Key key,
+    @required this.viewModel,
+  }) : super(key: key);
+
   static const String route = '/stub';
+
+  final StubScreenVM viewModel;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.selectedCompany;
-    final user = company.user;
     final localization = AppLocalization.of(context);
+    final listUIState = state.uiState.stubUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
 
     return AppScaffold(
+                      isChecked: isInMultiselect &&
+                          listUIState.selectedIds.length == viewModel.stubList.length,
+                      showCheckbox: isInMultiselect,
+                      onCheckboxChanged: (value) {
+                        final stubs = viewModel.stubList
+                            .map<StubEntity>((stubId) => viewModel.stubMap[stubId])
+                            .where((stub) => value != listUIState.isSelected(stub))
+                            .toList();
+                
+                        viewModel.onEntityAction(
+                            context, stubs, EntityAction.toggleMultiselect);
+                      },
                      appBarTitle: ListFilter(
+                       title: localization.stubs
                        key: ValueKey(state.stubListState.filterClearedAt),
                        entityType: EntityType.stub,
                        onFilterChanged: (value) {
@@ -32,13 +57,35 @@ class StubScreen extends StatelessWidget {
                        },
                      ),
                      appBarActions: [
-                       ListFilterButton(
-                         entityType: EntityType.stub,
-                         onFilterPressed: (String value) {
-                           store.dispatch(FilterStubs(value));
-                         },
-                       ),
-                     ],
+                        if (!viewModel.isInMultiselect)
+                          ListFilterButton(
+                            entityType: EntityType.stub,
+                            onFilterPressed: (String value) {
+                              store.dispatch(FilterStubs(value));
+                            },
+                          ),
+                        if (viewModel.isInMultiselect)
+                          SaveCancelButtons(
+                            saveLabel: localization.done,
+                            onSavePressed: listUIState.selectedIds.isEmpty
+                                ? null
+                                : (context) async {
+                                    final stubs = listUIState.selectedIds
+                                        .map<StubEntity>(
+                                            (stubId) => viewModel.stubMap[stubId])
+                                        .toList();
+                
+                                    await showEntityActionsDialog(
+                                        entities: stubs, context: context, multiselect: true,
+                                        completer: Completer<Null>()
+                                          ..future.then((_) =>
+                                          store.dispatch(ClearStubMultiselect())),
+                                        );
+                                  },
+                            onCancelPressed: (context) =>
+                                store.dispatch(ClearStubMultiselect()),
+                          ),
+                   ],
                    body: StubListBuilder(),
                    bottomNavigationBar: AppBottomBar(
                      entityType: EntityType.stub,
@@ -57,10 +104,17 @@ class StubScreen extends StatelessWidget {
                      onSelectedState: (EntityState state, value) {
                        store.dispatch(FilterStubsByState(state));
                      },
+                    onCheckboxPressed: () {
+                      if (store.state.stubListState.isInMultiselect()) {
+                        store.dispatch(ClearStubMultiselect());
+                      } else {
+                        store.dispatch(StartStubMultiselect());
+                      }
+                    },
                    ),
                    floatingActionButton: user.canCreate(EntityType.stub)
                        ? FloatingActionButton(
-                           //key: Key(StubKeys.stubScreenFABKeyString),
+                           heroTag: 'stub_fab',
                            backgroundColor: Theme.of(context).primaryColorDark,
                            onPressed: () {
                              store.dispatch(

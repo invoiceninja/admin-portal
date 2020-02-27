@@ -16,8 +16,8 @@ abstract class PaymentState
   factory PaymentState() {
     return _$PaymentState._(
       lastUpdated: 0,
-      map: BuiltMap<int, PaymentEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, PaymentEntity>(),
+      list: BuiltList<String>(),
     );
   }
 
@@ -26,9 +26,9 @@ abstract class PaymentState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, PaymentEntity> get map;
+  BuiltMap<String, PaymentEntity> get map;
 
-  BuiltList<int> get list;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -41,6 +41,19 @@ abstract class PaymentState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
+    final map = Map<String, PaymentEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<PaymentState> get serializer => _$paymentStateSerializer;
 }
 
@@ -51,7 +64,7 @@ abstract class PaymentUIState extends Object
     return _$PaymentUIState._(
       listUIState: ListUIState(PaymentFields.paymentDate, sortAscending: false),
       editing: PaymentEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
 

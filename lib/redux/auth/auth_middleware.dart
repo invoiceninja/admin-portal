@@ -1,30 +1,38 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
 ]) {
-  final loginInit = _createLoginInit();
+  final userLogout = _createUserLogout();
   final loginRequest = _createLoginRequest(repository);
   final signUpRequest = _createSignUpRequest(repository);
   final oauthRequest = _createOAuthRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
+  final recoverRequest = _createRecoverRequest(repository);
+  final addCompany = _createCompany(repository);
 
   return [
-    TypedMiddleware<AppState, LoadUserLogin>(loginInit),
+    TypedMiddleware<AppState, UserLogout>(userLogout),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
     TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
     TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
+    TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
+    TypedMiddleware<AppState, AddCompany>(addCompany),
   ];
 }
 
@@ -37,32 +45,32 @@ void _saveAuthLocal(
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
+  if (kIsWeb) {
+    return;
+  }
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String email = prefs.getString(kSharedPrefEmail) ?? '';
+  final String email = kReleaseMode
+      ? (prefs.getString(kSharedPrefEmail) ?? '')
+      : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
   final String secret = prefs.getString(kSharedPrefSecret) ?? '';
-  store.dispatch(UserLoginLoaded(email, url, secret));
 
-  store.dispatch(UserSettingsChanged(
-    enableDarkMode: prefs.getBool(kSharedPrefEnableDarkMode) ?? false,
-    emailPayment: prefs.getBool(kSharedPrefEmailPayment) ?? false,
-    requireAuthentication:
-        prefs.getBool(kSharedPrefRequireAuthentication) ?? false,
-    autoStartTasks: prefs.getBool(kSharedPrefAutoStartTasks) ?? false,
-    addDocumentsToInvoice:
-        prefs.getBool(kSharedPrefAddDocumentsToInvoice) ?? false,
-  ));
+  store.dispatch(UserLoginLoaded(email, url, secret));
 }
 
-Middleware<AppState> _createLoginInit() {
+Middleware<AppState> _createUserLogout() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadUserLogin;
+    final action = dynamicAction as UserLogout;
+
+    next(action);
 
     _loadAuthLocal(store);
 
-    Navigator.of(action.context).pushReplacementNamed(LoginScreen.route);
+    Navigator.of(action.context).pushNamedAndRemoveUntil(
+        LoginScreen.route, (Route<dynamic> route) => false);
 
-    next(action);
+    store.dispatch(UpdateCurrentRoute(LoginScreen.route));
   };
 }
 
@@ -84,23 +92,19 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         secret: action.secret,
         url: action.url,
       );
-
-      if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadAccountSuccess(
-            completer: action.completer, loginResponse: data));
-      } else {
-        store.dispatch(UserLoginFailure(
-            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
-      }
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print(error);
       var message = error.toString();
       if (message.toLowerCase().contains('no host specified')) {
         message = 'Please check the URL is correct';
-      } else if (message.toLowerCase().contains('credentials')) {
-        message += ', please confirm your credentials in the web app';
       } else if (message.contains('404')) {
         message += ', you may need to add /public to the URL';
+      }
+      print('Login error: $message');
+      if (action.completer != null) {
+        action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
     });
@@ -120,6 +124,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       platform: action.platform,
       firstName: action.firstName,
       lastName: action.lastName,
+      secret: action.secret,
     )
         .then((data) {
       _saveAuthLocal(email: action.email, secret: '', url: '');
@@ -127,7 +132,10 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print(error);
+      print('Signup error: $error');
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
       store.dispatch(UserLoginFailure(error));
     });
 
@@ -152,16 +160,14 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
         url: action.url,
       );
 
-      if (_isVersionSupported(data.version)) {
-        store.dispatch(LoadAccountSuccess(
-            completer: action.completer, loginResponse: data));
-      } else {
-        store.dispatch(UserLoginFailure(
-            'The minimum version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion'));
-      }
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      print('Oauth login error: $error');
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+      store.dispatch(UserLoginFailure(error));
     });
 
     next(action);
@@ -173,14 +179,14 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
 
-    next(action);
-
     _loadAuthLocal(store);
 
+    String url;
+    String token;
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String url =
-        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final String token = prefs.getString(getCompanyTokenKey());
+    url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+    token = prefs.getString(kSharedPrefToken);
 
     repository
         .refresh(url: url, token: token, platform: action.platform)
@@ -190,23 +196,53 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
           loginResponse: data,
           loadCompanies: action.loadCompanies));
     }).catchError((Object error) {
-      print(error);
-      store.dispatch(UserLoginFailure(error.toString()));
+      print('Refresh data error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
+      store.dispatch(RefreshDataFailure(error));
     });
+
+    next(action);
   };
 }
 
-bool _isVersionSupported(String version) {
-  final parts = version.split('.');
+Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as RecoverPasswordRequest;
 
-  final int major = int.parse(parts[0]);
-  final int minor = int.parse(parts[1]);
-  final int patch = int.parse(parts[2]);
+    repository
+        .recoverPassword(
+      email: action.email,
+      url: action.url,
+      secret: action.secret,
+    )
+        .then((data) {
+      store.dispatch(RecoverPasswordSuccess());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      if (action.completer != null) {
+        store.dispatch(RecoverPasswordFailure(error.toString()));
+        action.completer.completeError(error);
+      }
+    });
 
-  return major >= kMinMajorAppVersion &&
-      minor >= kMinMinorAppVersion &&
-      patch >= kMinPatchAppVersion;
+    next(action);
+  };
+}
+
+Middleware<AppState> _createCompany(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as AddCompany;
+    final state = store.state;
+
+    repository.addCompany(token: state.credentials.token).then((dynamic value) {
+      store.dispatch(RefreshData(
+        platform: getPlatform(action.context),
+      ));
+    });
+
+    next(action);
+  };
 }

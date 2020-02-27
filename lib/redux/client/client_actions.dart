@@ -1,47 +1,50 @@
 import 'dart:async';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ViewClientList implements PersistUI {
-  ViewClientList({@required this.context, this.force = false});
-
-  final BuildContext context;
-  final bool force;
-}
-
-class ViewClient implements PersistUI {
-  ViewClient({
-    @required this.clientId,
-    @required this.context,
+class ViewClientList extends AbstractNavigatorAction implements PersistUI {
+  ViewClientList({
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
-  final int clientId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditClient implements PersistUI {
+class ViewClient extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewClient({
+    @required NavigatorState navigator,
+    @required this.clientId,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final String clientId;
+  final bool force;
+}
+
+class EditClient extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditClient(
       {@required this.client,
-      @required this.context,
+      @required NavigatorState navigator,
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final ClientEntity client;
   final ContactEntity contact;
-  final BuildContext context;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -60,18 +63,17 @@ class UpdateClient implements PersistUI {
 }
 
 class LoadClient {
-  LoadClient({this.completer, this.clientId, this.loadActivities = false});
+  LoadClient({this.completer, this.clientId});
 
   final Completer completer;
-  final int clientId;
-  final bool loadActivities;
+  final String clientId;
 }
 
 class LoadClientActivity {
   LoadClientActivity({this.completer, this.clientId});
 
   final Completer completer;
-  final int clientId;
+  final String clientId;
 }
 
 class LoadClients {
@@ -173,64 +175,64 @@ class SaveClientFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveClientRequest implements StartSaving {
-  ArchiveClientRequest(this.completer, this.clientId);
+class ArchiveClientsRequest implements StartSaving {
+  ArchiveClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final int clientId;
+  final List<String> clientIds;
 }
 
-class ArchiveClientSuccess implements StopSaving, PersistData {
-  ArchiveClientSuccess(this.client);
+class ArchiveClientsSuccess implements StopSaving, PersistData {
+  ArchiveClientsSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
-class ArchiveClientFailure implements StopSaving {
-  ArchiveClientFailure(this.client);
+class ArchiveClientsFailure implements StopSaving {
+  ArchiveClientsFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
-class DeleteClientRequest implements StartSaving {
-  DeleteClientRequest(this.completer, this.clientId);
+class DeleteClientsRequest implements StartSaving {
+  DeleteClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final int clientId;
+  final List<String> clientIds;
 }
 
-class DeleteClientSuccess implements StopSaving, PersistData {
-  DeleteClientSuccess(this.client);
+class DeleteClientsSuccess implements StopSaving, PersistData {
+  DeleteClientsSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
-class DeleteClientFailure implements StopSaving {
-  DeleteClientFailure(this.client);
+class DeleteClientsFailure implements StopSaving {
+  DeleteClientsFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
-class RestoreClientRequest implements StartSaving {
-  RestoreClientRequest(this.completer, this.clientId);
+class RestoreClientsRequest implements StartSaving {
+  RestoreClientsRequest(this.completer, this.clientIds);
 
   final Completer completer;
-  final int clientId;
+  final List<String> clientIds;
 }
 
 class RestoreClientSuccess implements StopSaving, PersistData {
-  RestoreClientSuccess(this.client);
+  RestoreClientSuccess(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
 class RestoreClientFailure implements StopSaving {
-  RestoreClientFailure(this.client);
+  RestoreClientFailure(this.clients);
 
-  final ClientEntity client;
+  final List<ClientEntity> clients;
 }
 
-class FilterClients {
+class FilterClients implements PersistUI {
   FilterClients(this.filter);
 
   final String filter;
@@ -240,6 +242,13 @@ class SortClients implements PersistUI {
   SortClients(this.field);
 
   final String field;
+}
+
+class FilterClientsByEntity implements PersistUI {
+  FilterClientsByEntity({this.entityId, this.entityType});
+
+  final String entityId;
+  final EntityType entityType;
 }
 
 class FilterClientsByState implements PersistUI {
@@ -260,46 +269,155 @@ class FilterClientsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterClientsByCustom3 implements PersistUI {
+  FilterClientsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterClientsByCustom4 implements PersistUI {
+  FilterClientsByCustom4(this.value);
+
+  final String value;
+}
+
 void handleClientAction(
-    BuildContext context, ClientEntity client, EntityAction action) {
+    BuildContext context, List<BaseEntity> clients, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          clients.length <= 1,
+      'Cannot perform this action on more than one client');
+
+  if (clients.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final clientIds = clients.map((client) => client.id).toList();
+  final client = clients[0];
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditClient(context: context, client: client));
+      editEntity(context: context, entity: client);
+      break;
+    case EntityAction.settings:
+      store.dispatch(ViewSettings(
+        navigator: Navigator.of(context),
+        client: client,
+        section: kSettingsCompanyDetails,
+      ));
       break;
     case EntityAction.newInvoice:
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
-          context: context));
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.invoice,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state, client: client));
+      break;
+    case EntityAction.newQuote:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.quote,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state, client: client, isQuote: true));
       break;
     case EntityAction.newExpense:
-      store.dispatch(EditExpense(
-          expense: ExpenseEntity(
-              company: company, client: client, uiState: state.uiState),
-          context: context));
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.expense,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(state: state, client: client));
       break;
-    case EntityAction.enterPayment:
-      store.dispatch(EditPayment(
-          payment: PaymentEntity(company: company)
-              .rebuild((b) => b.clientId = client.id),
-          context: context));
+    case EntityAction.newPayment:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.payment,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: PaymentEntity(state: state)
+              .rebuild((b) => b.clientId = client.id));
+      break;
+    case EntityAction.newProject:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.project,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: ProjectEntity(state: state)
+              .rebuild((b) => b.clientId = client.id));
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreClientRequest(
-          snackBarCompleter(context, localization.restoredClient), client.id));
+      store.dispatch(RestoreClientsRequest(
+          snackBarCompleter<Null>(context, localization.restoredClient),
+          clientIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveClientRequest(
-          snackBarCompleter(context, localization.archivedClient), client.id));
+      store.dispatch(ArchiveClientsRequest(
+          snackBarCompleter<Null>(context, localization.archivedClient),
+          clientIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteClientRequest(
-          snackBarCompleter(context, localization.deletedClient), client.id));
+      store.dispatch(DeleteClientsRequest(
+          snackBarCompleter<Null>(context, localization.deletedClient),
+          clientIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.clientListState.isInMultiselect()) {
+        store.dispatch(StartClientMultiselect());
+      }
+
+      if (clients.isEmpty) {
+        break;
+      }
+
+      for (final client in clients) {
+        if (!state.clientListState.isSelected(client.id)) {
+          store.dispatch(AddToClientMultiselect(entity: client));
+        } else {
+          store.dispatch(RemoveFromClientMultiselect(entity: client));
+        }
+      }
       break;
   }
 }
+
+class StartClientMultiselect {}
+
+class AddToClientMultiselect {
+  AddToClientMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromClientMultiselect {
+  RemoveFromClientMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearClientMultiselect {}

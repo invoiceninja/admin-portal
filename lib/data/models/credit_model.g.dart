@@ -49,7 +49,7 @@ class _$CreditListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CreditEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -132,6 +132,12 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
       serializers.serialize(object.clientId,
           specifiedType: const FullType(int)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -156,17 +162,23 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -210,6 +222,10 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
           result.clientId = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -226,13 +242,17 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -446,6 +466,8 @@ class _$CreditEntity extends CreditEntity {
   @override
   final int clientId;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -454,9 +476,11 @@ class _$CreditEntity extends CreditEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final String id;
 
   factory _$CreditEntity([void Function(CreditEntityBuilder) updates]) =>
       (new CreditEntityBuilder()..update(updates)).build();
@@ -469,11 +493,13 @@ class _$CreditEntity extends CreditEntity {
       this.privateNotes,
       this.publicNotes,
       this.clientId,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
       this.id})
       : super._() {
     if (amount == null) {
@@ -517,11 +543,13 @@ class _$CreditEntity extends CreditEntity {
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         clientId == other.clientId &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
         id == other.id;
   }
 
@@ -538,18 +566,26 @@ class _$CreditEntity extends CreditEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, amount.hashCode),
-                                                    balance.hashCode),
-                                                creditDate.hashCode),
-                                            creditNumber.hashCode),
-                                        privateNotes.hashCode),
-                                    publicNotes.hashCode),
-                                clientId.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                amount
+                                                                    .hashCode),
+                                                            balance.hashCode),
+                                                        creditDate.hashCode),
+                                                    creditNumber.hashCode),
+                                                privateNotes.hashCode),
+                                            publicNotes.hashCode),
+                                        clientId.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -563,11 +599,13 @@ class _$CreditEntity extends CreditEntity {
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
           ..add('clientId', clientId)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
           ..add('id', id))
         .toString();
   }
@@ -605,6 +643,10 @@ class CreditEntityBuilder
   int get clientId => _$this._clientId;
   set clientId(int clientId) => _$this._clientId = clientId;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -621,13 +663,19 @@ class CreditEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   CreditEntityBuilder();
 
@@ -640,11 +688,13 @@ class CreditEntityBuilder
       _privateNotes = _$v.privateNotes;
       _publicNotes = _$v.publicNotes;
       _clientId = _$v.clientId;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
       _id = _$v.id;
       _$v = null;
     }
@@ -675,11 +725,13 @@ class CreditEntityBuilder
             privateNotes: privateNotes,
             publicNotes: publicNotes,
             clientId: clientId,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
             id: id);
     replace(_$result);
     return _$result;

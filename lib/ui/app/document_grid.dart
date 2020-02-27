@@ -7,19 +7,20 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
-    @required this.documents,
+    @required this.documentIds,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.onViewExpense,
   });
 
-  final List<int> documents;
+  final List<String> documentIds;
   final Function(String) onUploadDocument;
   final Function(DocumentEntity) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
@@ -28,7 +29,7 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.selectedCompany;
+    final company = state.company;
 
     return ListView(
       children: [
@@ -84,7 +85,7 @@ class DocumentGrid extends StatelessWidget {
           shrinkWrap: true,
           primary: true,
           crossAxisCount: 2,
-          children: documents
+          children: documentIds
               .map((documentId) => DocumentTile(
                     document: state.documentState.map[documentId],
                     onDeleteDocument: onDeleteDocument,
@@ -144,30 +145,12 @@ class DocumentTile extends StatelessWidget {
                               icon: Icons.delete,
                               label: localization.delete,
                               onPressed: () {
-                                showDialog<AlertDialog>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    semanticLabel: localization.areYouSure,
-                                    title: Text(localization.areYouSure),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                          child: Text(localization.cancel
-                                              .toUpperCase()),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          }),
-                                      FlatButton(
-                                          child: Text(
-                                              localization.ok.toUpperCase()),
-                                          onPressed: () {
-                                            onDeleteDocument(document);
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                          })
-                                    ],
-                                  ),
-                                );
+                                confirmCallback(
+                                    context: context,
+                                    callback: () {
+                                      onDeleteDocument(document);
+                                      Navigator.pop(context);
+                                    });
                               },
                             ),
                       SizedBox(
@@ -185,10 +168,10 @@ class DocumentTile extends StatelessWidget {
                   SizedBox(height: 25),
                   Text(document.name,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline),
+                      style: Theme.of(context).textTheme.headline5),
                   Text(
                     '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                    style: Theme.of(context).textTheme.subhead,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 20),
                   DocumentPreview(document),
@@ -224,7 +207,7 @@ class DocumentTile extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           document.name ?? '',
-                          style: Theme.of(context).textTheme.subhead,
+                          style: Theme.of(context).textTheme.headline5,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
@@ -261,8 +244,8 @@ class DocumentPreview extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
-            imageUrl: document.previewUrl(state.authState.url),
-            httpHeaders: {'X-Ninja-Token': state.selectedCompany.token},
+            imageUrl: document.previewUrl(state.credentials.url),
+            httpHeaders: {'X-API-TOKEN': state.credentials.token},
             placeholder: (context, url) => Container(
                   height: height,
                   child: Center(

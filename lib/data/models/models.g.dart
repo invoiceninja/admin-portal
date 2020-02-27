@@ -10,6 +10,7 @@ const EntityAction _$edit = const EntityAction._('edit');
 const EntityAction _$archive = const EntityAction._('archive');
 const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
+const EntityAction _$remove = const EntityAction._('remove');
 const EntityAction _$clone = const EntityAction._('clone');
 const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
@@ -17,17 +18,26 @@ const EntityAction _$convert = const EntityAction._('convert');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
+const EntityAction _$markPaid = const EntityAction._('markPaid');
+const EntityAction _$newClient = const EntityAction._('newClient');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
+const EntityAction _$newQuote = const EntityAction._('newQuote');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
+const EntityAction _$newProject = const EntityAction._('newProject');
 const EntityAction _$newTask = const EntityAction._('newTask');
 const EntityAction _$viewInvoice = const EntityAction._('viewInvoice');
+const EntityAction _$viewQuote = const EntityAction._('viewQuote');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
-const EntityAction _$enterPayment = const EntityAction._('enterPayment');
+const EntityAction _$newPayment = const EntityAction._('newPayment');
+const EntityAction _$settings = const EntityAction._('settings');
+const EntityAction _$refund = const EntityAction._('refund');
 const EntityAction _$pdf = const EntityAction._('pdf');
 const EntityAction _$more = const EntityAction._('more');
 const EntityAction _$start = const EntityAction._('start');
 const EntityAction _$resume = const EntityAction._('resume');
 const EntityAction _$stop = const EntityAction._('stop');
+const EntityAction _$toggleMultiselect =
+    const EntityAction._('toggleMultiselect');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -39,6 +49,8 @@ EntityAction _$valueOf(String name) {
       return _$delete;
     case 'restore':
       return _$restore;
+    case 'remove':
+      return _$remove;
     case 'clone':
       return _$clone;
     case 'cloneToInvoice':
@@ -53,18 +65,32 @@ EntityAction _$valueOf(String name) {
       return _$sendEmail;
     case 'markSent':
       return _$markSent;
+    case 'markPaid':
+      return _$markPaid;
+    case 'newClient':
+      return _$newClient;
     case 'newInvoice':
       return _$newInvoice;
+    case 'newQuote':
+      return _$newQuote;
     case 'newExpense':
       return _$newExpense;
+    case 'newProject':
+      return _$newProject;
     case 'newTask':
       return _$newTask;
     case 'viewInvoice':
       return _$viewInvoice;
+    case 'viewQuote':
+      return _$viewQuote;
     case 'clientPortal':
       return _$clientPortal;
-    case 'enterPayment':
-      return _$enterPayment;
+    case 'newPayment':
+      return _$newPayment;
+    case 'settings':
+      return _$settings;
+    case 'refund':
+      return _$refund;
     case 'pdf':
       return _$pdf;
     case 'more':
@@ -75,6 +101,8 @@ EntityAction _$valueOf(String name) {
       return _$resume;
     case 'stop':
       return _$stop;
+    case 'toggleMultiselect':
+      return _$toggleMultiselect;
     default:
       throw new ArgumentError(name);
   }
@@ -86,6 +114,7 @@ final BuiltSet<EntityAction> _$values =
   _$archive,
   _$delete,
   _$restore,
+  _$remove,
   _$clone,
   _$cloneToInvoice,
   _$cloneToQuote,
@@ -93,17 +122,25 @@ final BuiltSet<EntityAction> _$values =
   _$download,
   _$sendEmail,
   _$markSent,
+  _$markPaid,
+  _$newClient,
   _$newInvoice,
+  _$newQuote,
   _$newExpense,
+  _$newProject,
   _$newTask,
   _$viewInvoice,
+  _$viewQuote,
   _$clientPortal,
-  _$enterPayment,
+  _$newPayment,
+  _$settings,
+  _$refund,
   _$pdf,
   _$more,
   _$start,
   _$resume,
   _$stop,
+  _$toggleMultiselect,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

@@ -9,12 +9,14 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, OAuthLoginRequest>(oauthLoginRequestReducer),
   TypedReducer<AuthState, UserSignUpRequest>(userSignUpRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
-  TypedReducer<AuthState, UserLoginFailure>(userLoginFailureReducer),
-  TypedReducer<AuthState, ClearAuthError>(clearAuthErrorReducer),
+  TypedReducer<AuthState, UserVerifiedPassword>(userVerifiedPasswordReducer),
 ]);
 
-AuthState clearAuthErrorReducer(AuthState authState, ClearAuthError action) {
-  return authState.rebuild((b) => b..error = null);
+AuthState userSignUpRequestReducer(
+    AuthState authState, UserSignUpRequest action) {
+  return authState.rebuild((b) => b
+    ..url = ''
+    ..secret = '');
 }
 
 AuthState userSignUpRequestReducer(
@@ -27,7 +29,7 @@ AuthState userSignUpRequestReducer(
 AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
-    ..url = action.url ?? ''
+    ..url = formatApiUrl(action.url)
     ..secret = action.secret ?? ''
     ..email = action.email ?? '');
 }
@@ -35,7 +37,6 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
 AuthState userLoginRequestReducer(
     AuthState authState, UserLoginRequest action) {
   return authState.rebuild((b) => b
-    ..error = null
     ..url = formatApiUrl(action.url)
     ..secret = action.secret
     ..email = action.email
@@ -45,7 +46,6 @@ AuthState userLoginRequestReducer(
 AuthState oauthLoginRequestReducer(
     AuthState authState, OAuthLoginRequest action) {
   return authState.rebuild((b) => b
-    ..error = null
     ..url = formatApiUrl(action.url)
     ..secret = action.secret);
 }
@@ -57,7 +57,8 @@ AuthState userLoginSuccessReducer(
     ..password = '');
 }
 
-AuthState userLoginFailureReducer(
-    AuthState authState, UserLoginFailure action) {
-  return authState.rebuild((b) => b..error = action.error);
+AuthState userVerifiedPasswordReducer(
+    AuthState authState, UserVerifiedPassword action) {
+  return authState.rebuild(
+      (b) => b..lastEnteredPasswordAt = DateTime.now().millisecondsSinceEpoch);
 }

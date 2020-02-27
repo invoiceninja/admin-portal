@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FieldGrid extends StatelessWidget {
-  const FieldGrid(this.fields, {this.fieldConverter});
+  const FieldGrid(this.fields);
 
   final Map<String, String> fields;
-  final Function(String) fieldConverter;
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +12,6 @@ class FieldGrid extends StatelessWidget {
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {
-      if (fieldConverter != null) {
-        field = fieldConverter(field);
-      }
       if (value != null && value.isNotEmpty) {
         fieldWidgets.add(Column(
           crossAxisAlignment: CrossAxisAlignment.start,

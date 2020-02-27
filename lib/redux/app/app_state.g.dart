@@ -24,6 +24,12 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isSaving',
       serializers.serialize(object.isSaving,
           specifiedType: const FullType(bool)),
+      'isTesting',
+      serializers.serialize(object.isTesting,
+          specifiedType: const FullType(bool)),
+      'lastError',
+      serializers.serialize(object.lastError,
+          specifiedType: const FullType(String)),
       'serverVersion',
       serializers.serialize(object.serverVersion,
           specifiedType: const FullType(String)),
@@ -33,24 +39,16 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'staticState',
       serializers.serialize(object.staticState,
           specifiedType: const FullType(StaticState)),
+      'prefState',
+      serializers.serialize(object.prefState,
+          specifiedType: const FullType(PrefState)),
       'uiState',
       serializers.serialize(object.uiState,
           specifiedType: const FullType(UIState)),
-      'companyState1',
-      serializers.serialize(object.companyState1,
-          specifiedType: const FullType(CompanyState)),
-      'companyState2',
-      serializers.serialize(object.companyState2,
-          specifiedType: const FullType(CompanyState)),
-      'companyState3',
-      serializers.serialize(object.companyState3,
-          specifiedType: const FullType(CompanyState)),
-      'companyState4',
-      serializers.serialize(object.companyState4,
-          specifiedType: const FullType(CompanyState)),
-      'companyState5',
-      serializers.serialize(object.companyState5,
-          specifiedType: const FullType(CompanyState)),
+      'userCompanyStates',
+      serializers.serialize(object.userCompanyStates,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(UserCompanyState)])),
     ];
 
     return result;
@@ -75,6 +73,14 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.isSaving = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'isTesting':
+          result.isTesting = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'lastError':
+          result.lastError = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'serverVersion':
           result.serverVersion = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -87,29 +93,19 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.staticState.replace(serializers.deserialize(value,
               specifiedType: const FullType(StaticState)) as StaticState);
           break;
+        case 'prefState':
+          result.prefState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(PrefState)) as PrefState);
+          break;
         case 'uiState':
           result.uiState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UIState)) as UIState);
           break;
-        case 'companyState1':
-          result.companyState1.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
-          break;
-        case 'companyState2':
-          result.companyState2.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
-          break;
-        case 'companyState3':
-          result.companyState3.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
-          break;
-        case 'companyState4':
-          result.companyState4.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
-          break;
-        case 'companyState5':
-          result.companyState5.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyState)) as CompanyState);
+        case 'userCompanyStates':
+          result.userCompanyStates.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(UserCompanyState)]))
+              as BuiltList<Object>);
           break;
       }
     }
@@ -124,23 +120,21 @@ class _$AppState extends AppState {
   @override
   final bool isSaving;
   @override
+  final bool isTesting;
+  @override
+  final String lastError;
+  @override
   final String serverVersion;
   @override
   final AuthState authState;
   @override
   final StaticState staticState;
   @override
+  final PrefState prefState;
+  @override
   final UIState uiState;
   @override
-  final CompanyState companyState1;
-  @override
-  final CompanyState companyState2;
-  @override
-  final CompanyState companyState3;
-  @override
-  final CompanyState companyState4;
-  @override
-  final CompanyState companyState5;
+  final BuiltList<UserCompanyState> userCompanyStates;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
@@ -148,21 +142,26 @@ class _$AppState extends AppState {
   _$AppState._(
       {this.isLoading,
       this.isSaving,
+      this.isTesting,
+      this.lastError,
       this.serverVersion,
       this.authState,
       this.staticState,
+      this.prefState,
       this.uiState,
-      this.companyState1,
-      this.companyState2,
-      this.companyState3,
-      this.companyState4,
-      this.companyState5})
+      this.userCompanyStates})
       : super._() {
     if (isLoading == null) {
       throw new BuiltValueNullFieldError('AppState', 'isLoading');
     }
     if (isSaving == null) {
       throw new BuiltValueNullFieldError('AppState', 'isSaving');
+    }
+    if (isTesting == null) {
+      throw new BuiltValueNullFieldError('AppState', 'isTesting');
+    }
+    if (lastError == null) {
+      throw new BuiltValueNullFieldError('AppState', 'lastError');
     }
     if (serverVersion == null) {
       throw new BuiltValueNullFieldError('AppState', 'serverVersion');
@@ -173,23 +172,14 @@ class _$AppState extends AppState {
     if (staticState == null) {
       throw new BuiltValueNullFieldError('AppState', 'staticState');
     }
+    if (prefState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'prefState');
+    }
     if (uiState == null) {
       throw new BuiltValueNullFieldError('AppState', 'uiState');
     }
-    if (companyState1 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState1');
-    }
-    if (companyState2 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState2');
-    }
-    if (companyState3 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState3');
-    }
-    if (companyState4 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState4');
-    }
-    if (companyState5 == null) {
-      throw new BuiltValueNullFieldError('AppState', 'companyState5');
+    if (userCompanyStates == null) {
+      throw new BuiltValueNullFieldError('AppState', 'userCompanyStates');
     }
   }
 
@@ -206,15 +196,14 @@ class _$AppState extends AppState {
     return other is AppState &&
         isLoading == other.isLoading &&
         isSaving == other.isSaving &&
+        isTesting == other.isTesting &&
+        lastError == other.lastError &&
         serverVersion == other.serverVersion &&
         authState == other.authState &&
         staticState == other.staticState &&
+        prefState == other.prefState &&
         uiState == other.uiState &&
-        companyState1 == other.companyState1 &&
-        companyState2 == other.companyState2 &&
-        companyState3 == other.companyState3 &&
-        companyState4 == other.companyState4 &&
-        companyState5 == other.companyState5;
+        userCompanyStates == other.userCompanyStates;
   }
 
   @override
@@ -227,18 +216,16 @@ class _$AppState extends AppState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc(
-                                        $jc($jc(0, isLoading.hashCode),
-                                            isSaving.hashCode),
-                                        serverVersion.hashCode),
-                                    authState.hashCode),
-                                staticState.hashCode),
-                            uiState.hashCode),
-                        companyState1.hashCode),
-                    companyState2.hashCode),
-                companyState3.hashCode),
-            companyState4.hashCode),
-        companyState5.hashCode));
+                                    $jc($jc(0, isLoading.hashCode),
+                                        isSaving.hashCode),
+                                    isTesting.hashCode),
+                                lastError.hashCode),
+                            serverVersion.hashCode),
+                        authState.hashCode),
+                    staticState.hashCode),
+                prefState.hashCode),
+            uiState.hashCode),
+        userCompanyStates.hashCode));
   }
 }
 
@@ -252,6 +239,14 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   bool _isSaving;
   bool get isSaving => _$this._isSaving;
   set isSaving(bool isSaving) => _$this._isSaving = isSaving;
+
+  bool _isTesting;
+  bool get isTesting => _$this._isTesting;
+  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
+
+  String _lastError;
+  String get lastError => _$this._lastError;
+  set lastError(String lastError) => _$this._lastError = lastError;
 
   String _serverVersion;
   String get serverVersion => _$this._serverVersion;
@@ -269,39 +264,20 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set staticState(StaticStateBuilder staticState) =>
       _$this._staticState = staticState;
 
+  PrefStateBuilder _prefState;
+  PrefStateBuilder get prefState =>
+      _$this._prefState ??= new PrefStateBuilder();
+  set prefState(PrefStateBuilder prefState) => _$this._prefState = prefState;
+
   UIStateBuilder _uiState;
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
   set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
 
-  CompanyStateBuilder _companyState1;
-  CompanyStateBuilder get companyState1 =>
-      _$this._companyState1 ??= new CompanyStateBuilder();
-  set companyState1(CompanyStateBuilder companyState1) =>
-      _$this._companyState1 = companyState1;
-
-  CompanyStateBuilder _companyState2;
-  CompanyStateBuilder get companyState2 =>
-      _$this._companyState2 ??= new CompanyStateBuilder();
-  set companyState2(CompanyStateBuilder companyState2) =>
-      _$this._companyState2 = companyState2;
-
-  CompanyStateBuilder _companyState3;
-  CompanyStateBuilder get companyState3 =>
-      _$this._companyState3 ??= new CompanyStateBuilder();
-  set companyState3(CompanyStateBuilder companyState3) =>
-      _$this._companyState3 = companyState3;
-
-  CompanyStateBuilder _companyState4;
-  CompanyStateBuilder get companyState4 =>
-      _$this._companyState4 ??= new CompanyStateBuilder();
-  set companyState4(CompanyStateBuilder companyState4) =>
-      _$this._companyState4 = companyState4;
-
-  CompanyStateBuilder _companyState5;
-  CompanyStateBuilder get companyState5 =>
-      _$this._companyState5 ??= new CompanyStateBuilder();
-  set companyState5(CompanyStateBuilder companyState5) =>
-      _$this._companyState5 = companyState5;
+  ListBuilder<UserCompanyState> _userCompanyStates;
+  ListBuilder<UserCompanyState> get userCompanyStates =>
+      _$this._userCompanyStates ??= new ListBuilder<UserCompanyState>();
+  set userCompanyStates(ListBuilder<UserCompanyState> userCompanyStates) =>
+      _$this._userCompanyStates = userCompanyStates;
 
   AppStateBuilder();
 
@@ -309,15 +285,14 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     if (_$v != null) {
       _isLoading = _$v.isLoading;
       _isSaving = _$v.isSaving;
+      _isTesting = _$v.isTesting;
+      _lastError = _$v.lastError;
       _serverVersion = _$v.serverVersion;
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
+      _prefState = _$v.prefState?.toBuilder();
       _uiState = _$v.uiState?.toBuilder();
-      _companyState1 = _$v.companyState1?.toBuilder();
-      _companyState2 = _$v.companyState2?.toBuilder();
-      _companyState3 = _$v.companyState3?.toBuilder();
-      _companyState4 = _$v.companyState4?.toBuilder();
-      _companyState5 = _$v.companyState5?.toBuilder();
+      _userCompanyStates = _$v.userCompanyStates?.toBuilder();
       _$v = null;
     }
     return this;
@@ -344,15 +319,14 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
           new _$AppState._(
               isLoading: isLoading,
               isSaving: isSaving,
+              isTesting: isTesting,
+              lastError: lastError,
               serverVersion: serverVersion,
               authState: authState.build(),
               staticState: staticState.build(),
+              prefState: prefState.build(),
               uiState: uiState.build(),
-              companyState1: companyState1.build(),
-              companyState2: companyState2.build(),
-              companyState3: companyState3.build(),
-              companyState4: companyState4.build(),
-              companyState5: companyState5.build());
+              userCompanyStates: userCompanyStates.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -360,18 +334,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         authState.build();
         _$failedField = 'staticState';
         staticState.build();
+        _$failedField = 'prefState';
+        prefState.build();
         _$failedField = 'uiState';
         uiState.build();
-        _$failedField = 'companyState1';
-        companyState1.build();
-        _$failedField = 'companyState2';
-        companyState2.build();
-        _$failedField = 'companyState3';
-        companyState3.build();
-        _$failedField = 'companyState4';
-        companyState4.build();
-        _$failedField = 'companyState5';
-        companyState5.build();
+        _$failedField = 'userCompanyStates';
+        userCompanyStates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

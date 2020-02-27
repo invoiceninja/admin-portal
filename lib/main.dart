@@ -1,75 +1,83 @@
 import 'dart:async';
-import 'package:sentry/sentry.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:redux/redux.dart';
-import 'package:local_auth/local_auth.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux_logging/redux_logging.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
-import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
-import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
-import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_middleware.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_middleware.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_middleware.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_middleware.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_middleware.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_middleware.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_middleware.dart';
+import 'package:invoiceninja_flutter/redux/project/project_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_middleware.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_middleware.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_middleware.dart';
+import 'package:invoiceninja_flutter/redux/task/task_middleware.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_middleware.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
+import 'package:invoiceninja_flutter/ui/auth/lock_screen.dart';
+import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_logging/redux_logging.dart';
+import 'package:sentry/sentry.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
+import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/user/user_middleware.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_middleware.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 void main({bool isTesting = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
           dsn: Config.SENTRY_DNS,
           environmentAttributes: Event(
             release: kAppVersion,
-            environment: Config.PLATFORM,
+            environment: Platform.operatingSystem,
           ));
 
-  final prefs = await SharedPreferences.getInstance();
-  final enableDarkMode = prefs.getBool(kSharedPrefEnableDarkMode) ?? false;
-  final requireAuthentication =
-      prefs.getBool(kSharedPrefRequireAuthentication) ?? false;
-
   final store = Store<AppState>(appReducer,
-      initialState: AppState(
-        enableDarkMode: enableDarkMode || isTesting,
-        requireAuthentication: requireAuthentication,
-        layout: AppLayout.tablet,
-        isTesting: isTesting,
-      ),
+      initialState: await _initialState(isTesting),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDocumentsMiddleware())
@@ -85,7 +93,12 @@ void main({bool isTesting = false}) async {
         ..addAll(createStorePaymentsMiddleware())
         ..addAll(createStoreQuotesMiddleware())
         ..addAll(createStoreSettingsMiddleware())
+        ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreUsersMiddleware())
+        ..addAll(createStoreTaxRatesMiddleware())
+        ..addAll(createStoreCompanyGatewaysMiddleware())
+        ..addAll(createStoreGroupsMiddleware())
         ..addAll(isTesting
             ? []
             : [
@@ -96,7 +109,7 @@ void main({bool isTesting = false}) async {
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     print('Caught error: $error');
-    if (isInDebugMode) {
+    if (_isInDebugMode) {
       print(stackTrace);
       return;
     } else {
@@ -120,7 +133,7 @@ void main({bool isTesting = false}) async {
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode || !store.state.reportErrors) {
+    if (_isInDebugMode || !store.state.reportErrors) {
       FlutterError.dumpErrorToConsole(details);
     } else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
@@ -128,10 +141,41 @@ void main({bool isTesting = false}) async {
   };
 }
 
-bool get isInDebugMode {
+bool get _isInDebugMode {
   bool inDebugMode = false;
   assert(inDebugMode = true);
   return inDebugMode;
+}
+
+Future<AppState> _initialState(bool isTesting) async {
+  final prefs = await SharedPreferences.getInstance();
+  final prefString = prefs?.getString(kSharedPrefs);
+
+  var prefState = PrefState();
+  if (prefString != null) {
+    try {
+      prefState = serializers.deserializeWith(
+          PrefState.serializer, json.decode(prefString));
+    } catch (e) {
+      print('Failed to load prefs: $e');
+    }
+  }
+
+  String currentRoute;
+
+  /*
+  if (kIsWeb && prefState.isDesktop) {
+    currentRoute = html.window.location.hash.replaceFirst('#', '');
+    if (currentRoute.isEmpty || currentRoute == '/') {
+      currentRoute = DashboardScreenBuilder.route;
+    }
+  }
+   */
+
+  return AppState(
+    prefState: prefState,
+    currentRoute: currentRoute,
+  );
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
@@ -147,6 +191,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   Future<Null> _authenticate() async {
     bool authenticated = false;
+
     try {
       authenticated = await LocalAuthentication().authenticateWithBiometrics(
           localizedReason: 'Please authenticate to access the app',
@@ -155,10 +200,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     } catch (e) {
       print(e);
     }
-    if (mounted) {
-      setState(() {
-        _authenticated = authenticated;
-      });
+
+    if (authenticated) {
+      setState(() => _authenticated = true);
     }
   }
 
@@ -187,20 +231,43 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   @override
   void didChangeDependencies() {
     final state = widget.store.state;
-    if (state.uiState.requireAuthentication && !_authenticated) {
+    if (state.prefState.requireAuthentication && !_authenticated) {
       _authenticate();
     }
     super.didChangeDependencies();
   }
 
+  Route<dynamic> generateRoute(RouteSettings settings) {
+    /*
+    print('## generateRoute: ${settings.name}, isInitial: ${settings.isInitialRoute}');
+    print('## pathname: ${html5.window.location.pathname} hash: ${html5.window.location.hash}, href: ${html5.window.location.href}');
+    html5.window.history.replaceState(null, settings.name, '/#${settings.name}');
+    widget.store.dispatch(UpdateCurrentRoute(settings.name));
+    */
+    switch (settings.name) {
+      case '/login':
+        return MaterialPageRoute<dynamic>(builder: (_) => LoginScreen());
+      default:
+        return MaterialPageRoute<dynamic>(builder: (_) => MainScreen());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
-        final state = widget.store.state;
+        final store = widget.store;
+        final state = store.state;
+        final accentColor = convertHexStringToColor(state.accentColor) ??
+            Colors.lightBlueAccent;
+        final fontFamily = kIsWeb ? 'Roboto' : null;
+        final pageTransitionsTheme = PageTransitionsTheme(builders: {
+          TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        });
         Intl.defaultLocale = localeSelector(state);
-        final localization = AppLocalization(Locale(Intl.defaultLocale));
+
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))
@@ -209,49 +276,26 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           //showPerformanceOverlay: true,
           localizationsDelegates: [
             const AppLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate
           ],
-          home: state.uiState.requireAuthentication && !_authenticated
-              ? Material(
-                  color: Colors.grey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.lock,
-                            size: 24.0,
-                            color: Colors.grey[400],
-                          ),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          Text(
-                            localization.locked,
-                            style: TextStyle(
-                              fontSize: 32.0,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                      RaisedButton(
-                        onPressed: () => _authenticate(),
-                        child: Text(localization.authenticate),
-                      )
-                    ],
-                  ),
-                )
+          home: state.prefState.requireAuthentication && !_authenticated
+              ? LockScreen(onAuthenticatePressed: _authenticate)
               : InitScreen(),
           locale: AppLocalization.createLocale(localeSelector(state)),
-          theme: state.uiState.enableDarkMode
+          theme: state.prefState.enableDarkMode
               ? ThemeData(
+                  pageTransitionsTheme: pageTransitionsTheme,
                   brightness: Brightness.dark,
-                  accentColor: Colors.lightBlueAccent,
+                  accentColor: accentColor,
+                  textSelectionHandleColor: accentColor,
+                  fontFamily: fontFamily,
                 )
-              : ThemeData().copyWith(
+              : ThemeData(fontFamily: fontFamily).copyWith(
+                  pageTransitionsTheme: pageTransitionsTheme,
+                  accentColor: accentColor,
+                  textSelectionColor: accentColor,
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
@@ -261,94 +305,89 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   buttonColor: const Color(0xFF0D5D91),
                 ),
           title: 'Invoice Ninja',
-          routes: {
-            LoginScreen.route: (context) {
-              return LoginScreen();
-            },
-            MainScreen.route: (context) {
-              return MainScreen();
-            },
-            DashboardScreen.route: (context) {
-              if (widget.store.state.dashboardState.isStale) {
-                widget.store.dispatch(LoadDashboard());
-              }
-              return DashboardScreen();
-            },
-            ProductScreen.route: (context) {
-              if (widget.store.state.productState.isStale) {
-                widget.store.dispatch(LoadProducts());
-              }
-              return ProductScreen();
-            },
+          onGenerateRoute: isMobile(context) ? null : generateRoute,
+          routes: isMobile(context) ? {
+            LoginScreen.route: (context) => LoginScreen(),
+            MainScreen.route: (context) => MainScreen(),
+            DashboardScreenBuilder.route: (context) => DashboardScreenBuilder(),
+            ProductScreen.route: (context) => ProductScreenBuilder(),
             ProductViewScreen.route: (context) => ProductViewScreen(),
             ProductEditScreen.route: (context) => ProductEditScreen(),
-            ClientScreen.route: (context) {
-              if (widget.store.state.clientState.isStale) {
-                widget.store.dispatch(LoadClients());
-              }
-              return ClientScreen();
-            },
+            ClientScreen.route: (context) => ClientScreenBuilder(),
             ClientViewScreen.route: (context) => ClientViewScreen(),
             ClientEditScreen.route: (context) => ClientEditScreen(),
-            InvoiceScreen.route: (context) {
-              if (widget.store.state.invoiceState.isStale) {
-                widget.store.dispatch(LoadInvoices());
-              }
-              return InvoiceScreen();
-            },
+            InvoiceScreen.route: (context) => InvoiceScreenBuilder(),
             InvoiceViewScreen.route: (context) => InvoiceViewScreen(),
             InvoiceEditScreen.route: (context) => InvoiceEditScreen(),
             InvoiceEmailScreen.route: (context) => InvoiceEmailScreen(),
-            // STARTER: routes - do not remove comment
-            DocumentScreen.route: (context) {
-              widget.store.dispatch(LoadDocuments());
-              return DocumentScreen();
-            },
+            DocumentScreen.route: (context) => DocumentScreenBuilder(),
             DocumentViewScreen.route: (context) => DocumentViewScreen(),
             DocumentEditScreen.route: (context) => DocumentEditScreen(),
-            ExpenseScreen.route: (context) {
-              widget.store.dispatch(LoadExpenses());
-              return ExpenseScreen();
-            },
+            ExpenseScreen.route: (context) => ExpenseScreenBuilder(),
             ExpenseViewScreen.route: (context) => ExpenseViewScreen(),
             ExpenseEditScreen.route: (context) => ExpenseEditScreen(),
-            VendorScreen.route: (context) {
-              widget.store.dispatch(LoadVendors());
-              return VendorScreen();
-            },
+            VendorScreen.route: (context) => VendorScreenBuilder(),
             VendorViewScreen.route: (context) => VendorViewScreen(),
             VendorEditScreen.route: (context) => VendorEditScreen(),
-            TaskScreen.route: (context) {
-              widget.store.dispatch(LoadTasks());
-              return TaskScreen();
-            },
+            TaskScreen.route: (context) => TaskScreenBuilder(),
             TaskViewScreen.route: (context) => TaskViewScreen(),
             TaskEditScreen.route: (context) => TaskEditScreen(),
-            ProjectScreen.route: (context) {
-              widget.store.dispatch(LoadProjects());
-              return ProjectScreen();
-            },
+            ProjectScreen.route: (context) => ProjectScreenBuilder(),
             ProjectViewScreen.route: (context) => ProjectViewScreen(),
             ProjectEditScreen.route: (context) => ProjectEditScreen(),
-            PaymentScreen.route: (context) {
-              if (widget.store.state.paymentState.isStale) {
-                widget.store.dispatch(LoadPayments());
-              }
-              return PaymentScreen();
-            },
+            PaymentScreen.route: (context) => PaymentScreenBuilder(),
             PaymentViewScreen.route: (context) => PaymentViewScreen(),
             PaymentEditScreen.route: (context) => PaymentEditScreen(),
-            QuoteScreen.route: (context) {
-              if (widget.store.state.quoteState.isStale) {
-                widget.store.dispatch(LoadQuotes());
-              }
-              return QuoteScreen();
-            },
+            PaymentRefundScreen.route: (context) => PaymentRefundScreen(),
+            QuoteScreen.route: (context) => QuoteScreenBuilder(),
             QuoteViewScreen.route: (context) => QuoteViewScreen(),
             QuoteEditScreen.route: (context) => QuoteEditScreen(),
             QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
-            SettingsScreen.route: (context) => SettingsScreen(),
-          },
+            // STARTER: routes - do not remove comment
+            UserScreen.route: (context) => UserScreenBuilder(),
+            UserViewScreen.route: (context) => UserViewScreen(),
+            UserEditScreen.route: (context) => UserEditScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
+            GroupViewScreen.route: (context) => GroupViewScreen(),
+            GroupEditScreen.route: (context) => GroupEditScreen(),
+            SettingsScreen.route: (context) => SettingsScreenBuilder(),
+            ReportsScreen.route: (context) => ReportsScreenBuilder(),
+            CompanyDetailsScreen.route: (context) => CompanyDetailsScreen(),
+            UserDetailsScreen.route: (context) => UserDetailsScreen(),
+            LocalizationScreen.route: (context) => LocalizationScreen(),
+            CompanyGatewayScreen.route: (context) =>
+                CompanyGatewayScreenBuilder(),
+            CompanyGatewayViewScreen.route: (context) =>
+                CompanyGatewayViewScreen(),
+            CompanyGatewayEditScreen.route: (context) =>
+                CompanyGatewayEditScreen(),
+            OnlinePaymentsScreen.route: (context) => OnlinePaymentsScreen(),
+            TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
+            TaxRateSettingsScreen.route: (context) => TaxRateScreenBuilder(),
+            TaxRateViewScreen.route: (context) => TaxRateViewScreen(),
+            TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
+            ProductSettingsScreen.route: (context) => ProductSettingsScreen(),
+            NotificationsSettingsScreen.route: (context) =>
+                NotificationsSettingsScreen(),
+            ImportExportScreen.route: (context) => ImportExportScreen(),
+            DeviceSettingsScreen.route: (context) => DeviceSettingsScreen(),
+            GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
+            GroupEditScreen.route: (context) => GroupEditScreen(),
+            GroupViewScreen.route: (context) => GroupViewScreen(),
+            CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
+            GeneratedNumbersScreen.route: (context) => GeneratedNumbersScreen(),
+            WorkflowSettingsScreen.route: (context) => WorkflowSettingsScreen(),
+            InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
+            ClientPortalScreen.route: (context) => ClientPortalScreen(),
+            BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
+            EmailSettingsScreen.route: (context) => EmailSettingsScreen(),
+            TemplatesAndRemindersScreen.route: (context) =>
+                TemplatesAndRemindersScreen(),
+            CreditCardsAndBanksScreen.route: (context) =>
+                CreditCardsAndBanksScreen(),
+            DataVisualizationsScreen.route: (context) =>
+                DataVisualizationsScreen(),
+          } : {},
         );
       }),
     );

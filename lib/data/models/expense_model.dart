@@ -4,7 +4,7 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'expense_model.g.dart';
@@ -44,6 +44,7 @@ class ExpenseFields {
   static const String bankId = 'bankId';
   static const String expenseCurrencyId = 'expenseCurrencyId';
   static const String expenseCategoryId = 'expenseCategoryId';
+  static const String expenseCategory = 'expenseCategory';
   static const String amount = 'amount';
   static const String expenseDate = 'expenseDate';
   static const String paymentDate = 'paymentDate';
@@ -54,8 +55,10 @@ class ExpenseFields {
   static const String taxRate1 = 'taxRate1';
   static const String taxRate2 = 'taxRate2';
   static const String clientId = 'clientId';
+  static const String client = 'client';
   static const String invoiceId = 'invoiceId';
   static const String vendorId = 'vendorId';
+  static const String vendor = 'vendor';
   static const String customValue1 = 'customValue1';
   static const String customValue2 = 'customValue2';
 
@@ -68,58 +71,61 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
-      {int id,
-      CompanyEntity company,
-      UIState uiState,
-      VendorEntity vendor,
-      ClientEntity client}) {
+      {String id, AppState state, VendorEntity vendor, ClientEntity client}) {
     return _$ExpenseEntity._(
-      id: id ?? --ExpenseEntity.counter,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
       privateNotes: '',
       publicNotes: '',
       shouldBeInvoiced: false,
-      invoiceDocuments: uiState?.addDocumentsToInvoice ?? false,
+      invoiceDocuments: state?.prefState?.addDocumentsToInvoice ?? false,
       transactionId: '',
       transactionReference: '',
-      bankId: 0,
+      bankId: '',
       amount: 0,
       expenseDate: convertDateTimeToSqlDate(),
       paymentDate: '',
-      paymentTypeId: 0,
+      paymentTypeId: '',
       exchangeRate: 1,
-      expenseCurrencyId:
-          (vendor != null && vendor.currencyId != null && vendor.currencyId > 0)
-              ? vendor.currencyId
-              : (company?.currencyId ?? kDefaultCurrencyId),
-      invoiceCurrencyId:
-          (client != null && client.currencyId != null && client.currencyId > 0)
-              ? client.currencyId
-              : (company?.currencyId ?? kDefaultCurrencyId),
+      expenseCurrencyId: (vendor != null && vendor.hasCurrency)
+          ? vendor.currencyId
+          : (state?.company?.currencyId ?? kDefaultCurrencyId),
+      invoiceCurrencyId: (client != null && client.hasCurrency)
+          ? client.settings.currencyId // TODO handle group currency
+          : (state?.company?.currencyId ?? kDefaultCurrencyId),
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
       taxRate2: 0,
-      clientId: client?.id ?? 0,
-      vendorId: vendor?.id ?? 0,
-      invoiceId: 0,
-      categoryId: 0,
+      taxName3: '',
+      taxRate3: 0,
+      clientId: client?.id,
+      vendorId: vendor?.id,
+      invoiceId: '',
+      categoryId: '',
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       isDeleted: false,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
+      archivedAt: 0,
+      updatedAt: 0,
     );
   }
 
   ExpenseEntity._();
 
-  static int counter = 0;
-
   ExpenseEntity get clone => rebuild((b) => b
-    ..id = --ExpenseEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false
-    ..invoiceId = 0
+    ..invoiceId = null
     ..expenseDate = convertDateTimeToSqlDate()
     ..transactionReference = ''
-    ..paymentTypeId = 0
+    ..paymentTypeId = null
     ..paymentDate = '');
 
   @override
@@ -146,14 +152,14 @@ abstract class ExpenseEntity extends Object
   String get transactionReference;
 
   @BuiltValueField(wireName: 'bank_id')
-  int get bankId;
+  String get bankId;
 
   @BuiltValueField(wireName: 'expense_currency_id')
-  int get expenseCurrencyId;
+  String get expenseCurrencyId;
 
   @nullable
   @BuiltValueField(wireName: 'expense_category_id')
-  int get categoryId;
+  String get categoryId;
 
   double get amount;
 
@@ -167,10 +173,10 @@ abstract class ExpenseEntity extends Object
   double get exchangeRate;
 
   @BuiltValueField(wireName: 'invoice_currency_id')
-  int get invoiceCurrencyId;
+  String get invoiceCurrencyId;
 
   @BuiltValueField(wireName: 'payment_type_id')
-  int get paymentTypeId;
+  String get paymentTypeId;
 
   @BuiltValueField(wireName: 'tax_name1')
   String get taxName1;
@@ -184,15 +190,24 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate2')
   double get taxRate2;
 
+  @BuiltValueField(wireName: 'tax_name3')
+  String get taxName3;
+
+  @BuiltValueField(wireName: 'tax_rate3')
+  double get taxRate3;
+
+  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
+  @nullable
   @BuiltValueField(wireName: 'vendor_id')
-  int get vendorId;
+  String get vendorId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -200,17 +215,28 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.invoice)) {
+      if (userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.newInvoice);
       }
     }
@@ -219,7 +245,7 @@ abstract class ExpenseEntity extends Object
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (user.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task)) {
       actions.add(EntityAction.clone);
     }
 
@@ -227,7 +253,7 @@ abstract class ExpenseEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
@@ -262,9 +288,19 @@ abstract class ExpenseEntity extends Object
 
     if (publicNotes.toLowerCase().contains(filter)) {
       return true;
-    }
-
-    if (privateNotes.toLowerCase().contains(filter)) {
+    } else if (privateNotes.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -293,6 +329,18 @@ abstract class ExpenseEntity extends Object
       return transactionReference;
     } else if (transactionReference.toLowerCase().contains(filter)) {
       return transactionReference;
+    } else if (customValue1.isNotEmpty &&
+        customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.isNotEmpty &&
+        customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.isNotEmpty &&
+        customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.isNotEmpty &&
+        customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;
@@ -329,7 +377,8 @@ abstract class ExpenseEntity extends Object
   }
 
   bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(endDate) <= 0 && endDate.compareTo(endDate) >= 0;
+    return startDate.compareTo(expenseDate) <= 0 &&
+        endDate.compareTo(expenseDate) >= 0;
   }
 
   @override
@@ -349,8 +398,8 @@ abstract class ExpenseEntity extends Object
     return round(total, 2);
   }
 
-  int get statusId {
-    if ((invoiceId ?? 0) > 0) {
+  String get statusId {
+    if (isInvoiced) {
       return kExpenseStatusInvoiced;
     } else if (shouldBeInvoiced) {
       return kExpenseStatusPending;
@@ -363,7 +412,7 @@ abstract class ExpenseEntity extends Object
 
   double get convertedAmountWithTax => round(amountWithTax * exchangeRate, 2);
 
-  bool get isInvoiced => invoiceId != null && invoiceId > 0;
+  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
   bool get isPending => !isInvoiced && shouldBeInvoiced;
 
@@ -381,15 +430,14 @@ abstract class ExpenseCategoryEntity extends Object
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
   factory ExpenseCategoryEntity() {
     return _$ExpenseCategoryEntity._(
-      id: --ExpenseCategoryEntity.counter,
+      id: BaseEntity.nextId,
+      isChanged: false,
       name: '',
       isDeleted: false,
     );
   }
 
   ExpenseCategoryEntity._();
-
-  static int counter = 0;
 
   @override
   bool matchesFilter(String filter) {
@@ -452,7 +500,7 @@ abstract class ExpenseStatusEntity extends Object
     implements Built<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   factory ExpenseStatusEntity() {
     return _$ExpenseStatusEntity._(
-      id: 0,
+      id: '',
       name: '',
     );
   }

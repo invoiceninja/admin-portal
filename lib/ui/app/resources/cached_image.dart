@@ -15,10 +15,10 @@ class CachedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = store.state;
 
     // TODO remove this workaround
-    if (uiState.isTesting || (url ?? '').isEmpty) {
+    if (state.isTesting || (url ?? '').isEmpty) {
       return SizedBox(
         width: width,
         height: height,

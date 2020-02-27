@@ -1,17 +1,17 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:memoize/memoize.dart';
 
 var memoizedDropdownExpenseCategoriesList = memo2(
-    (BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+    (BuiltMap<String, ExpenseCategoryEntity> categoryMap,
             BuiltList<ExpenseCategoryEntity> categoryList) =>
         dropdownExpenseCategoriesSelector(categoryMap, categoryList));
 
-List<int> dropdownExpenseCategoriesSelector(
-    BuiltMap<int, ExpenseCategoryEntity> categoryMap,
+List<String> dropdownExpenseCategoriesSelector(
+    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
     BuiltList<ExpenseCategoryEntity> categoryList) {
   final list = categoryList
       //.where((category) => category.isActive)
@@ -27,40 +27,49 @@ List<int> dropdownExpenseCategoriesSelector(
   return list;
 }
 
-var memoizedHasMultipleCurrencies = memo2(
-    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
-        hasMultipleCurrencies(company, clientMap));
+var memoizedHasMultipleCurrencies = memo3((CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    hasMultipleCurrencies(company, clientMap, groupMap));
 
 bool hasMultipleCurrencies(
-        CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
-    memoizedGetCurrencyIds(company, clientMap).length > 1;
+        CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
 
-var memoizedGetCurrencyIds = memo2(
-    (CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) =>
-        getCurrencyIds(company, clientMap));
+var memoizedGetCurrencyIds = memo3((CompanyEntity company,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
+    getCurrencyIds(company, clientMap, groupMap));
 
-List<int> getCurrencyIds(
-    CompanyEntity company, BuiltMap<int, ClientEntity> clientMap) {
-  final currencyIds = <int>[];
-  if (company.currencyId > 0) {
-    currencyIds.add(company.currencyId);
-  } else {
-    currencyIds.add(kDefaultCurrencyId);
-  }
+List<String> getCurrencyIds(
+    CompanyEntity company,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap) {
+  final currencyIds = <String>[];
   clientMap.forEach((clientId, client) {
-    if (client.currencyId > 0 &&
-        !client.isDeleted &&
-        !currencyIds.contains(client.currencyId)) {
-      currencyIds.add(client.currencyId);
+    final group = groupMap[client.groupId];
+    if (!client.isDeleted) {
+      String currencyId;
+      if (client.hasCurrency) {
+        currencyId = client.currencyId;
+      } else if (group != null && group.hasCurrency) {
+        currencyId = group.currencyId;
+      }
+      if (currencyId != null && !currencyIds.contains(client.currencyId)) {
+        currencyIds.add(currencyId);
+      }
     }
   });
+
   return currencyIds;
 }
 
 var memoizedFilteredSelector = memo2(
-    (String filter, CompanyState state) => filteredSelector(filter, state));
+    (String filter, UserCompanyState state) => filteredSelector(filter, state));
 
-List<BaseEntity> filteredSelector(String filter, CompanyState state) {
+List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
   final List<BaseEntity> list = []
     ..addAll(state.productState.list
         .map((productId) => state.productState.map[productId])
@@ -108,30 +117,20 @@ List<BaseEntity> filteredSelector(String filter, CompanyState state) {
 List<CompanyEntity> companiesSelector(AppState state) {
   final List<CompanyEntity> list = [];
 
-  if (state.companyState1.company != null) {
-    list.add(state.companyState1.company);
-  }
-  if (state.companyState2.company != null) {
-    list.add(state.companyState2.company);
-  }
-  if (state.companyState3.company != null) {
-    list.add(state.companyState3.company);
-  }
-  if (state.companyState4.company != null) {
-    list.add(state.companyState4.company);
-  }
-  if (state.companyState5.company != null) {
-    list.add(state.companyState5.company);
+  for (var companyState in state.userCompanyStates) {
+    if (companyState.company != null) {
+      list.add(companyState.company);
+    }
   }
 
   return list
-      .where((CompanyEntity company) => company.name.isNotEmpty)
+      .where((CompanyEntity company) => (company.id ?? '').isNotEmpty)
       .toList();
 }
 
 String localeSelector(AppState state) {
   final locale = state.staticState
-          ?.languageMap[state.selectedCompany?.languageId]?.locale ??
+          ?.languageMap[state.company?.settings?.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090

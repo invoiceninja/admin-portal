@@ -1,43 +1,63 @@
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
-
-//import 'package:flutter_html_view/flutter_html_view.dart';
-import 'package:html/parser.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
     Key key,
     @required this.viewModel,
   }) : super(key: key);
+
   final EmailEntityVM viewModel;
 
   @override
   _InvoiceEmailViewState createState() => new _InvoiceEmailViewState();
 }
 
-class _InvoiceEmailViewState extends State<InvoiceEmailView> {
+class _InvoiceEmailViewState extends State<InvoiceEmailView>
+    with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
-  String emailSubject;
-  String emailBody;
+  String _emailSubject;
+  String _emailBody;
+  String _lastSubject;
+  String _lastBody;
+  String _bodyPreview = '';
+  String _subjectPreview = '';
+  bool _isLoading = false;
 
+  final _debouncer = Debouncer();
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
+  TabController _controller;
   List<TextEditingController> _controllers = [];
+
+  static const kTabPreview = 0;
+  //static const kTabEdit = 1;
+  //static const kTabHistory = 2;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(vsync: this, length: 3);
+    _controller.addListener(_handleTabSelection);
+  }
 
   @override
   void didChangeDependencies() {
-    super.didChangeDependencies();
-
     _controllers = [
       _subjectController,
       _bodyController,
@@ -45,11 +65,16 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
 
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
-    loadTemplate(client.getNextEmailTemplate(invoice.id));
+
+    _loadTemplate(client.getNextEmailTemplate(invoice.id));
+
+    super.didChangeDependencies();
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_handleTabSelection);
+    _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -59,144 +84,134 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   }
 
   void _onChanged() {
-    setState(() {
-      emailSubject = _subjectController.text;
-      emailBody = _bodyController.text;
-      updateTemplate();
+    _debouncer.run(() {
+      setState(() {
+        _emailSubject = _subjectController.text;
+        _emailBody = _bodyController.text;
+      });
     });
   }
 
-  void loadTemplate(EmailTemplate template) {
+  void _loadTemplate(EmailTemplate template) {
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
     selectedTemplate = template;
 
-    switch (template) {
-      case EmailTemplate.initial:
-        if (viewModel.invoice.isQuote) {
-          emailSubject = company.emailSubjectQuote;
-          emailBody = company.emailBodyQuote;
-        } else {
-          emailSubject = company.emailSubjectInvoice;
-          emailBody = company.emailBodyInvoice;
-        }
-        break;
-      case EmailTemplate.reminder1:
-        emailSubject = company.emailSubjectReminder1;
-        emailBody = company.emailBodyReminder1;
-        break;
-      case EmailTemplate.reminder2:
-        emailSubject = company.emailSubjectReminder2;
-        emailBody = company.emailBodyReminder2;
-        break;
-      case EmailTemplate.reminder3:
-        emailSubject = company.emailSubjectReminder3;
-        emailBody = company.emailBodyReminder3;
-        break;
-    }
+    _emailSubject = company.settings.getEmailSubject(template) ?? '';
+    _emailBody = company.settings.getEmailBody(template) ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _subjectController.text = emailSubject;
-    _bodyController.text = emailBody.replaceAll('</div>', '</div>\n');
+    _subjectController.text = _emailSubject;
+    _bodyController.text = (_emailBody ?? '').replaceAll('</div>', '</div>\n');
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
-    updateTemplate();
+    _handleTabSelection();
   }
 
-  void updateTemplate() {
-    final viewModel = widget.viewModel;
+  void _handleTabSelection() {
+    if (_isLoading || _controller.index != kTabPreview) {
+      return;
+    }
 
-    emailSubject = processTemplate(emailSubject, viewModel.invoice, context);
-    emailBody = processTemplate(emailBody, viewModel.invoice, context);
+    final subject = _subjectController.text.trim();
+    final body = _bodyController.text.trim();
+
+    if (subject == _lastSubject && body == _lastBody) {
+      return;
+    } else {
+      _lastSubject = subject;
+      _lastBody = body;
+    }
+
+    loadTemplate(
+        context: context,
+        subject: subject,
+        body: body,
+        onStart: (subject, body) {
+          setState(() {
+            _isLoading = true;
+            _subjectPreview = subject;
+            _bodyPreview = body;
+          });
+        },
+        onComplete: (subject, body) {
+          setState(() {
+            _isLoading = false;
+            _subjectPreview = subject;
+            _bodyPreview = body;
+          });
+        });
   }
 
   Widget _buildPreview(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Container(
-      //color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          Container(
-            color: Theme.of(context).backgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: <Widget>[
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<EmailTemplate>(
-                      value: selectedTemplate,
-                      onChanged: (template) =>
-                          setState(() => loadTemplate(template)),
-                      items: [
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.initialEmail),
-                          value: EmailTemplate.initial,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.firstReminder),
-                          value: EmailTemplate.reminder1,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.secondReminder),
-                          value: EmailTemplate.reminder2,
-                        ),
-                        DropdownMenuItem<EmailTemplate>(
-                          child: Text(localization.thirdReminder),
-                          value: EmailTemplate.reminder3,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              shrinkWrap: true,
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Container(
+          color: Theme.of(context).backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: <Widget>[
-                Container(
-                  //color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 14.0, top: 26.0, right: 14.0, bottom: 24.0),
-                    child: Text(
-                      emailSubject,
-                      style: TextStyle(
-                        //color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<EmailTemplate>(
+                    value: selectedTemplate,
+                    onChanged: (template) =>
+                        setState(() => _loadTemplate(template)),
+                    items: [
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.initialEmail),
+                        value: widget.viewModel.invoice.emailTemplate,
                       ),
-                    ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstReminder),
+                        value: EmailTemplate.firstReminder,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondReminder),
+                        value: EmailTemplate.secondReminder,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdReminder),
+                        value: EmailTemplate.thirdReminder,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstCustom),
+                        value: EmailTemplate.firstCustom,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.secondCustom),
+                        value: EmailTemplate.secondCustom,
+                      ),
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.thirdCustom),
+                        value: EmailTemplate.thirdCustom,
+                      ),
+                    ],
                   ),
                 ),
-                Container(
-                  //color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                        parse(emailBody.replaceAll('</div>', '\n')).body.text),
-                  ),
-                  /*
-                  child: HtmlView(
-                    data: emailBody,
-                  ),
-                  */
+                Expanded(
+                  child: Container(),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+        Expanded(
+          child: EmailPreview(
+            isLoading: _isLoading,
+            subject: _subjectPreview,
+            body: _bodyPreview,
+          ),
+        ),
+      ],
     );
   }
 
@@ -206,18 +221,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
     return SingleChildScrollView(
       child: FormCard(
         children: <Widget>[
-          TextFormField(
+          DecoratedFormField(
             controller: _subjectController,
-            decoration: InputDecoration(
-              labelText: localization.subject,
-            ),
-            keyboardType: TextInputType.text,
+            label: localization.subject,
           ),
-          TextFormField(
+          DecoratedFormField(
             controller: _bodyController,
-            decoration: InputDecoration(
-              labelText: localization.body,
-            ),
+            label: localization.body,
             maxLines: 12,
             keyboardType: TextInputType.multiline,
           ),
@@ -234,10 +244,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
         invoiceId: invoice.id, typeId: kActivityEmailInvoice);
 
     if (activities.isEmpty) {
-      return Center(
-        child: Text(localization.noHistory,
-            style: TextStyle(fontSize: 26, color: Colors.grey)),
-      );
+      return HelpText(localization.noHistory);
     }
 
     return ListView.builder(
@@ -253,35 +260,33 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalization.of(context).sendEmail),
-          bottom: TabBar(
-            tabs: [
-              Tab(text: localization.preview),
-              Tab(text: localization.customize),
-              Tab(text: localization.history),
-            ],
-          ),
-          actions: <Widget>[
-            ActionIconButton(
-              isSaving: viewModel.isSaving,
-              tooltip: localization.send,
-              icon: Icons.send,
-              onPressed: () => viewModel.onSendPressed(
-                  context,
-                  selectedTemplate,
-                  _subjectController.text,
-                  _bodyController.text),
-            )
+      child: EditScaffold(
+        entity: invoice,
+        title: localization.sendEmail,
+        onCancelPressed: (context) =>
+            viewEntity(context: context, entity: invoice),
+        appBarBottom: TabBar(
+          controller: _controller,
+          tabs: [
+            Tab(text: localization.preview),
+            Tab(text: localization.customize),
+            Tab(text: localization.history),
           ],
         ),
+        saveLabel: localization.send,
+        onSavePressed: (context) {
+          viewModel.onSendPressed(context, selectedTemplate,
+              _subjectController.text, _bodyController.text);
+        },
         body: viewModel.isLoading
             ? LoadingIndicator()
             : TabBarView(
+                controller: _controller,
+                key: ValueKey('__invoice_${widget.viewModel.invoice.id}__'),
                 children: [
                   _buildPreview(context),
                   _buildEdit(context),

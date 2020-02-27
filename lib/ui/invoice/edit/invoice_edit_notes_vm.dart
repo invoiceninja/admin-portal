@@ -53,7 +53,7 @@ class InvoiceEditNotesVM extends EntityEditNotesVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditNotesVM(
-      company: state.selectedCompany,
+      company: state.company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),

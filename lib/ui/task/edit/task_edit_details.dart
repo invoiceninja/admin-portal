@@ -4,7 +4,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
@@ -26,6 +28,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
   @override
@@ -59,13 +62,15 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
   }
 
   void _onChanged() {
-    final task = widget.viewModel.task.rebuild((b) => b
-      ..description = _descriptionController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (task != widget.viewModel.task) {
-      widget.viewModel.onChanged(task);
-    }
+    _debouncer.run(() {
+      final task = widget.viewModel.task.rebuild((b) => b
+        ..description = _descriptionController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (task != widget.viewModel.task) {
+        widget.viewModel.onChanged(task);
+      }
+    });
   }
 
   @override
@@ -83,18 +88,16 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             !task.isInvoiced
                 ? EntityDropdown(
                     key: Key('__client_${task.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue:
-                        (state.clientState.map[task.clientId] ?? ClientEntity())
-                            .displayName,
-                    entityMap: state.clientState.map,
+                    entityId: task.clientId,
                     entityList: memoizedDropdownClientList(
                         state.clientState.map, state.clientState.list),
                     onSelected: (client) {
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..clientId = client.id
-                        ..projectId = 0));
+                        ..clientId = client?.id
+                        ..projectId = null));
                     },
                     onAddPressed: (completer) {
                       viewModel.onAddClientPressed(context, completer);
@@ -104,12 +107,10 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             !task.isInvoiced
                 ? EntityDropdown(
                     key: Key('__project_${task.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.project,
                     labelText: localization.project,
-                    initialValue: (state.projectState.map[task.projectId] ??
-                            ProjectEntity())
-                        .name,
-                    entityMap: state.projectState.map,
+                    entityId: task.projectId,
                     entityList: memoizedDropdownProjectList(
                         state.projectState.map,
                         state.projectState.list,
@@ -118,8 +119,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     onSelected: (selected) {
                       final project = selected as ProjectEntity;
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..projectId = project.id
-                        ..clientId = project.clientId));
+                        ..projectId = project?.id
+                        ..clientId = project?.clientId));
                     },
                     onAddPressed: (completer) {
                       viewModel.onAddProjectPressed(context, completer);
@@ -129,38 +130,34 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             // TODO Remove isNotEmpty check in v2
             company.taskStatusMap.isNotEmpty
                 ? EntityDropdown(
+                    key: ValueKey('__task_status_${task.taskStatusId}__'),
                     entityType: EntityType.taskStatus,
                     labelText: localization.status,
-                    initialValue: (company.taskStatusMap[task.taskStatusId] ??
-                            TaskStatusEntity())
-                        .name,
-                    entityMap: company.taskStatusMap,
+                    entityId: task.taskStatusId,
                     entityList: company.taskStatusMap.keys.toList(),
                     onSelected: (selected) {
                       final taskStatus = selected as TaskStatusEntity;
                       viewModel.onChanged(task.rebuild((b) => b
-                        ..taskStatusId = taskStatus.id
+                        ..taskStatusId = taskStatus?.id
                         ..taskStatusSortOrder = 9999));
                     },
                   )
                 : SizedBox(),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _descriptionController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.description,
-              ),
+              label: localization.description,
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.task1),
-              options: company.getCustomFieldValues(CustomFieldType.task1),
+              field: CustomFieldType.task1,
+              value: task.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.task2),
-              options: company.getCustomFieldValues(CustomFieldType.task2),
+              field: CustomFieldType.task2,
+              value: task.customValue2,
             ),
           ],
         ),

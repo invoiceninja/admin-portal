@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
-    @required this.user,
+    @required this.userCompany,
     @required this.onTap,
     @required this.expense,
     @required this.client,
@@ -24,7 +24,7 @@ class ExpenseListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
@@ -49,7 +49,7 @@ class ExpenseListItem extends StatelessWidget {
         ? expense.matchesFilterValue(filter)
         : null;
 
-    final company = state.selectedCompany;
+    final company = state.company;
     final category = company.expenseCategoryMap[expense.categoryId];
 
     String subtitle = '';
@@ -78,23 +78,32 @@ class ExpenseListItem extends StatelessWidget {
       }
       subtitle += '📎';
     }
+    final listUIState = expenseUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
       isSelected: expense.id ==
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),
-      user: user,
+      userCompany: userCompany,
       entity: expense,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
-        leading: onCheckboxChanged != null
-            ? Checkbox(
-                value: isChecked,
-                onChanged: (value) => onCheckboxChanged(value),
-                activeColor: Theme.of(context).accentColor,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
               )
             : null,
         title: Container(
@@ -107,13 +116,13 @@ class ExpenseListItem extends StatelessWidget {
                       ? expense.publicNotes
                       : formatDate(expense.expenseDate, context),
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
                   formatNumber(expense.amountWithTax, context,
                       currencyId: expense.expenseCurrencyId),
-                  style: Theme.of(context).textTheme.title)
+                  style: Theme.of(context).textTheme.headline6)
             ],
           ),
         ),

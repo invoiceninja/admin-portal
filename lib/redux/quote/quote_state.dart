@@ -6,6 +6,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
@@ -15,8 +16,8 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   factory QuoteState() {
     return _$QuoteState._(
       lastUpdated: 0,
-      map: BuiltMap<int, InvoiceEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, InvoiceEntity>(),
+      list: BuiltList<String>(),
     );
   }
 
@@ -25,9 +26,9 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, InvoiceEntity> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
-  BuiltList<int> get list;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -40,6 +41,19 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  QuoteState loadQuotes(BuiltList<InvoiceEntity> quotes) {
+    final map = Map<String, InvoiceEntity>.fromIterable(
+      quotes,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<QuoteState> get serializer => _$quoteStateSerializer;
 }
 
@@ -50,8 +64,7 @@ abstract class QuoteUIState extends Object
     return _$QuoteUIState._(
       listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
       editing: InvoiceEntity(),
-      editingItem: InvoiceItemEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
 
@@ -61,7 +74,8 @@ abstract class QuoteUIState extends Object
   InvoiceEntity get editing;
 
   @nullable
-  InvoiceItemEntity get editingItem;
+  @BuiltValueField(serialize: false)
+  int get editingItemIndex;
 
   @override
   bool get isCreatingNew => editing.isNew;

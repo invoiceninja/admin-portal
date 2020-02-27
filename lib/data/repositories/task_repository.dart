@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
@@ -15,10 +15,9 @@ class TaskRepository {
 
   final WebClient webClient;
 
-  Future<TaskEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
-    final dynamic response =
-        await webClient.get('${auth.url}/tasks/$entityId', company.token);
+  Future<TaskEntity> loadItem(Credentials credentials, String entityId) async {
+    final dynamic response = await webClient.get(
+        '${credentials.url}/tasks/$entityId', credentials.token);
 
     final TaskItemResponse taskResponse =
         serializers.deserializeWith(TaskItemResponse.serializer, response);
@@ -27,14 +26,14 @@ class TaskRepository {
   }
 
   Future<BuiltList<TaskEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/tasks?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/tasks?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskListResponse taskResponse =
         serializers.deserializeWith(TaskListResponse.serializer, response);
@@ -42,8 +41,22 @@ class TaskRepository {
     return taskResponse.data;
   }
 
-  Future<TaskEntity> saveData(
-      CompanyEntity company, AuthState auth, TaskEntity task,
+  Future<List<TaskEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    var url = credentials.url + '/tasks/bulk?';
+    if (action != null) {
+      url += '&action=' + action.toString();
+    }
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids}));
+
+    final TaskListResponse taskResponse =
+        serializers.deserializeWith(TaskListResponse.serializer, response);
+
+    return taskResponse.data.toList();
+  }
+
+  Future<TaskEntity> saveData(Credentials credentials, TaskEntity task,
       [EntityAction action]) async {
     // Workaround for API issue
     if (task.isNew) {
@@ -56,13 +69,15 @@ class TaskRepository {
 
     if (task.isNew) {
       response = await webClient.post(
-          auth.url + '/tasks', company.token, json.encode(data));
+          credentials.url + '/tasks', credentials.token,
+          data: json.encode(data));
     } else {
-      var url = auth.url + '/tasks/' + task.id.toString();
+      var url = credentials.url + '/tasks/' + task.id.toString();
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response = await webClient.put(url, company.token, json.encode(data));
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final TaskItemResponse taskResponse =

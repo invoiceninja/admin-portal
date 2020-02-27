@@ -55,7 +55,7 @@ abstract class CountryEntity extends Object
     implements Built<CountryEntity, CountryEntityBuilder> {
   factory CountryEntity() {
     return _$CountryEntity._(
-      id: 0,
+      id: '',
       name: '',
       iso2: '',
       iso3: '',

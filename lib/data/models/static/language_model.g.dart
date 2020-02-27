@@ -53,7 +53,7 @@ class _$LanguageListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -129,7 +129,7 @@ class _$LanguageEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -156,7 +156,7 @@ class _$LanguageEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -361,7 +361,7 @@ class _$LanguageEntity extends LanguageEntity {
   @override
   final String locale;
   @override
-  final int id;
+  final String id;
 
   factory _$LanguageEntity([void Function(LanguageEntityBuilder) updates]) =>
       (new LanguageEntityBuilder()..update(updates)).build();
@@ -419,9 +419,9 @@ class LanguageEntityBuilder
   String get locale => _$this._locale;
   set locale(String locale) => _$this._locale = locale;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   LanguageEntityBuilder();
 

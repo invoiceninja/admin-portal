@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -41,12 +41,11 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 }
 
 Middleware<AppState> _editExpense() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditExpense;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -55,12 +54,7 @@ Middleware<AppState> _editExpense() {
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
 
     if (isMobile(action.context)) {
-      final expense =
-          await Navigator.of(action.context).pushNamed(ExpenseEditScreen.route);
-
-      if (action.completer != null && expense != null) {
-        action.completer.complete(expense);
-      }
+      action.navigator.pushNamed(ExpenseEditScreen.route);
     }
   };
 }
@@ -70,8 +64,8 @@ Middleware<AppState> _viewExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -80,7 +74,7 @@ Middleware<AppState> _viewExpense() {
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ExpenseViewScreen.route);
+      action.navigator.pushNamed(ExpenseViewScreen.route);
     }
   };
 }
@@ -89,17 +83,21 @@ Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewExpenseList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.expenseState.isStale) {
+      store.dispatch(LoadExpenses());
+    }
+
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ExpenseScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -108,18 +106,21 @@ Middleware<AppState> _viewExpenseList() {
 Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+    final prevExpenses = action.expenseIds
+        .map((id) => store.state.expenseState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.archive)
-        .then((ExpenseEntity expense) {
-      store.dispatch(ArchiveExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.archive)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(ArchiveExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveExpenseFailure(origExpense));
+      store.dispatch(ArchiveExpenseFailure(prevExpenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -132,18 +133,21 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
 Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+    final prevExpenses = action.expenseIds
+        .map((id) => store.state.expenseState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.delete)
-        .then((ExpenseEntity expense) {
-      store.dispatch(DeleteExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.delete)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(DeleteExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteExpenseFailure(origExpense));
+      store.dispatch(DeleteExpenseFailure(prevExpenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,18 +160,21 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
 Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreExpenseRequest;
-    final origExpense = store.state.expenseState.map[action.expenseId];
+    final prevExpenses = action.expenseIds
+        .map((id) => store.state.expenseState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origExpense, EntityAction.restore)
-        .then((ExpenseEntity expense) {
-      store.dispatch(RestoreExpenseSuccess(expense));
+        .bulkAction(
+            store.state.credentials, action.expenseIds, EntityAction.restore)
+        .then((List<ExpenseEntity> expenses) {
+      store.dispatch(RestoreExpenseSuccess(expenses));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreExpenseFailure(origExpense));
+      store.dispatch(RestoreExpenseFailure(prevExpenses));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -181,8 +188,7 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveExpenseRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.expense)
+        .saveData(store.state.credentials, action.expense)
         .then((ExpenseEntity expense) {
       if (action.expense.isNew) {
         store.dispatch(AddExpenseSuccess(expense));
@@ -212,7 +218,7 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 
     store.dispatch(LoadExpenseRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.expenseId)
+        .loadItem(store.state.credentials, action.expenseId)
         .then((expense) {
       store.dispatch(LoadExpenseSuccess(expense));
 
@@ -249,21 +255,19 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
     final int updatedAt = (state.expenseState.lastUpdated / 1000).round();
 
     store.dispatch(LoadExpensesRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadExpensesSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.selectedCompany.isEnterprisePlan) {
+      if (state.company.isEnterprisePlan) {
         if (state.documentState.isStale) {
           store.dispatch(LoadDocuments());
         }
       } else {
-        if (state.dashboardState.isStale) {
-          store.dispatch(LoadDashboard());
+        if (state.clientState.isStale) {
+          store.dispatch(LoadClients());
         }
       }
     }).catchError((Object error) {
@@ -271,12 +275,6 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
       store.dispatch(LoadExpensesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
-      }
-
-      // Support selfhost users with older versions
-      // TODO remove this in v2
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
       }
     });
 

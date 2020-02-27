@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -39,9 +40,9 @@ class QuoteListVM extends EntityListVM {
     AppState state,
     UserEntity user,
     ListUIState listState,
-    List<int> invoiceList,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ClientEntity> clientMap,
+    List<String> invoiceList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
     String filter,
     bool isLoading,
     bool isLoaded,
@@ -49,7 +50,9 @@ class QuoteListVM extends EntityListVM {
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
-    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    List<String> tableColumns,
+    EntityType entityType,
   }) : super(
           state: state,
           user: user,
@@ -64,7 +67,8 @@ class QuoteListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
-          onEntityAction: onEntityAction,
+          tableColumns: tableColumns,
+          entityType: entityType,
         );
 
   static QuoteListVM fromStore(Store<AppState> store) {
@@ -72,7 +76,7 @@ class QuoteListVM extends EntityListVM {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadQuotes(completer: completer, force: true));
       return completer.future;
@@ -92,16 +96,19 @@ class QuoteListVM extends EntityListVM {
       isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
-        store.dispatch(ViewQuote(quoteId: quote.id, context: context));
+        viewEntity(context: context, entity: quote);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(FilterQuotesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.quoteListState.filterEntityId, context: context)),
-      onEntityAction:
-          (BuildContext context, BaseEntity quote, EntityAction action) =>
-              handleQuoteAction(context, quote, action),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.quoteListState.filterEntityId,
+          entityType: state.quoteListState.filterEntityType),
+      onEntityAction: (BuildContext context, List<BaseEntity> quotes,
+              EntityAction action) =>
+          handleQuoteAction(context, quotes, action),
+      tableColumns: QuotePresenter.getTableFields(state.userCompany),
+      entityType: EntityType.quote,
     );
   }
 }

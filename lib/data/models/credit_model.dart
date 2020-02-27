@@ -52,7 +52,8 @@ abstract class CreditEntity extends Object
     implements Built<CreditEntity, CreditEntityBuilder> {
   factory CreditEntity() {
     return _$CreditEntity._(
-      id: --CreditEntity.counter,
+      id: BaseEntity.nextId,
+      isChanged: false,
       amount: 0.0,
       balance: 0.0,
       creditDate: '',
@@ -68,10 +69,9 @@ abstract class CreditEntity extends Object
 
   CreditEntity._();
 
-  static int counter = 0;
-
   CreditEntity get clone => rebuild((b) => b
-    ..id = --CreditEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false);
 
   @override
@@ -100,10 +100,13 @@ abstract class CreditEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(CreditEntity credit, String sortField, bool sortAscending) {

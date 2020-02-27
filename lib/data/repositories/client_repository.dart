@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
-
-import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ClientRepository {
   const ClientRepository({
@@ -16,15 +15,11 @@ class ClientRepository {
 
   final WebClient webClient;
 
-  Future<ClientEntity> loadItem(CompanyEntity company, AuthState auth,
-      int entityId, bool loadActivities) async {
-    String url = '${auth.url}/clients/$entityId';
+  Future<ClientEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final String url = '${credentials.url}/clients/$entityId?include=gateway_tokens,activities';
 
-    if (loadActivities) {
-      url += '?include=activities';
-    }
-
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);
@@ -33,14 +28,14 @@ class ClientRepository {
   }
 
   Future<BuiltList<ClientEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/clients?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/clients?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);
@@ -48,21 +43,37 @@ class ClientRepository {
     return clientResponse.data;
   }
 
+  Future<List<ClientEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    var url =
+        credentials.url + '/clients/bulk?include=gateway_tokens,activities';
+    if (action != null) {
+      url += '&action=' + action.toString();
+    }
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids}));
+
+    final ClientListResponse clientResponse =
+        serializers.deserializeWith(ClientListResponse.serializer, response);
+
+    return clientResponse.data.toList();
+  }
+
   Future<ClientEntity> saveData(
-      CompanyEntity company, AuthState auth, ClientEntity client,
-      [EntityAction action]) async {
+      Credentials credentials, ClientEntity client) async {
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;
 
     if (client.isNew) {
-      response = await webClient.post(auth.url + '/clients?include=activities',
-          company.token, json.encode(data));
+      response = await webClient.post(
+          credentials.url + '/clients?include=gateway_tokens,activities',
+          credentials.token,
+          data: json.encode(data));
     } else {
-      var url = auth.url + '/clients/${client.id}?include=activities';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
-      response = await webClient.put(url, company.token, json.encode(data));
+      final url = credentials.url +
+          '/clients/${client.id}?include=gateway_tokens,activities';
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final ClientItemResponse clientResponse =

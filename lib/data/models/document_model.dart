@@ -45,9 +45,10 @@ class DocumentFields {
 abstract class DocumentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<DocumentEntity, DocumentEntityBuilder> {
-  factory DocumentEntity({int id}) {
+  factory DocumentEntity({String id}) {
     return _$DocumentEntity._(
-      id: id ?? --DocumentEntity.counter,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
       path: '',
       type: '',
@@ -59,12 +60,21 @@ abstract class DocumentEntity extends Object
       width: 0,
       height: 0,
       size: 0,
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
+      vendorId: '',
+      projectId: '',
+      invoiceId: '',
+      expenseId: '',
     );
   }
 
   DocumentEntity._();
-
-  static int counter = 0;
 
   String get name;
 
@@ -82,17 +92,42 @@ abstract class DocumentEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @nullable
   @BuiltValueField(wireName: 'expense_id')
-  int get expenseId;
+  String get expenseId;
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
 
+  @nullable
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
   DocumentEntity get clone => rebuild((b) => b
-    ..id = --DocumentEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false);
 
   @override
@@ -111,9 +146,9 @@ abstract class DocumentEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  bool get isInvoiceDocument => invoiceId != null && invoiceId > 0;
+  bool get isInvoiceDocument => invoiceId != null && invoiceId.isNotEmpty;
 
-  bool get isExpenseDocument => expenseId != null && expenseId > 0;
+  bool get isExpenseDocument => expenseId != null && expenseId.isNotEmpty;
 
   String get prettySize => size > 1000000
       ? '${round(size / 1000000, 1).toInt()} MB'
@@ -200,20 +235,23 @@ abstract class DocumentEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.invoice)) {
+      if (userCompany.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.newInvoice);
       }
     }
 
-    if (user.canCreate(EntityType.document)) {
+    if (userCompany.canCreate(EntityType.document)) {
       actions.add(EntityAction.clone);
     }
 
@@ -221,7 +259,7 @@ abstract class DocumentEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   static Serializer<DocumentEntity> get serializer =>

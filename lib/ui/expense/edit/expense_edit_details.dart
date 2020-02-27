@@ -4,7 +4,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -30,11 +32,12 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _amountController,
       _custom1Controller,
       _custom2Controller,
@@ -66,14 +69,16 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
-      ..amount = parseDouble(_amountController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (expense != viewModel.expense) {
-      viewModel.onChanged(expense);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final expense = viewModel.expense.rebuild((b) => b
+        ..amount = parseDouble(_amountController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (expense != viewModel.expense) {
+        viewModel.onChanged(expense);
+      }
+    });
   }
 
   @override
@@ -92,16 +97,16 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__vendor_${expense.vendorId}__'),
+              allowClearing: true,
               entityType: EntityType.vendor,
               labelText: localization.vendor,
-              initialValue:
-                  (vendorState.map[expense.vendorId] ?? VendorEntity()).name,
-              entityMap: vendorState.map,
+              entityId: expense.vendorId,
               entityList:
                   memoizedDropdownVendorList(vendorState.map, vendorState.list),
               onSelected: (vendor) {
-                viewModel
-                    .onChanged(expense.rebuild((b) => b..vendorId = vendor.id));
+                viewModel.onChanged(
+                    expense.rebuild((b) => b..vendorId = vendor?.id));
               },
               onAddPressed: (completer) {
                 viewModel.onAddVendorPressed(context, completer);
@@ -110,21 +115,19 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             expense.isInvoiced
                 ? SizedBox()
                 : EntityDropdown(
+                    key: ValueKey('__client_${expense.clientId}__'),
+                    allowClearing: true,
                     entityType: EntityType.client,
                     labelText: localization.client,
-                    initialValue:
-                        (clientState.map[expense.clientId] ?? ClientEntity())
-                            .displayName,
-                    entityMap: clientState.map,
+                    entityId: expense.clientId,
                     entityList: memoizedDropdownClientList(
                         clientState.map, clientState.list),
                     onSelected: (client) {
-                      var currencyId = (client as ClientEntity).currencyId;
-                      if (currencyId == 0) {
-                        currencyId = company.currencyId;
-                      }
+                      final currencyId =
+                          (client as ClientEntity)?.settings?.currencyId ??
+                              company.currencyId;
                       viewModel.onChanged(expense.rebuild((b) => b
-                        ..clientId = client.id
+                        ..clientId = client?.id
                         ..invoiceCurrencyId = currencyId));
                     },
                     onAddPressed: (completer) {
@@ -132,12 +135,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     },
                   ),
             EntityDropdown(
+              key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,
               labelText: localization.category,
-              initialValue: (company.expenseCategoryMap[expense.categoryId] ??
-                      ExpenseCategoryEntity())
-                  .name,
-              entityMap: company.expenseCategoryMap,
+              entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
               onSelected: (category) {
@@ -145,20 +146,18 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     expense.rebuild((b) => b..categoryId = category.id));
               },
             ),
-            TextFormField(
+            DecoratedFormField(
               controller: _amountController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: localization.amount,
-              ),
+              label: localization.amount,
             ),
             EntityDropdown(
+              key:
+                  ValueKey('__expense_currency_${expense.expenseCurrencyId}__'),
               entityType: EntityType.currency,
-              entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue: staticState
-                  .currencyMap[viewModel.expense.expenseCurrencyId]?.name,
+              entityId: expense.expenseCurrencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.expense
                       .rebuild((b) => b..expenseCurrencyId = currency.id)),
@@ -173,13 +172,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.expense1),
-              options: company.getCustomFieldValues(CustomFieldType.expense1),
+              field: CustomFieldType.expense1,
+              value: expense.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.expense2),
-              options: company.getCustomFieldValues(CustomFieldType.expense2),
+              field: CustomFieldType.expense2,
+              value: expense.customValue2,
             ),
           ],
         ),

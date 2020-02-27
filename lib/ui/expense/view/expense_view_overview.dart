@@ -2,8 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -36,27 +35,34 @@ class ExpenseOverview extends StatelessWidget {
 
     if (expense.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.expense1);
-      fields[label1] = expense.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.expense1,
+          value: expense.customValue1);
     }
 
     if (expense.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.expense2);
-      fields[label2] = expense.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.expense2,
+          value: expense.customValue2);
     }
 
     return ListView(
       children: <Widget>[
         expense.isConverted
-            ? TwoValueHeader(
+            ? EntityHeader(
                 backgroundColor: ExpenseStatusColors.colors[expense.statusId],
-                label1: localization.amount,
-                value1: formatNumber(expense.amountWithTax, context,
+                label: localization.amount,
+                value: formatNumber(expense.amountWithTax, context,
                     currencyId: expense.expenseCurrencyId),
-                label2: localization.converted,
-                value2: formatNumber(expense.convertedAmountWithTax, context,
+                secondLabel: localization.converted,
+                secondValue: formatNumber(
+                    expense.convertedAmountWithTax, context,
                     currencyId: expense.invoiceCurrencyId),
               )
-            : OneValueHeader(
+            : EntityHeader(
                 backgroundColor: ExpenseStatusColors.colors[expense.statusId],
                 label: localization.amount,
                 value: formatNumber(expense.amountWithTax, context,
@@ -116,8 +122,7 @@ class ExpenseOverview extends StatelessWidget {
                 child: ListTile(
                   title: EntityStateTitle(
                       entity: invoice,
-                      title:
-                          '${localization.invoice} ${invoice.invoiceNumber}'),
+                      title: '${localization.invoice} ${invoice.number}'),
                   leading: Icon(getEntityIcon(EntityType.invoice), size: 18),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () =>

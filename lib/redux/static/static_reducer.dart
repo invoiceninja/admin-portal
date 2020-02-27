@@ -40,11 +40,6 @@ StaticState staticLoadedReducer(
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..datetimeFormatMap.addAll(Map.fromIterable(
-      action.data.datetimeFormats,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    ))
     ..languageMap.addAll(Map.fromIterable(
       action.data.languages,
       key: (dynamic item) => item.id,
@@ -65,8 +60,8 @@ StaticState staticLoadedReducer(
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..frequencyMap.addAll(Map.fromIterable(
-      action.data.frequencies,
+    ..gatewayMap.addAll(Map.fromIterable(
+      action.data.gateways,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'date_format_model.g.dart';
 
@@ -9,6 +11,7 @@ abstract class DateFormatListResponse
   factory DateFormatListResponse(
           [void updates(DateFormatListResponseBuilder b)]) =
       _$DateFormatListResponse;
+
   DateFormatListResponse._();
 
   BuiltList<DateFormatEntity> get data;
@@ -22,6 +25,7 @@ abstract class DateFormatItemResponse
   factory DateFormatItemResponse(
           [void updates(DateFormatItemResponseBuilder b)]) =
       _$DateFormatItemResponse;
+
   DateFormatItemResponse._();
 
   DateFormatEntity get data;
@@ -36,20 +40,63 @@ class DateFormatFields {
   static const String formatMoment = 'formatMoment';
 }
 
-abstract class DateFormatEntity
+abstract class DateFormatEntity extends Object
+    with SelectableEntity
     implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   factory DateFormatEntity() {
     return _$DateFormatEntity._(
-      id: 0,
+      id: '',
       format: '',
     );
   }
-  DateFormatEntity._();
 
-  int get id;
+  DateFormatEntity._();
 
   @BuiltValueField(wireName: 'format_dart')
   String get format;
+
+  @override
+  bool matchesFilter(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return true;
+    }
+
+    filter = filter.toLowerCase();
+
+    if (filter.toLowerCase().contains(filter)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    filter = filter.toLowerCase();
+
+    /*
+    if (location.toLowerCase().contains(filter)) {
+      return location;
+    }
+    */
+
+    return null;
+  }
+
+  String get preview {
+    final formatter = DateFormat(format, 'en');
+    return formatter.format(DateTime.parse('2000-01-31'));
+  }
+
+  @override
+  String get listDisplayName => preview;
+
+  @override
+  double get listDisplayAmount => null;
 
   static Serializer<DateFormatEntity> get serializer =>
       _$dateFormatEntitySerializer;

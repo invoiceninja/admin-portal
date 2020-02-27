@@ -6,25 +6,25 @@ part of 'company_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<CompanyState> _$companyStateSerializer =
-    new _$CompanyStateSerializer();
+Serializer<UserCompanyState> _$userCompanyStateSerializer =
+    new _$UserCompanyStateSerializer();
+Serializer<SettingsUIState> _$settingsUIStateSerializer =
+    new _$SettingsUIStateSerializer();
 
-class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
+class _$UserCompanyStateSerializer
+    implements StructuredSerializer<UserCompanyState> {
   @override
-  final Iterable<Type> types = const [CompanyState, _$CompanyState];
+  final Iterable<Type> types = const [UserCompanyState, _$UserCompanyState];
   @override
-  final String wireName = 'CompanyState';
+  final String wireName = 'UserCompanyState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CompanyState object,
+  Iterable<Object> serialize(Serializers serializers, UserCompanyState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'documentState',
       serializers.serialize(object.documentState,
           specifiedType: const FullType(DocumentState)),
-      'dashboardState',
-      serializers.serialize(object.dashboardState,
-          specifiedType: const FullType(DashboardState)),
       'productState',
       serializers.serialize(object.productState,
           specifiedType: const FullType(ProductState)),
@@ -52,20 +52,33 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'userState',
+      serializers.serialize(object.userState,
+          specifiedType: const FullType(UserState)),
+      'taxRateState',
+      serializers.serialize(object.taxRateState,
+          specifiedType: const FullType(TaxRateState)),
+      'companyGatewayState',
+      serializers.serialize(object.companyGatewayState,
+          specifiedType: const FullType(CompanyGatewayState)),
+      'groupState',
+      serializers.serialize(object.groupState,
+          specifiedType: const FullType(GroupState)),
     ];
-    if (object.company != null) {
+    if (object.userCompany != null) {
       result
-        ..add('company')
-        ..add(serializers.serialize(object.company,
-            specifiedType: const FullType(CompanyEntity)));
+        ..add('userCompany')
+        ..add(serializers.serialize(object.userCompany,
+            specifiedType: const FullType(UserCompanyEntity)));
     }
     return result;
   }
 
   @override
-  CompanyState deserialize(Serializers serializers, Iterable<Object> serialized,
+  UserCompanyState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyStateBuilder();
+    final result = new UserCompanyStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -73,17 +86,14 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'company':
-          result.company.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+        case 'userCompany':
+          result.userCompany.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyEntity))
+              as UserCompanyEntity);
           break;
         case 'documentState':
           result.documentState.replace(serializers.deserialize(value,
               specifiedType: const FullType(DocumentState)) as DocumentState);
-          break;
-        case 'dashboardState':
-          result.dashboardState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DashboardState)) as DashboardState);
           break;
         case 'productState':
           result.productState.replace(serializers.deserialize(value,
@@ -121,6 +131,23 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
           break;
+        case 'userState':
+          result.userState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserState)) as UserState);
+          break;
+        case 'taxRateState':
+          result.taxRateState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxRateState)) as TaxRateState);
+          break;
+        case 'companyGatewayState':
+          result.companyGatewayState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CompanyGatewayState))
+              as CompanyGatewayState);
+          break;
+        case 'groupState':
+          result.groupState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupState)) as GroupState);
+          break;
       }
     }
 
@@ -128,13 +155,146 @@ class _$CompanyStateSerializer implements StructuredSerializer<CompanyState> {
   }
 }
 
-class _$CompanyState extends CompanyState {
+class _$SettingsUIStateSerializer
+    implements StructuredSerializer<SettingsUIState> {
   @override
-  final CompanyEntity company;
+  final Iterable<Type> types = const [SettingsUIState, _$SettingsUIState];
+  @override
+  final String wireName = 'SettingsUIState';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'company',
+      serializers.serialize(object.company,
+          specifiedType: const FullType(CompanyEntity)),
+      'origCompany',
+      serializers.serialize(object.origCompany,
+          specifiedType: const FullType(CompanyEntity)),
+      'client',
+      serializers.serialize(object.client,
+          specifiedType: const FullType(ClientEntity)),
+      'origClient',
+      serializers.serialize(object.origClient,
+          specifiedType: const FullType(ClientEntity)),
+      'group',
+      serializers.serialize(object.group,
+          specifiedType: const FullType(GroupEntity)),
+      'origGroup',
+      serializers.serialize(object.origGroup,
+          specifiedType: const FullType(GroupEntity)),
+      'user',
+      serializers.serialize(object.user,
+          specifiedType: const FullType(UserEntity)),
+      'origUser',
+      serializers.serialize(object.origUser,
+          specifiedType: const FullType(UserEntity)),
+      'entityType',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(EntityType)),
+      'isChanged',
+      serializers.serialize(object.isChanged,
+          specifiedType: const FullType(bool)),
+      'updatedAt',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'section',
+      serializers.serialize(object.section,
+          specifiedType: const FullType(String)),
+      'filterClearedAt',
+      serializers.serialize(object.filterClearedAt,
+          specifiedType: const FullType(int)),
+    ];
+    if (object.filter != null) {
+      result
+        ..add('filter')
+        ..add(serializers.serialize(object.filter,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  SettingsUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new SettingsUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'company':
+          result.company.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+          break;
+        case 'origCompany':
+          result.origCompany.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+          break;
+        case 'client':
+          result.client.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+          break;
+        case 'origClient':
+          result.origClient.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+          break;
+        case 'group':
+          result.group.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupEntity)) as GroupEntity);
+          break;
+        case 'origGroup':
+          result.origGroup.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupEntity)) as GroupEntity);
+          break;
+        case 'user':
+          result.user.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+        case 'origUser':
+          result.origUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+        case 'entityType':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'updatedAt':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'section':
+          result.section = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'filter':
+          result.filter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterClearedAt':
+          result.filterClearedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserCompanyState extends UserCompanyState {
+  @override
+  final UserCompanyEntity userCompany;
   @override
   final DocumentState documentState;
-  @override
-  final DashboardState dashboardState;
   @override
   final ProductState productState;
   @override
@@ -153,14 +313,22 @@ class _$CompanyState extends CompanyState {
   final PaymentState paymentState;
   @override
   final QuoteState quoteState;
+  @override
+  final UserState userState;
+  @override
+  final TaxRateState taxRateState;
+  @override
+  final CompanyGatewayState companyGatewayState;
+  @override
+  final GroupState groupState;
 
-  factory _$CompanyState([void Function(CompanyStateBuilder) updates]) =>
-      (new CompanyStateBuilder()..update(updates)).build();
+  factory _$UserCompanyState(
+          [void Function(UserCompanyStateBuilder) updates]) =>
+      (new UserCompanyStateBuilder()..update(updates)).build();
 
-  _$CompanyState._(
-      {this.company,
+  _$UserCompanyState._(
+      {this.userCompany,
       this.documentState,
-      this.dashboardState,
       this.productState,
       this.clientState,
       this.invoiceState,
@@ -169,57 +337,71 @@ class _$CompanyState extends CompanyState {
       this.taskState,
       this.projectState,
       this.paymentState,
-      this.quoteState})
+      this.quoteState,
+      this.userState,
+      this.taxRateState,
+      this.companyGatewayState,
+      this.groupState})
       : super._() {
     if (documentState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'documentState');
-    }
-    if (dashboardState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'dashboardState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
     }
     if (productState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'productState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'productState');
     }
     if (clientState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'clientState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'clientState');
     }
     if (invoiceState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'invoiceState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'invoiceState');
     }
     if (expenseState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'expenseState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'expenseState');
     }
     if (vendorState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'vendorState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'vendorState');
     }
     if (taskState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'taskState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'taskState');
     }
     if (projectState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'projectState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'projectState');
     }
     if (paymentState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'paymentState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'paymentState');
     }
     if (quoteState == null) {
-      throw new BuiltValueNullFieldError('CompanyState', 'quoteState');
+      throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
+    }
+    if (userState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'userState');
+    }
+    if (taxRateState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'taxRateState');
+    }
+    if (companyGatewayState == null) {
+      throw new BuiltValueNullFieldError(
+          'UserCompanyState', 'companyGatewayState');
+    }
+    if (groupState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'groupState');
     }
   }
 
   @override
-  CompanyState rebuild(void Function(CompanyStateBuilder) updates) =>
+  UserCompanyState rebuild(void Function(UserCompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CompanyStateBuilder toBuilder() => new CompanyStateBuilder()..replace(this);
+  UserCompanyStateBuilder toBuilder() =>
+      new UserCompanyStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CompanyState &&
-        company == other.company &&
+    return other is UserCompanyState &&
+        userCompany == other.userCompany &&
         documentState == other.documentState &&
-        dashboardState == other.dashboardState &&
         productState == other.productState &&
         clientState == other.clientState &&
         invoiceState == other.invoiceState &&
@@ -228,7 +410,11 @@ class _$CompanyState extends CompanyState {
         taskState == other.taskState &&
         projectState == other.projectState &&
         paymentState == other.paymentState &&
-        quoteState == other.quoteState;
+        quoteState == other.quoteState &&
+        userState == other.userState &&
+        taxRateState == other.taxRateState &&
+        companyGatewayState == other.companyGatewayState &&
+        groupState == other.groupState;
   }
 
   @override
@@ -243,26 +429,36 @@ class _$CompanyState extends CompanyState {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, company.hashCode),
-                                                documentState.hashCode),
-                                            dashboardState.hashCode),
-                                        productState.hashCode),
-                                    clientState.hashCode),
-                                invoiceState.hashCode),
-                            expenseState.hashCode),
-                        vendorState.hashCode),
-                    taskState.hashCode),
-                projectState.hashCode),
-            paymentState.hashCode),
-        quoteState.hashCode));
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                userCompany
+                                                                    .hashCode),
+                                                            documentState
+                                                                .hashCode),
+                                                        productState.hashCode),
+                                                    clientState.hashCode),
+                                                invoiceState.hashCode),
+                                            expenseState.hashCode),
+                                        vendorState.hashCode),
+                                    taskState.hashCode),
+                                projectState.hashCode),
+                            paymentState.hashCode),
+                        quoteState.hashCode),
+                    userState.hashCode),
+                taxRateState.hashCode),
+            companyGatewayState.hashCode),
+        groupState.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('CompanyState')
-          ..add('company', company)
+    return (newBuiltValueToStringHelper('UserCompanyState')
+          ..add('userCompany', userCompany)
           ..add('documentState', documentState)
-          ..add('dashboardState', dashboardState)
           ..add('productState', productState)
           ..add('clientState', clientState)
           ..add('invoiceState', invoiceState)
@@ -271,31 +467,30 @@ class _$CompanyState extends CompanyState {
           ..add('taskState', taskState)
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
-          ..add('quoteState', quoteState))
+          ..add('quoteState', quoteState)
+          ..add('userState', userState)
+          ..add('taxRateState', taxRateState)
+          ..add('companyGatewayState', companyGatewayState)
+          ..add('groupState', groupState))
         .toString();
   }
 }
 
-class CompanyStateBuilder
-    implements Builder<CompanyState, CompanyStateBuilder> {
-  _$CompanyState _$v;
+class UserCompanyStateBuilder
+    implements Builder<UserCompanyState, UserCompanyStateBuilder> {
+  _$UserCompanyState _$v;
 
-  CompanyEntityBuilder _company;
-  CompanyEntityBuilder get company =>
-      _$this._company ??= new CompanyEntityBuilder();
-  set company(CompanyEntityBuilder company) => _$this._company = company;
+  UserCompanyEntityBuilder _userCompany;
+  UserCompanyEntityBuilder get userCompany =>
+      _$this._userCompany ??= new UserCompanyEntityBuilder();
+  set userCompany(UserCompanyEntityBuilder userCompany) =>
+      _$this._userCompany = userCompany;
 
   DocumentStateBuilder _documentState;
   DocumentStateBuilder get documentState =>
       _$this._documentState ??= new DocumentStateBuilder();
   set documentState(DocumentStateBuilder documentState) =>
       _$this._documentState = documentState;
-
-  DashboardStateBuilder _dashboardState;
-  DashboardStateBuilder get dashboardState =>
-      _$this._dashboardState ??= new DashboardStateBuilder();
-  set dashboardState(DashboardStateBuilder dashboardState) =>
-      _$this._dashboardState = dashboardState;
 
   ProductStateBuilder _productState;
   ProductStateBuilder get productState =>
@@ -350,13 +545,35 @@ class CompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
-  CompanyStateBuilder();
+  UserStateBuilder _userState;
+  UserStateBuilder get userState =>
+      _$this._userState ??= new UserStateBuilder();
+  set userState(UserStateBuilder userState) => _$this._userState = userState;
 
-  CompanyStateBuilder get _$this {
+  TaxRateStateBuilder _taxRateState;
+  TaxRateStateBuilder get taxRateState =>
+      _$this._taxRateState ??= new TaxRateStateBuilder();
+  set taxRateState(TaxRateStateBuilder taxRateState) =>
+      _$this._taxRateState = taxRateState;
+
+  CompanyGatewayStateBuilder _companyGatewayState;
+  CompanyGatewayStateBuilder get companyGatewayState =>
+      _$this._companyGatewayState ??= new CompanyGatewayStateBuilder();
+  set companyGatewayState(CompanyGatewayStateBuilder companyGatewayState) =>
+      _$this._companyGatewayState = companyGatewayState;
+
+  GroupStateBuilder _groupState;
+  GroupStateBuilder get groupState =>
+      _$this._groupState ??= new GroupStateBuilder();
+  set groupState(GroupStateBuilder groupState) =>
+      _$this._groupState = groupState;
+
+  UserCompanyStateBuilder();
+
+  UserCompanyStateBuilder get _$this {
     if (_$v != null) {
-      _company = _$v.company?.toBuilder();
+      _userCompany = _$v.userCompany?.toBuilder();
       _documentState = _$v.documentState?.toBuilder();
-      _dashboardState = _$v.dashboardState?.toBuilder();
       _productState = _$v.productState?.toBuilder();
       _clientState = _$v.clientState?.toBuilder();
       _invoiceState = _$v.invoiceState?.toBuilder();
@@ -366,33 +583,36 @@ class CompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _userState = _$v.userState?.toBuilder();
+      _taxRateState = _$v.taxRateState?.toBuilder();
+      _companyGatewayState = _$v.companyGatewayState?.toBuilder();
+      _groupState = _$v.groupState?.toBuilder();
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(CompanyState other) {
+  void replace(UserCompanyState other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$CompanyState;
+    _$v = other as _$UserCompanyState;
   }
 
   @override
-  void update(void Function(CompanyStateBuilder) updates) {
+  void update(void Function(UserCompanyStateBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$CompanyState build() {
-    _$CompanyState _$result;
+  _$UserCompanyState build() {
+    _$UserCompanyState _$result;
     try {
       _$result = _$v ??
-          new _$CompanyState._(
-              company: _company?.build(),
+          new _$UserCompanyState._(
+              userCompany: _userCompany?.build(),
               documentState: documentState.build(),
-              dashboardState: dashboardState.build(),
               productState: productState.build(),
               clientState: clientState.build(),
               invoiceState: invoiceState.build(),
@@ -401,16 +621,18 @@ class CompanyStateBuilder
               taskState: taskState.build(),
               projectState: projectState.build(),
               paymentState: paymentState.build(),
-              quoteState: quoteState.build());
+              quoteState: quoteState.build(),
+              userState: userState.build(),
+              taxRateState: taxRateState.build(),
+              companyGatewayState: companyGatewayState.build(),
+              groupState: groupState.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'company';
-        _company?.build();
+        _$failedField = 'userCompany';
+        _userCompany?.build();
         _$failedField = 'documentState';
         documentState.build();
-        _$failedField = 'dashboardState';
-        dashboardState.build();
         _$failedField = 'productState';
         productState.build();
         _$failedField = 'clientState';
@@ -429,9 +651,343 @@ class CompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'userState';
+        userState.build();
+        _$failedField = 'taxRateState';
+        taxRateState.build();
+        _$failedField = 'companyGatewayState';
+        companyGatewayState.build();
+        _$failedField = 'groupState';
+        groupState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'CompanyState', _$failedField, e.toString());
+            'UserCompanyState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$SettingsUIState extends SettingsUIState {
+  @override
+  final CompanyEntity company;
+  @override
+  final CompanyEntity origCompany;
+  @override
+  final ClientEntity client;
+  @override
+  final ClientEntity origClient;
+  @override
+  final GroupEntity group;
+  @override
+  final GroupEntity origGroup;
+  @override
+  final UserEntity user;
+  @override
+  final UserEntity origUser;
+  @override
+  final EntityType entityType;
+  @override
+  final bool isChanged;
+  @override
+  final int updatedAt;
+  @override
+  final String section;
+  @override
+  final String filter;
+  @override
+  final int filterClearedAt;
+
+  factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
+      (new SettingsUIStateBuilder()..update(updates)).build();
+
+  _$SettingsUIState._(
+      {this.company,
+      this.origCompany,
+      this.client,
+      this.origClient,
+      this.group,
+      this.origGroup,
+      this.user,
+      this.origUser,
+      this.entityType,
+      this.isChanged,
+      this.updatedAt,
+      this.section,
+      this.filter,
+      this.filterClearedAt})
+      : super._() {
+    if (company == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'company');
+    }
+    if (origCompany == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origCompany');
+    }
+    if (client == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'client');
+    }
+    if (origClient == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origClient');
+    }
+    if (group == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'group');
+    }
+    if (origGroup == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origGroup');
+    }
+    if (user == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'user');
+    }
+    if (origUser == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'origUser');
+    }
+    if (entityType == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'entityType');
+    }
+    if (isChanged == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'isChanged');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'updatedAt');
+    }
+    if (section == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'section');
+    }
+    if (filterClearedAt == null) {
+      throw new BuiltValueNullFieldError('SettingsUIState', 'filterClearedAt');
+    }
+  }
+
+  @override
+  SettingsUIState rebuild(void Function(SettingsUIStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  SettingsUIStateBuilder toBuilder() =>
+      new SettingsUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is SettingsUIState &&
+        company == other.company &&
+        origCompany == other.origCompany &&
+        client == other.client &&
+        origClient == other.origClient &&
+        group == other.group &&
+        origGroup == other.origGroup &&
+        user == other.user &&
+        origUser == other.origUser &&
+        entityType == other.entityType &&
+        isChanged == other.isChanged &&
+        updatedAt == other.updatedAt &&
+        section == other.section &&
+        filter == other.filter &&
+        filterClearedAt == other.filterClearedAt;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(0,
+                                                            company.hashCode),
+                                                        origCompany.hashCode),
+                                                    client.hashCode),
+                                                origClient.hashCode),
+                                            group.hashCode),
+                                        origGroup.hashCode),
+                                    user.hashCode),
+                                origUser.hashCode),
+                            entityType.hashCode),
+                        isChanged.hashCode),
+                    updatedAt.hashCode),
+                section.hashCode),
+            filter.hashCode),
+        filterClearedAt.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('SettingsUIState')
+          ..add('company', company)
+          ..add('origCompany', origCompany)
+          ..add('client', client)
+          ..add('origClient', origClient)
+          ..add('group', group)
+          ..add('origGroup', origGroup)
+          ..add('user', user)
+          ..add('origUser', origUser)
+          ..add('entityType', entityType)
+          ..add('isChanged', isChanged)
+          ..add('updatedAt', updatedAt)
+          ..add('section', section)
+          ..add('filter', filter)
+          ..add('filterClearedAt', filterClearedAt))
+        .toString();
+  }
+}
+
+class SettingsUIStateBuilder
+    implements Builder<SettingsUIState, SettingsUIStateBuilder> {
+  _$SettingsUIState _$v;
+
+  CompanyEntityBuilder _company;
+  CompanyEntityBuilder get company =>
+      _$this._company ??= new CompanyEntityBuilder();
+  set company(CompanyEntityBuilder company) => _$this._company = company;
+
+  CompanyEntityBuilder _origCompany;
+  CompanyEntityBuilder get origCompany =>
+      _$this._origCompany ??= new CompanyEntityBuilder();
+  set origCompany(CompanyEntityBuilder origCompany) =>
+      _$this._origCompany = origCompany;
+
+  ClientEntityBuilder _client;
+  ClientEntityBuilder get client =>
+      _$this._client ??= new ClientEntityBuilder();
+  set client(ClientEntityBuilder client) => _$this._client = client;
+
+  ClientEntityBuilder _origClient;
+  ClientEntityBuilder get origClient =>
+      _$this._origClient ??= new ClientEntityBuilder();
+  set origClient(ClientEntityBuilder origClient) =>
+      _$this._origClient = origClient;
+
+  GroupEntityBuilder _group;
+  GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
+  set group(GroupEntityBuilder group) => _$this._group = group;
+
+  GroupEntityBuilder _origGroup;
+  GroupEntityBuilder get origGroup =>
+      _$this._origGroup ??= new GroupEntityBuilder();
+  set origGroup(GroupEntityBuilder origGroup) => _$this._origGroup = origGroup;
+
+  UserEntityBuilder _user;
+  UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+  set user(UserEntityBuilder user) => _$this._user = user;
+
+  UserEntityBuilder _origUser;
+  UserEntityBuilder get origUser =>
+      _$this._origUser ??= new UserEntityBuilder();
+  set origUser(UserEntityBuilder origUser) => _$this._origUser = origUser;
+
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
+  int _updatedAt;
+  int get updatedAt => _$this._updatedAt;
+  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+
+  String _section;
+  String get section => _$this._section;
+  set section(String section) => _$this._section = section;
+
+  String _filter;
+  String get filter => _$this._filter;
+  set filter(String filter) => _$this._filter = filter;
+
+  int _filterClearedAt;
+  int get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int filterClearedAt) =>
+      _$this._filterClearedAt = filterClearedAt;
+
+  SettingsUIStateBuilder();
+
+  SettingsUIStateBuilder get _$this {
+    if (_$v != null) {
+      _company = _$v.company?.toBuilder();
+      _origCompany = _$v.origCompany?.toBuilder();
+      _client = _$v.client?.toBuilder();
+      _origClient = _$v.origClient?.toBuilder();
+      _group = _$v.group?.toBuilder();
+      _origGroup = _$v.origGroup?.toBuilder();
+      _user = _$v.user?.toBuilder();
+      _origUser = _$v.origUser?.toBuilder();
+      _entityType = _$v.entityType;
+      _isChanged = _$v.isChanged;
+      _updatedAt = _$v.updatedAt;
+      _section = _$v.section;
+      _filter = _$v.filter;
+      _filterClearedAt = _$v.filterClearedAt;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(SettingsUIState other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$SettingsUIState;
+  }
+
+  @override
+  void update(void Function(SettingsUIStateBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$SettingsUIState build() {
+    _$SettingsUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$SettingsUIState._(
+              company: company.build(),
+              origCompany: origCompany.build(),
+              client: client.build(),
+              origClient: origClient.build(),
+              group: group.build(),
+              origGroup: origGroup.build(),
+              user: user.build(),
+              origUser: origUser.build(),
+              entityType: entityType,
+              isChanged: isChanged,
+              updatedAt: updatedAt,
+              section: section,
+              filter: filter,
+              filterClearedAt: filterClearedAt);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'company';
+        company.build();
+        _$failedField = 'origCompany';
+        origCompany.build();
+        _$failedField = 'client';
+        client.build();
+        _$failedField = 'origClient';
+        origClient.build();
+        _$failedField = 'group';
+        group.build();
+        _$failedField = 'origGroup';
+        origGroup.build();
+        _$failedField = 'user';
+        user.build();
+        _$failedField = 'origUser';
+        origUser.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SettingsUIState', _$failedField, e.toString());
       }
       rethrow;
     }

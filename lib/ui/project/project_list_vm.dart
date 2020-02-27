@@ -1,19 +1,21 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/project/project_list.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/project_presenter.dart';
+import 'package:invoiceninja_flutter/ui/project/project_list.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/redux.dart';
 
 class ProjectListBuilder extends StatelessWidget {
   const ProjectListBuilder({Key key}) : super(key: key);
@@ -33,7 +35,7 @@ class ProjectListBuilder extends StatelessWidget {
 
 class ProjectListVM {
   ProjectListVM({
-    @required this.user,
+    @required this.state,
     @required this.projectList,
     @required this.projectMap,
     @required this.clientMap,
@@ -43,7 +45,7 @@ class ProjectListVM {
     @required this.isLoaded,
     @required this.onProjectTap,
     @required this.onRefreshed,
-    @required this.onEntityAction,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -53,7 +55,7 @@ class ProjectListVM {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProjects(completer: completer, force: true));
       return completer.future;
@@ -62,7 +64,7 @@ class ProjectListVM {
     final state = store.state;
 
     return ProjectListVM(
-      user: state.user,
+      state: state,
       listState: state.projectListState,
       projectList: memoizedFilteredProjectList(
           state.projectState.map,
@@ -76,31 +78,34 @@ class ProjectListVM {
       filter: state.projectUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterProjectsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.projectListState.filterEntityId,
-              context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.projectListState.filterEntityId,
+          entityType: state.projectListState.filterEntityType),
       onProjectTap: (context, project) {
-        store.dispatch(ViewProject(projectId: project.id, context: context));
+        if (store.state.projectListState.isInMultiselect()) {
+          handleProjectAction(
+              context, [project], EntityAction.toggleMultiselect);
+        } else {
+          viewEntity(context: context, entity: project);
+        }
       },
-      onEntityAction:
-          (BuildContext context, BaseEntity project, EntityAction action) =>
-              handleProjectAction(context, project, action),
       onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: ProjectPresenter.getTableFields(state.userCompany),
     );
   }
 
-  final UserEntity user;
-  final List<int> projectList;
-  final BuiltMap<int, ProjectEntity> projectMap;
-  final BuiltMap<int, ClientEntity> clientMap;
+  final AppState state;
+  final List<String> projectList;
+  final BuiltMap<String, ProjectEntity> projectMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, ProjectEntity) onProjectTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, ProjectEntity, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final List<String> tableColumns;
 }

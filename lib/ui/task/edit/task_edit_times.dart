@@ -2,6 +2,8 @@ import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/time_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times_vm.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +27,20 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
   TaskTime selectedTaskTime;
 
   void _showTaskTimeEditor(TaskTime taskTime, BuildContext context) {
-    showDialog<TimeEditDetails>(
+    showDialog<ResponsivePadding>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
           final task = viewModel.task;
           final taskTimes = task.taskTimes;
-          return TimeEditDetails(
-            viewModel: viewModel,
-            //key: Key(taskTime.entityKey),
-            taskTime: taskTime,
-            index: taskTimes.indexOf(
-                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
+          return ResponsivePadding(
+            child: TimeEditDetails(
+              viewModel: viewModel,
+              //key: Key(taskTime.entityKey),
+              taskTime: taskTime,
+              index: taskTimes.indexOf(
+                  taskTimes.firstWhere((time) => time.equalTo(taskTime))),
+            ),
           );
         });
   }
@@ -57,15 +61,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     }
 
     if (task.taskTimes.isEmpty) {
-      return Center(
-        child: Text(
-          localization.clickPlusToAddTime,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 20.0,
-          ),
-        ),
-      );
+      return HelpText(localization.clickPlusToAddTime);
     }
 
     final taskTimes = task.taskTimes

@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/size_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
@@ -13,7 +14,6 @@ import 'package:invoiceninja_flutter/data/models/static/language_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/frequency_model.dart';
 
 part 'static_data_model.g.dart';
 
@@ -69,6 +69,7 @@ abstract class StaticDataEntity
       currencies: BuiltList<CurrencyEntity>(),
       sizes: BuiltList<SizeEntity>(),
       industries: BuiltList<IndustryEntity>(),
+      gateways: BuiltList<GatewayEntity>(),
       timezones: BuiltList<TimezoneEntity>(),
       dateFormats: BuiltList<DateFormatEntity>(),
       datetimeFormats: BuiltList<DatetimeFormatEntity>(),
@@ -77,7 +78,6 @@ abstract class StaticDataEntity
       countries: BuiltList<CountryEntity>(),
       invoiceDesigns: BuiltList<InvoiceDesignEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
-      frequencies: BuiltList<FrequencyEntity>(),
     );
   }
   StaticDataEntity._();
@@ -90,21 +90,26 @@ abstract class StaticDataEntity
 
   BuiltList<TimezoneEntity> get timezones;
 
+  BuiltList<GatewayEntity> get gateways;
+
+  @BuiltValueField(wireName: 'date_formats')
   BuiltList<DateFormatEntity> get dateFormats;
 
+  @BuiltValueField(wireName: 'datetime_formats')
   BuiltList<DatetimeFormatEntity> get datetimeFormats;
 
   BuiltList<LanguageEntity> get languages;
 
+  @BuiltValueField(wireName: 'payment_types')
   BuiltList<PaymentTypeEntity> get paymentTypes;
 
   BuiltList<CountryEntity> get countries;
 
+  @BuiltValueField(wireName: 'invoice_designs')
   BuiltList<InvoiceDesignEntity> get invoiceDesigns;
 
+  @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
-
-  BuiltList<FrequencyEntity> get frequencies;
 
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
@@ -27,6 +28,7 @@ class VendorEditAddressState extends State<VendorEditAddress> {
   final _postalCodeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -65,15 +67,17 @@ class VendorEditAddressState extends State<VendorEditAddress> {
   }
 
   void _onChanged() {
-    final vendor = widget.viewModel.vendor.rebuild((b) => b
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim());
-    if (vendor != widget.viewModel.vendor) {
-      widget.viewModel.onChanged(vendor);
-    }
+    _debouncer.run(() {
+      final vendor = widget.viewModel.vendor.rebuild((b) => b
+        ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim());
+      if (vendor != widget.viewModel.vendor) {
+        widget.viewModel.onChanged(vendor);
+      }
+    });
   }
 
   @override
@@ -85,53 +89,36 @@ class VendorEditAddressState extends State<VendorEditAddress> {
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
         children: <Widget>[
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _address1Controller,
-            decoration: InputDecoration(
-              labelText: localization.address1,
-            ),
+            label: localization.address1,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _address2Controller,
-            decoration: InputDecoration(
-              labelText: localization.address2,
-            ),
+            label: localization.address2,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _cityController,
-            decoration: InputDecoration(
-              labelText: localization.city,
-            ),
+            label: localization.city,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _stateController,
-            decoration: InputDecoration(
-              labelText: localization.state,
-            ),
+            label: localization.state,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _postalCodeController,
-            decoration: InputDecoration(
-              labelText: localization.postalCode,
-            ),
-            keyboardType: TextInputType.phone,
+            label: localization.postalCode,
           ),
           EntityDropdown(
             key: ValueKey(vendor.countryId),
+            allowClearing: true,
             entityType: EntityType.country,
-            entityMap: viewModel.state.staticState.countryMap,
             entityList:
                 memoizedCountryList(viewModel.state.staticState.countryMap),
             labelText: localization.country,
-            initialValue:
-                viewModel.state.staticState.countryMap[vendor.countryId]?.name,
+            entityId: vendor.countryId,
             onSelected: (SelectableEntity country) => viewModel
-                .onChanged(vendor.rebuild((b) => b..countryId = country.id)),
+                .onChanged(vendor.rebuild((b) => b..countryId = country?.id)),
           ),
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'project_model.g.dart';
@@ -35,7 +36,8 @@ abstract class ProjectItemResponse
 
 class ProjectFields {
   static const String name = 'name';
-  static const String clientId = 'clientAt';
+  static const String clientId = 'clientId';
+  static const String client = 'client';
   static const String taskRate = 'taskRate';
   static const String dueDate = 'due_date';
   static const String privateNotes = 'privateNotes';
@@ -49,31 +51,36 @@ class ProjectFields {
 }
 
 abstract class ProjectEntity extends Object
-    with BaseEntity, SelectableEntity
+    with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ProjectEntity, ProjectEntityBuilder> {
-  factory ProjectEntity({int id}) {
+  factory ProjectEntity({String id, AppState state}) {
     return _$ProjectEntity._(
-      id: id ?? --ProjectEntity.counter,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
       name: '',
-      clientId: 0,
+      clientId: '',
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
       budgetedHours: 0.0,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      createdAt: 0,
+      assignedUserId: '',
     );
   }
 
   ProjectEntity._();
 
-  static int counter = 0;
-
   ProjectEntity get clone => rebuild((b) => b
-    ..id = --ProjectEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false);
 
   @override
@@ -83,8 +90,9 @@ abstract class ProjectEntity extends Object
 
   String get name;
 
+  @override
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @BuiltValueField(wireName: 'task_rate')
   double get taskRate;
@@ -104,26 +112,35 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.task) && isActive) {
+      if (userCompany.canCreate(EntityType.task) && isActive) {
         actions.add(EntityAction.newTask);
       }
 
-      if (user.canCreate(EntityType.invoice) && isActive) {
+      if (userCompany.canCreate(EntityType.invoice) && isActive) {
         actions.add(EntityAction.newInvoice);
       }
     }
 
-    if (user.canCreate(EntityType.project)) {
+    if (userCompany.canCreate(EntityType.project)) {
       actions.add(EntityAction.clone);
     }
 
@@ -131,7 +148,7 @@ abstract class ProjectEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
@@ -155,6 +172,14 @@ abstract class ProjectEntity extends Object
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return true;
     }
 
     return name.toLowerCase().contains(filter);
@@ -164,6 +189,14 @@ abstract class ProjectEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;
@@ -176,6 +209,8 @@ abstract class ProjectEntity extends Object
 
   @override
   double get listDisplayAmount => null;
+
+  bool get hasClient => clientId != null && clientId.isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

@@ -24,7 +24,7 @@ class QuoteEmailScreen extends StatelessWidget {
         final quote = state.quoteState.map[quoteId];
         final client = state.clientState.map[quote.clientId];
         if (client.areActivitiesStale) {
-          store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
+          store.dispatch(LoadClient(clientId: client.id));
         }
       },
       converter: (Store<AppState> store) {
@@ -65,7 +65,7 @@ class EmailQuoteVM extends EmailEntityVM {
     return EmailQuoteVM(
         isLoading: state.isLoading,
         isSaving: state.isSaving,
-        company: state.selectedCompany,
+        company: state.company,
         invoice: quote,
         client: state.clientState.map[quote.clientId],
         onSendPressed: (context, template, subject, body) =>

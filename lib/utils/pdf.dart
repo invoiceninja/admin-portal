@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   final localization = AppLocalization.of(context);
@@ -28,9 +29,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
         final localization = AppLocalization.of(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text(invoice.isQuote
-                ? localization.quote
-                : localization.invoice + ' ' + invoice.invoiceNumber),
+            title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
             actions: <Widget>[
               FlatButton(
                 child: Text(
@@ -44,33 +43,79 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
               ),
             ],
           ),
-          body: FutureBuilder(
-              future: createFileOfPdfUrl(invoice.invitationDownloadLink),
-              builder: (BuildContext context, AsyncSnapshot<File> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                  case ConnectionState.active:
-                  case ConnectionState.waiting:
-                    return LoadingIndicator();
-                  case ConnectionState.done:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else
-                      return PDFView(filePath: snapshot.data.path);
-                }
-                return null; // unreachable
-              }),
+          body: Container(
+            color: Colors.grey,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: FutureBuilder(
+                future: renderPDF(invoice.invitationDownloadLink),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<PDFPageImage>> snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.active:
+                    case ConnectionState.waiting:
+                      return LoadingIndicator();
+                    case ConnectionState.done:
+                      if (snapshot.hasError)
+                        return Text(
+                            '${getPdfRequirements(context)} - Error: ${snapshot.error}');
+                      else
+                        return snapshot.data.length == 1
+                            ? Center(
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Image(
+                                      image: MemoryImage(
+                                          snapshot.data.first.bytes),
+                                      height: double.infinity),
+                                ),
+                              )
+                            : ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: snapshot.data
+                                    .map((page) => Row(
+                                          children: <Widget>[
+                                            Container(
+                                              width: 20,
+                                              height: double.infinity,
+                                              color: Colors.grey,
+                                            ),
+                                            Container(
+                                              color: Colors.white,
+                                              child: ExtendedImage.memory(
+                                                page.bytes,
+                                                fit: BoxFit.fitHeight,
+                                              ),
+                                            ),
+                                          ],
+                                        ))
+                                    .toList(),
+                              );
+                  }
+                  return null; // unreachable
+                }),
+          ),
         );
       });
 }
 
-Future<File> createFileOfPdfUrl(String url) async {
-  final filename = url.substring(url.lastIndexOf('/') + 1);
+Future<List<PDFPageImage>> renderPDF(String url) async {
+  url =
+      //'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd'; // one page
+      'https://staging.invoiceninja.com/download/9gsjumkd8yaujcr0trnucnwfrelt1hil'; // four pages
+
   final request = await HttpClient().getUrl(Uri.parse(url));
   final response = await request.close();
   final bytes = await consolidateHttpClientResponseBytes(response);
-  final dir = (await getApplicationDocumentsDirectory()).path;
-  final file = new File('$dir/$filename');
-  await file.writeAsBytes(bytes);
-  return file;
+
+  final document = await PDFDocument.openData(bytes);
+  final List<PDFPageImage> pages = [];
+  for (var i = 1; i <= document.pagesCount; i++) {
+    final page = await document.getPage(1);
+    final pageImage = await page.render(width: page.width, height: page.height);
+    pages.add(pageImage);
+    page.close();
+  }
+
+  return pages;
 }

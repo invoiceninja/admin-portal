@@ -1,42 +1,53 @@
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_state.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
-EntityUIState stubUIReducer(StubUIState state, dynamic dynamicAction) {
+EntityUIState stubUIReducer(StubUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(stubListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewStub>(
-      (int selectedId, dynamic dynamicAction) => action.stubId),
-  TypedReducer<int, AddStubSuccess>(
-      (int selectedId, dynamic dynamicAction) => action.stub.id),
-  TypedReducer<int, FilterStubsByEntity>((selectedId, action) => action.entityId == null ? selectedId : 0)
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewStub>(
+      (String selectedId, dynamic action) => action.stubId),
+  TypedReducer<String, AddStubSuccess>(
+      (String selectedId, dynamic action) => action.stub.id),
 ]);
 
 final editingReducer = combineReducers<StubEntity>([
   TypedReducer<StubEntity, SaveStubSuccess>(_updateEditing),
   TypedReducer<StubEntity, AddStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, RestoreStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, ArchiveStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, DeleteStubSuccess>(_updateEditing),
+  TypedReducer<StubEntity, RestoreStubSuccess>((stubs, action) {
+                                                   return action.stubs[0];
+                                                 }),
+  TypedReducer<StubEntity, ArchiveStubSuccess>((stubs, action) {
+                                                  return action.stubs[0];
+                                                }),
+  TypedReducer<StubEntity, DeleteStubSuccess>((stubs, action) {
+                                                 return action.stubs[0];
+                                               }),
   TypedReducer<StubEntity, EditStub>(_updateEditing),
-  TypedReducer<StubEntity, UpdateStub>(_updateEditing),
+  TypedReducer<StubEntity, UpdateStub>((stub, action) {
+   return action.stub.rebuild((b) => b..isChanged = true);
+ }),
   TypedReducer<StubEntity, SelectCompany>(_clearEditing),
+  TypedReducer<StubEntity, DiscardChanges>(_clearEditing),
 ]);
 
-StubEntity _clearEditing(StubEntity stub, dynamic dynamicAction) {
+StubEntity _clearEditing(StubEntity stub, dynamic action) {
   return StubEntity();
 }
 
-StubEntity _updateEditing(StubEntity stub, dynamic dynamicAction) {
+StubEntity _updateEditing(StubEntity stub, dynamic action) {
   return action.stub;
 }
 
@@ -48,6 +59,11 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterStubsByCustom1>(_filterStubsByCustom1),
   TypedReducer<ListUIState, FilterStubsByCustom2>(_filterStubsByCustom2),
   TypedReducer<ListUIState, FilterStubsByEntity>(_filterStubsByClient),
+  TypedReducer<ListUIState, StartStubMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToStubMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromStubMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearStubMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterStubsByClient(
@@ -97,6 +113,28 @@ ListUIState _sortStubs(ListUIState stubListState, SortStubs action) {
   return stubListState.rebuild((b) => b
     ..sortAscending = b.sortField != action.field || !b.sortAscending
     ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState productListState, StartStubMultiselect action) {
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder();
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState productListState, AddToStubMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState productListState, RemoveFromStubMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState productListState, ClearStubMultiselect action) {
+  return productListState.rebuild((b) => b..selectedIds = null;
 }
 
 final stubsReducer = combineReducers<StubState>([
@@ -188,14 +226,5 @@ StubState _setLoadedStub(
 }
 
 StubState _setLoadedStubs(
-    StubState stubState, LoadStubsSuccess action) {
-  final state = stubState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.stubs,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-  return state.rebuild((b) => b..list.replace(state.map.keys));
-}
+        StubState stubState, LoadStubsSuccess action) =>
+    stubState.loadStubs(action.stubs);

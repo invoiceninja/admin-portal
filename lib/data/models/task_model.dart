@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'task_model.g.dart';
@@ -41,7 +42,9 @@ class TaskFields {
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoiceId';
+  static const String client = 'client';
   static const String clientId = 'clientId';
+  static const String project = 'project';
   static const String projectId = 'projectId';
   static const String timeLog = 'timeLog';
   static const String isRunning = 'isRunning';
@@ -127,9 +130,11 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
 abstract class TaskEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<TaskEntity, TaskEntityBuilder> {
-  factory TaskEntity({int id, bool isRunning = false}) {
+  factory TaskEntity({String id, AppState state}) {
+    final isRunning = state?.prefState?.autoStartTasks ?? false;
     return _$TaskEntity._(
-      id: id ?? --TaskEntity.counter,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
       description: '',
       duration: 0,
       invoiceId: null,
@@ -141,18 +146,25 @@ abstract class TaskEntity extends Object
       isRunning: isRunning,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      assignedUserId: '',
+      createdAt: 0,
+      createdUserId: '',
+      vendorId: '',
+      taskStatusId: '',
+      taskStatusSortOrder: 0,
     );
   }
 
   TaskEntity._();
 
-  static int counter = 0;
-
   TaskEntity get clone => rebuild((b) => b
-    ..id = --TaskEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false
     ..invoiceId = null
     ..isRunning = false
@@ -171,7 +183,7 @@ abstract class TaskEntity extends Object
     return updateTaskTime(taskTime, times.length - 1);
   }
 
-  bool get isInvoiced => invoiceId != null && invoiceId > 0;
+  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
 
   @override
   EntityType get entityType {
@@ -323,16 +335,16 @@ abstract class TaskEntity extends Object
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  int get invoiceId;
+  String get invoiceId;
 
   @override
   @nullable
   @BuiltValueField(wireName: 'client_id')
-  int get clientId;
+  String get clientId;
 
   @nullable
   @BuiltValueField(wireName: 'project_id')
-  int get projectId;
+  String get projectId;
 
   @BuiltValueField(wireName: 'time_log')
   String get timeLog;
@@ -347,20 +359,35 @@ abstract class TaskEntity extends Object
   String get customValue2;
 
   @nullable
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @nullable
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @nullable
   @BuiltValueField(wireName: 'task_status_id')
-  int get taskStatusId;
+  String get taskStatusId;
 
   @nullable
   @BuiltValueField(wireName: 'task_status_sort_order')
   int get taskStatusSortOrder;
 
+  @nullable
+  @BuiltValueField(wireName: 'vendor_id')
+  String get vendorId;
+
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this) && !isDeleted) {
+      if (includeEdit && userCompany.canEditEntity(this) && !isDeleted) {
         actions.add(EntityAction.edit);
       }
 
@@ -374,7 +401,7 @@ abstract class TaskEntity extends Object
             actions.add(EntityAction.start);
           }
 
-          if (user.canCreate(EntityType.invoice)) {
+          if (userCompany.canCreate(EntityType.invoice)) {
             actions.add(EntityAction.newInvoice);
           }
         }
@@ -385,13 +412,13 @@ abstract class TaskEntity extends Object
       actions.add(EntityAction.viewInvoice);
     }
 
-    if (user.canCreate(EntityType.task)) {
+    if (userCompany.canCreate(EntityType.task)) {
       actions.add(EntityAction.clone);
     }
 
     actions.add(null);
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   int compareTo(TaskEntity task, String sortField, bool sortAscending) {
@@ -414,6 +441,14 @@ abstract class TaskEntity extends Object
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
+      return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -443,6 +478,14 @@ abstract class TaskEntity extends Object
   String matchesFilterValue(String filter) {
     if (filter == null || filter.isEmpty) {
       return null;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;
@@ -469,7 +512,7 @@ abstract class TaskStatusEntity extends Object
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
   factory TaskStatusEntity() {
     return _$TaskStatusEntity._(
-      id: 0,
+      id: '',
       name: '',
       sortOrder: 0,
     );

@@ -38,7 +38,7 @@ abstract class IndustryEntity extends Object
     implements Built<IndustryEntity, IndustryEntityBuilder> {
   factory IndustryEntity() {
     return _$IndustryEntity._(
-      id: 0,
+      id: '',
       name: '',
     );
   }

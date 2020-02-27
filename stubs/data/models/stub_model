@@ -40,10 +40,10 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
 
   // STARTER: properties - do not remove comment
 
-  static int counter = 0;
   factory StubEntity() {
     return _$StubEntity._(
-      id: 0,
+      id: BaseEntity.nextId,
+      isChanged: false,
       // STARTER: constructor - do not remove comment
     );
   }

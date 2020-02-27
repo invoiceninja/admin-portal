@@ -1,3 +1,5 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -23,25 +25,32 @@ TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
   return action.taskTime ?? TaskTime(startDate: DateTime(2000).toUtc());
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewTask>((selectedId, action) => action.taskId),
-  TypedReducer<int, AddTaskSuccess>((selectedId, action) => action.task.id),
-  TypedReducer<int, FilterTasksByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
+  TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
 ]);
 
 final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, SaveTaskSuccess>(_updateEditing),
   TypedReducer<TaskEntity, AddTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, RestoreTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, ArchiveTaskSuccess>(_updateEditing),
-  TypedReducer<TaskEntity, DeleteTaskSuccess>(_updateEditing),
+  TypedReducer<TaskEntity, RestoreTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
+  TypedReducer<TaskEntity, ArchiveTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
+  TypedReducer<TaskEntity, DeleteTaskSuccess>((tasks, action) {
+    return action.tasks[0];
+  }),
   TypedReducer<TaskEntity, EditTask>(_updateEditing),
-  TypedReducer<TaskEntity, UpdateTask>(_updateEditing),
+  TypedReducer<TaskEntity, UpdateTask>((task, action) {
+    return action.task.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<TaskEntity, AddTaskTime>(_addTaskTime),
   TypedReducer<TaskEntity, DeleteTaskTime>(_removeTaskTime),
   TypedReducer<TaskEntity, UpdateTaskTime>(_updateTaskTime),
   TypedReducer<TaskEntity, SelectCompany>(_clearEditing),
+  TypedReducer<TaskEntity, DiscardChanges>(_clearEditing),
 ]);
 
 TaskEntity _clearEditing(TaskEntity task, dynamic action) {
@@ -60,6 +69,11 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTasksByCustom1>(_filterTasksByCustom1),
   TypedReducer<ListUIState, FilterTasksByCustom2>(_filterTasksByCustom2),
   TypedReducer<ListUIState, FilterTasksByEntity>(_filterTasksByClient),
+  TypedReducer<ListUIState, StartTaskMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToTaskMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearTaskMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterTasksByClient(
@@ -131,6 +145,26 @@ TaskEntity _updateTaskTime(TaskEntity task, UpdateTaskTime action) {
   return task.updateTaskTime(action.taskTime, action.index);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState taskListState, StartTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState taskListState, AddToTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState taskListState, RemoveFromTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState taskListState, ClearTaskMultiselect action) {
+  return taskListState.rebuild((b) => b..selectedIds = null);
+}
+
 final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, SaveTaskSuccess>(_updateTask),
   TypedReducer<TaskState, AddTaskSuccess>(_addTask),
@@ -148,49 +182,95 @@ final tasksReducer = combineReducers<TaskState>([
 ]);
 
 TaskState _archiveTaskRequest(TaskState taskState, ArchiveTaskRequest action) {
-  final task = taskState.map[action.taskId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
 
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _archiveTaskFailure(TaskState taskState, ArchiveTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskRequest(TaskState taskState, DeleteTaskRequest action) {
-  final task = taskState.map[action.taskId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
 
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskSuccess(TaskState taskState, DeleteTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _deleteTaskFailure(TaskState taskState, DeleteTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskRequest(TaskState taskState, RestoreTaskRequest action) {
-  final task = taskState.map[action.taskId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return taskState.rebuild((b) => b..map[action.taskId] = task);
+  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
+
+  for (int i = 0; i < tasks.length; i++) {
+    tasks[i] = tasks[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return taskState.rebuild((b) {
+    for (final task in tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _restoreTaskFailure(TaskState taskState, RestoreTaskFailure action) {
-  return taskState.rebuild((b) => b..map[action.task.id] = action.task);
+  return taskState.rebuild((b) {
+    for (final task in action.tasks) {
+      b.map[task.id] = task;
+    }
+  });
 }
 
 TaskState _addTask(TaskState taskState, AddTaskSuccess action) {
@@ -207,14 +287,5 @@ TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
   return taskState.rebuild((b) => b..map[action.task.id] = action.task);
 }
 
-TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) {
-  final state = taskState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.tasks,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-  return state.rebuild((b) => b..list.replace(state.map.keys));
-}
+TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
+    taskState.loadTasks(action.tasks);

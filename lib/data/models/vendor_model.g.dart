@@ -51,7 +51,7 @@ class _$VendorListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -114,12 +114,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'balance',
-      serializers.serialize(object.balance,
-          specifiedType: const FullType(double)),
-      'paid_to_date',
-      serializers.serialize(object.paidToDate,
-          specifiedType: const FullType(double)),
       'address1',
       serializers.serialize(object.address1,
           specifiedType: const FullType(String)),
@@ -136,15 +130,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           specifiedType: const FullType(String)),
       'country_id',
       serializers.serialize(object.countryId,
-          specifiedType: const FullType(int)),
-      'work_phone',
-      serializers.serialize(object.workPhone,
+          specifiedType: const FullType(String)),
+      'phone',
+      serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
-          specifiedType: const FullType(String)),
-      'last_login',
-      serializers.serialize(object.lastLogin,
           specifiedType: const FullType(String)),
       'website',
       serializers.serialize(object.website,
@@ -155,20 +146,35 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
-      'currency_id',
-      serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'vendor_contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
     ];
+    if (object.currencyId != null) {
+      result
+        ..add('currency_id')
+        ..add(serializers.serialize(object.currencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -193,17 +199,23 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -222,14 +234,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'balance':
-          result.balance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
-          break;
-        case 'paid_to_date':
-          result.paidToDate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
           break;
         case 'address1':
           result.address1 = serializers.deserialize(value,
@@ -253,18 +257,14 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
-        case 'work_phone':
-          result.workPhone = serializers.deserialize(value,
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'last_login':
-          result.lastLogin = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'website':
@@ -281,7 +281,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -291,11 +291,23 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'vendor_contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -313,13 +325,17 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -359,6 +375,12 @@ class _$VendorContactEntitySerializer
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -383,17 +405,23 @@ class _$VendorContactEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -430,6 +458,10 @@ class _$VendorContactEntitySerializer
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -446,13 +478,17 @@ class _$VendorContactEntitySerializer
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -654,10 +690,6 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String name;
   @override
-  final double balance;
-  @override
-  final double paidToDate;
-  @override
   final String address1;
   @override
   final String address2;
@@ -668,13 +700,11 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String postalCode;
   @override
-  final int countryId;
+  final String countryId;
   @override
-  final String workPhone;
+  final String phone;
   @override
   final String privateNotes;
-  @override
-  final String lastLogin;
   @override
   final String website;
   @override
@@ -682,13 +712,19 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String idNumber;
   @override
-  final int currencyId;
+  final String currencyId;
   @override
   final String customValue1;
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final BuiltList<VendorContactEntity> contacts;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -698,48 +734,45 @@ class _$VendorEntity extends VendorEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final String id;
 
   factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
       (new VendorEntityBuilder()..update(updates)).build();
 
   _$VendorEntity._(
       {this.name,
-      this.balance,
-      this.paidToDate,
       this.address1,
       this.address2,
       this.city,
       this.state,
       this.postalCode,
       this.countryId,
-      this.workPhone,
+      this.phone,
       this.privateNotes,
-      this.lastLogin,
       this.website,
       this.vatNumber,
       this.idNumber,
       this.currencyId,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.contacts,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
       this.id})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'name');
-    }
-    if (balance == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'balance');
-    }
-    if (paidToDate == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'paidToDate');
     }
     if (address1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'address1');
@@ -759,14 +792,11 @@ class _$VendorEntity extends VendorEntity {
     if (countryId == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'countryId');
     }
-    if (workPhone == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'workPhone');
+    if (phone == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'phone');
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'privateNotes');
-    }
-    if (lastLogin == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'lastLogin');
     }
     if (website == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'website');
@@ -777,14 +807,17 @@ class _$VendorEntity extends VendorEntity {
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
     }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
-    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'customValue4');
     }
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
@@ -803,29 +836,30 @@ class _$VendorEntity extends VendorEntity {
     if (identical(other, this)) return true;
     return other is VendorEntity &&
         name == other.name &&
-        balance == other.balance &&
-        paidToDate == other.paidToDate &&
         address1 == other.address1 &&
         address2 == other.address2 &&
         city == other.city &&
         state == other.state &&
         postalCode == other.postalCode &&
         countryId == other.countryId &&
-        workPhone == other.workPhone &&
+        phone == other.phone &&
         privateNotes == other.privateNotes &&
-        lastLogin == other.lastLogin &&
         website == other.website &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
         currencyId == other.currencyId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         contacts == other.contacts &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
         id == other.id;
   }
 
@@ -849,25 +883,25 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode),
-                                                                                state.hashCode),
-                                                                            postalCode.hashCode),
-                                                                        countryId.hashCode),
-                                                                    workPhone.hashCode),
-                                                                privateNotes.hashCode),
-                                                            lastLogin.hashCode),
-                                                        website.hashCode),
-                                                    vatNumber.hashCode),
-                                                idNumber.hashCode),
-                                            currencyId.hashCode),
-                                        customValue1.hashCode),
-                                    customValue2.hashCode),
-                                contacts.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode),
+                                                                                phone.hashCode),
+                                                                            privateNotes.hashCode),
+                                                                        website.hashCode),
+                                                                    vatNumber.hashCode),
+                                                                idNumber.hashCode),
+                                                            currencyId.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        contacts.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -875,29 +909,30 @@ class _$VendorEntity extends VendorEntity {
   String toString() {
     return (newBuiltValueToStringHelper('VendorEntity')
           ..add('name', name)
-          ..add('balance', balance)
-          ..add('paidToDate', paidToDate)
           ..add('address1', address1)
           ..add('address2', address2)
           ..add('city', city)
           ..add('state', state)
           ..add('postalCode', postalCode)
           ..add('countryId', countryId)
-          ..add('workPhone', workPhone)
+          ..add('phone', phone)
           ..add('privateNotes', privateNotes)
-          ..add('lastLogin', lastLogin)
           ..add('website', website)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
           ..add('currencyId', currencyId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('contacts', contacts)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
           ..add('id', id))
         .toString();
   }
@@ -910,14 +945,6 @@ class VendorEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
-
-  double _balance;
-  double get balance => _$this._balance;
-  set balance(double balance) => _$this._balance = balance;
-
-  double _paidToDate;
-  double get paidToDate => _$this._paidToDate;
-  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
 
   String _address1;
   String get address1 => _$this._address1;
@@ -939,21 +966,17 @@ class VendorEntityBuilder
   String get postalCode => _$this._postalCode;
   set postalCode(String postalCode) => _$this._postalCode = postalCode;
 
-  int _countryId;
-  int get countryId => _$this._countryId;
-  set countryId(int countryId) => _$this._countryId = countryId;
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
 
-  String _workPhone;
-  String get workPhone => _$this._workPhone;
-  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
-
-  String _lastLogin;
-  String get lastLogin => _$this._lastLogin;
-  set lastLogin(String lastLogin) => _$this._lastLogin = lastLogin;
 
   String _website;
   String get website => _$this._website;
@@ -967,9 +990,9 @@ class VendorEntityBuilder
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -979,11 +1002,23 @@ class VendorEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
   ListBuilder<VendorContactEntity> _contacts;
   ListBuilder<VendorContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<VendorContactEntity>();
   set contacts(ListBuilder<VendorContactEntity> contacts) =>
       _$this._contacts = contacts;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1001,42 +1036,49 @@ class VendorEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   VendorEntityBuilder();
 
   VendorEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _balance = _$v.balance;
-      _paidToDate = _$v.paidToDate;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
       _city = _$v.city;
       _state = _$v.state;
       _postalCode = _$v.postalCode;
       _countryId = _$v.countryId;
-      _workPhone = _$v.workPhone;
+      _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
-      _lastLogin = _$v.lastLogin;
       _website = _$v.website;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
       _currencyId = _$v.currencyId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
       _id = _$v.id;
       _$v = null;
     }
@@ -1063,29 +1105,30 @@ class VendorEntityBuilder
       _$result = _$v ??
           new _$VendorEntity._(
               name: name,
-              balance: balance,
-              paidToDate: paidToDate,
               address1: address1,
               address2: address2,
               city: city,
               state: state,
               postalCode: postalCode,
               countryId: countryId,
-              workPhone: workPhone,
+              phone: phone,
               privateNotes: privateNotes,
-              lastLogin: lastLogin,
               website: website,
               vatNumber: vatNumber,
               idNumber: idNumber,
               currencyId: currencyId,
               customValue1: customValue1,
               customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               contacts: contacts.build(),
+              isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
-              isOwner: isOwner,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1115,6 +1158,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1123,9 +1168,11 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final String id;
 
   factory _$VendorContactEntity(
           [void Function(VendorContactEntityBuilder) updates]) =>
@@ -1137,11 +1184,13 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.email,
       this.isPrimary,
       this.phone,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
       this.id})
       : super._() {
     if (firstName == null) {
@@ -1179,11 +1228,13 @@ class _$VendorContactEntity extends VendorContactEntity {
         email == other.email &&
         isPrimary == other.isPrimary &&
         phone == other.phone &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
         id == other.id;
   }
 
@@ -1198,16 +1249,20 @@ class _$VendorContactEntity extends VendorContactEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, firstName.hashCode),
-                                            lastName.hashCode),
-                                        email.hashCode),
-                                    isPrimary.hashCode),
-                                phone.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, firstName.hashCode),
+                                                    lastName.hashCode),
+                                                email.hashCode),
+                                            isPrimary.hashCode),
+                                        phone.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -1219,11 +1274,13 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('email', email)
           ..add('isPrimary', isPrimary)
           ..add('phone', phone)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
           ..add('id', id))
         .toString();
   }
@@ -1253,6 +1310,10 @@ class VendorContactEntityBuilder
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
 
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -1269,13 +1330,19 @@ class VendorContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   VendorContactEntityBuilder();
 
@@ -1286,11 +1353,13 @@ class VendorContactEntityBuilder
       _email = _$v.email;
       _isPrimary = _$v.isPrimary;
       _phone = _$v.phone;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
       _id = _$v.id;
       _$v = null;
     }
@@ -1319,11 +1388,13 @@ class VendorContactEntityBuilder
             email: email,
             isPrimary: isPrimary,
             phone: phone,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
             id: id);
     replace(_$result);
     return _$result;

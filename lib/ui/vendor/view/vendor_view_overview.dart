@@ -5,8 +5,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -31,24 +31,30 @@ class VendorOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String, String>{};
 
-    if (vendor.currencyId > 0 && vendor.currencyId != company.currencyId) {
+    if (vendor.hasCurrency && vendor.currencyId != company.currencyId) {
       fields[VendorFields.currencyId] =
           statics.currencyMap[vendor.currencyId].name;
     }
 
     if (vendor.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.vendor1);
-      fields[label1] = vendor.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor1,
+          value: vendor.customValue1);
     }
 
     if (vendor.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.vendor2);
-      fields[label2] = vendor.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.vendor2,
+          value: vendor.customValue2);
     }
 
     return ListView(
       children: <Widget>[
-        OneValueHeader(
+        EntityHeader(
           label: localization.total,
           value: formatNumber(
               memoizedCalculateVendorBalance(vendor.id, vendor.currencyId,
@@ -69,11 +75,9 @@ class VendorOverview extends StatelessWidget {
           onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.expense, true),
-          subtitle: memoizedExpenseStatsForVendor(
-              vendor.id,
-              state.expenseState.map,
-              localization.active,
-              localization.archived),
+          subtitle:
+              memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
+                  .present(localization.active, localization.archived),
         ),
       ],
     );

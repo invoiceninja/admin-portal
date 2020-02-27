@@ -40,12 +40,11 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
 }
 
 Middleware<AppState> _editTask() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditTask;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -54,12 +53,7 @@ Middleware<AppState> _editTask() {
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
 
     if (isMobile(action.context)) {
-      final task =
-          await Navigator.of(action.context).pushNamed(TaskEditScreen.route);
-
-      if (action.completer != null && task != null) {
-        action.completer.complete(task);
-      }
+      action.navigator.pushNamed(TaskEditScreen.route);
     }
   };
 }
@@ -69,8 +63,8 @@ Middleware<AppState> _viewTask() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewTask;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -79,7 +73,7 @@ Middleware<AppState> _viewTask() {
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(TaskViewScreen.route);
+      action.navigator.pushNamed(TaskViewScreen.route);
     }
   };
 }
@@ -88,17 +82,21 @@ Middleware<AppState> _viewTaskList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTaskList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.taskState.isStale) {
+      store.dispatch(LoadTasks());
+    }
+
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           TaskScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -107,18 +105,20 @@ Middleware<AppState> _viewTaskList() {
 Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.archive)
-        .then((TaskEntity task) {
-      store.dispatch(ArchiveTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.archive)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(ArchiveTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveTaskFailure(origTask));
+      store.dispatch(ArchiveTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -131,18 +131,20 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.delete)
-        .then((TaskEntity task) {
-      store.dispatch(DeleteTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.delete)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(DeleteTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteTaskFailure(origTask));
+      store.dispatch(DeleteTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -155,18 +157,20 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaskRequest;
-    final origTask = store.state.taskState.map[action.taskId];
+    final prevTasks =
+        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origTask,
-            EntityAction.restore)
-        .then((TaskEntity task) {
-      store.dispatch(RestoreTaskSuccess(task));
+        .bulkAction(
+            store.state.credentials, action.taskIds, EntityAction.restore)
+        .then((List<TaskEntity> tasks) {
+      store.dispatch(RestoreTaskSuccess(tasks));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreTaskFailure(origTask));
+      store.dispatch(RestoreTaskFailure(prevTasks));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -180,8 +184,7 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTaskRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.task)
+        .saveData(store.state.credentials, action.task)
         .then((TaskEntity task) {
       if (action.task.isNew) {
         store.dispatch(AddTaskSuccess(task));
@@ -210,9 +213,7 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
     }
 
     store.dispatch(LoadTaskRequest());
-    repository
-        .loadItem(state.selectedCompany, state.authState, action.taskId)
-        .then((task) {
+    repository.loadItem(state.credentials, action.taskId).then((task) {
       store.dispatch(LoadTaskSuccess(task));
 
       if (action.completer != null) {
@@ -248,9 +249,7 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     final int updatedAt = (state.taskState.lastUpdated / 1000).round();
 
     store.dispatch(LoadTasksRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
       if (action.completer != null) {

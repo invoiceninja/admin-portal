@@ -16,8 +16,8 @@ abstract class DocumentState
   factory DocumentState() {
     return _$DocumentState._(
       lastUpdated: 0,
-      map: BuiltMap<int, DocumentEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, DocumentEntity>(),
+      list: BuiltList<String>(),
     );
   }
   DocumentState._();
@@ -25,8 +25,8 @@ abstract class DocumentState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, DocumentEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, DocumentEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -49,7 +49,7 @@ abstract class DocumentUIState extends Object
     return _$DocumentUIState._(
       listUIState: ListUIState(DocumentFields.name),
       editing: DocumentEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   DocumentUIState._();

@@ -1,16 +1,11 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
-import 'package:invoiceninja_flutter/ui/product/view/product_view.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/ui/product/view/product_view.dart';
+import 'package:redux/redux.dart';
 
 class ProductViewScreen extends StatelessWidget {
   const ProductViewScreen({Key key}) : super(key: key);
@@ -20,7 +15,7 @@ class ProductViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ProductViewVM>(
-      distinct: true,
+      //distinct: true,
       converter: (Store<AppState> store) {
         return ProductViewVM.fromStore(store);
       },
@@ -35,11 +30,10 @@ class ProductViewScreen extends StatelessWidget {
 
 class ProductViewVM {
   ProductViewVM({
+    @required this.state,
     @required this.product,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -52,54 +46,37 @@ class ProductViewVM {
         ProductEntity(id: state.productUIState.selectedId);
 
     /*
-    Future<Null> _handleRefresh(BuildContext context, bool loadActivities) {
-      final completer = snackBarCompleter(
+    Future<Null> _handleRefresh(BuildContext context) {
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProduct(
           completer: completer,
-          productId: product.id,
-          loadActivities: loadActivities));
+          productId: product.id,));
       return completer.future;
     }
     */
 
     return ProductViewVM(
+      state: state,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: product.isNew,
       product: product,
-      company: state.selectedCompany,
-      onEditPressed: (BuildContext context) {
-        final Completer<ProductEntity> completer = Completer<ProductEntity>();
-        store.dispatch(EditProduct(
-            product: product, context: context, completer: completer));
-        completer.future.then((product) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedProduct,
-          )));
-        });
-      },
+      company: state.company,
       onRefreshed: null,
       /*
-      onRefreshed: (context, loadActivities) =>
-          _handleRefresh(context, loadActivities),
+      onRefreshed: (context) =>
+          _handleRefresh(context),
           */
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProductAction(context, product, action),
+          handleProductAction(context, [product], action),
     );
   }
 
+  final AppState state;
   final ProductEntity product;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext, bool) onRefreshed;
   final bool isSaving;
   final bool isLoading;

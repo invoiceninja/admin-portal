@@ -9,11 +9,11 @@ class HelpText extends StatelessWidget {
     return Container(
       child: Center(
         child: Opacity(
-          opacity: 0.5,
+          opacity: 0.8,
           child: Text(
             message,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 22,
               color: Colors.grey,
             ),
           ),

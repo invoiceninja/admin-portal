@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 
 class LiveText extends StatefulWidget {
-  const LiveText(this.value, {this.style});
+  const LiveText(this.value, {this.style, this.duration});
 
+  final Duration duration;
   final Function value;
   final TextStyle style;
 
@@ -17,8 +18,10 @@ class _LiveTextState extends State<LiveText> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 100),
-        (Timer timer) => mounted ? setState(() => false) : false);
+    _timer = Timer.periodic(
+      widget.duration ?? Duration(milliseconds: 100),
+      (Timer timer) => mounted ? setState(() => false) : false,
+    );
   }
 
   @override

@@ -1,10 +1,15 @@
+import 'package:faker/faker.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-import 'package:faker/faker.dart';
+
 import 'utils/common_actions.dart';
 import 'utils/localizations.dart';
 
 void main() {
+  runTestSuite();
+}
+
+void runTestSuite({bool batchMode = false}) {
   group('Product Tests', () {
     TestLocalization localization;
     FlutterDriver driver;
@@ -23,7 +28,7 @@ void main() {
       driver = await FlutterDriver.connect();
 
       print('Login to app');
-      await login(driver);
+      await login(driver, retype: batchMode);
 
       print('View products');
       viewSection(driver: driver, name: localization.products);
@@ -68,7 +73,9 @@ void main() {
         localization.product: productKey,
         localization.description: description,
         localization.cost: cost,
-      });
+      }, skipCheckFor: [
+        localization.cost
+      ]);
 
       if (await isMobile(driver)) {
         print('Click back');
@@ -94,7 +101,9 @@ void main() {
         localization.product: updatedProductKey,
         localization.description: updatedDescription,
         localization.cost: updatedCost,
-      });
+      }, skipCheckFor: [
+        localization.cost
+      ]);
     });
 
     // Archive the edited product

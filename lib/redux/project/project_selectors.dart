@@ -22,21 +22,23 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
 }
 
 var memoizedDropdownProjectList = memo4(
-    (BuiltMap<int, ProjectEntity> projectMap, BuiltList<int> projectList,
-            BuiltMap<int, ClientEntity> clientMap, int clientId) =>
+    (BuiltMap<String, ProjectEntity> projectMap, BuiltList<String> projectList,
+            BuiltMap<String, ClientEntity> clientMap, String clientId) =>
         dropdownProjectsSelector(projectMap, projectList, clientMap, clientId));
 
-List<int> dropdownProjectsSelector(
-    BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> projectList,
-    BuiltMap<int, ClientEntity> clientMap,
-    int clientId) {
+List<String> dropdownProjectsSelector(
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltList<String> projectList,
+    BuiltMap<String, ClientEntity> clientMap,
+    String clientId) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
-    if (clientId != null && clientId > 0 && project.clientId != clientId) {
+    if (clientId != null &&
+        clientId.isNotEmpty &&
+        project.clientId != clientId) {
       return false;
     }
-    if (project.clientId > 0 &&
+    if (project.hasClient &&
         clientMap.containsKey(project.clientId) &&
         !clientMap[project.clientId].isActive) {
       return false;
@@ -54,18 +56,18 @@ List<int> dropdownProjectsSelector(
 }
 
 var memoizedFilteredProjectList = memo4(
-    (BuiltMap<int, ProjectEntity> projectMap,
-            BuiltList<int> projectList,
+    (BuiltMap<String, ProjectEntity> projectMap,
+            BuiltList<String> projectList,
             ListUIState projectListState,
-            BuiltMap<int, ClientEntity> clientMap) =>
+            BuiltMap<String, ClientEntity> clientMap) =>
         filteredProjectsSelector(
             projectMap, projectList, projectListState, clientMap));
 
-List<int> filteredProjectsSelector(
-    BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> projectList,
+List<String> filteredProjectsSelector(
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltList<String> projectList,
     ListUIState projectListState,
-    BuiltMap<int, ClientEntity> clientMap) {
+    BuiltMap<String, ClientEntity> clientMap) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     final client =
@@ -118,7 +120,7 @@ List<int> filteredProjectsSelector(
 
 Duration taskDurationForProject(
   ProjectEntity project,
-  BuiltMap<int, TaskEntity> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
 ) {
   int total = 0;
   taskMap.forEach((index, task) {
@@ -129,17 +131,12 @@ Duration taskDurationForProject(
   return Duration(seconds: total);
 }
 
-var memoizedProjectStatsForClient = memo4((int clientId,
-        BuiltMap<int, ProjectEntity> projectMap,
-        String activeLabel,
-        String archivedLabel) =>
-    projectStatsForClient(clientId, projectMap, activeLabel, archivedLabel));
+var memoizedProjectStatsForClient = memo2(
+    (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
+        projectStatsForClient(clientId, projectMap));
 
-String projectStatsForClient(
-    int clientId,
-    BuiltMap<int, ProjectEntity> projectMap,
-    String activeLabel,
-    String archivedLabel) {
+EntityStats projectStatsForClient(
+    String clientId, BuiltMap<String, ProjectEntity> projectMap) {
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
@@ -152,20 +149,9 @@ String projectStatsForClient(
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
 bool hasProjectChanges(
-        ProjectEntity project, BuiltMap<int, ProjectEntity> projectMap) =>
-    project.isNew || project != projectMap[project.id];
+        ProjectEntity project, BuiltMap<String, ProjectEntity> projectMap) =>
+    project.isNew ? project.isChanged : project != projectMap[project.id];

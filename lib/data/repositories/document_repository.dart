@@ -4,7 +4,7 @@ import 'dart:core';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
@@ -16,9 +16,9 @@ class DocumentRepository {
   final WebClient webClient;
 
   Future<DocumentEntity> loadItem(
-      CompanyEntity company, AuthState auth, int entityId) async {
-    final dynamic response =
-        await webClient.get('${auth.url}/documents/$entityId', company.token);
+      Credentials credentials, String entityId) async {
+    final dynamic response = await webClient.get(
+        '${credentials.url}/documents/$entityId', credentials.token);
 
     final DocumentItemResponse documentResponse =
         serializers.deserializeWith(DocumentItemResponse.serializer, response);
@@ -27,14 +27,14 @@ class DocumentRepository {
   }
 
   Future<BuiltList<DocumentEntity>> loadList(
-      CompanyEntity company, AuthState auth, int updatedAt) async {
-    String url = auth.url + '/documents?';
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/documents?';
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
     }
 
-    final dynamic response = await webClient.get(url, company.token);
+    final dynamic response = await webClient.get(url, credentials.token);
 
     final DocumentListResponse documentResponse =
         serializers.deserializeWith(DocumentListResponse.serializer, response);
@@ -42,32 +42,49 @@ class DocumentRepository {
     return documentResponse.data;
   }
 
+  Future<List<DocumentEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    var url = credentials.url + '/documents/bulk?';
+    if (action != null) {
+      url += '&action=' + action.toString();
+    }
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids}));
+
+    final DocumentListResponse documentResponse =
+        serializers.deserializeWith(DocumentListResponse.serializer, response);
+
+    return documentResponse.data.toList();
+  }
+
   Future<DocumentEntity> saveData(
-      CompanyEntity company, AuthState auth, DocumentEntity document,
+      Credentials credentials, DocumentEntity document,
       [EntityAction action]) async {
     dynamic response;
 
     if (document.isNew) {
       final fields = <String, String>{};
-      if (document.expenseId != null && document.expenseId > 0) {
+      if (document.expenseId != null && document.expenseId.isNotEmpty) {
         fields['expense_id'] = '${document.expenseId}';
       } else {
         fields['invoice_id'] = '${document.invoiceId}';
       }
 
       response = await webClient.post(
-          '${auth.url}/documents', company.token, fields, document.path);
+          '${credentials.url}/documents', credentials.token,
+          data: fields, filePath: document.path);
     } else {
       final data =
           serializers.serializeWith(DocumentEntity.serializer, document);
-      var url = '${auth.url}/documents/${document.id}';
+      var url = '${credentials.url}/documents/${document.id}';
       if (action == EntityAction.delete) {
-        response = await webClient.delete(url, company.token);
+        response = await webClient.delete(url, credentials.token);
       } else {
         if (action != null) {
           url += '?action=' + action.toString();
         }
-        response = await webClient.put(url, company.token, json.encode(data));
+        response = await webClient.put(url, credentials.token,
+            data: json.encode(data));
       }
     }
 

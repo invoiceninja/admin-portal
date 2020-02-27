@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -33,7 +35,7 @@ class StubListBuilder extends StatelessWidget {
 
 class StubListVM {
   StubListVM({
-    @required this.user,
+    @required this.userCompany,
     @required this.stubList,
     @required this.stubMap,
     @required this.filter,
@@ -43,6 +45,7 @@ class StubListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
+    @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
   });
@@ -52,7 +55,7 @@ class StubListVM {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadStubs(completer: completer, force: true));
       return completer.future;
@@ -61,7 +64,7 @@ class StubListVM {
     final state = store.state;
 
     return StubListVM(
-        user: state.user,
+        userCompany: state.userCompany,
         listState: state.stubListState,
         stubList: memoizedFilteredStubList(state.stubState.map,
             state.stubState.list, state.stubListState),
@@ -71,31 +74,36 @@ class StubListVM {
         filter: state.stubUIState.listUIState.filter,
           onClearEntityFilterPressed: () =>
               store.dispatch(FilterStubsByEntity()),
-          onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-              ViewClient(
-                  clientId: state.stubListState.filterEntityId,
-                  context: context)),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.stubListState.filterEntityId,
+          entityType: state.stubListState.filterEntityType),
         onStubTap: (context, stub) {
-          store.dispatch(ViewStub(stubId: stub.id, context: context));
+          if (store.state.stubListState.isInMultiselect()) {
+            handleStubAction(
+                context, [stub], EntityAction.toggleMultiselect);
+          } else {
+            viewEntity(context: context, entity: stub);
+          }
         },
       onEntityAction:
-          (BuildContext context, BaseEntity stub, EntityAction action) =>
-          handleStubAction(context, stub, action),
+          (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
+          handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
     );
   }
 
-  final UserEntity user;
-  final List<int> stubList;
-  final BuiltMap<int, StubEntity> stubMap;
+  final UserCompanyEntity userCompany;
+  final List<String> stubList;
+  final BuiltMap<String, StubEntity> stubMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, StubEntity) onStubTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, StubEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
-
+  final List<String> tableColumns;
 }

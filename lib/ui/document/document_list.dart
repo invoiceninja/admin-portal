@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -19,6 +22,21 @@ class DocumentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final userCompany = state.userCompany;
+    final listUIState = store.state.uiState.documentUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final documentList = viewModel.documentList;
+
+    if (state.shouldSelectEntity(
+        entityType: EntityType.document, hasRecords: documentList.isNotEmpty)) {
+      viewEntityById(
+          context: context,
+          entityType: EntityType.document,
+          entityId: documentList.isEmpty ? null : documentList.first);
+    }
+
     /*
     final localization = AppLocalization.of(context);
     final listState = viewModel.listState;
@@ -34,7 +52,7 @@ class DocumentList extends StatelessWidget {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.documentList.isEmpty
+                  child: viewModel.documentMap.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : ListView.separated(
                           shrinkWrap: true,
@@ -43,16 +61,14 @@ class DocumentList extends StatelessWidget {
                           itemBuilder: (BuildContext context, index) {
                             final documentId = viewModel.documentList[index];
                             final document = viewModel.documentMap[documentId];
-                            final user = viewModel.user;
 
                             void showDialog() => showEntityActionsDialog(
-                                entity: document,
-                                context: context,
-                                user: user,
-                                onEntityAction: viewModel.onEntityAction);
+                                  entities: [document],
+                                  context: context,
+                                );
 
                             return DocumentListItem(
-                              user: viewModel.user,
+                              userCompany: userCompany,
                               filter: viewModel.filter,
                               document: document,
                               onTap: () =>
@@ -62,10 +78,24 @@ class DocumentList extends StatelessWidget {
                                   showDialog();
                                 } else {
                                   viewModel.onEntityAction(
-                                      context, document, action);
+                                      context, [document], action);
                                 }
                               },
-                              onLongPress: () => showDialog(),
+                              onLongPress: () async {
+                                final longPressIsSelection = store
+                                        .state
+                                        .prefState
+                                        .longPressSelectionIsDefault ??
+                                    true;
+                                if (longPressIsSelection && !isInMultiselect) {
+                                  viewModel.onEntityAction(context, [document],
+                                      EntityAction.toggleMultiselect);
+                                } else {
+                                  showDialog();
+                                }
+                              },
+                              isChecked: isInMultiselect &&
+                                  listUIState.isSelected(document.id),
                             );
                           },
                         ),

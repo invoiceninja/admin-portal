@@ -1,5 +1,7 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
@@ -11,52 +13,81 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(quoteListReducer(state.listUIState, action))
     ..editing.replace(editingReducer(state.editing, action))
-    ..editingItem.replace(editingItemReducer(state.editingItem, action))
+    ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-final editingItemReducer = combineReducers<InvoiceItemEntity>([
-  TypedReducer<InvoiceItemEntity, EditQuote>(editQuoteItem),
-  TypedReducer<InvoiceItemEntity, EditQuoteItem>(editQuoteItem),
+final editingItemReducer = combineReducers<int>([
+  TypedReducer<int, EditQuote>((index, action) => action.quoteItemIndex),
+  TypedReducer<int, EditQuoteItem>((index, action) => action.quoteItemIndex),
 ]);
-
-InvoiceItemEntity editQuoteItem(InvoiceItemEntity quoteItem, dynamic action) {
-  return action.quoteItem ?? InvoiceItemEntity();
-}
 
 Reducer<String> dropdownFilterReducer = combineReducers([
-  TypedReducer<String, FilterQuoteDropdown>(filterClientDropdownReducer),
+  TypedReducer<String, FilterQuoteDropdown>(filterquoteDropdownReducer),
 ]);
 
-String filterClientDropdownReducer(
+String filterquoteDropdownReducer(
     String dropdownFilter, FilterQuoteDropdown action) {
   return action.filter;
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewQuote>((selectedId, action) => action.quoteId),
-  TypedReducer<int, AddQuoteSuccess>((selectedId, action) => action.quote.id),
-  TypedReducer<int, ShowEmailQuote>((selectedId, action) => action.quote.id),
-  TypedReducer<int, FilterQuotesByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewQuote>((selectedId, action) => action.quoteId),
+  TypedReducer<String, AddQuoteSuccess>(
+      (selectedId, action) => action.quote.id),
+  TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, SaveQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, AddQuoteSuccess>(_updateEditing),
   TypedReducer<InvoiceEntity, EditQuote>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdateQuote>(_updateEditing),
-  TypedReducer<InvoiceEntity, RestoreQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, ArchiveQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, DeleteQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity, UpdateQuote>((quote, action) {
+    return action.quote.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, AddQuoteItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, DeleteQuoteItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, UpdateQuoteItem>((invoice, action) {
+    return invoice.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<InvoiceEntity, UpdateQuoteClient>((quote, action) {
+    final client = action.client;
+    return quote.rebuild((b) => b
+      ..isChanged = true
+      ..clientId = client.id
+      ..invitations.addAll(client.contacts
+          .map((contact) => InvitationEntity(contactId: contact.id))));
+  }),
+  TypedReducer<InvoiceEntity, RestoreQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
+  TypedReducer<InvoiceEntity, ArchiveQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
+  TypedReducer<InvoiceEntity, DeleteQuotesSuccess>((quotes, action) {
+    return action.quotes[0];
+  }),
   TypedReducer<InvoiceEntity, AddQuoteItem>(_addQuoteItem),
   TypedReducer<InvoiceEntity, AddQuoteItems>(_addQuoteItems),
   TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),
   TypedReducer<InvoiceEntity, UpdateQuoteItem>(_updateQuoteItem),
   TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
+  TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity, AddQuoteContact>((invoice, action) {
+    return invoice.rebuild((b) => b
+      ..invitations.add(
+          action.invitation ?? InvitationEntity(contactId: action.contact.id)));
+  }),
+  TypedReducer<InvoiceEntity, RemoveQuoteContact>((invoice, action) {
+    return invoice.rebuild((b) => b..invitations.remove(action.invitation));
+  }),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity client, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
   return InvoiceEntity();
 }
 
@@ -66,25 +97,25 @@ InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
 
 InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
   return quote.rebuild(
-      (b) => b..invoiceItems.add(action.quoteItem ?? InvoiceItemEntity()));
+      (b) => b..lineItems.add(action.quoteItem ?? InvoiceItemEntity()));
 }
 
 InvoiceEntity _addQuoteItems(InvoiceEntity quote, AddQuoteItems action) {
-  return quote.rebuild((b) => b..invoiceItems.addAll(action.quoteItems));
+  return quote.rebuild((b) => b..lineItems.addAll(action.quoteItems));
 }
 
 InvoiceEntity _removeQuoteItem(InvoiceEntity quote, DeleteQuoteItem action) {
-  if (quote.invoiceItems.length <= action.index) {
+  if (quote.lineItems.length <= action.index) {
     return quote;
   }
-  return quote.rebuild((b) => b..invoiceItems.removeAt(action.index));
+  return quote.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
 InvoiceEntity _updateQuoteItem(InvoiceEntity quote, UpdateQuoteItem action) {
-  if (quote.invoiceItems.length <= action.index) {
+  if (quote.lineItems.length <= action.index) {
     return quote;
   }
-  return quote.rebuild((b) => b..invoiceItems[action.index] = action.quoteItem);
+  return quote.rebuild((b) => b..lineItems[action.index] = action.quoteItem);
 }
 
 final quoteListReducer = combineReducers<ListUIState>([
@@ -95,6 +126,13 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
+  TypedReducer<ListUIState, FilterQuotesByCustom3>(_filterQuotesByCustom3),
+  TypedReducer<ListUIState, FilterQuotesByCustom4>(_filterQuotesByCustom4),
+  TypedReducer<ListUIState, StartQuoteMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToQuoteMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterQuotesByCustom1(
@@ -114,6 +152,26 @@ ListUIState _filterQuotesByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return quoteListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterQuotesByCustom3(
+    ListUIState quoteListState, FilterQuotesByCustom3 action) {
+  if (quoteListState.custom3Filters.contains(action.value)) {
+    return quoteListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return quoteListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterQuotesByCustom4(
+    ListUIState quoteListState, FilterQuotesByCustom4 action) {
+  if (quoteListState.custom4Filters.contains(action.value)) {
+    return quoteListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return quoteListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
@@ -157,21 +215,41 @@ ListUIState _sortQuotes(ListUIState quoteListState, SortQuotes action) {
     ..sortField = action.field);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState quoteListState, StartQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState quoteListState, AddToQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState quoteListState, ClearQuoteMultiselect action) {
+  return quoteListState.rebuild((b) => b..selectedIds = null);
+}
+
 final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, SaveQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, AddQuoteSuccess>(_addQuote),
   TypedReducer<QuoteState, LoadQuotesSuccess>(_setLoadedQuotes),
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuoteRequest>(_archiveQuoteRequest),
-  TypedReducer<QuoteState, ArchiveQuoteSuccess>(_archiveQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuoteFailure>(_archiveQuoteFailure),
-  TypedReducer<QuoteState, DeleteQuoteRequest>(_deleteQuoteRequest),
-  TypedReducer<QuoteState, DeleteQuoteSuccess>(_deleteQuoteSuccess),
-  TypedReducer<QuoteState, DeleteQuoteFailure>(_deleteQuoteFailure),
-  TypedReducer<QuoteState, RestoreQuoteRequest>(_restoreQuoteRequest),
-  TypedReducer<QuoteState, RestoreQuoteSuccess>(_restoreQuoteSuccess),
-  TypedReducer<QuoteState, RestoreQuoteFailure>(_restoreQuoteFailure),
+  TypedReducer<QuoteState, ArchiveQuotesRequest>(_archiveQuoteRequest),
+  TypedReducer<QuoteState, ArchiveQuotesSuccess>(_archiveQuoteSuccess),
+  TypedReducer<QuoteState, ArchiveQuotesFailure>(_archiveQuoteFailure),
+  TypedReducer<QuoteState, DeleteQuotesRequest>(_deleteQuoteRequest),
+  TypedReducer<QuoteState, DeleteQuotesSuccess>(_deleteQuoteSuccess),
+  TypedReducer<QuoteState, DeleteQuotesFailure>(_deleteQuoteFailure),
+  TypedReducer<QuoteState, RestoreQuotesRequest>(_restoreQuoteRequest),
+  TypedReducer<QuoteState, RestoreQuotesSuccess>(_restoreQuoteSuccess),
+  TypedReducer<QuoteState, RestoreQuotesFailure>(_restoreQuoteFailure),
   TypedReducer<QuoteState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
@@ -181,73 +259,111 @@ QuoteState _markSentQuoteSuccess(
 }
 
 QuoteState _archiveQuoteRequest(
-    QuoteState quoteState, ArchiveQuoteRequest action) {
-  final quote = quoteState.map[action.quoteId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+    QuoteState quoteState, ArchiveQuotesRequest action) {
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
 
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _archiveQuoteSuccess(
-    QuoteState quoteState, ArchiveQuoteSuccess action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, ArchiveQuotesSuccess action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _archiveQuoteFailure(
-    QuoteState quoteState, ArchiveQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, ArchiveQuotesFailure action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteRequest(
-    QuoteState quoteState, DeleteQuoteRequest action) {
-  if (!quoteState.map.containsKey(action.quoteId)) {
-    return quoteState;
+    QuoteState quoteState, DeleteQuotesRequest action) {
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
+
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
   }
-
-  final quote = quoteState.map[action.quoteId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
-
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteSuccess(
-    QuoteState quoteState, DeleteQuoteSuccess action) {
-  if (!quoteState.map.containsKey(action.quote.id)) {
-    return quoteState;
-  }
-
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, DeleteQuotesSuccess action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _deleteQuoteFailure(
-    QuoteState quoteState, DeleteQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, DeleteQuotesFailure action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteRequest(
-    QuoteState quoteState, RestoreQuoteRequest action) {
-  final quote = quoteState.map[action.quoteId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return quoteState.rebuild((b) => b..map[action.quoteId] = quote);
+    QuoteState quoteState, RestoreQuotesRequest action) {
+  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
+
+  for (int i = 0; i < quotes.length; i++) {
+    quotes[i] = quotes[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return quoteState.rebuild((b) {
+    for (final quote in quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteSuccess(
-    QuoteState quoteState, RestoreQuoteSuccess action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, RestoreQuotesSuccess action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _restoreQuoteFailure(
-    QuoteState quoteState, RestoreQuoteFailure action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+    QuoteState quoteState, RestoreQuotesFailure action) {
+  return quoteState.rebuild((b) {
+    for (final quote in action.quotes) {
+      b.map[quote.id] = quote;
+    }
+  });
 }
 
 QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
   final quote = action.quote.rebuild((b) => b
     ..quoteInvoiceId = action.invoice.id
-    ..invoiceStatusId = kInvoiceStatusApproved);
+    ..statusId = kQuoteStatusApproved);
   return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }
 
@@ -261,14 +377,5 @@ QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
   return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
 }
 
-QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) {
-  final state = quoteState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.quotes,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-  return state.rebuild((b) => b..list.replace(state.map.keys));
-}
+QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
+    quoteState.loadQuotes(action.quotes);

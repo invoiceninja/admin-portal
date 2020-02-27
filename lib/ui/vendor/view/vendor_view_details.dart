@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -85,14 +85,14 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.workPhone ?? '').isNotEmpty) {
+      if ((vendor.phone ?? '').isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
-          title: vendor.workPhone,
+          title: vendor.phone,
           subtitle: localization.phone,
           onTap: () => setState(() {
             _launched = _launchURL(
-                context, 'sms:' + cleanPhoneNumber(vendor.workPhone));
+                context, 'sms:' + cleanPhoneNumber(vendor.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(vendor.workPhone));
           }),
         ));
@@ -151,46 +151,6 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
 
     return ListView(
       children: _buildDetailsList(),
-    );
-  }
-}
-
-class AppListTile extends StatelessWidget {
-  const AppListTile({
-    this.icon,
-    this.title,
-    this.subtitle,
-    this.dense = false,
-    this.onTap,
-    this.copyValue,
-  });
-
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final bool dense;
-  final Function onTap;
-  final String copyValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).canvasColor,
-      child: ListTile(
-        contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: subtitle == null ? Container() : Text(subtitle),
-        dense: dense,
-        onTap: onTap,
-        onLongPress: () {
-          Clipboard.setData(ClipboardData(text: copyValue ?? title));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(AppLocalization.of(context)
-                  .copiedToClipboard
-                  .replaceFirst(':value', copyValue ?? title))));
-        },
-      ),
     );
   }
 }

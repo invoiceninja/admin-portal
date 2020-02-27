@@ -7,11 +7,12 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/project/edit/project_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectEdit extends StatefulWidget {
   const ProjectEdit({
@@ -26,9 +27,11 @@ class ProjectEdit extends StatefulWidget {
 }
 
 class _ProjectEditState extends State<ProjectEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_projectEdit');
+  final _debouncer = Debouncer();
 
-  bool autoValidate = false;
+  bool _autoValidate = false;
 
   final _nameController = TextEditingController();
   final _dueDateController = TextEditingController();
@@ -81,16 +84,18 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..budgetedHours = parseDouble(_hoursController.text)
-      ..taskRate = parseDouble(_taskRateController.text)
-      ..privateNotes = _privateNotesController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (project != widget.viewModel.project) {
-      widget.viewModel.onChanged(project);
-    }
+    _debouncer.run(() {
+      final project = widget.viewModel.project.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..budgetedHours = parseDouble(_hoursController.text)
+        ..taskRate = parseDouble(_taskRateController.text)
+        ..privateNotes = _privateNotesController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (project != widget.viewModel.project) {
+        widget.viewModel.onChanged(project);
+      }
+    });
   }
 
   @override
@@ -99,147 +104,102 @@ class _ProjectEditState extends State<ProjectEdit> {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final project = viewModel.project;
-    final company = viewModel.company;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      entity: project,
+      title: project.isNew ? localization.newProject : localization.editProject,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          _autoValidate = !isValid;
+        });
+
+        if (!isValid) {
+          return;
+        }
+
+        viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.project.isNew
-              ? localization.newProject
-              : localization.editProject),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () => viewModel.onCancelPressed(context),
+      body: Form(
+        key: _formKey,
+        child: Builder(builder: (BuildContext context) {
+          return ListView(
+            key: ValueKey(viewModel.project.id),
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
+                  project.isNew
+                      ? EntityDropdown(
+                          key: ValueKey('__client_${project.clientId}__'),
+                          entityType: EntityType.client,
+                          labelText: localization.client,
+                          entityId: project.clientId,
+                          entityList: memoizedDropdownClientList(
+                              state.clientState.map, state.clientState.list),
+                          validator: (String val) => val.trim().isEmpty
+                              ? localization.pleaseSelectAClient
+                              : null,
+                          autoValidate: _autoValidate,
+                          onSelected: (client) {
+                            viewModel.onChanged(project
+                                .rebuild((b) => b..clientId = client.id));
+                          },
+                          onAddPressed: (completer) {
+                            viewModel.onAddClientPressed(context, completer);
+                          },
+                        )
+                      : SizedBox(),
+                  DecoratedFormField(
+                    controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? localization.pleaseEnterAName
+                        : null,
+                    autovalidate: _autoValidate,
+                    label: localization.name,
+                  ),
+                  DatePicker(
+                    labelText: localization.dueDate,
+                    selectedDate: project.dueDate,
+                    onSelected: (date) {
+                      viewModel
+                          .onChanged(project.rebuild((b) => b..dueDate = date));
+                    },
+                  ),
+                  DecoratedFormField(
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    controller: _hoursController,
+                    label: localization.budgetedHours,
+                  ),
+                  DecoratedFormField(
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    controller: _taskRateController,
+                    label: localization.taskRate,
+                  ),
+                  DecoratedFormField(
+                    maxLines: 4,
+                    controller: _privateNotesController,
+                    keyboardType: TextInputType.multiline,
+                    label: localization.privateNotes,
+                  ),
+                  CustomField(
+                    controller: _custom1Controller,
+                    field: CustomFieldType.project1,
+                    value: project.customValue1,
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    field: CustomFieldType.project2,
+                    value: project.customValue2,
+                  ),
+                ],
               ),
-            Builder(builder: (BuildContext context) {
-              return ActionIconButton(
-                icon: Icons.cloud_upload,
-                tooltip: localization.save,
-                isVisible: !project.isDeleted,
-                isDirty: project.isNew || project != viewModel.origProject,
-                isSaving: viewModel.isSaving,
-                onPressed: () {
-                  final bool isValid = _formKey.currentState.validate();
-
-                  setState(() {
-                    autoValidate = !isValid;
-                  });
-
-                  if (!isValid) {
-                    return;
-                  }
-
-                  viewModel.onSavePressed(context);
-                },
-              );
-            })
-          ],
-        ),
-        body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
-            return ListView(
-              key: ValueKey(viewModel.project.id),
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    project.isNew
-                        ? EntityDropdown(
-                            entityType: EntityType.client,
-                            labelText: localization.client,
-                            initialValue:
-                                (state.clientState.map[project.clientId] ??
-                                        ClientEntity())
-                                    .displayName,
-                            entityMap: state.clientState.map,
-                            entityList: memoizedDropdownClientList(
-                                state.clientState.map, state.clientState.list),
-                            validator: (String val) => val.trim().isEmpty
-                                ? localization.pleaseSelectAClient
-                                : null,
-                            autoValidate: autoValidate,
-                            onSelected: (client) {
-                              viewModel.onChanged(project
-                                  .rebuild((b) => b..clientId = client.id));
-                            },
-                            onAddPressed: (completer) {
-                              viewModel.onAddClientPressed(context, completer);
-                            },
-                          )
-                        : SizedBox(),
-                    TextFormField(
-                      autocorrect: false,
-                      controller: _nameController,
-                      validator: (String val) => val.trim().isEmpty
-                          ? localization.pleaseEnterAName
-                          : null,
-                      autovalidate: autoValidate,
-                      decoration: InputDecoration(
-                        labelText: localization.name,
-                      ),
-                    ),
-                    DatePicker(
-                      labelText: localization.dueDate,
-                      selectedDate: project.dueDate,
-                      onSelected: (date) {
-                        viewModel.onChanged(
-                            project.rebuild((b) => b..dueDate = date));
-                      },
-                    ),
-                    TextFormField(
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      controller: _hoursController,
-                      decoration: InputDecoration(
-                        labelText: localization.budgetedHours,
-                      ),
-                    ),
-                    TextFormField(
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      controller: _taskRateController,
-                      decoration: InputDecoration(
-                        labelText: localization.taskRate,
-                      ),
-                    ),
-                    TextFormField(
-                      maxLines: 4,
-                      controller: _privateNotesController,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        labelText: localization.privateNotes,
-                      ),
-                    ),
-                    CustomField(
-                      controller: _custom1Controller,
-                      labelText:
-                          company.getCustomFieldLabel(CustomFieldType.project1),
-                      options: company
-                          .getCustomFieldValues(CustomFieldType.project1),
-                    ),
-                    CustomField(
-                      controller: _custom2Controller,
-                      labelText:
-                          company.getCustomFieldLabel(CustomFieldType.project2),
-                      options: company
-                          .getCustomFieldValues(CustomFieldType.project2),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }),
-        ),
+            ],
+          );
+        }),
       ),
     );
   }

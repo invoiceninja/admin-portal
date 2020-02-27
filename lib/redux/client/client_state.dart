@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
@@ -13,19 +14,21 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   factory ClientState() {
     return _$ClientState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ClientEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ClientEntity>(),
+      list: BuiltList<String>(),
     );
   }
+
   ClientState._();
 
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ClientEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ClientEntity> get map;
 
-  ClientEntity get(int clientId) {
+  BuiltList<String> get list;
+
+  ClientEntity get(String clientId) {
     if (map.containsKey(clientId)) {
       return map[clientId];
     } else {
@@ -42,6 +45,19 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
         kMillisecondsToRefreshData;
   }
 
+  ClientState loadClients(BuiltList<ClientEntity> clients) {
+    final map = Map<String, ClientEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ClientState> get serializer => _$clientStateSerializer;
@@ -55,10 +71,10 @@ abstract class ClientUIState extends Object
       listUIState: ListUIState(ClientFields.name),
       editing: ClientEntity(),
       editingContact: ContactEntity(),
-      selectedId: 0,
       saveCompleter: null,
     );
   }
+
   ClientUIState._();
 
   @nullable

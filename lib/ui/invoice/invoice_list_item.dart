@@ -19,6 +19,8 @@ class InvoiceListItem extends StatelessWidget {
     @required this.client,
     @required this.filter,
     @required this.hasDocuments,
+    this.onCheckboxChanged,
+    this.isChecked = false,
   });
 
   final UserEntity user;
@@ -29,13 +31,17 @@ class InvoiceListItem extends StatelessWidget {
   final ClientEntity client;
   final String filter;
   final bool hasDocuments;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = StoreProvider.of<AppState>(context).state;
+    final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
-    final quoteUIState = uiState.quoteUIState;
+    final listUIState = invoiceUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
@@ -43,25 +49,34 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final invoiceStatusId = invoice.isQuote && invoice.quoteInvoiceId > 0
-        ? kInvoiceStatusApproved
-        : invoice.invoiceStatusId;
+    final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
+        ? kQuoteStatusApproved
+        : invoice.statusId;
 
     return DismissibleEntity(
       isSelected: invoice.id ==
           (uiState.isEditing
-              ? (invoice.isQuote
-                  ? quoteUIState.editing.id
-                  : invoiceUIState.editing.id)
-              : (invoice.isQuote
-                  ? quoteUIState.selectedId
-                  : invoiceUIState.selectedId)),
-      user: user,
+              ? invoiceUIState.editing.id
+              : invoiceUIState.selectedId),
+      userCompany: state.userCompany,
       entity: invoice,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -69,7 +84,7 @@ class InvoiceListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
@@ -77,7 +92,7 @@ class InvoiceListItem extends StatelessWidget {
                       invoice.balance > 0 ? invoice.balance : invoice.amount,
                       context,
                       clientId: invoice.clientId),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),
@@ -88,12 +103,12 @@ class InvoiceListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text((invoice.invoiceNumber +
+                      ? Text(((invoice.number ?? localization.pending) +
                               ' • ' +
                               formatDate(
                                   invoice.dueDate.isNotEmpty
                                       ? invoice.dueDate
-                                      : invoice.invoiceDate,
+                                      : invoice.date,
                                   context) +
                               (hasDocuments ? '  📎' : ''))
                           .trim())

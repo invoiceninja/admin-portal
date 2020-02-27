@@ -16,8 +16,8 @@ abstract class ProjectState
   factory ProjectState() {
     return _$ProjectState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ProjectEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ProjectEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ProjectState._();
@@ -25,8 +25,8 @@ abstract class ProjectState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ProjectEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ProjectEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -39,6 +39,19 @@ abstract class ProjectState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  ProjectState loadProjects(BuiltList<ProjectEntity> clients) {
+    final map = Map<String, ProjectEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
+  }
+
   static Serializer<ProjectState> get serializer => _$projectStateSerializer;
 }
 
@@ -49,7 +62,7 @@ abstract class ProjectUIState extends Object
     return _$ProjectUIState._(
       listUIState: ListUIState(ProjectFields.name),
       editing: ProjectEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   ProjectUIState._();

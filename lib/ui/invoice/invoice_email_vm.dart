@@ -23,7 +23,7 @@ class InvoiceEmailScreen extends StatelessWidget {
         final invoice = state.invoiceState.map[invoiceId];
         final client = state.clientState.get(invoice.clientId);
         if (client.areActivitiesStale) {
-          store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
+          store.dispatch(LoadClient(clientId: client.id));
         }
       },
       converter: (Store<AppState> store) {
@@ -83,7 +83,7 @@ class EmailInvoiceVM extends EmailEntityVM {
     return EmailInvoiceVM(
         isLoading: state.isLoading,
         isSaving: state.isSaving,
-        company: state.selectedCompany,
+        company: state.company,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId] ??
             ClientEntity(id: invoice.clientId),

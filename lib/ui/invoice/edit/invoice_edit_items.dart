@@ -1,10 +1,12 @@
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -24,10 +26,9 @@ class InvoiceEditItems extends StatefulWidget {
 }
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
-  InvoiceItemEntity selectedInvoiceItem;
+  int selectedItemIndex;
 
-  void _showInvoiceItemEditor(
-      InvoiceItemEntity invoiceItem, BuildContext context) {
+  void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
@@ -36,10 +37,9 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
           return ItemEditDetails(
             viewModel: viewModel,
-            key: Key(invoiceItem.entityKey),
-            invoiceItem: invoiceItem,
-            index: invoice.invoiceItems.indexOf(
-                invoice.invoiceItems.firstWhere((i) => i.id == invoiceItem.id)),
+            key: ValueKey('__${lineItemIndex}__'),
+            invoiceItem: invoice.lineItems[lineItemIndex],
+            index: lineItemIndex,
           );
         });
   }
@@ -49,38 +49,33 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
-    final invoiceItem = invoice.invoiceItems.contains(viewModel.invoiceItem)
-        ? viewModel.invoiceItem
-        : null;
+    final itemIndex = viewModel.invoiceItemIndex;
 
-    if (invoiceItem != null && invoiceItem != selectedInvoiceItem) {
-      selectedInvoiceItem = invoiceItem;
+    final invoiceItem =
+        itemIndex != null && invoice.lineItems.length > itemIndex
+            ? invoice.lineItems[itemIndex]
+            : null;
+
+    if (invoiceItem != null && itemIndex != selectedItemIndex) {
+      selectedItemIndex = itemIndex;
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        _showInvoiceItemEditor(invoiceItem, context);
+        _showInvoiceItemEditor(itemIndex, context);
       });
     }
 
-    if (invoice.invoiceItems.isEmpty) {
-      return Center(
-        child: Text(
-          localization.clickPlusToAddItem,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 20.0,
-          ),
-        ),
-      );
+    if (invoice.lineItems.isEmpty) {
+      return HelpText(localization.clickPlusToAddItem);
     }
 
-    final invoiceItems =
-        invoice.invoiceItems.map((invoiceItem) => InvoiceItemListTile(
-              invoice: invoice,
-              invoiceItem: invoiceItem,
-              onTap: () => _showInvoiceItemEditor(invoiceItem, context),
-            ));
-
     return ListView(
-      children: invoiceItems.toList(),
+      children: [
+        for (int i = 0; i < invoice.lineItems.length; i++)
+          InvoiceItemListTile(
+            invoice: invoice,
+            invoiceItem: invoice.lineItems[i],
+            onTap: () => _showInvoiceItemEditor(i, context),
+          )
+      ],
     );
   }
 }
@@ -112,8 +107,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
 
   TaxRateEntity _taxRate1;
   TaxRateEntity _taxRate2;
+  TaxRateEntity _taxRate3;
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -126,7 +123,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
         formatNumberType: FormatNumberType.input);
-    _qtyController.text = formatNumber(invoiceItem.qty, context,
+    _qtyController.text = formatNumber(invoiceItem.quantity, context,
         formatNumberType: FormatNumberType.input);
     _discountController.text = formatNumber(invoiceItem.discount, context,
         formatNumberType: FormatNumberType.input);
@@ -143,8 +140,15 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _custom2Controller,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+        (dynamic controller) => controller.addListener(_onTextChanged));
+
+    _taxRate1 =
+        TaxRateEntity(name: invoiceItem.taxName1, rate: invoiceItem.taxRate1);
+    _taxRate2 =
+        TaxRateEntity(name: invoiceItem.taxName2, rate: invoiceItem.taxRate2);
+    _taxRate3 =
+        TaxRateEntity(name: invoiceItem.taxName3, rate: invoiceItem.taxRate3);
 
     super.didChangeDependencies();
   }
@@ -152,11 +156,17 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   @override
   void dispose() {
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
+      controller.removeListener(_onTextChanged);
       controller.dispose();
     });
 
     super.dispose();
+  }
+
+  void _onTextChanged() {
+    _debouncer.run(() {
+      _onChanged();
+    });
   }
 
   void _onChanged() {
@@ -164,16 +174,19 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
-      ..qty = parseDouble(_qtyController.text)
+      ..quantity = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim());
 
-    if (_taxRate1 != null) {
+    if (_taxRate1 != null && !_taxRate1.isEmpty) {
       invoiceItem = invoiceItem.applyTax(_taxRate1);
     }
-    if (_taxRate2 != null) {
+    if (_taxRate2 != null && !_taxRate2.isEmpty) {
       invoiceItem = invoiceItem.applyTax(_taxRate2, isSecond: true);
+    }
+    if (_taxRate3 != null && !_taxRate3.isEmpty) {
+      invoiceItem = invoiceItem.applyTax(_taxRate3, isThird: true);
     }
 
     if (invoiceItem != widget.invoiceItem) {
@@ -185,7 +198,6 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final invoiceItem = widget.invoiceItem;
     final company = viewModel.company;
 
     return ResponsivePadding(
@@ -228,21 +240,20 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               maxLines: 4,
             ),
             CustomField(
-              controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.product1),
-              options: company.getCustomFieldValues(CustomFieldType.product1),
-            ),
+                controller: _custom1Controller,
+                field: CustomFieldType.product1,
+                value: widget.invoiceItem.customValue1),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.product2),
-              options: company.getCustomFieldValues(CustomFieldType.product2),
+              field: CustomFieldType.product2,
+              value: widget.invoiceItem.customValue2,
             ),
             DecoratedFormField(
               label: localization.unitCost,
               controller: _costController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
-            company.hasInvoiceField('quantity')
+            company.settings.hasInvoiceField('quantity')
                 ? DecoratedFormField(
                     label: localization.quantity,
                     controller: _qtyController,
@@ -250,7 +261,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.hasInvoiceField('discount')
+            company.settings.hasInvoiceField('discount')
                 ? DecoratedFormField(
                     label: localization.discount,
                     controller: _discountController,
@@ -258,30 +269,42 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            company.enableInvoiceItemTaxes
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) {
-                      _taxRate1 = taxRate;
-                      _onChanged();
-                    },
-                    labelText: localization.tax,
-                    initialTaxName: invoiceItem.taxName1,
-                    initialTaxRate: invoiceItem.taxRate1,
-                  )
-                : Container(),
-            company.enableInvoiceItemTaxes && company.enableSecondTaxRate
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) {
-                      _taxRate2 = taxRate;
-                      _onChanged();
-                    },
-                    labelText: localization.tax,
-                    initialTaxName: invoiceItem.taxName2,
-                    initialTaxRate: invoiceItem.taxRate2,
-                  )
-                : Container(),
+            if (company.settings.enableFirstItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) {
+                  setState(() {
+                    _taxRate1 = taxRate;
+                    _onChanged();
+                  });
+                },
+                labelText: localization.tax,
+                initialTaxName: _taxRate1.name,
+                initialTaxRate: _taxRate1.rate,
+              ),
+            if (company.settings.enableSecondItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) {
+                  setState(() {
+                    _taxRate2 = taxRate;
+                    _onChanged();
+                  });
+                },
+                labelText: localization.tax,
+                initialTaxName: _taxRate2.name,
+                initialTaxRate: _taxRate2.rate,
+              ),
+            if (company.settings.enableThirdItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) {
+                  setState(() {
+                    _taxRate3 = taxRate;
+                    _onChanged();
+                  });
+                },
+                labelText: localization.tax,
+                initialTaxName: _taxRate3.name,
+                initialTaxRate: _taxRate3.rate,
+              ),
           ],
         ),
       ),

@@ -1,14 +1,15 @@
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownClientList = memo2(
-    (BuiltMap<int, ClientEntity> clientMap, BuiltList<int> clientList) =>
+    (BuiltMap<String, ClientEntity> clientMap, BuiltList<String> clientList) =>
         dropdownClientsSelector(clientMap, clientList));
 
-List<int> dropdownClientsSelector(
-    BuiltMap<int, ClientEntity> clientMap, BuiltList<int> clientList) {
+List<String> dropdownClientsSelector(
+    BuiltMap<String, ClientEntity> clientMap, BuiltList<String> clientList) {
   final list =
       clientList.where((clientId) => clientMap[clientId].isActive).toList();
 
@@ -21,14 +22,32 @@ List<int> dropdownClientsSelector(
   return list;
 }
 
-var memoizedFilteredClientList = memo3((BuiltMap<int, ClientEntity> clientMap,
-        BuiltList<int> clientList, ListUIState clientListState) =>
-    filteredClientsSelector(clientMap, clientList, clientListState));
+var memoizedFilteredClientList = memo4((BuiltMap<String, ClientEntity>
+            clientMap,
+        BuiltList<String> clientList,
+        BuiltMap<String, GroupEntity> groupMap,
+        ListUIState clientListState) =>
+    filteredClientsSelector(clientMap, clientList, groupMap, clientListState));
 
-List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList, ListUIState clientListState) {
+List<String> filteredClientsSelector(
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> clientList,
+    BuiltMap<String, GroupEntity> groupMap,
+    ListUIState clientListState) {
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];
+    final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
+
+    if (clientListState.filterEntityId != null) {
+      if (!clientListState.entityMatchesFilter(group)) {
+        return false;
+      }
+    } else if (clientListState.filterEntityType == EntityType.user) {
+      if (!client.userCanAccess(clientListState.filterEntityId)) {
+        return false;
+      }
+    }
+
     if (!client.matchesStates(clientListState.stateFilters)) {
       return false;
     }
@@ -40,7 +59,20 @@ List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
         !clientListState.custom2Filters.contains(client.customValue2)) {
       return false;
     }
-    return client.matchesFilter(clientListState.filter);
+    if (clientListState.custom3Filters.isNotEmpty &&
+        !clientListState.custom3Filters.contains(client.customValue3)) {
+      return false;
+    }
+    if (clientListState.custom4Filters.isNotEmpty &&
+        !clientListState.custom4Filters.contains(client.customValue4)) {
+      return false;
+    }
+    if (!client.matchesFilter(clientListState.filter) &&
+        !group.matchesFilter(clientListState.filter)) {
+      return false;
+    }
+
+    return true;
   }).toList();
 
   list.sort((clientAId, clientBId) {
@@ -54,5 +86,5 @@ List<int> filteredClientsSelector(BuiltMap<int, ClientEntity> clientMap,
 }
 
 bool hasClientChanges(
-        ClientEntity client, BuiltMap<int, ClientEntity> clientMap) =>
-    client.isNew || client != clientMap[client.id];
+        ClientEntity client, BuiltMap<String, ClientEntity> clientMap) =>
+    client.isNew ? client.isChanged : client != clientMap[client.id];

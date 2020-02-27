@@ -1,19 +1,20 @@
 import 'dart:async';
-import 'package:redux/redux.dart';
-import 'package:flutter/material.dart';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/document/document_list.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/document/document_list.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:redux/redux.dart';
 
 class DocumentListBuilder extends StatelessWidget {
   const DocumentListBuilder({Key key}) : super(key: key);
@@ -33,7 +34,7 @@ class DocumentListBuilder extends StatelessWidget {
 
 class DocumentListVM {
   DocumentListVM({
-    @required this.user,
+    @required this.state,
     @required this.documentList,
     @required this.documentMap,
     @required this.filter,
@@ -52,7 +53,7 @@ class DocumentListVM {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadDocuments(completer: completer, force: true));
       return completer.future;
@@ -61,7 +62,7 @@ class DocumentListVM {
     final state = store.state;
 
     return DocumentListVM(
-      user: state.user,
+      state: state,
       listState: state.documentListState,
       documentList: memoizedFilteredDocumentList(state.documentState.map,
           state.documentState.list, state.documentListState),
@@ -71,30 +72,32 @@ class DocumentListVM {
       filter: state.documentUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
           store.dispatch(FilterDocumentsByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.documentListState.filterEntityId,
-              context: context)),
-      onDocumentTap: (context, document) {
-        store.dispatch(ViewDocument(documentId: document.id, context: context));
-      },
-      onEntityAction:
-          (BuildContext context, BaseEntity document, EntityAction action) =>
-              handleDocumentAction(context, document, action),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.documentListState.filterEntityId,
+          entityType: state.documentListState.filterEntityType),
+      onDocumentTap: (context, document) => viewEntityById(
+          context: context,
+          entityId: document.id,
+          entityType: EntityType.document),
+      onEntityAction: (BuildContext context, List<BaseEntity> documents,
+              EntityAction action) =>
+          handleDocumentAction(context, documents, action),
       onRefreshed: (context) => _handleRefresh(context),
     );
   }
 
-  final UserEntity user;
-  final List<int> documentList;
-  final BuiltMap<int, DocumentEntity> documentMap;
+  final AppState state;
+  final List<String> documentList;
+  final BuiltMap<String, DocumentEntity> documentMap;
   final ListUIState listState;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext, DocumentEntity) onDocumentTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, DocumentEntity, EntityAction) onEntityAction;
+  final Function(BuildContext, List<DocumentEntity>, EntityAction)
+      onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
 }

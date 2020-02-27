@@ -1,18 +1,6 @@
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
-
-final dashboardReducer = combineReducers<DashboardState>([
-  TypedReducer<DashboardState, LoadDashboardSuccess>(_setLoadedDashboards),
-]);
-
-DashboardState _setLoadedDashboards(
-    DashboardState dashboardState, LoadDashboardSuccess action) {
-  return dashboardState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..data.replace(action.data));
-}
 
 DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
   if (action is UpdateDashboardSettings) {
@@ -33,7 +21,9 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     }
   } else if (action is SelectCompany) {
-    return state.rebuild((b) => b..currencyId = action.company.currencyId);
+    //return state.rebuild((b) => b..currencyId = action.company.jcurrencyId);
+    // TODO re-enable
+    return state;
   }
 
   return state;

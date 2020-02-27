@@ -5,8 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -39,17 +41,18 @@ class LoginVM {
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
+    @required this.onRecoverPressed,
     @required this.onSignUpPressed,
-    @required this.onCancel2FAPressed,
     @required this.onGoogleLoginPressed,
+    @required this.onGoogleSignUpPressed,
   });
 
   bool isLoading;
   AuthState authState;
-  final Function() onCancel2FAPressed;
 
   final Function(
-    BuildContext, {
+    BuildContext,
+    Completer<Null> completer, {
     @required String email,
     @required String password,
     @required String url,
@@ -58,14 +61,25 @@ class LoginVM {
   }) onLoginPressed;
 
   final Function(
-    BuildContext, {
+    BuildContext,
+    Completer<Null> completer, {
+    @required String email,
+    @required String url,
+    @required String secret,
+  }) onRecoverPressed;
+
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
     @required String firstName,
     @required String lastName,
     @required String email,
     @required String password,
   }) onSignUpPressed;
 
-  final Function(BuildContext, String, String) onGoogleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer,
+      {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer) onGoogleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -73,38 +87,69 @@ class LoginVM {
         'email',
         'openid',
         'profile',
+        'https://www.googleapis.com/auth/gmail.send',
       ],
     );
 
     void _handleLogin(BuildContext context) {
-      store.dispatch(UpdateLayout(calculateLayout(context)));
+      final layout = calculateLayout(context);
+
+      store.dispatch(UserSettingsChanged(layout: layout));
       AppBuilder.of(context).rebuild();
 
-      if (isMobile(context)) {
-        store.dispatch(ViewDashboard(context: context));
-      } else {
-        store.dispatch(ViewMainScreen(context));
-      }
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        if (layout == AppLayout.mobile) {
+          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+        } else {
+          store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
+        }
+      });
     }
 
     return LoginVM(
         isLoading: store.state.isLoading,
         authState: store.state.authState,
-        onCancel2FAPressed: () => store.dispatch(ClearAuthError()),
-        onGoogleLoginPressed:
-            (BuildContext context, String url, String secret) async {
+        onGoogleLoginPressed: (
+          BuildContext context,
+          Completer<Null> completer, {
+          @required String url,
+          @required String secret,
+          @required String oneTimePassword,
+        }) async {
           try {
             final account = await _googleSignIn.signIn();
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-                final Completer<Null> completer = Completer<Null>();
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
                   token: value.idToken,
                   url: url.trim(),
                   secret: secret.trim(),
                   platform: getPlatform(context),
+                  oneTimePassword: oneTimePassword,
+                ));
+                completer.future.then((_) => _handleLogin(context));
+              });
+            }
+          } catch (error) {
+            print(error);
+          }
+        },
+        onGoogleSignUpPressed:
+            (BuildContext context, Completer<Null> completer) async {
+          try {
+            final account = await _googleSignIn.signIn();
+
+            if (account != null) {
+              account.authentication.then((GoogleSignInAuthentication value) {
+                store.dispatch(UserSignUpRequest(
+                  completer: completer,
+                  email: account.email,
+                  firstName: getFirstName(account.displayName),
+                  lastName: getLastName(account.displayName),
+                  photoUrl: account.photoUrl,
+                  oauthId: account.id,
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });
@@ -114,7 +159,8 @@ class LoginVM {
           }
         },
         onSignUpPressed: (
-          BuildContext context, {
+          BuildContext context,
+          Completer<Null> completer, {
           @required String firstName,
           @required String lastName,
           @required String email,
@@ -124,7 +170,6 @@ class LoginVM {
             return;
           }
 
-          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserSignUpRequest(
             completer: completer,
             firstName: firstName.trim(),
@@ -135,8 +180,34 @@ class LoginVM {
           ));
           completer.future.then((_) => _handleLogin(context));
         },
+        onRecoverPressed: (
+          BuildContext context,
+          Completer<Null> completer, {
+          @required String email,
+          @required String url,
+          @required String secret,
+        }) {
+          if (store.state.isLoading) {
+            return;
+          }
+
+          if (url.isNotEmpty && !url.startsWith('http')) {
+            url = 'https://' + url;
+          }
+
+          store.dispatch(RecoverPasswordRequest(
+            completer: completer,
+            email: email.trim(),
+            url: url.trim(),
+            secret: secret.trim(),
+          ));
+          completer.future.then((_) {
+            print('## DONE ##');
+          });
+        },
         onLoginPressed: (
-          BuildContext context, {
+          BuildContext context,
+          Completer<Null> completer, {
           @required String email,
           @required String password,
           @required String url,
@@ -151,7 +222,6 @@ class LoginVM {
             url = 'https://' + url;
           }
 
-          final Completer<Null> completer = Completer<Null>();
           store.dispatch(UserLoginRequest(
             completer: completer,
             email: email.trim(),

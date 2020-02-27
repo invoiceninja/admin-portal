@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
-    @required this.user,
+    @required this.userCompany,
     @required this.client,
     @required this.project,
     @required this.onTap,
@@ -23,7 +23,7 @@ class TaskListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity user;
+  final UserCompanyEntity userCompany;
   final ClientEntity client;
   final ProjectEntity project;
   final Function(EntityAction) onEntityAction;
@@ -42,13 +42,16 @@ class TaskListItem extends StatelessWidget {
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
 
-    final CompanyEntity company = state.selectedCompany;
+    final CompanyEntity company = state.company;
     final taskStatus = company.taskStatusMap[task.taskStatusId];
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? task.matchesFilterValue(filter)
         : null;
+    final listUIState = taskUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     //final subtitle = filterMatch ?? client?.displayName ?? task.description;
     String subtitle;
@@ -64,18 +67,23 @@ class TaskListItem extends StatelessWidget {
     return DismissibleEntity(
       isSelected: task.id ==
           (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
-      user: user,
+      userCompany: userCompany,
       entity: task,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: onTap,
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
         onLongPress: onLongPress,
-        leading: onCheckboxChanged != null
-            ? Checkbox(
-                //key: NinjaKeys.taskItemCheckbox(task.id),
-                value: isChecked,
-                onChanged: (value) => onCheckboxChanged(value),
-                activeColor: Theme.of(context).accentColor,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
               )
             : null,
         title: Container(
@@ -89,13 +97,13 @@ class TaskListItem extends StatelessWidget {
                       : formatDate(convertTimestampToDateString(task.updatedAt),
                           context),
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               LiveText(() {
                 return formatNumber(task.listDisplayAmount, context,
                     formatNumberType: FormatNumberType.duration);
-              }, style: Theme.of(context).textTheme.title),
+              }, style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

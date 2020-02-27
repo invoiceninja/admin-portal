@@ -1,35 +1,38 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDocumentList implements PersistUI {
-  ViewDocumentList(this.context);
+class ViewDocumentList extends AbstractNavigatorAction implements PersistUI {
+  ViewDocumentList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
+  final bool force;
 }
 
-class ViewDocument implements PersistUI {
-  ViewDocument({this.documentId, this.context});
+class ViewDocument extends AbstractNavigatorAction implements PersistUI {
+  ViewDocument(
+      {@required NavigatorState navigator, this.documentId, this.force})
+      : super(navigator: navigator);
 
-  final int documentId;
-  final BuildContext context;
+  final String documentId;
+  final bool force;
 }
 
-class EditDocument implements PersistUI {
+class EditDocument extends AbstractNavigatorAction implements PersistUI {
   EditDocument({
+    @required NavigatorState navigator,
     this.document,
-    this.context,
     this.completer,
-  });
+  }) : super(navigator: navigator);
 
   final DocumentEntity document;
-  final BuildContext context;
   final Completer completer;
 }
 
@@ -40,18 +43,17 @@ class UpdateDocument implements PersistUI {
 }
 
 class LoadDocument {
-  LoadDocument({this.completer, this.documentId, this.loadActivities = false});
+  LoadDocument({this.completer, this.documentId});
 
   final Completer completer;
-  final int documentId;
-  final bool loadActivities;
+  final String documentId;
 }
 
 class LoadDocumentActivity {
   LoadDocumentActivity({this.completer, this.documentId});
 
   final Completer completer;
-  final int documentId;
+  final String documentId;
 }
 
 class LoadDocuments {
@@ -135,63 +137,63 @@ class SaveDocumentFailure implements StopSaving {
 }
 
 class ArchiveDocumentRequest implements StartSaving {
-  ArchiveDocumentRequest(this.completer, this.documentId);
+  ArchiveDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final int documentId;
+  final List<String> documentIds;
 }
 
 class ArchiveDocumentSuccess implements StopSaving, PersistData {
-  ArchiveDocumentSuccess(this.document);
+  ArchiveDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class ArchiveDocumentFailure implements StopSaving {
-  ArchiveDocumentFailure(this.document);
+  ArchiveDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentRequest implements StartSaving {
-  DeleteDocumentRequest(this.completer, this.documentId);
+  DeleteDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final int documentId;
+  final List<String> documentIds;
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {
-  DeleteDocumentSuccess(this.document);
+  DeleteDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentFailure implements StopSaving {
-  DeleteDocumentFailure(this.document);
+  DeleteDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class RestoreDocumentRequest implements StartSaving {
-  RestoreDocumentRequest(this.completer, this.documentId);
+  RestoreDocumentRequest(this.completer, this.documentIds);
 
   final Completer completer;
-  final int documentId;
+  final List<String> documentIds;
 }
 
 class RestoreDocumentSuccess implements StopSaving, PersistData {
-  RestoreDocumentSuccess(this.document);
+  RestoreDocumentSuccess(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
 class RestoreDocumentFailure implements StopSaving {
-  RestoreDocumentFailure(this.document);
+  RestoreDocumentFailure(this.documents);
 
-  final DocumentEntity document;
+  final List<DocumentEntity> documents;
 }
 
-class FilterDocuments {
+class FilterDocuments implements PersistUI {
   FilterDocuments(this.filter);
 
   final String filter;
@@ -221,36 +223,97 @@ class FilterDocumentsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterDocumentsByCustom3 implements PersistUI {
+  FilterDocumentsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterDocumentsByCustom4 implements PersistUI {
+  FilterDocumentsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterDocumentsByEntity implements PersistUI {
   FilterDocumentsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
 void handleDocumentAction(
-    BuildContext context, DocumentEntity document, EntityAction action) {
+    BuildContext context, List<BaseEntity> documents, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          documents.length == 1,
+      'Cannot perform this action on more than one document');
+
+  if (documents.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final document = documents.first;
+  final documentIds = documents.map((document) => document.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditDocument(context: context, document: document));
+      editEntity(context: context, entity: document);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter(context, localization.restoredDocument),
-          document.id));
+          snackBarCompleter<Null>(context, localization.restoredDocument),
+          documentIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter(context, localization.archivedDocument),
-          document.id));
+          snackBarCompleter<Null>(context, localization.archivedDocument),
+          documentIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteDocumentRequest(
-          snackBarCompleter(context, localization.deletedDocument),
-          document.id));
+          snackBarCompleter<Null>(context, localization.deletedDocument),
+          documentIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.documentListState.isInMultiselect()) {
+        store.dispatch(StartDocumentMultiselect());
+      }
+
+      if (documents.isEmpty) {
+        break;
+      }
+
+      for (final document in documents) {
+        if (!store.state.documentListState.isSelected(document.id)) {
+          store.dispatch(AddToDocumentMultiselect(entity: document));
+        } else {
+          store.dispatch(RemoveFromDocumentMultiselect(entity: document));
+        }
+      }
       break;
   }
 }
+
+class StartDocumentMultiselect {}
+
+class AddToDocumentMultiselect {
+  AddToDocumentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromDocumentMultiselect {
+  RemoveFromDocumentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearDocumentMultiselect {}

@@ -40,7 +40,7 @@ The application was created using the [Flutter Redux Starter](https://github.com
 
 The architecture is based off these two projects:
 
-- [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/example/redux) - [Brian Egan](https://twitter.com/brianegan)
+- [Redux Sample](https://github.com/brianegan/flutter_architecture_samples/tree/master/redux) - [Brian Egan](https://twitter.com/brianegan)
 - [inKino](https://github.com/roughike/inKino) - [Iiro Krankka](https://twitter.com/koorankka)
 
 ### Blog Posts

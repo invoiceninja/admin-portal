@@ -53,7 +53,7 @@ class _$DocumentListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -142,13 +142,55 @@ class _$DocumentEntitySerializer
       result
         ..add('invoice_id')
         ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.expenseId != null) {
       result
         ..add('expense_id')
         ..add(serializers.serialize(object.expenseId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue1 != null) {
+      result
+        ..add('custom_value1')
+        ..add(serializers.serialize(object.customValue1,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue2 != null) {
+      result
+        ..add('custom_value2')
+        ..add(serializers.serialize(object.customValue2,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -174,17 +216,23 @@ class _$DocumentEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -231,14 +279,42 @@ class _$DocumentEntitySerializer
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
@@ -257,13 +333,17 @@ class _$DocumentEntitySerializer
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -478,11 +558,25 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
-  final int invoiceId;
+  final String invoiceId;
   @override
-  final int expenseId;
+  final String expenseId;
   @override
   final bool isDefault;
+  @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final String projectId;
+  @override
+  final String vendorId;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -492,9 +586,11 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final String id;
 
   factory _$DocumentEntity([void Function(DocumentEntityBuilder) updates]) =>
       (new DocumentEntityBuilder()..update(updates)).build();
@@ -510,11 +606,19 @@ class _$DocumentEntity extends DocumentEntity {
       this.invoiceId,
       this.expenseId,
       this.isDefault,
+      this.customValue1,
+      this.customValue2,
+      this.customValue3,
+      this.customValue4,
+      this.projectId,
+      this.vendorId,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
       this.id})
       : super._() {
     if (name == null) {
@@ -565,11 +669,19 @@ class _$DocumentEntity extends DocumentEntity {
         invoiceId == other.invoiceId &&
         expenseId == other.expenseId &&
         isDefault == other.isDefault &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        projectId == other.projectId &&
+        vendorId == other.vendorId &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
         id == other.id;
   }
 
@@ -590,22 +702,28 @@ class _$DocumentEntity extends DocumentEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(0,
-                                                                    name.hashCode),
-                                                                type.hashCode),
-                                                            path.hashCode),
-                                                        width.hashCode),
-                                                    height.hashCode),
-                                                size.hashCode),
-                                            preview.hashCode),
-                                        invoiceId.hashCode),
-                                    expenseId.hashCode),
-                                isDefault.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc(0, name.hashCode), type.hashCode), path.hashCode), width.hashCode), height.hashCode),
+                                                                                size.hashCode),
+                                                                            preview.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    expenseId.hashCode),
+                                                                isDefault.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            projectId.hashCode),
+                                        vendorId.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -622,11 +740,19 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('invoiceId', invoiceId)
           ..add('expenseId', expenseId)
           ..add('isDefault', isDefault)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('projectId', projectId)
+          ..add('vendorId', vendorId)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
           ..add('id', id))
         .toString();
   }
@@ -664,17 +790,45 @@ class DocumentEntityBuilder
   String get preview => _$this._preview;
   set preview(String preview) => _$this._preview = preview;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
-  int _expenseId;
-  int get expenseId => _$this._expenseId;
-  set expenseId(int expenseId) => _$this._expenseId = expenseId;
+  String _expenseId;
+  String get expenseId => _$this._expenseId;
+  set expenseId(String expenseId) => _$this._expenseId = expenseId;
 
   bool _isDefault;
   bool get isDefault => _$this._isDefault;
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
+
+  String _customValue1;
+  String get customValue1 => _$this._customValue1;
+  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+
+  String _customValue2;
+  String get customValue2 => _$this._customValue2;
+  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -692,13 +846,19 @@ class DocumentEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   DocumentEntityBuilder();
 
@@ -714,11 +874,19 @@ class DocumentEntityBuilder
       _invoiceId = _$v.invoiceId;
       _expenseId = _$v.expenseId;
       _isDefault = _$v.isDefault;
+      _customValue1 = _$v.customValue1;
+      _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
+      _projectId = _$v.projectId;
+      _vendorId = _$v.vendorId;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
       _id = _$v.id;
       _$v = null;
     }
@@ -752,11 +920,19 @@ class DocumentEntityBuilder
             invoiceId: invoiceId,
             expenseId: expenseId,
             isDefault: isDefault,
+            customValue1: customValue1,
+            customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            projectId: projectId,
+            vendorId: vendorId,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
             id: id);
     replace(_$result);
     return _$result;

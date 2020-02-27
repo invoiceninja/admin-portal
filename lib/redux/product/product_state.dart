@@ -15,8 +15,8 @@ abstract class ProductState
   factory ProductState() {
     return _$ProductState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ProductEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ProductEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ProductState._();
@@ -24,8 +24,8 @@ abstract class ProductState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ProductEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ProductEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -34,6 +34,19 @@ abstract class ProductState
 
     return DateTime.now().millisecondsSinceEpoch - lastUpdated >
         kMillisecondsToRefreshData;
+  }
+
+  ProductState loadProducts(BuiltList<ProductEntity> clients) {
+    final map = Map<String, ProductEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace(map.keys));
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
@@ -48,7 +61,7 @@ abstract class ProductUIState extends Object
     return _$ProductUIState._(
       listUIState: ListUIState(ProductFields.productKey),
       editing: ProductEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   ProductUIState._();

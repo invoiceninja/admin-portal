@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 
@@ -29,6 +31,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   final _shippingPostalCodeController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
@@ -67,15 +70,17 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
   }
 
   void _onChanged() {
-    final client = widget.viewModel.client.rebuild((b) => b
-      ..shippingAddress1 = _shippingAddress1Controller.text.trim()
-      ..shippingAddress2 = _shippingAddress2Controller.text.trim()
-      ..shippingCity = _shippingCityController.text.trim()
-      ..shippingState = _shippingStateController.text.trim()
-      ..shippingPostalCode = _shippingPostalCodeController.text.trim());
-    if (client != widget.viewModel.client) {
-      widget.viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final client = widget.viewModel.client.rebuild((b) => b
+        ..shippingAddress1 = _shippingAddress1Controller.text.trim()
+        ..shippingAddress2 = _shippingAddress2Controller.text.trim()
+        ..shippingCity = _shippingCityController.text.trim()
+        ..shippingState = _shippingStateController.text.trim()
+        ..shippingPostalCode = _shippingPostalCodeController.text.trim());
+      if (client != widget.viewModel.client) {
+        widget.viewModel.onChanged(client);
+      }
+    });
   }
 
   @override
@@ -87,52 +92,35 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
     return ListView(shrinkWrap: true, children: <Widget>[
       FormCard(
         children: <Widget>[
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _shippingAddress1Controller,
-            decoration: InputDecoration(
-              labelText: localization.address1,
-            ),
+            label: localization.address1,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _shippingAddress2Controller,
-            decoration: InputDecoration(
-              labelText: localization.address2,
-            ),
+            label: localization.address2,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _shippingCityController,
-            decoration: InputDecoration(
-              labelText: localization.city,
-            ),
+            label: localization.city,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _shippingStateController,
-            decoration: InputDecoration(
-              labelText: localization.state,
-            ),
+            label: localization.state,
           ),
-          TextFormField(
-            autocorrect: false,
+          DecoratedFormField(
             controller: _shippingPostalCodeController,
-            decoration: InputDecoration(
-              labelText: localization.postalCode,
-            ),
-            keyboardType: TextInputType.phone,
+            label: localization.postalCode,
           ),
           EntityDropdown(
             key: ValueKey(client.shippingCountryId),
+            allowClearing: true,
             entityType: EntityType.country,
-            entityMap: viewModel.staticState.countryMap,
             entityList: memoizedCountryList(viewModel.staticState.countryMap),
             labelText: localization.country,
-            initialValue: viewModel
-                .staticState.countryMap[client.shippingCountryId]?.name,
+            entityId: client.shippingCountryId,
             onSelected: (SelectableEntity country) => viewModel.onChanged(
-                client.rebuild((b) => b..shippingCountryId = country.id)),
+                client.rebuild((b) => b..shippingCountryId = country?.id)),
           ),
         ],
       ),

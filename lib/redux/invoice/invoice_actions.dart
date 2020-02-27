@@ -1,47 +1,45 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewInvoiceList implements PersistUI {
-  ViewInvoiceList({this.context, this.force = false});
+class ViewInvoiceList extends AbstractNavigatorAction implements PersistUI {
+  ViewInvoiceList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewInvoice implements PersistUI {
-  ViewInvoice({this.invoiceId, this.context, this.force = false});
+class ViewInvoice extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewInvoice(
+      {this.invoiceId, @required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final int invoiceId;
-  final BuildContext context;
+  final String invoiceId;
   final bool force;
 }
 
-class EditInvoice implements PersistUI {
-  EditInvoice(
-      {this.invoice,
-      this.context,
-      this.completer,
-      this.invoiceItem,
-      this.force = false});
+class EditInvoice extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  EditInvoice({
+    this.invoice,
+    @required NavigatorState navigator,
+    this.completer,
+    this.invoiceItemIndex,
+    this.force = false,
+  }) : super(navigator: navigator);
 
   final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
-  final BuildContext context;
+  final int invoiceItemIndex;
   final Completer completer;
   final bool force;
 }
@@ -55,9 +53,9 @@ class ShowEmailInvoice {
 }
 
 class EditInvoiceItem implements PersistUI {
-  EditInvoiceItem([this.invoiceItem]);
+  EditInvoiceItem([this.invoiceItemIndex]);
 
-  final InvoiceItemEntity invoiceItem;
+  final int invoiceItemIndex;
 }
 
 class UpdateInvoice implements PersistUI {
@@ -66,11 +64,17 @@ class UpdateInvoice implements PersistUI {
   final InvoiceEntity invoice;
 }
 
+class UpdateInvoiceClient implements PersistUI {
+  UpdateInvoiceClient({this.client});
+
+  final ClientEntity client;
+}
+
 class LoadInvoice {
   LoadInvoice({this.completer, this.invoiceId});
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
 }
 
 class LoadInvoices {
@@ -128,6 +132,19 @@ class LoadInvoicesSuccess implements StopLoading, PersistData {
   }
 }
 
+class AddInvoiceContact implements PersistUI {
+  AddInvoiceContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemoveInvoiceContact implements PersistUI {
+  RemoveInvoiceContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
 class AddInvoiceItem implements PersistUI {
   AddInvoiceItem({this.invoiceItem});
 
@@ -135,9 +152,9 @@ class AddInvoiceItem implements PersistUI {
 }
 
 class AddInvoiceItems implements PersistUI {
-  AddInvoiceItems(this.invoiceItems);
+  AddInvoiceItems(this.lineItems);
 
-  final List<InvoiceItemEntity> invoiceItems;
+  final List<InvoiceItemEntity> lineItems;
 }
 
 class UpdateInvoiceItem implements PersistUI {
@@ -183,7 +200,7 @@ class EmailInvoiceRequest implements StartSaving {
       {this.completer, this.invoiceId, this.template, this.subject, this.body});
 
   final Completer completer;
-  final int invoiceId;
+  final String invoiceId;
   final EmailTemplate template;
   final String subject;
   final String body;
@@ -197,83 +214,102 @@ class EmailInvoiceFailure implements StopSaving {
   final dynamic error;
 }
 
-class MarkSentInvoiceRequest implements StartSaving {
-  MarkSentInvoiceRequest(this.completer, this.invoiceId);
+class MarkInvoicesSentRequest implements StartSaving {
+  MarkInvoicesSentRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final int invoiceId;
+  final List<String> invoiceIds;
 }
 
-class MarkSentInvoiceSuccess implements StopSaving, PersistData {
-  MarkSentInvoiceSuccess(this.invoice);
+class MarkInvoicesSentSuccess implements StopSaving, PersistData {
+  MarkInvoicesSentSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class MarkSentInvoiceFailure implements StopSaving {
-  MarkSentInvoiceFailure(this.invoice);
+class MarkInvoicesSentFailure implements StopSaving {
+  MarkInvoicesSentFailure(this.error);
 
-  final InvoiceEntity invoice;
+  final dynamic error;
 }
 
-class ArchiveInvoiceRequest implements StartSaving {
-  ArchiveInvoiceRequest(this.completer, this.invoiceId);
+class MarkInvoicesPaidRequest implements StartSaving {
+  MarkInvoicesPaidRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final int invoiceId;
+  final List<String> invoiceIds;
 }
 
-class ArchiveInvoiceSuccess implements StopSaving, PersistData {
-  ArchiveInvoiceSuccess(this.invoice);
+class MarkInvoicesPaidSuccess implements StopSaving, PersistData {
+  MarkInvoicesPaidSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class ArchiveInvoiceFailure implements StopSaving {
-  ArchiveInvoiceFailure(this.invoice);
+class MarkInvoicesPaidFailure implements StopSaving {
+  MarkInvoicesPaidFailure(this.error);
 
-  final InvoiceEntity invoice;
+  final dynamic error;
 }
 
-class DeleteInvoiceRequest implements StartSaving {
-  DeleteInvoiceRequest(this.completer, this.invoiceId);
+class ArchiveInvoicesRequest implements StartSaving {
+  ArchiveInvoicesRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final int invoiceId;
+  final List<String> invoiceIds;
 }
 
-class DeleteInvoiceSuccess implements StopSaving, PersistData {
-  DeleteInvoiceSuccess(this.invoice);
+class ArchiveInvoicesSuccess implements StopSaving, PersistData {
+  ArchiveInvoicesSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class DeleteInvoiceFailure implements StopSaving {
-  DeleteInvoiceFailure(this.invoice);
+class ArchiveInvoicesFailure implements StopSaving {
+  ArchiveInvoicesFailure(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class RestoreInvoiceRequest implements StartSaving {
-  RestoreInvoiceRequest(this.completer, this.invoiceId);
+class DeleteInvoicesRequest implements StartSaving {
+  DeleteInvoicesRequest(this.completer, this.invoiceIds);
 
   final Completer completer;
-  final int invoiceId;
+  final List<String> invoiceIds;
 }
 
-class RestoreInvoiceSuccess implements StopSaving, PersistData {
-  RestoreInvoiceSuccess(this.invoice);
+class DeleteInvoicesSuccess implements StopSaving, PersistData {
+  DeleteInvoicesSuccess(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class RestoreInvoiceFailure implements StopSaving {
-  RestoreInvoiceFailure(this.invoice);
+class DeleteInvoicesFailure implements StopSaving {
+  DeleteInvoicesFailure(this.invoices);
 
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> invoices;
 }
 
-class FilterInvoices {
+class RestoreInvoicesRequest implements StartSaving {
+  RestoreInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class RestoreInvoicesSuccess implements StopSaving, PersistData {
+  RestoreInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class RestoreInvoicesFailure implements StopSaving {
+  RestoreInvoicesFailure(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class FilterInvoices implements PersistUI {
   FilterInvoices(this.filter);
 
   final String filter;
@@ -300,7 +336,7 @@ class FilterInvoicesByStatus implements PersistUI {
 class FilterInvoicesByEntity implements PersistUI {
   FilterInvoicesByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
@@ -322,16 +358,33 @@ class FilterInvoicesByCustom2 implements PersistUI {
   final String value;
 }
 
-void handleInvoiceAction(
-    BuildContext context, InvoiceEntity invoice, EntityAction action) async {
+class FilterInvoicesByCustom3 implements PersistUI {
+  FilterInvoicesByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterInvoicesByCustom4 implements PersistUI {
+  FilterInvoicesByCustom4(this.value);
+
+  final String value;
+}
+
+void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
+    EntityAction action) async {
+  if (invoices.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final invoice = invoices.first as InvoiceEntity;
+  final invoiceIds = invoices.map((invoice) => invoice.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditInvoice(context: context, invoice: invoice));
+      editEntity(context: context, entity: invoice);
       break;
     case EntityAction.pdf:
       viewPdf(invoice, context);
@@ -343,48 +396,92 @@ void handleInvoiceAction(
       }
       break;
     case EntityAction.markSent:
-      store.dispatch(MarkSentInvoiceRequest(
-          snackBarCompleter(context, localization.markedInvoiceAsSent),
-          invoice.id));
+      store.dispatch(MarkInvoicesSentRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.markedInvoiceAsSent
+                  : localization.markedInvoicesAsSent),
+          invoiceIds));
+      break;
+    case EntityAction.markPaid:
+      store.dispatch(MarkInvoicesPaidRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.markedInvoiceAsPaid
+                  : localization.markedInvoicesAsPaid),
+          invoiceIds));
       break;
     case EntityAction.sendEmail:
-      if (isMobile(context)) {
-        store.dispatch(ShowEmailInvoice(
-            completer: snackBarCompleter(context, localization.emailedInvoice),
-            invoice: invoice,
-            context: context));
-      } else {
-        showDialog<ResponsivePadding>(
-            context: context,
-            builder: (BuildContext context) {
-              return ResponsivePadding(child: InvoiceEmailScreen());
-            });
-      }
+      store.dispatch(ShowEmailInvoice(
+          completer:
+              snackBarCompleter<Null>(context, localization.emailedInvoice),
+          invoice: invoice,
+          context: context));
       break;
     case EntityAction.cloneToInvoice:
-      store.dispatch(
-          EditInvoice(context: context, invoice: invoice.cloneToInvoice));
+      createEntity(context: context, entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: invoice.cloneToQuote));
+      createEntity(context: context, entity: invoice.clone); // TODO fix this
       break;
-    case EntityAction.enterPayment:
-      store.dispatch(EditPayment(
-          context: context, payment: invoice.createPayment(company)));
+    case EntityAction.newPayment:
+      createEntity(
+          context: context,
+          entity: PaymentEntity(state: state).rebuild((b) => b
+            ..clientId = invoice.clientId
+            ..invoices.addAll(invoices
+                .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+                .toList())));
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreInvoiceRequest(
-          snackBarCompleter(context, localization.restoredInvoice),
-          invoice.id));
+      store.dispatch(RestoreInvoicesRequest(
+          snackBarCompleter<Null>(context, localization.restoredInvoice),
+          invoiceIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveInvoiceRequest(
-          snackBarCompleter(context, localization.archivedInvoice),
-          invoice.id));
+      store.dispatch(ArchiveInvoicesRequest(
+          snackBarCompleter<Null>(context, localization.archivedInvoice),
+          invoiceIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteInvoiceRequest(
-          snackBarCompleter(context, localization.deletedInvoice), invoice.id));
+      store.dispatch(DeleteInvoicesRequest(
+          snackBarCompleter<Null>(context, localization.deletedInvoice),
+          invoiceIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.invoiceListState.isInMultiselect()) {
+        store.dispatch(StartInvoiceMultiselect());
+      }
+
+      if (invoices.isEmpty) {
+        break;
+      }
+
+      for (final invoice in invoices) {
+        if (!store.state.invoiceListState.isSelected(invoice.id)) {
+          store.dispatch(AddToInvoiceMultiselect(entity: invoice));
+        } else {
+          store.dispatch(RemoveFromInvoiceMultiselect(entity: invoice));
+        }
+      }
       break;
   }
 }
+
+class StartInvoiceMultiselect {}
+
+class AddToInvoiceMultiselect {
+  AddToInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromInvoiceMultiselect {
+  RemoveFromInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearInvoiceMultiselect {}

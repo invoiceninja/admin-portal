@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/document/document_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -42,7 +42,6 @@ class DocumentEditVM {
     @required this.isSaving,
     @required this.origDocument,
     @required this.onSavePressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
@@ -56,40 +55,37 @@ class DocumentEditVM {
       isSaving: state.isSaving,
       origDocument: state.documentState.map[document.id],
       document: document,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (DocumentEntity document) {
         store.dispatch(UpdateDocument(document));
-      },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(DocumentScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(document.isNew
-              ? DocumentScreen.route
-              : DocumentViewScreen.route));
-        }
       },
       onSavePressed: (BuildContext context) {
         final Completer<DocumentEntity> completer =
             new Completer<DocumentEntity>();
         store.dispatch(
             SaveDocumentRequest(completer: completer, document: document));
-        return completer.future.then((_) {
-          return completer.future.then((savedDocument) {
+        return completer.future.then((savedDocument) {
+          if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-            if (isMobile(context)) {
-              if (document.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(DocumentViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedDocument);
-              }
+            if (document.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(DocumentViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedDocument);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
+          } else {
+            viewEntityById(
                 context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                entityId: savedDocument.id,
+                entityType: EntityType.document,
+                force: true);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );
@@ -99,7 +95,6 @@ class DocumentEditVM {
   final CompanyEntity company;
   final Function(DocumentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final DocumentEntity origDocument;
