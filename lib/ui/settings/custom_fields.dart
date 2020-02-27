@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/settings/custom_fields_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CustomFields extends StatefulWidget {
   const CustomFields({
@@ -57,6 +58,7 @@ class _CustomFieldsState extends State<CustomFields>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: isMobile(context),
         tabs: [
           Tab(
             text: localization.company,

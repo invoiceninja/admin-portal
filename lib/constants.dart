@@ -213,7 +213,6 @@ const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
 
-const String kReportActivity = 'activity';
 const String kReportAging = 'aging';
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';

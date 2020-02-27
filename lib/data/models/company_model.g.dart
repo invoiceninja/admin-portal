@@ -76,9 +76,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'enable_product_quantity',
       serializers.serialize(object.enableProductQuantity,
           specifiedType: const FullType(bool)),
-      'enable_invoice_quantity',
-      serializers.serialize(object.enableInvoiceQuantity,
-          specifiedType: const FullType(bool)),
       'default_quantity',
       serializers.serialize(object.defaultQuantity,
           specifiedType: const FullType(bool)),
@@ -321,10 +318,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'enable_product_quantity':
           result.enableProductQuantity = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'enable_invoice_quantity':
-          result.enableInvoiceQuantity = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'default_quantity':
@@ -2626,8 +2619,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool enableProductQuantity;
   @override
-  final bool enableInvoiceQuantity;
-  @override
   final bool defaultQuantity;
   @override
   final bool showProductDetails;
@@ -2722,7 +2713,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.fillProducts,
       this.enableProductCost,
       this.enableProductQuantity,
-      this.enableInvoiceQuantity,
       this.defaultQuantity,
       this.showProductDetails,
       this.plan,
@@ -2809,10 +2799,6 @@ class _$CompanyEntity extends CompanyEntity {
     if (enableProductQuantity == null) {
       throw new BuiltValueNullFieldError(
           'CompanyEntity', 'enableProductQuantity');
-    }
-    if (enableInvoiceQuantity == null) {
-      throw new BuiltValueNullFieldError(
-          'CompanyEntity', 'enableInvoiceQuantity');
     }
     if (defaultQuantity == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'defaultQuantity');
@@ -2922,7 +2908,6 @@ class _$CompanyEntity extends CompanyEntity {
         fillProducts == other.fillProducts &&
         enableProductCost == other.enableProductCost &&
         enableProductQuantity == other.enableProductQuantity &&
-        enableInvoiceQuantity == other.enableInvoiceQuantity &&
         defaultQuantity == other.defaultQuantity &&
         showProductDetails == other.showProductDetails &&
         plan == other.plan &&
@@ -2983,7 +2968,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), enableInvoiceQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
                                                                                 payments.hashCode),
                                                                             quotes.hashCode),
                                                                         credits.hashCode),
@@ -3022,7 +3007,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('fillProducts', fillProducts)
           ..add('enableProductCost', enableProductCost)
           ..add('enableProductQuantity', enableProductQuantity)
-          ..add('enableInvoiceQuantity', enableInvoiceQuantity)
           ..add('defaultQuantity', defaultQuantity)
           ..add('showProductDetails', showProductDetails)
           ..add('plan', plan)
@@ -3132,11 +3116,6 @@ class CompanyEntityBuilder
   bool get enableProductQuantity => _$this._enableProductQuantity;
   set enableProductQuantity(bool enableProductQuantity) =>
       _$this._enableProductQuantity = enableProductQuantity;
-
-  bool _enableInvoiceQuantity;
-  bool get enableInvoiceQuantity => _$this._enableInvoiceQuantity;
-  set enableInvoiceQuantity(bool enableInvoiceQuantity) =>
-      _$this._enableInvoiceQuantity = enableInvoiceQuantity;
 
   bool _defaultQuantity;
   bool get defaultQuantity => _$this._defaultQuantity;
@@ -3353,7 +3332,6 @@ class CompanyEntityBuilder
       _fillProducts = _$v.fillProducts;
       _enableProductCost = _$v.enableProductCost;
       _enableProductQuantity = _$v.enableProductQuantity;
-      _enableInvoiceQuantity = _$v.enableInvoiceQuantity;
       _defaultQuantity = _$v.defaultQuantity;
       _showProductDetails = _$v.showProductDetails;
       _plan = _$v.plan;
@@ -3430,7 +3408,6 @@ class CompanyEntityBuilder
               fillProducts: fillProducts,
               enableProductCost: enableProductCost,
               enableProductQuantity: enableProductQuantity,
-              enableInvoiceQuantity: enableInvoiceQuantity,
               defaultQuantity: defaultQuantity,
               showProductDetails: showProductDetails,
               plan: plan,
