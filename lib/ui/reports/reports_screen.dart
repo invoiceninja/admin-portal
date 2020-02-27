@@ -150,7 +150,6 @@ class ReportsScreen extends StatelessWidget {
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(report: value),
                         items: [
-                          //kReportActivity,
                           //kReportAging,
                           kReportClient,
                           //kReportCredit,

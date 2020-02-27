@@ -45,7 +45,6 @@ abstract class CompanyEntity extends Object
       showProductDetails: true,
       enableProductCost: false,
       enableProductQuantity: true,
-      enableInvoiceQuantity: true,
       defaultQuantity: true,
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
@@ -119,9 +118,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'enable_product_quantity')
   bool get enableProductQuantity;
-
-  @BuiltValueField(wireName: 'enable_invoice_quantity')
-  bool get enableInvoiceQuantity;
 
   @BuiltValueField(wireName: 'default_quantity')
   bool get defaultQuantity;
