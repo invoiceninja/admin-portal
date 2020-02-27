@@ -31,9 +31,9 @@ jobs:
           git checkout v2
           git status
 
-          # cd build/web
-          # git init
-          # change this remote url for examle your remote url is https://github.com/onatcipli/flutter_web.git then the following:
+          cp -r ../build/web/* ./public/
+          git status
+
           # git remote add origin https://${{secrets.commit_secret}}@github.com/onatcipli/flutter_web.git
           # git checkout -b gh-pages
           # git add --all
