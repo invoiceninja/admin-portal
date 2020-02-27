@@ -61,8 +61,7 @@ class MenuDrawerVM {
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {
 
-
-        //store.dispatch(SelectCompany(int.parse(companyIndex), company));
+        store.dispatch(SelectCompany(int.parse(companyIndex)));
         store.dispatch(LoadClients());
         AppBuilder.of(context).rebuild();
       },

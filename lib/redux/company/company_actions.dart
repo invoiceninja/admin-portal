@@ -6,10 +6,9 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class SelectCompany {
-  SelectCompany(this.companyIndex, this.company);
+  SelectCompany(this.companyIndex);
 
   final int companyIndex;
-  final UserCompanyEntity company;
 }
 
 class LoadCompanySuccess {

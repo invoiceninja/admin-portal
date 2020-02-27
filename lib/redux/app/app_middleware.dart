@@ -407,7 +407,7 @@ Middleware<AppState> _createAccountLoaded() {
           prefs.setString(kSharedPrefToken, userCompany.token.token);
         }
 
-        store.dispatch(SelectCompany(i, userCompany));
+        store.dispatch(SelectCompany(i));
         store.dispatch(LoadCompanySuccess(userCompany));
 
         final company = userCompany.company;
@@ -426,7 +426,7 @@ Middleware<AppState> _createAccountLoaded() {
         }
       }
 
-      store.dispatch(SelectCompany(0, response.userCompanies[0]));
+      store.dispatch(SelectCompany(0));
       store.dispatch(UserLoginSuccess());
     }
 
