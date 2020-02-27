@@ -29,13 +29,8 @@ jobs:
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
           cd invoiceninja
           git checkout v2
-          git status
 
           cp -r ../build/web/* ./public/
-          git status
-
-          # git remote add origin https://${{secrets.commit_secret}}@github.com/onatcipli/flutter_web.git
-          # git checkout -b gh-pages
-          # git add --all
-          # git commit -m "update"
-          # git push origin gh-pages -f
+          git add .
+          git commit -m 'Update Flutter client'
+          git push
