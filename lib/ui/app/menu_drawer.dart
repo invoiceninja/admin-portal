@@ -56,7 +56,7 @@ class MenuDrawer extends StatelessWidget {
                 width: 32,
                 url: company.settings.companyLogo,
               )
-            : Image.asset('assets/images/logo.png', width: 37, height: 37);
+            : Image.asset('assets/images/logo.png', width: 32);
 
     Widget _companyListItem(CompanyEntity company) => Row(
           mainAxisSize: MainAxisSize.max,
