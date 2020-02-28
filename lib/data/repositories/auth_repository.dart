@@ -32,7 +32,7 @@ class AuthRepository {
       'last_name': lastName,
       'terms_of_service': true,
       'privacy_policy': true,
-      'token_name': '${Platform.operatingSystem}-client',
+      'token_name': '${Config.PLATFORM.toLowerCase()}-client',
     };
 
     final url = formatApiUrl(kAppUrl) + '/signup';
@@ -91,12 +91,15 @@ class AuthRepository {
   }
 
   Future<dynamic> addCompany({String token}) async {
-    return webClient.post('/companies', token);
+    final data = {
+      'token_name': '${Config.PLATFORM.toLowerCase()}-client',
+    };
+
+    return webClient.post('/companies', token, data: json.encode(data));
   }
 
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
-
     /*
     final includes = [
       'account',
