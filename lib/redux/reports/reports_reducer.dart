@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 
 ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
-  if (action is SaveUserSettingsSuccess) {
+  if (action is SaveAuthUserSuccess) {
     return state.rebuild((b) => b
       ..group = ''
       ..subgroup = ''

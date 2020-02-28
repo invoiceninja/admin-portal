@@ -119,6 +119,7 @@ part 'serializers.g.dart';
   GatewayEntity,
   GatewayTokenListResponse,
   GatewayTokenItemResponse,
+  UserCompanyItemResponse,
 ])
 
 final Serializers serializers =
