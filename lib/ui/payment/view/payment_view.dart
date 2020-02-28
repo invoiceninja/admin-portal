@@ -33,7 +33,8 @@ class _PaymentViewState extends State<PaymentView> {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
     final state = StoreProvider.of<AppState>(context).state;
-    final client = state.clientState.map[payment.clientId];
+    final client = state.clientState.map[payment.clientId] ??
+        ClientEntity(id: payment.clientId);
     final localization = AppLocalization.of(context);
 
     final fields = <String, String>{};

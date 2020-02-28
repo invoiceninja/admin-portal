@@ -18,6 +18,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
   TypedReducer<String, AddDocumentSuccess>(
       (selectedId, action) => action.document.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([

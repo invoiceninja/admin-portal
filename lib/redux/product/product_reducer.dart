@@ -56,6 +56,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
   TypedReducer<String, AddProductSuccess>(
       (selectedId, action) => action.product.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final productListReducer = combineReducers<ListUIState>([

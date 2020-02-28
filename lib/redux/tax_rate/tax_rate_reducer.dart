@@ -20,6 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, action) => action.taxRateId),
   TypedReducer<String, AddTaxRateSuccess>(
       (String selectedId, action) => action.taxRate.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<TaxRateEntity>([

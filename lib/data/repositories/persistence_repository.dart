@@ -21,16 +21,6 @@ class PersistenceRepository {
   final FileStorage fileStorage;
 
   Future<File> saveCompanyState(UserCompanyState state) async {
-    final token = state.userCompany.token.token;
-    final stateWithoutToken =
-        state.rebuild((b) => b..userCompany.token.token = '');
-
-    if (kIsWeb) {
-      print('## COOKIE: ${readCookie()}');
-      writeCookie('token', token);
-    }
-
-    // TODO persist stateWithoutToken
     final data = serializers.serializeWith(UserCompanyState.serializer, state);
 
     return await fileStorage.save(json.encode(data));
@@ -38,16 +28,8 @@ class PersistenceRepository {
 
   Future<UserCompanyState> loadCompanyState(int index) async {
     final String data = await fileStorage.load();
-    //final SharedPreferences prefs = await SharedPreferences.getInstance();
-    //final token = prefs.getString(getCompanyTokenKey(index - 1)) ?? '';
     final companyState = serializers.deserializeWith(
         UserCompanyState.serializer, json.decode(data));
-
-    /*
-    // TODO re-enable
-        return companyState.rebuild((b) => b
-      ..companyState.userCompany.replace(companyState.company.rebuild((b) => b..token = token)));
-    */
 
     return companyState;
 

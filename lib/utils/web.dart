@@ -1,15 +1,6 @@
 import 'dart:async';
 import 'dart:html';
 
-void writeCookie(String key, String value) {
-  window.document.cookie =
-      '$key=$value; expires=Sat, 19 Dec 2099 12:00:00 UTC; Secure; SameSite=Strict;';
-}
-
-String readCookie() {
-  return window.document.cookie;
-}
-
 Future<String> webFilePicker() {
   final completer = new Completer<String>();
   final InputElement input = document.createElement('input');
