@@ -307,182 +307,179 @@ class _LoginState extends State<LoginView> {
                       label: localization.oneTimePassword,
                     )
                   else
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 400),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(height: 10),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.firstName,
-                              controller: _firstNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterAFirstName
-                                      : null,
-                            ),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.lastName,
-                              controller: _lastNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterALastName
-                                      : null,
-                            ),
-                          if (_emailLogin)
-                            DecoratedFormField(
-                              controller: _emailController,
-                              autocorrect: false,
-                              textInputAction: _isFormComplete && !_createAccount
-                                  ? TextInputAction.done
-                                  : TextInputAction.next,
-                              label: localization.email,
-                              keyboardType: TextInputType.emailAddress,
-                              autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourEmail
-                                      : null,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context).nextFocus(),
-                            ),
-                          if (_emailLogin && !_recoverPassword)
-                            TextFormField(
-                              controller: _passwordController,
-                              key: ValueKey(localization.password),
-                              textInputAction: _isFormComplete && !_createAccount
-                                  ? TextInputAction.done
-                                  : TextInputAction.next,
-                              autocorrect: false,
-                              autovalidate: _autoValidate,
-                              decoration: InputDecoration(
-                                labelText: localization.password,
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _isPasswordObscured
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isPasswordObscured = !_isPasswordObscured;
-                                    });
-                                  },
+                    Column(
+                      children: <Widget>[
+                        SizedBox(height: 10),
+                        if (_createAccount && _emailLogin)
+                          DecoratedFormField(
+                            label: localization.firstName,
+                            controller: _firstNameController,
+                            //autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterAFirstName
+                                    : null,
+                          ),
+                        if (_createAccount && _emailLogin)
+                          DecoratedFormField(
+                            label: localization.lastName,
+                            controller: _lastNameController,
+                            //autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterALastName
+                                    : null,
+                          ),
+                        if (_emailLogin)
+                          DecoratedFormField(
+                            controller: _emailController,
+                            autocorrect: false,
+                            textInputAction: _isFormComplete && !_createAccount
+                                ? TextInputAction.done
+                                : TextInputAction.next,
+                            label: localization.email,
+                            keyboardType: TextInputType.emailAddress,
+                            autovalidate: _autoValidate,
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterYourEmail
+                                    : null,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
+                          ),
+                        if (_emailLogin && !_recoverPassword)
+                          TextFormField(
+                            controller: _passwordController,
+                            key: ValueKey(localization.password),
+                            textInputAction: _isFormComplete && !_createAccount
+                                ? TextInputAction.done
+                                : TextInputAction.next,
+                            autocorrect: false,
+                            autovalidate: _autoValidate,
+                            decoration: InputDecoration(
+                              labelText: localization.password,
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isPasswordObscured
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
                                 ),
-                              ),
-                              validator: (value) {
-                                if (value.isEmpty || value.trim().isEmpty) {
-                                  return localization.pleaseEnterYourPassword;
-                                }
-
-                                if (_createAccount) {
-                                  if (value.length < 8) {
-                                    return localization.passwordIsTooShort;
-                                  }
-
-                                  if (!_validatePassword(value)) {
-                                    return localization.passwordIsTooEasy;
-                                  }
-                                }
-
-                                return null;
-                              },
-                              obscureText: _isPasswordObscured,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context).nextFocus(),
-                            ),
-                          if (_isSelfHosted)
-                            TextFormField(
-                              controller: _urlController,
-                              key: ValueKey(localization.url),
-                              autocorrect: false,
-                              autovalidate: _autoValidate,
-                              textInputAction: _isFormComplete
-                                  ? TextInputAction.done
-                                  : TextInputAction.next,
-                              decoration:
-                                  InputDecoration(labelText: localization.url),
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourUrl
-                                      : null,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context).nextFocus(),
-                              keyboardType: TextInputType.url,
-                            ),
-                          if (_isSelfHosted)
-                            TextFormField(
-                              controller: _secretController,
-                              key: ValueKey(localization.secret),
-                              textInputAction: TextInputAction.done,
-                              autocorrect: false,
-                              decoration:
-                                  InputDecoration(labelText: localization.secret),
-                              obscureText: true,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context).nextFocus(),
-                            ),
-                          if (_createAccount)
-                            Padding(
-                              padding: EdgeInsets.only(top: 22),
-                              child: Column(
-                                children: <Widget>[
-                                  CheckboxListTile(
-                                    onChanged: (value) =>
-                                        setState(() => _termsChecked = value),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    activeColor: convertHexStringToColor(
-                                        kDefaultAccentColor),
-                                    value: _termsChecked,
-                                    title: RichText(
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            style: aboutTextStyle,
-                                            text: localization.iAgreeToThe + ' ',
-                                          ),
-                                          LinkTextSpan(
-                                            style: linkStyle,
-                                            url: kTermsOfServiceURL,
-                                            text: localization.termsOfServiceLink,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  CheckboxListTile(
-                                    onChanged: (value) =>
-                                        setState(() => _privacyChecked = value),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    activeColor: convertHexStringToColor(
-                                        kDefaultAccentColor),
-                                    value: _privacyChecked,
-                                    title: RichText(
-                                      text: TextSpan(
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            style: aboutTextStyle,
-                                            text: localization.iAgreeToThe + ' ',
-                                          ),
-                                          LinkTextSpan(
-                                            style: linkStyle,
-                                            url: kTermsOfServiceURL,
-                                            text: localization.privacyPolicyLink,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                onPressed: () {
+                                  setState(() {
+                                    _isPasswordObscured = !_isPasswordObscured;
+                                  });
+                                },
                               ),
                             ),
-                        ],
-                      ),
+                            validator: (value) {
+                              if (value.isEmpty || value.trim().isEmpty) {
+                                return localization.pleaseEnterYourPassword;
+                              }
+
+                              if (_createAccount) {
+                                if (value.length < 8) {
+                                  return localization.passwordIsTooShort;
+                                }
+
+                                if (!_validatePassword(value)) {
+                                  return localization.passwordIsTooEasy;
+                                }
+                              }
+
+                              return null;
+                            },
+                            obscureText: _isPasswordObscured,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
+                          ),
+                        if (_isSelfHosted)
+                          TextFormField(
+                            controller: _urlController,
+                            key: ValueKey(localization.url),
+                            autocorrect: false,
+                            autovalidate: _autoValidate,
+                            textInputAction: _isFormComplete
+                                ? TextInputAction.done
+                                : TextInputAction.next,
+                            decoration:
+                                InputDecoration(labelText: localization.url),
+                            validator: (val) =>
+                                val.isEmpty || val.trim().isEmpty
+                                    ? localization.pleaseEnterYourUrl
+                                    : null,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
+                            keyboardType: TextInputType.url,
+                          ),
+                        if (_isSelfHosted)
+                          TextFormField(
+                            controller: _secretController,
+                            key: ValueKey(localization.secret),
+                            textInputAction: TextInputAction.done,
+                            autocorrect: false,
+                            decoration:
+                                InputDecoration(labelText: localization.secret),
+                            obscureText: true,
+                            onFieldSubmitted: (String value) =>
+                                FocusScope.of(context).nextFocus(),
+                          ),
+                        if (_createAccount)
+                          Padding(
+                            padding: EdgeInsets.only(top: 22),
+                            child: Column(
+                              children: <Widget>[
+                                CheckboxListTile(
+                                  onChanged: (value) =>
+                                      setState(() => _termsChecked = value),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: convertHexStringToColor(
+                                      kDefaultAccentColor),
+                                  value: _termsChecked,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          style: aboutTextStyle,
+                                          text: localization.iAgreeToThe + ' ',
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kTermsOfServiceURL,
+                                          text: localization.termsOfServiceLink,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                CheckboxListTile(
+                                  onChanged: (value) =>
+                                      setState(() => _privacyChecked = value),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor: convertHexStringToColor(
+                                      kDefaultAccentColor),
+                                  value: _privacyChecked,
+                                  title: RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          style: aboutTextStyle,
+                                          text: localization.iAgreeToThe + ' ',
+                                        ),
+                                        LinkTextSpan(
+                                          style: linkStyle,
+                                          url: kTermsOfServiceURL,
+                                          text: localization.privacyPolicyLink,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                     ),
                   if (_loginError.isNotEmpty &&
                       !_loginError.contains(OTP_ERROR))
