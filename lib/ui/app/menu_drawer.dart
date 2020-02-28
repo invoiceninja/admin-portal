@@ -368,35 +368,44 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
+    Widget child = SelectedIndicator(
+      isSelected: uiState.currentRoute.startsWith('/$route'),
+      child: ListTile(
+        dense: true,
+        leading: Icon(widget.icon, size: 22),
+        title: state.prefState.isMenuCollapsed ? null : Text(widget.title),
+        onTap: () => widget.entityType != null
+            ? viewEntitiesByType(
+                context: context, entityType: widget.entityType)
+            : widget.onTap(),
+        onLongPress: () => widget.onLongPress != null
+            ? widget.onLongPress()
+            : widget.entityType != null
+                ? createEntityByType(
+                    context: context, entityType: widget.entityType)
+                : null,
+        /*
+            trailing: _isHovered ||
+                    !RendererBinding.instance.mouseTracker.mouseIsConnected
+                ? trailingWidget
+                : null,
+
+             */
+        trailing: trailingWidget,
+      ),
+    );
+
+    if (state.prefState.isMenuCollapsed) {
+      child = Tooltip(
+        message: widget.title,
+        child: child,
+      );
+    }
+
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
       onExit: (event) => setState(() => _isHovered = false),
-      child: SelectedIndicator(
-        isSelected: uiState.currentRoute.startsWith('/$route'),
-        child: ListTile(
-          dense: true,
-          leading: Icon(widget.icon, size: 22),
-          title: state.prefState.isMenuCollapsed ? null : Text(widget.title),
-          onTap: () => widget.entityType != null
-              ? viewEntitiesByType(
-                  context: context, entityType: widget.entityType)
-              : widget.onTap(),
-          onLongPress: () => widget.onLongPress != null
-              ? widget.onLongPress()
-              : widget.entityType != null
-                  ? createEntityByType(
-                      context: context, entityType: widget.entityType)
-                  : null,
-          /*
-          trailing: _isHovered ||
-                  !RendererBinding.instance.mouseTracker.mouseIsConnected
-              ? trailingWidget
-              : null,
-
-           */
-          trailing: trailingWidget,
-        ),
-      ),
+      child: child,
     );
   }
 }
