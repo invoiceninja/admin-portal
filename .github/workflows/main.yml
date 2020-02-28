@@ -18,7 +18,7 @@ jobs:
       - run: flutter pub get
       - run: |
           cp lib/.env.dart.example lib/.env.dart
-          sed 's/secret/password/g' lib/.env.dart
+          sed -i 's/secret/password/g' lib/.env.dart
           cat lib/.env.dart
       - run: flutter build web --release
       - run: |

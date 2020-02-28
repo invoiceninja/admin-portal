@@ -73,7 +73,7 @@ void main({bool isTesting = false}) async {
           dsn: Config.SENTRY_DNS,
           environmentAttributes: Event(
             release: kAppVersion,
-            environment: Platform.operatingSystem,
+            environment: Config.PLATFORM,
           ));
 
   final store = Store<AppState>(appReducer,
