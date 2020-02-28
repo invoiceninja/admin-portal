@@ -30,7 +30,7 @@ class SettingsRepository {
     return companyResponse.data;
   }
 
-  Future<UserEntity> saveUser(
+  Future<UserEntity> saveAuthUser(
       Credentials credentials, UserEntity user, String password) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
@@ -44,7 +44,25 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+    serializers.deserializeWith(UserItemResponse.serializer, response);
+
+    return userResponse.data;
+  }
+
+  Future<UserCompanyEntity> saveUserSettings(
+      Credentials credentials, UserEntity user) async {
+    final data = serializers.serializeWith(UserEntity.serializer, user);
+    dynamic response;
+
+    final url = credentials.url + '/company_users/${user.id}';
+    response = await webClient.put(
+      url,
+      credentials.token,
+      data: json.encode(data),
+    );
+
+    final UserCompanyItemResponse userResponse =
+    serializers.deserializeWith(UserCompanyItemResponse.serializer, response);
 
     return userResponse.data;
   }

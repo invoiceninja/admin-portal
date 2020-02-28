@@ -35,6 +35,19 @@ abstract class UserItemResponse
       _$userItemResponseSerializer;
 }
 
+abstract class UserCompanyItemResponse
+    implements Built<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
+  factory UserCompanyItemResponse([void updates(UserCompanyItemResponseBuilder b)]) =
+  _$UserCompanyItemResponse;
+
+  UserCompanyItemResponse._();
+
+  UserCompanyEntity get data;
+
+  static Serializer<UserCompanyItemResponse> get serializer =>
+      _$userCompanyItemResponseSerializer;
+}
+
 class UserFields {
   static const String firstName = 'first_name';
   static const String lastName = 'last_name';

@@ -52,7 +52,7 @@ class UserDetailsVM {
         });
         if (state.authState.hasRecentlyEnteredPassword) {
           store.dispatch(
-            SaveUserSettingsRequest(
+            SaveAuthUserRequest(
               completer: completer,
               user: state.uiState.settingsUIState.user,
             ),
@@ -62,7 +62,7 @@ class UserDetailsVM {
               context: context,
               callback: (password) {
                 store.dispatch(
-                  SaveUserSettingsRequest(
+                  SaveAuthUserRequest(
                     completer: completer,
                     user: state.uiState.settingsUIState.user,
                     password: password,

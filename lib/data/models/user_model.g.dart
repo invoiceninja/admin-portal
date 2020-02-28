@@ -10,6 +10,8 @@ Serializer<UserListResponse> _$userListResponseSerializer =
     new _$UserListResponseSerializer();
 Serializer<UserItemResponse> _$userItemResponseSerializer =
     new _$UserItemResponseSerializer();
+Serializer<UserCompanyItemResponse> _$userCompanyItemResponseSerializer =
+    new _$UserCompanyItemResponseSerializer();
 Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
 
 class _$UserListResponseSerializer
@@ -91,6 +93,53 @@ class _$UserItemResponseSerializer
         case 'data':
           result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(UserEntity)) as UserEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$UserCompanyItemResponseSerializer
+    implements StructuredSerializer<UserCompanyItemResponse> {
+  @override
+  final Iterable<Type> types = const [
+    UserCompanyItemResponse,
+    _$UserCompanyItemResponse
+  ];
+  @override
+  final String wireName = 'UserCompanyItemResponse';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, UserCompanyItemResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'data',
+      serializers.serialize(object.data,
+          specifiedType: const FullType(UserCompanyEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  UserCompanyItemResponse deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new UserCompanyItemResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(UserCompanyEntity))
+              as UserCompanyEntity);
           break;
       }
     }
@@ -467,6 +516,102 @@ class UserItemResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UserItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserCompanyItemResponse extends UserCompanyItemResponse {
+  @override
+  final UserCompanyEntity data;
+
+  factory _$UserCompanyItemResponse(
+          [void Function(UserCompanyItemResponseBuilder) updates]) =>
+      (new UserCompanyItemResponseBuilder()..update(updates)).build();
+
+  _$UserCompanyItemResponse._({this.data}) : super._() {
+    if (data == null) {
+      throw new BuiltValueNullFieldError('UserCompanyItemResponse', 'data');
+    }
+  }
+
+  @override
+  UserCompanyItemResponse rebuild(
+          void Function(UserCompanyItemResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserCompanyItemResponseBuilder toBuilder() =>
+      new UserCompanyItemResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserCompanyItemResponse && data == other.data;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, data.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('UserCompanyItemResponse')
+          ..add('data', data))
+        .toString();
+  }
+}
+
+class UserCompanyItemResponseBuilder
+    implements
+        Builder<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
+  _$UserCompanyItemResponse _$v;
+
+  UserCompanyEntityBuilder _data;
+  UserCompanyEntityBuilder get data =>
+      _$this._data ??= new UserCompanyEntityBuilder();
+  set data(UserCompanyEntityBuilder data) => _$this._data = data;
+
+  UserCompanyItemResponseBuilder();
+
+  UserCompanyItemResponseBuilder get _$this {
+    if (_$v != null) {
+      _data = _$v.data?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(UserCompanyItemResponse other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserCompanyItemResponse;
+  }
+
+  @override
+  void update(void Function(UserCompanyItemResponseBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserCompanyItemResponse build() {
+    _$UserCompanyItemResponse _$result;
+    try {
+      _$result = _$v ?? new _$UserCompanyItemResponse._(data: data.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'data';
+        data.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'UserCompanyItemResponse', _$failedField, e.toString());
       }
       rethrow;
     }

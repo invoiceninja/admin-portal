@@ -172,7 +172,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origClient.replace(action.client)
       ..isChanged = false);
   }),
-  TypedReducer<SettingsUIState, SaveUserSettingsSuccess>((state, action) {
+  TypedReducer<SettingsUIState, SaveAuthUserSuccess>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..origUser.replace(action.user)

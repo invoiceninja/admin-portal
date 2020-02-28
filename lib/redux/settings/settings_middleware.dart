@@ -22,13 +22,15 @@ List<Middleware<AppState>> createStoreSettingsMiddleware([
 ]) {
   final viewSettings = _viewSettings();
   final saveCompany = _saveCompany(repository);
-  final saveUser = _saveUser(repository);
+  final saveAuthUser = _saveAuthUser(repository);
+  final saveSettings = _saveSettings(repository);
   final uploadLogo = _uploadLogo(repository);
 
   return [
     TypedMiddleware<AppState, ViewSettings>(viewSettings),
     TypedMiddleware<AppState, SaveCompanyRequest>(saveCompany),
-    TypedMiddleware<AppState, SaveUserSettingsRequest>(saveUser),
+    TypedMiddleware<AppState, SaveAuthUserRequest>(saveAuthUser),
+    TypedMiddleware<AppState, SaveUserSettingsRequest>(saveSettings),
     TypedMiddleware<AppState, UploadLogoRequest>(uploadLogo),
   ];
 }
@@ -84,15 +86,34 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
   };
 }
 
-Middleware<AppState> _saveUser(SettingsRepository settingsRepository) {
+Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveAuthUserRequest;
+
+    settingsRepository
+        .saveAuthUser(store.state.credentials, action.user, action.password)
+        .then((user) {
+      store.dispatch(SaveAuthUserSuccess(user));
+      store.dispatch(UserVerifiedPassword());
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveAuthUserFailure(error));
+      action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveUserSettingsRequest;
 
     settingsRepository
-        .saveUser(store.state.credentials, action.user, action.password)
-        .then((user) {
-      store.dispatch(SaveUserSettingsSuccess(user));
-      store.dispatch(UserVerifiedPassword());
+        .saveUserSettings(store.state.credentials, action.user)
+        .then((userCompany) {
+      store.dispatch(SaveUserSettingsSuccess(userCompany));
       action.completer.complete();
     }).catchError((Object error) {
       print(error);

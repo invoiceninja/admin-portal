@@ -81,10 +81,14 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       );
     }
   }),
-  TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
-      (userCompany, action) => userCompany.rebuild((b) => b
+  TypedReducer<UserCompanyEntity, SaveAuthUserSuccess>((userCompany, action) =>
+      userCompany.rebuild((b) => b
         ..user.replace(action.user)
         ..settings.replace(action.user.userCompany.settings))),
+  TypedReducer<UserCompanyEntity, SaveUserSettingsSuccess>(
+      (userCompany, action) => userCompany.rebuild((b) => b
+        ..user.userCompany.settings.replace(userCompany.settings)
+        ..settings.replace(action.userCompany.settings))),
 ]);
 
 UserCompanyEntity loadCompanySuccessReducer(

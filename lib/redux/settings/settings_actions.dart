@@ -61,6 +61,28 @@ class SaveUserSettingsRequest implements StartSaving {
   SaveUserSettingsRequest({
     @required this.completer,
     @required this.user,
+  });
+
+  final Completer completer;
+  final UserEntity user;
+}
+
+class SaveUserSettingsSuccess implements StopSaving, PersistData, PersistUI {
+  SaveUserSettingsSuccess(this.userCompany);
+
+  final UserCompanyEntity userCompany;
+}
+
+class SaveUserSettingsFailure implements StopSaving {
+  SaveUserSettingsFailure(this.error);
+
+  final Object error;
+}
+
+class SaveAuthUserRequest implements StartSaving {
+  SaveAuthUserRequest({
+    @required this.completer,
+    @required this.user,
     this.password,
   });
 
@@ -69,14 +91,14 @@ class SaveUserSettingsRequest implements StartSaving {
   final String password;
 }
 
-class SaveUserSettingsSuccess implements StopSaving, PersistData, PersistUI {
-  SaveUserSettingsSuccess(this.user);
+class SaveAuthUserSuccess implements StopSaving, PersistData, PersistUI {
+  SaveAuthUserSuccess(this.user);
 
   final UserEntity user;
 }
 
-class SaveUserSettingsFailure implements StopSaving {
-  SaveUserSettingsFailure(this.error);
+class SaveAuthUserFailure implements StopSaving {
+  SaveAuthUserFailure(this.error);
 
   final Object error;
 }

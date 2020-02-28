@@ -31,7 +31,7 @@ import 'package:redux/redux.dart';
 import 'expense_report.dart';
 import 'reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
-if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);
@@ -225,26 +225,12 @@ class ReportsScreenVM {
               .rebuild((b) => b..userCompany.settings.replace(settings));
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).savedSettings);
-          if (state.authState.hasRecentlyEnteredPassword) {
-            store.dispatch(
-              SaveUserSettingsRequest(
-                completer: completer,
-                user: user,
-              ),
-            );
-          } else {
-            passwordCallback(
-                context: context,
-                callback: (password) {
-                  store.dispatch(
-                    SaveUserSettingsRequest(
-                      completer: completer,
-                      user: user,
-                      password: password,
-                    ),
-                  );
-                });
-          }
+          store.dispatch(
+            SaveUserSettingsRequest(
+              completer: completer,
+              user: user,
+            ),
+          );
         },
         onSettingsChanged: ({
           String report,
