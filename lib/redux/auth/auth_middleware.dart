@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
@@ -240,6 +243,8 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
     repository.addCompany(token: state.credentials.token).then((dynamic value) {
       store.dispatch(RefreshData(
         platform: getPlatform(action.context),
+        completer: Completer<Null>()
+          ..future.then<Null>((_) => store.dispatch(LoadClients())),
       ));
     });
 
