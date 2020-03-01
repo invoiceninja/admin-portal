@@ -25,7 +25,12 @@ class SettingsList extends StatelessWidget {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
-    if (settingsUIState.filter != null)
+    if (!state.userCompany.isAdmin)
+      return SettingsListTile(
+        section: kSettingsUserDetails,
+        viewModel: viewModel,
+      );
+    else if (settingsUIState.filter != null)
       return SettingsSearch(
         viewModel: viewModel,
         filter: settingsUIState.filter,
@@ -83,12 +88,12 @@ class SettingsList extends StatelessWidget {
             section: kSettingsProducts,
             viewModel: viewModel,
           ),
-        /*
         if (showAll)
           SettingsListTile(
-            section: kSettingsNotifications,
+            section: kSettingsIntegrations,
             viewModel: viewModel,
           ),
+        /*
         if (showAll)
           SettingsListTile(
             section: kSettingsImportExport,

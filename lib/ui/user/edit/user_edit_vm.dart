@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -70,7 +71,16 @@ class UserEditVM {
       },
       onSavePressed: (BuildContext context) {
         final Completer<UserEntity> completer = new Completer<UserEntity>();
-        store.dispatch(SaveUserRequest(completer: completer, user: user));
+        if (state.authState.hasRecentlyEnteredPassword) {
+          store.dispatch(SaveUserRequest(completer: completer, user: user));
+        } else {
+          passwordCallback(
+              context: context,
+              callback: (password) {
+                store.dispatch(SaveUserRequest(
+                    completer: completer, user: user, password: password));
+              });
+        }
         return completer.future.then((savedUser) {
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(UserViewScreen.route));

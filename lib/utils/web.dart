@@ -25,3 +25,5 @@ void webDownload(String filename, String data) {
     ..setAttribute('download', filename)
     ..click();
 }
+
+void webReload() => window.location.reload();

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -76,9 +77,6 @@ class MenuDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(viewModel.user.fullName,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.caption)
                 ],
               ),
             ),
@@ -424,6 +422,14 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
+            if (true || isSelfHosted(context))
+              IconButton(
+                icon: Icon(
+                  Icons.warning,
+                  color: Theme.of(context).accentColor,
+                ),
+                onPressed: () => _showUpdate(context),
+              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
@@ -509,13 +515,26 @@ class SidebarFooterCollapsed extends StatelessWidget {
     return PopupMenuButton<String>(
       icon: Icon(Icons.info_outline),
       onSelected: (value) {
-        if (value == localization.about) {
+        if (value == localization.updateAvailable) {
+          _showUpdate(context);
+        } else if (value == localization.about) {
           _showAbout(context);
         } else if (value == localization.contactUs) {
           _showContactUs(context);
         }
       },
       itemBuilder: (BuildContext context) => [
+        if (true || isSelfHosted(context) && kIsWeb)
+          PopupMenuItem<String>(
+            child: ListTile(
+              leading: Icon(
+                Icons.warning,
+                color: Theme.of(context).accentColor,
+              ),
+              title: Text(localization.updateAvailable),
+            ),
+            value: localization.updateAvailable,
+          ),
         PopupMenuItem<String>(
           child: ListTile(
             leading: Icon(Icons.mail),
@@ -553,6 +572,14 @@ void _showContactUs(BuildContext context) {
   showDialog<ContactUsDialog>(
     context: context,
     builder: (BuildContext context) => ContactUsDialog(),
+  );
+}
+
+void _showUpdate(BuildContext context) {
+  showDialog<UpdateDialog>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => UpdateDialog(),
   );
 }
 

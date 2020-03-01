@@ -44,6 +44,7 @@ class WebClient {
     String filePath,
     String fileIndex,
     String secret,
+    String password,
   }) async {
     url = _checkUrl(url);
     print('POST: $url');
@@ -55,7 +56,9 @@ class WebClient {
           fileIndex: fileIndex, data: data);
     } else {
       response = await http.Client()
-          .post(url, body: data, headers: _getHeaders(token, secret: secret))
+          .post(url,
+              body: data,
+              headers: _getHeaders(token, secret: secret, password: password))
           .timeout(const Duration(seconds: kMaxPostSeconds));
     }
 
@@ -64,11 +67,14 @@ class WebClient {
     return json.decode(response.body);
   }
 
-  Future<dynamic> put(String url, String token,
-      {dynamic data,
-      String filePath,
-      String fileIndex = 'file',
-      String password}) async {
+  Future<dynamic> put(
+    String url,
+    String token, {
+    dynamic data,
+    String filePath,
+    String fileIndex = 'file',
+    String password,
+  }) async {
     url = _checkUrl(url);
     print('PUT: $url');
     debugPrint('Data: $data', wrapWidth: 1000);
@@ -219,8 +225,8 @@ Future<http.Response> _uploadFile(String url, String token, String filePath,
     final endIndex = prefix.indexOf(';');
     final fileExt = prefix.substring(startIndex, endIndex);
     final bytes = base64.decode(parts[1]);
-    multipartFile =
-        http.MultipartFile.fromBytes(fileIndex, bytes, filename: 'file.$fileExt');
+    multipartFile = http.MultipartFile.fromBytes(fileIndex, bytes,
+        filename: 'file.$fileExt');
   } else {
     final file = File(filePath);
     final stream = http.ByteStream(DelegatingStream.typed(file.openRead()));

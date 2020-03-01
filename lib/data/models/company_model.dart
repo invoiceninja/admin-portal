@@ -46,6 +46,8 @@ abstract class CompanyEntity extends Object
       enableProductCost: false,
       enableProductQuantity: true,
       defaultQuantity: true,
+      slackWebhookUrl: '',
+      googleAnalyticsUrl: '',
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
@@ -163,43 +165,38 @@ abstract class CompanyEntity extends Object
 
   BuiltMap<String, ExpenseCategoryEntity> get expenseCategoryMap;
 
-  @BuiltValueField(wireName: 'users')
   BuiltList<UserEntity> get users;
 
-  @BuiltValueField(wireName: 'clients')
   BuiltList<ClientEntity> get clients;
 
-  @BuiltValueField(wireName: 'products')
   BuiltList<ProductEntity> get products;
 
-  @BuiltValueField(wireName: 'invoices')
   BuiltList<InvoiceEntity> get invoices;
 
-  @BuiltValueField(wireName: 'payments')
   BuiltList<PaymentEntity> get payments;
 
-  @BuiltValueField(wireName: 'quotes')
   BuiltList<InvoiceEntity> get quotes;
 
-  @BuiltValueField(wireName: 'credits')
   BuiltList<InvoiceEntity> get credits;
 
-  @BuiltValueField(wireName: 'tasks')
   BuiltList<TaskEntity> get tasks;
 
-  @BuiltValueField(wireName: 'projects')
   BuiltList<ProjectEntity> get projects;
 
-  @BuiltValueField(wireName: 'expenses')
   BuiltList<ExpenseEntity> get expenses;
 
-  @BuiltValueField(wireName: 'vendors')
   BuiltList<VendorEntity> get vendors;
 
   BuiltMap<String, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
+
+  @BuiltValueField(wireName: 'slack_webhook_url')
+  String get slackWebhookUrl;
+
+  @BuiltValueField(wireName: 'google_analytics_url')
+  String get googleAnalyticsUrl;
 
   SettingsEntity get settings;
 

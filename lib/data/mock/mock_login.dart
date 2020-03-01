@@ -3,37 +3,7 @@ const dynamic kMockLogin = '''
     "data": [
         {
             "permissions": "",
-            "settings": {
-                "report_settings": {
-                    "client": {
-                        "sort_index": 0,
-                        "sort_ascending": true,
-                        "columns": [
-                            "name",
-                            "contact_email",
-                            "id_number",
-                            "vat_number",
-                            "currency",
-                            "balance",
-                            "paid_to_date",
-                            "country"
-                        ]
-                    },
-                    "invoice": {
-                        "sort_index": 0,
-                        "sort_ascending": true,
-                        "columns": [
-                            "number",
-                            "amount",
-                            "balance",
-                            "date",
-                            "due_date",
-                            "client",
-                            "is_deleted"
-                        ]
-                    }
-                }
-            },
+            "settings": null,
             "is_owner": true,
             "is_admin": true,
             "is_locked": false,
@@ -56,37 +26,7 @@ const dynamic kMockLogin = '''
                 "custom_value4": "",
                 "company_user": {
                     "permissions": "",
-                    "settings": {
-                        "report_settings": {
-                            "client": {
-                                "sort_index": 0,
-                                "sort_ascending": true,
-                                "columns": [
-                                    "name",
-                                    "contact_email",
-                                    "id_number",
-                                    "vat_number",
-                                    "currency",
-                                    "balance",
-                                    "paid_to_date",
-                                    "country"
-                                ]
-                            },
-                            "invoice": {
-                                "sort_index": 0,
-                                "sort_ascending": true,
-                                "columns": [
-                                    "number",
-                                    "amount",
-                                    "balance",
-                                    "date",
-                                    "due_date",
-                                    "client",
-                                    "is_deleted"
-                                ]
-                            }
-                        }
-                    },
+                    "settings": null,
                     "is_owner": true,
                     "is_admin": true,
                     "is_locked": false,
@@ -340,37 +280,7 @@ const dynamic kMockLogin = '''
                         "custom_value4": "",
                         "company_user": {
                             "permissions": "",
-                            "settings": {
-                                "report_settings": {
-                                    "client": {
-                                        "sort_index": 0,
-                                        "sort_ascending": true,
-                                        "columns": [
-                                            "name",
-                                            "contact_email",
-                                            "id_number",
-                                            "vat_number",
-                                            "currency",
-                                            "balance",
-                                            "paid_to_date",
-                                            "country"
-                                        ]
-                                    },
-                                    "invoice": {
-                                        "sort_index": 0,
-                                        "sort_ascending": true,
-                                        "columns": [
-                                            "number",
-                                            "amount",
-                                            "balance",
-                                            "date",
-                                            "due_date",
-                                            "client",
-                                            "is_deleted"
-                                        ]
-                                    }
-                                }
-                            },
+                            "settings": null,
                             "is_owner": true,
                             "is_admin": true,
                             "is_locked": false,
@@ -509,7 +419,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "ziK7itF81zXgIXGqtcB2zyxeZRnvaH5ockcVpM7f",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "q9wdL9wejP",
@@ -526,7 +436,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "jwitNwaAPdyIcsym13yte0RnzIGefJFokZe6UdhJ",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -587,7 +497,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "qZORQYY4fmPYg5b3WA4psMo69oV6wQevL73e8nHP",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "QJ0dNk6eLO",
@@ -604,7 +514,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "zu8h6wT6llHRHYRXJXfSOxeyzYzQTgzpSNTmI71o",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "z3YaOYpdxq",
@@ -621,7 +531,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "4brVWyWk9FZ0kEGHeD4ahrKvEBXTqNZKZGJLyn7p",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "mWZdPNwaKg",
@@ -638,7 +548,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "jOzJnhWDw3NdvClsYKLhhBGE5PLe6qRtihIdkzxM",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "LYqaQWldnj",
@@ -655,7 +565,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "weVQHiqZfrEiP2rtzDenfoXCCGpSngq4iUQsIGGU",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "JAPdR6qdGy",
@@ -672,7 +582,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "xCyNlZ03oziPNyghJlJtNkpTVRf0CkcYpNu4mr84",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -733,7 +643,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "ru0vTkhBCeWA3e36ljlvvonDd2eSqdqhp5YLD190",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "rlNbW6Jayg",
@@ -750,7 +660,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "FaOlYGdmJ9dGzTEF7KvGtuYLKj6fTdRdDUh18JCl",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -811,7 +721,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "nZfdVFONJa8MARuySXAigGsWKuUgsfk7KWw4FQq3",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "W4QbYEKbzq",
@@ -828,7 +738,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "Y3Wpg3YQKwfUPGqnKI4PABeUHeQF2T0IkHE3cLV3",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "joQeZ6JepZ",
@@ -845,7 +755,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "00MUw3946fcOkL5kGdxVBhm8EpM7XsifN3NXSbxf",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "EKQe1wRbJY",
@@ -862,7 +772,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "x4FB7UNDT1RnQvoHrTIvDYgEIM8b8SGLm87CXEbG",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -923,7 +833,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "ZUeGsom6bukqU4s466yCYWrITVbAg1zhJbQlmx2H",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "GELe31Mb69",
@@ -940,7 +850,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "WXLyUO7gvWB9DUNnBymDlXHiL20c2R2ZTWaZV3xM",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -1001,7 +911,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "wL7FmMG9kS0zOEwyvCC7V3pxU9hDa3k4jlYVLfcr",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "qM7e5yBe2v",
@@ -1018,7 +928,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "n5pQ4ikiCFOg5YdoYZOoyjZVXNvhBKb1r1ZEHc75",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "QK9b68neEv",
@@ -1035,7 +945,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "IqpeziyaXZL9adzgA3AZShKOzPdhiyvqoOJv8iTC",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -1096,7 +1006,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "SaOujBHXAu7y6AA3iqvyoD52LVXBlxsJuR7iHpfP",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "MVyb82mevA",
@@ -1113,7 +1023,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "k9TeFumom1plvLcePYKCgXFDsPuX5FVi5W1AzIsK",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -1174,7 +1084,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "bdm343oIu3m8UNABkDTYQesErG4vBAhpBJW30U7Q",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "QnXe0Rvbxr",
@@ -1191,7 +1101,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "yl7tlDARd7NJtgsg95DLfYya7ZtixphuJdOwmeep",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -1252,7 +1162,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "7GUwQ6EcD4rVxDzLtCYSXeJVWmDOCWKfqXJmR6z6",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "Volej2RejN",
@@ -1269,7 +1179,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "wvASZge8pYiCKwBaUtnRhdHz4ax1TdrgSrOKqC4e",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "Wpmbk55ezJ",
@@ -1286,7 +1196,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "vydXDEyDsoVW2u1LpShIWF7zAk0zFPsQi6ogofTK",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "OpnelO5dKB",
@@ -1303,7 +1213,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "2zxw0RKYkZLXBdAJXIXvTr7Xajuo6YrZIeoxN2lF",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "wMvbmwOeYA",
@@ -1320,7 +1230,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "dOd2Aymjz6ab6XajWhzYbbXcEretSrRgQmW53MO8",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "4openZRe7A",
@@ -1337,7 +1247,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "lLan09K7JgfnYgj7ZUHmwKPX849ER2KNSMIkOZdH",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     },
@@ -1398,7 +1308,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "1TRizS9bbsLZPHNtSv8BGxWJ9k21e5oePsuKekth",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "k8mepg2dMy",
@@ -1415,7 +1325,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "RMYTgdyhsdTNsj00yUqIw2kXOy6KjJYcacgK3GPm",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "l4zbqj2dpr",
@@ -1432,7 +1342,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "QOhJG77kTy9w0lXTkNraX477RW7nc7LfEiIAs9jh",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "yMYer0EbOB",
@@ -1449,7 +1359,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "JpJ7a4C1lr1QNi9i2imHAK2C46AZ0AZt7M5a982J",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "gl9avgmbG1",
@@ -1466,7 +1376,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "BqjvN0KKwCIqUK4PgJFMDGsuPnMVvmBl80c7Gw7o",
-                                "send": true
+                                "send_email": true
                             },
                             {
                                 "id": "7LDdwjRb1Y",
@@ -1483,7 +1393,7 @@ const dynamic kMockLogin = '''
                                 "custom_value3": "",
                                 "custom_value4": "",
                                 "contact_key": "URBH051yTDd0e5g7RnhNZXfun7MOsU6Y1LgkzIua",
-                                "send": true
+                                "send_email": true
                             }
                         ]
                     }
