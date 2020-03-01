@@ -524,7 +524,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         }
       },
       itemBuilder: (BuildContext context) => [
-        if (true || isSelfHosted(context))
+        if (true || isSelfHosted(context) && kIsWeb)
           PopupMenuItem<String>(
             child: ListTile(
               leading: Icon(

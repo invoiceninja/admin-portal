@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class UpdateDialog extends StatefulWidget {
   @override
@@ -57,15 +59,21 @@ class _UpdateDialogState extends State<UpdateDialog> {
     setState(() => _isLoading = true);
 
     final state = StoreProvider.of<AppState>(context).state;
-    final credentials = state.credentials;
-    final webClient = WebClient();
-    const url = '/self-update';
-    webClient.post(url, credentials.token).then((dynamic response) {
-      print('DONE: $response');
-      setState(() => _isLoading = false);
-    }).catchError((dynamic error) {
-      showErrorDialog(context: context, message: '$error');
-      setState(() => _isLoading = false);
-    });
+    passwordCallback(
+        context: context,
+        callback: (password) {
+          final credentials = state.credentials;
+          final webClient = WebClient();
+          const url = '/self-update';
+          webClient
+              .post(url, credentials.token, password: password)
+              .then((dynamic response) {
+            setState(() => _isLoading = false);
+            webReload();
+          }).catchError((dynamic error) {
+            showErrorDialog(context: context, message: '$error');
+            setState(() => _isLoading = false);
+          });
+        });
   }
 }
