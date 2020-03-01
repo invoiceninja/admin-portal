@@ -23,7 +23,7 @@ jobs:
           cat lib/.env.dart
       - run: flutter build web --release
       - run: |
-          git config --global user.email ${{secrets.commit_secret}}
+          git config --global user.email ${{secrets.commit_email}}
           git config --global user.name hillelcoren
           git status
 
