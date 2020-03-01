@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
+import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -575,37 +576,10 @@ void _showContactUs(BuildContext context) {
 }
 
 void _showUpdate(BuildContext context) {
-  final localization = AppLocalization.of(context);
-
-  showDialog<AlertDialog>(
+  showDialog<UpdateDialog>(
     context: context,
-    builder: (BuildContext context) => AlertDialog(
-      title: Text(localization.updateAvailable),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(localization.aNewVersionIsAvailable),
-          SizedBox(height: 20),
-          Text('• ${localization.currentVersion}: v$kAppVersion'),
-          //Text('• ${localization.latestVersion}: v???'),
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text(localization.cancel.toUpperCase()),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        FlatButton(
-          child: Text(localization.updateNow.toUpperCase()),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
+    barrierDismissible: false,
+    builder: (BuildContext context) => UpdateDialog(),
   );
 }
 
