@@ -69,7 +69,9 @@ class _UpdateDialogState extends State<UpdateDialog> {
               .then((dynamic response) {
             setState(() => _isLoading = false);
             print('## response: $response');
-            //webReload();
+            if (response == 'done') {
+              webReload();
+            }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
             setState(() => _isLoading = false);
