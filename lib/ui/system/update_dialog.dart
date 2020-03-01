@@ -55,13 +55,12 @@ class _UpdateDialogState extends State<UpdateDialog> {
     );
   }
 
-  void updateApp(BuildContext context) {
-    setState(() => _isLoading = true);
-
+  void updateApp(BuildContext context) async {
     final state = StoreProvider.of<AppState>(context).state;
     passwordCallback(
         context: context,
         callback: (password) {
+          setState(() => _isLoading = true);
           final credentials = state.credentials;
           final webClient = WebClient();
           const url = '/self-update';
@@ -69,7 +68,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
               .post(url, credentials.token, password: password)
               .then((dynamic response) {
             setState(() => _isLoading = false);
-            webReload();
+            print('## response: $response');
+            //webReload();
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
             setState(() => _isLoading = false);
