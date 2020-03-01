@@ -110,7 +110,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Report',
       'add_company': 'Add Company',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -32530,9 +32529,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get unapprovedQuote =>
       _localizedValues[localeCode]['unapproved_quote'];
-
-  String get toLearnAboutGoogleFonts =>
-      _localizedValues[localeCode]['to_learn_about_gogle_fonts'];
 
   String get addCompany => _localizedValues[localeCode]['add_company'];
 
