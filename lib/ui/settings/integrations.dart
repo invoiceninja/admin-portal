@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/integrations_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -57,9 +58,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
     super.didChangeDependencies();
   }
 
-  void _onChanged() {
-
-  }
+  void _onChanged() {}
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +72,21 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
-              DecoratedFormField(
-                label: 'Slack',
-                hint: localization.slackWebhookUrl,
-                controller: _slackWebhookController,
+              LearnMore(
+                url: 'https://my.slack.com/services/new/incoming-webhook/',
+                child: DecoratedFormField(
+                  label: 'Slack',
+                  hint: localization.slackWebhookUrl,
+                  controller: _slackWebhookController,
+                ),
               ),
-              DecoratedFormField(
-                label: 'Google Analytics',
-                hint: localization.analyticsKey,
-                controller: _googleAnalyticsController,
+              LearnMore(
+                url: 'https://support.google.com/analytics/answer/1037249',
+                child: DecoratedFormField(
+                  label: 'Google Analytics',
+                  hint: localization.trackingId,
+                  controller: _googleAnalyticsController,
+                ),
               ),
             ],
           )
