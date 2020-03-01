@@ -421,6 +421,14 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
+            if (true || isSelfHosted(context))
+              IconButton(
+                icon: Icon(
+                  Icons.warning,
+                  color: Theme.of(context).accentColor,
+                ),
+                onPressed: () => _showUpdate(context),
+              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
@@ -506,13 +514,26 @@ class SidebarFooterCollapsed extends StatelessWidget {
     return PopupMenuButton<String>(
       icon: Icon(Icons.info_outline),
       onSelected: (value) {
-        if (value == localization.about) {
+        if (value == localization.updateAvailable) {
+          _showUpdate(context);
+        } else if (value == localization.about) {
           _showAbout(context);
         } else if (value == localization.contactUs) {
           _showContactUs(context);
         }
       },
       itemBuilder: (BuildContext context) => [
+        if (true || isSelfHosted(context))
+          PopupMenuItem<String>(
+            child: ListTile(
+              leading: Icon(
+                Icons.warning,
+                color: Theme.of(context).accentColor,
+              ),
+              title: Text(localization.updateAvailable),
+            ),
+            value: localization.updateAvailable,
+          ),
         PopupMenuItem<String>(
           child: ListTile(
             leading: Icon(Icons.mail),
@@ -550,6 +571,41 @@ void _showContactUs(BuildContext context) {
   showDialog<ContactUsDialog>(
     context: context,
     builder: (BuildContext context) => ContactUsDialog(),
+  );
+}
+
+void _showUpdate(BuildContext context) {
+  final localization = AppLocalization.of(context);
+
+  showDialog<AlertDialog>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text(localization.updateAvailable),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(localization.aNewVersionIsAvailable),
+          SizedBox(height: 8),
+          Text('• ${localization.currentVersion}: v$kAppVersion'),
+          Text('• ${localization.latestVersion}: v???'),
+        ],
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(localization.cancel.toUpperCase()),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text(localization.updateNow.toUpperCase()),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
   );
 }
 

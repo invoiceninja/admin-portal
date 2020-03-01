@@ -14,6 +14,11 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'current_version': 'Current Version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the app is available to download.',
+      'update_available': 'Update Available',
       'learn_more': 'Learn More',
       'integrations': 'Integrations',
       'tracking_id': 'Tracking Id',
@@ -32731,6 +32736,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get integrations => _localizedValues[localeCode]['integrations'];
 
   String get learnMore => _localizedValues[localeCode]['learn_more'];
+
+  String get updateAvailable => _localizedValues[localeCode]['update_available'];
+
+  String get aNewVersionIsAvailable => _localizedValues[localeCode]['a_new_version_is_available'];
+
+  String get updateNow => _localizedValues[localeCode]['update_now'];
+
+  String get currentVersion => _localizedValues[localeCode]['current_version'];
+
+  String get latestVersion => _localizedValues[localeCode]['latest_version'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
