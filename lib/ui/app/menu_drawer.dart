@@ -586,9 +586,9 @@ void _showUpdate(BuildContext context) {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(localization.aNewVersionIsAvailable),
-          SizedBox(height: 8),
+          SizedBox(height: 20),
           Text('• ${localization.currentVersion}: v$kAppVersion'),
-          Text('• ${localization.latestVersion}: v???'),
+          //Text('• ${localization.latestVersion}: v???'),
         ],
       ),
       actions: <Widget>[

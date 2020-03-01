@@ -17,7 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
       'update_now': 'Update Now',
-      'a_new_version_is_available': 'A new version of the app is available to download.',
+      'a_new_version_is_available': 'A new version of the app is available',
       'update_available': 'Update Available',
       'learn_more': 'Learn More',
       'integrations': 'Integrations',
