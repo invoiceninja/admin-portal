@@ -68,22 +68,31 @@ class UserRepository {
     return userResponse.data.toList();
   }
 
-  Future<UserEntity> saveData(Credentials credentials, UserEntity user,
+  Future<UserEntity> saveData(
+      Credentials credentials, UserEntity user, String password,
       [EntityAction action]) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
     if (user.isNew) {
       response = await webClient.post(
-          credentials.url + '/users?include=company_user', credentials.token,
-          data: json.encode(data));
+        credentials.url + '/users?include=company_user',
+        credentials.token,
+        data: json.encode(data),
+        password: password,
+      );
     } else {
-      var url = credentials.url + '/users/${user.id}?include=company_user';
+      var url = credentials.url +
+          '/users/${user.id}?include=company_user&password=$password';
       if (action != null) {
         url += '?action=' + action.toString();
       }
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+        password: password,
+      );
     }
 
     final UserItemResponse userResponse =

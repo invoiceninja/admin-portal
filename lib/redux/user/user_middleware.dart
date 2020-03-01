@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -208,13 +209,14 @@ Middleware<AppState> _saveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveUserRequest;
     repository
-        .saveData(store.state.credentials, action.user)
+        .saveData(store.state.credentials, action.user, action.password)
         .then((UserEntity user) {
       if (action.user.isNew) {
         store.dispatch(AddUserSuccess(user));
       } else {
         store.dispatch(SaveUserSuccess(user));
       }
+      store.dispatch(UserVerifiedPassword());
       action.completer.complete(user);
       final userUIState = store.state.userUIState;
       if (userUIState.saveCompleter != null) {
