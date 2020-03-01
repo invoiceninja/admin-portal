@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/settings/notifications.dart';
+import 'package:invoiceninja_flutter/ui/settings/integrations.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class NotificationsSettingsScreen extends StatelessWidget {
-  const NotificationsSettingsScreen({Key key}) : super(key: key);
-  static const String route = '/$kSettings/$kSettingsNotifications';
+class IntegrationSettingsScreen extends StatelessWidget {
+  const IntegrationSettingsScreen({Key key}) : super(key: key);
+  static const String route = '/$kSettings/$kSettingsIntegrations';
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, NotificationSettingsVM>(
-      converter: NotificationSettingsVM.fromStore,
+    return StoreConnector<AppState, IntegrationSettingsVM>(
+      converter: IntegrationSettingsVM.fromStore,
       builder: (context, viewModel) {
-        return NotificationSettings(
+        return IntegrationSettings(
           viewModel: viewModel,
           key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         );
@@ -24,17 +24,17 @@ class NotificationsSettingsScreen extends StatelessWidget {
   }
 }
 
-class NotificationSettingsVM {
-  NotificationSettingsVM({
+class IntegrationSettingsVM {
+  IntegrationSettingsVM({
     @required this.state,
     @required this.onSavePressed,
     @required this.onCancelPressed,
   });
 
-  static NotificationSettingsVM fromStore(Store<AppState> store) {
+  static IntegrationSettingsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return NotificationSettingsVM(
+    return IntegrationSettingsVM(
       state: state,
       onSavePressed: null,
       onCancelPressed: null,

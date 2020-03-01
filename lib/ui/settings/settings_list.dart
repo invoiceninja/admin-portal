@@ -83,12 +83,12 @@ class SettingsList extends StatelessWidget {
             section: kSettingsProducts,
             viewModel: viewModel,
           ),
-        /*
         if (showAll)
           SettingsListTile(
-            section: kSettingsNotifications,
+            section: kSettingsIntegrations,
             viewModel: viewModel,
           ),
+        /*
         if (showAll)
           SettingsListTile(
             section: kSettingsImportExport,

@@ -179,6 +179,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(String)])),
+      'slack_webhook_url',
+      serializers.serialize(object.slackWebhookUrl,
+          specifiedType: const FullType(String)),
+      'google_analytics_url',
+      serializers.serialize(object.googleAnalyticsUrl,
+          specifiedType: const FullType(String)),
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
@@ -473,6 +479,14 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.customFields.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
                   const [const FullType(String), const FullType(String)])));
+          break;
+        case 'slack_webhook_url':
+          result.slackWebhookUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'google_analytics_url':
+          result.googleAnalyticsUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -2675,6 +2689,10 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltMap<String, String> customFields;
   @override
+  final String slackWebhookUrl;
+  @override
+  final String googleAnalyticsUrl;
+  @override
   final SettingsEntity settings;
   @override
   final int enabledModules;
@@ -2741,6 +2759,8 @@ class _$CompanyEntity extends CompanyEntity {
       this.vendors,
       this.userMap,
       this.customFields,
+      this.slackWebhookUrl,
+      this.googleAnalyticsUrl,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -2878,6 +2898,12 @@ class _$CompanyEntity extends CompanyEntity {
     if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
     }
+    if (slackWebhookUrl == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'slackWebhookUrl');
+    }
+    if (googleAnalyticsUrl == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'googleAnalyticsUrl');
+    }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
     }
@@ -2936,6 +2962,8 @@ class _$CompanyEntity extends CompanyEntity {
         vendors == other.vendors &&
         userMap == other.userMap &&
         customFields == other.customFields &&
+        slackWebhookUrl == other.slackWebhookUrl &&
+        googleAnalyticsUrl == other.googleAnalyticsUrl &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -2968,16 +2996,16 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode),
-                                                                                payments.hashCode),
-                                                                            quotes.hashCode),
-                                                                        credits.hashCode),
-                                                                    tasks.hashCode),
-                                                                projects.hashCode),
-                                                            expenses.hashCode),
-                                                        vendors.hashCode),
-                                                    userMap.hashCode),
-                                                customFields.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode),
+                                                                                credits.hashCode),
+                                                                            tasks.hashCode),
+                                                                        projects.hashCode),
+                                                                    expenses.hashCode),
+                                                                vendors.hashCode),
+                                                            userMap.hashCode),
+                                                        customFields.hashCode),
+                                                    slackWebhookUrl.hashCode),
+                                                googleAnalyticsUrl.hashCode),
                                             settings.hashCode),
                                         enabledModules.hashCode),
                                     isChanged.hashCode),
@@ -3035,6 +3063,8 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('vendors', vendors)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
+          ..add('slackWebhookUrl', slackWebhookUrl)
+          ..add('googleAnalyticsUrl', googleAnalyticsUrl)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3270,6 +3300,16 @@ class CompanyEntityBuilder
   set customFields(MapBuilder<String, String> customFields) =>
       _$this._customFields = customFields;
 
+  String _slackWebhookUrl;
+  String get slackWebhookUrl => _$this._slackWebhookUrl;
+  set slackWebhookUrl(String slackWebhookUrl) =>
+      _$this._slackWebhookUrl = slackWebhookUrl;
+
+  String _googleAnalyticsUrl;
+  String get googleAnalyticsUrl => _$this._googleAnalyticsUrl;
+  set googleAnalyticsUrl(String googleAnalyticsUrl) =>
+      _$this._googleAnalyticsUrl = googleAnalyticsUrl;
+
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
       _$this._settings ??= new SettingsEntityBuilder();
@@ -3360,6 +3400,8 @@ class CompanyEntityBuilder
       _vendors = _$v.vendors?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
+      _slackWebhookUrl = _$v.slackWebhookUrl;
+      _googleAnalyticsUrl = _$v.googleAnalyticsUrl;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3436,6 +3478,8 @@ class CompanyEntityBuilder
               vendors: vendors.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
+              slackWebhookUrl: slackWebhookUrl,
+              googleAnalyticsUrl: googleAnalyticsUrl,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,
@@ -3491,6 +3535,7 @@ class CompanyEntityBuilder
         userMap.build();
         _$failedField = 'customFields';
         customFields.build();
+
         _$failedField = 'settings';
         settings.build();
       } catch (e) {

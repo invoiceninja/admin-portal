@@ -128,8 +128,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.percent;
     case kSettingsProducts:
       return FontAwesomeIcons.cube;
-    case kSettingsNotifications:
-      return FontAwesomeIcons.bell;
+    case kSettingsIntegrations:
+      return FontAwesomeIcons.link;
     case kSettingsImportExport:
       return FontAwesomeIcons.fileExport;
     case kSettingsDeviceSettings:

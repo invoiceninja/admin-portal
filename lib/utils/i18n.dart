@@ -14,6 +14,9 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
       'untitled_company': 'Untitled Company',
@@ -32722,6 +32725,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get creditFooter => _localizedValues[localeCode]['credit_footer'];
 
   String get creditTerms => _localizedValues[localeCode]['credit_terms'];
+
+  String get slackWebhookUrl => _localizedValues[localeCode]['slack_webhook_url'];
+
+  String get analyticsKey => _localizedValues[localeCode]['analytics_key'];
+
+  String get integrations => _localizedValues[localeCode]['integrations'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
