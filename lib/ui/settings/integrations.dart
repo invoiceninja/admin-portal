@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/integrations_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class IntegrationSettings extends StatefulWidget {
@@ -28,6 +29,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
   final _slackWebhookController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
 
   @override
   void dispose() {
@@ -58,7 +60,18 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
     super.didChangeDependencies();
   }
 
-  void _onChanged() {}
+  void _onChanged() {
+    _debouncer.run(() {
+      final state = widget.viewModel.state;
+      final company = state.company.rebuild((b) => b
+        ..slackWebhookUrl = _slackWebhookController.text.trim()
+        ..googleAnalyticsUrl = _googleAnalyticsController.text.trim()
+      );
+      if (state.company != company) {
+        widget.viewModel.onCompanyChanged(company);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +80,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
 
     return EditScaffold(
       title: localization.integrations,
-      onSavePressed: null,
+      onSavePressed: widget.viewModel.onSavePressed,
       body: ListView(
         children: <Widget>[
           FormCard(
@@ -76,6 +89,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
                 url: 'https://my.slack.com/services/new/incoming-webhook/',
                 child: DecoratedFormField(
                   label: 'Slack',
+                  keyboardType: TextInputType.url,
                   hint: localization.slackWebhookUrl,
                   controller: _slackWebhookController,
                 ),

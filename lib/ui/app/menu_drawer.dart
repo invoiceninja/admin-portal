@@ -76,9 +76,6 @@ class MenuDrawer extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(viewModel.user.fullName,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.caption)
                 ],
               ),
             ),

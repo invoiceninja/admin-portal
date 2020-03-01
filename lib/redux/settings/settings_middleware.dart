@@ -45,12 +45,17 @@ Middleware<AppState> _viewSettings() {
       return;
     }
 
-    final route = SettingsScreen.route +
-        (action.section != null
-            ? '/${action.section}'
-            : uiState.mainRoute == kSettings
-                ? '/$kSettingsCompanyDetails'
-                : '/${uiState.settingsUIState.section}');
+    String route = SettingsScreen.route;
+
+    if (!store.state.userCompany.isAdmin) {
+      route += '/$kSettingsUserDetails';
+    } else if (action.section != null) {
+      route += '/${action.section}';
+    } else if (uiState.mainRoute == kSettings) {
+      route += '/$kSettingsCompanyDetails';
+    } else {
+      route += '/${uiState.settingsUIState.section}';
+    }
 
     next(action);
 
