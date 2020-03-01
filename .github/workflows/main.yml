@@ -9,6 +9,7 @@ jobs:
     env:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
+      commit_name: ${{secrets.commit_name}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -24,7 +25,7 @@ jobs:
       - run: flutter build web --release
       - run: |
           git config --global user.email ${{secrets.commit_email}}
-          git config --global user.name hillelcoren
+          git config --global user.name ${{secrets.commit_name}}
           git status
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
