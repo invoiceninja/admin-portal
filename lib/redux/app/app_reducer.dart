@@ -22,8 +22,9 @@ import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState(prefState: state.prefState).rebuild((b) => b
-      ..authState
-          .replace(state.authState.rebuild((b) => b..isAuthenticated = false))
+      ..authState.replace(state.authState.rebuild((b) => b
+        ..isAuthenticated = false
+        ..lastEnteredPasswordAt = 0))
       ..isTesting = state.isTesting);
   } else if (action is LoadStateSuccess) {
     return action.state.rebuild((b) => b
