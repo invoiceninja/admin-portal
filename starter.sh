@@ -199,7 +199,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: state getters - do not remove comment"
-    code="${Module}State get ${module_camel}State => selectedCompanyState.${module_camel}State;${lineBreak}"
+    code="${Module}State get ${module_camel}State => userCompanyState.${module_camel}State;${lineBreak}"
     code="${code}ListUIState get ${module_camel}ListState => uiState.${module_camel}UIState.listUIState;${lineBreak}"
     code="${code}${Module}UIState get ${module_camel}UIState => uiState.${module_camel}UIState;${lineBreak}${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
