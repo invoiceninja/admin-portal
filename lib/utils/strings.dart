@@ -71,7 +71,7 @@ bool isValidDate(String input) {
   try {
     DateTime.parse(input);
     return true;
-  } catch(e) {
+  } catch (e) {
     return false;
   }
 }

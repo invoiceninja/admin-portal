@@ -121,6 +121,5 @@ part 'serializers.g.dart';
   GatewayTokenItemResponse,
   UserCompanyItemResponse,
 ])
-
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

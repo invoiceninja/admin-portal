@@ -103,8 +103,8 @@ class DeviceSettingsVM {
           if (value == AppLayout.mobile) {
             store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
           } else {
-            store.dispatch(
-                ViewMainScreen(navigator: Navigator.of(context), addDelay: true));
+            store.dispatch(ViewMainScreen(
+                navigator: Navigator.of(context), addDelay: true));
           }
         });
       },

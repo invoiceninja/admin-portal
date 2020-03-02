@@ -133,8 +133,8 @@ ReportResult creditReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort(
-      (rowA, rowB) => sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

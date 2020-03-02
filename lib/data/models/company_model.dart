@@ -595,7 +595,12 @@ abstract class UserSettingsEntity
 
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
-  factory ReportSettingsEntity({String sortColumn, bool sortAscending, int sortTotalsIndex, bool sortTotalsAscending, }) {
+  factory ReportSettingsEntity({
+    String sortColumn,
+    bool sortAscending,
+    int sortTotalsIndex,
+    bool sortTotalsAscending,
+  }) {
     return _$ReportSettingsEntity._(
       sortColumn: sortColumn ?? '',
       sortAscending: sortAscending ?? true,

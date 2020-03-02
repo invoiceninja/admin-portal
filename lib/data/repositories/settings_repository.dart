@@ -44,7 +44,7 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-    serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response);
 
     return userResponse.data;
   }
@@ -61,8 +61,8 @@ class SettingsRepository {
       data: json.encode(data),
     );
 
-    final UserCompanyItemResponse userResponse =
-    serializers.deserializeWith(UserCompanyItemResponse.serializer, response);
+    final UserCompanyItemResponse userResponse = serializers.deserializeWith(
+        UserCompanyItemResponse.serializer, response);
 
     return userResponse.data;
   }

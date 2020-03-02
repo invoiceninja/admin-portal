@@ -66,7 +66,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
   int kCustom3Panel = 5;
   int kCustom4Panel = 6;
 
-
   int closeBottomSheet() {
     if (_filterStateController != null) {
       _filterStateController.close();
@@ -112,7 +111,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
     final _showFilterStateSheet = () {
       if (closeBottomSheet() == kFilterStatePanel) {
-       return;
+        return;
       }
       _filterStateController =
           Scaffold.of(context).showBottomSheet<StoreConnector>((context) {

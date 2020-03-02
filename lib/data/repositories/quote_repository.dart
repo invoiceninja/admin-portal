@@ -18,8 +18,7 @@ class QuoteRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/quotes/$entityId?',
-        credentials.token);
+        '${credentials.url}/quotes/$entityId?', credentials.token);
 
     final InvoiceItemResponse quoteResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

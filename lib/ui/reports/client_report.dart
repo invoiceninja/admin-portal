@@ -280,7 +280,8 @@ ReportResult clientReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

@@ -8,7 +8,6 @@ import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 
 List<Middleware<AppState>> createStoreReportsMiddleware() {
-
   final viewReports = _viewReports();
 
   return [
@@ -41,4 +40,3 @@ Middleware<AppState> _viewReports() {
     }
   };
 }
-

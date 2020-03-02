@@ -91,8 +91,8 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           title: vendor.phone,
           subtitle: localization.phone,
           onTap: () => setState(() {
-            _launched = _launchURL(
-                context, 'sms:' + cleanPhoneNumber(vendor.phone));
+            _launched =
+                _launchURL(context, 'sms:' + cleanPhoneNumber(vendor.phone));
             //_launched = _launchURL('tel:' + cleanPhoneNumber(vendor.workPhone));
           }),
         ));

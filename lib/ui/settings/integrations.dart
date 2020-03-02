@@ -65,8 +65,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
       final state = widget.viewModel.state;
       final company = state.company.rebuild((b) => b
         ..slackWebhookUrl = _slackWebhookController.text.trim()
-        ..googleAnalyticsUrl = _googleAnalyticsController.text.trim()
-      );
+        ..googleAnalyticsUrl = _googleAnalyticsController.text.trim());
       if (state.company != company) {
         widget.viewModel.onCompanyChanged(company);
       }

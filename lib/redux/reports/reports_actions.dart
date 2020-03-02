@@ -38,4 +38,3 @@ class UpdateReportSettings implements PersistUI {
   final String customStartDate;
   final String customEndDate;
 }
-

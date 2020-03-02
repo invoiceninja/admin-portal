@@ -373,9 +373,20 @@ else
     code="..${module_camel}UIState.replace(${module_camel}UIReducer(state.${module_camel}UIState, action))${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
 
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:invoiceninja_flutter/redux/product/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
+
+    comment="STARTER: errors - do not remove comment"
+    code="TypedReducer<String, Load${Module}sFailure>((state, action) { return '${action.error}'; }),${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
+
     echo "Generating built files.."
     flutter packages pub run build_runner clean
     flutter packages pub run build_runner build --delete-conflicting-outputs
+
+    echo "Clean up"
+    flutter dartfmt lib
 fi
 
 echo "Successfully completed"

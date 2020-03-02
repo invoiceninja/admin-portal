@@ -238,7 +238,8 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
     final bool sendEmail = store.state.prefState.emailPayment;
 
     repository
-        .refundPayment(store.state.credentials, action.payment, sendEmail: sendEmail)
+        .refundPayment(store.state.credentials, action.payment,
+            sendEmail: sendEmail)
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));

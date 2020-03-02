@@ -37,8 +37,9 @@ abstract class UserItemResponse
 
 abstract class UserCompanyItemResponse
     implements Built<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
-  factory UserCompanyItemResponse([void updates(UserCompanyItemResponseBuilder b)]) =
-  _$UserCompanyItemResponse;
+  factory UserCompanyItemResponse(
+          [void updates(UserCompanyItemResponseBuilder b)]) =
+      _$UserCompanyItemResponse;
 
   UserCompanyItemResponse._();
 

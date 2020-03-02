@@ -18,8 +18,7 @@ class InvoiceRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/invoices/$entityId?',
-        credentials.token);
+        '${credentials.url}/invoices/$entityId?', credentials.token);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -29,8 +28,7 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url =
-        credentials.url + '/invoices?'; // invoice_type_id=1
+    String url = credentials.url + '/invoices?'; // invoice_type_id=1
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
