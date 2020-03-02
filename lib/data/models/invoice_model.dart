@@ -750,7 +750,7 @@ abstract class InvitationEntity extends Object
 
   String get borderlessLink => silentLink + '&borderless=true';
 
-  String get downloadLink => link.replaceFirst('/view/', '/download/');
+  String get downloadLink => link.replaceFirst('/client/', '/') + '/download';
 
   @override
   bool matchesFilter(String filter) {

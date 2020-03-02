@@ -100,9 +100,12 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
 }
 
 Future<List<PDFPageImage>> renderPDF(String url) async {
+  print('### renderPDF: $url');
+  /*
   url =
       //'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd'; // one page
       'https://staging.invoiceninja.com/download/9gsjumkd8yaujcr0trnucnwfrelt1hil'; // four pages
+  */
 
   final request = await HttpClient().getUrl(Uri.parse(url));
   final response = await request.close();
