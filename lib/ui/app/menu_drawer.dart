@@ -259,12 +259,6 @@ class MenuDrawer extends StatelessWidget {
                           entityType: EntityType.credit,
                           icon: getEntityIcon(EntityType.credit),
                           title: localization.credits,
-                          onTap: () => store.dispatch(ViewcreditList(context)),
-                          onCreateTap: () {
-                            navigator.pop();
-                            store.dispatch(EditCredit(
-                                credit: InvoiceEntity(), context: context));
-                          },
                         ),
 
                         DrawerTile(

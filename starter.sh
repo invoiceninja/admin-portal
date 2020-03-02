@@ -168,6 +168,7 @@ else
        './stubs/ui/stub/stub_list_item'
        './stubs/ui/stub/stub_list_vm'
        './stubs/ui/stub/stub_list'
+       './stubs/ui/stub/stub_presenter'
        './stubs/ui/stub/stub_screen')
 
     for i in "${files[@]}"
@@ -352,11 +353,6 @@ else
     code="${code}entityType: EntityType.${module_camel},${lineBreak}"
     code="${code}icon: getEntityIcon(EntityType.${module_camel}),${lineBreak}"
     code="${code}title: localization.${module_camel}s,${lineBreak}"
-    code="${code}onTap: () => store.dispatch(View${module_camel}List(context)),${lineBreak}"
-    code="${code}onCreateTap: () {${lineBreak}"
-    code="${code}navigator.pop();${lineBreak}"
-    code="${code}store.dispatch(Edit${Module}(${lineBreak}"
-    code="${code}${module_camel}: ${Module}Entity(), context: context));${lineBreak}"
     code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart

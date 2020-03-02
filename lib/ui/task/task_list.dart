@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
-import 'package:invoiceninja_flutter/ui/app/presenters/task_presenter.dart';
+import 'file:///C:/Users/hillel/Documents/flutter-mobile/lib/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';

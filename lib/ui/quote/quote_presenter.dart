@@ -14,7 +14,7 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.date,
       QuoteFields.amount,
       QuoteFields.balance,
-      QuoteFields.dueDate,
+      QuoteFields.validUntil,
       EntityFields.state,
     ];
   }
@@ -37,7 +37,7 @@ class QuotePresenter extends EntityPresenter {
         return Text(formatNumber(quote.amount, context));
       case QuoteFields.balance:
         return Text(formatNumber(quote.balance, context));
-      case QuoteFields.dueDate:
+      case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
     }
 

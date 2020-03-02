@@ -35,6 +35,7 @@ class StubListBuilder extends StatelessWidget {
 
 class StubListVM {
   StubListVM({
+    @required this.state,
     @required this.userCompany,
     @required this.stubList,
     @required this.stubMap,
@@ -64,6 +65,7 @@ class StubListVM {
     final state = store.state;
 
     return StubListVM(
+        state: state,
         userCompany: state.userCompany,
         listState: state.stubListState,
         stubList: memoizedFilteredStubList(state.stubState.map,
@@ -93,6 +95,7 @@ class StubListVM {
     );
   }
 
+  final AppState state;
   final UserCompanyEntity userCompany;
   final List<String> stubList;
   final BuiltMap<String, StubEntity> stubMap;

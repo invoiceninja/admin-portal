@@ -35,6 +35,7 @@ class CreditListBuilder extends StatelessWidget {
 
 class CreditListVM {
   CreditListVM({
+    @required this.state,
     @required this.userCompany,
     @required this.creditList,
     @required this.creditMap,
@@ -64,6 +65,7 @@ class CreditListVM {
     final state = store.state;
 
     return CreditListVM(
+      state: state,
       userCompany: state.userCompany,
       listState: state.creditListState,
       creditList: memoizedFilteredCreditList(
@@ -91,6 +93,7 @@ class CreditListVM {
     );
   }
 
+  final AppState state;
   final UserCompanyEntity userCompany;
   final List<String> creditList;
   final BuiltMap<String, InvoiceEntity> creditMap;
