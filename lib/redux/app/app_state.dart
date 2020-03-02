@@ -430,7 +430,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return settingsUIState.isChanged;
     }
 
-    if (uiState.currentRoute.endsWith('edit')) {
+    if (uiState.currentRoute.endsWith('/edit') ||
+        uiState.currentRoute.endsWith('_edit')) {
       throw 'AppState.hasChanges is not defined for ${uiState.currentRoute}';
     }
 
