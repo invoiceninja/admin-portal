@@ -42,6 +42,7 @@ class MainScreen extends StatelessWidget {
           if ([
                 InvoiceScreen.route,
                 QuoteScreen.route,
+                CreditScreen.route,
               ].contains(mainRoute) &&
               subRoute == '/edit' &&
               prefState.isDesktop) {
@@ -51,6 +52,9 @@ class MainScreen extends StatelessWidget {
                 break;
               case QuoteScreen.route:
                 screen = QuoteEditScreen();
+                break;
+              case CreditScreen.route:
+                screen = CreditEditScreen();
                 break;
             }
           } else {
