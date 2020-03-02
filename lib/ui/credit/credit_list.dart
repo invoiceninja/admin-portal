@@ -73,6 +73,7 @@ class _CreditListState extends State<CreditList> {
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     */
     final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
     final listUIState = store.state.uiState.creditUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final creditList = viewModel.creditList;

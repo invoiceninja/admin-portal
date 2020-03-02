@@ -76,6 +76,7 @@ class _StubListState extends State<StubList> {
         filteredClientId != null ? viewModel.clientMap[filteredClientId] : null;
     */
     final store = StoreProvider.of<AppState>(context);
+    final viewModel = widget.viewModel;
     final listUIState = store.state.uiState.stubUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final stubList = viewModel.stubList;
