@@ -385,15 +385,18 @@ class EntityScreens extends StatelessWidget {
       listFlex = 5;
     }
 
-    final child = subRoute == 'email'
-        ? emailWidget
-        : subRoute == 'refund'
-            ? refundWidget
-            : subRoute == 'edit'
-                ? editWidget
-                : (entityUIState.selectedId ?? '').isNotEmpty
-                    ? viewWidget
-                    : BlankScreen(AppLocalization.of(context).noRecordSelected);
+    Widget child;
+    if (subRoute == 'email') {
+      child = emailWidget;
+    } else if (subRoute == 'refund') {
+      child = refundWidget;
+    } else if (subRoute == 'edit') {
+      child = editWidget;
+    } else if ((entityUIState.selectedId ?? '').isNotEmpty) {
+      child = viewWidget;
+    } else {
+      child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+    }
 
     return Row(
       children: <Widget>[
