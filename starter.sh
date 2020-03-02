@@ -422,6 +422,14 @@ else
     code="case EntityType.${module_camel}: handle${Module}Action(context, entities, action);${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
+    comment="STARTER: lang key - do not remove comment"
+    code="'${module_snake}': '${Module}', '${module_snake}s': '${Module}s', 'new_${module_snake}': 'New ${Module}', 'edit_${module_snake}': 'Edit ${Module}', 'created_${module_snake}': 'Successfully created ${module_snake}', 'updated_${module_snake}': 'Successfully updated ${module_snake}', 'archived_${module_snake}': 'Successfully archived ${module_snake}', 'deleted_${module_snake}': 'Successfully deleted ${module_snake}', 'removed_${module_snake}': 'Successfully removed ${module_snake}', 'restored_${module_snake}': 'Successfully restored ${module_snake}',${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
+
+    comment="STARTER: lang field - do not remove comment"
+    code="String get ${module_camel} => _localizedValues[localeCode][' ${module_snake}']; String get ${module_camel}s => _localizedValues[localeCode][' ${module_snake}s']; String get newUser => _localizedValues[localeCode]['new_ ${module_snake}']; String get createdUser => _localizedValues[localeCode]['created_ ${module_snake}']; String get updatedUser => _localizedValues[localeCode]['updated_ ${module_snake}']; String get archivedUser => _localizedValues[localeCode]['archived_ ${module_snake}']; String get deletedUser => _localizedValues[localeCode]['deleted_ ${module_snake}']; String get restoredUser => _localizedValues[localeCode]['restored_ ${module_snake}']; String get editUser => _localizedValues[localeCode]['edit_ ${module_snake}'];${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
+
     echo "Generating built files.."
     flutter packages pub run build_runner clean
     flutter packages pub run build_runner build --delete-conflicting-outputs

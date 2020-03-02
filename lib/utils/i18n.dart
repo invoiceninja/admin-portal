@@ -14,6 +14,7 @@ abstract class LocaleCodeAware {
 mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      // STARTER: lang key - do not remove comment
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
       'update_now': 'Update Now',
@@ -32751,6 +32752,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get latestVersion => _localizedValues[localeCode]['latest_version'];
 
   String get appUpdated => _localizedValues[localeCode]['app_updated'];
+
+  // STARTER: lang field - do not remove comment
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
