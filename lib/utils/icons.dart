@@ -72,8 +72,6 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.payment:
     case EntityType.companyGateway:
       return FontAwesomeIcons.creditCard;
-    case EntityType.credit:
-      return FontAwesomeIcons.creditCard;
     case EntityType.quote:
       return FontAwesomeIcons.fileAlt;
     case EntityType.vendor:
@@ -86,6 +84,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.layerGroup;
     case EntityType.user:
       return FontAwesomeIcons.user;
+    case EntityType.credit:
+      return FontAwesomeIcons.solidFileAlt;
     default:
       return null;
   }

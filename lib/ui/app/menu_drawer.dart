@@ -219,14 +219,18 @@ class MenuDrawer extends StatelessWidget {
                           icon: getEntityIcon(EntityType.payment),
                           title: localization.payments,
                         ),
-                        // TODO remove this
-                        if (!Config.DEMO_MODE)
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.quote,
-                            icon: getEntityIcon(EntityType.quote),
-                            title: localization.quotes,
-                          ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.quote,
+                          icon: getEntityIcon(EntityType.quote),
+                          title: localization.quotes,
+                        ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.credit,
+                          icon: getEntityIcon(EntityType.credit),
+                          title: localization.credits,
+                        ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.project,
@@ -252,13 +256,6 @@ class MenuDrawer extends StatelessWidget {
                           title: localization.expenses,
                         ),
                         // STARTER: menu - do not remove comment
-                        DrawerTile(
-                          company: company,
-                          entityType: EntityType.credit,
-                          icon: getEntityIcon(EntityType.credit),
-                          title: localization.credits,
-                        ),
-
                         DrawerTile(
                           company: company,
                           icon: getEntityIcon(EntityType.reports),
