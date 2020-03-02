@@ -10,8 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {
   const MenuDrawerBuilder({Key key}) : super(key: key);

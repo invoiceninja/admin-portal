@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/help_link.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';

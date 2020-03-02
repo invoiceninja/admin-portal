@@ -20,7 +20,6 @@ import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
