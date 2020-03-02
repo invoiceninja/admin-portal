@@ -187,11 +187,15 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: states switch list - do not remove comment"
-    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.list;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: states switch map - do not remove comment"
     code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: states switch - do not remove comment"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}UIState;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: state getters - do not remove comment"
