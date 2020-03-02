@@ -94,6 +94,9 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
         SaveCancelButtons(
           saveLabel: localization.save.toUpperCase(),
           onSavePressed: (context) {
+            if ((_password ?? '').isEmpty) {
+              return;
+            }
             Navigator.pop(context);
             widget.callback(_password);
           },
