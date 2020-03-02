@@ -378,7 +378,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
 
     comment="STARTER: errors - do not remove comment"
-    code="TypedReducer<String, Load${Module}sFailure>((state, action) { return '${action.error}'; }),${lineBreak}"
+    code="TypedReducer<String, Load${Module}sFailure>((state, action) { return '\${action.error}'; }),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
 
     comment="STARTER: history - do not remove comment"
