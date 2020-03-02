@@ -267,6 +267,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -408,6 +414,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -761,6 +771,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$PaymentEntity([void Function(PaymentEntityBuilder) updates]) =>
@@ -796,6 +808,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -871,6 +884,7 @@ class _$PaymentEntity extends PaymentEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -894,25 +908,25 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode),
-                                                                                customValue2.hashCode),
-                                                                            customValue3.hashCode),
-                                                                        customValue4.hashCode),
-                                                                    exchangeRate.hashCode),
-                                                                exchangeCurrencyId.hashCode),
-                                                            isManual.hashCode),
-                                                        projectId.hashCode),
-                                                    vendorId.hashCode),
-                                                paymentables.hashCode),
-                                            invoices.hashCode),
-                                        credits.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode),
+                                                                                customValue3.hashCode),
+                                                                            customValue4.hashCode),
+                                                                        exchangeRate.hashCode),
+                                                                    exchangeCurrencyId.hashCode),
+                                                                isManual.hashCode),
+                                                            projectId.hashCode),
+                                                        vendorId.hashCode),
+                                                    paymentables.hashCode),
+                                                invoices.hashCode),
+                                            credits.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -948,6 +962,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1083,6 +1098,11 @@ class PaymentEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1120,6 +1140,7 @@ class PaymentEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1174,6 +1195,7 @@ class PaymentEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;

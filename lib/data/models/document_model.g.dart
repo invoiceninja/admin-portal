@@ -228,6 +228,12 @@ class _$DocumentEntitySerializer
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -339,6 +345,10 @@ class _$DocumentEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -590,6 +600,8 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$DocumentEntity([void Function(DocumentEntityBuilder) updates]) =>
@@ -619,6 +631,7 @@ class _$DocumentEntity extends DocumentEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (name == null) {
@@ -682,6 +695,7 @@ class _$DocumentEntity extends DocumentEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -705,25 +719,25 @@ class _$DocumentEntity extends DocumentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, name.hashCode), type.hashCode), path.hashCode), width.hashCode), height.hashCode),
-                                                                                size.hashCode),
-                                                                            preview.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    expenseId.hashCode),
-                                                                isDefault.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            projectId.hashCode),
-                                        vendorId.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), type.hashCode), path.hashCode), width.hashCode), height.hashCode), size.hashCode),
+                                                                                preview.hashCode),
+                                                                            invoiceId.hashCode),
+                                                                        expenseId.hashCode),
+                                                                    isDefault.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                projectId.hashCode),
+                                            vendorId.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -753,6 +767,7 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -856,6 +871,11 @@ class DocumentEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -887,6 +907,7 @@ class DocumentEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -933,6 +954,7 @@ class DocumentEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

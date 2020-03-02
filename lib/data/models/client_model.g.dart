@@ -264,6 +264,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -458,6 +464,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -488,6 +498,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
+      'password',
+      serializers.serialize(object.password,
+          specifiedType: const FullType(String)),
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
@@ -513,12 +526,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
     ];
-    if (object.password != null) {
-      result
-        ..add('password')
-        ..add(serializers.serialize(object.password,
-            specifiedType: const FullType(String)));
-    }
     if (object.lastLogin != null) {
       result
         ..add('last_login')
@@ -565,6 +572,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       result
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
             specifiedType: const FullType(String)));
     }
     if (object.id != null) {
@@ -666,6 +679,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -954,6 +971,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
@@ -1002,6 +1021,7 @@ class _$ClientEntity extends ClientEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (groupId == null) {
@@ -1161,6 +1181,7 @@ class _$ClientEntity extends ClientEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1184,25 +1205,25 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode),
-                                                                                shippingState.hashCode),
-                                                                            shippingPostalCode.hashCode),
-                                                                        shippingCountryId.hashCode),
-                                                                    settings.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                contacts.hashCode),
-                                            activities.hashCode),
-                                        gatewayTokens.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode),
+                                                                                shippingPostalCode.hashCode),
+                                                                            shippingCountryId.hashCode),
+                                                                        settings.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    contacts.hashCode),
+                                                activities.hashCode),
+                                            gatewayTokens.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1251,6 +1272,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1444,6 +1466,11 @@ class ClientEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1494,6 +1521,7 @@ class ClientEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1561,6 +1589,7 @@ class ClientEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1627,6 +1656,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$ContactEntity([void Function(ContactEntityBuilder) updates]) =>
@@ -1653,6 +1684,7 @@ class _$ContactEntity extends ContactEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (firstName == null) {
@@ -1663,6 +1695,9 @@ class _$ContactEntity extends ContactEntity {
     }
     if (email == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'email');
+    }
+    if (password == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'password');
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'phone');
@@ -1721,6 +1756,7 @@ class _$ContactEntity extends ContactEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1744,25 +1780,25 @@ class _$ContactEntity extends ContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, firstName.hashCode), lastName.hashCode),
-                                                                                email.hashCode),
-                                                                            password.hashCode),
-                                                                        phone.hashCode),
-                                                                    contactKey.hashCode),
-                                                                isPrimary.hashCode),
-                                                            sendEmail.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        lastLogin.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
+                                                                                password.hashCode),
+                                                                            phone.hashCode),
+                                                                        contactKey.hashCode),
+                                                                    isPrimary.hashCode),
+                                                                sendEmail.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            lastLogin.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1789,6 +1825,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1880,6 +1917,11 @@ class ContactEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1908,6 +1950,7 @@ class ContactEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1951,6 +1994,7 @@ class ContactEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

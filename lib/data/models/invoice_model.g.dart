@@ -325,6 +325,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -548,6 +554,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -809,6 +819,12 @@ class _$InvitationEntitySerializer
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -876,6 +892,10 @@ class _$InvitationEntitySerializer
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -1180,6 +1200,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$InvoiceEntity([void Function(InvoiceEntityBuilder) updates]) =>
@@ -1236,6 +1258,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -1400,6 +1423,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1423,25 +1447,25 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
-                                                                                customSurcharge3.hashCode),
-                                                                            customSurcharge4.hashCode),
-                                                                        customTaxes1.hashCode),
-                                                                    customTaxes2.hashCode),
-                                                                customTaxes3.hashCode),
-                                                            customTaxes4.hashCode),
-                                                        hasExpenses.hashCode),
-                                                    quoteInvoiceId.hashCode),
-                                                filename.hashCode),
-                                            lineItems.hashCode),
-                                        invitations.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
+                                                                                customSurcharge4.hashCode),
+                                                                            customTaxes1.hashCode),
+                                                                        customTaxes2.hashCode),
+                                                                    customTaxes3.hashCode),
+                                                                customTaxes4.hashCode),
+                                                            hasExpenses.hashCode),
+                                                        quoteInvoiceId.hashCode),
+                                                    filename.hashCode),
+                                                lineItems.hashCode),
+                                            invitations.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1498,6 +1522,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1721,6 +1746,11 @@ class InvoiceEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1779,6 +1809,7 @@ class InvoiceEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1854,6 +1885,7 @@ class InvoiceEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -2265,6 +2297,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$InvitationEntity(
@@ -2284,6 +2318,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (key == null) {
@@ -2327,6 +2362,7 @@ class _$InvitationEntity extends InvitationEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -2343,18 +2379,20 @@ class _$InvitationEntity extends InvitationEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, key.hashCode),
-                                                    link.hashCode),
-                                                contactId.hashCode),
-                                            sentDate.hashCode),
-                                        viewedDate.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                $jc(
+                                                    $jc($jc(0, key.hashCode),
+                                                        link.hashCode),
+                                                    contactId.hashCode),
+                                                sentDate.hashCode),
+                                            viewedDate.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -2373,6 +2411,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -2432,6 +2471,11 @@ class InvitationEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -2452,6 +2496,7 @@ class InvitationEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -2487,6 +2532,7 @@ class InvitationEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

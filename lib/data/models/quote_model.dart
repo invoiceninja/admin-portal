@@ -41,11 +41,11 @@ class QuoteFields {
   static const String balance = 'balance';
   static const String client = 'client';
   static const String clientId = 'clientId';
-  static const String quoteStatusId = 'quoteStatusId';
-  static const String quoteNumber = 'quoteNumber';
+  static const String statusId = 'statusId';
+  static const String number = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'poNumber';
-  static const String quoteDate = 'quoteDate';
+  static const String date = 'date';
   static const String dueDate = 'dueDate';
   static const String terms = 'terms';
   static const String partial = 'partial';
@@ -313,7 +313,7 @@ abstract class QuoteEntity extends Object
       case QuoteFields.updatedAt:
         response = quoteA.updatedAt.compareTo(quoteB.updatedAt);
         break;
-      case QuoteFields.quoteDate:
+      case QuoteFields.date:
         response = quoteA.invoiceDate.compareTo(quoteB.invoiceDate);
         break;
     }

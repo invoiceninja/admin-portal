@@ -197,6 +197,10 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'assigned_user_id')
   String get assignedUserId;
 
+  @nullable
+  @BuiltValueField(wireName: 'entity_type')
+  String get subEntityType;
+
   String get entityKey => '__${entityType}__${id}__';
 
   EntityType get entityType => throw 'EntityType not set: ${this}';

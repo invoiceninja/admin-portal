@@ -174,6 +174,12 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -248,6 +254,10 @@ class _$CreditEntitySerializer implements StructuredSerializer<CreditEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -480,6 +490,8 @@ class _$CreditEntity extends CreditEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$CreditEntity([void Function(CreditEntityBuilder) updates]) =>
@@ -500,6 +512,7 @@ class _$CreditEntity extends CreditEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -550,6 +563,7 @@ class _$CreditEntity extends CreditEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -570,22 +584,26 @@ class _$CreditEntity extends CreditEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                amount
+                                                                $jc(
+                                                                    0,
+                                                                    amount
+                                                                        .hashCode),
+                                                                balance
                                                                     .hashCode),
-                                                            balance.hashCode),
-                                                        creditDate.hashCode),
-                                                    creditNumber.hashCode),
-                                                privateNotes.hashCode),
-                                            publicNotes.hashCode),
-                                        clientId.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                            creditDate
+                                                                .hashCode),
+                                                        creditNumber.hashCode),
+                                                    privateNotes.hashCode),
+                                                publicNotes.hashCode),
+                                            clientId.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -606,6 +624,7 @@ class _$CreditEntity extends CreditEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -673,6 +692,11 @@ class CreditEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -695,6 +719,7 @@ class CreditEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -732,6 +757,7 @@ class CreditEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

@@ -582,8 +582,6 @@ abstract class ContactEntity extends Object
 
   String get email;
 
-  // TODO remove this nullable
-  @nullable
   String get password;
 
   String get phone;

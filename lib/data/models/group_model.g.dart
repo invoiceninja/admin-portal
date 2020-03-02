@@ -157,6 +157,12 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(String)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -211,6 +217,10 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'id':
@@ -429,6 +439,8 @@ class _$GroupEntity extends GroupEntity {
   @override
   final String assignedUserId;
   @override
+  final String subEntityType;
+  @override
   final String id;
 
   factory _$GroupEntity([void Function(GroupEntityBuilder) updates]) =>
@@ -444,6 +456,7 @@ class _$GroupEntity extends GroupEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (name == null) {
@@ -474,6 +487,7 @@ class _$GroupEntity extends GroupEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -487,15 +501,17 @@ class _$GroupEntity extends GroupEntity {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc($jc(0, name.hashCode),
-                                        settings.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                    $jc(
+                                        $jc($jc(0, name.hashCode),
+                                            settings.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -511,6 +527,7 @@ class _$GroupEntity extends GroupEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -558,6 +575,11 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _subEntityType;
+  String get subEntityType => _$this._subEntityType;
+  set subEntityType(String subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -575,6 +597,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -609,6 +632,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;

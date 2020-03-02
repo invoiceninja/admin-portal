@@ -43,11 +43,11 @@ class InvoiceFields {
   static const String balance = 'balance';
   static const String clientId = 'clientId';
   static const String client = 'client';
-  static const String invoiceStatusId = 'invoiceStatusId';
-  static const String invoiceNumber = 'invoiceNumber';
+  static const String statusId = 'statusId';
+  static const String number = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'poNumber';
-  static const String invoiceDate = 'invoiceDate';
+  static const String date = 'date';
   static const String dueDate = 'dueDate';
   static const String terms = 'terms';
   static const String footer = 'invoiceFooter';
@@ -153,7 +153,11 @@ abstract class InvoiceEntity extends Object
 
   @override
   EntityType get entityType {
-    return EntityType.invoice;
+    if ((subEntityType ?? '').isNotEmpty) {
+      return EntityType.valueOf(subEntityType);
+    } else {
+      return EntityType.invoice;
+    }
   }
 
   double get amount;
@@ -343,8 +347,8 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
-      case InvoiceFields.invoiceDate:
-      case QuoteFields.quoteDate:
+      case InvoiceFields.date:
+      case QuoteFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:
