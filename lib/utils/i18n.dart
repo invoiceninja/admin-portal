@@ -17,8 +17,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
       'update_now': 'Update Now',
-      'a_new_version_is_available': 'A new version of the app is available',
+      'a_new_version_is_available': 'A new version of the web app is available',
       'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
       'learn_more': 'Learn More',
       'integrations': 'Integrations',
       'tracking_id': 'Tracking Id',
@@ -32746,6 +32747,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get currentVersion => _localizedValues[localeCode]['current_version'];
 
   String get latestVersion => _localizedValues[localeCode]['latest_version'];
+
+  String get appUpdated => _localizedValues[localeCode]['app_updated'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

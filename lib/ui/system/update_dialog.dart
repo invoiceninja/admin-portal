@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -15,8 +16,14 @@ class UpdateDialog extends StatefulWidget {
   _UpdateDialogState createState() => _UpdateDialogState();
 }
 
+enum UpdateState {
+  initial,
+  loading,
+  done,
+}
+
 class _UpdateDialogState extends State<UpdateDialog> {
-  bool _isLoading = false;
+  UpdateState updateState = UpdateState.initial;
 
   @override
   Widget build(BuildContext context) {
@@ -24,20 +31,22 @@ class _UpdateDialogState extends State<UpdateDialog> {
 
     return AlertDialog(
       title: Text(localization.updateAvailable),
-      content: _isLoading
-          ? LoadingIndicator(height: 50)
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(localization.aNewVersionIsAvailable),
-                SizedBox(height: 20),
-                Text('• ${localization.currentVersion}: v$kAppVersion'),
-                //Text('• ${localization.latestVersion}: v???'),
-              ],
-            ),
+      content: updateState == UpdateState.done
+          ? Text(localization.appUpdated)
+          : updateState == UpdateState.loading
+              ? LoadingIndicator(height: 50)
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(localization.aNewVersionIsAvailable),
+                    SizedBox(height: 20),
+                    Text('• ${localization.currentVersion}: v$kAppVersion'),
+                    //Text('• ${localization.latestVersion}: v???'),
+                  ],
+                ),
       actions: <Widget>[
-        if (!_isLoading) ...[
+        if (updateState == UpdateState.initial) ...[
           FlatButton(
             child: Text(localization.cancel.toUpperCase()),
             onPressed: () {
@@ -50,7 +59,13 @@ class _UpdateDialogState extends State<UpdateDialog> {
               updateApp(context);
             },
           ),
-        ]
+        ] else if (updateState == UpdateState.done)
+          FlatButton(
+            child: Text(localization.close.toUpperCase()),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
       ],
     );
   }
@@ -60,21 +75,23 @@ class _UpdateDialogState extends State<UpdateDialog> {
     passwordCallback(
         context: context,
         callback: (password) {
-          setState(() => _isLoading = true);
+          setState(() => updateState = UpdateState.loading);
           final credentials = state.credentials;
           final webClient = WebClient();
           const url = '/self-update';
           webClient
               .post(url, credentials.token, password: password)
               .then((dynamic response) {
-            setState(() => _isLoading = false);
             print('## response: $response');
-            if (response == 'done') {
-              webReload();
+            if (response == '{message: true}') {
+              setState(() => updateState = UpdateState.done);
+              if (kIsWeb) {
+                webReload();
+              }
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
-            setState(() => _isLoading = false);
+            setState(() => updateState = UpdateState.initial);
           });
         });
   }
