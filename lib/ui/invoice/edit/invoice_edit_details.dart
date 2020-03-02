@@ -142,9 +142,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
-                    label: widget.isQuote
-                        ? localization.quoteNumber
-                        : localization.invoiceNumber,
+                    label: widget.entityType == EntityType.credit
+                        ? localization.creditNumber
+                        : widget.entityType == EntityType.quote
+                            ? localization.quoteNumber
+                            : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
@@ -158,18 +160,22 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               validator: (String val) => val.trim().isEmpty
                   ? AppLocalization.of(context).pleaseSelectADate
                   : null,
-              labelText: widget.isQuote
-                  ? localization.quoteDate
-                  : localization.invoiceDate,
+              labelText: widget.entityType == EntityType.credit
+                  ? localization.creditDate
+                  : widget.entityType == EntityType.quote
+                      ? localization.quoteDate
+                      : localization.invoiceDate,
               selectedDate: invoice.date,
               onSelected: (date) {
                 viewModel.onChanged(invoice.rebuild((b) => b..date = date));
               },
             ),
             DatePicker(
-              labelText: widget.isQuote
-                  ? localization.validUntil
-                  : localization.dueDate,
+              labelText: widget.entityType == EntityType.credit
+                  ? localization.appliedDate
+                  : widget.entityType == EntityType.quote
+                      ? localization.validUntil
+                      : localization.dueDate,
               selectedDate: invoice.dueDate,
               onSelected: (date) {
                 viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));

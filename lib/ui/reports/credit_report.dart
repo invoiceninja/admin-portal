@@ -86,10 +86,10 @@ ReportResult creditReport(
           value = credit.balance;
           break;
         case CreditReportFields.credit_date:
-          value = credit.creditDate;
+          value = credit.date;
           break;
         case CreditReportFields.credit_number:
-          value = credit.creditNumber;
+          value = credit.number;
           break;
         case CreditReportFields.client:
           value = client.displayName;

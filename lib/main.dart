@@ -354,7 +354,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   CreditScreen.route: (context) => CreditScreen(),
                   CreditViewScreen.route: (context) => CreditViewScreen(),
                   CreditEditScreen.route: (context) => CreditEditScreen(),
-
                   UserScreen.route: (context) => UserScreenBuilder(),
                   UserViewScreen.route: (context) => UserViewScreen(),
                   UserEditScreen.route: (context) => UserEditScreen(),
