@@ -169,7 +169,8 @@ else
        './stubs/ui/stub/stub_list_vm'
        './stubs/ui/stub/stub_list'
        './stubs/ui/stub/stub_presenter'
-       './stubs/ui/stub/stub_screen')
+       './stubs/ui/stub/stub_screen'
+       './stubs/ui/stub/stub_screen_vm')
 
     for i in "${files[@]}"
     do
