@@ -374,7 +374,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:invoiceninja_flutter/redux/product/${module_snake}_actions.dart';${lineBreak}"
+    code="import 'package:invoiceninja_flutter/redux/${module_snake}/${module_snake}_actions.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
 
     comment="STARTER: errors - do not remove comment"
@@ -386,8 +386,41 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
 
     comment="STARTER: import - do not remove comment"
-    code="import 'package:invoiceninja_flutter/redux/product/${module_snake}_actions.dart';${lineBreak}"
+    code="import 'package:invoiceninja_flutter/redux/${module_snake}/${module_snake}_actions.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+
+
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:invoiceninja_flutter/redux/${module_snake}/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: filter - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Filter${Module}sByEntity(entityId: filterEntity.id, entityType: filterEntity.entityType,)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: view list - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(View${Module}List(navigator: navigator)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: view - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(View${Module}(${module_camel}Id: entityId, navigator: navigator, force: force,)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: create type - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, force: force, group: ${Module}Entity(state: state), )); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: create - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, ${module_camel}: entity, force: force, completer: completer, )); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: edit - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: map[entityId], navigator: navigator, completer: completer ?? snackBarCompleter<${Module}Entity>(context, entity.isNew ? localization.created${Module} : localization.updated${Module}),));break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: actions - do not remove comment"
+    code="case EntityType.${module_camel}: handle${Module}Action(context, entities, action);${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     echo "Generating built files.."
     flutter packages pub run build_runner clean

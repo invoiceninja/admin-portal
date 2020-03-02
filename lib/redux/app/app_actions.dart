@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+// STARTER: import - do not remove comment
 
 class PersistUI {}
 
@@ -228,7 +229,7 @@ void filterEntitiesByType({
         entityType: filterEntity.entityType,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: filter - do not remove comment
   }
 }
 
@@ -297,7 +298,7 @@ void viewEntitiesByType({
     case EntityType.group:
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
-    // TODO Add to starter
+    // STARTER: view list - do not remove comment
   }
 }
 
@@ -421,7 +422,7 @@ void viewEntityById({
         force: force,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: view - do not remove comment
   }
 }
 
@@ -535,7 +536,7 @@ void createEntityByType(
         group: GroupEntity(state: state),
       ));
       break;
-    // TODO Add to starter
+    // STARTER: create type - do not remove comment
   }
 }
 
@@ -666,7 +667,7 @@ void createEntity({
         completer: completer,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: create - do not remove comment
   }
 }
 
@@ -848,7 +849,7 @@ void editEntityById(
                     : localization.updatedGroup),
       ));
       break;
-    // TODO Add to starter
+    // STARTER: edit - do not remove comment
   }
 }
 
@@ -917,5 +918,6 @@ void handleEntitiesActions(
       break;
     case EntityType.document:
       handleDocumentAction(context, entities, action);
+    // STARTER: actions - do not remove comment
   }
 }
