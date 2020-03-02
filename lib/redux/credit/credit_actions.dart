@@ -357,26 +357,6 @@ class FilterCreditsByCustom4 implements PersistUI {
   final String value;
 }
 
-class ConvertCredit implements PersistData {
-  ConvertCredit(this.completer, this.creditId);
-
-  final String creditId;
-  final Completer completer;
-}
-
-class ConvertCreditSuccess implements StopSaving, PersistData {
-  ConvertCreditSuccess({this.credit, this.invoice});
-
-  final InvoiceEntity credit;
-  final InvoiceEntity invoice;
-}
-
-class ConvertCreditFailure implements StopSaving {
-  ConvertCreditFailure(this.error);
-
-  final dynamic error;
-}
-
 Future handleCreditAction(
     BuildContext context, List<BaseEntity> credits, EntityAction action) async {
   assert(
@@ -413,16 +393,6 @@ Future handleCreditAction(
           // TODO fix this
           // entityId: credit.creditInvoiceId,
           entityType: EntityType.invoice);
-      break;
-    case EntityAction.convert:
-      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertCredit(completer, credit.id));
-      completer.future.then((InvoiceEntity invoice) {
-        viewEntityById(
-            context: context,
-            entityType: EntityType.invoice,
-            entityId: invoice.id);
-      });
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(
