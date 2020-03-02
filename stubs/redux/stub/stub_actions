@@ -1,43 +1,50 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ViewStubList implements PersistUI {
-  ViewStubList({@required this.context, this.force = false});
+class ViewStubList extends AbstractNavigatorAction implements PersistUI {
+  ViewStubList({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewStub implements PersistUI, PersistPrefs {
+class ViewStub extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewStub({
-              @required this.stubId,
-              @required this.context,
-              this.force = false,
-            });
+    @required NavigatorState navigator,
+    @required this.stubId,
+    this.force = false,
+  }) : super(navigator: navigator);
 
   final String stubId;
-  final BuildContext context;
   final bool force;
 }
 
-class EditStub implements PersistUI, PersistPrefs {
+class EditStub extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditStub(
-                {@required this.stub,
-                @required this.context,
-                this.completer,
-                this.force = false});
+      {@required this.stub,
+      @required NavigatorState navigator,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false})
+      : super(navigator: navigator);
 
   final StubEntity stub;
-  final BuildContext context;
   final Completer completer;
+  final Completer cancelCompleter;
   final bool force;
 }
 
