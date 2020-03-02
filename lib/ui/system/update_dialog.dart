@@ -82,12 +82,14 @@ class _UpdateDialogState extends State<UpdateDialog> {
           webClient
               .post(url, credentials.token, password: password)
               .then((dynamic response) {
-            print('## response: $response');
-            if (response == '{message: true}') {
+            if (response['message'] == true) {
               setState(() => updateState = UpdateState.done);
               if (kIsWeb) {
                 webReload();
               }
+            } else {
+              setState(() => updateState = UpdateState.initial);
+              showErrorDialog(context: context, message: '$response');
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
