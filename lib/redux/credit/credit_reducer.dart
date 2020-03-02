@@ -246,7 +246,7 @@ CreditState _restoreCreditRequest(
 }
 
 CreditState _restoreCreditSuccess(
-    CreditState creditState, RestoreCreditSuccess action) {
+    CreditState creditState, RestoreCreditsSuccess action) {
   return creditState.rebuild((b) {
     for (final credit in action.credits) {
       b.map[credit.id] = credit;
@@ -255,7 +255,7 @@ CreditState _restoreCreditSuccess(
 }
 
 CreditState _restoreCreditFailure(
-    CreditState creditState, RestoreCreditFailure action) {
+    CreditState creditState, RestoreCreditsFailure action) {
   return creditState.rebuild((b) {
     for (final credit in action.credits) {
       b.map[credit.id] = credit;

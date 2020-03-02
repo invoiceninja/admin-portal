@@ -239,7 +239,7 @@ StubState _restoreStubRequest(
 }
 
 StubState _restoreStubSuccess(
-    StubState stubState, RestoreStubSuccess action) {
+    StubState stubState, RestoreStubsSuccess action) {
   return stubState.rebuild((b) {
     for (final stub in action.stubs) {
       b.map[stub.id] = stub;
@@ -248,7 +248,7 @@ StubState _restoreStubSuccess(
 }
 
 StubState _restoreStubFailure(
-    StubState stubState, RestoreStubFailure action) {
+    StubState stubState, RestoreStubsFailure action) {
   return stubState.rebuild((b) {
     for (final stub in action.stubs) {
       b.map[stub.id] = stub;
