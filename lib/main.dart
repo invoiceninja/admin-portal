@@ -49,6 +49,12 @@ import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_middleware.dart';
+
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
@@ -94,6 +100,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStoreCreditsMiddleware())
         ..addAll(createStoreUsersMiddleware())
         ..addAll(createStoreTaxRatesMiddleware())
         ..addAll(createStoreCompanyGatewaysMiddleware())
@@ -344,6 +351,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  CreditScreen.route: (context) => CreditScreen(),
+                  CreditViewScreen.route: (context) => CreditViewScreen(),
+                  CreditEditScreen.route: (context) => CreditEditScreen(),
+
                   UserScreen.route: (context) => UserScreenBuilder(),
                   UserViewScreen.route: (context) => UserViewScreen(),
                   UserEditScreen.route: (context) => UserEditScreen(),

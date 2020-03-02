@@ -1,4 +1,5 @@
 import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -118,7 +119,7 @@ ListUIState _sortStubs(ListUIState stubListState, SortStubs action) {
 
 ListUIState _startListMultiselect(
     ListUIState productListState, StartStubMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = ListBuilder();
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
@@ -135,7 +136,7 @@ ListUIState _removeFromListMultiselect(
 
 ListUIState _clearListMultiselect(
     ListUIState productListState, ClearStubMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds = null;
+  return productListState.rebuild((b) => b..selectedIds = null);
 }
 
 final stubsReducer = combineReducers<StubState>([
@@ -155,58 +156,104 @@ final stubsReducer = combineReducers<StubState>([
 ]);
 
 StubState _archiveStubRequest(
-    StubState stubState, ArchiveStubRequest action) {
-  final stub = stubState.map[action.stubId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+    StubState stubState, ArchiveStubsRequest action) {
+  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
 
-  return stubState.rebuild((b) => b..map[action.stubId] = stub);
+  for (int i = 0; i < stubs.length; i++) {
+    stubs[i] = stubs[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return stubState.rebuild((b) {
+    for (final stub in stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _archiveStubSuccess(
-    StubState stubState, ArchiveStubSuccess action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+    StubState stubState, ArchiveStubsSuccess action) {
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _archiveStubFailure(
-    StubState stubState, ArchiveStubFailure action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+    StubState stubState, ArchiveStubsFailure action) {
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _deleteStubRequest(
-    StubState stubState, DeleteStubRequest action) {
-  final stub = stubState.map[action.stubId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+    StubState stubState, DeleteStubsRequest action) {
+  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
 
-  return stubState.rebuild((b) => b..map[action.stubId] = stub);
+  for (int i = 0; i < stubs.length; i++) {
+    stubs[i] = stubs[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return stubState.rebuild((b) {
+    for (final stub in stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _deleteStubSuccess(
-    StubState stubState, DeleteStubSuccess action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+    StubState stubState, DeleteStubsSuccess action) {
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _deleteStubFailure(
-    StubState stubState, DeleteStubFailure action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+    StubState stubState, DeleteStubsFailure action) {
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _restoreStubRequest(
-    StubState stubState, RestoreStubRequest action) {
-  final stub = stubState.map[action.stubId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return stubState.rebuild((b) => b..map[action.stubId] = stub);
+    StubState stubState, RestoreStubsRequest action) {
+  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
+
+  for (int i = 0; i < stubs.length; i++) {
+    stubs[i] = stubs[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return stubState.rebuild((b) {
+    for (final stub in stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _restoreStubSuccess(
     StubState stubState, RestoreStubSuccess action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _restoreStubFailure(
     StubState stubState, RestoreStubFailure action) {
-  return stubState.rebuild((b) => b..map[action.stub.id] = action.stub);
+  return stubState.rebuild((b) {
+    for (final stub in action.stubs) {
+      b.map[stub.id] = stub;
+    }
+  });
 }
 
 StubState _addStub(StubState stubState, AddStubSuccess action) {

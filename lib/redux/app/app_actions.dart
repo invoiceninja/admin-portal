@@ -26,6 +26,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 class PersistUI {}
 
@@ -230,6 +231,12 @@ void filterEntitiesByType({
       ));
       break;
     // STARTER: filter - do not remove comment
+    case EntityType.credit:
+      store.dispatch(FilterCreditsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
   }
 }
 
@@ -299,6 +306,9 @@ void viewEntitiesByType({
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
     // STARTER: view list - do not remove comment
+    case EntityType.credit:
+      store.dispatch(ViewCreditList(navigator: navigator));
+      break;
   }
 }
 
@@ -423,6 +433,13 @@ void viewEntityById({
       ));
       break;
     // STARTER: view - do not remove comment
+    case EntityType.credit:
+      store.dispatch(ViewCredit(
+        creditId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
   }
 }
 
@@ -537,6 +554,13 @@ void createEntityByType(
       ));
       break;
     // STARTER: create type - do not remove comment
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        navigator: navigator,
+        force: force,
+        credit: InvoiceEntity(state: state),
+      ));
+      break;
   }
 }
 
@@ -668,6 +692,14 @@ void createEntity({
       ));
       break;
     // STARTER: create - do not remove comment
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        navigator: navigator,
+        credit: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
   }
 }
 
@@ -850,6 +882,18 @@ void editEntityById(
       ));
       break;
     // STARTER: edit - do not remove comment
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        credit: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<InvoiceEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdCredit
+                    : localization.updatedCredit),
+      ));
+      break;
   }
 }
 
@@ -920,5 +964,8 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.credit:
+      handleCreditAction(context, entities, action);
+      break;
   }
 }

@@ -14,7 +14,7 @@ abstract class CreditListResponse
 
   CreditListResponse._();
 
-  BuiltList<CreditEntity> get data;
+  BuiltList<InvoiceEntity> get data;
 
   static Serializer<CreditListResponse> get serializer =>
       _$creditListResponseSerializer;
@@ -27,7 +27,7 @@ abstract class CreditItemResponse
 
   CreditItemResponse._();
 
-  CreditEntity get data;
+  InvoiceEntity get data;
 
   static Serializer<CreditItemResponse> get serializer =>
       _$creditItemResponseSerializer;
@@ -45,111 +45,4 @@ class CreditFields {
   static const String updatedAt = 'updatedAt';
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
-}
-
-abstract class CreditEntity extends Object
-    with BaseEntity, SelectableEntity
-    implements Built<CreditEntity, CreditEntityBuilder> {
-  factory CreditEntity() {
-    return _$CreditEntity._(
-      id: BaseEntity.nextId,
-      isChanged: false,
-      amount: 0.0,
-      balance: 0.0,
-      creditDate: '',
-      creditNumber: '',
-      privateNotes: '',
-      publicNotes: '',
-      clientId: 0,
-      updatedAt: 0,
-      archivedAt: 0,
-      isDeleted: false,
-    );
-  }
-
-  CreditEntity._();
-
-  CreditEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..isChanged = false
-    ..isDeleted = false);
-
-  @override
-  EntityType get entityType {
-    return EntityType.credit;
-  }
-
-  double get amount;
-
-  double get balance;
-
-  @BuiltValueField(wireName: 'credit_date')
-  String get creditDate;
-
-  @BuiltValueField(wireName: 'credit_number')
-  String get creditNumber;
-
-  @BuiltValueField(wireName: 'private_notes')
-  String get privateNotes;
-
-  @BuiltValueField(wireName: 'public_notes')
-  String get publicNotes;
-
-  @BuiltValueField(wireName: 'client_id')
-  int get clientId;
-
-  @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
-      bool includeEdit = false,
-      bool multiselect = false}) {
-    final actions = <EntityAction>[];
-
-    return actions..addAll(super.getActions(userCompany: userCompany));
-  }
-
-  int compareTo(CreditEntity credit, String sortField, bool sortAscending) {
-    int response = 0;
-    final CreditEntity creditA = sortAscending ? this : credit;
-    final CreditEntity creditB = sortAscending ? credit : this;
-
-    switch (sortField) {
-      case CreditFields.amount:
-        response = creditA.amount.compareTo(creditB.amount);
-    }
-
-    return response;
-  }
-
-  @override
-  bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    return publicNotes.toLowerCase().contains(filter);
-  }
-
-  @override
-  String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    return null;
-  }
-
-  @override
-  String get listDisplayName {
-    return publicNotes;
-  }
-
-  @override
-  double get listDisplayAmount => null;
-
-  @override
-  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
-
-  static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
 }

@@ -53,7 +53,7 @@ Middleware<AppState> _editStub() {
     store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
 
     if (isMobile(action.context)) {
-        action.navigator.pushNamed(QuoteEditScreen.route);
+        action.navigator.pushNamed(StubEditScreen.route);
     }
   };
 }
@@ -105,19 +105,20 @@ Middleware<AppState> _viewStubList() {
 
 Middleware<AppState> _archiveStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as ArchiveStubRequest;
-    final origStub = store.state.stubState.map[action.stubId];
+    final action = dynamicAction as ArchiveStubsRequest;
+    final prevStubs =
+        action.stubIds.map((id) => store.state.stubState.map[id]).toList();
     repository
-        .saveData(store.state.credentials,
-            origStub, EntityAction.archive)
-        .then((StubEntity stub) {
-      store.dispatch(ArchiveStubSuccess(stub));
+        .bulkAction(
+            store.state.credentials, action.stubIds, EntityAction.archive)
+        .then((List<StubEntity> stubs) {
+      store.dispatch(ArchiveStubsSuccess(stubs));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveStubFailure(origStub));
+      store.dispatch(ArchiveStubsFailure(prevStubs));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -129,19 +130,20 @@ Middleware<AppState> _archiveStub(StubRepository repository) {
 
 Middleware<AppState> _deleteStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteStubRequest;
-    final origStub = store.state.stubState.map[action.stubId];
+    final action = dynamicAction as DeleteStubsRequest;
+    final prevStubs =
+        action.stubIds.map((id) => store.state.stubState.map[id]).toList();
     repository
-        .saveData(store.state.credentials,
-            origStub, EntityAction.delete)
-        .then((StubEntity stub) {
-      store.dispatch(DeleteStubSuccess(stub));
+        .bulkAction(
+            store.state.credentials, action.stubIds, EntityAction.delete)
+        .then((List<StubEntity> stubs) {
+      store.dispatch(DeleteStubsSuccess(stubs));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteStubFailure(origStub));
+      store.dispatch(DeleteStubsFailure(prevStubs));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -153,19 +155,20 @@ Middleware<AppState> _deleteStub(StubRepository repository) {
 
 Middleware<AppState> _restoreStub(StubRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-  final action = dynamicAction as RestoreStubRequest;
-    final origStub = store.state.stubState.map[action.stubId];
+    final action = dynamicAction as RestoreStubsRequest;
+    final prevStubs =
+        action.stubIds.map((id) => store.state.stubState.map[id]).toList();
     repository
-        .saveData(store.state.credentials,
-            origStub, EntityAction.restore)
-        .then((StubEntity stub) {
-      store.dispatch(RestoreStubSuccess(stub));
+        .bulkAction(
+            store.state.credentials, action.stubIds, EntityAction.restore)
+        .then((List<StubEntity> stubs) {
+      store.dispatch(RestoreStubSuccess(stubs));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreStubFailure(origStub));
+      store.dispatch(RestoreStubFailure(prevStubs));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

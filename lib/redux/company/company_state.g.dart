@@ -52,6 +52,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'creditState',
+      serializers.serialize(object.creditState,
+          specifiedType: const FullType(CreditState)),
       'userState',
       serializers.serialize(object.userState,
           specifiedType: const FullType(UserState)),
@@ -130,6 +133,10 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'creditState':
+          result.creditState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CreditState)) as CreditState);
           break;
         case 'userState':
           result.userState.replace(serializers.deserialize(value,
@@ -314,6 +321,8 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
   @override
+  final CreditState creditState;
+  @override
   final UserState userState;
   @override
   final TaxRateState taxRateState;
@@ -338,6 +347,7 @@ class _$UserCompanyState extends UserCompanyState {
       this.projectState,
       this.paymentState,
       this.quoteState,
+      this.creditState,
       this.userState,
       this.taxRateState,
       this.companyGatewayState,
@@ -372,6 +382,9 @@ class _$UserCompanyState extends UserCompanyState {
     }
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
+    }
+    if (creditState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'creditState');
     }
     if (userState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'userState');
@@ -411,6 +424,7 @@ class _$UserCompanyState extends UserCompanyState {
         projectState == other.projectState &&
         paymentState == other.paymentState &&
         quoteState == other.quoteState &&
+        creditState == other.creditState &&
         userState == other.userState &&
         taxRateState == other.taxRateState &&
         companyGatewayState == other.companyGatewayState &&
@@ -434,20 +448,23 @@ class _$UserCompanyState extends UserCompanyState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                userCompany
+                                                                $jc(
+                                                                    0,
+                                                                    userCompany
+                                                                        .hashCode),
+                                                                documentState
                                                                     .hashCode),
-                                                            documentState
+                                                            productState
                                                                 .hashCode),
-                                                        productState.hashCode),
-                                                    clientState.hashCode),
-                                                invoiceState.hashCode),
-                                            expenseState.hashCode),
-                                        vendorState.hashCode),
-                                    taskState.hashCode),
-                                projectState.hashCode),
-                            paymentState.hashCode),
-                        quoteState.hashCode),
+                                                        clientState.hashCode),
+                                                    invoiceState.hashCode),
+                                                expenseState.hashCode),
+                                            vendorState.hashCode),
+                                        taskState.hashCode),
+                                    projectState.hashCode),
+                                paymentState.hashCode),
+                            quoteState.hashCode),
+                        creditState.hashCode),
                     userState.hashCode),
                 taxRateState.hashCode),
             companyGatewayState.hashCode),
@@ -468,6 +485,7 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
           ..add('quoteState', quoteState)
+          ..add('creditState', creditState)
           ..add('userState', userState)
           ..add('taxRateState', taxRateState)
           ..add('companyGatewayState', companyGatewayState)
@@ -545,6 +563,12 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  CreditStateBuilder _creditState;
+  CreditStateBuilder get creditState =>
+      _$this._creditState ??= new CreditStateBuilder();
+  set creditState(CreditStateBuilder creditState) =>
+      _$this._creditState = creditState;
+
   UserStateBuilder _userState;
   UserStateBuilder get userState =>
       _$this._userState ??= new UserStateBuilder();
@@ -583,6 +607,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _creditState = _$v.creditState?.toBuilder();
       _userState = _$v.userState?.toBuilder();
       _taxRateState = _$v.taxRateState?.toBuilder();
       _companyGatewayState = _$v.companyGatewayState?.toBuilder();
@@ -622,6 +647,7 @@ class UserCompanyStateBuilder
               projectState: projectState.build(),
               paymentState: paymentState.build(),
               quoteState: quoteState.build(),
+              creditState: creditState.build(),
               userState: userState.build(),
               taxRateState: taxRateState.build(),
               companyGatewayState: companyGatewayState.build(),
@@ -651,6 +677,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'creditState';
+        creditState.build();
         _$failedField = 'userState';
         userState.build();
         _$failedField = 'taxRateState';

@@ -484,7 +484,7 @@ abstract class ActivityEntity
     ClientEntity client,
     InvoiceEntity invoice,
     PaymentEntity payment,
-    CreditEntity credit,
+    InvoiceEntity credit,
     InvoiceEntity quote,
     TaskEntity task,
     ExpenseEntity expense,

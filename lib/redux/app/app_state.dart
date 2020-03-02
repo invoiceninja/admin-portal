@@ -41,6 +41,8 @@ import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
+
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -160,6 +162,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.credit:
+        return creditState.map;
+
       case EntityType.user:
         return userState.map;
       case EntityType.taxRate:
@@ -217,6 +222,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.credit:
+        return creditState.list;
+
       case EntityType.user:
         return userState.list;
       case EntityType.taxRate:
@@ -253,6 +261,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.credit:
+        return creditUIState;
+
       case EntityType.user:
         return userUIState;
       case EntityType.taxRate:
@@ -303,6 +314,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  CreditState get creditState => userCompanyState.creditState;
+  ListUIState get creditListState => uiState.creditUIState.listUIState;
+  CreditUIState get creditUIState => uiState.creditUIState;
+
   UserState get userState => userCompanyState.userState;
 
   ListUIState get userListState => uiState.userUIState.listUIState;

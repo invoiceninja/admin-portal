@@ -149,64 +149,62 @@ class SaveStubFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveStubRequest implements StartSaving {
-  ArchiveStubRequest(this.completer, this.stubId);
+class ArchiveStubsRequest implements StartSaving {
+  ArchiveStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final String stubId;
+  final List<String> stubIds;
 }
 
-class ArchiveStubSuccess implements StopSaving, PersistData {
-  ArchiveStubSuccess(this.stub);
+class ArchiveStubsSuccess implements StopSaving, PersistData {
+  ArchiveStubsSuccess(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class ArchiveStubFailure implements StopSaving {
-  ArchiveStubFailure(this.stub);
+class ArchiveStubsFailure implements StopSaving {
+  ArchiveStubsFailure(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class DeleteStubRequest implements StartSaving {
-  DeleteStubRequest(this.completer, this.stubId);
+class DeleteStubsRequest implements StartSaving {
+  DeleteStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final String stubId;
+  final List<String> stubIds;
 }
 
-class DeleteStubSuccess implements StopSaving, PersistData {
-  DeleteStubSuccess(this.stub);
+class DeleteStubsSuccess implements StopSaving, PersistData {
+  DeleteStubsSuccess(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class DeleteStubFailure implements StopSaving {
-  DeleteStubFailure(this.stub);
+class DeleteStubsFailure implements StopSaving {
+  DeleteStubsFailure(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class RestoreStubRequest implements StartSaving {
-  RestoreStubRequest(this.completer, this.stubId);
+class RestoreStubsRequest implements StartSaving {
+  RestoreStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final String stubId;
+  final List<String> stubIds;
 }
 
-class RestoreStubSuccess implements StopSaving, PersistData {
-  RestoreStubSuccess(this.stub);
+class RestoreStubsSuccess implements StopSaving, PersistData {
+  RestoreStubsSuccess(this.stub);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class RestoreStubFailure implements StopSaving {
-  RestoreStubFailure(this.stub);
+class RestoreStubsFailure implements StopSaving {
+  RestoreStubsFailure(this.stub);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
-
-
 
 
 class FilterStubs implements PersistUI {
@@ -268,25 +266,26 @@ void handleStubAction(
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final stub = stubs.first as StubEntity;
+  final stubIds = stubs.map((stub) => stub.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditStub(context: context, stub: stub));
+      editEntity(context: context, entity: stub);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreStubRequest(
-          snackBarCompleter<Null>(context, localization.restoredStub), stub.id));
+      store.dispatch(RestoreStubsRequest(
+          snackBarCompleter<Null>(context, localization.restoredStub), stubIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveStubRequest(
-          snackBarCompleter<Null>(context, localization.archivedStub), stub.id));
+      store.dispatch(ArchiveStubsRequest(
+          snackBarCompleter<Null>(context, localization.archivedStub), stubIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteStubRequest(
-          snackBarCompleter<Null>(context, localization.deletedStub), stub.id));
+      store.dispatch(DeleteStubsRequest(
+          snackBarCompleter<Null>(context, localization.deletedStub), stubIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.stubListState.isInMultiselect()) {

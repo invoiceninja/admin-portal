@@ -283,16 +283,6 @@ class FilterClientsByCustom4 implements PersistUI {
 
 void handleClientAction(
     BuildContext context, List<BaseEntity> clients, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          clients.length <= 1,
-      'Cannot perform this action on more than one client');
-
   if (clients.isEmpty) {
     return;
   }
