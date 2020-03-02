@@ -103,6 +103,11 @@ const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
 const String kQuoteStatusApproved = '4';
 
+const String kCreditStatusDraft = '1';
+const String kCreditStatusSent = '2';
+const String kCreditStatusPartial = '3';
+const String kCreditStatusPaid = '4';
+
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
@@ -264,6 +269,17 @@ class InvoiceStatusColors {
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: Colors.green,
+  };
+}
+
+class CreditStatusColors {
+  static const colors = {
+    kCreditStatusDraft: Colors.grey,
+    kCreditStatusSent: Colors.blue,
+    //kInvoiceStatusViewed: Colors.orange,
+    //kInvoiceStatusApproved: Colors.green,
+    kCreditStatusPartial: Colors.deepPurple,
+    kCreditStatusPaid: Colors.green,
   };
 }
 

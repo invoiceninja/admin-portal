@@ -1,55 +1,75 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/data/models/credit_model.dart';
-import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
+import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/credit/credit_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 class CreditListBuilder extends StatelessWidget {
   const CreditListBuilder({Key key}) : super(key: key);
+
+  static const String route = '/credit/edit';
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, CreditListVM>(
       converter: CreditListVM.fromStore,
-      builder: (context, viewModel) {
-        return CreditList(
-          viewModel: viewModel,
+      builder: (context, vm) {
+        return InvoiceList(
+          viewModel: vm,
         );
       },
     );
   }
 }
 
-class CreditListVM {
+class CreditListVM extends EntityListVM {
   CreditListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.creditList,
-    @required this.creditMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.isLoaded,
-    @required this.onCreditTap,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-  });
+    AppState state,
+    UserEntity user,
+    ListUIState listState,
+    List<String> invoiceList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    String filter,
+    bool isLoading,
+    bool isLoaded,
+    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext) onRefreshed,
+    Function onClearEntityFilterPressed,
+    Function(BuildContext) onViewEntityFilterPressed,
+    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    List<String> tableColumns,
+    EntityType entityType,
+  }) : super(
+    state: state,
+    user: user,
+    listState: listState,
+    invoiceList: invoiceList,
+    invoiceMap: invoiceMap,
+    clientMap: clientMap,
+    filter: filter,
+    isLoading: isLoading,
+    isLoaded: isLoaded,
+    onInvoiceTap: onInvoiceTap,
+    onRefreshed: onRefreshed,
+    onClearEntityFilterPressed: onClearEntityFilterPressed,
+    onViewEntityFilterPressed: onViewEntityFilterPressed,
+    tableColumns: tableColumns,
+    entityType: entityType,
+  );
 
   static CreditListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -66,45 +86,29 @@ class CreditListVM {
 
     return CreditListVM(
       state: state,
-      userCompany: state.userCompany,
+      user: state.user,
       listState: state.creditListState,
-      creditList: memoizedFilteredCreditList(state.creditState.map,
+      invoiceList: memoizedFilteredCreditList(state.creditState.map,
           state.creditState.list, state.clientState.map, state.creditListState),
-      creditMap: state.creditState.map,
+      invoiceMap: state.creditState.map,
+      clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.creditState.isLoaded,
-      filter: state.creditUIState.listUIState.filter,
+      isLoaded: state.creditState.isLoaded && state.clientState.isLoaded,
+      filter: state.creditListState.filter,
+      onInvoiceTap: (context, credit) {
+        viewEntity(context: context, entity: credit);
+      },
+      onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(FilterCreditsByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.creditListState.filterEntityId,
           entityType: state.creditListState.filterEntityType),
-      onCreditTap: (context, credit) {
-        if (store.state.creditListState.isInMultiselect()) {
-          handleCreditAction(context, [credit], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: credit);
-        }
-      },
       onEntityAction: (BuildContext context, List<BaseEntity> credits,
-              EntityAction action) =>
+          EntityAction action) =>
           handleCreditAction(context, credits, action),
-      onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: CreditPresenter.getTableFields(state.userCompany),
+      entityType: EntityType.credit,
     );
   }
-
-  final AppState state;
-  final UserCompanyEntity userCompany;
-  final List<String> creditList;
-  final BuiltMap<String, InvoiceEntity> creditMap;
-  final ListUIState listState;
-  final String filter;
-  final bool isLoading;
-  final bool isLoaded;
-  final Function(BuildContext, InvoiceEntity) onCreditTap;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
-  final List<String> tableColumns;
 }

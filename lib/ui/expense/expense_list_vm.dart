@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'file:///C:/Users/hillel/Documents/flutter-mobile/lib/ui/expense/expense_presenter.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_presenter.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';

@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'file:///C:/Users/hillel/Documents/flutter-mobile/lib/ui/project/project_presenter.dart';
+import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
