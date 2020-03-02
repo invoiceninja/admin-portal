@@ -328,7 +328,6 @@ abstract class CompanyEntity extends Object
     // TODO remove this
     if ([
       EntityType.recurringInvoice,
-      EntityType.credit,
       EntityType.project,
       EntityType.task,
       EntityType.expense,

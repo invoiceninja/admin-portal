@@ -185,7 +185,7 @@ else
 
     # Link in new module
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:invoiceninja_flutter/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: states switch list - do not remove comment"
@@ -204,6 +204,10 @@ else
     code="${Module}State get ${module_camel}State => userCompanyState.${module_camel}State;${lineBreak}"
     code="${code}ListUIState get ${module_camel}ListState => uiState.${module_camel}UIState.listUIState;${lineBreak}"
     code="${code}${Module}UIState get ${module_camel}UIState => uiState.${module_camel}UIState;${lineBreak}${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: has changes - do not remove comment"
+    code="case ${Module}EditScreen.route: return has${Module}Changes(${module_camel}UIState.editing, ${module_camel}State.map);${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do
