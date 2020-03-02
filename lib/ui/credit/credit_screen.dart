@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
