@@ -406,7 +406,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: create type - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, force: force, group: ${Module}Entity(state: state), )); break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, force: force, ${module_camel}: ${Module}Entity(state: state), )); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: create - do not remove comment"
@@ -426,7 +426,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
     comment="STARTER: lang field - do not remove comment"
-    code="String get ${module_camel} => _localizedValues[localeCode][' ${module_snake}']; String get ${module_camel}s => _localizedValues[localeCode][' ${module_snake}s']; String get newUser => _localizedValues[localeCode]['new_ ${module_snake}']; String get createdUser => _localizedValues[localeCode]['created_ ${module_snake}']; String get updatedUser => _localizedValues[localeCode]['updated_ ${module_snake}']; String get archivedUser => _localizedValues[localeCode]['archived_ ${module_snake}']; String get deletedUser => _localizedValues[localeCode]['deleted_ ${module_snake}']; String get restoredUser => _localizedValues[localeCode]['restored_ ${module_snake}']; String get editUser => _localizedValues[localeCode]['edit_ ${module_snake}'];${lineBreak}"
+    code="String get ${module_camel} => _localizedValues[localeCode][' ${module_snake}']; String get ${module_camel}s => _localizedValues[localeCode][' ${module_snake}s']; String get new${Module} => _localizedValues[localeCode]['new_ ${module_snake}']; String get created${Module} => _localizedValues[localeCode]['created_ ${module_snake}']; String get updated${Module} => _localizedValues[localeCode]['updated_ ${module_snake}']; String get archived${Module} => _localizedValues[localeCode]['archived_ ${module_snake}']; String get deleted${Module} => _localizedValues[localeCode]['deleted_ ${module_snake}']; String get restored${Module} => _localizedValues[localeCode]['restored_ ${module_snake}']; String get edit${Module} => _localizedValues[localeCode]['edit_ ${module_snake}'];${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
     echo "Generating built files.."
