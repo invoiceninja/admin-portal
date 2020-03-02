@@ -186,8 +186,12 @@ else
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
-    comment="STARTER: states switch - do not remove comment"
-    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}UIState;${lineBreak}"
+    comment="STARTER: states switch list - do not remove comment"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: states switch map - do not remove comment"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: state getters - do not remove comment"
@@ -418,7 +422,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: actions - do not remove comment"
-    code="case EntityType.${module_camel}: handle${Module}Action(context, entities, action);${lineBreak}"
+    code="case EntityType.${module_camel}: handle${Module}Action(context, entities, action); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: lang key - do not remove comment"
