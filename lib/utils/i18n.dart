@@ -946,7 +946,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
@@ -31462,8 +31464,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailedQuote => _localizedValues[localeCode]['emailed_quote'];
 
+  String get emailedCredit => _localizedValues[localeCode]['emailed_credit'];
+
   String get markedQuoteAsSent =>
       _localizedValues[localeCode]['marked_quote_as_sent'];
+
+  String get markedCreditAsSent =>
+      _localizedValues[localeCode]['marked_credit_as_sent'];
 
   String get expired => _localizedValues[localeCode]['expired'];
 

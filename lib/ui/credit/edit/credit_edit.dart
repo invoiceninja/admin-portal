@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class CreditEdit extends StatefulWidget {
   const CreditEdit({
@@ -14,92 +15,138 @@ class CreditEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final CreditEditVM viewModel;
+  final EntityEditVM viewModel;
 
   @override
   _CreditEditState createState() => _CreditEditState();
 }
 
-class _CreditEditState extends State<CreditEdit> {
+class _CreditEditState extends State<CreditEdit>
+    with SingleTickerProviderStateMixin {
+  TabController _controller;
+
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_creditEdit');
-  final _debouncer = Debouncer();
+  GlobalKey<FormState>(debugLabel: '_creditEdit');
 
-  // STARTER: controllers - do not remove comment
-
-  List<TextEditingController> _controllers = [];
+  static const kDetailsScreen = 0;
+  static const kItemScreen = 1;
+  //static const kNotesScreen = 2;
 
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      // STARTER: array - do not remove comment
-    ];
+  void initState() {
+    super.initState();
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    final viewModel = widget.viewModel;
 
-    final credit = widget.viewModel.credit;
-    // STARTER: read value - do not remove comment
+    final index =
+    viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+  }
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-    super.didChangeDependencies();
+    if (widget.viewModel.invoiceItemIndex != null) {
+      _controller.animateTo(kItemScreen);
+    }
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
+    _controller.dispose();
     super.dispose();
-  }
-
-  void _onChanged() {
-    _debouncer.run(() {
-      final credit = widget.viewModel.credit.rebuild((b) => b
-          // STARTER: set value - do not remove comment
-          );
-      if (credit != widget.viewModel.credit) {
-        widget.viewModel.onChanged(credit);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final credit = viewModel.credit;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final state = viewModel.state;
 
     return EditScaffold(
+      entity: invoice,
+      title: invoice.isNew ? localization.newCredit : localization.editCredit,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          _autoValidate = !isValid;
-        });
-
-        if (!isValid) {
+        if (!_formKey.currentState.validate()) {
           return;
         }
 
-        viewModel.onSavePressed(context);
+        widget.viewModel.onSavePressed(context);
       },
+      appBarBottom: state.prefState.isDesktop
+          ? null
+          : TabBar(
+        controller: _controller,
+        //isScrollable: true,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.items,
+          ),
+          Tab(
+            text: localization.notes,
+          ),
+        ],
+      ),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
-            return ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                  ],
-                ),
-              ],
-            );
-          })),
+        key: _formKey,
+        child: state.prefState.isDesktop
+            ? CreditEditDetailsScreen()
+            : TabBarView(
+          key: ValueKey('__credit_${viewModel.invoice.id}__'),
+          controller: _controller,
+          children: <Widget>[
+            CreditEditDetailsScreen(),
+            CreditEditItemsScreen(),
+            CreditEditNotesScreen(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).primaryColor,
+        shape: CircularNotchedRectangle(),
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Text(
+            '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
+            style: TextStyle(
+              //color: Theme.of(context).selectedRowColor,
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'credit_edit_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          showDialog<InvoiceItemSelector>(
+              context: context,
+              builder: (BuildContext context) {
+                return InvoiceItemSelector(
+                  excluded: invoice.lineItems
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
+                      ? viewModel.state.taskState.map[item.taskId]
+                      : viewModel.state.expenseState.map[item.expenseId])
+                      .toList(),
+                  clientId: invoice.clientId,
+                  onItemsSelected: (items, [clientId]) {
+                    viewModel.onItemsAdded(items, clientId);
+                    _controller.animateTo(kItemScreen);
+                  },
+                );
+              });
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+        tooltip: localization.addItem,
+      ),
     );
   }
 }

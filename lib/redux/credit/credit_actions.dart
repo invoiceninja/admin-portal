@@ -1,21 +1,20 @@
 import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewCreditList extends AbstractNavigatorAction implements PersistUI {
-  ViewCreditList({
-    @required NavigatorState navigator,
-    this.force = false,
-  }) : super(navigator: navigator);
+  ViewCreditList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
   final bool force;
 }
@@ -23,8 +22,8 @@ class ViewCreditList extends AbstractNavigatorAction implements PersistUI {
 class ViewCredit extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   ViewCredit({
+    this.creditId,
     @required NavigatorState navigator,
-    @required this.creditId,
     this.force = false,
   }) : super(navigator: navigator);
 
@@ -35,17 +34,31 @@ class ViewCredit extends AbstractNavigatorAction
 class EditCredit extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditCredit(
-      {@required this.credit,
-      @required NavigatorState navigator,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false})
+      {this.credit,
+        @required NavigatorState navigator,
+        this.creditItemIndex,
+        this.completer,
+        this.force = false})
       : super(navigator: navigator);
 
   final InvoiceEntity credit;
+  final int creditItemIndex;
   final Completer completer;
-  final Completer cancelCompleter;
   final bool force;
+}
+
+class ShowEmailCredit {
+  ShowEmailCredit({this.credit, this.context, this.completer});
+
+  final InvoiceEntity credit;
+  final BuildContext context;
+  final Completer completer;
+}
+
+class EditCreditItem implements PersistUI {
+  EditCreditItem([this.creditItemIndex]);
+
+  final int creditItemIndex;
 }
 
 class UpdateCredit implements PersistUI {
@@ -54,15 +67,14 @@ class UpdateCredit implements PersistUI {
   final InvoiceEntity credit;
 }
 
-class LoadCredit {
-  LoadCredit({this.completer, this.creditId});
+class UpdateCreditClient implements PersistUI {
+  UpdateCreditClient({this.client});
 
-  final Completer completer;
-  final String creditId;
+  final ClientEntity client;
 }
 
-class LoadCreditActivity {
-  LoadCreditActivity({this.completer, this.creditId});
+class LoadCredit {
+  LoadCredit({this.completer, this.creditId});
 
   final Completer completer;
   final String creditId;
@@ -123,6 +135,44 @@ class LoadCreditsSuccess implements StopLoading, PersistData {
   }
 }
 
+class AddCreditContact implements PersistUI {
+  AddCreditContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemoveCreditContact implements PersistUI {
+  RemoveCreditContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
+class AddCreditItem implements PersistUI {
+  AddCreditItem({this.creditItem});
+
+  final InvoiceItemEntity creditItem;
+}
+
+class AddCreditItems implements PersistUI {
+  AddCreditItems(this.creditItems);
+
+  final List<InvoiceItemEntity> creditItems;
+}
+
+class UpdateCreditItem implements PersistUI {
+  UpdateCreditItem({this.index, this.creditItem});
+
+  final int index;
+  final InvoiceItemEntity creditItem;
+}
+
+class DeleteCreditItem implements PersistUI {
+  DeleteCreditItem(this.index);
+
+  final int index;
+}
+
 class SaveCreditRequest implements StartSaving {
   SaveCreditRequest({this.completer, this.credit});
 
@@ -148,10 +198,49 @@ class SaveCreditFailure implements StopSaving {
   final Object error;
 }
 
+class EmailCreditRequest implements StartSaving {
+  EmailCreditRequest(
+      {this.completer, this.creditId, this.template, this.subject, this.body});
+
+  final Completer completer;
+  final String creditId;
+  final EmailTemplate template;
+  final String subject;
+  final String body;
+}
+
+class EmailCreditSuccess implements StopSaving, PersistData {}
+
+class EmailCreditFailure implements StopSaving {
+  EmailCreditFailure(this.error);
+
+  final dynamic error;
+}
+
+class MarkSentCreditRequest implements StartSaving {
+  MarkSentCreditRequest(this.completer, this.creditId);
+
+  final Completer completer;
+  final String creditId;
+}
+
+class MarkSentCreditSuccess implements StopSaving, PersistData {
+  MarkSentCreditSuccess(this.credit);
+
+  final InvoiceEntity credit;
+}
+
+class MarkSentCreditFailure implements StopSaving {
+  MarkSentCreditFailure(this.credit);
+
+  final InvoiceEntity credit;
+}
+
 class ArchiveCreditsRequest implements StartSaving {
   ArchiveCreditsRequest(this.completer, this.creditIds);
 
   final Completer completer;
+
   final List<String> creditIds;
 }
 
@@ -171,6 +260,7 @@ class DeleteCreditsRequest implements StartSaving {
   DeleteCreditsRequest(this.completer, this.creditIds);
 
   final Completer completer;
+
   final List<String> creditIds;
 }
 
@@ -190,6 +280,7 @@ class RestoreCreditsRequest implements StartSaving {
   RestoreCreditsRequest(this.completer, this.creditIds);
 
   final Completer completer;
+
   final List<String> creditIds;
 }
 
@@ -223,6 +314,25 @@ class FilterCreditsByState implements PersistUI {
   final EntityState state;
 }
 
+class FilterCreditsByStatus implements PersistUI {
+  FilterCreditsByStatus(this.status);
+
+  final EntityStatus status;
+}
+
+class FilterCreditsByEntity implements PersistUI {
+  FilterCreditsByEntity({this.entityId, this.entityType});
+
+  final String entityId;
+  final EntityType entityType;
+}
+
+class FilterCreditDropdown {
+  FilterCreditDropdown(this.filter);
+
+  final String filter;
+}
+
 class FilterCreditsByCustom1 implements PersistUI {
   FilterCreditsByCustom1(this.value);
 
@@ -247,22 +357,39 @@ class FilterCreditsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterCreditsByEntity implements PersistUI {
-  FilterCreditsByEntity({this.entityId, this.entityType});
+class ConvertCredit implements PersistData {
+  ConvertCredit(this.completer, this.creditId);
 
-  final String entityId;
-  final EntityType entityType;
+  final String creditId;
+  final Completer completer;
 }
 
-void handleCreditAction(
-    BuildContext context, List<BaseEntity> credits, EntityAction action) {
-  if (credits.isEmpty) {
-    return;
-  }
+class ConvertCreditSuccess implements StopSaving, PersistData {
+  ConvertCreditSuccess({this.credit, this.invoice});
+
+  final InvoiceEntity credit;
+  final InvoiceEntity invoice;
+}
+
+class ConvertCreditFailure implements StopSaving {
+  ConvertCreditFailure(this.error);
+
+  final dynamic error;
+}
+
+Future handleCreditAction(
+    BuildContext context, List<BaseEntity> credits, EntityAction action) async {
+  assert(
+  [
+    EntityAction.restore,
+    EntityAction.archive,
+    EntityAction.delete,
+    EntityAction.toggleMultiselect
+  ].contains(action) ||
+      credits.length == 1,
+  'Cannot perform this action on more than one credit');
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final credit = credits.first as InvoiceEntity;
   final creditIds = credits.map((credit) => credit.id).toList();
@@ -270,6 +397,51 @@ void handleCreditAction(
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: credit);
+      break;
+    case EntityAction.pdf:
+      viewPdf(credit, context);
+      break;
+    case EntityAction.clientPortal:
+      if (await canLaunch(credit.invitationSilentLink)) {
+        await launch(credit.invitationSilentLink,
+            forceSafariVC: false, forceWebView: false);
+      }
+      break;
+    case EntityAction.viewInvoice:
+      viewEntityById(
+          context: context,
+          // TODO fix this
+          // entityId: credit.creditInvoiceId,
+          entityType: EntityType.invoice);
+      break;
+    case EntityAction.convert:
+      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
+      store.dispatch(ConvertCredit(completer, credit.id));
+      completer.future.then((InvoiceEntity invoice) {
+        viewEntityById(
+            context: context,
+            entityType: EntityType.invoice,
+            entityId: invoice.id);
+      });
+      break;
+    case EntityAction.markSent:
+      store.dispatch(MarkSentCreditRequest(
+          snackBarCompleter<Null>(context, localization.markedCreditAsSent),
+          credit.id));
+      break;
+    case EntityAction.sendEmail:
+      store.dispatch(ShowEmailCredit(
+          completer:
+          snackBarCompleter<Null>(context, localization.emailedCredit),
+          credit: credit,
+          context: context));
+      break;
+    case EntityAction.cloneToInvoice:
+      createEntity(context: context, entity: credit.clone);
+      break;
+    case EntityAction.cloneToCredit:
+      createEntity(context: context, entity: credit.clone);
+      createEntity(context: context, entity: credit.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreCreditsRequest(
@@ -288,7 +460,7 @@ void handleCreditAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.creditListState.isInMultiselect()) {
-        store.dispatch(StartCreditMultiselect(context: context));
+        store.dispatch(StartCreditMultiselect());
       }
 
       if (credits.isEmpty) {
@@ -297,39 +469,27 @@ void handleCreditAction(
 
       for (final credit in credits) {
         if (!store.state.creditListState.isSelected(credit.id)) {
-          store.dispatch(
-              AddToCreditMultiselect(context: context, entity: credit));
+          store.dispatch(AddToCreditMultiselect(entity: credit));
         } else {
-          store.dispatch(
-              RemoveFromCreditMultiselect(context: context, entity: credit));
+          store.dispatch(RemoveFromCreditMultiselect(entity: credit));
         }
       }
       break;
   }
 }
 
-class StartCreditMultiselect {
-  StartCreditMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class StartCreditMultiselect {}
 
 class AddToCreditMultiselect {
-  AddToCreditMultiselect({@required this.context, @required this.entity});
+  AddToCreditMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromCreditMultiselect {
-  RemoveFromCreditMultiselect({@required this.context, @required this.entity});
+  RemoveFromCreditMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
-class ClearCreditMultiselect {
-  ClearCreditMultiselect({@required this.context});
-
-  final BuildContext context;
-}
+class ClearCreditMultiselect {}

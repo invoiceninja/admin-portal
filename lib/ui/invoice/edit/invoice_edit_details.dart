@@ -19,11 +19,11 @@ class InvoiceEditDetails extends StatefulWidget {
   const InvoiceEditDetails({
     Key key,
     @required this.viewModel,
-    this.isQuote = false,
+    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
-  final bool isQuote;
+  final EntityType entityType;
 
   @override
   InvoiceEditDetailsState createState() => InvoiceEditDetailsState();

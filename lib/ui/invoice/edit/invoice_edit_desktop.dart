@@ -26,11 +26,11 @@ class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
     Key key,
     @required this.viewModel,
-    this.isQuote = false,
+    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
-  final bool isQuote;
+  final EntityType entityType;
 
   @override
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
