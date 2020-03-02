@@ -27,9 +27,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({

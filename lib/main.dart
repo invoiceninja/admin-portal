@@ -53,9 +53,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';

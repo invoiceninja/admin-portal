@@ -6,9 +6,7 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 EntityUIState creditUIReducer(CreditUIState state, dynamic action) {
   return state.rebuild((b) =>
