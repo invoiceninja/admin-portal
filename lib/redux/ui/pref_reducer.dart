@@ -17,13 +17,12 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart'
-    as prefix0;
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+// STARTER: import - do not remove comment
 import 'package:redux/redux.dart';
 
 PrefState prefReducer(
@@ -261,7 +260,7 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
       ..origClient.replace(action.client)
       ..isChanged = false);
   }),
-  TypedReducer<SettingsUIState, prefix0.SaveAuthUserSuccess>((state, action) {
+  TypedReducer<SettingsUIState, SaveAuthUserSuccess>((state, action) {
     return state.rebuild((b) => b
       ..user.replace(action.user)
       ..origUser.replace(action.user)
@@ -395,7 +394,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, EditGroup>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
-  // TODO add to starter.sh
+  // STARTER: history - do not remove comment
 ]);
 
 BuiltList<HistoryRecord> _addToHistory(

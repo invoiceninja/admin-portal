@@ -381,6 +381,14 @@ else
     code="TypedReducer<String, Load${Module}sFailure>((state, action) { return '${action.error}'; }),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
 
+    comment="STARTER: history - do not remove comment"
+    code="TypedReducer<BuiltList<HistoryRecord>, View${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}Id, entityType: EntityType.${module_camel}))),TypedReducer<BuiltList<HistoryRecord>, Edit${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}.id, entityType: EntityType.${module_camel}))),${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:invoiceninja_flutter/redux/product/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+
     echo "Generating built files.."
     flutter packages pub run build_runner clean
     flutter packages pub run build_runner build --delete-conflicting-outputs
