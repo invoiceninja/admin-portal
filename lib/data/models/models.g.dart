@@ -12,6 +12,7 @@ const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$remove = const EntityAction._('remove');
 const EntityAction _$clone = const EntityAction._('clone');
+const EntityAction _$cloneToCredit = const EntityAction._('cloneToCredit');
 const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$convert = const EntityAction._('convert');
@@ -53,6 +54,8 @@ EntityAction _$valueOf(String name) {
       return _$remove;
     case 'clone':
       return _$clone;
+    case 'cloneToCredit':
+      return _$cloneToCredit;
     case 'cloneToInvoice':
       return _$cloneToInvoice;
     case 'cloneToQuote':
@@ -116,6 +119,7 @@ final BuiltSet<EntityAction> _$values =
   _$restore,
   _$remove,
   _$clone,
+  _$cloneToCredit,
   _$cloneToInvoice,
   _$cloneToQuote,
   _$convert,

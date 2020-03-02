@@ -43,6 +43,7 @@ class EntityAction extends EnumClass {
   static const EntityAction restore = _$restore;
   static const EntityAction remove = _$remove;
   static const EntityAction clone = _$clone;
+  static const EntityAction cloneToCredit = _$cloneToCredit;
   static const EntityAction cloneToInvoice = _$cloneToInvoice;
   static const EntityAction cloneToQuote = _$cloneToQuote;
   static const EntityAction convert = _$convert;
