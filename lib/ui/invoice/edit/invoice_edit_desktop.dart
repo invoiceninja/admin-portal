@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
@@ -223,9 +224,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       validator: (String val) => val.trim().isEmpty
                           ? AppLocalization.of(context).pleaseSelectADate
                           : null,
-                      labelText: widget.entityType == EntityType.credit ? localization.creditDate :
-                          widget.entityType == EntityType.quote ? localization.quoteDate
-                          : localization.invoiceDate,
+                      labelText: widget.entityType == EntityType.credit
+                          ? localization.creditDate
+                          : widget.entityType == EntityType.quote
+                              ? localization.quoteDate
+                              : localization.invoiceDate,
                       selectedDate: invoice.date,
                       onSelected: (date) {
                         viewModel
@@ -234,9 +237,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                     DatePicker(
                       allowClearing: true,
-                      labelText: widget.isQuote
-                          ? localization.validUntil
-                          : localization.dueDate,
+                      labelText: widget.entityType == EntityType.credit
+                          ? localization.appliedDate
+                          : widget.entityType == EntityType.quote
+                              ? localization.validUntil
+                              : localization.dueDate,
                       selectedDate: invoice.dueDate,
                       onSelected: (date) {
                         viewModel.onChanged(
@@ -281,9 +286,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   children: <Widget>[
                     DecoratedFormField(
                       controller: _invoiceNumberController,
-                      label: widget.isQuote
-                          ? localization.quoteNumber
-                          : localization.invoiceNumber,
+                      label: widget.entityType == EntityType.credit
+                          ? localization.creditNumber
+                          : widget.entityType == EntityType.quote
+                              ? localization.quoteNumber
+                              : localization.invoiceNumber,
                       validator: (String val) =>
                           val.trim().isEmpty && invoice.isOld
                               ? AppLocalization.of(context)
@@ -316,7 +323,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
               ),
             ],
           ),
-          widget.isQuote ? QuoteEditItemsScreen() : InvoiceEditItemsScreen(),
+          widget.entityType == EntityType.credit
+              ? CreditEditItemsScreen()
+              : widget.entityType == EntityType.quote
+                  ? QuoteEditItemsScreen()
+                  : InvoiceEditItemsScreen(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -335,13 +346,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         Tab(text: localization.publicNotes),
                         Tab(text: localization.privateNotes),
                         Tab(
-                            text: widget.isQuote
-                                ? localization.quoteTerms
-                                : localization.invoiceTerms),
+                            text: widget.entityType == EntityType.credit
+                                ? localization.creditTerms
+                                : widget.entityType == EntityType.quote
+                                    ? localization.quoteTerms
+                                    : localization.invoiceTerms),
                         Tab(
-                            text: widget.isQuote
-                                ? localization.quoteFooter
-                                : localization.invoiceFooter),
+                            text: widget.entityType == EntityType.credit
+                                ? localization.creditFooter
+                                : widget.entityType == EntityType.quote
+                                    ? localization.quoteFooter
+                                    : localization.invoiceFooter),
                       ],
                     ),
                     SizedBox(
