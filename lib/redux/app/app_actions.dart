@@ -918,6 +918,7 @@ void handleEntitiesActions(
       break;
     case EntityType.document:
       handleDocumentAction(context, entities, action);
+      break;
     // STARTER: actions - do not remove comment
   }
 }

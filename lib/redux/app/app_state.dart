@@ -159,7 +159,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientState.map;
       case EntityType.invoice:
         return invoiceState.map;
-      // STARTER: states switch - do not remove comment
+      // STARTER: states switch map - do not remove comment
       case EntityType.user:
         return userState.map;
       case EntityType.taxRate:
@@ -216,7 +216,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientState.list;
       case EntityType.invoice:
         return invoiceState.list;
-      // STARTER: states switch - do not remove comment
+      // STARTER: states switch list - do not remove comment
       case EntityType.user:
         return userState.list;
       case EntityType.taxRate:
