@@ -18,10 +18,6 @@ enum QuoteReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
-  //vendor,
-  //vendor_city,
-  //vendor_state,
-  //vendor_country,
   status,
   discount,
   po_number,
@@ -83,7 +79,6 @@ ReportResult quoteReport(
     QuoteReportFields.balance,
     QuoteReportFields.due_date,
     QuoteReportFields.client,
-    //QuoteReportFields.vendor,
   ];
 
   if (quoteReportSettings.columns.isNotEmpty) {
@@ -134,18 +129,6 @@ ReportResult quoteReport(
         case QuoteReportFields.client_shipping_address2:
           value = client.shippingAddress2;
           break;
-        //case QuoteReportFields.vendor:
-        //  value = vendor.listDisplayName;
-        //  break;
-        //case QuoteReportFields.vendor_city:
-        //  value = vendor.city;
-        //  break;
-        //case QuoteReportFields.vendor_state:
-        //  value = vendor.state;
-        //  break;
-        //case QuoteReportFields.vendor_country:
-        //  value = staticState.countryMap[vendor.countryId].listDisplayName;
-        //  break;
         case QuoteReportFields.status:
           value = staticState.invoiceStatusMap[quote.statusId].name;
           break;
@@ -244,13 +227,14 @@ ReportResult quoteReport(
     }
   }
 
-  data.sort(
-      (rowA, rowB) => sortReportTableRows(rowA, rowB, quoteReportSettings));
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:
         QuoteReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
-    columns: columns.map((item) => EnumUtils.parse(item)).toList(),
+    columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,

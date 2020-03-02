@@ -160,7 +160,7 @@ class ReportsScreen extends StatelessWidget {
                           //kReportProduct,
                           //kReportProfitAndLoss,
                           //kReportTask,
-                          //kReportTaxRate,
+                          kReportTaxRate,
                           kReportQuote,
                         ]
                             .map((report) =>
@@ -401,19 +401,22 @@ class _ReportDataTableState extends State<ReportDataTable> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              DataTable(
-                sortColumnIndex: reportSettings.sortTotalsIndex != null &&
-                    reportResult.columns.length >
-                        reportSettings.sortTotalsIndex
-                    ? reportSettings.sortTotalsIndex
-                    : null,
-                sortAscending: reportSettings.sortTotalsAscending ?? true,
-                columns: reportResult.totalColumns(
-                    context,
-                        (index, ascending) =>
-                        widget.viewModel
-                            .onReportTotalsSorted(index, ascending)),
-                rows: reportResult.totalRows(context),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  sortColumnIndex: reportSettings.sortTotalsIndex != null &&
+                      reportResult.columns.length >
+                          reportSettings.sortTotalsIndex
+                      ? reportSettings.sortTotalsIndex
+                      : null,
+                  sortAscending: reportSettings.sortTotalsAscending ?? true,
+                  columns: reportResult.totalColumns(
+                      context,
+                          (index, ascending) =>
+                          widget.viewModel
+                              .onReportTotalsSorted(index, ascending)),
+                  rows: reportResult.totalRows(context),
+                ),
               ),
             ],
           ),
@@ -472,9 +475,14 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     'paid_to_date',
     'amount',
     'quantity',
-    'pridce',
+    'price',
     'cost',
     'total',
+    'invoice_amount',
+    'tax_rate',
+    'tax_amount',
+    'tax_paid',
+    'payment_amount'
   ].contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
