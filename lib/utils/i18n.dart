@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'credit_date': 'Credit Date',
       'credit': 'Credit',
       'credits': 'Credits',
       'new_credit': 'New Credit',
@@ -32772,15 +32773,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'];
 
   // STARTER: lang field - do not remove comment
-  String get credit => _localizedValues[localeCode][' credit'];
-  String get credits => _localizedValues[localeCode][' credits'];
-  String get newCredit => _localizedValues[localeCode]['new_ credit'];
-  String get createdCredit => _localizedValues[localeCode]['created_ credit'];
-  String get updatedCredit => _localizedValues[localeCode]['updated_ credit'];
-  String get archivedCredit => _localizedValues[localeCode]['archived_ credit'];
-  String get deletedCredit => _localizedValues[localeCode]['deleted_ credit'];
-  String get restoredCredit => _localizedValues[localeCode]['restored_ credit'];
-  String get editCredit => _localizedValues[localeCode]['edit_ credit'];
+  String get newCredit => _localizedValues[localeCode]['new_credit'];
+
+  String get createdCredit => _localizedValues[localeCode]['created_credit'];
+
+  String get updatedCredit => _localizedValues[localeCode]['updated_credit'];
+
+  String get archivedCredit => _localizedValues[localeCode]['archived_credit'];
+
+  String get deletedCredit => _localizedValues[localeCode]['deleted_credit'];
+
+  String get restoredCredit => _localizedValues[localeCode]['restored_credit'];
+
+  String get creditDate => _localizedValues[localeCode]['credit_date'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

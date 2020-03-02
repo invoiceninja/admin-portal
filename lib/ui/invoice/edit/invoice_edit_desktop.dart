@@ -223,8 +223,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       validator: (String val) => val.trim().isEmpty
                           ? AppLocalization.of(context).pleaseSelectADate
                           : null,
-                      labelText: widget.isQuote
-                          ? localization.quoteDate
+                      labelText: widget.entityType == EntityType.credit ? localization.creditDate :
+                          widget.entityType == EntityType.quote ? localization.quoteDate
                           : localization.invoiceDate,
                       selectedDate: invoice.date,
                       onSelected: (date) {
