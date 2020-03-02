@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
-import 'file:///C:/Users/hillel/Documents/flutter-mobile/lib/ui/client/client_presenter.dart';
+import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';

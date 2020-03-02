@@ -68,8 +68,8 @@ class CreditListVM {
       state: state,
       userCompany: state.userCompany,
       listState: state.creditListState,
-      creditList: memoizedFilteredCreditList(
-          state.creditState.map, state.creditState.list, state.creditListState),
+      creditList: memoizedFilteredCreditList(state.creditState.map,
+          state.creditState.list, state.clientState.map, state.creditListState),
       creditMap: state.creditState.map,
       isLoading: state.isLoading,
       isLoaded: state.creditState.isLoaded,
