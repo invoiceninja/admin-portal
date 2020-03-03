@@ -77,7 +77,7 @@ class StubEditVM {
                 Navigator.of(context).pop(savedStub);
               }
           } else {
-              store.dispatch(ViewStub(context: context, stubId: savedStub.id, force: true));
+              viewEntity(context: context, entity: savedStub, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

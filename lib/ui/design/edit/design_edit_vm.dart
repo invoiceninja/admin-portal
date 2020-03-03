@@ -78,8 +78,7 @@ class DesignEditVM {
               Navigator.of(context).pop(savedDesign);
             }
           } else {
-            store.dispatch(ViewDesign(
-                context: context, designId: savedDesign.id, force: true));
+            viewEntity(context: context, entity: savedDesign, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
