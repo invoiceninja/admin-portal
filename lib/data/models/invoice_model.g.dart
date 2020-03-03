@@ -271,10 +271,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.customTaxes4,
             specifiedType: const FullType(bool)));
     }
-    if (object.quoteInvoiceId != null) {
+    if (object.invoiceId != null) {
       result
-        ..add('quote_invoice_id')
-        ..add(serializers.serialize(object.quoteInvoiceId,
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
     if (object.filename != null) {
@@ -508,8 +508,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.hasExpenses = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'quote_invoice_id':
-          result.quoteInvoiceId = serializers.deserialize(value,
+        case 'invoice_id':
+          result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'filename':
@@ -1178,7 +1178,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasExpenses;
   @override
-  final String quoteInvoiceId;
+  final String invoiceId;
   @override
   final String filename;
   @override
@@ -1247,7 +1247,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.customTaxes3,
       this.customTaxes4,
       this.hasExpenses,
-      this.quoteInvoiceId,
+      this.invoiceId,
       this.filename,
       this.lineItems,
       this.invitations,
@@ -1412,7 +1412,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         customTaxes3 == other.customTaxes3 &&
         customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
-        quoteInvoiceId == other.quoteInvoiceId &&
+        invoiceId == other.invoiceId &&
         filename == other.filename &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
@@ -1454,7 +1454,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                     customTaxes3.hashCode),
                                                                 customTaxes4.hashCode),
                                                             hasExpenses.hashCode),
-                                                        quoteInvoiceId.hashCode),
+                                                        invoiceId.hashCode),
                                                     filename.hashCode),
                                                 lineItems.hashCode),
                                             invitations.hashCode),
@@ -1511,7 +1511,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('customTaxes3', customTaxes3)
           ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
-          ..add('quoteInvoiceId', quoteInvoiceId)
+          ..add('invoiceId', invoiceId)
           ..add('filename', filename)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
@@ -1695,10 +1695,9 @@ class InvoiceEntityBuilder
   bool get hasExpenses => _$this._hasExpenses;
   set hasExpenses(bool hasExpenses) => _$this._hasExpenses = hasExpenses;
 
-  String _quoteInvoiceId;
-  String get quoteInvoiceId => _$this._quoteInvoiceId;
-  set quoteInvoiceId(String quoteInvoiceId) =>
-      _$this._quoteInvoiceId = quoteInvoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
   String _filename;
   String get filename => _$this._filename;
@@ -1798,7 +1797,7 @@ class InvoiceEntityBuilder
       _customTaxes3 = _$v.customTaxes3;
       _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
-      _quoteInvoiceId = _$v.quoteInvoiceId;
+      _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
@@ -1874,7 +1873,7 @@ class InvoiceEntityBuilder
               customTaxes3: customTaxes3,
               customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
-              quoteInvoiceId: quoteInvoiceId,
+              invoiceId: invoiceId,
               filename: filename,
               lineItems: lineItems.build(),
               invitations: invitations.build(),

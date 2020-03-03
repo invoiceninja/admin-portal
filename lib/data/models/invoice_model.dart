@@ -119,7 +119,7 @@ abstract class InvoiceEntity extends Object
       customTaxes3: false,
       customTaxes4: false,
       hasExpenses: false,
-      quoteInvoiceId: '',
+      invoiceId: '',
       customSurcharge1: 0,
       customSurcharge2: 0,
       customSurcharge3: 0,
@@ -149,7 +149,7 @@ abstract class InvoiceEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..statusId = kInvoiceStatusDraft
-    ..quoteInvoiceId = null
+    ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
@@ -320,8 +320,8 @@ abstract class InvoiceEntity extends Object
   bool get hasExpenses;
 
   @nullable
-  @BuiltValueField(wireName: 'quote_invoice_id')
-  String get quoteInvoiceId;
+  @BuiltValueField(wireName: 'invoice_id')
+  String get invoiceId;
 
   @nullable
   String get filename;
@@ -333,7 +333,7 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvitationEntity> get invitations;
 
   bool get isApproved =>
-      statusId == kQuoteStatusApproved || (quoteInvoiceId ?? '').isNotEmpty;
+      statusId == kQuoteStatusApproved || (invoiceId ?? '').isNotEmpty;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 

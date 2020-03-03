@@ -363,7 +363,7 @@ QuoteState _restoreQuoteFailure(
 QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
   final quote = action.quote.rebuild((b) => b
-    ..quoteInvoiceId = action.invoice.id
+    ..invoiceId = action.invoice.id
     ..statusId = kQuoteStatusApproved);
   return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
 }

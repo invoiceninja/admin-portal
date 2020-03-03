@@ -410,7 +410,7 @@ Future handleQuoteAction(
     case EntityAction.viewInvoice:
       viewEntityById(
           context: context,
-          entityId: quote.quoteInvoiceId,
+          entityId: quote.invoiceId,
           entityType: EntityType.invoice);
       break;
     case EntityAction.convert:

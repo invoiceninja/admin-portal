@@ -49,7 +49,7 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
+    final invoiceStatusId = (invoice.invoiceId ?? '').isNotEmpty
         ? kQuoteStatusApproved
         : invoice.statusId;
 
