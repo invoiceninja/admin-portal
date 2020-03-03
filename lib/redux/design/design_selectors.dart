@@ -39,11 +39,12 @@ List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList, ListUIState designListState) {
   final list = designList.where((designId) {
     final design = designMap[designId];
+    /*
     if (designListState.filterEntityId != null &&
-        design.entityId != designListState.filterEntityId) {
+        design.id != designListState.filterEntityId) {
       return false;
     } else {}
-
+    */
     if (!design.matchesStates(designListState.stateFilters)) {
       return false;
     }

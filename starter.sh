@@ -359,7 +359,6 @@ else
     code="${code}entityType: EntityType.${module_camel},${lineBreak}"
     code="${code}icon: getEntityIcon(EntityType.${module_camel}),${lineBreak}"
     code="${code}title: localization.${module_camel}s,${lineBreak}"
-    code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart
 
