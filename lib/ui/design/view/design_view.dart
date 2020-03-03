@@ -29,6 +29,7 @@ class _DesignViewState extends State<DesignView> {
     return ViewScaffold(
       entity: design,
       isSettings: true,
+      onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[],
       ),
