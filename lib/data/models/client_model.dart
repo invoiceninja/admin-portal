@@ -458,8 +458,8 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.newInvoice);
       }
 
-      if (userCompany.canCreate(EntityType.expense)) {
-        actions.add(EntityAction.newExpense);
+      if (userCompany.canCreate(EntityType.payment)) {
+        actions.add(EntityAction.newPayment);
       }
 
       if (userCompany.canCreate(EntityType.quote)) {
@@ -470,8 +470,8 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.newCredit);
       }
 
-      if (userCompany.canCreate(EntityType.payment)) {
-        actions.add(EntityAction.newPayment);
+      if (userCompany.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
       }
     }
 

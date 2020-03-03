@@ -2,6 +2,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
@@ -140,6 +141,18 @@ class ClientOverview extends StatelessWidget {
                 viewModel.onEntityPressed(context, EntityType.quote, true),
             subtitle:
                 memoizedQuoteStatsForClient(client.id, state.quoteState.map)
+                    .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.credit))
+          EntityListTile(
+            bottomPadding: 1,
+            icon: getEntityIcon(EntityType.credit),
+            title: localization.credits,
+            onTap: () => viewModel.onEntityPressed(context, EntityType.credit),
+            onLongPress: () =>
+                viewModel.onEntityPressed(context, EntityType.credit, true),
+            subtitle:
+                memoizedCreditStatsForClient(client.id, state.creditState.map)
                     .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.project))
