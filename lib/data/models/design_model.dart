@@ -45,15 +45,15 @@ abstract class DesignEntity extends Object
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      // STARTER: constructor - do not remove comment
+      name: '',
     );
   }
 
   DesignEntity._();
 
-  String get displayName {
-    // STARTER: display name - do not remove comment
-  }
+  String get name;
+
+  String get displayName => name;
 
   int compareTo(DesignEntity design, String sortField, bool sortAscending) {
     int response = 0;
