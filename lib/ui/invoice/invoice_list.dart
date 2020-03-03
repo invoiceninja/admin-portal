@@ -13,10 +13,12 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceList extends StatefulWidget {
@@ -39,15 +41,25 @@ class _EntityListState extends State<InvoiceList> {
     super.initState();
 
     final viewModel = widget.viewModel;
+    final entityType = viewModel.entityType;
+    final state = viewModel.state;
 
     dataTableSource = EntityDataTableSource(
         context: context,
-        entityType: EntityType.invoice,
-        editingId: viewModel.state.invoiceUIState.editing.id,
+        entityType: entityType,
+        editingId: entityType == EntityType.credit
+            ? state.creditUIState.editing.id
+            : entityType == EntityType.quote
+                ? state.quoteUIState.editing.id
+                : state.invoiceUIState.editing.id,
         tableColumns: viewModel.tableColumns,
         entityList: viewModel.invoiceList,
         entityMap: viewModel.invoiceMap,
-        entityPresenter: InvoicePresenter(),
+        entityPresenter: entityType == EntityType.credit
+            ? CreditPresenter()
+            : entityType == EntityType.quote
+                ? QuotePresenter()
+                : InvoicePresenter(),
         onTap: (BaseEntity invoice) =>
             viewModel.onInvoiceTap(context, invoice));
   }
