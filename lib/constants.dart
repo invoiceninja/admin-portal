@@ -106,7 +106,7 @@ const String kQuoteStatusApproved = '4';
 const String kCreditStatusDraft = '1';
 const String kCreditStatusSent = '2';
 const String kCreditStatusPartial = '3';
-const String kCreditStatusPaid = '4';
+const String kCreditStatusApplied = '4';
 
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
@@ -279,7 +279,7 @@ class CreditStatusColors {
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kCreditStatusPartial: Colors.deepPurple,
-    kCreditStatusPaid: Colors.green,
+    kCreditStatusApplied: Colors.green,
   };
 }
 
