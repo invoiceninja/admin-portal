@@ -149,33 +149,29 @@ class DesignCode extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Row(
+        FormCard(
           children: <Widget>[
-            Expanded(
-              child: AppDropdownButton<String>(
-                value: null,
-                onChanged: (dynamic value) {},
-                items: ['Bootrap']
-                    .map((value) => DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                ))
-                    .toList(),
-                labelText: localization.cssFramework,
-              ),
+            AppDropdownButton<String>(
+              value: null,
+              onChanged: (dynamic value) {},
+              items: ['Bootrap']
+                  .map((value) => DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              ))
+                  .toList(),
+              labelText: localization.cssFramework,
             ),
-            Expanded(
-              child: AppDropdownButton<String>(
-                value: null,
-                onChanged: (dynamic value) {},
-                items: ['Bootrap']
-                    .map((value) => DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                ))
-                    .toList(),
-                labelText: localization.loadDesign,
-              ),
+            AppDropdownButton<String>(
+              value: null,
+              onChanged: (dynamic value) {},
+              items: ['Bootrap']
+                  .map((value) => DropdownMenuItem(
+                value: value,
+                child: Text(value),
+              ))
+                  .toList(),
+              labelText: localization.loadDesign,
             ),
           ],
         ),
