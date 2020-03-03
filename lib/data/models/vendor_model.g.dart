@@ -215,7 +215,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       result
         ..add('entity_type')
         ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -341,7 +341,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -431,7 +431,7 @@ class _$VendorContactEntitySerializer
       result
         ..add('entity_type')
         ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -504,7 +504,7 @@ class _$VendorContactEntitySerializer
           break;
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -758,7 +758,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String assignedUserId;
   @override
-  final String subEntityType;
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -1071,9 +1071,9 @@ class VendorEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _subEntityType;
-  String get subEntityType => _$this._subEntityType;
-  set subEntityType(String subEntityType) =>
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
       _$this._subEntityType = subEntityType;
 
   String _id;
@@ -1204,7 +1204,7 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String assignedUserId;
   @override
-  final String subEntityType;
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -1381,9 +1381,9 @@ class VendorContactEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _subEntityType;
-  String get subEntityType => _$this._subEntityType;
-  set subEntityType(String subEntityType) =>
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
       _$this._subEntityType = subEntityType;
 
   String _id;

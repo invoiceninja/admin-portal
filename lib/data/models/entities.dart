@@ -199,7 +199,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   @nullable
   @BuiltValueField(wireName: 'entity_type')
-  String get subEntityType;
+  EntityType get subEntityType;
 
   String get entityKey => '__${entityType}__${id}__';
 

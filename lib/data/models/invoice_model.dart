@@ -74,11 +74,16 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal, BelongsToClient
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  factory InvoiceEntity(
-      {String id, bool isQuote = false, AppState state, ClientEntity client}) {
+  factory InvoiceEntity({
+    String id,
+    AppState state,
+    ClientEntity client,
+    EntityType entityType,
+  }) {
     final company = state?.company;
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
+      subEntityType: entityType ?? EntityType.invoice,
       isChanged: false,
       amount: 0.0,
       balance: 0.0,
@@ -153,8 +158,8 @@ abstract class InvoiceEntity extends Object
 
   @override
   EntityType get entityType {
-    if ((subEntityType ?? '').isNotEmpty) {
-      return EntityType.valueOf(subEntityType);
+    if (subEntityType != null) {
+      return subEntityType;
     } else {
       return EntityType.invoice;
     }

@@ -304,7 +304,7 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
       result
         ..add('entity_type')
         ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -536,7 +536,7 @@ class _$QuoteEntitySerializer implements StructuredSerializer<QuoteEntity> {
           break;
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -620,7 +620,7 @@ class _$InvitationEntitySerializer
       result
         ..add('entity_type')
         ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -693,7 +693,7 @@ class _$InvitationEntitySerializer
           break;
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -995,7 +995,7 @@ class _$QuoteEntity extends QuoteEntity {
   @override
   final String assignedUserId;
   @override
-  final String subEntityType;
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -1568,9 +1568,9 @@ class QuoteEntityBuilder implements Builder<QuoteEntity, QuoteEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _subEntityType;
-  String get subEntityType => _$this._subEntityType;
-  set subEntityType(String subEntityType) =>
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
       _$this._subEntityType = subEntityType;
 
   String _id;
@@ -1755,7 +1755,7 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String assignedUserId;
   @override
-  final String subEntityType;
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -1929,9 +1929,9 @@ class InvitationEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _subEntityType;
-  String get subEntityType => _$this._subEntityType;
-  set subEntityType(String subEntityType) =>
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
       _$this._subEntityType = subEntityType;
 
   String _id;

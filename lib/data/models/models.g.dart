@@ -23,6 +23,7 @@ const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
 const EntityAction _$newQuote = const EntityAction._('newQuote');
+const EntityAction _$newCredit = const EntityAction._('newCredit');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
 const EntityAction _$newProject = const EntityAction._('newProject');
 const EntityAction _$newTask = const EntityAction._('newTask');
@@ -76,6 +77,8 @@ EntityAction _$valueOf(String name) {
       return _$newInvoice;
     case 'newQuote':
       return _$newQuote;
+    case 'newCredit':
+      return _$newCredit;
     case 'newExpense':
       return _$newExpense;
     case 'newProject':
@@ -130,6 +133,7 @@ final BuiltSet<EntityAction> _$values =
   _$newClient,
   _$newInvoice,
   _$newQuote,
+  _$newCredit,
   _$newExpense,
   _$newProject,
   _$newTask,

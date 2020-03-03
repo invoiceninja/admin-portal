@@ -324,7 +324,26 @@ void handleClientAction(
       }
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client, isQuote: true));
+          entity: InvoiceEntity(
+            state: state,
+            client: client,
+            entityType: EntityType.quote,
+          ));
+      break;
+    case EntityAction.newCredit:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.credit,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+            state: state,
+            client: client,
+            entityType: EntityType.credit,
+          ));
       break;
     case EntityAction.newExpense:
       if (isNotMobile(context)) {

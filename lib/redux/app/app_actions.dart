@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
@@ -506,7 +507,7 @@ void createEntityByType(
           force: force,
           quote: InvoiceEntity(
             state: state,
-            isQuote: true,
+            entityType: EntityType.quote,
           )));
       break;
     case EntityType.vendor:
@@ -558,7 +559,10 @@ void createEntityByType(
       store.dispatch(EditCredit(
         navigator: navigator,
         force: force,
-        credit: InvoiceEntity(state: state),
+        credit: InvoiceEntity(
+          state: state,
+          entityType: EntityType.credit,
+        ),
       ));
       break;
   }
