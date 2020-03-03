@@ -28,13 +28,13 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<DesignEntity>([
   TypedReducer<DesignEntity, SaveDesignSuccess>(_updateEditing),
   TypedReducer<DesignEntity, AddDesignSuccess>(_updateEditing),
-  TypedReducer<DesignEntity, RestoreDesignSuccess>((designs, action) {
+  TypedReducer<DesignEntity, RestoreDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
-  TypedReducer<DesignEntity, ArchiveDesignSuccess>((designs, action) {
+  TypedReducer<DesignEntity, ArchiveDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
-  TypedReducer<DesignEntity, DeleteDesignSuccess>((designs, action) {
+  TypedReducer<DesignEntity, DeleteDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
   TypedReducer<DesignEntity, EditDesign>(_updateEditing),
@@ -143,15 +143,15 @@ final designsReducer = combineReducers<DesignState>([
   TypedReducer<DesignState, AddDesignSuccess>(_addDesign),
   TypedReducer<DesignState, LoadDesignsSuccess>(_setLoadedDesigns),
   TypedReducer<DesignState, LoadDesignSuccess>(_setLoadedDesign),
-  TypedReducer<DesignState, ArchiveDesignRequest>(_archiveDesignRequest),
-  TypedReducer<DesignState, ArchiveDesignSuccess>(_archiveDesignSuccess),
-  TypedReducer<DesignState, ArchiveDesignFailure>(_archiveDesignFailure),
-  TypedReducer<DesignState, DeleteDesignRequest>(_deleteDesignRequest),
-  TypedReducer<DesignState, DeleteDesignSuccess>(_deleteDesignSuccess),
-  TypedReducer<DesignState, DeleteDesignFailure>(_deleteDesignFailure),
-  TypedReducer<DesignState, RestoreDesignRequest>(_restoreDesignRequest),
-  TypedReducer<DesignState, RestoreDesignSuccess>(_restoreDesignSuccess),
-  TypedReducer<DesignState, RestoreDesignFailure>(_restoreDesignFailure),
+  TypedReducer<DesignState, ArchiveDesignsRequest>(_archiveDesignRequest),
+  TypedReducer<DesignState, ArchiveDesignsSuccess>(_archiveDesignSuccess),
+  TypedReducer<DesignState, ArchiveDesignsFailure>(_archiveDesignFailure),
+  TypedReducer<DesignState, DeleteDesignsRequest>(_deleteDesignRequest),
+  TypedReducer<DesignState, DeleteDesignsSuccess>(_deleteDesignSuccess),
+  TypedReducer<DesignState, DeleteDesignsFailure>(_deleteDesignFailure),
+  TypedReducer<DesignState, RestoreDesignsRequest>(_restoreDesignRequest),
+  TypedReducer<DesignState, RestoreDesignsSuccess>(_restoreDesignSuccess),
+  TypedReducer<DesignState, RestoreDesignsFailure>(_restoreDesignFailure),
 ]);
 
 DesignState _archiveDesignRequest(

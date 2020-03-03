@@ -28,13 +28,13 @@ Reducer<String> selectedIdReducer = combineReducers([
 final editingReducer = combineReducers<StubEntity>([
   TypedReducer<StubEntity, SaveStubSuccess>(_updateEditing),
   TypedReducer<StubEntity, AddStubSuccess>(_updateEditing),
-  TypedReducer<StubEntity, RestoreStubSuccess>((stubs, action) {
+  TypedReducer<StubEntity, RestoreStubsSuccess>((stubs, action) {
                                                    return action.stubs[0];
                                                  }),
-  TypedReducer<StubEntity, ArchiveStubSuccess>((stubs, action) {
+  TypedReducer<StubEntity, ArchiveStubsSuccess>((stubs, action) {
                                                   return action.stubs[0];
                                                 }),
-  TypedReducer<StubEntity, DeleteStubSuccess>((stubs, action) {
+  TypedReducer<StubEntity, DeleteStubsSuccess>((stubs, action) {
                                                  return action.stubs[0];
                                                }),
   TypedReducer<StubEntity, EditStub>(_updateEditing),
@@ -144,15 +144,15 @@ final stubsReducer = combineReducers<StubState>([
   TypedReducer<StubState, AddStubSuccess>(_addStub),
   TypedReducer<StubState, LoadStubsSuccess>(_setLoadedStubs),
   TypedReducer<StubState, LoadStubSuccess>(_setLoadedStub),
-  TypedReducer<StubState, ArchiveStubRequest>(_archiveStubRequest),
-  TypedReducer<StubState, ArchiveStubSuccess>(_archiveStubSuccess),
-  TypedReducer<StubState, ArchiveStubFailure>(_archiveStubFailure),
-  TypedReducer<StubState, DeleteStubRequest>(_deleteStubRequest),
-  TypedReducer<StubState, DeleteStubSuccess>(_deleteStubSuccess),
-  TypedReducer<StubState, DeleteStubFailure>(_deleteStubFailure),
-  TypedReducer<StubState, RestoreStubRequest>(_restoreStubRequest),
-  TypedReducer<StubState, RestoreStubSuccess>(_restoreStubSuccess),
-  TypedReducer<StubState, RestoreStubFailure>(_restoreStubFailure),
+  TypedReducer<StubState, ArchiveStubsRequest>(_archiveStubRequest),
+  TypedReducer<StubState, ArchiveStubsSuccess>(_archiveStubSuccess),
+  TypedReducer<StubState, ArchiveStubsFailure>(_archiveStubFailure),
+  TypedReducer<StubState, DeleteStubsRequest>(_deleteStubRequest),
+  TypedReducer<StubState, DeleteStubsSuccess>(_deleteStubSuccess),
+  TypedReducer<StubState, DeleteStubsFailure>(_deleteStubFailure),
+  TypedReducer<StubState, RestoreStubsRequest>(_restoreStubRequest),
+  TypedReducer<StubState, RestoreStubsSuccess>(_restoreStubSuccess),
+  TypedReducer<StubState, RestoreStubsFailure>(_restoreStubFailure),
 ]);
 
 StubState _archiveStubRequest(
