@@ -38,7 +38,8 @@ class _DesignEditState extends State<DesignEdit>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(
+        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 3 : 2);
   }
 
   @override
@@ -95,10 +96,13 @@ class _DesignEditState extends State<DesignEdit>
                 controller: _controller,
                 tabs: [
                   Tab(
-                    text: localization.code,
+                    text: localization.settings,
                   ),
                   Tab(
                     text: localization.preview,
+                  ),
+                  Tab(
+                    text: localization.header,
                   ),
                 ],
               )
@@ -123,14 +127,41 @@ class _DesignEditState extends State<DesignEdit>
                 tabController: _controller,
                 formKey: _formKey,
                 focusNode: _focusNode,
-                children: <Widget>[])
+                children: <Widget>[
+                  DesignSettings(),
+                  DesignHeader(),
+                  DesignPreview(),
+                ])
             : AppForm(
                 focusNode: _focusNode,
                 formKey: _formKey,
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: DesignCode(),
+                      child: Column(
+                        children: <Widget>[
+                          TabBar(
+                            controller: _controller,
+                            tabs: <Widget>[
+                              Tab(
+                                text: localization.settings,
+                              ),
+                              Tab(
+                                text: localization.header,
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              controller: _controller,
+                              children: <Widget>[
+                                DesignSettings(),
+                                DesignHeader(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: DesignPreview(),
@@ -141,7 +172,31 @@ class _DesignEditState extends State<DesignEdit>
   }
 }
 
-class DesignCode extends StatelessWidget {
+class DesignHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                //scrollPadding: EdgeInsets.all(20.0),
+                keyboardType: TextInputType.multiline,
+                maxLines: 99999,
+                autofocus: true,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DesignSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -156,9 +211,9 @@ class DesignCode extends StatelessWidget {
               onChanged: (dynamic value) {},
               items: ['Bootrap']
                   .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(value),
-              ))
+                        value: value,
+                        child: Text(value),
+                      ))
                   .toList(),
               labelText: localization.cssFramework,
             ),
@@ -167,31 +222,13 @@ class DesignCode extends StatelessWidget {
               onChanged: (dynamic value) {},
               items: ['Bootrap']
                   .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(value),
-              ))
+                        value: value,
+                        child: Text(value),
+                      ))
                   .toList(),
               labelText: localization.loadDesign,
             ),
           ],
-        ),
-        Expanded(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextField(
-                    //scrollPadding: EdgeInsets.all(20.0),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 99999,
-                    autofocus: true,
-                  )
-                ],
-              ),
-            ),
-          ),
         ),
       ],
     );
