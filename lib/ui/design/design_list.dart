@@ -30,38 +30,6 @@ class DesignList extends StatefulWidget {
 }
 
 class _DesignListState extends State<DesignList> {
-  EntityDataTableSource dataTableSource;
-
-  @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-
-    dataTableSource = EntityDataTableSource(
-        context: context,
-        entityType: EntityType.design,
-        editingId: viewModel.state.designUIState.editing.id,
-        tableColumns: viewModel.tableColumns,
-        entityList: viewModel.designList,
-        entityMap: viewModel.designMap,
-        entityPresenter: DesignPresenter(),
-        onTap: (BaseEntity design) => viewModel.onDesignTap(context, design));
-  }
-
-  @override
-  void didUpdateWidget(DesignList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    final viewModel = widget.viewModel;
-    dataTableSource.editingId = viewModel.state.designUIState.editing.id;
-    dataTableSource.entityList = viewModel.designList;
-    dataTableSource.entityMap = viewModel.designMap;
-
-    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    dataTableSource.notifyListeners();
-  }
-
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;

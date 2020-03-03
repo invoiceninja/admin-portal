@@ -94,6 +94,7 @@ class DesignScreen extends StatelessWidget {
       body: DesignListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.design,
+        onlyList: true,
         onSelectedSortField: (value) {
           store.dispatch(SortDesigns(value));
         },

@@ -27,6 +27,7 @@ class AppBottomBar extends StatefulWidget {
     this.customValues2 = const [],
     this.customValues3 = const [],
     this.customValues4 = const [],
+    this.onlyList = false,
   });
 
   final EntityType entityType;
@@ -44,6 +45,7 @@ class AppBottomBar extends StatefulWidget {
   final List<String> customValues2;
   final List<String> customValues3;
   final List<String> customValues4;
+  final bool onlyList;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -322,7 +324,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
-      final isList = prefState.moduleLayout == ModuleLayout.list;
+      final isList =
+          prefState.moduleLayout == ModuleLayout.list || widget.onlyList;
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -333,13 +336,14 @@ class _AppBottomBarState extends State<AppBottomBar> {
               icon: Icon(Icons.check_box),
               onPressed: () => widget.onCheckboxPressed(),
             ),
-            IconButton(
-              tooltip: localization.switchListTable,
-              icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-              onPressed: () {
-                store.dispatch(SwitchListTableLayout());
-              },
-            ),
+            if (!widget.onlyList)
+              IconButton(
+                tooltip: localization.switchListTable,
+                icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                onPressed: () {
+                  store.dispatch(SwitchListTableLayout());
+                },
+              ),
             if (isList && widget.sortFields.isNotEmpty)
               IconButton(
                 tooltip: localization.sort,
