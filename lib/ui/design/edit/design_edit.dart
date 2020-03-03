@@ -144,6 +144,8 @@ class _DesignEditState extends State<DesignEdit>
 class DesignCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -155,11 +157,24 @@ class DesignCode extends StatelessWidget {
                 onChanged: (dynamic value) {},
                 items: ['Bootrap']
                     .map((value) => DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        ))
+                  value: value,
+                  child: Text(value),
+                ))
                     .toList(),
-                labelText: '',
+                labelText: localization.cssFramework,
+              ),
+            ),
+            Expanded(
+              child: AppDropdownButton<String>(
+                value: null,
+                onChanged: (dynamic value) {},
+                items: ['Bootrap']
+                    .map((value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                ))
+                    .toList(),
+                labelText: localization.loadDesign,
               ),
             ),
           ],
