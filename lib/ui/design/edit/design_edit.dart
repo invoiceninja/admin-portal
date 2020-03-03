@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -143,21 +144,45 @@ class _DesignEditState extends State<DesignEdit>
 class DesignCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
           children: <Widget>[
-            TextField(
-              //scrollPadding: EdgeInsets.all(20.0),
-              keyboardType: TextInputType.multiline,
-              maxLines: 99999,
-              autofocus: true,
-            )
+            Expanded(
+              child: AppDropdownButton<String>(
+                value: null,
+                onChanged: (dynamic value) {},
+                items: ['Bootrap']
+                    .map((value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
+                    .toList(),
+                labelText: '',
+              ),
+            ),
           ],
         ),
-      ),
+        Expanded(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    //scrollPadding: EdgeInsets.all(20.0),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 99999,
+                    autofocus: true,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
