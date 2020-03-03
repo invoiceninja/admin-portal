@@ -278,8 +278,8 @@ const Map<int, String> kModules = {
   kModuleProposals: 'proposals',
   kModuleTickets: 'tickets',
   kModuleRecurringInvoices: 'recurring_invoices',
-  kModuleRecurringExpenses: 'recurring_expenses',
   kModuleRecurringTasks: 'recurring_tasks',
+  kModuleRecurringExpenses: 'recurring_expenses',
 };
 
 class InvoiceStatusColors {
