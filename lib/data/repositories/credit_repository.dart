@@ -18,10 +18,10 @@ class CreditRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/credits/$entityId', credentials.token);
+        '${credentials.url}/credits/$entityId?', credentials.token);
 
-    final CreditItemResponse creditResponse =
-        serializers.deserializeWith(CreditItemResponse.serializer, response);
+    final InvoiceItemResponse creditResponse =
+    serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return creditResponse.data;
   }
@@ -36,8 +36,8 @@ class CreditRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final CreditListResponse creditResponse =
-        serializers.deserializeWith(CreditListResponse.serializer, response);
+    final InvoiceListResponse creditResponse =
+    serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return creditResponse.data;
   }
@@ -51,8 +51,8 @@ class CreditRepository {
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids}));
 
-    final CreditListResponse invoiceResponse =
-    serializers.deserializeWith(CreditListResponse.serializer, response);
+    final InvoiceListResponse invoiceResponse =
+    serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return invoiceResponse.data.toList();
   }
@@ -64,20 +64,36 @@ class CreditRepository {
 
     if (credit.isNew) {
       response = await webClient.post(
-          credentials.url + '/credits', credentials.token,
+          credentials.url + '/credits?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/credits/' + credit.id.toString();
+      var url = '${credentials.url}/credits/${credit.id}?';
       if (action != null) {
         url += '?action=' + action.toString();
       }
       response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
-    final CreditItemResponse creditResponse =
-        serializers.deserializeWith(CreditItemResponse.serializer, response);
+    final InvoiceItemResponse creditResponse =
+    serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return creditResponse.data;
+  }
+
+  Future<Null> emailCredit(Credentials credentials, InvoiceEntity credit,
+      EmailTemplate template, String subject, String body) async {
+    final data = {
+      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
+      'template': {
+        'body': body,
+        'subject': subject,
+      }
+    };
+
+    await webClient.post(
+        credentials.url + '/email_invoice?invoice_id=${credit.id}',
+        credentials.token,
+        data: json.encode(data));
   }
 }
