@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class DesignEditScreen extends StatelessWidget {
   const DesignEditScreen({Key key}) : super(key: key);
-  static const String route = '/design/edit';
+  static const String route = '/$kSettings/$kSettingsCustomDesignsEdit';
 
   @override
   Widget build(BuildContext context) {

@@ -110,7 +110,7 @@ abstract class DesignEntity extends Object
   }
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => name;
 
   @override
   double get listDisplayAmount => null;
