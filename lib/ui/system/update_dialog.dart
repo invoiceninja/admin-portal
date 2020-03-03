@@ -34,7 +34,10 @@ class _UpdateDialogState extends State<UpdateDialog> {
       content: updateState == UpdateState.done
           ? Text(localization.appUpdated)
           : updateState == UpdateState.loading
-              ? LoadingIndicator(height: 50)
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: LoadingIndicator(height: 50),
+                )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
