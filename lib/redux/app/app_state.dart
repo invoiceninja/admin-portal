@@ -486,7 +486,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'History: $historyList';
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
     //return 'Invitations: ${invoiceUIState.editing.invitations}';
-    //return 'Token: ${userCompanyStates.map((state) => state.token.name).where((name) => name.isNotEmpty).toList().join(', ')}';
+    return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
