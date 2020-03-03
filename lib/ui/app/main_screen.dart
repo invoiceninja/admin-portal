@@ -52,9 +52,11 @@ class MainScreen extends StatelessWidget {
                 ].contains(mainRoute) &&
                 subRoute == '/edit') {
               isFullScreen = true;
-            } else if (DesignEditScreen.route == uiState.currentRoute) {
-              isFullScreen = true;
             }
+          }
+          if (prefState.isNotMobile &&
+              DesignEditScreen.route == uiState.currentRoute) {
+            isFullScreen = true;
           }
 
           if (isFullScreen) {
@@ -68,9 +70,12 @@ class MainScreen extends StatelessWidget {
               case CreditScreen.route:
                 screen = CreditEditScreen();
                 break;
-              case DesignEditScreen.route:
-                screen = Placeholder();
-                break;
+              default:
+                switch (uiState.currentRoute) {
+                  case DesignEditScreen.route:
+                    screen = DesignEditScreen();
+                    break;
+                }
             }
           } else {
             switch (mainRoute) {
