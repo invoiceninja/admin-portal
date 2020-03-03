@@ -26,15 +26,15 @@ class DesignEdit extends StatefulWidget {
 class _DesignEditState extends State<DesignEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_designEdit');
+      GlobalKey<FormState>(debugLabel: '_designEdit');
   final _debouncer = Debouncer();
 
-  // STARTER: controllers - do not remove comment
+  TextEditingController _nameController;
 
   FocusScopeNode _focusNode;
   TabController _controller;
 
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
 
   @override
   void initState() {
@@ -47,13 +47,13 @@ class _DesignEditState extends State<DesignEdit>
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
+      _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final design = widget.viewModel.design;
-    // STARTER: read value - do not remove comment
+    _nameController.text = design.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -74,9 +74,8 @@ class _DesignEditState extends State<DesignEdit>
 
   void _onChanged() {
     _debouncer.run(() {
-      final design = widget.viewModel.design.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-      );
+      final design = widget.viewModel.design
+          .rebuild((b) => b..name = _nameController.text.trim());
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
       }
@@ -94,21 +93,21 @@ class _DesignEditState extends State<DesignEdit>
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         appBarBottom: isMobile(context)
             ? TabBar(
-          //key: ValueKey(state.settingsUIState.updatedAt),
-          controller: _controller,
-          isScrollable: true,
-          tabs: [
-            Tab(
-              text: localization.settings,
-            ),
-            Tab(
-              text: localization.preview,
-            ),
-            Tab(
-              text: localization.header,
-            ),
-          ],
-        )
+                //key: ValueKey(state.settingsUIState.updatedAt),
+                controller: _controller,
+                isScrollable: true,
+                tabs: [
+                  Tab(
+                    text: localization.settings,
+                  ),
+                  Tab(
+                    text: localization.preview,
+                  ),
+                  Tab(
+                    text: localization.header,
+                  ),
+                ],
+              )
             : null,
         onSavePressed: (context) {
           final bool isValid = _formKey.currentState.validate();
@@ -127,52 +126,56 @@ class _DesignEditState extends State<DesignEdit>
         },
         body: isMobile(context)
             ? AppTabForm(
-            tabController: _controller,
-            formKey: _formKey,
-            focusNode: _focusNode,
-            children: <Widget>[
-              DesignSettings(),
-              DesignPreview(),
-              DesignHeader(),
-            ])
-            : AppForm(
-          focusNode: _focusNode,
-          formKey: _formKey,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    TabBar(
-                      controller: _controller,
-                      isScrollable: true,
-                      tabs: <Widget>[
-                        Tab(
-                          text: localization.settings,
-                        ),
-                        Tab(
-                          text: localization.header,
-                        ),
-                      ],
+                tabController: _controller,
+                formKey: _formKey,
+                focusNode: _focusNode,
+                children: <Widget>[
+                    DesignSettings(
+                      nameController: _nameController,
                     ),
+                    DesignPreview(),
+                    DesignHeader(),
+                  ])
+            : AppForm(
+                focusNode: _focusNode,
+                formKey: _formKey,
+                child: Row(
+                  children: <Widget>[
                     Expanded(
-                      child: TabBarView(
-                        controller: _controller,
+                      child: Column(
                         children: <Widget>[
-                          DesignSettings(),
-                          DesignHeader(),
+                          TabBar(
+                            controller: _controller,
+                            isScrollable: true,
+                            tabs: <Widget>[
+                              Tab(
+                                text: localization.settings,
+                              ),
+                              Tab(
+                                text: localization.header,
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: TabBarView(
+                              controller: _controller,
+                              children: <Widget>[
+                                DesignSettings(
+                                  nameController: _nameController,
+                                ),
+                                DesignHeader(),
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    )
+                    ),
+                    Expanded(
+                      child: DesignPreview(),
+                    ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: DesignPreview(),
-              ),
-            ],
-          ),
-        ));
+              ));
   }
 }
 
@@ -201,10 +204,9 @@ class DesignHeader extends StatelessWidget {
 }
 
 class DesignSettings extends StatelessWidget {
+  const DesignSettings({@required this.nameController});
 
-  const DesignSettings({@required this.nameTextEditingController});
-
-  final TextEditingController nameTextEditingController;
+  final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
@@ -217,17 +219,16 @@ class DesignSettings extends StatelessWidget {
           children: <Widget>[
             DecoratedFormField(
               label: localization.name,
-              controller:,
+              controller: nameController,
             ),
             AppDropdownButton<String>(
               value: null,
               onChanged: (dynamic value) {},
               items: kFrameworks
-                  .map((value) =>
-                  DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  ))
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value),
+                      ))
                   .toList(),
               labelText: localization.cssFramework,
             ),
@@ -235,11 +236,10 @@ class DesignSettings extends StatelessWidget {
               value: null,
               onChanged: (dynamic value) {},
               items: ['Bootrap']
-                  .map((value) =>
-                  DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  ))
+                  .map((value) => DropdownMenuItem(
+                        value: value,
+                        child: Text(value),
+                      ))
                   .toList(),
               labelText: localization.loadDesign,
             ),
