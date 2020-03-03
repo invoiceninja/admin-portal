@@ -194,13 +194,13 @@ class RestoreDesignsRequest implements StartSaving {
 }
 
 class RestoreDesignsSuccess implements StopSaving, PersistData {
-  RestoreDesignsSuccess(this.design);
+  RestoreDesignsSuccess(this.designs);
 
   final List<DesignEntity> designs;
 }
 
 class RestoreDesignsFailure implements StopSaving {
-  RestoreDesignsFailure(this.design);
+  RestoreDesignsFailure(this.designs);
 
   final List<DesignEntity> designs;
 }

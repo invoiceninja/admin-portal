@@ -195,13 +195,13 @@ class RestoreStubsRequest implements StartSaving {
 }
 
 class RestoreStubsSuccess implements StopSaving, PersistData {
-  RestoreStubsSuccess(this.stub);
+  RestoreStubsSuccess(this.stubs);
 
   final List<StubEntity> stubs;
 }
 
 class RestoreStubsFailure implements StopSaving {
-  RestoreStubsFailure(this.stub);
+  RestoreStubsFailure(this.stubs);
 
   final List<StubEntity> stubs;
 }
