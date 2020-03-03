@@ -126,7 +126,30 @@ class _DesignEditState extends State<DesignEdit>
             : AppForm(
                 focusNode: _focusNode,
                 formKey: _formKey,
-                children: <Widget>[Text('test')],
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: DesignCode(),
+                    ),
+                    Expanded(
+                      child: DesignPreview(),
+                    ),
+                  ],
+                ),
               ));
+  }
+}
+
+class DesignCode extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class DesignPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Placeholder();
   }
 }
