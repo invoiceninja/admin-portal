@@ -142,6 +142,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.idBadge;
     case kSettingsCustomFields:
       return FontAwesomeIcons.heading;
+    case kSettingsCustomDesigns:
+      return FontAwesomeIcons.stamp;
     case kSettingsInvoiceDesign:
       return FontAwesomeIcons.paintBrush;
     case kSettingsWorkflowSettings:

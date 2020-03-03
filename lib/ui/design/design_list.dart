@@ -64,13 +64,10 @@ class _DesignListState extends State<DesignList> {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final listUIState = state.uiState.designUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
-    final isList = state.prefState.moduleLayout == ModuleLayout.list;
-    final designList = viewModel.designList;
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
@@ -78,90 +75,46 @@ class _DesignListState extends State<DesignList> {
       return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
-    if (state.shouldSelectEntity(
-        entityType: EntityType.design, hasRecords: designList.isNotEmpty)) {
-      viewEntityById(
-        context: context,
-        entityType: EntityType.design,
-        entityId: designList.isEmpty ? null : designList.first,
-      );
-    }
-
-    final listOrTable = () {
-      if (isList) {
-        return ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: viewModel.designList.length,
-            itemBuilder: (BuildContext context, index) {
-              final designId = viewModel.designList[index];
-              final design = viewModel.designMap[designId];
-
-              return DesignListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                design: design,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [design],
-                      context: context,
-                    );
-                  } else {
-                    handleDesignAction(context, [design], action);
-                  }
-                },
-                onTap: () => viewModel.onDesignTap(context, design),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleDesignAction(
-                        context, [design], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [design],
-                      context: context,
-                    );
-                  }
-                },
-                isChecked: isInMultiselect && listUIState.isSelected(design.id),
-              );
-            });
-      } else {
-        return SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: PaginatedDataTable(
-            onSelectAll: (value) {
-              final designs = viewModel.designList
-                  .map<DesignEntity>(
-                      (designId) => viewModel.designMap[designId])
-                  .where((design) => value != listUIState.isSelected(design.id))
-                  .toList();
-              handleDesignAction(
-                  context, designs, EntityAction.toggleMultiselect);
-            },
-            columns: [
-              if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
-              ...viewModel.tableColumns.map((field) => DataColumn(
-                  label: Text(AppLocalization.of(context).lookup(field)),
-                  numeric: EntityPresenter.isFieldNumeric(field),
-                  onSort: (int columnIndex, bool ascending) =>
-                      store.dispatch(SortDesigns(field)))),
-            ],
-            source: dataTableSource,
-            header: DatatableHeader(
-              entityType: EntityType.design,
-              onClearPressed: viewModel.onClearEntityFilterPressed,
-            ),
-          ),
-        ));
-      }
-    };
-
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: listOrTable(),
+      child: ListView.separated(
+          separatorBuilder: (context, index) => ListDivider(),
+          itemCount: viewModel.designList.length,
+          itemBuilder: (BuildContext context, index) {
+            final designId = viewModel.designList[index];
+            final design = viewModel.designMap[designId];
+
+            return DesignListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              design: design,
+              onEntityAction: (EntityAction action) {
+                if (action == EntityAction.more) {
+                  showEntityActionsDialog(
+                    entities: [design],
+                    context: context,
+                  );
+                } else {
+                  handleDesignAction(context, [design], action);
+                }
+              },
+              onTap: () => viewModel.onDesignTap(context, design),
+              onLongPress: () async {
+                final longPressIsSelection =
+                    state.prefState.longPressSelectionIsDefault ?? true;
+                if (longPressIsSelection && !isInMultiselect) {
+                  handleDesignAction(
+                      context, [design], EntityAction.toggleMultiselect);
+                } else {
+                  showEntityActionsDialog(
+                    entities: [design],
+                    context: context,
+                  );
+                }
+              },
+              isChecked: isInMultiselect && listUIState.isSelected(design.id),
+            );
+          }),
     );
   }
 }
