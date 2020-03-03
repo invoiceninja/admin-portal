@@ -50,31 +50,33 @@ class _AccountManagementSettingsState extends State<AccountManagementSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-
           FormCard(
               // TODO change to kModules.keys
-              children: [
-            kModuleQuotes,
-            kModuleCredits,
-            kModuleExpenses,
-          ]
-                  .map((key) => CheckboxListTile(
-                        controlAffinity: ListTileControlAffinity.leading,
-                        title: Text(localization.lookup(kModules[key])),
-                        value: company.enabledModules & key != 0,
-                        activeColor: Theme.of(context).accentColor,
-                        onChanged: (value) {
-                          int enabledModules = company.enabledModules;
-                          if (value) {
-                            enabledModules = enabledModules | key;
-                          } else {
-                            enabledModules = enabledModules ^ key;
-                          }
-                          viewModel.onCompanyChanged(company.rebuild(
-                              (b) => b..enabledModules = enabledModules));
-                        },
-                      ))
-                  .toList()),
+              children: kModules.keys.map((module) {
+            final implementedModules = [
+              kModuleQuotes,
+              kModuleCredits,
+            ];
+            final isImplemented = implementedModules.contains(module);
+            return CheckboxListTile(
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(localization.lookup(kModules[module])),
+              value: company.enabledModules & module != 0,
+              activeColor: Theme.of(context).accentColor,
+              onChanged: isImplemented
+                  ? (value) {
+                      int enabledModules = company.enabledModules;
+                      if (value) {
+                        enabledModules = enabledModules | module;
+                      } else {
+                        enabledModules = enabledModules ^ module;
+                      }
+                      viewModel.onCompanyChanged(company
+                          .rebuild((b) => b..enabledModules = enabledModules));
+                    }
+                  : null,
+            );
+          }).toList()),
         ],
       ),
     );
