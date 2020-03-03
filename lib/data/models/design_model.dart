@@ -67,6 +67,7 @@ abstract class DesignEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
+      return 0;
     } else {
       return response;
     }

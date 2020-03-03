@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -90,6 +90,7 @@ class DesignListVM {
               EntityAction action) =>
           handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
+      tableColumns: DesignPresenter.getTableFields(state.userCompany),
     );
   }
 
