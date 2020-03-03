@@ -49,7 +49,6 @@ import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_edit.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 
 part 'app_state.g.dart';

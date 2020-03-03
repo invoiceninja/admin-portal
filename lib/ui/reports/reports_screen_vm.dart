@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
@@ -26,11 +27,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-
-import 'expense_report.dart';
-import 'reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);

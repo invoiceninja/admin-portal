@@ -41,7 +41,7 @@ class CreditFields {
   static const String discount = 'discount';
   static const String poNumber = 'poNumber';
   static const String date = 'date';
-  static const String dueDate = 'dueDate';
+  static const String appliedDate = 'appliedDate';
   static const String terms = 'terms';
   static const String footer = 'invoiceFooter';
   static const String partial = 'partial';
