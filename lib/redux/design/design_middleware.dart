@@ -160,13 +160,13 @@ Middleware<AppState> _restoreDesign(DesignRepository repository) {
         .bulkAction(
             store.state.credentials, action.designIds, EntityAction.restore)
         .then((List<DesignEntity> designs) {
-      store.dispatch(RestoreDesignSuccess(designs));
+      store.dispatch(RestoreDesignsSuccess(designs));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreDesignFailure(prevDesigns));
+      store.dispatch(RestoreDesignsFailure(prevDesigns));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
