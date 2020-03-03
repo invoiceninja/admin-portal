@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -24,7 +26,7 @@ class DesignEdit extends StatefulWidget {
 class _DesignEditState extends State<DesignEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_designEdit');
+  GlobalKey<FormState>(debugLabel: '_designEdit');
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
@@ -73,8 +75,8 @@ class _DesignEditState extends State<DesignEdit>
   void _onChanged() {
     _debouncer.run(() {
       final design = widget.viewModel.design.rebuild((b) => b
-          // STARTER: set value - do not remove comment
-          );
+        // STARTER: set value - do not remove comment
+      );
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
       }
@@ -92,21 +94,21 @@ class _DesignEditState extends State<DesignEdit>
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         appBarBottom: isMobile(context)
             ? TabBar(
-                //key: ValueKey(state.settingsUIState.updatedAt),
-                controller: _controller,
-                isScrollable: true,
-                tabs: [
-                  Tab(
-                    text: localization.settings,
-                  ),
-                  Tab(
-                    text: localization.preview,
-                  ),
-                  Tab(
-                    text: localization.header,
-                  ),
-                ],
-              )
+          //key: ValueKey(state.settingsUIState.updatedAt),
+          controller: _controller,
+          isScrollable: true,
+          tabs: [
+            Tab(
+              text: localization.settings,
+            ),
+            Tab(
+              text: localization.preview,
+            ),
+            Tab(
+              text: localization.header,
+            ),
+          ],
+        )
             : null,
         onSavePressed: (context) {
           final bool isValid = _formKey.currentState.validate();
@@ -125,52 +127,52 @@ class _DesignEditState extends State<DesignEdit>
         },
         body: isMobile(context)
             ? AppTabForm(
-                tabController: _controller,
-                formKey: _formKey,
-                focusNode: _focusNode,
-                children: <Widget>[
-                    DesignSettings(),
-                    DesignPreview(),
-                    DesignHeader(),
-                  ])
+            tabController: _controller,
+            formKey: _formKey,
+            focusNode: _focusNode,
+            children: <Widget>[
+              DesignSettings(),
+              DesignPreview(),
+              DesignHeader(),
+            ])
             : AppForm(
-                focusNode: _focusNode,
-                formKey: _formKey,
-                child: Row(
+          focusNode: _focusNode,
+          formKey: _formKey,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Column(
                   children: <Widget>[
+                    TabBar(
+                      controller: _controller,
+                      isScrollable: true,
+                      tabs: <Widget>[
+                        Tab(
+                          text: localization.settings,
+                        ),
+                        Tab(
+                          text: localization.header,
+                        ),
+                      ],
+                    ),
                     Expanded(
-                      child: Column(
+                      child: TabBarView(
+                        controller: _controller,
                         children: <Widget>[
-                          TabBar(
-                            controller: _controller,
-                            isScrollable: true,
-                            tabs: <Widget>[
-                              Tab(
-                                text: localization.settings,
-                              ),
-                              Tab(
-                                text: localization.header,
-                              ),
-                            ],
-                          ),
-                          Expanded(
-                            child: TabBarView(
-                              controller: _controller,
-                              children: <Widget>[
-                                DesignSettings(),
-                                DesignHeader(),
-                              ],
-                            ),
-                          )
+                          DesignSettings(),
+                          DesignHeader(),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: DesignPreview(),
-                    ),
+                    )
                   ],
                 ),
-              ));
+              ),
+              Expanded(
+                child: DesignPreview(),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -199,6 +201,11 @@ class DesignHeader extends StatelessWidget {
 }
 
 class DesignSettings extends StatelessWidget {
+
+  const DesignSettings({@required this.nameTextEditingController});
+
+  final TextEditingController nameTextEditingController;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -208,14 +215,19 @@ class DesignSettings extends StatelessWidget {
       children: <Widget>[
         FormCard(
           children: <Widget>[
+            DecoratedFormField(
+              label: localization.name,
+              controller:,
+            ),
             AppDropdownButton<String>(
               value: null,
               onChanged: (dynamic value) {},
-              items: ['Bootrap']
-                  .map((value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value),
-                      ))
+              items: kFrameworks
+                  .map((value) =>
+                  DropdownMenuItem(
+                    value: value,
+                    child: Text(value),
+                  ))
                   .toList(),
               labelText: localization.cssFramework,
             ),
@@ -223,10 +235,11 @@ class DesignSettings extends StatelessWidget {
               value: null,
               onChanged: (dynamic value) {},
               items: ['Bootrap']
-                  .map((value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value),
-                      ))
+                  .map((value) =>
+                  DropdownMenuItem(
+                    value: value,
+                    child: Text(value),
+                  ))
                   .toList(),
               labelText: localization.loadDesign,
             ),
