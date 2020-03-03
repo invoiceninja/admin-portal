@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -51,12 +52,19 @@ class InvoiceOverview extends StatelessWidget {
       ),
     ];
 
+    String dueDateField = InvoiceFields.dueDate;
+    if (invoice.subEntityType == EntityType.credit) {
+      dueDateField = CreditFields.appliedDate;
+    } else if (invoice.subEntityType == EntityType.quote) {
+      dueDateField = QuoteFields.validUntil;
+    }
+
     final Map<String, String> fields = {
       InvoiceFields.statusId: invoice.isPastDue
           ? localization.pastDue
           : localization.lookup('invoice_status_${invoice.statusId}'),
       InvoiceFields.date: formatDate(invoice.date, context),
-      InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
+      dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),
       InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
