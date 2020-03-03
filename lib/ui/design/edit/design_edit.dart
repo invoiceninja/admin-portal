@@ -29,7 +29,8 @@ class _DesignEditState extends State<DesignEdit>
       GlobalKey<FormState>(debugLabel: '_designEdit');
   final _debouncer = Debouncer();
 
-  TextEditingController _nameController;
+  final _nameController = TextEditingController();
+  final _headerController = TextEditingController();
 
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -40,7 +41,6 @@ class _DesignEditState extends State<DesignEdit>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _nameController = TextEditingController();
     _controller = TabController(
         vsync: this, length: widget.viewModel.state.prefState.isMobile ? 3 : 2);
   }
@@ -49,12 +49,14 @@ class _DesignEditState extends State<DesignEdit>
   void didChangeDependencies() {
     _controllers = [
       _nameController,
+      _headerController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final design = widget.viewModel.design;
     _nameController.text = design.name;
+    _headerController.text = design.design;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -75,8 +77,9 @@ class _DesignEditState extends State<DesignEdit>
 
   void _onChanged() {
     _debouncer.run(() {
-      final design = widget.viewModel.design
-          .rebuild((b) => b..name = _nameController.text.trim());
+      final design = widget.viewModel.design.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..design = _headerController.text.trim());
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
       }
@@ -135,7 +138,9 @@ class _DesignEditState extends State<DesignEdit>
                       nameController: _nameController,
                     ),
                     DesignPreview(),
-                    DesignHeader(),
+                    DesignHeader(
+                      headerController: _headerController,
+                    ),
                   ])
             : AppForm(
                 focusNode: _focusNode,
@@ -164,7 +169,9 @@ class _DesignEditState extends State<DesignEdit>
                                 DesignSettings(
                                   nameController: _nameController,
                                 ),
-                                DesignHeader(),
+                                DesignHeader(
+                                  headerController: _headerController,
+                                ),
                               ],
                             ),
                           )
@@ -181,6 +188,10 @@ class _DesignEditState extends State<DesignEdit>
 }
 
 class DesignHeader extends StatelessWidget {
+  const DesignHeader({@required this.headerController});
+
+  final TextEditingController headerController;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -191,6 +202,7 @@ class DesignHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
+                controller: headerController,
                 //scrollPadding: EdgeInsets.all(20.0),
                 keyboardType: TextInputType.multiline,
                 maxLines: 99999,

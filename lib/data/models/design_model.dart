@@ -46,6 +46,7 @@ abstract class DesignEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
+      design: '',
     );
   }
 
@@ -55,6 +56,8 @@ abstract class DesignEntity extends Object
   EntityType get entityType => EntityType.design;
 
   String get name;
+
+  String get design;
 
   String get displayName => name;
 
