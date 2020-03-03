@@ -28,6 +28,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -256,6 +258,14 @@ class MenuDrawer extends StatelessWidget {
                           title: localization.expenses,
                         ),
                         // STARTER: menu - do not remove comment
+DrawerTile(
+company: company,
+entityType: EntityType.design,
+icon: getEntityIcon(EntityType.design),
+title: localization.designs,
+},
+),
+
                         DrawerTile(
                           company: company,
                           icon: getEntityIcon(EntityType.reports),

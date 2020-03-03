@@ -33,8 +33,9 @@ String filtercreditDropdownReducer(
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewCredit>((selectedId, action) => action.creditId),
   TypedReducer<String, AddCreditSuccess>(
-          (selectedId, action) => action.credit.id),
-  TypedReducer<String, ShowEmailCredit>((selectedId, action) => action.credit.id),
+      (selectedId, action) => action.credit.id),
+  TypedReducer<String, ShowEmailCredit>(
+      (selectedId, action) => action.credit.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
@@ -97,7 +98,7 @@ InvoiceEntity _updateEditing(InvoiceEntity credit, dynamic action) {
 
 InvoiceEntity _addCreditItem(InvoiceEntity credit, AddCreditItem action) {
   return credit.rebuild(
-          (b) => b..lineItems.add(action.creditItem ?? InvoiceItemEntity()));
+      (b) => b..lineItems.add(action.creditItem ?? InvoiceItemEntity()));
 }
 
 InvoiceEntity _addCreditItems(InvoiceEntity credit, AddCreditItems action) {
@@ -227,7 +228,8 @@ ListUIState _addToListMultiselect(
 
 ListUIState _removeFromListMultiselect(
     ListUIState creditListState, RemoveFromCreditMultiselect action) {
-  return creditListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return creditListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -368,5 +370,6 @@ CreditState _updateCredit(CreditState creditState, dynamic action) {
   return creditState.rebuild((b) => b..map[action.credit.id] = action.credit);
 }
 
-CreditState _setLoadedCredits(CreditState creditState, LoadCreditsSuccess action) =>
+CreditState _setLoadedCredits(
+        CreditState creditState, LoadCreditsSuccess action) =>
     creditState.loadCredits(action.credits);

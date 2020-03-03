@@ -35,10 +35,10 @@ class EditCredit extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
   EditCredit(
       {this.credit,
-        @required NavigatorState navigator,
-        this.creditItemIndex,
-        this.completer,
-        this.force = false})
+      @required NavigatorState navigator,
+      this.creditItemIndex,
+      this.completer,
+      this.force = false})
       : super(navigator: navigator);
 
   final InvoiceEntity credit;
@@ -360,14 +360,14 @@ class FilterCreditsByCustom4 implements PersistUI {
 Future handleCreditAction(
     BuildContext context, List<BaseEntity> credits, EntityAction action) async {
   assert(
-  [
-    EntityAction.restore,
-    EntityAction.archive,
-    EntityAction.delete,
-    EntityAction.toggleMultiselect
-  ].contains(action) ||
-      credits.length == 1,
-  'Cannot perform this action on more than one credit');
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          credits.length == 1,
+      'Cannot perform this action on more than one credit');
 
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
@@ -402,7 +402,7 @@ Future handleCreditAction(
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailCredit(
           completer:
-          snackBarCompleter<Null>(context, localization.emailedCredit),
+              snackBarCompleter<Null>(context, localization.emailedCredit),
           credit: credit,
           context: context));
       break;

@@ -15,6 +15,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'design': 'Design',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+
       'proposals': 'Proposals',
       'tickets': 'Tickets',
       'recurring_invoices': 'Recurring Invoices',
@@ -32780,6 +32791,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'];
 
   // STARTER: lang field - do not remove comment
+  String get design => _localizedValues[localeCode][' design'];
+  String get designs => _localizedValues[localeCode]['designs'];
+  String get newDesign => _localizedValues[localeCode]['new_design'];
+  String get createdDesign => _localizedValues[localeCode]['created_design'];
+  String get updatedDesign => _localizedValues[localeCode]['updated_design'];
+  String get archivedDesign => _localizedValues[localeCode]['archived_design'];
+  String get deletedDesign => _localizedValues[localeCode]['deleted_design'];
+  String get restoredDesign => _localizedValues[localeCode]['restored_design'];
+  String get editDesign => _localizedValues[localeCode]['edit_design'];
+
   String get newCredit => _localizedValues[localeCode]['new_credit'];
 
   String get createdCredit => _localizedValues[localeCode]['created_credit'];

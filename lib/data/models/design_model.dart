@@ -4,60 +4,60 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-part 'stub_model.g.dart';
+part 'design_model.g.dart';
 
-abstract class StubListResponse
-    implements Built<StubListResponse, StubListResponseBuilder> {
-  factory StubListResponse([void updates(StubListResponseBuilder b)]) =
-      _$StubListResponse;
+abstract class DesignListResponse
+    implements Built<DesignListResponse, DesignListResponseBuilder> {
+  factory DesignListResponse([void updates(DesignListResponseBuilder b)]) =
+      _$DesignListResponse;
 
-  StubListResponse._();
+  DesignListResponse._();
 
-  BuiltList<StubEntity> get data;
+  BuiltList<DesignEntity> get data;
 
-  static Serializer<StubListResponse> get serializer =>
-      _$stubListResponseSerializer;
+  static Serializer<DesignListResponse> get serializer =>
+      _$designListResponseSerializer;
 }
 
-abstract class StubItemResponse
-    implements Built<StubItemResponse, StubItemResponseBuilder> {
-  factory StubItemResponse([void updates(StubItemResponseBuilder b)]) =
-      _$StubItemResponse;
+abstract class DesignItemResponse
+    implements Built<DesignItemResponse, DesignItemResponseBuilder> {
+  factory DesignItemResponse([void updates(DesignItemResponseBuilder b)]) =
+      _$DesignItemResponse;
 
-  StubItemResponse._();
+  DesignItemResponse._();
 
-  StubEntity get data;
+  DesignEntity get data;
 
-  static Serializer<StubItemResponse> get serializer =>
-      _$stubItemResponseSerializer;
+  static Serializer<DesignItemResponse> get serializer =>
+      _$designItemResponseSerializer;
 }
 
-class StubFields {
-  // STARTER: fields - do not remove comment
+class DesignFields {
+  static const String name = 'name';
 }
 
-abstract class StubEntity extends Object with BaseEntity implements Built<StubEntity, StubEntityBuilder> {
+abstract class DesignEntity extends Object
+    with BaseEntity
+    implements Built<DesignEntity, DesignEntityBuilder> {
 
-  // STARTER: properties - do not remove comment
-
-  factory StubEntity() {
-    return _$StubEntity._(
+  factory DesignEntity() {
+    return _$DesignEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
       // STARTER: constructor - do not remove comment
     );
   }
 
-  StubEntity._();
+  DesignEntity._();
 
   String get displayName {
     // STARTER: display name - do not remove comment
   }
 
-  int compareTo(StubEntity stub, String sortField, bool sortAscending) {
+  int compareTo(DesignEntity design, String sortField, bool sortAscending) {
     int response = 0;
-    StubEntity stubA = sortAscending ? this : stub;
-    StubEntity stubB = sortAscending ? stub: this; 
+    DesignEntity designA = sortAscending ? this : design;
+    DesignEntity designB = sortAscending ? design : this;
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
@@ -113,5 +113,5 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   @override
   FormatNumberType get listDisplayAmountType => null;
 
-  static Serializer<StubEntity> get serializer => _$stubEntitySerializer;
+  static Serializer<DesignEntity> get serializer => _$designEntitySerializer;
 }

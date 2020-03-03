@@ -46,16 +46,16 @@ class CreditEditVM extends EntityEditVM {
     bool isSaving,
     Function(BuildContext) onCancelPressed,
   }) : super(
-    state: state,
-    company: company,
-    invoice: invoice,
-    invoiceItemIndex: invoiceItemIndex,
-    origInvoice: origInvoice,
-    onSavePressed: onSavePressed,
-    onItemsAdded: onItemsAdded,
-    isSaving: isSaving,
-    onCancelPressed: onCancelPressed,
-  );
+          state: state,
+          company: company,
+          invoice: invoice,
+          invoiceItemIndex: invoiceItemIndex,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
+        );
 
   factory CreditEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -75,7 +75,8 @@ class CreditEditVM extends EntityEditVM {
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
             if (credit.isNew) {
-              Navigator.of(context).pushReplacementNamed(CreditViewScreen.route);
+              Navigator.of(context)
+                  .pushReplacementNamed(CreditViewScreen.route);
             } else {
               Navigator.of(context).pop(savedCredit);
             }

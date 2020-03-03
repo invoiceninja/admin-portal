@@ -33,11 +33,12 @@ class EntityType extends EnumClass {
   static const EntityType payment = _$payment;
   static const EntityType group = _$group;
   static const EntityType user = _$user;
-
   static const EntityType company = _$company;
   static const EntityType gateway = _$gateway;
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
+  static const EntityType design = _$design;
+  // STARTER: entity type - do not remove comment
   static const EntityType quoteItem = _$quoteItem;
   static const EntityType contact = _$contact;
   static const EntityType vendorContact = _$vendorContact;

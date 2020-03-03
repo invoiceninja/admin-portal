@@ -164,6 +164,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.design:
+        return designState.map;
+
       case EntityType.credit:
         return creditState.map;
 
@@ -224,6 +227,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.design:
+        return designState.list;
+
       case EntityType.credit:
         return creditState.list;
 
@@ -263,6 +269,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.design:
+        return designUIState;
+
       case EntityType.credit:
         return creditUIState;
 
@@ -316,6 +325,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  DesignState get designState => userCompanyState.designState;
+  ListUIState get designListState => uiState.designUIState.listUIState;
+  DesignUIState get designUIState => uiState.designUIState;
+
   CreditState get creditState => userCompanyState.creditState;
 
   ListUIState get creditListState => uiState.creditUIState.listUIState;
@@ -423,6 +436,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case DesignEditScreen.route:
+        return hasDesignChanges(designUIState.editing, designState.map);
     }
 
     if (uiState.currentRoute.startsWith('/settings')) {

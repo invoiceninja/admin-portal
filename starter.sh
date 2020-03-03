@@ -438,6 +438,10 @@ else
     code="String get ${module_camel} => _localizedValues[localeCode][' ${module_snake}']; String get ${module_camel}s => _localizedValues[localeCode]['${module_snake}s']; String get new${Module} => _localizedValues[localeCode]['new_${module_snake}']; String get created${Module} => _localizedValues[localeCode]['created_${module_snake}']; String get updated${Module} => _localizedValues[localeCode]['updated_${module_snake}']; String get archived${Module} => _localizedValues[localeCode]['archived_${module_snake}']; String get deleted${Module} => _localizedValues[localeCode]['deleted_${module_snake}']; String get restored${Module} => _localizedValues[localeCode]['restored_${module_snake}']; String get edit${Module} => _localizedValues[localeCode]['edit_${module_snake}'];${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
+    comment="STARTER: entity type - do not remove comment"
+    code="static const EntityType ${module_camel} = _\$${module_camel}${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
+
     echo "Generating built files.."
     flutter packages pub run build_runner clean
     flutter packages pub run build_runner build --delete-conflicting-outputs

@@ -54,22 +54,22 @@ class CreditListVM extends EntityListVM {
     List<String> tableColumns,
     EntityType entityType,
   }) : super(
-    state: state,
-    user: user,
-    listState: listState,
-    invoiceList: invoiceList,
-    invoiceMap: invoiceMap,
-    clientMap: clientMap,
-    filter: filter,
-    isLoading: isLoading,
-    isLoaded: isLoaded,
-    onInvoiceTap: onInvoiceTap,
-    onRefreshed: onRefreshed,
-    onClearEntityFilterPressed: onClearEntityFilterPressed,
-    onViewEntityFilterPressed: onViewEntityFilterPressed,
-    tableColumns: tableColumns,
-    entityType: entityType,
-  );
+          state: state,
+          user: user,
+          listState: listState,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          isLoaded: isLoaded,
+          onInvoiceTap: onInvoiceTap,
+          onRefreshed: onRefreshed,
+          onClearEntityFilterPressed: onClearEntityFilterPressed,
+          onViewEntityFilterPressed: onViewEntityFilterPressed,
+          tableColumns: tableColumns,
+          entityType: entityType,
+        );
 
   static CreditListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -105,7 +105,7 @@ class CreditListVM extends EntityListVM {
           entityId: state.creditListState.filterEntityId,
           entityType: state.creditListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> credits,
-          EntityAction action) =>
+              EntityAction action) =>
           handleCreditAction(context, credits, action),
       tableColumns: CreditPresenter.getTableFields(state.userCompany),
       entityType: EntityType.credit,

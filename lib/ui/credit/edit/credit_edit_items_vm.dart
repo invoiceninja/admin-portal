@@ -74,7 +74,8 @@ class CreditEditItemsVM extends EntityEditItemsVM {
           if (index == credit.lineItems.length) {
             store.dispatch(AddCreditItem(creditItem: creditItem));
           } else {
-            store.dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
+            store.dispatch(
+                UpdateCreditItem(creditItem: creditItem, index: index));
           }
         });
   }

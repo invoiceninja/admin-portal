@@ -63,4 +63,3 @@ class QuoteFields {
   static const String archivedAt = 'archivedAt';
   static const String isDeleted = 'isDeleted';
 }
-

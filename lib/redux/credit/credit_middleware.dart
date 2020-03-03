@@ -120,7 +120,7 @@ Middleware<AppState> _showEmailCredit() {
 
     if (isMobile(action.context)) {
       final emailWasSent =
-      await Navigator.of(action.context).pushNamed(CreditEmailScreen.route);
+          await Navigator.of(action.context).pushNamed(CreditEmailScreen.route);
 
       if (action.completer != null && emailWasSent != null && emailWasSent) {
         action.completer.complete(null);
@@ -133,10 +133,10 @@ Middleware<AppState> _archiveCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveCreditsRequest;
     final prevCredits =
-    action.creditIds.map((id) => store.state.creditState.map[id]).toList();
+        action.creditIds.map((id) => store.state.creditState.map[id]).toList();
     repository
         .bulkAction(
-        store.state.credentials, action.creditIds, EntityAction.archive)
+            store.state.credentials, action.creditIds, EntityAction.archive)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(ArchiveCreditsSuccess(credits));
       if (action.completer != null) {
@@ -158,11 +158,11 @@ Middleware<AppState> _deleteCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteCreditsRequest;
     final prevCredits =
-    action.creditIds.map((id) => store.state.creditState.map[id]).toList();
+        action.creditIds.map((id) => store.state.creditState.map[id]).toList();
 
     repository
         .bulkAction(
-        store.state.credentials, action.creditIds, EntityAction.delete)
+            store.state.credentials, action.creditIds, EntityAction.delete)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(DeleteCreditsSuccess(credits));
       if (action.completer != null) {
@@ -184,11 +184,11 @@ Middleware<AppState> _restoreCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreCreditsRequest;
     final prevCredits =
-    action.creditIds.map((id) => store.state.creditState.map[id]).toList();
+        action.creditIds.map((id) => store.state.creditState.map[id]).toList();
 
     repository
         .bulkAction(
-        store.state.credentials, action.creditIds, EntityAction.restore)
+            store.state.credentials, action.creditIds, EntityAction.restore)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(RestoreCreditsSuccess(credits));
       if (action.completer != null) {
@@ -235,7 +235,7 @@ Middleware<AppState> _emailCredit(CreditRepository repository) {
     final origCredit = store.state.creditState.map[action.creditId];
     repository
         .emailCredit(store.state.credentials, origCredit, action.template,
-        action.subject, action.body)
+            action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailCreditSuccess());
       if (action.completer != null) {
@@ -292,7 +292,9 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
     }
 
     store.dispatch(LoadCreditRequest());
-    repository.loadItem(store.state.credentials, action.creditId).then((credit) {
+    repository
+        .loadItem(store.state.credentials, action.creditId)
+        .then((credit) {
       store.dispatch(LoadCreditSuccess(credit));
 
       if (action.completer != null) {

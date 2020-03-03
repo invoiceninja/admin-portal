@@ -56,22 +56,22 @@ class CreditViewVM extends EntityViewVM {
     Function(BuildContext, DocumentEntity) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
-    state: state,
-    company: company,
-    invoice: invoice,
-    client: client,
-    isSaving: isSaving,
-    isDirty: isDirty,
-    onActionSelected: onEntityAction,
-    onEditPressed: onEditPressed,
-    onClientPressed: onClientPressed,
-    onPaymentsPressed: onPaymentsPressed,
-    onPaymentPressed: onPaymentPressed,
-    onRefreshed: onRefreshed,
-    onUploadDocument: onUploadDocument,
-    onDeleteDocument: onDeleteDocument,
-    onViewExpense: onViewExpense,
-  );
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onClientPressed: onClientPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onPaymentPressed: onPaymentPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          onViewExpense: onViewExpense,
+        );
 
   factory CreditViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -125,8 +125,8 @@ class CreditViewVM extends EntityViewVM {
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-                message: AppLocalization.of(context).uploadedDocument,
-              )));
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

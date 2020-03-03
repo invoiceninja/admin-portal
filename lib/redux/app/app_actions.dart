@@ -27,6 +27,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 class PersistUI {}
@@ -232,6 +234,13 @@ void filterEntitiesByType({
       ));
       break;
     // STARTER: filter - do not remove comment
+    case EntityType.design:
+      store.dispatch(FilterDesignsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+
     case EntityType.credit:
       store.dispatch(FilterCreditsByEntity(
         entityId: filterEntity.id,
@@ -307,6 +316,10 @@ void viewEntitiesByType({
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
     // STARTER: view list - do not remove comment
+    case EntityType.design:
+      store.dispatch(ViewDesignList(navigator: navigator));
+      break;
+
     case EntityType.credit:
       store.dispatch(ViewCreditList(navigator: navigator));
       break;
@@ -434,6 +447,14 @@ void viewEntityById({
       ));
       break;
     // STARTER: view - do not remove comment
+    case EntityType.design:
+      store.dispatch(ViewDesign(
+        designId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
+
     case EntityType.credit:
       store.dispatch(ViewCredit(
         creditId: entityId,
@@ -555,6 +576,14 @@ void createEntityByType(
       ));
       break;
     // STARTER: create type - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        navigator: navigator,
+        force: force,
+        design: DesignEntity(state: state),
+      ));
+      break;
+
     case EntityType.credit:
       store.dispatch(EditCredit(
         navigator: navigator,
@@ -696,6 +725,15 @@ void createEntity({
       ));
       break;
     // STARTER: create - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        navigator: navigator,
+        design: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
+
     case EntityType.credit:
       store.dispatch(EditCredit(
         navigator: navigator,
@@ -886,6 +924,19 @@ void editEntityById(
       ));
       break;
     // STARTER: edit - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        design: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<DesignEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdDesign
+                    : localization.updatedDesign),
+      ));
+      break;
+
     case EntityType.credit:
       store.dispatch(EditCredit(
         credit: map[entityId],
@@ -968,6 +1019,10 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.design:
+      handleDesignAction(context, entities, action);
+      break;
+
     case EntityType.credit:
       handleCreditAction(context, entities, action);
       break;

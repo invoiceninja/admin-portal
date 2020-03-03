@@ -18,6 +18,8 @@ import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
@@ -85,6 +87,10 @@ final lastErrorReducer = combineReducers<String>([
     return '${action.error}';
   }),
   // STARTER: errors - do not remove comment
+  TypedReducer<String, LoadDesignsFailure>((state, action) {
+    return '${action.error}';
+  }),
+
   TypedReducer<String, LoadCreditsFailure>((state, action) {
     return '${action.error}';
   }),

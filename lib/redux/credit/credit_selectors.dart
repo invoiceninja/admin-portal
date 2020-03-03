@@ -8,10 +8,11 @@ ClientEntity creditClientSelector(
   return clientMap[credit.clientId];
 }
 
-var memoizedFilteredCreditList = memo4((BuiltMap<String, InvoiceEntity> creditMap,
-    BuiltList<String> creditList,
-    BuiltMap<String, ClientEntity> clientMap,
-    ListUIState creditListState) =>
+var memoizedFilteredCreditList = memo4((BuiltMap<String, InvoiceEntity>
+            creditMap,
+        BuiltList<String> creditList,
+        BuiltMap<String, ClientEntity> clientMap,
+        ListUIState creditListState) =>
     filteredCreditsSelector(creditMap, creditList, clientMap, creditListState));
 
 List<String> filteredCreditsSelector(
@@ -64,7 +65,7 @@ List<String> filteredCreditsSelector(
 }
 
 var memoizedCreditStatsForClient = memo2(
-        (String clientId, BuiltMap<String, InvoiceEntity> creditMap) =>
+    (String clientId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForClient(clientId, creditMap));
 
 EntityStats creditStatsForClient(
@@ -85,13 +86,13 @@ EntityStats creditStatsForClient(
 }
 
 var memoizedCreditStatsForUser = memo2(
-        (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
+    (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForUser(userId, creditMap));
 
 EntityStats creditStatsForUser(
-    String userId,
-    BuiltMap<String, InvoiceEntity> creditMap,
-    ) {
+  String userId,
+  BuiltMap<String, InvoiceEntity> creditMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
@@ -108,5 +109,5 @@ EntityStats creditStatsForUser(
 }
 
 bool hasCreditChanges(
-    InvoiceEntity credit, BuiltMap<String, InvoiceEntity> creditMap) =>
+        InvoiceEntity credit, BuiltMap<String, InvoiceEntity> creditMap) =>
     credit.isNew ? credit.isChanged : credit != creditMap[credit.id];

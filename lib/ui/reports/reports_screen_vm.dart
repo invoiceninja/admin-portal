@@ -28,7 +28,7 @@ import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
-if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);

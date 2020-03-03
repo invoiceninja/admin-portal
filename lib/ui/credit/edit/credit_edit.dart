@@ -26,7 +26,7 @@ class _CreditEditState extends State<CreditEdit>
   TabController _controller;
 
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_creditEdit');
+      GlobalKey<FormState>(debugLabel: '_creditEdit');
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
@@ -39,7 +39,7 @@ class _CreditEditState extends State<CreditEdit>
     final viewModel = widget.viewModel;
 
     final index =
-    viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
     _controller = TabController(vsync: this, length: 3, initialIndex: index);
   }
 
@@ -79,33 +79,33 @@ class _CreditEditState extends State<CreditEdit>
       appBarBottom: state.prefState.isDesktop
           ? null
           : TabBar(
-        controller: _controller,
-        //isScrollable: true,
-        tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.items,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-        ],
-      ),
+              controller: _controller,
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.items,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+              ],
+            ),
       body: Form(
         key: _formKey,
         child: state.prefState.isDesktop
             ? CreditEditDetailsScreen()
             : TabBarView(
-          key: ValueKey('__credit_${viewModel.invoice.id}__'),
-          controller: _controller,
-          children: <Widget>[
-            CreditEditDetailsScreen(),
-            CreditEditItemsScreen(),
-            CreditEditNotesScreen(),
-          ],
-        ),
+                key: ValueKey('__credit_${viewModel.invoice.id}__'),
+                controller: _controller,
+                children: <Widget>[
+                  CreditEditDetailsScreen(),
+                  CreditEditItemsScreen(),
+                  CreditEditNotesScreen(),
+                ],
+              ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).primaryColor,
@@ -133,8 +133,8 @@ class _CreditEditState extends State<CreditEdit>
                   excluded: invoice.lineItems
                       .where((item) => item.isTask || item.isExpense)
                       .map((item) => item.isTask
-                      ? viewModel.state.taskState.map[item.taskId]
-                      : viewModel.state.expenseState.map[item.expenseId])
+                          ? viewModel.state.taskState.map[item.taskId]
+                          : viewModel.state.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {

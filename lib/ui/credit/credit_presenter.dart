@@ -29,7 +29,7 @@ class CreditPresenter extends EntityPresenter {
         return Text(credit.number);
       case CreditFields.client:
         return Text((state.clientState.map[credit.clientId] ??
-            ClientEntity(id: credit.clientId))
+                ClientEntity(id: credit.clientId))
             .listDisplayName);
       case CreditFields.date:
         return Text(formatDate(credit.date, context));

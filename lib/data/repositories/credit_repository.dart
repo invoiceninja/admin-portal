@@ -21,7 +21,7 @@ class CreditRepository {
         '${credentials.url}/credits/$entityId?', credentials.token);
 
     final InvoiceItemResponse creditResponse =
-    serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return creditResponse.data;
   }
@@ -37,7 +37,7 @@ class CreditRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse creditResponse =
-    serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return creditResponse.data;
   }
@@ -52,7 +52,7 @@ class CreditRepository {
         data: json.encode({'ids': ids}));
 
     final InvoiceListResponse invoiceResponse =
-    serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return invoiceResponse.data.toList();
   }
@@ -72,11 +72,11 @@ class CreditRepository {
         url += '?action=' + action.toString();
       }
       response =
-      await webClient.put(url, credentials.token, data: json.encode(data));
+          await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final InvoiceItemResponse creditResponse =
-    serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return creditResponse.data;
   }
